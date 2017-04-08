@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
-    <meta name="author" content="Mosaddek">
-    <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
-    <link rel="shortcut icon" href="img/favicon.png">
+    <meta name="author" content="Yokohama">
+    <meta name="keyword" content="">
 
     <title>Blank</title>
 
@@ -16,9 +15,21 @@
     <!--external css-->
     <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
 
-    <!--right slidebar-->
-    <link href="css/slidebars.css" rel="stylesheet">
-
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
+      <link rel="stylesheet" type="text/css" href="assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+      <link rel="stylesheet" type="text/css" href="assets/jquery-multi-select/css/multi-select.css" />
+      <link rel="stylesheet" type="text/css" href="assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+      <link rel="stylesheet" type="text/css" href="assets/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+      <link rel="stylesheet" type="text/css" href="assets/bootstrap-timepicker/compiled/timepicker.css" />
+      <link rel="stylesheet" type="text/css" href="assets/bootstrap-colorpicker/css/colorpicker.css" />
+      <link rel="stylesheet" type="text/css" href="assets/bootstrap-datetimepicker/css/datetimepicker.css" />
+      <!--bootstrap switcher-->
+      <link rel="stylesheet" type="text/css" href="assets/bootstrap-switch/static/stylesheets/bootstrap-switch.css" />
+      <!--select 2-->
+      <link rel="stylesheet" type="text/css" href="assets/select2/css/select2.min.css"/>
+      <!--right slidebar-->
+      <link href="css/slidebars.css" rel="stylesheet">
+ 
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
@@ -28,176 +39,40 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
-  </head>
+   <script src="js/paidAchieve.js"></script>
 
-  <body>
+      <script>
+         function sync()
+         {
+           var n1 = document.getElementById('include');
+           var n2 = document.getElementById('input4');
+           n2.value = n1.value;
+         }
+      </script>
+   </head>
+   <body onload="prdValue();include();exclude();achPrdValue();achInclude();achExclude();">
 
   <section id="container" class="">
-      <!--header start-->
-      <header class="header white-bg">
-          <div class="sidebar-toggle-box">
-              <i class="fa fa-bars"></i>
-          </div>
-          <!--logo start-->
-          <a href="index.html" class="logo" >Flat<span>lab</span></a>
-          <!--logo end-->
-          <div class="nav notify-row" id="top_menu">
-            <!--  notification start -->
-            <ul class="nav top-menu">
+     <!--header start-->
+         <header class="header dark-bg">
+            <div class="sidebar-toggle-box">
+               <i class="fa fa-bars"></i>
+            </div>
+            <!--logo start-->
+            <a href="index.html" class="logo"><img src="img/yokohama-logo.svg" width="132" height="52"></a>
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu">
+               <!--  notification start -->
+               <ul class="nav top-menu">
               <!-- settings start -->
-              <li class="dropdown">
-                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                      <i class="fa fa-tasks"></i>
-                      <span class="badge bg-success">6</span>
-                  </a>
-                  <ul class="dropdown-menu extended tasks-bar">
-                      <div class="notify-arrow notify-arrow-green"></div>
-                      <li>
-                          <p class="green">You have 6 pending tasks</p>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Dashboard v1.3</div>
-                                  <div class="percent">40%</div>
-                              </div>
-                              <div class="progress progress-striped">
-                                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                      <span class="sr-only">40% Complete (success)</span>
-                                  </div>
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Database Update</div>
-                                  <div class="percent">60%</div>
-                              </div>
-                              <div class="progress progress-striped">
-                                  <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                      <span class="sr-only">60% Complete (warning)</span>
-                                  </div>
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Iphone Development</div>
-                                  <div class="percent">87%</div>
-                              </div>
-                              <div class="progress progress-striped">
-                                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 87%">
-                                      <span class="sr-only">87% Complete</span>
-                                  </div>
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Mobile App</div>
-                                  <div class="percent">33%</div>
-                              </div>
-                              <div class="progress progress-striped">
-                                  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 33%">
-                                      <span class="sr-only">33% Complete (danger)</span>
-                                  </div>
-                              </div>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <div class="task-info">
-                                  <div class="desc">Dashboard v1.3</div>
-                                  <div class="percent">45%</div>
-                              </div>
-                              <div class="progress progress-striped active">
-                                  <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
-                                      <span class="sr-only">45% Complete</span>
-                                  </div>
-                              </div>
-
-                          </a>
-                      </li>
-                      <li class="external">
-                          <a href="#">See All Tasks</a>
-                      </li>
-                  </ul>
-              </li>
               <!-- settings end -->
-              <!-- inbox dropdown start-->
-              <li id="header_inbox_bar" class="dropdown">
-                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                      <i class="fa fa-envelope-o"></i>
-                      <span class="badge bg-important">5</span>
-                  </a>
-                  <ul class="dropdown-menu extended inbox">
-                      <div class="notify-arrow notify-arrow-red"></div>
-                      <li>
-                          <p class="red">You have 5 new messages</p>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="photo"><img alt="avatar" src="./img/avatar-mini.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jonathan Smith</span>
-                                    <span class="time">Just now</span>
-                                    </span>
-                                    <span class="message">
-                                        Hello, this is an example msg.
-                                    </span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="photo"><img alt="avatar" src="./img/avatar-mini2.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jhon Doe</span>
-                                    <span class="time">10 mins</span>
-                                    </span>
-                                    <span class="message">
-                                     Hi, Jhon Doe Bhai how are you ?
-                                    </span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="photo"><img alt="avatar" src="./img/avatar-mini3.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jason Stathum</span>
-                                    <span class="time">3 hrs</span>
-                                    </span>
-                                    <span class="message">
-                                        This is awesome dashboard.
-                                    </span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="photo"><img alt="avatar" src="./img/avatar-mini4.jpg"></span>
-                                    <span class="subject">
-                                    <span class="from">Jondi Rose</span>
-                                    <span class="time">Just now</span>
-                                    </span>
-                                    <span class="message">
-                                        Hello, this is metrolab
-                                    </span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">See all messages</a>
-                      </li>
-                  </ul>
-              </li>
-              <!-- inbox dropdown end -->
-              <!-- notification dropdown start-->
-              <li id="header_notification_bar" class="dropdown">
+             
+            <!-- notification dropdown start-->
+             <li id="header_notification_bar" class="dropdown">
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                       <i class="fa fa-bell-o"></i>
-                      <span class="badge bg-warning">7</span>
+                      <span class="badge bg-important">7</span>
                   </a>
                   <ul class="dropdown-menu extended notification">
                       <div class="notify-arrow notify-arrow-yellow"></div>
@@ -206,188 +81,154 @@
                       </li>
                       <li>
                           <a href="#">
-                              <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                              Server #3 overloaded.
-                              <span class="small italic">34 mins</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="label label-warning"><i class="fa fa-bell"></i></span>
-                              Server #10 not respoding.
-                              <span class="small italic">1 Hours</span>
+                              <span class="label label-success"><i class="fa fa-bell"></i></span>
+                              #20543 has been approved
+                              <span class="small italic">30 mins</span>
                           </a>
                       </li>
                       <li>
                           <a href="#">
                               <span class="label label-danger"><i class="fa fa-bolt"></i></span>
-                              Database overloaded 24%.
+                               #20543 has been rejected
                               <span class="small italic">4 hrs</span>
                           </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="label label-success"><i class="fa fa-plus"></i></span>
-                              New user registered.
-                              <span class="small italic">Just now</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">
-                              <span class="label label-info"><i class="fa fa-bullhorn"></i></span>
-                              Application error.
-                              <span class="small italic">10 mins</span>
-                          </a>
-                      </li>
-                      <li>
-                          <a href="#">See all notifications</a>
                       </li>
                   </ul>
               </li>
               <!-- notification dropdown end -->
           </ul>
-          </div>
-          <div class="top-nav ">
-              <ul class="nav pull-right top-menu">
+            </div>
+            <div class="top-nav ">
+               <ul class="nav pull-right top-menu">
                   <li>
-                      <input type="text" class="form-control search" placeholder="Search">
+                     <input type="text" class="form-control search" placeholder="Search">
                   </li>
                   <!-- user login dropdown start-->
                   <li class="dropdown">
-                      <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                          <img alt="" src="img/avatar1_small.jpg">
-                          <span class="username">Jhon Doue</span>
-                          <b class="caret"></b>
-                      </a>
-                      <ul class="dropdown-menu extended logout">
-                          <div class="log-arrow-up"></div>
-                          <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                          <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                          <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                          <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
-                      </ul>
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                     <img alt="" src="img/avatar1_small.jpg">
+                     <span class="username">John Doe</span>
+                     <b class="caret"></b>
+                     </a>
+                     <ul class="dropdown-menu extended logout">
+                        <div class="log-arrow-up"></div>
+                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                        <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                        <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                     </ul>
                   </li>
-
                   <!-- user login dropdown end -->
-                  <li class="sb-toggle-right">
-                      <i class="fa  fa-align-right"></i>
-                  </li>
-              </ul>
-          </div>
-      </header>
-      <!--header end-->
-      <!--sidebar start-->
-      <aside>
-          <div id="sidebar"  class="nav-collapse ">
-              <!-- sidebar menu start-->
-              <ul class="sidebar-menu" id="nav-accordion">
+               </ul>
+            </div>
+         </header>
+         <!--header end-->
+         <!--sidebar start-->
+         <aside>
+            <div id="sidebar"  class="nav-collapse ">
+               <!-- sidebar menu start-->
+               <ul class="sidebar-menu" id="nav-accordion">
                   <li>
-                      <a href="index.html">
-                          <i class="fa fa-dashboard"></i>
-                          <span>Dashboard</span>
-                      </a>
+                     <a class="" href="index.html">
+                     <i class="fa fa-dashboard"></i>
+                     <span>My Dashboard</span>
+                     </a>
                   </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="fa fa-laptop"></i>
-                          <span>Layouts</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="boxed_page.html">Boxed Page</a></li>
-                          <li><a  href="horizontal_menu.html">Horizontal Menu</a></li>
-                          <li><a  href="header-color.html">Different Color Top bar</a></li>
-                          <li><a  href="mega_menu.html">Mega Menu</a></li>
-                          <li><a  href="language_switch_bar.html">Language Switch Bar</a></li>
-                          <li><a  href="email_template.html" target="_blank">Email Template</a></li>
-                      </ul>
+                  <li>
+                     <a class="" href="program_details.html">
+                     <i class="fa fa-tasks"></i>
+                     <span>Create New Program</span>
+                     </a>
                   </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="fa fa-book"></i>
-                          <span>UI Elements</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="general.html">General</a></li>
-                          <li><a  href="buttons.html">Buttons</a></li>
-                          <li><a  href="modal.html">Modal</a></li>
-                          <li><a  href="toastr.html">Toastr Notifications</a></li>
-                          <li><a  href="widget.html">Widget</a></li>
-                          <li><a  href="slider.html">Slider</a></li>
-                          <li><a  href="nestable.html">Nestable</a></li>
-                          <li><a  href="tree.html">Tree View</a></li>
-                          <li><a  href="font_awesome.html">Font Awesome</a></li>
-                      </ul>
+                  <li>
+                     <a class="active" href="program_details_existing.html">
+                     <i class="fa fa-tasks"></i>
+                     <span>Edit Program</span>
+                     </a>
                   </li>
-
-                  <li class="sub-menu">
-                      <a href="javascript:;">
-                          <i class="fa fa-cogs"></i>
-                          <span>Components</span>
-                      </a>
-                      <ul class="sub">
-                          <li><a  href="grids.html">Grids</a></li>
-                          <li><a  href="calendar.html">Calendar</a></li>
-                          <li><a  href="gallery.html">Gallery</a></li>
-                          <li><a  href="todo_list.html">Todo List</a></li>
-                          <li><a  href="draggable_portlet.html">Draggable Portlet</a></li>
-                      </ul>
+                  <li>
+                     <a class="" href="program_details_rejected.html">
+                     <i class="fa fa-tasks"></i>
+                     <span>Edit Rejected Program</span>
+                     </a>
                   </li>
-                  
-                  <!--multi level menu end-->
-
-              </ul>
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
+                  <li>
+                     <a href="login.html">
+                     <i class="fa fa-user"></i>
+                     <span>Login Page</span>
+                     </a>
+                  </li>
+               </ul>
+               <!-- sidebar menu end-->
+            </div>
+         </aside>
+         <!--sidebar end-->
       <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper site-min-height">
+        <section id="main-content">
+          <section class="wrapper">
               <!-- page start-->
-              <!-- wrapper col-lg-12 full width -->
-
-              <div class="col-lg-12">
-                  <div class="col-lg-6">
-                      <div class="col-lg-6">
-                            <h4>Paid Based On</h4>     
-                                              <label class="control-label" for="inputSuccess">Paid Based On</label>
-                                              <select class="form-control input-sm m-bot15" id="paid_basedon_inputselect" name="paid_basedon_inputselect">
-                                                  <option selected disabled class="" value="">- Select Programs -</option>
-                                                  <option id="bonusable_units_only_plus_nadunits_inputselect" value="Bonusable Units Only + NAD Units">Bonusable Units Only + NAD Units</option>
-                                                  <option id="all_units_sold_plus_nad_units_inputselect" value="All Units Sold + NAD Units">All Units Sold + NAD Units</option>
-                                                  <option id="bonusable_units_only_inputselect" value="Bonusable Units Only">Bonusable Units Only</option>
-                                                  <option id="nad_units_inputselect" value="NAD Units" name="nad_units">NAD Units</option>
-                                              </select>
-                        </div>
-                        <div class="col-lg-6">
-                                                <label class="control-label" for="inputSuccess">Payout Frequency</label>
-                                                <select class="form-control input-sm m-bot15 " id="payout_freq_inputselect" name="payout_freq_inputselect">
-                                                  <option selected disabled class="" value="">- Select Programs -</option>
-                                                  <option id="payout_freq_annually" value="Anually" name="payout_freq_annually">Anually</option>
-                                                  <option id="payout_freq_semiannually" value="Semi-Anually" name="payout_freq_semiannually">Semi-Anually</option>
-                                                  <option id="payout_freq_monthly" value="Monthly" name="payout_freq_monthly">Monthly</option>
-                                                  <option id="payout_freq_quarterly" value="Quarterly" name="payout_freq_onrequest">Quarterly</option>
-                                                  <option id="payout_freq_onrequest" value="On Request" name="payout_freq_onrequest">On Request</option>
-                                                  <option id="payout_freq_endof_prog" value="End of Program" name="payout_freq_endof_prog">End of Program</option>
-                                              </select>
+              <div class="row">
+                  <div class="col-lg-12">
+                      <section class="panel">
+                          <header class="panel-heading">
+                             <h3>Pricing Request</h3>
+                          </header>
+                          <div class="panel-body">
+                              <form role="form" class="">
+                                  <div class="col-lg-12">
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-6">
+                                      <label for="businessUnit">Business Unit</label>
+                                      <input disabled type="text" class="form-control" id="businessUnit" name="businessUnit" placeholder="Commercial" value="Commercial">
+                                  </div>
+                                        <div class="col-lg-2 col-md-6">
+                                      <label for="requestType">Request Type</label>
+                                      <input type="text" class="form-control" id="requestType" name="requestType" placeholder="Exception" value="Exception">
+                                  </div>
+                                        <div class="col-lg-2 col-md-6">
+                                      <label for="requestType">Requested By</label>
+                                      <input type="text" class="form-control" id="requestedBy" name="requestedBy" placeholder="" value="Nate Terhune">
+                                  </div>
+                                        <div class="col-lg-2 col-md-6">
+                                      <label for="requestType">Requested By Title</label>
+                                      <input type="text" class="form-control" id="requestedByTitle" name="requestedByTitle" placeholder="" value="Acct/Territory Manager">
+                                  </div>
+                                            <div class="col-lg-2 col-md-6">
+                                      <label for="approvedBy">Approved By</label>
+                                      <input type="text" class="form-control" id="approvedBy" name="approvedBy" placeholder="" value="Eddie Rollins">
+                                  </div>
+                                            <div class="col-lg-2 col-md-6">
+                                 <div class="form-group">
+                                      <label for="approvedBy">Approved By Title</label>
+                                      <input type="text" class="form-control" id="approvedByTitle" name="approvedByTitle" placeholder="" value="National Account Manager">
+                                  </div>
+                                </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                      <div class="col-lg-4 col-sm-6">
+                                        <label class="control-label">Begin/End Dates:</label>
+                                            <div class="input-group input-medium" data-date="13/07/2017" data-date-format="mm/dd/yyyy">
+                                                <input type="text" class="form-control dpd1 required" name="from" placeholder="Begins" value="03/11/2017"><span class="input-group-addon">To</span>
+                                                <input type="text" class="form-control dpd2 required" name="to" value="03/11/2018" placeholder="Ends">
                                             </div>
-                        <div class="table-responsive">    
-                          <table class="table table-hover table-bordered">
-                              <thead>
-                                <tr>
-                                <th colspan="3" class="text-center"><h4>Paid Based On</h4></th>
-                              </tr>
-                              </thead>
+                                        </div>
+                                  </div>
+                                <div class="col-md-8 col-sm-12">
+                                       <div class="form-group"> 
+                                            <div class="col-lg-8 col-sm-6">
+                                              <h4 class="paid-achieve">Product Line/Tread/Part Number</h4>     
+                        <div class="table-responsive" style="width: 100% !important;"> 
+                            <div class="col-lg-8 col-sm-6" style="padding-left: 6px !important; padding-right: 8px !important;">
+                          <table class="table">
                               <tbody>
                               <tr class="">
-                                  <td rowspan="2">
+                                  <td class="yk-vertalign" rowspan="2">
                                       <select class="paidachieve" name="paidBasedOn" id="paidBasedOn" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
-                                                                  <option selected value="ST">Select Tag</option>
+                                                                  <option value="ST">Select Tag</option>
                                                                   <option value="01">BusinessUnit</option>
                                                                   <option value="02">ChannelGroup</option>
-                                                                  <option value="03">Channel</option>
+                                                                  <option selected value="03">Channel</option>
                                                                   <option value="05">Corp</option>
                                                                   <option value="06">Bill To</option>
                                                                   <option value="07">Ship To</option>
@@ -395,33 +236,34 @@
                                                                   <option value="09">Brand</option>
                                                                   <option value="10">Prod Line</option>
                                                                   <option value="11">Part</option>
-                                                                   </select>
+                                                                <option value="12">Tread</option>
+                                                            </select>
                             
                                                                   <div class="form-group last">
-                                                                     <div class="col-lg-3" id="div1">
+                                                                     <div class="" id="div1">
                                                                         <script type="text/javascript" language="JavaScript">
                                                                            function prdValue(){
                                                                            var el = document.getElementById('div1');
-                                                                                     el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select" style="width: 150px"></select>';
+                                                                                     el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';
                                                                               }
                                                                         </script>
-                                   </div>
-                                 </div>
+                                                                    </div>
+                                                                </div>
                                   </td>
                                   <td class="va-bot">
                                       <div>
-                                           <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'include')">>></a>
+                                           <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'include')">&#62;&#62;</a>
                                            <br/>
-                                           <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('include', 'prdvalue')"><<</a>
+                                           <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('include', 'prdvalue')">&#60;&#60;</a>
                                        </div>
                                   </td>
                                   <td>
-                                      <h5>Include</h5>
-                                       <div id="div2">
+                                      <h5 class="paid-achieve">Include</h5>
+                                       <div class="" id="div2">
                                        <script type="text/javascript" language="JavaScript">
                                           function include(){
                                           var el = document.getElementById('div2');
-                                                    el.innerHTML = '<select name="include" multiple="multiple" class="multi-select" id="include" style="width: 150px"></select>';
+                                                    el.innerHTML = '<select name="include" multiple="multiple" class="multi-select paidachieve_box2" id="include"></select>';
                                           
                                              }
                                        </script>
@@ -431,18 +273,18 @@
                               <tr class="">
                                   <td class="va-bot">
                                       <div>
-                                           <a href="#" aria-activedescendant=""class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'exclude')">>></a>
+                                           <a href="#" aria-activedescendant="" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'exclude')">&#62;&#62;</a>
                                            <br/>
-                                           <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('exclude', 'prdvalue')"><<</a>
+                                           <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('exclude', 'prdvalue')">&#60;&#60;</a>
                                        </div>
                                   </td>
                                   <td>
-                                      <h5>Exclude</h5>
-                                      <div id="div3">
+                                      <h5 class="paid-achieve">Exclude</h5>
+                                      <div class="" id="div3">
                                         <script type="text/javascript" language="JavaScript">
                                            function exclude(){
                                            var el = document.getElementById('div3');
-                                                     el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select" id="exclude" style="width: 150px" ></select>';
+                                                     el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select paidachieve_box2" id="exclude"></select>';
                                               }
                                         </script>
                                       </div>
@@ -451,47 +293,228 @@
                                   </tbody>
                                   </table>
                               </div>
-                        </div>
+                            </div>
+                       </div>
+        <!-- END PAID based on -->
+
+                </div> <!-- END ACHIEVE based on -->
                     </div>
-                  </div> <!-- END col-lg-6 -->
-                  <div class="col-lg-6">
-                      
-             
-                  </div> <!-- END col-lg-6 -->
-              </div> <!-- END wrapper col-lg-12 full width -->
-              <!-- page end-->
-          </section>
-      </section>
+                             <!--div class="form-group">
+                                  <label class="control-label col-md-3"></label>
+                                  <div class="col-md-9">
+                                      <select multiple="multiple" class="multi-select" id="my_multi_select2" name="my_multi_select2[]">
+                                          <optgroup label="Product Line">
+                                              <option>Dallas Cowboys</option>
+                                              <option>New York Giants</option>
+                                              <option>Philadelphia Eagles</option>
+                                              <option>Washington Redskins</option>
+                                          </optgroup>
+                                          <optgroup label="Tread">
+                                              <option>Chicago Bears</option>
+                                              <option>Detroit Lions</option>
+                                              <option>Green Bay Packers</option>
+                                              <option>Minnesota Vikings</option>
+                                          </optgroup>
+                                          <optgroup label="Part Number">
+                                              <option>Atlanta Falcons</option>
+                                              <option>Carolina Panthers</option>
+                                              <option>New Orleans Saints</option>
+                                              <option>Tampa Bay Buccaneers</option>
+                                          </optgroup>
+                                      </select>
+                                  </div>
+                              </div-->
+                                 <div class="form-group">
+                                      <div class="col-lg-12">
+                                          <div class="row">
+                                              <div class="col-lg-3">
+                                                  <label class="control-label">Net Price</label>
+                                                  <input type="text" class="form-control" placeholder=".col-lg-3">
+                                              </div>
+                                              <div class="col-lg-3">
+                                                  <label class="control-label">Invoice Disc %</label>
+                                                  <input type="text" class="form-control" placeholder=".col-lg-3">
+                                              </div>    
+                                              <div class="col-lg-3">
+                                                   <label class="control-label">Invoice Disc $</label>
+                                                  <input type="text" class="form-control" placeholder=".col-lg-3">
+                                              </div>
+                                              <div class="col-lg-3">
+                                                   <label class="control-label">Commission $</label>
+                                                  <input type="text" class="form-control" placeholder=".col-lg-3">
+                                              </div>
+                                          </div>
+
+                                      </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <div class="col-lg-6 col-md-6 inline-flex">
+                                        <div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/16/17">
+                                            <label class="control-label" for="inputSuccess">Bonus Units</label>
+                                             <div class="radio-inline">
+                                                <label class="control-label" for="inputSuccess">
+                                                <input type="radio" name="optionsRadiosBonus" id="optionsRadiosBonusUnitsYes" value="Yes" class="radio-inline required" checked="checked">
+                                                Yes
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label class="control-label" for="inputSuccess">
+                                                <input type="radio" name="optionsRadiosBonus" id="optionsRadiosBonusUnitsNo" value="No" class="radio-inline required">No</label> 
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 inline-flex">
+                                        <div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/16/17">
+                                             <label class="control-label" for="inputSuccess">Commission?</label>
+                                             <div class="radio-inline">
+                                                <label class="control-label" for="inputSuccess">
+                                                <input type="radio" name="optionsRadiosCommission" id="optionsRadiosCommissionYes" value="Yes" class="radio-inline required" checked="checked">
+                                                Yes
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="radio-inline">
+                                                <label class="control-label" for="inputSuccess">
+                                                <input type="radio" name="optionsRadiosCommission" id="optionsRadiosCommissionNo" value="No" class="radio-inline required">
+                                                No</label> 
+                                        </div>
+                                    </div>
+                                  </div>
+                                <div class="form-group">
+                                    <div class="col-lg-3 col-md-3 inline-flex">
+                                        <div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/16/17">
+                                             <label class="control-label" for="inputSuccess">Commission?</label>
+                                             <div class="radio-inline">
+                                                <label class="control-label" for="inputSuccess">
+                                                <input type="radio" name="optionsRadiosCommission" id="optionsRadiosCommissionYes" value="Yes" class="radio-inline required" checked="checked">
+                                                Yes
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="radio-inline">
+                                                <label class="control-label" for="inputSuccess">
+                                                <input type="radio" name="optionsRadiosCommission" id="optionsRadiosCommissionNo" value="No" class="radio-inline required">
+                                                No</label> 
+                                        </div>
+                                    </div>
+                                  </div>
+                                  <h4 class="tableheader">Program Terms</h4>
+                                  <div class="form-group clearfix">
+                                            <div class="col-lg-6 col-sm-6">
+                                              <label class="control-label" for="inputSuccess">Terms Code</label>
+                                              <select class="form-control input-sm m-bot15" id="paid_basedon_inputselect" name="paid_basedon_inputselect">
+                                                  <option disabled class="" value="">- Select -</option>
+                                                  <option id="bonusable_units_only_plus_nadunits_inputselect" value="Bonusable Units Only + NAD Units">Bonusable Units Only + NAD Units</option>
+                                                  <option id="all_units_sold_plus_nad_units_inputselect" value="All Units Sold + NAD Units">All Units Sold + NAD Units</option>
+                                                  <option id="bonusable_units_only_inputselect" value="Bonusable Units Only">Bonusable Units Only</option>
+                                                  <option selected id="nad_units_inputselect" value="NAD Units" name="nad_units">NAD Units</option>
+                                              </select>
+                                            </div>
+                                            <div class="col-lg-6 col-sm-6">
+                                                <label class="control-label" for="inputSuccess">Other</label>
+                                                <select class="form-control input-sm m-bot15" id="payout_freq_inputselect2" name="payout_freq_inputselect">
+                                                  <option disabled class="" value="">- Other Types of Shipping Programs -</option>
+                                                  <option id="payout_freq_annually2" value="Anually" name="payout_freq_annually">Anually</option>
+                                                  <option id="payout_freq_semiannually" value="Semi-Anually" name="payout_freq_semiannually">Semi-Anually</option>
+                                                  <option id="payout_freq_monthly" value="Monthly" name="payout_freq_monthly">Monthly</option>
+                                                  <option selected id="payout_freq_quarterly" value="Quarterly" name="payout_freq_onrequest">Quarterly</option>
+                                                  <option id="payout_freq_onrequest" value="On Request" name="payout_freq_onrequest">On Request</option>
+                                                  <option id="payout_freq_endof_prog" value="End of Program" name="payout_freq_endof_prog">End of Program</option>
+                                              </select>
+                                            </div>
+                                        </div>
+                                  <!--div class="form-group col-lg-12 clearfix">
+                                        <div class="input-group m-bot15 col-lg-2">
+                                            <span class="input-group-addon"><input type="radio">
+                                              </span>                                              
+                                              <input type="text" class="form-control"><span class="input-group-addon">$</span>
+                                          </div>
+                                          <div class="input-group m-bot15 col-lg-2">
+                                                <span class="input-group-addon"><input type="radio"></span>
+                                              <input type="text" class="form-control"><span class="input-group-addon">%</span>
+                                          </div>
+                                      
+                                  </div-->
+                                  <div class="checkbox clearfix">
+                                      <label>
+                                          <input type="checkbox"> SSP
+                                      </label>
+                                    </div>
+                                  
+                                  <button type="button" class="btn btn-default">Cancel</button>&nbsp;&nbsp;<button type="submit" class="btn btn-info">Submit For Approval</button>
+                              </form>
+                          </div>
+                      </section>
+                  </div>
+              </div>
+  </section>
+  </section>
       <!--main content end-->
 
-      <!-- Right Slidebar start -->
-      
-      <!-- Right Slidebar end -->
-
-      <!--footer start-->
+  <!--footer start-->
       <footer class="site-footer">
-          <div class="text-center">
-              2013 &copy; FlatLab by VectorLab.
-              <a href="#" class="go-top">
-                  <i class="fa fa-angle-up"></i>
-              </a>
-          </div>
+         <div class="text-center">
+            2017 &copy; Yokohama Tire Corporation. All rights reserved. The Yokohama Rubber Company Limited
+            <a href="#" class="go-top">
+            <i class="fa fa-angle-up"></i>
+            </a>
+         </div>
       </footer>
-      <!--footer end-->
-  </section>
+<!--footer end-->    
+</section>
+<!-- END section id="container" FIRST section after opening body tag  -->
 
     <!-- js placed at the end of the document so the pages load faster -->
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
-    <script src="js/jquery.scrollTo.min.js"></script>
-    <script src="js/slidebars.min.js"></script>
-    <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
-    <script src="js/respond.min.js" ></script>
-
-    <!--common script for all pages-->
-    <script src="js/common-scripts.js"></script>
-
+      <!-- js placed at the end of the document so the pages load faster -->
+      <script src="js/jquery.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/jquery-ui-1.9.2.custom.min.js"></script>
+      <script src="js/jquery-migrate-1.2.1.min.js"></script>
+      <script class="include" type="text/javascript" src="js/jquery.dcjqaccordion.2.7.js"></script>
+      <script src="js/jquery.scrollTo.min.js"></script>
+      <script src="js/jquery.nicescroll.js" type="text/javascript"></script>
+      <script src="js/respond.min.js" ></script>
+      <script src="js/jquery.stepy.js"></script>
+      <!--right slidebar-->
+      <script src="js/slidebars.min.js"></script>
+      <script type="text/javascript" src="assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+      <script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+      <script type="text/javascript" src="assets/bootstrap-daterangepicker/moment.min.js"></script>
+      <script type="text/javascript" src="assets/bootstrap-daterangepicker/daterangepicker.js"></script>
+      <script type="text/javascript" src="assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+      <script type="text/javascript" src="assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+      <script type="text/javascript" src="assets/jquery-multi-select/js/jquery.multi-select.js"></script>
+      <script type="text/javascript" src="assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
+      <script type="text/javascript" src="assets/data-tables/jquery.dataTables.js"></script>
+      <script type="text/javascript" src="assets/data-tables/DT_bootstrap.js"></script>
+      <!--select2-->
+      <script type="text/javascript" src="assets/select2/js/select2.min.js"></script>
+      <!--Form Validation-->
+      <script src="js/bootstrap-validator.min.js" type="text/javascript"></script>
+      <!--Form Wizard-->
+      <script src="js/jquery.steps.min.js" type="text/javascript"></script>
+      <script src="js/jquery.validate.min.js" type="text/javascript"></script>
+      <!--common script for all pages-->
+      <script src="js/common-scripts.js"></script>
+      <!--script for this page-->
+      
+            <script type="text/javascript">
+         $(document).ready(function () {
+             $(".js-example-basic-single").select2();
+         
+             $(".js-example-basic-multiple").select2();
+         });
+      </script>
+      <!--this page  script only-->
+      <script src="js/advanced-form-components.js"></script>
+      <script src="js/editable-table-form.js"></script>
+             <script>
+         jQuery(document).ready(function() {
+             EditableTable.init();
+         });
+      </script>
 
 
   </body>

@@ -6,6 +6,7 @@
 	version="1.1">
 
 	<reload-interval value="3"/>
+	<context-root uri="SalesIncentiveMgmt" />
 	<enable-directory-browsing value="true"/>
 	<enable-file-serving value="true"/>
 	<enable-reloading value="true"/>

@@ -9,7 +9,7 @@
 	<!-- provide access to individual properties -->
 	<context:property-placeholder
 		ignore-resource-not-found="true"
-		location="classpath:config/amp.properties,classpath:config/amp-sql.properties,classpath:config/amp-local-dev.properties" />
+		location="classpath:config/sim.properties" />
 
 	<!-- provide access complete properties map java.util.Properties object -->
 	<bean id="ampProperties"

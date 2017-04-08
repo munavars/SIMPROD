@@ -8,11 +8,8 @@
 	<virtual-host name="default_host" />
 
 	<resource-ref name="dataSource"
-		binding-name="jdbc/CustomerServiceWebsiteTest">
-		<authentication-alias name="CustomerServiceWebsiteTest" />
+		binding-name="jdbc/localJNDI">
+		<authentication-alias name="MUNAVARSNode01/developmentDB" />
 	</resource-ref>
-	<resource-ref name="CustomerServiceWebsiteTest"
-		binding-name="jdbc/CustomerServiceWebsiteTest">
-		<authentication-alias name="CustomerServiceWebsiteTest" />
-	</resource-ref>
+	
 </web-bnd>

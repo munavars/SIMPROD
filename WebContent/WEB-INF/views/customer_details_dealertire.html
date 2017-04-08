@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="Yokohama Tire">
     <meta name="keyword" content="">
-    <link rel="shortcut icon" href="img/favicon.png">
+
     <title>Ympact Customer Details</title>
 
     <!-- Bootstrap core CSS -->
@@ -26,6 +26,7 @@
     <!-- Custom styles for this template -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/style-responsive.css" rel="stylesheet" />
+    <link href="css/status_icons.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -98,7 +99,7 @@
                           <div class="log-arrow-up"></div>
                           <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                           <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                          <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                          <li><a href="#"><i class="fa fa-bell-o"></i> Notifications</a></li>
                           <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
                       </ul>
                   </li>
@@ -119,19 +120,19 @@
                       </a>
                   </li>
                   <li>
-                      <a class="" href="pricing-form.html">
+                      <a class="" href="program_details.html">
                               <i class="fa fa-tasks"></i>
                               <span>Create New Program</span>
                       </a>
                   </li>
                    <li>
-                      <a class="" href="pricing-form-existing.html">
+                      <a class="" href="program_details_existing.html">
                               <i class="fa fa-tasks"></i>
                               <span>Edit Program</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="pricing-form-rejected.html">
+                      <a class="" href="program_details_rejected.html">
                               <i class="fa fa-tasks"></i>
                               <span>Edit Rejected Program</span>
                       </a>
@@ -162,15 +163,15 @@
                               <li><strong>22031</strong></li>
                               <li><strong>Consumer</strong></li>
                               <li><strong>Tony Carlfeldt</strong>, Account Manager</li>
-                              <li><strong>Cleopatra Jones</strong>, National Account Manager</li>
+                              <li><strong>Kevin Rogers</strong>, Director, Consumer Sales</li>
                           </ul>
                       </div>
                       <div class="adv-table editable-table">
                             <div class="clearfix">
-                                    <div class="col-lg-6 col-sm-6">                                
-                                       <form action="#" class="">
+                                    <div class="col-lg-6 col-sm-6">
+                                       <form action="#" class="cmxform">
                                               <div class="form-group clearfix">
-                                                    <label class="control-label font-weight-bold" for="inputSuccess"><h5>On Demand Program List: <button data-original-title="To View Programs by Status:" data-content="Iinsert your cursor inside the grey box with 'Active' selected and choose the types of program statuses you want to view." data-placement="right" data-trigger="hover" class="btn btn-info popovers"><strong>?</strong></button></h5></label>
+                                                    <label class="control-label font-weight-bold" for="inputSuccess"><h5>On Demand Program List: <button data-original-title="To View Programs by Status:" data-content="Insert your cursor inside the grey box with 'Active' selected and choose the types of statuses you want to view." data-placement="right" data-trigger="hover" class="btn btn-info btn-xs popovers"><strong>?</strong></button></h5></label>
 
                                                   <select class="js-example-basic-multiple" multiple="multiple">
                                                     <option selected value="Active">Active</option>
@@ -185,199 +186,273 @@
                                 </div>
                           </div>
                           <div class="table-responsive">
-
                                 <div class="btn-group pull-right">
                                    <div class="btn-group">
-                                  <a href="pricing-form.html"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
+                                  <a href="program_details.html"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
                               </div>
+                                 <div class="btn-group m-left8">
+                                  <a href="#"><button class="btn btn-default"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                              </div>   
                             </div>
+                              <div class="btn-group">
+                                  <div class="">
+                                                <select class="form-control input-sm m-bot15 required" id="Program Type_inputselect" name="Program Type_inputselect">
+                                                   <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
+                                                   <option id="program_type_vbs" value="VBS">VBS/MKP</option>
+                                                   <option id="program_type_ddf" value="DDF">DDF</option>
+                                                    <option id="program_type_coop" value="COOP">COOP</option>
+                                                    <option id="program_type_fixed" value="Fixed $">Fixed $</option>
+                                                </select>
+                                          </div>
+                              </div>
+                              </div>
                           <h4 class="tableHeader">Programs</h4>
                           <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                              <thead>
-                                 <tr>
-                                    <th colspan="2" class="center toptheader">Program</th>
-                                    <th colspan="12" class="emptyth">&nbsp;</th>
-                              </tr>
-                              <tr>
-                                <th class="center rowvis">Number</th>
-                                <th>Name</th>
-                                <th>Start Date</th>
+                             <thead>
+                              <tr class="rowvis">
+                                <th class="center rowvis">Program ID</th>
+                                <th>Program</th>
+                                <th>Frequency</th>								
+                                <th>Begin Date</th>
                                 <th>End Date</th>
-                                <th>Guaranteed</th>
-                                <th>AMT/$</th>
-                                <th>Paid Based On</th>
-                                <th>Pay Frequency</th>
-                                <th>Achieve Based On</th>
-                                <th>Achieve Frequency</th>
-                                <th>Pay To</th>
                                 <th>BTL</th>
-                                <th>Marker</th>
-                                <th class="center">Status</th>
+                                <th>LT Pricing/PGM</th>	
+                                <th>Paid Based On</th>								
+                                <th>Tiered Program</th>
+                                <th>Achieve Based On</th>
+                                <th>True Up</th>								
+                                <th>Accrual Amount</th>
+                                <th>Accrual Type</th>
+								<th>Current Tier</th>
+								<th>Begin</th>
+								<th>Tier Rate</th>								
+                                <th>Accrued Amount</th>
+                                <th>Credit Amount</th>
+                                <th>Payables</th>								
+                                <th>GL Balance</th>
                               </tr>
                               </thead>
                               <tbody>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [2348]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">28140</a></td>
-                                  <td>Growth Bonus</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>No</td>
-                                  <td>3$</td>
-                                  <td>Bonusable Units Only</td>
-                                  <td>Annual</td>
-                                  <td>Bonusable Units Only</td>
-                                  <td>Annual</td>
-                                  <td>22301</td>
-                                  <td>NO</td>
-                                  <td>2</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Pending 03/21/17"></div></td>
-
-                              </tr>
-                               <tr class="">
-                                   <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [235]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">20543</a></td>
-                                  <td>Points Plus Program</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>2.5%</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>22301</td>
-                                  <td>NO</td>
-                                  <td>3</td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Approved 03/21/17"></div></td>
+								<td>235</td>
+								<td>Points Plus Program</td>
+								<td>Monthly</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>No</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>No</td>
+								<td>-</td>
+								<td>-</td>
+								<td class="text-right">2.5</td>
+								<td>%</td>
+								<td>0</td>
+								<td class="text-right"></td>
+								<td></td>
+								<td class="text-right">373,147</td>
+								<td class="text-right">(200,199)</td>
+								<td class="text-right">0</td>
+								<td class="text-right">172,948</td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [236]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">20543</a></td>
-                                  <td>Volume Bonus</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>6.25%</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>22301</td>
-                                  <td>YES</td>
-                                  <td>1</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Pending 03/21/17"></div></td>
+								<td><a href="program_details_existing_nosections.html">2348</a></td>
+								<td>Growth Bonus</td>
+								<td>Annually</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>No</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>Yes</td>
+								<td>Bonusable Sales Only</td>
+								<td>Yes</td>
+								<td class="text-right"></td>
+								<td>$</td>
+								<td>2</td>
+								<td class="text-right">1,040,001</td>
+								<td>2</td>
+								<td class="text-right">307,254</td>
+								<td class="text-right"></td>
+								<td class="text-right">0</td>
+								<td class="text-right">307,254</td>
                               </tr>
                               <tr class="">
-                                 <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [865]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">20543</a></td>
-                                  <td>Channel Support</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>5.5%</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>22301</td>
-                                  <td>NO</td>
-                                  <td>2</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Pending 03/21/17"></div></td>
+								<td>236</td>
+								<td>Volume Bonus</td>
+								<td>Monthly</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>No</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>No</td>
+								<td>-</td>
+								<td>-</td>
+								<td class="text-right">6.25</td>
+								<td>%</td>
+								<td>0</td>
+								<td class="text-right"></td>
+								<td></td>
+								<td class="text-right">932,869</td>
+								<td class="text-right">(500,498)</td>
+								<td class="text-right">0</td>
+								<td class="text-right">432,370</td>
                               </tr>
                               <tr class="">
-                                <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [937]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">20543</a></td>
-                                  <td>Delivery Commission</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>5%</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>22301</td>
-                                  <td>NO</td>
-                                  <td>3</td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Approved 03/21/17"></div></td>
+								<td>865</td>
+								<td>Channel Support</td>
+								<td>Monthly</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>Yes</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>No</td>
+								<td>-</td>
+								<td>-</td>
+								<td class="text-right">5.5</td>
+								<td>%</td>
+								<td>0</td>
+								<td class="text-right"></td>
+								<td></td>
+								<td class="text-right">820,924</td>
+								<td class="text-right">(440,438)</td>
+								<td class="text-right">0</td>
+								<td class="text-right">380,486</td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [1075]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">28140</a></td>
-                                  <td>Promotional</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>5%</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>Bonusable Sales</td>
-                                  <td>Monthly</td>
-                                  <td>22301</td>
-                                  <td>NO</td>
-                                  <td>2</td>
-                                  <td class="center"><div class="rejected tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Rejected 03/21/17"></div></td>
-                              </tr>
-                                   <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [1203]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">28140</a></td>
-                                  <td>Promotional</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>5%</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>On Request</td>
-                                  <td>22301</td>
-                                  <td>NO</td>
-                                  <td>4</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Pending 03/21/17"></div></td>
+								<td>937</td>
+								<td>Delivery Commission</td>
+								<td>Monthly</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>No</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>No</td>
+								<td>-</td>
+								<td>-</td>
+								<td class="text-right">3</td>
+								<td>%</td>
+								<td>0</td>
+								<td class="text-right"></td>
+								<td></td>
+								<td class="text-right">447,777</td>
+								<td class="text-right">(240,239)</td>
+								<td class="text-right">0</td>
+								<td class="text-right">207,537</td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [3511]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">28140</a></td>
-                                  <td>Financial Support</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>1%</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>On Request</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>Monthly</td>
-                                  <td>22301</td>
-                                  <td>YES</td>
-                                  <td>2</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Pending 03/21/17"></div></td>
-                              </tr>
-                            <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [949]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">28140</a></td>
-                                  <td>OE Program</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>1.75%</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>On Request</td>
-                                  <td>Bonusable Sales Only</td>
-                                  <td>On Request</td>
-                                  <td>22301</td>
-                                  <td>NO</td>
-                                  <td>2</td>
-                                  <td class="center"><div class="rejected tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Rejected 03/21/17"></div></td>
-                              </tr>
-                            <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html" data-original-title="Program ID [1359]" data-content="And here's the long description of this Program ID. I can't say enough about how amazing this is. In fact, I can't stop singing its praises. It's very engaging. right?" data-placement="bottom" data-trigger="hover" class="info popovers">28140</a></td>
-                                  <td>Trip Fund</td>
-                                  <td>01/01/2017</td>
-                                  <td>12/31/2017</td>
-                                  <td>YES</td>
-                                  <td>0.25%</td>
-                                  <td>Bonusable Units Only</td>
-                                  <td>On Request</td>
-                                  <td>Bonusable Units Only</td>
-                                  <td>On Request</td>
-                                  <td>22301</td>
-                                  <td>NO</td>
-                                  <td>2</td>
-                                  <td class="center"><div class="rejected tooltips" data-placement="top" data-toggle="tooltip"  type="" data-original-title="Rejected 03/21/17"></div></td>
-                              </tr>
-                                  
+									<td>949</td>
+									<td>OE Program</td>
+									<td>On Request</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>Yes</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">1.75</td>
+									<td>%</td>
+									<td>0</td>
+									<td class="text-right"></td>
+									<td></td>
+									<td class="text-right">261,203</td>
+									<td class="text-right">(119,325)</td>
+									<td class="text-right">(8,793)</td>
+									<td class="text-right">133,084</td>
+                                </tr>
+                                <tr class="">
+									<td>1075</td>
+									<td>Promotional</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>42825</td>
+									<td>No</td>
+									<td>Promo</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">5</td>
+									<td>%</td>
+									<td>0</td>
+									<td class="text-right"></td>
+									<td></td>
+									<td class="text-right">425,742</td>
+									<td class="text-right">(225,140)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">200,602</td>
+                                </tr>
+                                <tr class="">
+									<td>1203</td>
+									<td>Promotional</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>42825</td>
+									<td>No</td>
+									<td>Promo</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">3</td>
+									<td>%</td>
+									<td>0</td>
+									<td class="text-right"></td>
+									<td></td>
+									<td class="text-right">15,589</td>
+									<td class="text-right">(9740)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">5,849</td>
+                                </tr>
+                                <tr class="">
+									<td>1359</td>
+									<td>Trip Fund</td>
+									<td>On Request</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>Yes</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">0.25</td>
+									<td>$</td>
+									<td>0</td>
+									<td class="text-right"></td>
+									<td></td>
+									<td class="text-right">38,406</td>
+									<td class="text-right">0</td>
+									<td class="text-right">0</td>
+									<td class="text-right">38,406</td>
+                                </tr>
+                                <tr class="">
+									<td>3511</td>
+									<td>Financial Support</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>No</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">1</td>
+									<td>%</td>
+									<td>0</td>
+									<td class="text-right"></td>
+									<td></td>
+									<td class="text-right">149,259</td>
+									<td class="text-right">(80,079)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">69,179</td>
+                                </tr>                                  
                               </tbody>
                           </table>
                       </div>
@@ -387,82 +462,7 @@
           </section>
       </section>
       <!--main content end-->
-      <!-- Right Slidebar start -->
-      <div class="sb-slidebar sb-right sb-style-overlay">
-          <h5 class="side-title"> pending Tasks</h5>
-          <ul class="p-task tasks-bar">
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Dashboard v1.3</div>
-                          <div class="percent">40%</div>
-                      </div>
-                      <div class="progress progress-striped">
-                          <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
-                              <span class="sr-only">40% Complete (success)</span>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Database Update</div>
-                          <div class="percent">60%</div>
-                      </div>
-                      <div class="progress progress-striped">
-                          <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-warning">
-                              <span class="sr-only">60% Complete (warning)</span>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Iphone Development</div>
-                          <div class="percent">87%</div>
-                      </div>
-                      <div class="progress progress-striped">
-                          <div style="width: 87%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar progress-bar-info">
-                              <span class="sr-only">87% Complete</span>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Mobile App</div>
-                          <div class="percent">33%</div>
-                      </div>
-                      <div class="progress progress-striped">
-                          <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" role="progressbar" class="progress-bar progress-bar-danger">
-                              <span class="sr-only">33% Complete (danger)</span>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Dashboard v1.3</div>
-                          <div class="percent">45%</div>
-                      </div>
-                      <div class="progress progress-striped active">
-                          <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar">
-                              <span class="sr-only">45% Complete</span>
-                          </div>
-                      </div>
-
-                  </a>
-              </li>
-              <li class="external">
-                  <a href="#">See All Tasks</a>
-              </li>
-          </ul>
-      </div>
-      <!-- Right Slidebar end -->
+      
       <!--footer start-->
      <footer class="site-footer">
           <div class="text-center">
@@ -472,8 +472,9 @@
               </a>
           </div>
       </footer>
-      <!--footer end-->
+    <!--footer end-->
   </section>
+ <!-- END #container  -->
 
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="js/jquery.js"></script>

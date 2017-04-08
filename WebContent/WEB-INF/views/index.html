@@ -6,22 +6,22 @@
     <meta name="description" content="">
     <meta name="author" content="Yokohama Tire">
     <meta name="keyword" content="">
-    <link rel="shortcut icon" href="img/favicon.png">
-    <title>Ympact Dashboard</title>
+    <title>Sales Incentive Management Dashboard</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
-    <link href="resources/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-    <link rel="stylesheet" href="resources/assets/data-tables/DT_bootstrap.css" />
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
 
       <!--right slidebar-->
-      <link href="resources/css/slidebars.css" rel="stylesheet">
-
+      <link href="css/slidebars.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    <link href="resources/css/style.css" rel="stylesheet">
-    <link href="resources/css/style-responsive.css" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/style-responsive.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/status_icons.css">
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
@@ -39,7 +39,7 @@
               <i class="fa fa-bars"></i>
           </div>
           <!--logo start-->
-          <a href="index.html" class="logo"><img src="resources/img/yokohama-logo.svg" width="132" height="52"></a>
+          <a href="index.html" class="logo"><img src="img/yokohama-logo.svg" width="132" height="52"></a>
           <!--logo end-->
           <div class="nav notify-row" id="top_menu">
             <!--  notification start -->
@@ -116,19 +116,19 @@
                       </a>
                   </li>
                   <li>
-                      <a class="" href="pricing-form.html">
+                      <a class="" href="program_details.html">
                               <i class="fa fa-tasks"></i>
                               <span>Create New Program</span>
                       </a>
                   </li>
                    <li>
-                      <a class="" href="pricing-form-existing.html">
+                      <a class="" href="program_details_existing.html">
                               <i class="fa fa-tasks"></i>
                               <span>Edit Program</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="pricing-form-rejected.html">
+                      <a class="" href="program_details_rejected.html">
                               <i class="fa fa-tasks"></i>
                               <span>Edit Rejected Program</span>
                       </a>
@@ -153,11 +153,14 @@
 <!-- START 'Pending Approvals' table -->
                        <div class="adv-table editable-table">
                           <div class="clearfix">
-                          </div>
-                         <div class="space15"></div>
+                          </div><div class="btn-group pull-right">
+                                 <div class="btn-group">
+                                  <a href="#"><button class="btn btn-default"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                                </div>   
+                            </div>
                          <h3 class="tableHeader">Pending Approvals</h3>
-                          <div class="table-responsive">    
-                          <table class="table table-striped table-hover table-bordered approvals" id="editable-sample">
+                          <div class="table-responsive">
+                          <table class="table table-striped table-hover table-bordered approvals" id="pending-approvals">
                               <thead>
                                 <tr>
                                     <th colspan="2" class="center toptheader">Customer</th>
@@ -182,16 +185,16 @@
                               <tbody>
                               <tr class="">
                                   <td class="center">20998</td>
-                                  <td>A &amp; E TIRE INC</td>
+                                  <td>A &amp; E TIRE INC</td>   
                                   <td class="center">1234</td>
                                   <td>OE Spec Credit</td>
                                   <td>Commercial</td>
                                   <td class="center">03/15/2017</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/24/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/16/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">26100</td>
@@ -200,10 +203,11 @@
                                   <td>Retail Sellout</td>
                                   <td>Consumer</td>
                                   <td class="center">03/11/2017</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td><td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/16/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28588</td>
@@ -212,11 +216,11 @@
                                   <td>Program Support</td>
                                   <td>Consumer</td>
                                   <td class="center">03/11/2017</td>
-                                  <td class="center"><div class="rejected tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Rejected 03/21/17"></div></td>
-                                  <td class="center"><div class="rejected tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Rejected 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/16/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28588</td>
@@ -225,11 +229,11 @@
                                   <td>Store Assistance</td>
                                   <td>Commercial</td>
                                   <td class="center">03/11/2017</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
                             </tr>
                               <tr class="">
                                   <td class="center">26588</td>
@@ -238,11 +242,11 @@
                                   <td>Trip Fund</td>
                                   <td>OTR</td>
                                   <td class="center">03/11/2017</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28544</td>
@@ -251,11 +255,11 @@
                                   <td>Fixed Subsidy</td>
                                   <td>Consumer</td>
                                   <td class="center">03/11/2017</td>
-                                 <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                 <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                 <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28588</td>
@@ -264,11 +268,11 @@
                                   <td>Roadside Assistance</td>
                                   <td>Commercial</td>
                                   <td class="center">03/11/2017</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
+                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
+                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
+                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
+                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
+                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28568</td>
@@ -277,11 +281,11 @@
                                   <td>OE Spec Credit</td>
                                   <td>OTR</td>
                                   <td class="center">02/01/2017</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/17/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28588</td>
@@ -290,11 +294,11 @@
                                   <td class="">OE Spec Credit</td>
                                   <td class="">Consumer</td>
                                   <td class="center">03/01/2017</td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/16/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28588</td>
@@ -303,11 +307,11 @@
                                   <td>Retail Enhancement</td>
                                   <td>OTR</td>
                                   <td class="center">02/01/2017</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28588</td>
@@ -316,11 +320,11 @@
                                   <td>Trip Fund</td>
                                   <td>Commercial</td>
                                   <td class="center">03/11/2017</td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="approved tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Approved 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
                               </tr>
                               <tr class="">
                                   <td class="center">28588</td>
@@ -329,11 +333,11 @@
                                   <td>Retail Sellout</td>
                                   <td>OTR</td>
                                   <td class="center">02/01/2017</td>
-                                  <td class="center"><div class="rejected tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Rejected 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
-                                  <td class="center"><div class="rejected tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Rejected 03/21/17"></div></td>
-                                  <td class="center"><div class="pending tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Pending 03/21/17"></div></td>
+                                  <td class="center"><a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a></td>
+                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
                               </tr>
                               </tbody>
                           </table>
@@ -344,157 +348,490 @@
 <!-- START 'My Customers' table -->
                       
                      <div class="adv-table editable-table">
-                         <div class="space15"></div>
+                         <div class="clearfix">
+                          </div><div class="btn-group pull-right">
+                                 <div class="btn-group">
+                                  <a href="#"><button class="btn btn-default"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                                </div>   
+                            </div>
                          <h3 class="tableHeader">Customers</h3>
-                          <div class="table-responsive">    
-                          <table class="table table-striped table-hover table-bordered" id="editable-sample2">
+                          <div class="table-responsive">
+
+                          <table class="table table-striped table-hover table-bordered" id="customers-overview">
                               <thead>
-                                <tr>
-                                    <th colspan="2" class="center toptheader">Customer</th>
-                                    <th colspan="6" class="toptheader">&nbsp;</th>
-                              </tr>
                               <tr class="rowvis">
-                                <th class="center">Number</th>
-                                <th class="">Name</th>
-                                <th class="">Bus. Unit</th>
-                                <th class="">Acct Manager</th>
-                                <th class="">Program Count</th>
-                                <th class="center">Accrued</th>
-                                <th class="center">Paid</th>
-                                <th class="center">Balance</th>
+							    <th>Customer</th>
+                                <th class="center rowvis">Program ID</th>
+                                <th>Program</th>
+                                <th>Frequency</th>								
+                                <th>Begin Date</th>
+                                <th>End Date</th>
+                                <th>BTL</th>
+                                <th>LT Pricing/PGM</th>	
+                                <th>Paid Based On</th>								
+                                <th>Tiered Program</th>
+                                <th>Achieve Based On</th>
+                                <th>True Up</th>								
+                                <th>Accrual Amount</th>
+                                <th>Accrual Type</th>
+								<th>Current Tier</th>
+								<th>Begin</th>
+								<th>Tier Rate</th>								
+                                <th>Accrued Amount</th>
+                                <th>Credit Amount</th>
+                                <th>Payables</th>								
+                                <th>GL Balance</th>
                               </tr>
                               </thead>
-                            <tbody>
+                              <tbody>
                               <tr class="">
-                                  <td class="center"><a href="customer_details_dealertire.html">22031</a></td>
-                                  <td><a href="customer_details_dealertire.html">DEALER TIRE LLC</a></td>
-                                  <td><a href="customer_details_dealertire.html">Consumer</a></td>
-                                  <td><a href="customer_details_dealertire.html">Tony Carlfeldt</a></td>
-                                  <td><a href="customer_details_dealertire.html">10</a></td>
-                                  <td class="text-right"><a href="customer_details_dealertire.html">$8,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_dealertire.html">$3,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_dealertire.html">$5,000.00</a></td>
+                                  <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+								<td>235</td>
+								<td>Points Plus Program</td>
+								<td>Monthly</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>No</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>No</td>
+								<td>-</td>
+								<td>-</td>
+								<td class="text-right">2.5</td>
+								<td>%</td>
+								<td>0</td>
+								<td></td>
+								<td></td>
+								<td class="text-right">373,147</td>
+								<td class="text-right">(200,199)</td>
+								<td class="text-right">0</td>
+								<td class="text-right">172,948</td>
+                              </tr>
+                              <tr class="">
+								<td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+								<td><a href="program_details_existing_nosections.html">2348</a></td>
+								<td>Growth Bonus</td>
+								<td>Annually</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>No</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>Yes</td>
+								<td>Bonusable Sales Only</td>
+								<td>Yes</td>
+								<td class="text-right"></td>
+								<td>$</td>
+								<td>2</td>
+								<td class="text-right">1,040,001</td>
+								<td>2</td>
+								<td class="text-right">307,254</td>
+								<td class="text-right"></td>
+								<td class="text-right">0</td>
+								<td class="text-right">307,254</td>
+                              </tr>
+                              <tr class="">
+                                  <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+								<td>236</td>
+								<td>Volume Bonus</td>
+								<td>Monthly</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>No</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>No</td>
+								<td>-</td>
+								<td>-</td>
+								<td class="text-right">6.25</td>
+								<td>%</td>
+								<td>0</td>
+								<td></td>
+								<td></td>
+								<td class="text-right">932,869</td>
+								<td class="text-right">(500,498)</td>
+								<td class="text-right">0</td>
+								<td class="text-right">432,370</td>
+                              </tr>
+                              <tr class="">
+                                  <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+								<td>865</td>
+								<td>Channel Support</td>
+								<td>Monthly</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>Yes</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>No</td>
+								<td>-</td>
+								<td>-</td>
+								<td class="text-right">5.5</td>
+								<td>%</td>
+								<td>0</td>
+								<td></td>
+								<td></td>
+								<td class="text-right">820,924</td>
+								<td class="text-right">(440,438)</td>
+								<td class="text-right">0</td>
+								<td class="text-right">380,486</td>
+                              </tr>
+                              <tr class="">
+                                  <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+								<td>937</td>
+								<td>Delivery Commission</td>
+								<td>Monthly</td>
+								<td>01/01/2017</td>
+								<td>12/31/2017</td>
+								<td>No</td>
+								<td>LTP</td>
+								<td>Bonusable Sales Only</td>
+								<td>No</td>
+								<td>-</td>
+								<td>-</td>
+								<td class="text-right">3</td>
+								<td>%</td>
+								<td>0</td>
+								<td></td>
+								<td></td>
+								<td class="text-right">447,777</td>
+								<td class="text-right">(240,239)</td>
+								<td class="text-right">0</td>
+								<td class="text-right">207,537</td>
+                              </tr>
+                              <tr class="">
+                                  <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+									<td>949</td>
+									<td>OE Program</td>
+									<td>On Request</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>Yes</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">1.75</td>
+									<td>%</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">261,203</td>
+									<td class="text-right">(119,325)</td>
+									<td class="text-right">(8,793)</td>
+									<td class="text-right">133,084</td>
+
+                              </tr>
+                                   <tr class="">
+                                       <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+									<td>1075</td>
+									<td>Promotional</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>42825</td>
+									<td>No</td>
+									<td>Promo</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">5</td>
+									<td>%</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">425,742</td>
+									<td class="text-right">(225,140)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">200,602</td>
+                              </tr>
+                              <tr class="">
+                                  <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+									<td>1203</td>
+									<td>Promotional</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>42825</td>
+									<td>No</td>
+									<td>Promo</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">3</td>
+									<td>%</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">15,589</td>
+									<td class="text-right">(9740)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">5,849</td>
                               </tr>
                                 <tr class="">
-                                  <td class="center"><a href="customer_details_tirediscounters.html">25589</a></td>
-                                  <td><a href="customer_details_tirediscounters.html">TIRE DISCOUNTERS INC</a></td>
-                                  <td><a href="customer_details_tirediscounters.html">Consumer</a></td>
-                                  <td><a href="customer_details_tirediscounters.html">Tony Carlfeldt</a></td>
-                                  <td><a href="customer_details_tirediscounters.html">8</a></td>
-                                  <td class="text-right"><a href="customer_details_tirediscounters.html">$6,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_tirediscounters.html">$5,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_tirediscounters.html">$1,000.00</a></td>
+                                    <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+									<td>1359</td>
+									<td>Trip Fund</td>
+									<td>On Request</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>Yes</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">0.25</td>
+									<td>$</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">38,406</td>
+									<td class="text-right">0</td>
+									<td class="text-right">0</td>
+									<td class="text-right">38,406</td>
+                                </tr>
+                                <tr class="">
+                                    <td><a href="customer_details_dealertire_latest.html">22031 DEALER TIRE LLC</a></td>
+									<td>3511</td>
+									<td>Financial Support</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>No</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">1</td>
+									<td>%</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">149,259</td>
+									<td class="text-right">(80,079)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">69,179</td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="customer_details_tirediscounters.html">25589</a></td>
-                                  <td><a href="customer_details_tirediscounters.html">TIRE DISCOUNTERS INC</a></td>
-                                  <td><a href="customer_details_tirediscounters.html">Consumer</a></td>
-                                  <td><a href="customer_details_tirediscounters.html">Tony Carlfeldt</a></td>
-                                  <td><a href="customer_details_tirediscounters.html">12</a></td>
-                                  <td class="text-right"><a href="customer_details_tirediscounters.html">$6,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_tirediscounters.html">$4,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_tirediscounters.html">$2,000.00</a></td>
-                              </tr>
+									<td>25589 28517 TIRE DISCOUNTERS INC</td>
+									<td>1541</td>
+									<td>Fixed Subsidy</td>
+									<td>On Request</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>Yes</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">2.5</td>
+									<td>%</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">34,325</td>
+									<td class="text-right">0</td>
+									<td class="text-right">0</td>
+									<td class="text-right">34,325</td>
+								</tr>
                               <tr class="">
-                                  <td class="center"><a href="customer_details_gcrtrucktire.html">27587</a></td>
-                                  <td><a href="customer_details_gcrtrucktire.html">GCR TRUCK TIRE CENTERS</a></td>
-                                  <td><a href="customer_details_gcrtrucktire.html">Consumer</a></td>
-                                  <td><a href="customer_details_gcrtrucktire.html">Tony Carlfeldt</a></td>
-                                  <td><a href="customer_details_gcrtrucktire.html">10</a></td>
-                                <td class="text-right"><a href="customer_details_gcrtrucktire.html">$9,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_gcrtrucktire.html">$7,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_gcrtrucktire.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="customer_details_reinaltthomascorp.html">00204</a></td>
-                                  <td><a href="customer_details_reinaltthomascorp.html">REINALT-THOMAS CORPORATION</a></td>
-                                  <td><a href="customer_details_reinaltthomascorp.html">Commercial</a></td>
-                                  <td><a href="customer_details_reinaltthomascorp.html">Colby McGehee</a></td>
-                                  <td><a href="customer_details_reinaltthomascorp.html">8</a></td>
-                                  <td class="text-right"><a href="customer_details_reinaltthomascorps.html">$9,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_reinaltthomascorp.html">$6,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_reinaltthomascorp.html">$3,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="customer_details_monromuffler.html">21132</a></td>
-                                  <td><a href="customer_details_monromuffler.html">MONRO MUFFLER BRAKE INC</a></td>
-                                  <td><a href="customer_details_monromuffler.html">OTR</a></td>
-                                  <td><a href="customer_details_monromuffler.html">Annalisa Zumbar</a></td>
-                                  <td><a href="customer_details_monromuffler.html">19</a></td>
-                                  <td class="text-right"><a href="customer_details_monromuffler.html">$6,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_monromuffler.html">$2,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details.html">$4,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="customer_details_valleytire.html">00188</a></td>
-                                  <td><a href="customer_details_valleytire.html">VALLEY TIRE CO INC</a></td>
-                                  <td><a href="customer_details_valleytire.html">Consumer</a></td>
-                                  <td><a href="customer_details_valleytire.html">Bill Smith</a></td>
-                                  <td><a href="customer_details_valleytire.html">12</a></td>
-                                  <td class="text-right"><a href="customer_details_valleytire.html">$9,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_valleytire.html">$6,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_valleytire.html">$3,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="customer_details_millertransporters.html">13235</a></td>
-                                  <td><a href="customer_details_millertransporters.html">MILLER TRANSPORTERS INC</a></td>
-                                  <td><a href="customer_details_millertransporters.html">Commercial</a></td>
-                                  <td><a href="customer_details_millertransporters.html">Tony Carlfeldt</a></td>
-                                  <td><a href="customer_details_millertransporters.html">9</a></td>
-                                  <td class="text-right"><a href="customer_details_millertransporters.html">$7,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_millertransporters.html">$2,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_millertransporters.html">$5,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="customer_details_coopertire.html">11790</a></td>
-                                  <td><a href="customer_details_coopertire.html">COOPER TIRE & RUBBER</a></td>
-                                  <td><a href="customer_details_coopertire.html">Commercial</a></td>
-                                  <td><a href="customer_details_coopertire.html">Annalisa Zumbar</a></td>
-                                  <td><a href="customer_details_coopertire.html">6</a></td>
-                                  <td class="text-right"><a href="customer_details_coopertire.html">$8,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_coopertire.html">$2,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_coopertire.html">$4,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="customer_details_truckstopdist.html">00224</a></td>
-                                  <td><a href="customer_details_truckstopdist.html">TRUCKSTOP DISTRIBUTORS IN</a></td>
-                                  <td><a href="customer_details_truckstopdist.html">Commercial</a></td>
-                                  <td><a href="customer_details_truckstopdist.html">Bill Smith</a></td>
-                                  <td><a href="customer_details_truckstopdist.html">11</a></td>
-                                  <td class="text-right"><a href="customer_details_truckstopdist.html">$8,500.00</a></td>
-                                  <td class="text-right"><a href="customer_details_truckstopdist.html">$6,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_truckstopdist.html">$2,500.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="customer_details_valleytire.html">00188</a></td>
-                                  <td><a href="customer_details_valleytire.html">VALLEY TIRE CO INC</a></td>
-                                  <td><a href="customer_details_valleytire.html">Consumer</a></td>
-                                  <td><a href="customer_details_valleytire.html">Tony Carlfeldt</a></td>
-                                  <td><a href="customer_details_valleytire.html">10</a></td>
-                                  <td class="text-right"><a href="customer_details_valleytire.html">$9,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_valleytire.html">$8,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_valleytire.html">$1,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="customer_details_travelcentersofa.html">00122</a></td>
-                                  <td><a href="customer_details_travelcentersofa.html">TRAVELCENTERS OF AMERICA</a></td>
-                                  <td><a href="customer_details_travelcentersofa.html">Commercial</a></td>
-                                  <td><a href="customer_details_travelcentersofa.html">Bill Smith</a></td>
-                                  <td><a href="customer_details_travelcentersofa.html">9</a></td>
-                                  <td class="text-right"><a href="customer_details_travelcentersofa.html">$7,000.00</a></td>
-                                  <td class="text-right"><a href="customer_details_travelcentersofa.html">$1,000.00</a></td>                 
-                                  <td class="text-right"><a href="customer_details_travelcentersofa.html">$6,000.00</a></td>
-                              </tr>
+									<td>25589 28517 TIRE DISCOUNTERS INC</td>
+									<td>1558</td>
+									<td>Program Support</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>42825</td>
+									<td>No</td>
+									<td>Promo</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">5</td>
+									<td>%</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">68,650</td>
+									<td class="text-right">(39,616)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">29,034</td>
+								</tr>
+								<tr>
+									<td>25589 28517 TIRE DISCOUNTERS INC</td>
+									<td>1564</td>
+									<td>Spiff</td>
+									<td>On Request</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>Yes</td>
+									<td>LTP</td>
+									<td>Bonusable Units Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">1</td>
+									<td>$</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">15,338</td>
+									<td class="text-right">0</td>
+									<td class="text-right">0</td>
+									<td class="text-right">15,338</td>
+								</tr>
+								<tr>
+									<td>25589 28517 TIRE DISCOUNTERS INC</td>
+									<td>2060</td>
+									<td>Volume Bonus</td>
+									<td>Annually</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>No</td>
+									<td>LTP</td>
+									<td>All Invoice Sales</td>
+									<td>YES</td>
+									<td>All Units Sold + NAD Units</td>
+									<td>YES</td>
+									<td class="text-right"></td>
+									<td>%</td>
+									<td>9</td>
+									<td class="text-right">100,000</td>
+									<td>5</td>
+									<td class="text-right">70,941</td>
+									<td class="text-right">0</td>
+									<td class="text-right">0</td>
+									<td class="text-right">70,941</td>
+								</tr>
+								<tr>
+									<td>25589 28517 TIRE DISCOUNTERS INC</td>
+									<td>3597</td>
+									<td>Fixed Support</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>No</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">7</td>
+									<td>%</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">96,110</td>
+									<td class="text-right">(55,462)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">40,647</td>
+								</tr>
+								<tr>
+									<td>25589 28517 TIRE DISCOUNTERS INC</td>
+									<td>3598</td>
+									<td>Retail Sellout</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>No</td>
+									<td>LTP</td>
+									<td>Bonusable Units Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">4</td>
+									<td>$</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">39,968</td>
+									<td class="text-right">(21,588)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">18,380</td>
+								</tr>
+								<tr>
+									<td>25589 28517 TIRE DISCOUNTERS INC</td>
+									<td>3599</td>
+									<td>Retail Sellout</td>
+									<td>Monthly</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>No</td>
+									<td>LTP</td>
+									<td>Bonusable Units Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">2</td>
+									<td>$</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">582</td>
+									<td class="text-right">(410)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">172</td>
+								</tr>
+								<tr>
+									<td>25589 28517 TIRE DISCOUNTERS INC</td>
+									<td>3600</td>
+									<td>Marketing Support</td>
+									<td>On Request</td>
+									<td>01/01/2017</td>
+									<td>12/31/2017</td>
+									<td>Yes</td>
+									<td>LTP</td>
+									<td>Bonusable Sales Only</td>
+									<td>No</td>
+									<td>-</td>
+									<td>-</td>
+									<td class="text-right">6</td>
+									<td>%</td>
+									<td>0</td>
+									<td></td>
+									<td></td>
+									<td class="text-right">82,380</td>
+									<td class="text-right">(212,548)</td>
+									<td class="text-right">0</td>
+									<td class="text-right">(130,168)</td>
+								</tr>
+								<tr>
+									<td>Grand Total</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td class="text-right">4,180,470</td>
+									<td class="text-right">(2,145,287)</td>
+									<td class="text-right">(8,793)</td>
+									<td class="text-right">2,026,388</td>
+								</tr>
+                                  
                               </tbody>
-
                           </table>
                           </div>
                       </div>
   <!-- END of 'My Customers' table -->
                       
-  <!-- START 'My Programs' Table -->
+  <!-- START 'My Programs' Table 
                       
-                     <div class="adv-table editable-table ">
+                     <div class="adv-table editable-table" id="myPrograms">
                           <div class="clearfix">
                           </div>
                          <div class="space15"></div>
@@ -518,112 +855,112 @@
                               </thead>
                               <tbody>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">28140</a></td>
-                                  <td><a href="pricing-form-existing.html">OE Program</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill Jones</a></td>
-                                  <td><a href="pricing-form-existing.html">5</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">28140</a></td>
+                                  <td><a href="program_details_existing.html">OE Program</a></td>
+                                  <td><a href="program_details_existing.html">Bill Jones</a></td>
+                                  <td><a href="program_details_existing.html">5</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">Roadside Assistance</a></td>
-                                  <td><a href="pricing-form-existing.html">Bob Smith</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">Roadside Assistance</a></td>
+                                  <td><a href="program_details_existing.html">Bob Smith</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">Fixed Subsidy</a></td>
-                                  <td><a href="pricing-form-existing.html">Colby McGehee</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">Fixed Subsidy</a></td>
+                                  <td><a href="program_details_existing.html">Colby McGehee</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">Growth Bonus</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill Smith</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">Growth Bonus</a></td>
+                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">OE Program</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill Smith</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">OE Program</a></td>
+                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">OE Program</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill James</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">OE Program</a></td>
+                                  <td><a href="program_details_existing.html">Bill James</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                          <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">Fixed Subsidy</a></td>
-                                  <td><a href="pricing-form-existing.html">Bob Monroe</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                          <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">Fixed Subsidy</a></td>
+                                  <td><a href="program_details_existing.html">Bob Monroe</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">Growth Bonus</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill Smith</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">Growth Bonus</a></td>
+                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                               <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">OE Program</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill Smith</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                               <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">OE Program</a></td>
+                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                   <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">Growth Bonus</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill Smith</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">Growth Bonus</a></td>
+                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">Fixed Subsidy</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill Smith</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">Fixed Subsidy</a></td>
+                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               <tr class="">
-                                  <td class="center"><a href="pricing-form-existing.html">12</a></td>
-                                  <td><a href="pricing-form-existing.html">Growth Bonus</a></td>
-                                  <td><a href="pricing-form-existing.html">Bill Smith</a></td>
-                                  <td><a href="pricing-form-existing.html">12</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="pricing-form-existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="pricing-form-existing.html">$2,000.00</a></td>
+                                  <td class="center"><a href="program_details_existing.html">12</a></td>
+                                  <td><a href="program_details_existing.html">Growth Bonus</a></td>
+                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
+                                  <td><a href="program_details_existing.html">12</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
+                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
+                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
                               </tr>
                               </tbody>
                           </table>
@@ -641,150 +978,7 @@
           </section>
       </section>
       <!--main content end-->
-      <!-- Right Slidebar start -->
-      <div class="sb-slidebar sb-right sb-style-overlay">
-          <h5 class="side-title">Online Customers</h5>
-          <ul class="quick-chat-list">
-              <li class="online">
-                  <div class="media">
-                      <a href="#" class="pull-left media-thumb">
-                          <img alt="" src="img/chat-avatar2.jpg" class="media-object">
-                      </a>
-                      <div class="media-body">
-                          <strong>John Doe</strong>
-                          <small>Dream Land, AU</small>
-                      </div>
-                  </div><!-- media -->
-              </li>
-              <li class="online">
-                  <div class="media">
-                      <a href="#" class="pull-left media-thumb">
-                          <img alt="" src="img/chat-avatar.jpg" class="media-object">
-                      </a>
-                      <div class="media-body">
-                          <div class="media-status">
-                              <span class=" badge bg-important">3</span>
-                          </div>
-                          <strong>Jonathan Smith</strong>
-                          <small>United States</small>
-                      </div>
-                  </div><!-- media -->
-              </li>
-
-              <li class="online">
-                  <div class="media">
-                      <a href="#" class="pull-left media-thumb">
-                          <img alt="" src="img/pro-ac-1.png" class="media-object">
-                      </a>
-                      <div class="media-body">
-                          <div class="media-status">
-                              <span class=" badge bg-success">5</span>
-                          </div>
-                          <strong>Jane Doe</strong>
-                          <small>ABC, USA</small>
-                      </div>
-                  </div><!-- media -->
-              </li>
-              <li class="online">
-                  <div class="media">
-                      <a href="#" class="pull-left media-thumb">
-                          <img alt="" src="img/avatar1.jpg" class="media-object">
-                      </a>
-                      <div class="media-body">
-                          <strong>Anjelina Joli</strong>
-                          <small>Fockland, UK</small>
-                      </div>
-                  </div><!-- media -->
-              </li>
-              <li class="online">
-                  <div class="media">
-                      <a href="#" class="pull-left media-thumb">
-                          <img alt="" src="img/mail-avatar.jpg" class="media-object">
-                      </a>
-                      <div class="media-body">
-                          <div class="media-status">
-                              <span class=" badge bg-warning">7</span>
-                          </div>
-                          <strong>Mr Tasi</strong>
-                          <small>Dream Land, USA</small>
-                      </div>
-                  </div><!-- media -->
-              </li>
-          </ul>
-          <h5 class="side-title"> pending Task</h5>
-          <ul class="p-task tasks-bar">
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Dashboard v1.3</div>
-                          <div class="percent">40%</div>
-                      </div>
-                      <div class="progress progress-striped">
-                          <div style="width: 40%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="40" role="progressbar" class="progress-bar progress-bar-success">
-                              <span class="sr-only">40% Complete (success)</span>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Database Update</div>
-                          <div class="percent">60%</div>
-                      </div>
-                      <div class="progress progress-striped">
-                          <div style="width: 60%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="60" role="progressbar" class="progress-bar progress-bar-warning">
-                              <span class="sr-only">60% Complete (warning)</span>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Iphone Development</div>
-                          <div class="percent">87%</div>
-                      </div>
-                      <div class="progress progress-striped">
-                          <div style="width: 87%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="20" role="progressbar" class="progress-bar progress-bar-info">
-                              <span class="sr-only">87% Complete</span>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Mobile App</div>
-                          <div class="percent">33%</div>
-                      </div>
-                      <div class="progress progress-striped">
-                          <div style="width: 33%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="80" role="progressbar" class="progress-bar progress-bar-danger">
-                              <span class="sr-only">33% Complete (danger)</span>
-                          </div>
-                      </div>
-                  </a>
-              </li>
-              <li>
-                  <a href="#">
-                      <div class="task-info">
-                          <div class="desc">Dashboard v1.3</div>
-                          <div class="percent">45%</div>
-                      </div>
-                      <div class="progress progress-striped active">
-                          <div style="width: 45%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="45" role="progressbar" class="progress-bar">
-                              <span class="sr-only">45% Complete</span>
-                          </div>
-                      </div>
-
-                  </a>
-              </li>
-              <li class="external">
-                  <a href="#">See All Tasks</a>
-              </li>
-          </ul>
-      </div>
-      <!-- Right Slidebar end -->
+      
       <!--footer start-->
      <footer class="site-footer">
           <div class="text-center">

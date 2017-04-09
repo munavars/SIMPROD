@@ -3,6 +3,7 @@
  */
 package com.ytc.dal.jpa;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,15 +13,19 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.ytc.common.result.ResultCode;
+import com.ytc.common.result.ResultException;
 import com.ytc.dal.IDataAccessLayer;
+import com.ytc.dal.model.DalAuditableModel;
 import com.ytc.dal.model.DalModel;
 import com.ytc.dal.model.DalPaidBasedOn;
+import com.ytc.dal.model.DalUser;
+import com.ytc.service.ServiceContext;
 
 /**
  * Basic implementation of IDataAccessLayer
@@ -45,6 +50,71 @@ public class BaseDao implements IDataAccessLayer {
 		this.entityManager = entityManager;
 	}
 
+
+	@Override
+	@Transactional
+	public <T extends DalModel> T create(T item) {
+		return create(item, ServiceContext.getServiceContext().getUserId());
+	}
+
+	@Override
+	@Transactional
+	public <T extends DalModel> T create(T item, String userId) {
+		if (item instanceof DalAuditableModel) {
+			DalUser dbUser = getReference(DalUser.class, userId);
+			DalAuditableModel aItem = (DalAuditableModel) item;
+			aItem.setCreatedBy(dbUser);
+			aItem.setModifiedBy(dbUser);
+			Calendar createdDate = Calendar.getInstance();
+			aItem.setCreatedDate(createdDate);
+
+		}
+		if (StringUtils.isEmpty(item.getId())) {
+			entityManager.persist(item);
+		} else {
+			Session session = entityManager.unwrap(Session.class);
+			session.save(item);
+		}
+		return item;
+	}
+
+	@Override
+	public <E extends DalModel> E getReference(Class<E> clazz, String id) {
+		return (StringUtils.isEmpty(id)) ? null : (E) entityManager.getReference(clazz, id);
+	}
+
+	@Override
+	@Transactional
+	public <T extends DalModel> T update(T item) {
+		return update(item, ServiceContext.getServiceContext().getUserId());
+	}
+
+	@Override
+	@Transactional
+	public <T extends DalModel> T update(T item, String userId) {
+		T mergedItem = updateItemToBeMerged(item, userId);
+		T t = entityManager.merge(mergedItem);
+		entityManager.flush();
+		return t;
+	}
+
+	private <T extends DalModel> T updateItemToBeMerged(T item, String userId) {
+		String objectId = item.getId();
+		Class<? extends DalModel> entityClass = item.getClass();
+
+		DalModel existingItem = entityManager.find(entityClass, objectId);
+		if (existingItem == null) {
+			throw new ResultException(ResultCode.NOT_FOUND, String.format("Object with id %s not found", objectId), "id");
+		}
+
+		if (existingItem instanceof DalAuditableModel) {
+			DalUser dbUser = getReference(DalUser.class, userId);
+			DalAuditableModel itemToUpdate = (DalAuditableModel) item;
+			itemToUpdate.setModifiedBy(dbUser);
+			entityManager.detach(existingItem);
+		}
+		return item;
+	}
 
 
 	@Override
@@ -72,18 +142,18 @@ public class BaseDao implements IDataAccessLayer {
 		}
 		return query.executeUpdate();
 	}
-	
 
-    @Override
-    public <T extends DalModel> List<T> list(Class<T> resultClass, String qlString, Map<String, Object> queryParams) {
-        Query query = entityManager.createQuery(qlString);
-        for (Entry<String, Object> param : queryParams.entrySet()) {
-            query.setParameter(param.getKey(), param.getValue());
-        }
-        @SuppressWarnings("unchecked")
+
+	@Override
+	public <T extends DalModel> List<T> list(Class<T> resultClass, String qlString, Map<String, Object> queryParams) {
+		Query query = entityManager.createQuery(qlString);
+		for (Entry<String, Object> param : queryParams.entrySet()) {
+			query.setParameter(param.getKey(), param.getValue());
+		}
+		@SuppressWarnings("unchecked")
 		List<T> resultList = query.getResultList();
-        return resultList;
-    }
+		return resultList;
+	}
 
 	@Override
 	@Transactional
@@ -100,7 +170,7 @@ public class BaseDao implements IDataAccessLayer {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	 
-	
+
+
+
 }

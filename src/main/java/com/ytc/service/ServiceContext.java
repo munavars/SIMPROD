@@ -6,6 +6,8 @@ import java.util.UUID;
 
 
 public class ServiceContext {
+	
+	private String userId;
 
 
 	private static final ThreadLocal<ServiceContext> serviceContext = new ThreadLocal<ServiceContext>() {
@@ -33,6 +35,16 @@ public class ServiceContext {
 		UUID.randomUUID().toString().replaceAll("-", "");
 
 	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+	
+	
 
 
 }

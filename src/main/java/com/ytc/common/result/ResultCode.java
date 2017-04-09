@@ -18,7 +18,9 @@ public enum ResultCode {
    
     INVALID_LOGON(HttpStatus.SC_UNAUTHORIZED, "Invalid credentials or permission denied."),
 	
-	NOT_ACTIVE(HttpStatus.SC_UNAUTHORIZED, "user not in active state.");
+	NOT_ACTIVE(HttpStatus.SC_UNAUTHORIZED, "user not in active state."), 
+	
+	INVALID_DATA("Please verify the data. It sould be invalid");
 
    
     

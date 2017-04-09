@@ -10,6 +10,8 @@ import java.util.Set;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ytc.common.model.Model;
 import com.ytc.dal.model.DalModel;
@@ -18,9 +20,9 @@ import com.ytc.dal.model.DalModel;
 
 public class DataModelConverter implements IDataModelConverter {
 
-	//private Logger logger = LoggerFactory.getLogger(DataModelConverter.class);
+	private Logger logger = LoggerFactory.getLogger(DataModelConverter.class);
 
-	
+
 
 	private Set<Class<?>> knownJavaTypes;
 	private Set<Class<? extends DalModel>> knownDALtypes;
@@ -53,7 +55,7 @@ public class DataModelConverter implements IDataModelConverter {
 
 	@Override
 	public void convert(Object source, Object target) {
-		// logger.debug("Data model conversion from " + source.getClass() + " to " + target.getClass());
+		logger.debug("Data model conversion from " + source.getClass() + " to " + target.getClass());
 
 		Map<String, PropertyDescriptor> sourceProps = getPropMap(source.getClass());
 		Map<String, PropertyDescriptor> targetProps = getPropMap(target.getClass());
@@ -82,11 +84,10 @@ public class DataModelConverter implements IDataModelConverter {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private void stringToEnum(String propName, Object source, Object target, Class<?> targetEnumType) {
 		try {
-			// logger.debug("copy string to enum: " + propName + " ");
+			logger.debug("copy string to enum: " + propName + " ");
 			String enumStr = (String) PropertyUtils.getProperty(source, propName);
 			if (StringUtils.isNotBlank(enumStr)) {
 				try {
-					// class of enum is specific such as FolderType.class
 					PropertyUtils.setProperty(target, propName, Enum.valueOf((Class) targetEnumType, enumStr));
 
 				} catch (Exception e) {
@@ -98,7 +99,7 @@ public class DataModelConverter implements IDataModelConverter {
 				}
 			}
 		} catch (Exception e) {
-			// logger.debug("Could not convert string to enum for " + propName);
+			logger.debug("Could not convert string to enum for " + propName);
 		}
 
 	}
@@ -119,8 +120,8 @@ public class DataModelConverter implements IDataModelConverter {
 				BeanUtils.copyProperty(target, propName, value);
 			}
 		} catch (Exception e) {
-			// logger.debug("could not copy  prop " + propName + " from src=" + source.getClass() + " to target=" +
-			// target.getClass());
+			logger.debug("could not copy  prop " + propName + " from src=" + source.getClass() + " to target=" +
+			target.getClass());
 		}
 	}
 

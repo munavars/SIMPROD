@@ -64,5 +64,4 @@ public abstract class AuditableModel extends Model {
         this.modifiedDate = modifiedDate;
     }
 
-//test
 }

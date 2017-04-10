@@ -114,13 +114,5 @@
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 		<res-sharing-scope>Shareable</res-sharing-scope>
-	</resource-ref>
-	<resource-ref>
-		<description>
-		Auto Generated - SDO Datasource connection to CustomerServiceWebsiteTest</description>
-		<res-ref-name>dataSource</res-ref-name>
-		<res-type>javax.sql.DataSource</res-type>
-		<res-auth>Container</res-auth>
-		<res-sharing-scope>Shareable</res-sharing-scope>
-	</resource-ref>
+	</resource-ref>	
 </web-app>

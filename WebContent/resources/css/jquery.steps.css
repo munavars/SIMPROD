@@ -1,6 +1,12 @@
 /*
     Common 
 */
+/*
+   This inline style is to remove the search field and pagination filter and display from 'Program Schedule' editable table on program_details.html
+*/
+.editable-table .dataTables_filter,.adv-table .dataTables_length, .adv-table .dataTables_filter,.dataTables_paginate.paging_bootstrap.pagination,.editable-table .dataTables_filter,.adv-table .dataTables_info {
+    display: none;
+}
 
 .wizard,
 .tabcontrol
@@ -82,7 +88,7 @@ h3.uppercase {
 
 .wizard > .steps > ul > li
 {
-    width: 25%;
+    width: 24%;
 }
 
 .wizard > .steps > ul > li,

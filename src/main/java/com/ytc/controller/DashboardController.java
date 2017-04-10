@@ -1,4 +1,4 @@
-package com.ytc.service.impl;
+package com.ytc.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -6,8 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import com.ytc.controller.BaseController;
 
 @Controller
 @RequestMapping("/dashboard")

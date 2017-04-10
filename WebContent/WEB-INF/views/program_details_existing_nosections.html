@@ -18,10 +18,8 @@
       <link rel="stylesheet" type="text/css" href="assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
       <link rel="stylesheet" type="text/css" href="assets/jquery-multi-select/css/multi-select.css" />
       <link rel="stylesheet" type="text/css" href="assets/bootstrap-timepicker/compiled/timepicker.css" />
-      <link rel="stylesheet" type="text/css" href="assets/bootstrap-colorpicker/css/colorpicker.css" />
       <link rel="stylesheet" type="text/css" href="assets/bootstrap-datetimepicker/css/datetimepicker.css" />
-      <!--bootstrap switcher-->
-      <link rel="stylesheet" type="text/css" href="assets/bootstrap-switch/static/stylesheets/bootstrap-switch.css" />
+     
       <!--select 2-->
       <link rel="stylesheet" type="text/css" href="assets/select2/css/select2.min.css"/>
       <!--right slidebar-->
@@ -331,7 +329,7 @@
                                       </div><!-- END ROW 3 -->
                                       <div class="row">
                                         <div class="form-group">  
-                                        <div class="col-lg-5 col-md-5 col-sm-6">
+                                        <div class="col-lg-5 col-md-7 col-sm-7">
                                            <h4>Paid Based On</h4>
                                             <div class="table"> 
                                           <table class="table-responsive">
@@ -563,12 +561,18 @@
                 <!-- END Achieve -->
                                       
                         <!-- Start Tier -->
-                                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 pull-right">
-                                        <div class="adv-table editable-table"> 
+                                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="adv-table editable-table">
+                                           
                                          <h4 class="tableHeader">Program Schedules</h4>
+                                            
                                           <div class="table-responsive">    
                                             <table class="table table-striped table-hover table-bordered" id="editable-sample">
                                               <thead>
+                                                  <tr>
+                                                      <td colspan="6" class="noborders text-right"><label class="control-label" for="inputSuccess">Actual Marker</label>&nbsp;&nbsp;
+                                                <input id="actual_marker" name="actual_marker" type="text" size="3" class="form-control" value=""></td>
+                                                </tr>
                                               <tr>
                                                 <th>Marker</th>
                                                 <th>Amount</th>
@@ -582,10 +586,10 @@
                                               <tr class="">
                                                   <td class="center">1</td>
                                                   <td class="center">1</td>
-                                                  <td><div class="radio-inline inline-flex">
-                                                   <label  for="inputSuccess">
+                                                  <td>
+                                                   <label class="control-label" for="inputSuccess">
                                                    <input type="radio" checked="checked" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>  
-                                                </div>
+                                                
                                                 <div class="radio-inline inline-flex">
                                                    <label class="control-label" for="inputSuccess">
                                                    <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier1" value="$" class="radio-inline denomination required" checked="checked">$</label> 
@@ -660,7 +664,7 @@
                                           </div>
                                       </div>
                                         <div class="clearfix">
-                                            <div class="btn-group pull-right">
+                                            <div class="btn-group">
                                                 <button id="editable-sample_new" class="btn btn-default">Add New Tier <i class="fa fa-plus"></i></button>
                                             </div>
                                         </div>
@@ -726,7 +730,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
       </section>
       <!-- END section id="container" FIRST section after opening body tag  -->
        
-       
       <!-- js placed at the end of the document so the pages load faster -->
       <script src="js/jquery.js"></script>
       <script src="js/bootstrap.min.js"></script>
@@ -743,7 +746,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
       <script type="text/javascript" src="assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
       <script type="text/javascript" src="assets/bootstrap-daterangepicker/moment.min.js"></script>
       <script type="text/javascript" src="assets/bootstrap-daterangepicker/daterangepicker.js"></script>
-      <script type="text/javascript" src="assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
       <script type="text/javascript" src="assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
       <script type="text/javascript" src="assets/jquery-multi-select/js/jquery.multi-select.js"></script>
       <script type="text/javascript" src="assets/jquery-multi-select/js/jquery.quicksearch.js"></script>

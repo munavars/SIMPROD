@@ -8,27 +8,27 @@
       <meta name="keyword" content="YMPACT">
       <title>Program Details</title>
       <!-- Bootstrap core CSS -->
-      <link href="css/bootstrap.min.css" rel="stylesheet">
-      <link href="css/bootstrap-reset.css" rel="stylesheet">
+      <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+      <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
 
       <!--external css-->
       <link href="assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
       <!--Date Picker--> 
-      <link rel="stylesheet" type="text/css" href="assets/bootstrap-datepicker/css/datepicker.css" />
-      <link rel="stylesheet" type="text/css" href="assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
-      <link rel="stylesheet" type="text/css" href="assets/jquery-multi-select/css/multi-select.css" />
-      <link rel="stylesheet" type="text/css" href="assets/bootstrap-timepicker/compiled/timepicker.css" />
-      <link rel="stylesheet" type="text/css" href="assets/bootstrap-datetimepicker/css/datetimepicker.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datepicker/css/datepicker.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/jquery-multi-select/css/multi-select.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-timepicker/compiled/timepicker.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datetimepicker/css/datetimepicker.css" />
      
       <!--select 2-->
-      <link rel="stylesheet" type="text/css" href="assets/select2/css/select2.min.css"/>
+      <link rel="stylesheet" type="text/css" href="resources/assets/select2/css/select2.min.css"/>
       <!--right slidebar-->
-      <link href="css/slidebars.css" rel="stylesheet">
+      <link href="resources/css/slidebars.css" rel="stylesheet">
        <!--Form Wizard-->
-      <link rel="stylesheet" type="text/css" href="css/jquery.steps.css" />
+      <link rel="stylesheet" type="text/css" href="resources/css/jquery.steps.css" />
       <!-- Custom styles for this template -->
-      <link href="css/style.css" rel="stylesheet">
-      <link href="css/style-responsive.css" rel="stylesheet" />
+      <link href="resources/css/style.css" rel="stylesheet">
+      <link href="resources/css/style-responsive.css" rel="stylesheet" />
       
       <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltips and media queries -->
       <!--[if lt IE 9]>
@@ -36,7 +36,7 @@
       <script src="js/respond.min.js"></script>
       <![endif]-->
     
-       <script src="js/paidAchieve.js"></script>
+       <script src="resources/js/paidAchieve.js"></script>
 
       <script>
          function sync()
@@ -55,7 +55,7 @@
                <i class="fa fa-bars"></i>
             </div>
             <!--logo start-->
-            <a href="index.html" class="logo"><img src="img/yokohama-logo.svg" width="132" height="52"></a>
+            <a href="index.html" class="logo"><img src="resources/img/yokohama-logo.svg" width="132" height="52"></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                <!--  notification start -->
@@ -102,7 +102,6 @@
                   <!-- user login dropdown start-->
                   <li class="dropdown">
                      <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                     <img alt="" src="img/avatar1_small.jpg">
                      <span class="username">John Doe</span>
                      <b class="caret"></b>
                      </a>
@@ -453,7 +452,7 @@
                                   <div class="form-group">
              <!-- START ACHIEVE based on -->
                       <div class="form-group">
-                        <div class="form-group col-lg-5 md-4 col-sm-4">
+                        <div class="form-group col-lg-5 md-5 col-sm-6">
                              <h4 class="paid-achieve">Achieve Based On</h4>
                             <div class="">
                             <div class="space15"></div>
@@ -482,7 +481,7 @@
 
                 <!--Start Achieve Based On Multi-select-->
               
-                     <div class="col-lg-4 col-md-4 col-sm-4 p-left0">
+                     <div class="col-lg-4 col-md-6 col-sm-6 p-left0">
                        <div class="table">
                             <table class="table-responsive">
                               <tbody>
@@ -587,13 +586,14 @@
                                                   <td class="center">1</td>
                                                   <td class="center">1</td>
                                                   <td>
-                                                   <label class="control-label" for="inputSuccess">
-                                                   <input type="radio" checked="checked" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>  
-                                                
-                                                <div class="radio-inline inline-flex">
-                                                   <label class="control-label" for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier1" value="$" class="radio-inline denomination required" checked="checked">$</label> 
-                                                </div>
+                                                    <div class="radio-inline inline-flex">
+                                                       <label class="control-label" for="inputSuccess">
+                                                       <input type="radio" checked="checked" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>  
+                                                    </div>
+                                                    <div class="radio-inline inline-flex">
+                                                       <label class="control-label" for="inputSuccess">
+                                                       <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier1" value="$" class="radio-inline denomination required" checked="checked">$</label> 
+                                                    </div>
                                                   </td>
                                                   <td class="text-right">500,000</td>
                                                   <td><a class="edit" href="javascript:;">Edit</a></td>

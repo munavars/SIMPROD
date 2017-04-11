@@ -7967,7 +7967,7 @@
 		 *      } );
 		 *    } );
 		 */
-		"aLengthMenu": [ 10, 25, 50, 100 ],
+		"aLengthMenu": [ 5, 10, 20, "All" ],
 	
 	
 		/**
@@ -9032,11 +9032,11 @@
 		 *  @example
 		 *    $(document).ready( function() {
 		 *      $('#example').dataTable( {
-		 *        "iDisplayLength": 50
+		 *        "iDisplayLength": 25
 		 *      } );
 		 *    } )
 		 */
-		"iDisplayLength": 10,
+		"iDisplayLength": 5,
 	
 	
 		/**
@@ -11236,7 +11236,7 @@
 		 *  @type int
 		 *  @default 10
 		 */
-		"_iDisplayLength": 10,
+		"_iDisplayLength": 5,
 	
 		/**
 		 * Paging start point - aiDisplay index
@@ -11252,8 +11252,9 @@
 		 *  @default 10
 		 *  @private
 		 */
-		"_iDisplayEnd": 10,
+		"_iDisplayEnd": 5,
 		
+        
 		/**
 		 * Server-side processing - number of records in the result set
 		 * (i.e. before filtering), Use fnRecordsTotal rather than
@@ -11357,7 +11358,7 @@
 		"fnRecordsDisplay": function ()
 		{
 			if ( this.oFeatures.bServerSide ) {
-				return parseInt(this._iRecordsDisplay, 10);
+				return parseInt(this._iRecordsDisplay, 5);
 			} else {
 				return this.aiDisplay.length;
 			}

@@ -109,7 +109,7 @@
 		</cookie-config>
 	</session-config>
 	<resource-ref>
-		<description>CustomerServiceWebsiteTest</description>
+		<description>SalesInformationManagement</description>
 		<res-ref-name>dataSource</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>

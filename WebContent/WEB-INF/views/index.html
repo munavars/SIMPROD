@@ -13,6 +13,9 @@
     <link href="css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
     <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+     <!--dynamic table-->
+    <link href="assets/advanced-datatable/media/css/demo_page.css" rel="stylesheet" />
+    <link href="assets/advanced-datatable/media/css/demo_table.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/data-tables/DT_bootstrap.css" />
 
       <!--right slidebar-->
@@ -86,7 +89,6 @@
                   <!-- user login dropdown start-->
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                          <img alt="" src="img/avatar1_small.jpg">
                           <span class="username">John Doe</span>
                           <b class="caret"></b>
                       </a>
@@ -146,21 +148,23 @@
 <!--sidebar end-->
       <!--main content start-->
       <section id="main-content">
-          <section class="wrapper site-min-height">
+          <section class="wrapper">
               <!-- page start-->
+                <div class="row">
+                <div class="col-sm-12">
               <section class="panel">
+                  <!--header class="panel-heading">
+                    </header-->
                   <div class="panel-body"> 
 <!-- START 'Pending Approvals' table -->
-                       <div class="adv-table editable-table">
-                          <div class="clearfix">
-                          </div><div class="btn-group pull-right">
-                                 <div class="btn-group">
-                                  <a href="#"><button class="btn btn-default"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
-                                </div>   
-                            </div>
+                          <div class="btn-group pull-right">
+                            <div class="btn-group">
+                            <a href="#"><button class="btn btn-default"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                            </div>   
+                        </div>
                          <h3 class="tableHeader">Pending Approvals</h3>
-                          <div class="table-responsive">
-                          <table class="table table-striped table-hover table-bordered approvals" id="pending-approvals">
+                          <div class="adv-table table-responsive">
+                          <table class="display table table-striped table-bordered approvals" id="pending-approvals">
                               <thead>
                                 <tr>
                                     <th colspan="2" class="center toptheader">Customer</th>
@@ -341,23 +345,30 @@
                               </tr>
                               </tbody>
                           </table>
-                          </div>
-                      </div>
+                        </div>
+                        </div>
+                    </section>
+                </div>
+              </div>
+                 
 <!-- END 'Pending Approvals' table -->                    
 
 <!-- START 'My Customers' table -->
-                      
-                     <div class="adv-table editable-table">
-                         <div class="clearfix">
-                          </div><div class="btn-group pull-right">
-                                 <div class="btn-group">
-                                  <a href="#"><button class="btn btn-default"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
-                                </div>   
-                            </div>
+            <div class="row">
+                <div class="col-sm-12">
+              <section class="panel">
+                  <!--header class="panel-heading">
+                    </header-->
+                  <div class="panel-body"> 
+<!-- START 'Pending Approvals' table -->
+                          <div class="btn-group pull-right">
+                            <div class="btn-group">
+                            <a href="#"><button class="btn btn-default"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                            </div>   
+                        </div>
                          <h3 class="tableHeader">Customers</h3>
-                          <div class="table-responsive">
-
-                          <table class="table table-striped table-hover table-bordered" id="customers-overview">
+                          <div class="adv-table table-responsive">
+                          <table class="display table table-striped table-hover table-bordered approvals" id="customer-overview">
                               <thead>
                               <tr class="rowvis">
 							    <th>Customer</th>
@@ -826,154 +837,13 @@
                               </tbody>
                           </table>
                           </div>
-                      </div>
+                        </div>
+                    </section>
+                </div>
+              </div>
   <!-- END of 'My Customers' table -->
-                      
-  <!-- START 'My Programs' Table 
-                      
-                     <div class="adv-table editable-table" id="myPrograms">
-                          <div class="clearfix">
-                          </div>
-                         <div class="space15"></div>
-                         <h3 class="tableHeader">Programs</h3>
-                          <div class="table-responsive">    
-                          <table class="table table-striped table-hover table-bordered" id="editable-sample3">
-                              <thead>
-                                 <tr>
-                                    <th colspan="2" class="center toptheader">Program</th>
-                                    <th colspan="5" class="toptheader">&nbsp;</th>
-                              </tr>
-                              <tr class="rowvis">
-                                  <th class="text-center">Number</th>
-                                  <th class="">Name</th>
-                                  <th class="">Acct Manager</th>
-                                  <th class="">Customer Count</th>
-                                  <th class="center">Accrued</th>
-                                  <th class="center">Paid</th>
-                                  <th class="center">Balance</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">28140</a></td>
-                                  <td><a href="program_details_existing.html">OE Program</a></td>
-                                  <td><a href="program_details_existing.html">Bill Jones</a></td>
-                                  <td><a href="program_details_existing.html">5</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">Roadside Assistance</a></td>
-                                  <td><a href="program_details_existing.html">Bob Smith</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">Fixed Subsidy</a></td>
-                                  <td><a href="program_details_existing.html">Colby McGehee</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">Growth Bonus</a></td>
-                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">OE Program</a></td>
-                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">OE Program</a></td>
-                                  <td><a href="program_details_existing.html">Bill James</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                          <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">Fixed Subsidy</a></td>
-                                  <td><a href="program_details_existing.html">Bob Monroe</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">Growth Bonus</a></td>
-                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                               <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">OE Program</a></td>
-                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">Growth Bonus</a></td>
-                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">Fixed Subsidy</a></td>
-                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center"><a href="program_details_existing.html">12</a></td>
-                                  <td><a href="program_details_existing.html">Growth Bonus</a></td>
-                                  <td><a href="program_details_existing.html">Bill Smith</a></td>
-                                  <td><a href="program_details_existing.html">12</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$3,000.00</a></td>
-                                  <td class="text-right"><a href="program_details_existing.html">$1,000.00</a></td>    
-                                  <td class="text-right"><a href="program_details_existing.html">$2,000.00</a></td>
-                              </tr>
-                              </tbody>
-                          </table>
 
-                          </div>
-                      </div>
-    <!-- END My Program's table -->
-                  </div>
-                  
-              </section>
-              <!-- start new panel for testing -->
-              
-              <!-- end new panel for editable table testng -->
+            
               <!-- page end-->
           </section>
       </section>
@@ -1005,20 +875,19 @@
 
   <!--right slidebar-->
   <script src="js/slidebars.min.js"></script>
-
-    <!--common script for all pages-->
-    <script src="js/common-scripts.js"></script>
-
-      <!--script for this page only-->
-      <script src="js/editable-table.js"></script>
-
-      <!-- END JAVASCRIPTS -->
+      
+      <!--dynamic table initialization -->
+    <script src="js/dynamic_table_init.js"></script>
       <script>
-          jQuery(document).ready(function() {
-              EditableTable.init();
-          });
+      $(document).ready( function() {
+		       $('#customer-overview,#pending-approvals').dataTable( {
+		         "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]]
+		       } );
+		     } );
+    
       </script>
-
+      <!--common script for all pages-->
+    <script src="js/common-scripts.js"></script>
 
   </body>
 </html>

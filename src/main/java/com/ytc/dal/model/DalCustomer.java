@@ -2,15 +2,13 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
 
 
 @Entity
 @Table(name = "CUSTMSRTDX")
-public class DalCustomer extends DalModel {
+public class DalCustomer extends DalAuditableModel {
 
 
 	public DalCustomer() {
@@ -53,7 +51,7 @@ public class DalCustomer extends DalModel {
 
 	}
 
-	@Id
+	//@Id
 	@Column(name = "CMBLTOID")
 	public String getCMBLTOID() {
 		return CMBLTOID;

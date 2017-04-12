@@ -4,12 +4,13 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.validation.constraints.Size;
+import javax.persistence.MappedSuperclass;
 
+@MappedSuperclass
 public abstract class DalModel implements Cloneable {
 
 	
-	private String id;
+	private int id;
 
 	protected DalModel() {
 	}
@@ -20,18 +21,14 @@ public abstract class DalModel implements Cloneable {
 
 	@Id
 	@Column(name = "ID")
-	@Size(max = 5)
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
-		if (id != null && id.length() == 0) {
-			id = null;
-		}
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	
+		
 }

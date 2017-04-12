@@ -63,7 +63,7 @@ public abstract class DalAuditableModel extends DalModel {
         this.modifiedBy = modifiedBy;
     }
 
-    //@Version
+  
     @Column(name = "MODIFIED_DATE", columnDefinition = "timestamp")
     public Calendar getModifiedDate() {
         return modifiedDate;

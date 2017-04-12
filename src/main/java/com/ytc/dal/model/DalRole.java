@@ -2,25 +2,22 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.ytc.common.type.Status;
 
-//@Entity
+@Entity
 @Table(name = "ROLE")
 public class DalRole extends DalAuditableModel {
 
 
 	private String roleDescription;
+	private DalUser user;
 	private Status status;
 
-
-
-
-	public DalRole(DalRole r) {
-		this.roleDescription = r.roleDescription;
-		this.status = r.status;
-	}
 
 
 	@Column(name="ROLE_DESCRIPTION")
@@ -41,7 +38,18 @@ public class DalRole extends DalAuditableModel {
 
 
 	public void setStatus(Status status) {
-		this.status = status;
+		this.status = status;		
+	}
+
+	
+	public void setUser(DalUser user) {
+		this.user = user;
+	}
+	
+	@ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.LAZY)
+	@JoinColumn(name = "USER_NAME", referencedColumnName = "ID", nullable = false)
+	public DalUser getUser() {
+		return user;
 	}
 
 

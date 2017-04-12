@@ -2,12 +2,11 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "[vwBILL_TO_ALL]")
-public class DalPaidBasedOn extends DalModel {
+public class DalPaidBasedOn extends DalAuditableModel {
 
 
 	private int Bill_To_No;
@@ -17,7 +16,7 @@ public class DalPaidBasedOn extends DalModel {
 	public DalPaidBasedOn() {
 
 	}	
-	@Id
+	//@Id
 	@Column(name = "BILL_TO_NO")
 	public int getBill_To_No() {
 		return Bill_To_No;

@@ -6,21 +6,13 @@ import javax.persistence.Table;
 
 import com.ytc.common.type.Status;
 
-//@Entity
+@Entity
 @Table(name = "PERMISSION")
 public class DalPermission extends DalAuditableModel {
 
 
 	private String name;
 	private Status status;
-
-
-
-
-	public DalPermission(DalPermission p) {
-		this.name = p.name;
-		this.status = p.status;
-	}
 
 
 	@Column(name="NAME")

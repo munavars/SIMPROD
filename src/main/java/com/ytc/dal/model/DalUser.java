@@ -1,26 +1,39 @@
 package com.ytc.dal.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-//@Entity
-@Table(name = "USER")
+@Entity
+@Table(name = "USER_TABLE")
 public class DalUser extends DalAuditableModel {
 
+	private String userName;
+	private String status;
+	private Set<DalRole> roles = new HashSet<DalRole>();
 
 	public DalUser() {
 
 	}	
 
-	private String userName;
-	private String status;
-	private final List<DalRole> roles = new ArrayList<DalRole>();
+	public DalUser(int id) {
+		setId(id);
+	}
+	
+	 public DalUser(DalUser u ) {
+	        super(u);
+	        this.userName = u.userName;
+	        this.status = u.status;
+	        this.roles.addAll(u.roles);	      
+	    }
+
+	
 
 	@Column(name = "USER_NAME")
 	public String getUserName() {
@@ -42,12 +55,16 @@ public class DalUser extends DalAuditableModel {
 		this.status = status;
 	}
 
+	 public void setRoles(Set<DalRole> roles) {
+	        this.roles = roles;
+	    }
 
-	@ManyToOne(targetEntity = com.ytc.dal.model.DalRole.class)
-    @JoinColumn(name = "ROLE_ID", referencedColumnName = "ID", nullable = true)
-	public List<DalRole> getRoles() {
-		return roles;
-	}
+	
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    public Set<DalRole> getRoles() {
+        return roles;
+    }
 
 
 

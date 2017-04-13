@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -61,8 +63,10 @@ public class EmployeeService implements IEmployeeService {
 	@Override
 	public Employee getDetail(String loginId) {
 		logger.info("inside com.ytc.service.impl.EmployeeService.getDetail loginId: "+loginId);
-
-		DalEmployee dalEmployee = baseDao.getById(DalEmployee.class, loginId);
+		CriteriaQuery<DalEmployee> criteria = entityManager.getCriteriaBuilder().createQuery(DalEmployee.class);
+		Root<DalEmployee> data = criteria.from(DalEmployee.class); 
+		criteria.select(data);
+		List<DalEmployee> dalEmployee = entityManager.createQuery(criteria).getResultList();
 		logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created dalEmployee");
 		ModelMapper modelMapper = new ModelMapper();
 		logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created modelMapper");

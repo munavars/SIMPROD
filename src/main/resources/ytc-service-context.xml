@@ -31,7 +31,8 @@
 
 	<bean id="serviceLocator" class="com.ytc.service.impl.ServiceLocator">
 	</bean>
-
 	
-
+	<bean id="employeeService" class="com.ytc.service.impl.EmployeeService">
+	</bean>
+	
 </beans>

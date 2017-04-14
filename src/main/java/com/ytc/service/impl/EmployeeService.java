@@ -67,9 +67,9 @@ public class EmployeeService implements IEmployeeService {
 		Root<DalEmployee> data = criteria.from(DalEmployee.class); 
 		criteria.select(data);
 		List<DalEmployee> dalEmployee = entityManager.createQuery(criteria).getResultList();
-		logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created dalEmployee");
+		//logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created dalEmployee");
 		ModelMapper modelMapper = new ModelMapper();
-		logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created modelMapper");
+		//logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created modelMapper");
 		Employee employee = modelMapper.map(dalEmployee, Employee.class);
 		logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created employee: "+employee);
 		return employee;

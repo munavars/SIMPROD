@@ -8,7 +8,7 @@
 	<reload-interval value="3"/>
 	<context-root uri="SalesIncentiveMgmt" />
 	<enable-directory-browsing value="true"/>
-	<enable-file-serving value="true"/>
+	<enable-file-serving value="false"/>
 	<enable-reloading value="true"/>
 	<enable-serving-servlets-by-class-name value="true" />
 

@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 public abstract class DalModel implements Cloneable {
 
 	
-	private int id;
+	private String id;
 
 	protected DalModel() {
 	}
@@ -22,11 +22,11 @@ public abstract class DalModel implements Cloneable {
 	@Id
 	@Column(name = "ID")
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

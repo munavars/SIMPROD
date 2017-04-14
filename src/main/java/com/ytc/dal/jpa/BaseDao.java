@@ -100,7 +100,7 @@ public class BaseDao implements IDataAccessLayer {
 	}
 
 	private <T extends DalModel> T updateItemToBeMerged(T item, String userId) {
-		int objectId = item.getId();
+		String objectId = item.getId();
 		Class<? extends DalModel> entityClass = item.getClass();
 
 		DalModel existingItem = entityManager.find(entityClass, objectId);

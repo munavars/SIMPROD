@@ -22,7 +22,7 @@ public class DalUser extends DalAuditableModel {
 
 	}	
 
-	public DalUser(int id) {
+	public DalUser(String id) {
 		setId(id);
 	}
 	

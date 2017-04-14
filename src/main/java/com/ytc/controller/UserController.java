@@ -57,13 +57,13 @@ public class UserController extends BaseController {
 		String theUserid = request.getParameter("userid");
 		logger.info("UserController.processLogin userid: " + theUserid);
 		String thePassword = request.getParameter("userpassword");
-		logger.info("UserController.processLogin password: " + thePassword);
+		//logger.info("UserController.processLogin password: " + thePassword);
 
 //		validate user via LDAP
 		boolean isValidUser = isValidLDAPLogin(theUserid, thePassword);
 
-		logger.info("UserController.processLogin LDAPUtil.isValidYtcUser user: " + theUserid + " password: "
-				+ thePassword + ", isValidUser = " + isValidUser);
+		//logger.info("UserController.processLogin LDAPUtil.isValidYtcUser user: " + theUserid + " password: "
+			//	+ thePassword + ", isValidUser = " + isValidUser);
 		
 		if (isValidUser) {
 						

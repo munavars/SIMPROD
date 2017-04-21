@@ -7,4 +7,7 @@ public interface IServiceLocator {
 	ISecurityService getSecurityService();
 	IEmployeeService getEmployeeService();
 
+	IProgramService getProgramService();
+	
+	IProgramUpdateService getProgramPersistService();
 }

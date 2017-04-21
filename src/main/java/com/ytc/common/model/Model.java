@@ -3,7 +3,7 @@ package com.ytc.common.model;
 import java.io.Serializable;
 
 public abstract class Model implements Cloneable, Serializable {
-	private static final long serialVersionUID = 2514719982327593095L;
+	/*private static final long serialVersionUID = 2514719982327593095L;*/
 
 	private String id;
 

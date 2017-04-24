@@ -27,6 +27,7 @@ import com.ytc.dal.model.DalPaidBasedOn;
 import com.ytc.dal.model.DalUser;
 import com.ytc.service.ServiceContext;
 
+
 /**
  * Basic implementation of IDataAccessLayer
  */
@@ -55,7 +56,7 @@ public class BaseDao implements IDataAccessLayer {
 	@Override
 	@Transactional
 	public <T extends DalModel> T create(T item) {
-		return create(item, ServiceContext.getServiceContext().getUserId());
+		return create(item, "6");
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class BaseDao implements IDataAccessLayer {
 	}
 
 	private <T extends DalModel> T updateItemToBeMerged(T item, String userId) {
-		String objectId = item.getId();
+		Integer objectId = item.getId();
 		Class<? extends DalModel> entityClass = item.getClass();
 
 		DalModel existingItem = entityManager.find(entityClass, objectId);
@@ -172,6 +173,42 @@ public class BaseDao implements IDataAccessLayer {
 		return null;
 	}
 
+	@Override
+	public <E extends DalModel> E getById(Class<E> clazz, Integer id) {
+		if (id == null) {
+			throw new NoResultException(ResultCode.NOT_FOUND.getResultString("null"));
+		}
+		E entity = entityManager.find(clazz, id);
+		if (entity == null) {
+			throw new NoResultException(ResultCode.NOT_FOUND.getResultString(id));
+		}
 
+		return entity;
+	}
+	
+
+	@Override
+	public <T> List<T> getListFromNamedQuery(String namedQueryString) {
+		Query query = null;
+		List<T> returnList = null;
+		if(namedQueryString != null){
+			query = entityManager.createNamedQuery(namedQueryString);
+			returnList = query.getResultList();
+		}
+		return returnList;
+	}
+
+	public <T> T getEntityById(Class<T> class1, Integer id){
+		if (id == null) {
+			throw new NoResultException(ResultCode.NOT_FOUND.getResultString("null"));
+		}
+		T entity = entityManager.find(class1, id);
+		if (entity == null) {
+			throw new NoResultException(ResultCode.NOT_FOUND.getResultString(id));
+		}
+
+		return entity;
+		
+	}
 
 }

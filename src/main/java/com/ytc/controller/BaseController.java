@@ -26,4 +26,7 @@ public abstract class BaseController {
 		return serviceLocator;
 	}
 
+	protected IServiceLocator getServiceLocator() {
+		return serviceLocator;
+	}
 }

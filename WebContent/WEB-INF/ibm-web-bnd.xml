@@ -8,8 +8,8 @@
 	<virtual-host name="default_host" />
 
 	<resource-ref name="dataSource"
-		binding-name="jdbc/localJNDI">
-		<authentication-alias name="MUNAVARSNode01/developmentDB" />
+		binding-name="jdbc/simMSSQL">
+		<authentication-alias name="simweb" />
 	</resource-ref>
 	
 </web-bnd>

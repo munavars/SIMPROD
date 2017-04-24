@@ -56,12 +56,12 @@ public class BaseDao implements IDataAccessLayer {
 	@Override
 	@Transactional
 	public <T extends DalModel> T create(T item) {
-		return create(item, "6");
+		return create(item, 6);
 	}
 
 	@Override
 	@Transactional
-	public <T extends DalModel> T create(T item, String userId) {
+	public <T extends DalModel> T create(T item, Integer userId) {
 		if (item instanceof DalAuditableModel) {
 			DalUser dbUser = getReference(DalUser.class, userId);
 			DalAuditableModel aItem = (DalAuditableModel) item;
@@ -81,7 +81,7 @@ public class BaseDao implements IDataAccessLayer {
 	}
 
 	@Override
-	public <E extends DalModel> E getReference(Class<E> clazz, String id) {
+	public <E extends DalModel> E getReference(Class<E> clazz, Integer id) {
 		return (StringUtils.isEmpty(id)) ? null : (E) entityManager.getReference(clazz, id);
 	}
 
@@ -93,14 +93,14 @@ public class BaseDao implements IDataAccessLayer {
 
 	@Override
 	@Transactional
-	public <T extends DalModel> T update(T item, String userId) {
+	public <T extends DalModel> T update(T item, Integer userId) {
 		T mergedItem = updateItemToBeMerged(item, userId);
 		T t = entityManager.merge(mergedItem);
 		entityManager.flush();
 		return t;
 	}
 
-	private <T extends DalModel> T updateItemToBeMerged(T item, String userId) {
+	private <T extends DalModel> T updateItemToBeMerged(T item, Integer userId) {
 		Integer objectId = item.getId();
 		Class<? extends DalModel> entityClass = item.getClass();
 

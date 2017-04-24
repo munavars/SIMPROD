@@ -1,6 +1,5 @@
 package com.ytc.dal.model;
 
-import javax.persistence.AccessType;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,7 +7,6 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-@javax.persistence.Access(AccessType.PROPERTY)
 public abstract class DalModel implements Cloneable {
 
 
@@ -19,14 +17,14 @@ public abstract class DalModel implements Cloneable {
 	}
 
 	protected DalModel(DalModel m) {
-		
+
 	}
-	
+
+
 	@Id
-	@Column(name = "ID")
-	@GeneratedValue(strategy=GenerationType.AUTO)
-/*	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "default_gen")*/
-	public Integer getId() {
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	public Integer getId() { 
 		return id;
 	}
 
@@ -34,5 +32,5 @@ public abstract class DalModel implements Cloneable {
 		this.id = id;
 	}
 
-		
+
 }

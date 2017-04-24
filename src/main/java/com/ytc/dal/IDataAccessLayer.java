@@ -11,7 +11,7 @@ public interface IDataAccessLayer {
 
 	public <T extends DalModel> T create(T item);
 
-	public <T extends DalModel> T create(T item, String userId);
+	public <T extends DalModel> T create(T item, Integer userId);
 
 	public <T extends DalModel> T getById(Class<T> clazz, String id);
 
@@ -26,15 +26,17 @@ public interface IDataAccessLayer {
 
 	void flush();
 
-	public <T extends DalModel> T getReference(Class<T> clazz, String id);
+	public <T extends DalModel> T getReference(Class<T> clazz, Integer id);
 
 	public <T extends DalModel> T update(T item);
 
-	public <T extends DalModel> T update(T item, String userId);
+	public <T extends DalModel> T update(T item, Integer userId);
 
 	public <T> List<T> getListFromNamedQuery(String namedQueryString);
 	
 	public <T extends DalModel> T getById(Class<T> clazz, Integer id);
 	
 	public <T> T getEntityById(Class<T> class1, Integer id);
+
+	
 }

@@ -35,7 +35,7 @@ public class DalUser extends DalAuditableModel {
 
 	
 
-	@Column(name = "USER_NAME")
+	@Column(name = "USERNAME")
 	public String getUserName() {
 		return userName;
 	}

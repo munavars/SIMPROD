@@ -63,10 +63,10 @@ public class BaseDao implements IDataAccessLayer {
 	@Transactional
 	public <T extends DalModel> T create(T item, String userId) {
 		if (item instanceof DalAuditableModel) {
-//			DalUser dbUser = getReference(DalUser.class, userId);
+			DalUser dbUser = getReference(DalUser.class, userId);
 			DalAuditableModel aItem = (DalAuditableModel) item;
-			/*aItem.setCreatedBy(dbUser);
-			aItem.setModifiedBy(dbUser);*/
+			aItem.setCreatedBy(dbUser);
+			aItem.setModifiedBy(dbUser);
 			Calendar createdDate = Calendar.getInstance();
 			aItem.setCreatedDate(createdDate);
 
@@ -112,7 +112,7 @@ public class BaseDao implements IDataAccessLayer {
 		if (existingItem instanceof DalAuditableModel) {
 			DalUser dbUser = getReference(DalUser.class, userId);
 			DalAuditableModel itemToUpdate = (DalAuditableModel) item;
-			/*itemToUpdate.setModifiedBy(dbUser);*/
+			itemToUpdate.setModifiedBy(dbUser);
 			entityManager.detach(existingItem);
 		}
 		return item;

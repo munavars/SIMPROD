@@ -86,7 +86,7 @@ public class UserController extends BaseController {
 			} catch(Exception e) {
 				logger.info("Error occured while retrieving employee info: "+e);
 			}
-			return "program_details2";
+			return "index";
 		} else {
 			model.addAttribute("LoginErrorMessage",
 					"*** Your id " + theUserid + " or your password is not valid. Please check and try again.");

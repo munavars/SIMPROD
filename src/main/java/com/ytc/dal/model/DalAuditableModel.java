@@ -13,10 +13,10 @@ import javax.persistence.MappedSuperclass;
 public abstract class DalAuditableModel extends DalModel {
 
 
-    private DalUser createdBy;
-    private Calendar createdDate;
-    private DalUser modifiedBy;
-    private Calendar modifiedDate;
+    protected DalUser createdBy;
+    protected Calendar createdDate;
+    protected DalUser modifiedBy;
+    protected Calendar modifiedDate;
     
     public DalAuditableModel() {
         super();
@@ -24,6 +24,9 @@ public abstract class DalAuditableModel extends DalModel {
         createdDate = Calendar.getInstance();
         createdDate.clear();
         createdDate.setTimeInMillis(curTimeMillis);
+        modifiedDate= Calendar.getInstance();
+        modifiedDate.clear();
+        modifiedDate.setTimeInMillis(curTimeMillis);
     }
 
     public DalAuditableModel(DalAuditableModel m) {
@@ -64,7 +67,7 @@ public abstract class DalAuditableModel extends DalModel {
     }
 
     //@Version
-    @Column(name = "MODIFIED_DATE", columnDefinition = "timestamp")
+    @Column(name = "MODIFIED_DATE", columnDefinition = "timestamp",updatable = true, insertable = true)
     public Calendar getModifiedDate() {
         return modifiedDate;
     }

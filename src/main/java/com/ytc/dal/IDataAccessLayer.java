@@ -32,6 +32,9 @@ public interface IDataAccessLayer {
 
 	public <T extends DalModel> T update(T item, String userId);
 
-
-
+	public <T> List<T> getListFromNamedQuery(String namedQueryString);
+	
+	public <T extends DalModel> T getById(Class<T> clazz, Integer id);
+	
+	public <T> T getEntityById(Class<T> class1, Integer id);
 }

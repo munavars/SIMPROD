@@ -35,4 +35,14 @@
 	<bean id="employeeService" class="com.ytc.service.impl.EmployeeService">
 	</bean>
 	
+	<bean id="programService" class="com.ytc.service.impl.ProgramServiceImpl">
+	</bean>
+	
+	<bean id="programUpdateService" class="com.ytc.service.impl.ProgramUpdateServiceImpl">
+	</bean>
+	
+		
+	<bean id="programCreateService" class="com.ytc.service.impl.ProgramCreateServiceImpl">
+	</bean>
+	
 </beans>

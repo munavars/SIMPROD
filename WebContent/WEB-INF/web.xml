@@ -110,7 +110,7 @@
 	</session-config>
 	<resource-ref>
 		<description>SalesInformationManagement</description>
-		<res-ref-name>dataSource</res-ref-name>
+		<res-ref-name>jdbc/localJNDITest</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 		<res-sharing-scope>Shareable</res-sharing-scope>

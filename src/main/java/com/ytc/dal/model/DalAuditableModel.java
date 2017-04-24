@@ -13,9 +13,9 @@ import javax.persistence.MappedSuperclass;
 public abstract class DalAuditableModel extends DalModel {
 
 
-    private DalUser createdBy;
+    /*private DalUser createdBy;*/
     private Calendar createdDate;
-    private DalUser modifiedBy;
+    /*private DalUser modifiedBy;*/
     private Calendar modifiedDate;
     
     public DalAuditableModel() {
@@ -28,13 +28,13 @@ public abstract class DalAuditableModel extends DalModel {
 
     public DalAuditableModel(DalAuditableModel m) {
         super();
-        this.modifiedBy = m.modifiedBy;
-        this.createdBy = m.createdBy;
+       /* this.modifiedBy = m.modifiedBy;
+        this.createdBy = m.createdBy;*/
         this.modifiedDate = m.modifiedDate;
         this.createdDate = m.createdDate;
     }
 
-    @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.LAZY)
+/*    @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "CREATED_BY", updatable = false, insertable = true)
     public DalUser getCreatedBy() {
         return createdBy;
@@ -42,7 +42,7 @@ public abstract class DalAuditableModel extends DalModel {
 
     public void setCreatedBy(DalUser createdBy) {
         this.createdBy = createdBy;
-    }
+    }*/
 
     @Column(name = "CREATED_DATE", columnDefinition = "timestamp", updatable = false, insertable = true)
     public Calendar getCreatedDate() {
@@ -52,7 +52,7 @@ public abstract class DalAuditableModel extends DalModel {
     public void setCreatedDate(Calendar createdDate) {
         this.createdDate = createdDate;
     }
-
+/*
     @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "MODIFIED_BY")
     public DalUser getModifiedBy() {
@@ -61,7 +61,7 @@ public abstract class DalAuditableModel extends DalModel {
 
     public void setModifiedBy(DalUser modifiedBy) {
         this.modifiedBy = modifiedBy;
-    }
+    }*/
 
   
     @Column(name = "MODIFIED_DATE", columnDefinition = "timestamp")

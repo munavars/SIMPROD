@@ -9,26 +9,28 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class DalModel implements Cloneable {
 
-	
-	private int id;
+
+
+	private Integer id;
 
 	protected DalModel() {
 	}
 
 	protected DalModel(DalModel m) {
-		
+
 	}
 
+
 	@Id
-	@Column(name = "ID")
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	public Integer getId() { 
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-		
+
 }

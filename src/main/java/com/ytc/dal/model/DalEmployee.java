@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="EMPLOYEE")
-public class DalEmployee  extends DalModel {
+public class DalEmployee {
 	
 	@Column(name="EMP_ID")
 	private String EMP_ID;

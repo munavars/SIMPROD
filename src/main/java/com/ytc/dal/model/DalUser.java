@@ -22,7 +22,7 @@ public class DalUser extends DalAuditableModel {
 
 	}	
 
-	public DalUser(int id) {
+	public DalUser(Integer id) {
 		setId(id);
 	}
 	
@@ -35,7 +35,7 @@ public class DalUser extends DalAuditableModel {
 
 	
 
-	@Column(name = "USER_NAME")
+	@Column(name = "USERNAME")
 	public String getUserName() {
 		return userName;
 	}

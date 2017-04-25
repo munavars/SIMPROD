@@ -21,7 +21,7 @@ public class CustomerService implements ICustomerService {
 
 
 	@Override
-	public Customer getDetail(String customerId) {
+	public Customer getDetail(Integer customerId) {
 		DalCustomer dalCustomer = baseDao.getById(DalCustomer.class, customerId);
 		ModelMapper modelMapper = new ModelMapper();
 		Customer customer = modelMapper.map(dalCustomer, Customer.class);

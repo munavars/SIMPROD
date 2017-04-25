@@ -11,5 +11,5 @@ import com.ytc.common.model.Customer;
  *
  */
 public interface ICustomerService {
-	Customer getDetail(String customerId);
+	Customer getDetail(Integer customerId);
 }

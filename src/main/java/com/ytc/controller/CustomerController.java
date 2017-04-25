@@ -20,7 +20,7 @@ import com.ytc.service.ICustomerService;
 public class CustomerController extends BaseController  {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody ModelResult<Customer> getDetail(HttpServletRequest request, @PathVariable String id) {
+	public @ResponseBody ModelResult<Customer> getDetail(HttpServletRequest request, @PathVariable Integer id) {
 		return new ModelResult<Customer>(getService(request).getDetail(id));
 	}
 	

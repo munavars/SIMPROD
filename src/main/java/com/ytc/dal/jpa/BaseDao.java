@@ -3,6 +3,7 @@
  */
 package com.ytc.dal.jpa;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +73,20 @@ public class BaseDao implements IDataAccessLayer {
 
 		}
 		if (StringUtils.isEmpty(item.getId())) {
-			entityManager.persist(item);
+			//entityManager.persist(item);
+			Session session= entityManager.unwrap(Session.class);
+		    @SuppressWarnings("unused")
+			int result = -1;
+		    try {
+		        Serializable ser = session.save(item);
+		        if (ser != null) {
+		            result = (Integer) ser;
+		        }
+		    } catch (Exception e) {
+		        e.printStackTrace();
+		    }
+		    item.setId(result);
+		  entityManager.persist(item);
 		} else {
 			Session session = entityManager.unwrap(Session.class);
 			session.save(item);

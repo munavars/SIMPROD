@@ -11,7 +11,7 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
 		
-		<jee:jndi-lookup id="dataSource" jndi-name="jdbc/localJNDITest"
+		<jee:jndi-lookup id="dataSource" jndi-name="jdbc/simMSSQL"
 			cache="true" resource-ref="true" lookup-on-startup="false"
 			proxy-interface="javax.sql.DataSource" />
 
@@ -23,7 +23,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
 			<property name="jpaVendorAdapter">
 				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-					<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
+					<property name="databasePlatform" value="org.hibernate.dialect.SQLServer2012Dialect" />
 					<property name="showSql" value="true" />
 					<property name="generateDdl" value="false" />
 				</bean>

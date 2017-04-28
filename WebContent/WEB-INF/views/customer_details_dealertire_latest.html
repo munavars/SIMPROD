@@ -52,6 +52,9 @@
 }
 </style>	
     <script type="text/javascript">
+    
+    //Export to Excel 
+    
     var tableToExcel = (function() {
     	  var uri = 'data:application/vnd.ms-excel;base64,'
     	    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
@@ -60,7 +63,11 @@
     	  return function(table, name) {
     	    if (!table.nodeType) table = document.getElementById(table)
     	    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-    	    window.location.href = uri + base64(format(template, ctx))
+    	   // window.location.href = uri + base64(format(template, ctx))
+		    var a = document.createElement('a');
+		    a.href = uri + base64(format(template, ctx));
+			a.download =  $("#custname").text()+'.xls';
+		    a.click(); 
     	  }
     	})()
   
@@ -70,11 +77,29 @@
 		//alert(window.location.search.substr(1)); 	
 		getParams = new URLSearchParams(window.location.search);
 		var custId=getParams.get('custId'); 
-		//Loading the program details table using datatable 
-		 
+		
+		//loading the customer details
+		
+		$.ajax({ 
+			   type: "GET",
+			   dataType: "json",
+			   url: '/SIM/v1/customer/getDetail/'+custId,
+			   success: function(cust){
+				   $("#custname").text(cust.data.customerName);
+				   $("#custno").html("<strong>"+cust.data.customerNumber+"</strong>");
+				   $("#bu").html("<strong>"+cust.data.bu+"</strong>");
+				   $("#level1").html("<strong>"+cust.data.employeeHierarchy.lvl1EmpName+"</strong>, "+cust.data.employeeHierarchy.lvl1Title);
+				   $("#level3").html("<strong>"+cust.data.employeeHierarchy.lvl3EmpName+"</strong>, "+cust.data.employeeHierarchy.lvl3Title);
+                   
+			   }
+			});
+		
+		
+		//Loading the program details table using datatable 	
+				 
 		 var table=$("#editabletest").DataTable( {
 		    ajax: {
-		        url: '/SIM/v1/program/'+custId+'/1',
+		        url: '/SIM/program/'+custId+'/0',
 		        dataSrc: "data",
 		        type: "GET"
 		    },
@@ -87,9 +112,9 @@
 				   
        			{ data: "programId" },
 	            { data: "programName" },
-	            { data: "paidFrequency" },
-	            { data: "programStartDate" },
-	            { data: "programEndDate" },
+	            { data: "payoutFrequency" },
+	            { data: "beginDate" },
+	            { data: "endDate" },
 	            { data: "btl" },
 	            { data: "pricingType" },				            
 	            { data: "paidBasedOn" },
@@ -113,8 +138,8 @@
 		 
 		 $('#program_status').on('change',function() {
 			 
-		  	  var url='/SIM/v1/program/'+custId+'/'+$(this).val();
-		  	  console.log(url);
+		  	  var url='/SIM/program/'+custId+'/'+$(this).val();
+		  	  //console.log(url);
 		  	  if($(this).val()){
 		  	  	  table.ajax.url(url).load();
 		  	  }else {
@@ -267,12 +292,12 @@
                   </header>
                   <div class="panel-body">
                       <div class="col-lg-6">
-                        <h5>DEALER TIRE LLC</h5>
+                        <h5 id="custname">DEALER TIRE LLC</h5>
                           <ul class="list-unstyled">
-                              <li><strong>22031</strong></li>
-                              <li><strong>Consumer</strong></li>
-                              <li><strong>Tony Carlfeldt</strong>, Account Manager</li>
-                              <li><strong>Kevin Rogers</strong>, Director, Consumer Sales</li>
+                              <li id="custno"><strong>22031</strong></li>
+                              <li id="bu"><strong>Consumer</strong></li>
+                              <li id="level1"><strong>Tony Carlfeldt</strong>, Account Manager</li>
+                              <li id="level3"><strong>Kevin Rogers</strong>, Director, Consumer Sales</li>
                           </ul>
                       </div>
                       <div class="adv-table editable-table">
@@ -307,7 +332,7 @@
                                                 </select>
                                           </div>
                               </div>
-                                   <div class="btn-group">
+                                   <div class="btn-group m-left8">
                                   <a href="program_details.html"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
                               </div>
                                  <div class="btn-group m-left8">

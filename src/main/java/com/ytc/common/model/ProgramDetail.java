@@ -20,6 +20,21 @@ public class ProgramDetail extends Model{
 	private String BTL;
 	private String payoutFrequency;
 	private String paidBasedOn;
+	private Integer programId;
+	private String achievedBasedOn;
+	private String isTiered;
+	private double accrualAmount;
+	private String accrualType;
+	private String currentTier;
+	private String beginRange;
+	private String trueUp;
+	private String tierRate;
+	private double accruedAmount;
+	private double creditAmount;
+	private double payables;
+	private String glBalance;
+	
+	
 	
 	private ProgramDetailsDropDown dropdownList;
 
@@ -110,4 +125,86 @@ public class ProgramDetail extends Model{
 	public void setBTL(String bTL) {
 		BTL = bTL;
 	}
+	public Integer getProgramId() {
+		return programId;
+	}
+	public void setProgramId(Integer programId) {
+		this.programId = programId;
+	}
+	public String getAchievedBasedOn() {
+		return achievedBasedOn;
+	}
+	public void setAchievedBasedOn(String achievedBasedOn) {
+		this.achievedBasedOn = achievedBasedOn;
+	}
+	public String getIsTiered() {
+		return isTiered;
+	}
+	public void setIsTiered(String isTiered) {
+		this.isTiered = isTiered;
+	}
+	public double getAccrualAmount() {
+		return accrualAmount;
+	}
+	public void setAccrualAmount(double accrualAmount) {
+		this.accrualAmount = accrualAmount;
+	}
+	public String getAccrualType() {
+		return accrualType;
+	}
+	public void setAccrualType(String accrualType) {
+		this.accrualType = accrualType;
+	}
+	public String getCurrentTier() {
+		return currentTier;
+	}
+	public void setCurrentTier(String currentTier) {
+		this.currentTier = currentTier;
+	}
+	public String getBeginRange() {
+		return beginRange;
+	}
+	public void setBeginRange(String beginRange) {
+		this.beginRange = beginRange;
+	}
+	public String getTrueUp() {
+		return trueUp;
+	}
+	public void setTrueUp(String trueUp) {
+		this.trueUp = trueUp;
+	}
+	public String getTierRate() {
+		return tierRate;
+	}
+	public void setTierRate(String tierRate) {
+		this.tierRate = tierRate;
+	}
+	public double getAccruedAmount() {
+		return accruedAmount;
+	}
+	public void setAccruedAmount(double accruedAmount) {
+		this.accruedAmount = accruedAmount;
+	}
+	public double getCreditAmount() {
+		return creditAmount;
+	}
+	public void setCreditAmount(double creditAmount) {
+		this.creditAmount = creditAmount;
+	}
+	public double getPayables() {
+		return payables;
+	}
+	public void setPayables(double payables) {
+		this.payables = payables;
+	}
+	public String getGlBalance() {
+		return glBalance;
+	}
+	public void setGlBalance(String glBalance) {
+		this.glBalance = glBalance;
+	}
+	
+	
+	
+	
 }

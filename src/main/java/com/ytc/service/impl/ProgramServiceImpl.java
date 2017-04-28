@@ -1,10 +1,12 @@
 package com.ytc.service.impl;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -484,7 +486,8 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgram(String customerId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
-		/*String sql="select * from PROGRAM_DETAIL where PGM_HDR_ID in(select ID from PROGRAM_HEADER where CUSTOMER_ID=:custId)and STATUS_ID in (:status)";
+		//String sql="select * from PROGRAM_DETAIL where PGM_HDR_ID in(select ID from PROGRAM_HEADER where CUSTOMER_ID=:custId)and STATUS_ID in (:status)";
+		String sql=QueryConstant.PROGRAM_LIST;
 		List<String> selectedValues = Arrays.asList(status.split(","));
 		Map<String, Object> queryParams = new HashMap<>();
 		queryParams.put("custId", customerId);
@@ -498,18 +501,15 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setProgramId(dalProgramDetail.getId());
 			programDetail.setProgramName(dalProgramDetail.getProgramMaster().getProgram());
 			programDetail.setPayoutFrequency(dalProgramDetail.getPaidFrequency().getFrequency());
-			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");	
+			programDetail.setBeginDate(dalProgramDetail.getProgramStartDate().getTime());
+			programDetail.setEndDate(dalProgramDetail.getProgramStartDate().getTime());
 			
-//			programDetail.setProgramStartDate(df.format(dalProgramDetail.getProgramStartDate()));
-			programDetail.setProgramStartDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramStartDate().getTime(),
-					"MM/dd/yyyy"));
-			
-			programDetail.setProgramEndDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramEndDate().getTime(),
-					"MM/dd/yyyy"));
+			//programDetail.setProgramEndDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramEndDate().getTime(),
+				//	"MM/dd/yyyy"));
 			
 //			programDetail.setProgramEndDate(df.format(dalProgramDetail.getProgramEndDate()));
 			programDetail.setBTL(dalProgramDetail.getBTL());
-			programDetail.setPricingType(dalProgramDetail.getDalPricingType().getType());
+			programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());
 			programDetail.setPaidBasedOn(dalProgramDetail.getPaidBasedOn().getBaseItem());
 			programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().getBaseItem());
 			programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase("0")?"Yes":"No");
@@ -526,10 +526,9 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetailList.add(programDetail);
 		}
 		
-*/
+
 		return programDetailList;
 	}
-	
 	
 	/* (non-Javadoc)
 	 * @see com.ytc.service.IProgramService#addProgramTier(java.lang.String)

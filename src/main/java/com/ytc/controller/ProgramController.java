@@ -133,7 +133,7 @@ public class ProgramController extends BaseController {
 	}*/
 	
 	
-	@RequestMapping(value = "v1/{id}/{status}", method = RequestMethod.GET)
+	@RequestMapping(value = "/{id}/{status}", method = RequestMethod.GET)
 	public @ResponseBody ListResult<ProgramDetail> getProgram(HttpServletRequest request, @PathVariable String id,  @PathVariable String status) {
 		
 		return new ListResult<ProgramDetail>( getService(request).getProgram(id, status));

@@ -10,24 +10,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PAID_TYPE")
 @NamedQueries({
-	@NamedQuery(name="DalPaidType.getAllDetails", query = "select o from DalPaidType o")
+	@NamedQuery(name="DalPaidType.getAllDetails", query = "select o from DalPaidType o order by o.type")
 })
-public class DalPaidType {
-	
-	@Id
-	@Column(name="ID")
-	private Integer id;
+public class DalPaidType extends DalModel{
 	
 	@Column(name="TYPE")
 	private String type;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getType() {
 		return type;

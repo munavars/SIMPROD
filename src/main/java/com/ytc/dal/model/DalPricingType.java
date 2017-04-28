@@ -10,23 +10,11 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PRICING_TYPE")
 @NamedQueries({
-	@NamedQuery(name="DalPricingType.getAllDetails", query = "select o from DalPricingType o")
+	@NamedQuery(name="DalPricingType.getAllDetails", query = "select o from DalPricingType o order by o.type")
 })
-public class DalPricingType {
-
-	private Integer id;
+public class DalPricingType extends DalModel{
 
 	private String type;
-	
-	@Id
-	@Column(name="ID")
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	@Column(name="TYPE")
 	public String getType() {

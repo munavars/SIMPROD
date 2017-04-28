@@ -35,13 +35,19 @@ public class UserController extends BaseController {
 	}
 
 	@RequestMapping(value = "/getEmployeeHierarchy/{empId}", method = RequestMethod.GET)
-	public @ResponseBody List getEmployeeHierarchy(HttpServletRequest request, @PathVariable String empId) {
+	public @ResponseBody List getEmployeeHierarchy(HttpServletRequest request, @PathVariable Integer empId) {
 		logger.info("UserController /getEmployeeHierarchy/{empId}");
 		List aList = getHierarchyQueryResult(request, empId);
 		logger.info("UserController getHiearchyQueryResult: ["+aList+"]");
 		return aList;
 	}
 
+	@RequestMapping(value = { "/", "/programDetail" })
+	public String gotoProgramDetail() {
+		logger.info("UserController.ProgramDetailsPage");
+		return "program_details2";
+	}
+	
 	@RequestMapping(value = { "/", "/login" })
 	public String presentHomePage() {
 		logger.info("UserController.presentHomePage");
@@ -111,7 +117,7 @@ public class UserController extends BaseController {
 		return isValidUser;
 	}
 	
-	public List<String> getHierarchyQueryResult(HttpServletRequest request, String empId) {
+	public List<String> getHierarchyQueryResult(HttpServletRequest request, Integer empId) {
 		List<String> resultList = null;
 		String queryString = "SELECT * FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = '"+ empId+"' or LVL1_EMP_ID = '"+empId+"' or LVL2_EMP_ID = '"+empId+
 				"' or LVL3_EMP_ID = '"+empId+"' or LVL4_EMP_ID = '"+empId+"' or LVL5_EMP_ID = '"+empId+"'";

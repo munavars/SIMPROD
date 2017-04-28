@@ -1,10 +1,10 @@
 package com.ytc.dal.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,7 +15,7 @@ public class DalProgramDetPaid extends DalAuditableModel{
     
     private String method;
 
-	private DalTagItems tagId;
+	private Integer tagId;
     
     private String value;
 
@@ -38,13 +38,12 @@ public class DalProgramDetPaid extends DalAuditableModel{
 		this.method = method;
 	}
 
-    @OneToOne
-    @JoinColumn(name = "TAG_ID", referencedColumnName = "ITEM_ID")
-	public DalTagItems getTagId() {
+    @Column(name = "TAG_ID")
+	public Integer getTagId() {
 		return tagId;
 	}
 
-	public void setTagId(DalTagItems tagId) {
+	public void setTagId(Integer tagId) {
 		this.tagId = tagId;
 	}
 

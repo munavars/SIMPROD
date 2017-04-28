@@ -15,9 +15,9 @@ public class DalProgramDetAchieved extends DalAuditableModel{
    
     private String achMethod;
     
-    private DalTagItems achTagItems;
-    
-    private String achValue;
+    private Integer achTagId;
+
+	private String achValue;
 
     @ManyToOne
 	@JoinColumn(name = "PGM_DETAIL_ID", referencedColumnName = "ID")
@@ -38,16 +38,6 @@ public class DalProgramDetAchieved extends DalAuditableModel{
 		this.achMethod = achMethod;
 	}
 
-	@OneToOne
-    @JoinColumn(name = "ACH_TAG_ID", referencedColumnName = "ITEM_ID")
-	public DalTagItems getAchTagItems() {
-		return achTagItems;
-	}
-
-	public void setAchTagItems(DalTagItems achTagItems) {
-		this.achTagItems = achTagItems;
-	}
-
     @Column(name = "ACH_VALUE")
 	public String getAchValue() {
 		return achValue;
@@ -55,5 +45,14 @@ public class DalProgramDetAchieved extends DalAuditableModel{
 
 	public void setAchValue(String achValue) {
 		this.achValue = achValue;
+	}
+	
+	@Column(name = "ACH_TAG_ID")
+    public Integer getAchTagId() {
+		return achTagId;
+	}
+
+	public void setAchTagId(Integer achTagId) {
+		this.achTagId = achTagId;
 	}
 }

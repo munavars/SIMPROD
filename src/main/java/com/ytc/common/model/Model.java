@@ -3,14 +3,14 @@ package com.ytc.common.model;
 import java.io.Serializable;
 
 public abstract class Model implements Cloneable, Serializable {
-	/*private static final long serialVersionUID = 2514719982327593095L;*/
+	private static final long serialVersionUID = 2514719982327593095L;
 
-	private String id;
+	private Integer id;
 
 	protected Model() {
 	}
 
-	protected Model(String id) {
+	protected Model(Integer id) {
 		this.id = id;
 	}
 
@@ -18,11 +18,11 @@ public abstract class Model implements Cloneable, Serializable {
 		id = m.id;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

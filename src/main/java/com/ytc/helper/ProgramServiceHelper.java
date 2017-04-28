@@ -2,6 +2,7 @@ package com.ytc.helper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,12 +20,20 @@ public class ProgramServiceHelper {
 	
 	public static String convertToString(Object obj){
 		String returnValue = null;
-		if(obj != null && obj instanceof String){
+		if(obj != null){
 			returnValue = String.valueOf(obj);
 		}
 		return returnValue;
 	}
 
+	public static Date convertToDateFromCalendar(Calendar input1){
+		Date newDate = null;
+		if(input1 != null){
+			newDate = input1.getTime();
+		}
+		return newDate;
+	}
+	
 	public static String convertDateToString(Date inputDate, String format){
 		String convertedDateString = null;
 		
@@ -40,7 +49,7 @@ public class ProgramServiceHelper {
 		
 		if(inputDate != null && format != null){
 			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			String convertedDateString = sdf.format(new Date());
+			String convertedDateString = sdf.format(inputDate);
 			try {
 				newDate = sdf.parse(convertedDateString);
 			} catch (ParseException e) {
@@ -52,7 +61,7 @@ public class ProgramServiceHelper {
 	}
 	
 	public static void getExistingPaidDetails(Map<String, Set<String>> existingIncludedMap,
-			Map<String, Set<String>> existingExcludedMap, List<DalProgramDetPaid> dalProgramDetPaidList) {
+			Map<String, Set<String>> existingExcludedMap, Set<DalProgramDetPaid> dalProgramDetPaidList) {
 		Set<String> existingIncludeList = null;
 		Set<String> existingExcludeList = null;
 		if(dalProgramDetPaidList != null){
@@ -87,32 +96,32 @@ public class ProgramServiceHelper {
 
 
 	public static void getExistingAchievedDetails(Map<String, Set<String>> existingIncludedMap,
-			Map<String, Set<String>> existingExcludedMap, List<DalProgramDetAchieved> dalProgramDetAchievedList) {
+			Map<String, Set<String>> existingExcludedMap, Set<DalProgramDetAchieved> dalProgramDetAchievedList) {
 		Set<String> existingIncludeList = null;
 		Set<String> existingExcludeList = null;
 		if(dalProgramDetAchievedList != null){
 			
 			for(DalProgramDetAchieved dalProgramDetPaid : dalProgramDetAchievedList){
 				if(ProgramConstant.INCLUDED.equals(dalProgramDetPaid.getAchMethod())){
-					if(existingIncludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagItems())) != null){
-						existingIncludeList = existingIncludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagItems()));
+					if(existingIncludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagId())) != null){
+						existingIncludeList = existingIncludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagId()));
 						existingIncludeList.add(dalProgramDetPaid.getAchValue());
 					}
 					else{
 						existingIncludeList = new HashSet<String>(); 
 						existingIncludeList.add(dalProgramDetPaid.getAchValue());
-						existingIncludedMap.put(String.valueOf(dalProgramDetPaid.getAchTagItems()), existingIncludeList);
+						existingIncludedMap.put(String.valueOf(dalProgramDetPaid.getAchTagId()), existingIncludeList);
 					}
 				}
 				else if(ProgramConstant.EXCLUDED.equals(dalProgramDetPaid.getAchMethod())){
-					if(existingExcludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagItems())) != null){
-						existingExcludeList = existingExcludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagItems()));
+					if(existingExcludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagId())) != null){
+						existingExcludeList = existingExcludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagId()));
 						existingExcludeList.add(dalProgramDetPaid.getAchValue());
 					}
 					else{
 						existingExcludeList = new HashSet<String>(); 
 						existingExcludeList.add(dalProgramDetPaid.getAchValue());
-						existingExcludedMap.put(String.valueOf(dalProgramDetPaid.getAchTagItems()), existingExcludeList);
+						existingExcludedMap.put(String.valueOf(dalProgramDetPaid.getAchTagId()), existingExcludeList);
 					}
 				}
 
@@ -121,7 +130,7 @@ public class ProgramServiceHelper {
 	}
 	
 	public static Map<String, Set<String>> deletePaidOnDetails(Map<String, Set<String>> existingIncludedMap,
-			Map<String, Set<String>> existingExcludedMap, List<DalProgramDetPaid> dalProgramDetPaidList, ProgramPaidOn programPaidOn) {
+			Map<String, Set<String>> existingExcludedMap, Set<DalProgramDetPaid> dalProgramDetPaidList, ProgramPaidOn programPaidOn) {
 		Map<String, Set<String>> deletedValueForTagId = new HashMap<String, Set<String>>();
 		/*Include-  deleted value*/
 		for(Map.Entry<String, Set<String>> existingMap : existingIncludedMap.entrySet()){

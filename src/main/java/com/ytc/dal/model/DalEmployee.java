@@ -9,8 +9,9 @@ import javax.persistence.Table;
 @Table(name="EMPLOYEE")
 public class DalEmployee {
 	
+	@Id
 	@Column(name="EMP_ID")
-	private String EMP_ID;
+	private Integer EMP_ID;
 	
 	@Column(name="FIRST_NAME")
 	private String FIRST_NAME;
@@ -33,7 +34,6 @@ public class DalEmployee {
 	@Column(name="MANAGER_ID")
 	private String MANAGER_ID;
 	
-	@Id
 	@Column(name="LOGIN_ID")
 	private String LOGIN_ID;
 	
@@ -53,11 +53,11 @@ public class DalEmployee {
 		LOGIN_ID = e.LOGIN_ID;
 	}
 
-	public String getEMP_ID() {
+	public Integer getEMP_ID() {
 		return EMP_ID;
 	}
 
-	public void setEMP_ID(String eMP_ID) {
+	public void setEMP_ID(Integer eMP_ID) {
 		EMP_ID = eMP_ID;
 	}
 

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PROGRAM_MASTER")
 @NamedQueries({
-	@NamedQuery(name="DalProgramMaster.getAllDetails", query = "select o from DalProgramMaster o")
+	@NamedQuery(name="DalProgramMaster.getAllDetails", query = "select o from DalProgramMaster o order by o.program ")
 })
 public class DalProgramMaster extends DalAuditableModel {
 

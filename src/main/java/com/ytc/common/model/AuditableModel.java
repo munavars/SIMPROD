@@ -20,7 +20,7 @@ public abstract class AuditableModel extends Model {
     public AuditableModel() {
     }
 
-    public AuditableModel(String id) {
+    public AuditableModel(Integer id) {
         super(id);
     }
 

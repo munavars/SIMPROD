@@ -157,7 +157,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		dalProgramDet.setAccrualType(programDetail.getAmountType());
 		dalProgramDet.setPayTo(programDetail.getPayTo());
 		dalProgramDet.setPaidType(Integer.valueOf(programDetail.getPaidType()));
-		dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "Y" : "N");
+		dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "0" : "1");
 		dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
 		dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
 		dalProgramDetailList.add(dalProgramDet);

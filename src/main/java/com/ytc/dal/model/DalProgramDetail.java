@@ -1,13 +1,14 @@
 package com.ytc.dal.model;
 
 import java.util.Calendar;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -17,11 +18,15 @@ import javax.persistence.Table;
 @Table(name = "PROGRAM_DETAIL")
 public class DalProgramDetail extends DalAuditableModel {
 
+    /**
+	 * serialVersion.
+	 */
+	private static final long serialVersionUID = 1L;
 	private Calendar programStartDate;
     private Calendar programEndDate;
     private String longDesc;
     private String shortDesc;
-    private DalPricingType dalPricingType;
+    private Integer pricingType;
     private String isTiered;
     private double accrualAmount;
     private String accrualType;
@@ -33,50 +38,45 @@ public class DalProgramDetail extends DalAuditableModel {
     private String BTL;
     private int budgetMarker;
     private int forecastMarker;
-	private int actualMarker;
+    private int actualMarker;
     private String trueUp;
-    private String zmAppById;
+    
+    private DalEmployee zmAppById;
     private Calendar zmAppDate;
-    private String dirAppById;
+    private DalEmployee dirAppById;
     private Calendar dirAppDate;
-    private String execAppById;
+    private DalEmployee execAppById;
     private Calendar execAppDate;
-    private String tbpAppById;
+    private DalEmployee tbpAppById;
     private Calendar tbpAppDate;
+    
     private int statusId;
     private DalProgramMaster programMaster;
-	private DalProgramHeader dalProgramHeader;
-	private DalPaidType dalPaidType;
-	private List<DalProgramDetAchieved> dalProgramDetAchievedList;
-	private List<DalProgramDetPaid> dalProgramDetPaidList;
-	
-	@Column(name = "LONG_DESC")
+    private DalProgramHeader dalProgramHeader;
+	private Integer paidType;
+    private Set<DalProgramDetAchieved> dalProgramDetAchievedList;
+    private Set<DalProgramDetPaid> dalProgramDetPaidList;
+    private DalProgramDetailTier pgmDetailTier;
+    private DalAccrualData accuralData;
+                
+    @Column(name = "LONG_DESC")
     public String getLongDesc() {
-		return longDesc;
-	}
-	public void setLongDesc(String longDesc) {
-		this.longDesc = longDesc;
-	}
-	
-	@Column(name = "SHORT_DESC")
-	public String getShortDesc() {
-		return shortDesc;
-	}
-	public void setShortDesc(String shortDesc) {
-		this.shortDesc = shortDesc;
-	}
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="PAID_TYPE_ID", referencedColumnName = "ID")
-	public DalPaidType getDalPaidType() {
-		return dalPaidType;
-	}
-	public void setDalPaidType(DalPaidType dalPaidType) {
-		this.dalPaidType = dalPaidType;
-	}
-	
-	/**
-    * @return the progamStartDate
+                    return longDesc;
+    }
+    public void setLongDesc(String longDesc) {
+                    this.longDesc = longDesc;
+    }
+    
+    @Column(name = "SHORT_DESC")
+    public String getShortDesc() {
+                    return shortDesc;
+    }
+    public void setShortDesc(String shortDesc) {
+                    this.shortDesc = shortDesc;
+    }
+      
+    /**
+     * @return the progamStartDate
     */
     @Column(name = "PGM_START_DATE")
     public Calendar getProgramStartDate() {
@@ -147,8 +147,8 @@ public class DalProgramDetail extends DalAuditableModel {
     /**
     * @return the achBasedMetricId
     */
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "ACH_BASED_METRIC_ID", referencedColumnName = "BASE_ITEM_ID")
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ACH_BASED_METRIC_ID", referencedColumnName = "ID")
     public DalBaseItems getAchBasedMetric() {
                     return achBasedMetric;
     }
@@ -161,8 +161,8 @@ public class DalProgramDetail extends DalAuditableModel {
     /**
     * @return the achBasedFreqId
     */
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name = "ACH_BASED_FREQ_ID", referencedColumnName = "FREQ_ID")
+    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "ACH_BASED_FREQ_ID", referencedColumnName = "ID")
     public DalFrequency getAchBasedFreq() {
         return achBasedFreq;
     }
@@ -253,14 +253,15 @@ public class DalProgramDetail extends DalAuditableModel {
     /**
     * @return the zmAppById
     */
-    @Column(name = "ZM_APP_BY_ID")
-    public String getZmAppById() {
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="ZM_APP_BY_ID", referencedColumnName = "EMP_ID", insertable = false, updatable =false)
+    public DalEmployee getZmAppById() {
                     return zmAppById;
     }
     /**
     * @param zmAppById the zmAppById to set
     */
-    public void setZmAppById(String zmAppById) {
+    public void setZmAppById(DalEmployee zmAppById) {
                     this.zmAppById = zmAppById;
     }
     /**
@@ -279,14 +280,15 @@ public class DalProgramDetail extends DalAuditableModel {
     /**
     * @return the dirAppById
     */
-    @Column(name = "DIR_APP_BY_ID")
-    public String getDirAppById() {
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="DIR_APP_BY_ID", referencedColumnName = "EMP_ID", insertable = false, updatable =false)
+    public DalEmployee getDirAppById() {
                     return dirAppById;
     }
     /**
     * @param dirAppById the dirAppById to set
     */
-    public void setDirAppById(String dirAppById) {
+    public void setDirAppById(DalEmployee dirAppById) {
                     this.dirAppById = dirAppById;
     }
     /**
@@ -305,14 +307,15 @@ public class DalProgramDetail extends DalAuditableModel {
     /**
     * @return the execAppById
     */
-    @Column(name = "EXEC_APP_BY_ID")
-    public String getExecAppById() {
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="EXEC_APP_BY_ID", referencedColumnName = "EMP_ID", insertable = false, updatable =false)
+    public DalEmployee getExecAppById() {
                     return execAppById;
     }
     /**
     * @param execAppById the execAppById to set
     */
-    public void setExecAppById(String execAppById) {
+    public void setExecAppById(DalEmployee execAppById) {
                     this.execAppById = execAppById;
     }
     /**
@@ -331,14 +334,15 @@ public class DalProgramDetail extends DalAuditableModel {
     /**
     * @return the tbpAppById
     */
-    @Column(name = "TBP_APP_BY_ID")
-    public String getTbpAppById() {
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="TBP_APP_BY_ID", referencedColumnName = "EMP_ID", insertable = false, updatable =false)
+    public DalEmployee getTbpAppById() {
                     return tbpAppById;
     }
     /**
     * @param tbpAppById the tbpAppById to set
     */
-    public void setTbpAppById(String tbpAppById) {
+    public void setTbpAppById(DalEmployee tbpAppById) {
                     this.tbpAppById = tbpAppById;
     }
     /**
@@ -382,7 +386,7 @@ public class DalProgramDetail extends DalAuditableModel {
     public void setPaidFrequency(DalFrequency paidFrequency) {
                     this.paidFrequency = paidFrequency;
     }
-    /**
+   /**
     * @return the paidBase
     */
     @OneToOne(cascade=CascadeType.ALL)
@@ -396,22 +400,6 @@ public class DalProgramDetail extends DalAuditableModel {
     public void setPaidBasedOn(DalBaseItems paidBase) {
                     this.paidBasedOn = paidBase;
     }
-    /**
-    * @return the dalPricingType
-    */
-    
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="PRICING_TYPE_ID", referencedColumnName = "ID")
-    public DalPricingType getDalPricingType() {
-		return dalPricingType;
-	}
-	
-    /**
-    * @param dalPricingType the pricingType to set
-    */
-	public void setDalPricingType(DalPricingType dalPricingType) {
-		this.dalPricingType = dalPricingType;
-	}
     
     /**
     * @return the programMaster
@@ -419,7 +407,7 @@ public class DalProgramDetail extends DalAuditableModel {
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="PGM_ID")
     public DalProgramMaster getProgramMaster() {
-    	return programMaster;
+                return programMaster;
     }
     /**
     * @param programMaster the programMaster to set
@@ -427,30 +415,80 @@ public class DalProgramDetail extends DalAuditableModel {
     public void setProgramMaster(DalProgramMaster programMaster) {
         this.programMaster = programMaster;
     }
-	
-	@ManyToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "PGM_HDR_ID", referencedColumnName = "ID")
-	public DalProgramHeader getDalProgramHeader() {
-		return dalProgramHeader;
-	}
+                
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name = "PGM_HDR_ID", referencedColumnName = "ID")
+    public DalProgramHeader getDalProgramHeader() {
+                    return dalProgramHeader;
+    }
 
-	public void setDalProgramHeader(DalProgramHeader dalProgramHeader) {
-		this.dalProgramHeader = dalProgramHeader;
+    public void setDalProgramHeader(DalProgramHeader dalProgramHeader) {
+                    this.dalProgramHeader = dalProgramHeader;
+    }
+    
+    @OneToMany(mappedBy="dalProgramDetail", cascade=CascadeType.ALL, fetch =FetchType.EAGER)
+    public Set<DalProgramDetAchieved> getDalProgramDetAchievedList() {
+                    return dalProgramDetAchievedList;
+    }
+    public void setDalProgramDetAchievedList(Set<DalProgramDetAchieved> dalProgramDetAchievedList) {
+                    this.dalProgramDetAchievedList = dalProgramDetAchievedList;
+    }
+    
+    @OneToMany(mappedBy="dalProgramDetails", cascade=CascadeType.ALL, fetch =FetchType.EAGER)
+    public Set<DalProgramDetPaid> getDalProgramDetPaidList() {
+                    return dalProgramDetPaidList;
+    }
+    public void setDalProgramDetPaidList(Set<DalProgramDetPaid> dalProgramDetPaidList) {
+                    this.dalProgramDetPaidList = dalProgramDetPaidList;
+    }
+                
+    /**
+	 * @return the pgmDetailTier
+	 */
+
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumns({
+		@JoinColumn(name = "ID", referencedColumnName = "PGM_DETAIL_ID", insertable=false, updatable=false),
+		@JoinColumn(name = "ACTUAL_MARKER", referencedColumnName = "LEVEL",  insertable=false, updatable=false)})
+	public DalProgramDetailTier getPgmDetailTier() {
+		return pgmDetailTier;
+	}
+	/**
+	 * @param pgmDetailTier the pgmDetailTier to set
+	 */
+	public void setPgmDetailTier(DalProgramDetailTier pgmDetailTier) {
+		this.pgmDetailTier = pgmDetailTier;
 	}
 	
-	@OneToMany(mappedBy="dalProgramDetail", cascade=CascadeType.ALL, fetch =FetchType.EAGER)
-	public List<DalProgramDetAchieved> getDalProgramDetAchievedList() {
-		return dalProgramDetAchievedList;
+	/**
+	 * @return the accuralData
+	 */
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name = "ID", referencedColumnName = "PGM_DET_ID", insertable=false, updatable=false)
+	public DalAccrualData getAccuralData() {
+		return accuralData;
 	}
-	public void setDalProgramDetAchievedList(List<DalProgramDetAchieved> dalProgramDetAchievedList) {
-		this.dalProgramDetAchievedList = dalProgramDetAchievedList;
+	/**
+	 * @param accuralData the accuralData to set
+	 */
+	public void setAccuralData(DalAccrualData accuralData) {
+		this.accuralData = accuralData;
 	}
 	
-	@OneToMany(mappedBy="dalProgramDetails", cascade=CascadeType.ALL, fetch =FetchType.EAGER)
-	public List<DalProgramDetPaid> getDalProgramDetPaidList() {
-		return dalProgramDetPaidList;
+	@Column(name = "PRICING_TYPE_ID")
+    public Integer getPricingType() {
+		return pricingType;
 	}
-	public void setDalProgramDetPaidList(List<DalProgramDetPaid> dalProgramDetPaidList) {
-		this.dalProgramDetPaidList = dalProgramDetPaidList;
+	public void setPricingType(Integer pricingType) {
+		this.pricingType = pricingType;
 	}
+	
+	@Column(name = "PAID_TYPE_ID")
+	public Integer getPaidType() {
+		return paidType;
+	}
+	public void setPaidType(Integer paidType) {
+		this.paidType = paidType;
+	}
+	
 }

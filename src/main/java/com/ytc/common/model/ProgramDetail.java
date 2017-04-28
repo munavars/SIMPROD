@@ -17,11 +17,27 @@ public class ProgramDetail extends Model{
 	private String payTo;
 	private BigDecimal amount;
 	private String amountType;
-	private Boolean btl;
+	private String BTL;
 	private String payoutFrequency;
 	private String paidBasedOn;
-	private ProgramDetailsDropDown dropdownList;
 	
+	private ProgramDetailsDropDown dropdownList;
+
+	private ProgramPaidOn programPaidOn;
+	private ProgramAchieveOn programAchieveOn;
+	
+	public ProgramPaidOn getProgramPaidOn() {
+		return programPaidOn;
+	}
+	public void setProgramPaidOn(ProgramPaidOn programPaidOn) {
+		this.programPaidOn = programPaidOn;
+	}
+	public ProgramAchieveOn getProgramAchieveOn() {
+		return programAchieveOn;
+	}
+	public void setProgramAchieveOn(ProgramAchieveOn programAchieveOn) {
+		this.programAchieveOn = programAchieveOn;
+	}
 	public String getPayoutFrequency() {
 		return payoutFrequency;
 	}
@@ -88,10 +104,10 @@ public class ProgramDetail extends Model{
 	public void setAmountType(String amountType) {
 		this.amountType = amountType;
 	}
-	public Boolean getBtl() {
-		return btl;
+	public String getBTL() {
+		return BTL;
 	}
-	public void setBtl(Boolean btl) {
-		this.btl = btl;
+	public void setBTL(String bTL) {
+		BTL = bTL;
 	}
 }

@@ -37,7 +37,7 @@ public abstract class DalAuditableModel extends DalModel {
         this.createdDate = m.createdDate;
     }
 
-    @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "CREATED_BY", updatable = false, insertable = true)
     public DalUser getCreatedBy() {
         return createdBy;
@@ -56,7 +56,7 @@ public abstract class DalAuditableModel extends DalModel {
         this.createdDate = createdDate;
     }
 
-    @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "MODIFIED_BY")
     public DalUser getModifiedBy() {
         return modifiedBy;

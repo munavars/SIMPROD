@@ -15,8 +15,6 @@ public class ProgramAchieveOn {
 	
 	private List<DropDown> tagItemList;
 	
-	private List<DropDown> tagValueList;
-	
 	private Map<String, List<String>> includedMap;
 	
 	private Map<String, List<String>> excludedMap;
@@ -59,14 +57,6 @@ public class ProgramAchieveOn {
 
 	public void setTagItemList(List<DropDown> tagItemList) {
 		this.tagItemList = tagItemList;
-	}
-
-	public List<DropDown> getTagValueList() {
-		return tagValueList;
-	}
-
-	public void setTagValueList(List<DropDown> tagValueList) {
-		this.tagValueList = tagValueList;
 	}
 
 	public Map<String, List<String>> getIncludedMap() {

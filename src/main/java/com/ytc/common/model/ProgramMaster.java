@@ -5,7 +5,7 @@ public class ProgramMaster extends Model{
 	/**
 	 * 
 	 */
-	/*private static final long serialVersionUID = 1L;*/
+	private static final long serialVersionUID = 1L;
 	
 	private ProgramHeader programHeader;
 	

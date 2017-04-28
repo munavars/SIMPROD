@@ -1,8 +1,8 @@
 package com.ytc.service;
 
-import com.ytc.common.model.ProgramMaster;
+import com.ytc.common.model.ProgramHeader;
 
 public interface IProgramUpdateService {
 
-	Boolean saveProgramDetails(ProgramMaster programMaster); 
+	Boolean saveProgramDetails(ProgramHeader programHeader); 
 }

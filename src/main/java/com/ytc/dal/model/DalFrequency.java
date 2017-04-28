@@ -12,19 +12,10 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="DalFrequency.getAllDetailsWithSort", query = "select o from DalFrequency o order by o.sortSequence")
 })
-public class DalFrequency {
-	private Integer frequencyId;
+public class DalFrequency extends DalModel {
 	private String frequency;
 	private Integer sortSequence;
-	
-	@Id
-	@Column(name = "FREQ_ID")
-	public Integer getFrequencyId() {
-		return frequencyId;
-	}
-	public void setFrequencyId(Integer frequencyId) {
-		this.frequencyId = frequencyId;
-	}
+
 	@Column(name = "FREQUENCY")
 	public String getFrequency() {
 		return frequency;

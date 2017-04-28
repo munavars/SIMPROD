@@ -10,22 +10,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "BASE_ITEMS")
 @NamedQueries({
-	@NamedQuery(name="DalBaseItems.getAllDetails", query = "select o from DalBaseItems o")
+	@NamedQuery(name="DalBaseItems.getAllDetails", query = "select o from DalBaseItems o order by o.baseItem")
 })
-public class DalBaseItems {
+public class DalBaseItems extends DalModel{
 
-	private Integer baseItemId;
 	private String baseItem;
 	private String base;
-	
-	@Id
-	@Column(name = "BASE_ITEM_ID")
-	public Integer getBaseItemId() {
-		return baseItemId;
-	}
-	public void setBaseItemId(Integer baseItemId) {
-		this.baseItemId = baseItemId;
-	}
 	
 	@Column(name = "BASE_ITEM")
 	public String getBaseItem() {

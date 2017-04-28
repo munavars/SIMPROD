@@ -1,11 +1,6 @@
 package com.ytc.controller;
 
-import java.math.BigDecimal;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,37 +11,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ytc.common.model.ProgramAchieveOn;
+import com.ytc.common.model.DropDown;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
-import com.ytc.common.model.ProgramMaster;
-import com.ytc.common.model.ProgramPaidOn;
+import com.ytc.common.result.DataResult;
+import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ModelResult;
-import com.ytc.dal.model.DalPaidType;
-import com.ytc.service.IProgramUpdateService;
 import com.ytc.service.IProgramService;
+import com.ytc.service.IProgramUpdateService;
 
 @Controller
-@RequestMapping(value = "/index/")
+@RequestMapping(value = "/program/")
 public class ProgramController extends BaseController {
-	@RequestMapping(value = "/getAllProgram/{programId}/{customerId}", method = RequestMethod.GET)
-	public @ResponseBody ModelResult<ProgramMaster> getDetail(HttpServletRequest request, @PathVariable("programId") Integer programId, @PathVariable("customerId") String customerId) {
-		ModelResult<ProgramMaster> returnData = null;
+	@RequestMapping(value = "v1/getProgramDetail/{programId}", method = RequestMethod.GET)
+	public @ResponseBody ModelResult<ProgramHeader> getDetail(HttpServletRequest request, @PathVariable("programId") Integer programId) {
+		ModelResult<ProgramHeader> returnData = null;
 		/**
 		 * Assumption, if program id is null, then it is create request.
-		 * If Program id is not null, then user is view the program id in edit mode. In this case, we need ot fetch all the
+		 * If Program id is not null, then user is viewing the program id in edit mode. In this case, we need ot fetch all the
 		 * details related to program id and need to show it to user.
 		 * In both cases, initializing dropdown values are same.
 		 * */
-/*		if(programId == null){
-			returnData = new ModelResult<ProgramMaster>(getService(request).getProgramDetails(programId,customerId));
-		}
-		else{*/
-			returnData = new ModelResult<ProgramMaster>(getService(request).getProgramDetails(programId,customerId));
-		/*}*/
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(programId));
+		
 		return returnData;
 	}
 	
+	@RequestMapping(value = "v1/getProgramDetail/", method = RequestMethod.GET)
+	public @ResponseBody ModelResult<ProgramHeader> getDetailNew(HttpServletRequest request) {
+		ModelResult<ProgramHeader> returnData = null;
+		/**
+		 * Assumption, if program id is null, then it is create request.
+		 * If Program id is not null, then user is viewing the program id in edit mode. In this case, we need ot fetch all the
+		 * details related to program id and need to show it to user.
+		 * In both cases, initializing dropdown values are same.
+		 * */
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(null));
+		
+		return returnData;
+	}
 
 	private IProgramService getService(HttpServletRequest request) {
 		return getServiceLocator(request).getProgramService();
@@ -56,16 +59,22 @@ public class ProgramController extends BaseController {
 		return getServiceLocator().getProgramPersistService();
 	}
 	
-	@RequestMapping(value = "/saveProgramDetails", method = RequestMethod.POST)
-	public @ResponseBody Boolean saveProgramDetails(/*HttpServletRequest request, *//*@RequestBody ProgramMaster programMaster */) {
+	@RequestMapping(value = "v1/saveProgramDetails", method = RequestMethod.POST)
+	public @ResponseBody Boolean saveProgramDetails(@RequestBody ProgramHeader programHeader) {
 		Boolean returnValue = Boolean.FALSE;
-		ProgramMaster programMaster = populateProgramMaster();
-		returnValue = (Boolean)(getPersistService().saveProgramDetails(programMaster));
+		returnValue = (Boolean)(getPersistService().saveProgramDetails(programHeader));
 		return returnValue;
 	}
 
+	@RequestMapping(value = "v1/getTagValueDropDown/{tagId}", method = RequestMethod.GET)
+	public @ResponseBody List<DropDown> getTagValueDetails(HttpServletRequest request, @PathVariable("tagId") Integer tagId) {
+		List<DropDown> dropdownList = null;
+		dropdownList = (List<DropDown>)(getService(request).getTagValueDropDown(tagId));
+		return dropdownList;
+	}
 
-	private ProgramMaster populateProgramMaster() {
+
+/*	private ProgramMaster populateProgramMaster() {
 		ProgramMaster programMaster = new ProgramMaster();
 		
 		ProgramHeader programHeader = new ProgramHeader();
@@ -121,6 +130,33 @@ public class ProgramController extends BaseController {
 		programMaster.setProgramHeader(programHeader);
 		
 		return programMaster;
+	}*/
+	
+	
+	@RequestMapping(value = "v1/{id}/{status}", method = RequestMethod.GET)
+	public @ResponseBody ListResult<ProgramDetail> getProgram(HttpServletRequest request, @PathVariable String id,  @PathVariable String status) {
+		
+		return new ListResult<ProgramDetail>( getService(request).getProgram(id, status));
+	}
+	
+	@RequestMapping(value = "v1/addTier", method = RequestMethod.GET)
+	public @ResponseBody DataResult<String> addProgramTier(HttpServletRequest request) {
+		
+		
+		return new DataResult<String>(getService(request).addProgramTier(""));
+	}
+	
+	@RequestMapping(value = "v1/updateTier/{id}", method = RequestMethod.GET)
+	public @ResponseBody DataResult<String> updateProgramTier(HttpServletRequest request,@PathVariable String id) {
+		
+		return new DataResult<String>(getService(request).updateProgramTier(id));
+	}
+	
+	@RequestMapping(value = "v1/removeTier/{id}", method = RequestMethod.GET)
+	public @ResponseBody DataResult<String> removeProgramTier(HttpServletRequest request,@PathVariable String id) {
+		
+		return new DataResult<String>(getService(request).deleteProgramTier(id));
+		
 	}
 	
 }

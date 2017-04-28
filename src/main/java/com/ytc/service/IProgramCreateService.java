@@ -1,7 +1,7 @@
 package com.ytc.service;
 
-import com.ytc.common.model.ProgramMaster;
+import com.ytc.common.model.ProgramHeader;
 
 public interface IProgramCreateService {
-	Boolean createProgramDetails(ProgramMaster programMaster); 
+	Boolean createProgramDetails(ProgramHeader programHeader); 
 }

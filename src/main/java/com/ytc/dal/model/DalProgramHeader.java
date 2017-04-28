@@ -14,8 +14,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "PROGRAM_HEADER")
-public class DalProgramHeader  extends DalAuditableModel{
 	
+public class DalProgramHeader  extends DalAuditableModel{
 	
 	private DalCustomer customer;
 	
@@ -25,7 +25,7 @@ public class DalProgramHeader  extends DalAuditableModel{
 	
 	private Integer requestTypeId;
 	
-	private Integer requestId;
+	private DalEmployee request;
 	
 	private Calendar requestDate;
 	
@@ -33,7 +33,7 @@ public class DalProgramHeader  extends DalAuditableModel{
 	
 	private Calendar closedDate;
 	
-	private Integer statusId;
+	private DalStatus status;
 	
 	private List<DalProgramDetail> dalProgramDetailList;
 
@@ -83,15 +83,14 @@ public class DalProgramHeader  extends DalAuditableModel{
 		this.requestTypeId = requestTypeId;
 	}
 
-/*	@OneToOne
-	@JoinColumn(name = "REQUEST_ID", referencedColumnName = "EMP_ID")*/
-	@Column(name = "REQUEST_ID")
-	public Integer getRequestId() {
-		return requestId;
+	@OneToOne
+	@JoinColumn(name = "REQUEST_ID", referencedColumnName = "EMP_ID")
+	public DalEmployee getRequest() {
+		return request;
 	}
 
-	public void setRequestId(Integer requestId) {
-		this.requestId = requestId;
+	public void setRequest(DalEmployee request) {
+		this.request = request;
 	}
 
 	@Column(name = "REQUEST_DATE")
@@ -122,12 +121,13 @@ public class DalProgramHeader  extends DalAuditableModel{
 		this.closedDate = closedDate;
 	}
 
-	@Column(name = "STATUS_ID")
-	public Integer getStatusId() {
-		return statusId;
+	@OneToOne
+	@JoinColumn(name = "STATUS_ID", referencedColumnName = "ID")
+	public DalStatus getStatus() {
+		return status;
 	}
 
-	public void setStatusId(Integer statusId) {
-		this.statusId = statusId;
+	public void setStatus(DalStatus status) {
+		this.status = status;
 	}
 }

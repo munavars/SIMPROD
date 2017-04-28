@@ -2,7 +2,6 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -10,13 +9,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "TAG_ITEMS")
 @NamedQueries({
-	@NamedQuery(name="DalTagItems.getAllDetails", query = "select o from DalTagItems o")
+	@NamedQuery(name="DalTagItems.getAllDetails", query = "select o from DalTagItems o order by o.item")
 })
-public class DalTagItems {
-	
-
-	private Integer itemId;
-	
+public class DalTagItems extends DalModel {
 
 	private Integer entityId;
 	
@@ -25,17 +20,7 @@ public class DalTagItems {
 	
 	
 	private Integer tagLevel;
-
-	@Id
-	@Column(name = "ITEM_ID")
-	public Integer getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(Integer itemId) {
-		this.itemId = itemId;
-	}
-
+	
 	@Column(name = "ENTITY_ID")
 	public Integer getEntityId() {
 		return entityId;

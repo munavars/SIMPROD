@@ -93,7 +93,6 @@ public class BaseDao implements IDataAccessLayer {
 		}
 		return item;
 	}
-
 	@Override
 	public <E extends DalModel> E getReference(Class<E> clazz, Integer id) {
 		return (StringUtils.isEmpty(id)) ? null : (E) entityManager.getReference(clazz, id);
@@ -102,7 +101,7 @@ public class BaseDao implements IDataAccessLayer {
 	@Override
 	@Transactional
 	public <T extends DalModel> T update(T item) {
-		return update(item, ServiceContext.getServiceContext().getUserId());
+		return update(item, 6);
 	}
 
 	@Override
@@ -173,7 +172,7 @@ public class BaseDao implements IDataAccessLayer {
 
 	@Override
 	@Transactional
-	public <T extends DalModel> void delete(Class<T> clazz, String id) {
+	public <T extends DalModel> void delete(Class<T> clazz, Integer id) {
 		T objectToDel = entityManager.find(clazz, id);
 		entityManager.remove(objectToDel);
 		//logger.trace("Delete Row from {}, id: {}", clazz, id);
@@ -225,4 +224,27 @@ public class BaseDao implements IDataAccessLayer {
 		
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> getTagValue(String queryString) {
+		List<String> returnList = null;
+		Query query = null;
+		if(queryString != null){
+			query = entityManager.createQuery(queryString);
+			returnList = query.getResultList();
+		}
+		return returnList;
+	}
+
+
+	@Override
+	public <T extends DalAuditableModel> List<T> getlist(Class<T> resultClass, String qlString, Map<String, Object> queryParams) {
+		Query query = entityManager.createNativeQuery(qlString,resultClass);
+		for (Entry<String, Object> param : queryParams.entrySet()) {
+			query.setParameter(param.getKey(), param.getValue());
+		}
+		@SuppressWarnings("unchecked")
+		List<T> resultList = query.getResultList();
+		return resultList;
+	}
 }

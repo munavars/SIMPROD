@@ -86,7 +86,7 @@
 		$.ajax({ 
 			   type: "GET",
 			   dataType: "json",
-			   url: '/SIM/v1/customer/getDetail/'+custId,
+			   url: '/SIMO/v1/customer/getDetail/'+custId,
 			   success: function(cust){
 				   $("#custname").text(cust.data.customerName);
 				   $("#custno").html("<strong>"+cust.data.customerNumber+"</strong>");
@@ -107,7 +107,7 @@
 				 },
 				 
 		    ajax: {
-		        url: '/SIM/program/'+custId+'/0',
+		        url: '/SIMO/program/'+custId+'/0',
 		        dataSrc: "data",
 		        type: "GET",
 		    },
@@ -119,7 +119,7 @@
                     targets:0,
                     render: function ( data, type, row, meta ) {
                         if(type === 'display'){
-                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                            data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
                         }
 
                         return data;
@@ -158,12 +158,12 @@
 		 
 		 $('#program_status').on('change',function() {
 			 
-		  	  var url='/SIM/program/'+custId+'/'+$(this).val();
+		  	  var url='/SIMO/program/'+custId+'/'+$(this).val();
 		  	  if($(this).val()){
 		  	  	  table.ajax.url(url).load();
 		  	  }else {
 		  		  alert("Status cannot be Empty. Kindly choose");
-		  		  url='/SIM/program/'+custId+'/1000000';
+		  		  url='/SIMO/program/'+custId+'/1000000';
 		  		  table.ajax.url(url).load();
 		  	  }
 		  	  
@@ -361,7 +361,7 @@
                                           </div>
                               </div>
                                    <div class="btn-group m-left8">
-                                  <a href="/SIM/programDetail?pgmId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
+                                  <a href="/SIMO/programDetail?pgmId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
                               </div>
                                  <div class="btn-group m-left8">
                                   <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('editabletest', 'Program Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>

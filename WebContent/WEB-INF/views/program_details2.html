@@ -787,7 +787,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          	$.ajax({ 
              	type: "GET",
              	dataType: "json",
-             	url: "/SIM/program/v1/getProgramDetail/" + programId,
+             	url: "/SIMO/program/v1/getProgramDetail/" + programId,
              	success: function(response){
              		responseOnload = response.data;
              		includePaid = response.data.programDetailList[0].programPaidOn.includedMap;
@@ -994,7 +994,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				/*Service call to save the data.*/				
 			    $.ajax({
 					type: "POST",
-					url: "/SIM/program/v1/saveProgramDetails",
+					url: "/SIMO/program/v1/saveProgramDetails",
 					dataType: 'json',
 					contentType: 'application/json',
 					data: JSON.stringify(responseOnload),

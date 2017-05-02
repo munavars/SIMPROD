@@ -11,20 +11,7 @@
 		ignore-resource-not-found="true"
 		location="classpath:config/sim.properties" />
 
-	<!-- provide access complete properties map java.util.Properties object -->
-	<bean id="ampProperties"
-		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="locations">
-			<list>
-				<value>classpath:config/amp.properties</value>
-				<value>classpath:config/amp-sql.properties</value>
-				<value>classpath:config/amp-local-dev.properties</value>
-			</list>
-		</property>
-		
-	</bean>
-
+	
 	<import resource="ytc-service-context.xml" />
 	<import resource="ytc-connection-war.xml" />
 </beans>

@@ -14,10 +14,8 @@ import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
-import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
-import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
 import com.ytc.dal.model.DalProgramDetail;
@@ -143,8 +141,8 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		List<DalProgramDetail> dalProgramDetailList = new ArrayList<DalProgramDetail>();
 		DalProgramDetail dalProgramDet = new DalProgramDetail();
 		ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
-		dalProgramDet.setPaidBasedOn(baseDao.getEntityById(DalBaseItems.class, Integer.valueOf(programDetail.getPaidBasedOn())));
-		dalProgramDet.setPaidFrequency(baseDao.getEntityById(DalFrequency.class, Integer.valueOf(programDetail.getPayoutFrequency())));		
+		dalProgramDet.setPaidBasedOn(Integer.valueOf(programDetail.getPaidBasedOn()));
+		dalProgramDet.setPaidFrequency(Integer.valueOf(programDetail.getPayoutFrequency()));		
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(programDetail.getBeginDate().getTime());
 		dalProgramDet.setProgramStartDate(cal);
@@ -166,11 +164,10 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		dalProgramDet.setProgramMaster(baseDao.getById(DalProgramMaster.class, Integer.valueOf(programDetail.getProgramName())));
 		
 		if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){
-				dalProgramDet.setAchBasedMetric(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn() )));
+				dalProgramDet.setAchBasedMetric(Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn()));
 		}
 		if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
-			DalFrequency dalfreq = baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency()));
-			dalProgramDet.setAchBasedFreq(dalfreq);
+			dalProgramDet.setAchBasedFreq(Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency()));
 		}
 		
 		return dalProgramDet;

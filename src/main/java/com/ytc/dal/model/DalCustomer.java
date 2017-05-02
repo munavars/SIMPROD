@@ -10,6 +10,11 @@ import javax.persistence.Table;
 @Table(name = "CUSTOMER")
 public class DalCustomer extends DalAuditableModel {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String customerNumber;
 	
 	private String customerName;

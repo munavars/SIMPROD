@@ -50,6 +50,9 @@
  td,th {
     white-space:nowrap;
 }
+.dataTables_wrapper .dataTables_filter {
+    width: 50%;
+}
 </style>	
     <script type="text/javascript">
     
@@ -98,14 +101,31 @@
 		//Loading the program details table using datatable 	
 				 
 		 var table=$("#editabletest").DataTable( {
+			 
+			 oLanguage: {
+				 "sEmptyTable": "No data available for this customer"
+				 },
+				 
 		    ajax: {
 		        url: '/SIM/program/'+custId+'/0',
 		        dataSrc: "data",
-		        type: "GET"
+		        type: "GET",
 		    },
+		  
 		    columnDefs: [
 
-                { className: "dt-right", "targets": [11,15,16,17,18,19] }
+                { className: "dt-right", "targets": [11,15,16,17,18,19] },
+                {
+                    targets:0,
+                    render: function ( data, type, row, meta ) {
+                        if(type === 'display'){
+                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        }
+
+                        return data;
+                    }
+                }
+                
 
          ],
 		    columns: [
@@ -113,8 +133,8 @@
        			{ data: "programId" },
 	            { data: "programName" },
 	            { data: "payoutFrequency" },
-	            { data: "beginDate" },
-	            { data: "endDate" },
+	            { data: "displayBeginDate" },
+	            { data: "displayEndDate" },
 	            { data: "btl" },
 	            { data: "pricingType" },				            
 	            { data: "paidBasedOn" },
@@ -139,15 +159,23 @@
 		 $('#program_status').on('change',function() {
 			 
 		  	  var url='/SIM/program/'+custId+'/'+$(this).val();
-		  	  //console.log(url);
 		  	  if($(this).val()){
 		  	  	  table.ajax.url(url).load();
 		  	  }else {
 		  		  alert("Status cannot be Empty. Kindly choose");
+		  		  url='/SIM/program/'+custId+'/1000000';
+		  		  table.ajax.url(url).load();
 		  	  }
 		  	  
 		  	});	
 		 
+		 $('#create_new_pgm').click(function(){
+			 var type=$("#program_type_select option:selected").val();
+			 if(type=='Program Type'){
+				alert("Kindly choose a Program Type to create new program");
+				return false;
+			}
+		 });
 		// Excel export
 /* 		 $("#btnExport").click(function(e) {
 			 
@@ -292,12 +320,12 @@
                   </header>
                   <div class="panel-body">
                       <div class="col-lg-6">
-                        <h5 id="custname">DEALER TIRE LLC</h5>
+                        <h5 id="custname"></h5>
                           <ul class="list-unstyled">
-                              <li id="custno"><strong>22031</strong></li>
-                              <li id="bu"><strong>Consumer</strong></li>
-                              <li id="level1"><strong>Tony Carlfeldt</strong>, Account Manager</li>
-                              <li id="level3"><strong>Kevin Rogers</strong>, Director, Consumer Sales</li>
+                              <li id="custno"><strong>No data available for this customer Id</strong></li>
+                              <li id="bu"><strong></strong></li>
+                              <li id="level1"><strong></strong></li>
+                              <li id="level3"><strong></strong></li>
                           </ul>
                       </div>
                       <div class="adv-table editable-table">
@@ -323,7 +351,7 @@
                                 <div class="btn-group pull-right">
                                  <div class="btn-group">
                                   <div class="">
-                                                <select class="form-control input-sm m-bot15 required" id="Program Type_inputselect" name="Program Type_inputselect">
+                                                <select class="form-control input-sm m-bot15 required" id="program_type_select" name="Program Type_inputselect">
                                                    <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
                                                    <option id="program_type_vbs" value="VBS">VBS/MKP</option>
                                                    <option id="program_type_ddf" value="DDF">DDF</option>
@@ -333,7 +361,7 @@
                                           </div>
                               </div>
                                    <div class="btn-group m-left8">
-                                  <a href="program_details.html"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
+                                  <a href="/SIM/programDetail?pgmId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
                               </div>
                                  <div class="btn-group m-left8">
                                   <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('editabletest', 'Program Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>

@@ -30,10 +30,10 @@ public class DalProgramDetail extends DalAuditableModel {
     private String isTiered;
     private double accrualAmount;
     private String accrualType;
-    private DalFrequency paidFrequency;
-    private DalBaseItems paidBasedOn;
-    private DalBaseItems achBasedMetric;
-    private DalFrequency achBasedFreq;
+    private Integer paidFrequency;
+    private Integer paidBasedOn;
+    private Integer achBasedMetric;
+    private Integer achBasedFreq;
     private String payTo;
     private String BTL;
     private int budgetMarker;
@@ -147,29 +147,27 @@ public class DalProgramDetail extends DalAuditableModel {
     /**
     * @return the achBasedMetricId
     */
-    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ACH_BASED_METRIC_ID", referencedColumnName = "ID")
-    public DalBaseItems getAchBasedMetric() {
+    @Column(name = "ACH_BASED_METRIC_ID")
+    public Integer getAchBasedMetric() {
                     return achBasedMetric;
     }
     /**
     * @param achBasedMetricId the achBasedMetricId to set
     */
-    public void setAchBasedMetric(DalBaseItems achBasedMetric) {
+    public void setAchBasedMetric(Integer achBasedMetric) {
                     this.achBasedMetric = achBasedMetric;
     }
     /**
     * @return the achBasedFreqId
     */
-    @OneToOne(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "ACH_BASED_FREQ_ID", referencedColumnName = "ID")
-    public DalFrequency getAchBasedFreq() {
+    @Column(name = "ACH_BASED_FREQ_ID")
+    public Integer getAchBasedFreq() {
         return achBasedFreq;
     }
     /**
     * @param achBasedFreqId the achBasedFreqId to set
     */
-    public void setAchBasedFreq(DalFrequency achBasedFreq) {
+    public void setAchBasedFreq(Integer achBasedFreq) {
         this.achBasedFreq = achBasedFreq;
     }
     /**
@@ -375,29 +373,27 @@ public class DalProgramDetail extends DalAuditableModel {
     /**
     * @return the paidFrequency
     */
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="PAID_BASED_FREQ_ID")
-    public DalFrequency getPaidFrequency() {
+    @Column(name="PAID_BASED_FREQ_ID")
+    public Integer getPaidFrequency() {
                     return paidFrequency;
     }
     /**
     * @param paidFrequency the paidFrequency to set
     */
-    public void setPaidFrequency(DalFrequency paidFrequency) {
+    public void setPaidFrequency(Integer paidFrequency) {
                     this.paidFrequency = paidFrequency;
     }
    /**
     * @return the paidBase
     */
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="PAID_BASED_METRIC_ID")
-    public DalBaseItems getPaidBasedOn() {
+    @Column(name="PAID_BASED_METRIC_ID")
+    public Integer getPaidBasedOn() {
                     return paidBasedOn;
     }
     /**
     * @param paidBase the paidBase to set
     */
-    public void setPaidBasedOn(DalBaseItems paidBase) {
+    public void setPaidBasedOn(Integer paidBase) {
                     this.paidBasedOn = paidBase;
     }
     

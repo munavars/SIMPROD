@@ -1,7 +1,6 @@
 package com.ytc.service.impl;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -21,6 +20,7 @@ import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramDetailsDropDown;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramPaidOn;
+import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
@@ -171,10 +171,10 @@ public class ProgramServiceImpl implements IProgramService {
 		if(programHeader != null && dalProgramDetail != null && dalProgramHeader != null){
 			programAchieveOn = programHeader.getProgramDetailList().get(0).getProgramAchieveOn();
 			if(dalProgramDetail.getAchBasedMetric() != null){
-				programAchieveOn.setAchieveBasedOn(ProgramServiceHelper.convertToString(dalProgramDetail.getAchBasedMetric().getId()));	
+				programAchieveOn.setAchieveBasedOn(ProgramServiceHelper.convertToString(dalProgramDetail.getAchBasedMetric()));	
 			}
 			if(dalProgramDetail.getAchBasedFreq() != null){
-				programAchieveOn.setAchieveFrequency(ProgramServiceHelper.convertToString(dalProgramDetail.getAchBasedFreq().getId()));	
+				programAchieveOn.setAchieveFrequency(ProgramServiceHelper.convertToString(dalProgramDetail.getAchBasedFreq()));	
 			}
 			
 			if(dalProgramDetail.getDalProgramDetAchievedList() != null){
@@ -221,7 +221,7 @@ public class ProgramServiceImpl implements IProgramService {
 		ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
 		programDetail.setId(dalProgramDetail.getId());
 		programDetail.setProgramName(ProgramServiceHelper.convertToString(dalProgramDetail.getProgramMaster().getId()));
-		programDetail.setPayoutFrequency(String.valueOf(dalProgramDetail.getPaidFrequency().getId()));
+		programDetail.setPayoutFrequency(String.valueOf(dalProgramDetail.getPaidFrequency()));
 		programDetail.setBeginDate(ProgramServiceHelper.convertDateToRequiredFormat(dalProgramDetail.getProgramStartDate().getTime(),
 																			"MM/dd/yyyy")); 
 		programDetail.setEndDate(ProgramServiceHelper.convertDateToRequiredFormat(dalProgramDetail.getProgramEndDate().getTime(),
@@ -233,7 +233,7 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetail.setPayTo(dalProgramDetail.getPayTo());
 		programDetail.setPaidType( ProgramServiceHelper.convertToString(dalProgramDetail.getPaidType()));
 		programDetail.setPaidBasedOn( (dalProgramDetail.getPaidBasedOn() != null) ?
-									ProgramServiceHelper.convertToString(dalProgramDetail.getPaidBasedOn().getId()) : 
+									ProgramServiceHelper.convertToString(dalProgramDetail.getPaidBasedOn()) : 
 										null);
 	}
 
@@ -486,7 +486,6 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgram(String customerId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
-		//String sql="select * from PROGRAM_DETAIL where PGM_HDR_ID in(select ID from PROGRAM_HEADER where CUSTOMER_ID=:custId)and STATUS_ID in (:status)";
 		String sql=QueryConstant.PROGRAM_LIST;
 		List<String> selectedValues = Arrays.asList(status.split(","));
 		Map<String, Object> queryParams = new HashMap<>();
@@ -500,29 +499,34 @@ public class ProgramServiceImpl implements IProgramService {
 			ProgramDetail programDetail =new ProgramDetail();
 			programDetail.setProgramId(dalProgramDetail.getId());
 			programDetail.setProgramName(dalProgramDetail.getProgramMaster().getProgram());
-			programDetail.setPayoutFrequency(dalProgramDetail.getPaidFrequency().getFrequency());
+			programDetail.setPayoutFrequency(dalProgramDetail.getPaidFrequency().toString());
 			programDetail.setBeginDate(dalProgramDetail.getProgramStartDate().getTime());
-			programDetail.setEndDate(dalProgramDetail.getProgramStartDate().getTime());
-			
-			//programDetail.setProgramEndDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramEndDate().getTime(),
-				//	"MM/dd/yyyy"));
-			
-//			programDetail.setProgramEndDate(df.format(dalProgramDetail.getProgramEndDate()));
+			programDetail.setEndDate(dalProgramDetail.getProgramEndDate().getTime());
+			programDetail.setDisplayBeginDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramStartDate().getTime(), ProgramConstant.DATE_FORMAT));
+			programDetail.setDisplayEndDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramEndDate().getTime(), ProgramConstant.DATE_FORMAT));
 			programDetail.setBTL(dalProgramDetail.getBTL());
 			programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());
-			programDetail.setPaidBasedOn(dalProgramDetail.getPaidBasedOn().getBaseItem());
-			programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().getBaseItem());
-			programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase("0")?"Yes":"No");
+			programDetail.setPaidBasedOn(dalProgramDetail.getPaidBasedOn().toString());
+			programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().toString());
+			programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase(ProgramConstant.ZERO)?ProgramConstant.YES:ProgramConstant.NO);
 			programDetail.setAccrualAmount(dalProgramDetail.getAccrualAmount());
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
-			programDetail.setTrueUp(dalProgramDetail.getTrueUp().equalsIgnoreCase("Y")?"Yes":"No");
+			programDetail.setTrueUp(dalProgramDetail.getTrueUp().equalsIgnoreCase("Y")?ProgramConstant.YES:ProgramConstant.NO);
 			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getForecastMarker()));
-			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?Integer.toString(dalProgramDetail.getPgmDetailTier().getBeginRange()):"0");
-			programDetail.setTierRate(null!=dalProgramDetail.getPgmDetailTier()?(Double.toString(dalProgramDetail.getPgmDetailTier().getAmount())+dalProgramDetail.getPgmDetailTier().getTierType()):"0");
+			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?Integer.toString(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
+			String tierRate=ProgramConstant.ZERO;
+			if(null!=dalProgramDetail.getPgmDetailTier()){
+				if("$".equalsIgnoreCase(dalProgramDetail.getPgmDetailTier().getTierType())){
+					tierRate=(dalProgramDetail.getPgmDetailTier().getTierType()+Double.toString(dalProgramDetail.getPgmDetailTier().getAmount()));
+				}else{
+					tierRate=(Double.toString(dalProgramDetail.getPgmDetailTier().getAmount())+dalProgramDetail.getPgmDetailTier().getTierType());
+				}
+			}
+			programDetail.setTierRate(tierRate);
 			programDetail.setAccruedAmount(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getTotalAccuredAmount():0);
 			programDetail.setCreditAmount(0);
 			programDetail.setPayables(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getTotalPaidAmount():0);
-			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getBalance():"0");
+			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getBalance():ProgramConstant.ZERO);
 			programDetailList.add(programDetail);
 		}
 		

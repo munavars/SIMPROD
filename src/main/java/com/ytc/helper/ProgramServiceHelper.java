@@ -39,7 +39,8 @@ public class ProgramServiceHelper {
 		
 		if(inputDate != null && format != null){
 			SimpleDateFormat sdf = new SimpleDateFormat(format);
-			convertedDateString = sdf.format(new Date());
+			//convertedDateString = sdf.format(new Date());
+			convertedDateString = sdf.format(inputDate);
 		}
 		return convertedDateString;
 	}

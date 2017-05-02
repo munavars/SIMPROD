@@ -16,8 +16,6 @@ import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
-import com.ytc.dal.model.DalBaseItems;
-import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
 import com.ytc.dal.model.DalProgramDetail;
@@ -242,26 +240,10 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 					programHeader.getProgramDetailList().get(0).getId().equals(dalProgramDet.getId()) ){
 				ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
 				if(programDetail.getPaidBasedOn() != null){
-					DalBaseItems baseItems = baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getPaidBasedOn()));
-					if(dalProgramDet.getPaidBasedOn() != null ){
-						dalProgramDet.getPaidBasedOn().setId(baseItems.getId());
-						dalProgramDet.getPaidBasedOn().setBase(baseItems.getBase());
-						dalProgramDet.getPaidBasedOn().setBaseItem(baseItems.getBaseItem());
-					}	
-					else{
-						dalProgramDet.setPaidBasedOn(baseItems);
-					}
+					dalProgramDet.setPaidBasedOn(Integer.valueOf(programDetail.getPaidBasedOn()));
 				}
 				if(programDetail.getPayoutFrequency() != null){
-					DalFrequency dalfreq = baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getPayoutFrequency()));
-					if(dalProgramDet.getPaidFrequency() != null){
-						dalProgramDet.getPaidFrequency().setId(dalfreq.getId());
-						dalProgramDet.getPaidFrequency().setFrequency(dalfreq.getFrequency());
-						dalProgramDet.getPaidFrequency().setSortSequence(dalfreq.getSortSequence());	
-					}
-					else{
-						dalProgramDet.setPaidFrequency(dalfreq);
-					}
+					dalProgramDet.setPaidFrequency(Integer.valueOf(programDetail.getPayoutFrequency()));
 				}
 				Calendar cal = Calendar.getInstance();
 				cal.setTimeInMillis(programDetail.getBeginDate().getTime());
@@ -301,26 +283,10 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
 				
 				if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){
-					DalBaseItems baseItems = baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn() ));
-					if(dalProgramDet.getAchBasedMetric() != null ){
-						dalProgramDet.getAchBasedMetric().setId(baseItems.getId());
-						dalProgramDet.getAchBasedMetric().setBase(baseItems.getBase());
-						dalProgramDet.getAchBasedMetric().setBaseItem(baseItems.getBaseItem());
-					}	
-					else{
-						dalProgramDet.setAchBasedMetric(baseItems);
-					}
+					dalProgramDet.setAchBasedMetric(Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn()));				
 				}
 				if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
-					DalFrequency dalfreq = baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency()));
-					if(dalProgramDet.getAchBasedFreq() != null){
-						dalProgramDet.getAchBasedFreq().setId(dalfreq.getId());
-						dalProgramDet.getAchBasedFreq().setFrequency(dalfreq.getFrequency());
-						dalProgramDet.getAchBasedFreq().setSortSequence(dalfreq.getSortSequence());	
-					}
-					else{
-						dalProgramDet.setAchBasedFreq(dalfreq);
-					}
+					dalProgramDet.setAchBasedFreq(Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency()));				
 				}
 				
 				dalProgramDetail = dalProgramDet;

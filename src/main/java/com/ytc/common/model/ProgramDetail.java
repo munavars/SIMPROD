@@ -11,6 +11,8 @@ public class ProgramDetail extends Model{
 	private static final long serialVersionUID = 1L;
 	private Date beginDate;
 	private Date endDate;
+	private String displayBeginDate;
+	private String displayEndDate;
 	private String programName;
 	private String paidType;
 	private String pricingType;
@@ -202,6 +204,22 @@ public class ProgramDetail extends Model{
 	}
 	public void setGlBalance(String glBalance) {
 		this.glBalance = glBalance;
+	}
+
+	public String getDisplayBeginDate() {
+		return displayBeginDate;
+	}
+	
+	public void setDisplayBeginDate(String displayBeginDate) {
+		this.displayBeginDate = displayBeginDate;
+	}
+	
+	public String getDisplayEndDate() {
+		return displayEndDate;
+	}
+	
+	public void setDisplayEndDate(String displayEndDate) {
+		this.displayEndDate = displayEndDate;
 	}
 	
 	

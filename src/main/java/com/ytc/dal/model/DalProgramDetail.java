@@ -252,7 +252,7 @@ public class DalProgramDetail extends DalAuditableModel {
     * @return the zmAppById
     */
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="ZM_APP_BY_ID", referencedColumnName = "EMP_ID", insertable = false, updatable =false)
+    @JoinColumn(name="ZM_APP_BY_ID", referencedColumnName = "ID", insertable = false, updatable =false)
     public DalEmployee getZmAppById() {
                     return zmAppById;
     }
@@ -279,7 +279,7 @@ public class DalProgramDetail extends DalAuditableModel {
     * @return the dirAppById
     */
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="DIR_APP_BY_ID", referencedColumnName = "EMP_ID", insertable = false, updatable =false)
+    @JoinColumn(name="DIR_APP_BY_ID", referencedColumnName = "ID", insertable = false, updatable =false)
     public DalEmployee getDirAppById() {
                     return dirAppById;
     }
@@ -306,7 +306,7 @@ public class DalProgramDetail extends DalAuditableModel {
     * @return the execAppById
     */
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="EXEC_APP_BY_ID", referencedColumnName = "EMP_ID", insertable = false, updatable =false)
+    @JoinColumn(name="EXEC_APP_BY_ID", referencedColumnName = "ID", insertable = false, updatable =false)
     public DalEmployee getExecAppById() {
                     return execAppById;
     }
@@ -333,7 +333,7 @@ public class DalProgramDetail extends DalAuditableModel {
     * @return the tbpAppById
     */
     @OneToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="TBP_APP_BY_ID", referencedColumnName = "EMP_ID", insertable = false, updatable =false)
+    @JoinColumn(name="TBP_APP_BY_ID", referencedColumnName = "ID", insertable = false, updatable =false)
     public DalEmployee getTbpAppById() {
                     return tbpAppById;
     }

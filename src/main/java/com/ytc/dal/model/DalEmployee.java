@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class DalEmployee {
 	
 	@Id
-	@Column(name="EMP_ID")
+	@Column(name="ID")
 	private Integer EMP_ID;
 	
 	@Column(name="FIRST_NAME")

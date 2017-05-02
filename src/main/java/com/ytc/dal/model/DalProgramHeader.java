@@ -84,7 +84,7 @@ public class DalProgramHeader  extends DalAuditableModel{
 	}
 
 	@OneToOne
-	@JoinColumn(name = "REQUEST_ID", referencedColumnName = "EMP_ID")
+	@JoinColumn(name = "REQUEST_ID", referencedColumnName = "ID")
 	public DalEmployee getRequest() {
 		return request;
 	}

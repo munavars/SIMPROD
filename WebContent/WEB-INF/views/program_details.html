@@ -838,7 +838,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          	$.ajax({ 
              	type: "GET",
              	dataType: "json",
-             	url: "http://localhost:9080/SIM/index/getAllProgram/47/1234",
+             	url: "/SIMO/index/getAllProgram/47/1234",
              	success: function(data){        
                 	alert(data);
                 	$("#customerName").html(data.data.programHeader.customerName);

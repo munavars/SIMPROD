@@ -6,7 +6,7 @@
 	version="1.1">
 
 	<reload-interval value="3"/>
-	<context-root uri="SIM" />
+	<context-root uri="SIMO" />
 	<enable-directory-browsing value="true"/>
 	<enable-file-serving value="false"/>
 	<enable-reloading value="true"/>

@@ -799,7 +799,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
              		$("#customerId").html(response.data.customerId);
                 	$("#customerName").html(response.data.customerName);
                 	$("#businessUnit").html(response.data.businessUnit);
-                	$("#programId").html(response.data.id);
+                	$("#programId").html(response.data.programDetailList[0].id);
                 	$("#requestId").html(response.data.requestId);
                 	$("#requestedBy").html(response.data.requestedBy);
                 	if(response.data.requestedDate != null){

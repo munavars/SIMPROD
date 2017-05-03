@@ -511,105 +511,45 @@
                 <!-- END Achieve -->
                                       
                         <!-- Start Tier -->
-                                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12 pull-right">
-                                        <div class="adv-table editable-table"> 
+                                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                                        <div class="adv-table editable-table">
+                                           
                                          <h4 class="tableHeader">Program Schedules</h4>
+                                            
                                           <div class="table-responsive">    
-                                            <table class="table table-striped table-hover table-bordered" id="editable-sample">
+                                            <table class="table table-striped table-hover table-bordered" id="tier-schedule">
                                               <thead>
+                                                  <tr><td  colspan="3" class="noborders text-left"><label class="control-label" for="inputSuccess">Amount Type</label>&nbsp;&nbsp;
+                                                      <div class="radio-inline inline-flex">
+                                                       <label class="control-label" for="inputSuccess">
+                                                       <input type="radio"  name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>  
+                                                    </div>
+                                                    <div class="radio-inline inline-flex">
+                                                       <label class="control-label" for="inputSuccess">
+                                                       <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSignTier1" value="$" class="radio-inline denomination required" checked="checked">$</label> 
+                                                    </div></td>
+                                                    
+                                                      <td colspan="3" class="noborders text-right"><label class="control-label" for="inputSuccess">Actual Marker</label>&nbsp;&nbsp;
+                                                <input id="actual_marker" name="actual_marker" type="text" size="3" class="form-control" value=""></td>
+                                                
+                                                </tr>
                                               <tr>
                                                 <th>Marker</th>
                                                 <th>Amount</th>
-                                                <th>Amount Type</th>
+                                              <!--   <th>Amount Type</th> -->
                                                 <th>Beginning Range</th>
                                                 <th>Edit</th>
                                                 <th>Delete</th>
                                               </tr>
                                               </thead>
                                               <tbody>
-                                              <tr class="">
-                                                  <td class="center">1</td>
-                                                  <td class="center">1</td>
-                                                  <td><div class="radio-inline inline-flex">
-                                                   <label  for="inputSuccess">
-                                                   <input type="radio" checked="checked" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>  
-                                                </div>
-                                                <div class="radio-inline inline-flex">
-                                                   <label class="control-label" for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier1" value="$" class="radio-inline denomination required" checked="checked">$</label> 
-                                                </div>
-                                                  </td>
-                                                  <td class="text-right">500,000</td>
-                                                  <td><a class="edit" href="javascript:;">Edit</a></td>
-                                                  <td><a id="4066" class="delete" href="javascript:;">Delete</a></td>
-                                              </tr>
-                                              <tr class="">
-                                                <td class="center">2</td>
-                                                  <td class="center">2</td>
-                                                  <td><div class="radio-inline inline-flex">
-                                                       <label  for="inputSuccess">
-                                                       <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosPercentageTier2" value="%" class="radio-inline denomination required">%</label>  
-                                                    </div>
-                                                    <div class="radio-inline inline-flex">
-                                                       <label class="control-label" for="inputSuccess">
-                                                       <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier2" value="$" class="radio-inline denomination required">$</label> 
-                                                </div></td>
-                                                  <td class="text-right">1,040,001</td>
-                                                  <td><a class="edit" href="javascript:;">Edit</a></td>
-                                                  <td><a class="delete" href="javascript:;">Delete</a></td>
-                                              </tr>
-                                              <tr class="">
-                                                 <td class="center">3</td>
-                                                  <td class="center">5</td>
-                                                  <td><div class="radio-inline inline-flex">
-                                                   <label  for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosPercentageTier3" value="%" class="radio-inline denomination required">%</label>  
-                                                </div>
-                                                <div class="radio-inline inline-flex">
-                                                   <label class="control-label" for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier3" value="$" class="radio-inline denomination required">$</label> 
-                                                </div></td>
-                                                  <td class="text-right">1,500,000</td>
-                                                  <td><a class="edit" href="javascript:;">Edit</a></td>
-                                                  <td><a class="delete" href="javascript:;">Delete</a></td>
-                                              </tr>
-                                              <tr class="">
-                                                <td class="center">4</td>
-                                                  <td class="center">5</td>
-                                                  <td><div class="radio-inline inline-flex">
-                                                   <label  for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosPercentageTier4" value="%" class="radio-inline denomination required">%</label>  
-                                                </div>
-                                                <div class="radio-inline inline-flex">
-                                                   <label class="control-label" for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier4" value="$" class="radio-inline denomination required">$</label> 
-                                                </div></td>
-                                                  <td class="text-right">2,000,000</td>
-                                                  <td><a class="edit" href="javascript:;">Edit</a></td>
-                                                  <td><a class="delete" href="javascript:;">Delete</a></td>
-                                              </tr>
-                                              <tr class="">
-                                                 <td class="center">5</td>
-                                                  <td class="center">4</td>
-                                                  <td><div class="radio-inline inline-flex">
-                                                   <label  for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosPercentageTier5" value="%" class="radio-inline denomination required">%</label>  
-                                                </div>
-                                                <div class="radio-inline inline-flex">
-                                                   <label class="control-label" for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier5" value="$" class="radio-inline denomination required">$</label> 
-                                                </div></td>
-                                                  <td class="text-right">3,000,000</td>
-                                                  <td><a class="edit" href="javascript:;">Edit</a></td>
-                                                  <td><a class="delete" href="javascript:;">Delete</a></td>
-                                              </tr>
                                               </tbody>
                                           </table>
                                           </div>
                                       </div>
                                         <div class="clearfix">
-                                            <div class="btn-group pull-right">
-                                                <button id="editable-sample_new" class="btn btn-default">Add New Tier <i class="fa fa-plus"></i></button>
+                                            <div class="btn-group">
+                                                <button id="tier-schedule_new" class="btn btn-default">Add New Tier <i class="fa fa-plus"></i></button>
                                             </div>
                                         </div>
                                 </div>
@@ -906,12 +846,33 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                 	
                 	
                 	fnPopulateDropdown('achievedBasedOn', response.data.programDetailList[0].programAchieveOn.tagItemList);
+                	
+                	/*Program Tier details*/
+                	if(response.data.programDetailList[0].amountTypeTier == '%'){
+                		$("#optionsRadiosPercentageTier1").prop('checked', true);
+                	}
+                	else{
+                		$("#optionsRadiosDollarSignTier1").prop('checked', true);
+                	}
+                	$('#actual_marker').val(response.data.programDetailList[0].actualMarker);
+                	fnPopulateProgramTier(response.data.programDetailList[0].programTierDetailList);
              	},
              	failure: function(response){
              		alert("Wrongly done");
              	}
              	
          	});
+         	
+         	function fnPopulateProgramTier(tierData){                
+                var table = $("#tier-schedule").DataTable();
+                $.each(tierData, function(idx, item) {
+						table.fnAddData([item.level, item.amount,item.beginRange,
+										'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
+										'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
+                    ]);
+                }); 
+         	}
+         	
          	
          	function fnPopulatePaidDetails(response){
 				fnPopulateTextArea(response.data.programDetailList[0].programPaidOn.includedMap, 'include');
@@ -948,10 +909,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          	}
          	
 			function submitForApproval(){
-				/*Program Header details*/
-/* 				if(programId == null){
-					responseOnload.id = null;
-				} */
 				responseOnload.status = "0";
 				responseOnload.programDetailList[0].amount = $("#amount").val();
 				responseOnload.programDetailList[0].amountType = $('input:radio[name=optionsRadiosDenomination]:checked').val();
@@ -990,7 +947,18 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				responseOnload.programDetailList[0].programAchieveOn.achieveFrequency = $('#achieve_freq_inputselect').val();
 				responseOnload.programDetailList[0].programAchieveOn.includedMap = includeAchieve;
 				responseOnload.programDetailList[0].programAchieveOn.excludedMap = excludeAchieve;
-
+				
+				/*Save Tier information*/
+				fnGetTierData(responseOnload);
+				if( $('input:radio[name=optionsRadiosDenomination]:checked').val() == '%'){
+					responseOnload.programDetailList[0].amountTypeTier = '%';
+				}
+				else{
+					responseOnload.programDetailList[0].amountTypeTier = '$';
+				}
+				responseOnload.programDetailList[0].actualMarker = parseInt($('#actual_marker').val());
+				  
+				
 				/*Service call to save the data.*/				
 			    $.ajax({
 					type: "POST",
@@ -1011,7 +979,41 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					}
 			    });
 			}
-				     	
+			
+			function fnGetTierData(responseOnload){
+				/* var programDetailTierList= {}; */
+                var tiertype=$('input[name=optionsRadiosDenomination]:checked').val();
+                $('#tier-schedule tbody').find('tr').each(function(i) {
+
+                    var tds = $(this).find('td'),
+                    marker = tds.eq(0).text(),
+                    amount = tds.eq(1).text(),
+                    range = tds.eq(2).text();
+                    
+                    var regex = new RegExp(',', 'g');
+                    var programDetailTier = new Object();
+                    if($(this).find('a').eq(0).attr('id') == null){
+                    	programDetailTier.id = null;
+                    }
+                    else{
+                    	programDetailTier.id = parseInt($(this).find('a').eq(0).attr('id'));
+                    }
+                    programDetailTier.programDetailId = responseOnload.programDetailList[0].id;
+                    programDetailTier.level = parseInt(marker);
+                    programDetailTier.amount = parseInt(amount);
+                    programDetailTier.tierType = tiertype;
+                    programDetailTier.beginRange = parseInt(range.replace(regex, ''));
+                   
+                   	if(responseOnload.programDetailList[0].programTierDetailList == null){
+                   		responseOnload.programDetailList[0].programTierDetailList = [];	
+                   	}
+                    /* programDetailTierList[i] = programDetailTier; */
+                    responseOnload.programDetailList[0].programTierDetailList[i] = programDetailTier;
+                });
+                
+                /* responseOnload.programDetailList[0].programTierDetailList = programDetailTierList; */
+			}
+			     	
          	function resetFormForMandatoryCheck(elementId){
          		if( $('#'+ elementId).valid()){
 				   $('#'+ elementId).validate().resetForm(); 
@@ -1029,13 +1031,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					});
 					resetFormForMandatoryCheck(elementId);
 	         	}
-         	
-
-/* 				var optionsAsString = "";
-				for(var i = 0; i < items.length; i++) {
-				    optionsAsString += "<option value='" + item.key + "'>" + item.value  + "</option>";
-				}
-				$( 'select[name="'+elementId+'"]' ).append( optionsAsString ); */
 			}
          
        </script>

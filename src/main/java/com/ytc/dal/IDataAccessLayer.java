@@ -38,4 +38,6 @@ public interface IDataAccessLayer {
 	public List<String> getTagValue(String query);
 
 	<T extends DalAuditableModel> List<T> getlist(Class<T> resultClass, String qlString, Map<String, Object> queryParams);
+	
+	public <T> List<T> getListFromNamedQueryWithParameter(String namedQueryString, Map<String, Object> parameters);
 }

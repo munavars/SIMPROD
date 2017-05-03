@@ -14,6 +14,7 @@ import com.ytc.common.model.ProgramAchieveOn;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramPaidOn;
+import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
@@ -21,6 +22,7 @@ import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
 import com.ytc.dal.model.DalProgramDetail;
+import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.helper.ProgramServiceHelper;
@@ -42,6 +44,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		List<DalProgramDetAchieved> deletedAchievedEntityList = null;
 		List<DalProgramDetPaid> deletedPaidEntityList = null;
 		if(programHeader.getId() != null){
+			
 			DalProgramHeader dalProgramHeader =  baseDao.getById(DalProgramHeader.class, programHeader.getId());
 			
 			if(dalProgramHeader != null){
@@ -55,6 +58,8 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 								
 				/** save Program Achieved Based on*/
 				deletedAchievedEntityList = updateProgramAchieveBasedOnData(dalProgramHeader, programHeader, dalProgramDetail);
+				
+				
 				
 				baseDao.update(dalProgramHeader);
 				
@@ -70,6 +75,8 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 					}
 				}
 				
+				updateProgramTierData(dalProgramDetail, programHeader);
+				
 				isSuccess = Boolean.TRUE;
 			}
 			else{
@@ -82,6 +89,79 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 
 						
 		return isSuccess;
+	}
+
+	private void updateProgramTierData(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {
+		/** Need to handle the below scenarios 
+		 * 1. New record
+		 *  2. Modifying existing record
+		 *  3. Deleting existing record*/
+		Set<Integer> existingTierIdSet = null;
+		Set<Integer> UserTierIdSet = null;
+		
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		parameters.put("programDetailId", dalProgramDetail.getId());
+		List<DalProgramDetailTier> dalProgramTierAddedList = null;
+		List<DalProgramDetailTier> dalProgramTierList = baseDao.getListFromNamedQueryWithParameter("DalProgramDetailTier.getAllTierForProgramId", 
+														parameters);
+		
+		if(programHeader.getProgramDetailList().get(0).getProgramTierDetailList() != null && dalProgramTierList != null){
+			List<ProgramTierDetail> programTierDetailList = programHeader.getProgramDetailList().get(0).getProgramTierDetailList();
+			existingTierIdSet = new HashSet<Integer>();
+			 UserTierIdSet = new HashSet<Integer>();
+			for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierList){
+				existingTierIdSet.add(dalProgramDetailTier.getId());
+			}
+			for(ProgramTierDetail programTierDetail : programTierDetailList){
+				if(existingTierIdSet.contains(programTierDetail.getId())){
+					UserTierIdSet.add(programTierDetail.getId());
+					//modification
+					for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierList){
+						if(programTierDetail.getId().equals(dalProgramDetailTier.getId())){
+							dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
+							dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
+							dalProgramDetailTier.setLevel(programTierDetail.getLevel());
+							dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
+							dalProgramDetailTier.setProgramDetailId(dalProgramDetail.getId());
+							break;
+						}
+					}
+				}
+				else{
+					//newly added
+					if(dalProgramTierAddedList == null){
+						dalProgramTierAddedList = new ArrayList<DalProgramDetailTier>();
+					}
+					DalProgramDetailTier dalProgramDetailTier = new DalProgramDetailTier();
+					dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
+					dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
+					dalProgramDetailTier.setLevel(programTierDetail.getLevel());
+					dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
+					dalProgramDetailTier.setProgramDetailId(dalProgramDetail.getId());
+					dalProgramTierAddedList.add(dalProgramDetailTier);
+				}
+			}
+			
+			if(dalProgramTierList != null && !dalProgramTierList.isEmpty()){
+				for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierList){
+					baseDao.update(dalProgramDetailTier);		
+				}
+			}
+			if(dalProgramTierAddedList != null){
+				for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierAddedList){
+					baseDao.create(dalProgramDetailTier);
+				}
+			}
+			
+		}
+		else{
+			if(dalProgramTierList != null && !dalProgramTierList.isEmpty()){
+				for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierList){
+					baseDao.delete(DalProgramDetailTier.class, dalProgramDetailTier.getId());		
+				}
+			}
+		}
+		
 	}
 
 	private List<DalProgramDetAchieved> updateProgramAchieveBasedOnData(DalProgramHeader dalProgramHeader, ProgramHeader programHeader,
@@ -276,7 +356,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
 					dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));				
 				}
-				
+				dalProgramDet.setActualMarker(programDetail.getActualMarker());
 				dalProgramDetail = dalProgramDet;
 				break;
 			}

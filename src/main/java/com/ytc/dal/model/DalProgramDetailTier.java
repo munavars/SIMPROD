@@ -5,6 +5,8 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -13,21 +15,22 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PGM_DET_TIER")
+@NamedQueries({
+	@NamedQuery(name="DalProgramDetailTier.getAllTierForProgramId", query = "select o from DalProgramDetailTier o where o.programDetailId=:programDetailId")
+})
 public class DalProgramDetailTier extends DalAuditableModel{
 
 	
 	/**
-	 * 
+	 * Default serial version.
 	 */
-	//private String id;
+	private static final long serialVersionUID = 1L;
+
 	private Integer programDetailId;
 	private Integer level;
 	private double amount;
 	private String tierType;
 	private Integer beginRange;
-	/**
-	 * @return the id
-	 */
 	
 	/**
 	 * @return the programDetailId
@@ -93,8 +96,5 @@ public class DalProgramDetailTier extends DalAuditableModel{
 	 */
 	public void setBeginRange(Integer beginRange) {
 		this.beginRange = beginRange;
-	}
-	
-	
-	
+	}	
 }

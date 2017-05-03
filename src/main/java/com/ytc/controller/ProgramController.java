@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
+import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.common.result.DataResult;
 import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ModelResult;
@@ -146,10 +147,10 @@ public class ProgramController extends BaseController {
 		return new DataResult<String>(getService(request).addProgramTier(""));
 	}
 	
-	@RequestMapping(value = "v1/updateTier/{id}", method = RequestMethod.GET)
-	public @ResponseBody DataResult<String> updateProgramTier(HttpServletRequest request,@PathVariable String id) {
+	@RequestMapping(value = "v1/updateTier", method = RequestMethod.POST)
+	public @ResponseBody DataResult<String> updateProgramTier(HttpServletRequest request,@RequestBody ProgramTierDetail programTierDetail) {
 		
-		return new DataResult<String>(getService(request).updateProgramTier(id));
+		return new DataResult<String>(getService(request).updateProgramTier(programTierDetail));
 	}
 	
 	@RequestMapping(value = "v1/removeTier/{id}", method = RequestMethod.GET)

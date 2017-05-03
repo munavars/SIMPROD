@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
+import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
@@ -21,6 +22,7 @@ import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
 import com.ytc.dal.model.DalProgramDetail;
+import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalStatus;
@@ -41,6 +43,8 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		emp.setEMP_ID(47);
 		dalProgramHeader.setRequest(emp);
 		DalProgramDetail dalProgramDetail =  createProgramDetailsData(dalProgramHeader, programHeader);
+		dalProgramDetail.setStatusId(3);
+		dalProgramDetail.setDalProgramHeader(dalProgramHeader);
 		Random rand = new Random();
 		int  n = rand.nextInt(1000) + 1;
 		dalProgramHeader.setAccessPgmId(n);
@@ -50,9 +54,39 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		/** save Program Achieved Based on*/
 		createProgramAchieveBasedOnData(dalProgramHeader, programHeader, dalProgramDetail);
 		
-		baseDao.create(dalProgramHeader);
+		DalProgramDetail returnEntity = baseDao.create(dalProgramDetail);
+		
+		if(returnEntity != null && returnEntity.getId() != null){
+			createProgramTierData(returnEntity.getId(), programHeader);
+		}
 		
 		return Boolean.TRUE;
+	}
+
+	private void createProgramTierData(Integer id, ProgramHeader programHeader) {
+		List<ProgramTierDetail> programTierDetailList = programHeader.getProgramDetailList().get(0).getProgramTierDetailList();
+		List<DalProgramDetailTier> dalProgramTierAddedList = null;
+		if(programTierDetailList != null){
+			for(ProgramTierDetail programTierDetail : programTierDetailList){
+				//newly added
+				if(dalProgramTierAddedList == null){
+					dalProgramTierAddedList = new ArrayList<DalProgramDetailTier>();
+				}
+				DalProgramDetailTier dalProgramDetailTier = new DalProgramDetailTier();
+				dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
+				dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
+				dalProgramDetailTier.setLevel(programTierDetail.getLevel());
+				dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
+				dalProgramDetailTier.setProgramDetailId(id);
+				dalProgramTierAddedList.add(dalProgramDetailTier);
+			}
+			
+			if(dalProgramTierAddedList != null && !dalProgramTierAddedList.isEmpty()){
+				for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierAddedList){
+					baseDao.create(dalProgramDetailTier);
+				}
+			}
+		}
 	}
 
 	private void createProgramAchieveBasedOnData(DalProgramHeader dalProgramHeader, ProgramHeader programHeader,

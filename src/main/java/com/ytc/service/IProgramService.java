@@ -9,8 +9,6 @@ import com.ytc.common.model.ProgramTierDetail;
 
 public interface IProgramService {
 	
-	ProgramHeader getProgramDetails(Integer programDetId);
-	
 	List<DropDown> getTagValueDropDown(Integer tagId);
 	
 	String updateProgramTier(ProgramTierDetail programTierDetail);
@@ -20,5 +18,7 @@ public interface IProgramService {
 	String addProgramTier(String id);
 
 	List<ProgramDetail> getProgram(String customerId, String status);
+	
+	ProgramHeader getProgramDetails(Integer programDetId, Integer custId);
 
 }

@@ -1,6 +1,7 @@
 package com.ytc.service.impl;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -24,6 +25,7 @@ import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
+import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
@@ -47,7 +49,7 @@ public class ProgramServiceImpl implements IProgramService {
 	private IDataAccessLayer baseDao;
 
 	@Override
-	public ProgramHeader getProgramDetails(Integer programDetId) {
+	public ProgramHeader getProgramDetails(Integer programDetId, Integer custId) {
 		ProgramHeader programHeader = new ProgramHeader();
 		/**
 		 * Irrespective of whether program id is null or not, drop down list has to be initialized.
@@ -57,7 +59,7 @@ public class ProgramServiceImpl implements IProgramService {
 		if(programDetId != null){
 			dalProgramDetail =  baseDao.getById(DalProgramDetail.class, programDetId);
 		}
-		String customerId = "244"; 
+		String customerId = ""; 
 			
 		if(dalProgramDetail != null){
 			if(dalProgramDetail.getPayTo() != null){
@@ -78,12 +80,19 @@ public class ProgramServiceImpl implements IProgramService {
 			populateTierData(programHeader, dalProgramDetail);
 		}	
 		else{
-			populateDropDownValues(programHeader, customerId); //Customer id should be 
+			populateDropDownValues(programHeader, String.valueOf(custId)); //Customer id should be 
+			DalCustomer customer=baseDao.getById(DalCustomer.class, custId);
+			programHeader.setCustomerId(customer.getId());
+			programHeader.setCustomerName(customer.getCustomerName());
+			programHeader.setBusinessUnit(customer.getBu());
+			programHeader.setRequestId(1);
+			programHeader.setRequestedDate(new Date());
+			programHeader.setRequestedBy("1");
 		}
 		
 		return programHeader;
 	}
-	
+
 
 	private void populateTierData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
 		if(dalProgramDetail != null && programHeader != null){
@@ -124,7 +133,10 @@ public class ProgramServiceImpl implements IProgramService {
 		programHeader.setRequestId(dalProgramHeader.getRequest().getEMP_ID()); 
 		programHeader.setRequestedBy(dalProgramHeader.getRequest().getFIRST_NAME() + " " + dalProgramHeader.getRequest().getLAST_NAME());																		
 		programHeader.setRequestedDate( (dalProgramHeader.getRequestDate() != null ) ? dalProgramHeader.getRequestDate().getTime() : null);
-		programHeader.setCreatedBy(dalProgramHeader.getCreatedBy().getUserName());
+		if(dalProgramHeader.getCreatedBy() != null){
+			programHeader.setCreatedBy(dalProgramHeader.getCreatedBy().getUserName());
+		}
+		
 		programHeader.setCreatedDate(dalProgramHeader.getCreatedDate().getTime());
 		programHeader.setStatus( ProgramServiceHelper.convertToString(dalProgramHeader.getStatus().getType()));
 		if(dalProgramDetail.getZmAppById() != null){
@@ -520,6 +532,7 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgram(String customerId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
+		DecimalFormat df = new DecimalFormat("#.##"); 
 		String sql=QueryConstant.PROGRAM_LIST;
 		List<String> selectedValues = Arrays.asList(status.split(","));
 		Map<String, Object> queryParams = new HashMap<>();
@@ -533,17 +546,17 @@ public class ProgramServiceImpl implements IProgramService {
 			ProgramDetail programDetail =new ProgramDetail();
 			programDetail.setProgramId(dalProgramDetail.getId());
 			programDetail.setProgramName(dalProgramDetail.getProgramMaster().getProgram());
-			programDetail.setPayoutFrequency(dalProgramDetail.getPaidFrequency().toString());
+			programDetail.setPayoutFrequency(dalProgramDetail.getPaidFrequency().getFrequency());
 			programDetail.setBeginDate(dalProgramDetail.getProgramStartDate().getTime());
 			programDetail.setEndDate(dalProgramDetail.getProgramEndDate().getTime());
 			programDetail.setDisplayBeginDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramStartDate().getTime(), ProgramConstant.DATE_FORMAT));
 			programDetail.setDisplayEndDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramEndDate().getTime(), ProgramConstant.DATE_FORMAT));
-			programDetail.setBTL(dalProgramDetail.getBTL());
+			programDetail.setBTL("Y".equalsIgnoreCase(dalProgramDetail.getBTL())?ProgramConstant.YES:ProgramConstant.NO);
 			programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());
-			programDetail.setPaidBasedOn(dalProgramDetail.getPaidBasedOn().toString());
-			programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().toString());
+			programDetail.setPaidBasedOn(dalProgramDetail.getPaidBasedOn().getBaseItem());
+			programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().getBaseItem());
 			programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase(ProgramConstant.ZERO)?ProgramConstant.YES:ProgramConstant.NO);
-			programDetail.setAccrualAmount(dalProgramDetail.getAccrualAmount());
+			programDetail.setAccrualAmount(Double.valueOf(df.format(dalProgramDetail.getAccrualAmount())));
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
 			programDetail.setTrueUp(dalProgramDetail.getTrueUp().equalsIgnoreCase("Y")?ProgramConstant.YES:ProgramConstant.NO);
 			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getForecastMarker()));
@@ -631,4 +644,5 @@ public class ProgramServiceImpl implements IProgramService {
 		return status;
 		
 	}
+	
 }

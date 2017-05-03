@@ -119,7 +119,7 @@ var EditableTable = function () {
                 oTable.fnDeleteRow(nRow);
                 
                 $.ajax({
-                url: '/SIM/program/v1/removeTier/'+id,
+                url: '/SIMO/program/v1/removeTier/'+id,
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {

@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.dal.IDataAccessLayer;
-import com.ytc.dal.model.DalPaidBasedOn;
 import com.ytc.service.IPaidBasedOnService;
 
 public class PaidBasedOnService implements IPaidBasedOnService {

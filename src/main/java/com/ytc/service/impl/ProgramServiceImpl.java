@@ -171,10 +171,10 @@ public class ProgramServiceImpl implements IProgramService {
 		if(programHeader != null && dalProgramDetail != null && dalProgramHeader != null){
 			programAchieveOn = programHeader.getProgramDetailList().get(0).getProgramAchieveOn();
 			if(dalProgramDetail.getAchBasedMetric() != null){
-				programAchieveOn.setAchieveBasedOn(ProgramServiceHelper.convertToString(dalProgramDetail.getAchBasedMetric()));	
+				programAchieveOn.setAchieveBasedOn(ProgramServiceHelper.convertToString(dalProgramDetail.getAchBasedMetric().getId()));	
 			}
 			if(dalProgramDetail.getAchBasedFreq() != null){
-				programAchieveOn.setAchieveFrequency(ProgramServiceHelper.convertToString(dalProgramDetail.getAchBasedFreq()));	
+				programAchieveOn.setAchieveFrequency(ProgramServiceHelper.convertToString(dalProgramDetail.getAchBasedFreq().getId()));	
 			}
 			
 			if(dalProgramDetail.getDalProgramDetAchievedList() != null){
@@ -221,7 +221,7 @@ public class ProgramServiceImpl implements IProgramService {
 		ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
 		programDetail.setId(dalProgramDetail.getId());
 		programDetail.setProgramName(ProgramServiceHelper.convertToString(dalProgramDetail.getProgramMaster().getId()));
-		programDetail.setPayoutFrequency(String.valueOf(dalProgramDetail.getPaidFrequency()));
+		programDetail.setPayoutFrequency(String.valueOf(dalProgramDetail.getPaidFrequency().getId()));
 		programDetail.setBeginDate(ProgramServiceHelper.convertDateToRequiredFormat(dalProgramDetail.getProgramStartDate().getTime(),
 																			"MM/dd/yyyy")); 
 		programDetail.setEndDate(ProgramServiceHelper.convertDateToRequiredFormat(dalProgramDetail.getProgramEndDate().getTime(),
@@ -233,7 +233,7 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetail.setPayTo(dalProgramDetail.getPayTo());
 		programDetail.setPaidType( ProgramServiceHelper.convertToString(dalProgramDetail.getPaidType()));
 		programDetail.setPaidBasedOn( (dalProgramDetail.getPaidBasedOn() != null) ?
-									ProgramServiceHelper.convertToString(dalProgramDetail.getPaidBasedOn()) : 
+									ProgramServiceHelper.convertToString(dalProgramDetail.getPaidBasedOn().getId()) : 
 										null);
 	}
 

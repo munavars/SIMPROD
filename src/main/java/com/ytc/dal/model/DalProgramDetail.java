@@ -31,8 +31,8 @@ public class DalProgramDetail extends DalAuditableModel {
 	private double accrualAmount;
 	private String accrualType;
 	private DalFrequency paidFrequency;
-	private DalProgramDetPaid paidBasedOn;
-	private DalProgramDetAchieved achBasedMetric;
+	private DalBaseItems paidBasedOn;
+	private DalBaseItems achBasedMetric;
 	private DalFrequency achBasedFreq;
 	private String payTo;
 	private String BTL;
@@ -158,23 +158,23 @@ public class DalProgramDetail extends DalAuditableModel {
 
 	@ManyToOne
 	@JoinColumn(name="PAID_BASED_METRIC_ID", referencedColumnName = "ID")
-	public DalProgramDetPaid getPaidBasedOn() {
+	public DalBaseItems getPaidBasedOn() {
 		return paidBasedOn;
 	}
 
 
-	public void setPaidBasedOn(DalProgramDetPaid paidBasedOn) {
+	public void setPaidBasedOn(DalBaseItems paidBasedOn) {
 		this.paidBasedOn = paidBasedOn;
 	}
 
 	@ManyToOne
 	@JoinColumn(name="ACH_BASED_METRIC_ID", referencedColumnName = "ID")
-	public DalProgramDetAchieved getAchBasedMetric() {
+	public DalBaseItems getAchBasedMetric() {
 		return achBasedMetric;
 	}
 
 
-	public void setAchBasedMetric(DalProgramDetAchieved achBasedMetric) {
+	public void setAchBasedMetric(DalBaseItems achBasedMetric) {
 		this.achBasedMetric = achBasedMetric;
 	}
 

@@ -16,6 +16,7 @@ import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
+import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
@@ -241,7 +242,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 					programHeader.getProgramDetailList().get(0).getId().equals(dalProgramDet.getId()) ){
 				ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
 				if(programDetail.getPaidBasedOn() != null){
-					dalProgramDet.setPaidBasedOn(baseDao.getById(DalProgramDetPaid.class, Integer.valueOf(programDetail.getPaidBasedOn())));
+					dalProgramDet.setPaidBasedOn(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getPaidBasedOn())));
 				}
 				if(programDetail.getPayoutFrequency() != null){
 					dalProgramDet.setPaidFrequency(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getPayoutFrequency())));
@@ -270,7 +271,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
 				
 				if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){
-					dalProgramDet.setAchBasedMetric(baseDao.getById(DalProgramDetAchieved.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn())));				
+					dalProgramDet.setAchBasedMetric(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn())));				
 				}
 				if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
 					dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));				

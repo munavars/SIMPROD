@@ -185,7 +185,7 @@
 		$.ajax({ 
 			type: "GET",
 			dataType: "json",
-			url: "/SIM/program/v1/getTagValueDropDown/" + listindex,
+			url: "/SIMO/program/v1/getTagValueDropDown/" + listindex,
 			success: function(response){        
 				$.each(response, function (i, response) {
 					document.getElementById("prdvalue").options[i] = new Option(response.key, response.value);
@@ -203,7 +203,7 @@
 		$.ajax({ 
 			type: "GET",
 			dataType: "json",
-			url: "/SIM/program/v1/getTagValueDropDown/" + listindex,
+			url: "/SIMO/program/v1/getTagValueDropDown/" + listindex,
 			success: function(response){        
 				$.each(response, function (i, response) {
 					document.getElementById("achPrdvalue").options[i] = new Option(response.key, response.value);

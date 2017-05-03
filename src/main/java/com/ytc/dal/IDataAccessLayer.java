@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.ytc.dal.model.DalAuditableModel;
 import com.ytc.dal.model.DalModel;
-import com.ytc.dal.model.DalPaidBasedOn;
 
 
 public interface IDataAccessLayer {
@@ -21,9 +20,6 @@ public interface IDataAccessLayer {
 	public <T extends DalModel> void delete(Class<T> clazz, Integer id);
 
 	public <T extends DalModel> List<T> list(Class<T> clazz, String hql, Map<String, Object> queryParams);
-
-	public List<DalPaidBasedOn> list(Class<DalPaidBasedOn> class1, StringBuilder jpqlQuery,	Map<String, Object> queryParams);
-
 
 	void flush();
 

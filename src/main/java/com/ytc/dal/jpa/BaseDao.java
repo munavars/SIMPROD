@@ -24,7 +24,6 @@ import com.ytc.common.result.ResultException;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalAuditableModel;
 import com.ytc.dal.model.DalModel;
-import com.ytc.dal.model.DalPaidBasedOn;
 import com.ytc.dal.model.DalUser;
 import com.ytc.service.ServiceContext;
 
@@ -179,12 +178,6 @@ public class BaseDao implements IDataAccessLayer {
 		entityManager.flush();
 	}
 
-	@Override
-	public List<DalPaidBasedOn> list(Class<DalPaidBasedOn> class1, StringBuilder jpqlQuery,
-			Map<String, Object> queryParams) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public <E extends DalModel> E getById(Class<E> clazz, Integer id) {

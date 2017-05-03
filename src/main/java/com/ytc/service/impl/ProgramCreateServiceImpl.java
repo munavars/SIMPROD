@@ -14,6 +14,7 @@ import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
+import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalFrequency;
@@ -142,7 +143,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		List<DalProgramDetail> dalProgramDetailList = new ArrayList<DalProgramDetail>();
 		DalProgramDetail dalProgramDet = new DalProgramDetail();
 		ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
-		dalProgramDet.setPaidBasedOn(baseDao.getById(DalProgramDetPaid.class, Integer.valueOf(programDetail.getPaidBasedOn())));
+		dalProgramDet.setPaidBasedOn(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getPaidBasedOn())));
 		dalProgramDet.setPaidFrequency(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getPayoutFrequency())));		
 		Calendar cal = Calendar.getInstance();
 		cal.setTimeInMillis(programDetail.getBeginDate().getTime());
@@ -165,7 +166,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		dalProgramDet.setProgramMaster(baseDao.getById(DalProgramMaster.class, Integer.valueOf(programDetail.getProgramName())));
 		
 		if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){
-				dalProgramDet.setAchBasedMetric(baseDao.getById(DalProgramDetAchieved.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn())));
+				dalProgramDet.setAchBasedMetric(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn())));
 		}
 		if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
 			dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));

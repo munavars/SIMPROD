@@ -721,13 +721,18 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
        </script>
        
        <script>
-			var responseOnload;
+       		var responseOnload;
 			getParams = new URLSearchParams(window.location.search);
 			var programId =getParams.get('pgmId'); 
+			var custId = getParams.get('custId'); 
+			var url="/SIMO/program/v1/getProgramDetail/" + programId;
+			if(null==programId){
+				url="/SIMO/program/v1/getProgramDetailCreate/" + custId;
+			}
          	$.ajax({ 
              	type: "GET",
              	dataType: "json",
-             	url: "/SIMO/program/v1/getProgramDetail/" + programId,
+            	url: url,
              	success: function(response){
              		responseOnload = response.data;
              		includePaid = response.data.programDetailList[0].programPaidOn.includedMap;

@@ -33,13 +33,13 @@ public class ProgramController extends BaseController {
 		 * details related to program id and need to show it to user.
 		 * In both cases, initializing dropdown values are same.
 		 * */
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(programId));
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(programId, null));
 		
 		return returnData;
 	}
 	
-	@RequestMapping(value = "v1/getProgramDetail/", method = RequestMethod.GET)
-	public @ResponseBody ModelResult<ProgramHeader> getDetailNew(HttpServletRequest request) {
+	@RequestMapping(value = "v1/getProgramDetailCreate/{custId}", method = RequestMethod.GET)
+	public @ResponseBody ModelResult<ProgramHeader> getDetailNew(HttpServletRequest request, @PathVariable Integer custId) {
 		ModelResult<ProgramHeader> returnData = null;
 		/**
 		 * Assumption, if program id is null, then it is create request.
@@ -47,7 +47,7 @@ public class ProgramController extends BaseController {
 		 * details related to program id and need to show it to user.
 		 * In both cases, initializing dropdown values are same.
 		 * */
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(null));
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(null,custId));
 		
 		return returnData;
 	}

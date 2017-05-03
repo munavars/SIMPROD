@@ -57,7 +57,6 @@
     <script type="text/javascript">
     
     //Export to Excel 
-    
     var tableToExcel = (function() {
     	  var uri = 'data:application/vnd.ms-excel;base64,'
     	    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
@@ -76,13 +75,14 @@
   
     
 	$(document).ready(function () { 
-			
+
 		//alert(window.location.search.substr(1)); 	
 		getParams = new URLSearchParams(window.location.search);
 		var custId=getParams.get('custId'); 
+		$('#create_new_pgm').attr('href','/SIMO/programDetail?custId='+custId);
 		
 		//loading the customer details
-		
+
 		$.ajax({ 
 			   type: "GET",
 			   dataType: "json",
@@ -101,13 +101,13 @@
 		//Loading the program details table using datatable 	
 				 
 		 var table=$("#editabletest").DataTable( {
-			 
 			 oLanguage: {
 				 "sEmptyTable": "No data available for this customer"
 				 },
 				 
 		    ajax: {
-		        url: '/SIMO/program/'+custId+'/0',
+		        //url: '/SIMO/program/'+custId+'/0',
+		        url: '/SIMO/program/'+custId+'/'+$('#program_status').val(),
 		        dataSrc: "data",
 		        type: "GET",
 		    },
@@ -120,6 +120,16 @@
                     render: function ( data, type, row, meta ) {
                         if(type === 'display'){
                             data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        }
+
+                        return data;
+                    }
+                },   
+                {
+                    targets:1,
+                    render: function ( data, type, row, meta ) {
+                        if(type === 'display'){
+                            data = '<span data-toggle="tooltip" title="' + data + '">' + data + '</span>';
                         }
 
                         return data;
@@ -176,6 +186,11 @@
 				return false;
 			}
 		 });
+		 
+		 //tool tip on hover
+		 $('#editabletest').on('draw.dt', function () {
+             $('[data-toggle="tooltip"]').tooltip();
+         });
 		// Excel export
 /* 		 $("#btnExport").click(function(e) {
 			 
@@ -361,7 +376,7 @@
                                           </div>
                               </div>
                                    <div class="btn-group m-left8">
-                                  <a href="/SIMO/programDetail?pgmId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
+                                  <a href="/SIMO/programDetail?custId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
                               </div>
                                  <div class="btn-group m-left8">
                                   <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('editabletest', 'Program Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>

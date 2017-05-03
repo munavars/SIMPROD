@@ -20,53 +20,40 @@ var EditableTable = function () {
                 var jqTds = $('>td', nRow);
                 jqTds[0].innerHTML = '<input type="text" class="form-control small" value="' + aData[0] + '">';
                 jqTds[1].innerHTML = '<input type="text" class="form-control small" value="' + aData[1] + '">';
-                //jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '">';
-                jqTds[2].innerHTML =  aData[2];
-                jqTds[3].innerHTML = '<input type="text" class="form-control small" value="' + aData[3] + '">';
-                jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
-                jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
+                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '">';
+                if($(aData[3]).attr('id') == null){
+                	jqTds[3].innerHTML = '<a class="edit" href="">Save</a>';
+                }
+                else{
+                	jqTds[3].innerHTML = '<a id='+ $(aData[3]).attr('id') +' class="edit" href="">Save</a>';	
+                }
+                if($(aData[4]).attr('id') == null){
+                	jqTds[4].innerHTML = '<a class="cancel" href="">Cancel</a>';
+                }
+                else{
+                	jqTds[4].innerHTML = '<a id='+ $(aData[4]).attr('id') +' class="cancel" href="">Cancel</a>';	
+                }
             }
 
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                var regex = new RegExp(',', 'g');
-                var programDetailTier = new Object();
-                console.log(jqInputs[3]);
-                programDetailTier.id = "";
-                programDetailTier.programDetailId = 42;
-                programDetailTier.level=jqInputs[0].value;
-                programDetailTier.amount=jqInputs[1].value;
-                var radio='<label class="control-label" for="inputSuccess"> <input type="radio" checked="checked" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>'+
-                '<label class="control-label" for="inputSuccess"> <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">$</label>';
-                if(jqInputs[2].checked){
-                	programDetailTier.tierType=escape(jqInputs[2].value);
-                    
-                }else{
-                	programDetailTier.tierType=escape(jqInputs[3].value);
-                	radio='<label class="control-label" for="inputSuccess"> <input type="radio"  name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>'+
-                    '<label class="control-label" for="inputSuccess"> <input type="radio" checked="checked" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">$</label>';
-                }
-                
-                programDetailTier.beginRange=jqInputs[4].value.replace(regex, '');
-                console.log(programDetailTier);
-                
                 oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-                //oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-                //var val=(jqInputs[2].value+jqInputs[3].value);
-
-                oTable.fnUpdate(radio, nRow, 2, false);
-                oTable.fnUpdate(jqInputs[4].value, nRow, 3, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-                oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
+                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
+                var jqAnchor = $('a', nRow);
+                if($(jqAnchor[0]).attr('id') == null){
+                	oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 3, false);
+                }
+                else{
+                	oTable.fnUpdate('<a id='+ $(jqAnchor[0]).attr('id') +' class="edit" href="">Edit</a>', nRow, 3, false);	
+                }
+                if($(jqAnchor[1]).attr('id') == null){
+                	oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 4, false);
+                }
+                else{
+                	oTable.fnUpdate('<a id='+ $(jqAnchor[1]).attr('id') +' class="delete" href="">Delete</a>', nRow, 4, false);	
+                }
                 
-                $.ajax({
-                    url: '/SalesIncentiveMgmt/v1/program/updateTier/'+JSON.stringify(programDetailTier),
-                    type: "GET",
-                    dataType: 'json',
-                    success: function(data) {
-                    }
-                 	 });
                 oTable.fnDraw();
             }
 
@@ -75,7 +62,7 @@ var EditableTable = function () {
                 oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-                oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
+                //oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
                 oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
                 oTable.fnDraw();
             }
@@ -110,15 +97,15 @@ var EditableTable = function () {
 
             $('#tier-schedule_new').click(function (e) {
                 e.preventDefault();
-                var radio='<label class="control-label" for="inputSuccess"> <input type="radio" checked="checked" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>'+
-                '<label class="control-label" for="inputSuccess"> <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">$</label>';
-                var aiNew = oTable.fnAddData(['', '', radio, '',
+               
+               var aiNew = oTable.fnAddData(['', '', '',
                         '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
                 editRow(oTable, nRow);
-                nEditing = nRow;
-
+                
+                nEditing = nRow; 
+               
             });
 
             $('#editable-sample a.delete,#tier-schedule a.delete').live('click', function (e) {
@@ -132,7 +119,7 @@ var EditableTable = function () {
                 oTable.fnDeleteRow(nRow);
                 
                 $.ajax({
-                url: '/SalesIncentiveMgmt/v1/program/removeTier/'+id,
+                url: '/SIM/program/v1/removeTier/'+id,
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {
@@ -157,7 +144,6 @@ var EditableTable = function () {
 
                 /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
-
                 if (nEditing !== null && nEditing != nRow) {
                     /* Currently editing - but not this row - restore the old before continuing to edit mode */
                     restoreRow(oTable, nEditing);
@@ -167,7 +153,7 @@ var EditableTable = function () {
                     /* Editing this row and want to save it */
                     saveRow(oTable, nEditing);
                     nEditing = null;
-                    alert("Updated! Do not forget to do some ajax to sync with backend :)");
+                    alert(" Please click on 'Save Changes' button to permanently  update these changes in database !!!");
                 } else {
                     /* No edit in progress - let's start one */
                     editRow(oTable, nRow);

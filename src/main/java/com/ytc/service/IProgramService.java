@@ -5,6 +5,7 @@ import java.util.List;
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
+import com.ytc.common.model.ProgramTierDetail;
 
 public interface IProgramService {
 	
@@ -12,7 +13,7 @@ public interface IProgramService {
 	
 	List<DropDown> getTagValueDropDown(Integer tagId);
 	
-	String updateProgramTier(String id);
+	String updateProgramTier(ProgramTierDetail programTierDetail);
 
 	String deleteProgramTier(String id);
 

@@ -25,7 +25,6 @@ import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalAuditableModel;
 import com.ytc.dal.model.DalModel;
 import com.ytc.dal.model.DalUser;
-import com.ytc.service.ServiceContext;
 
 
 /**
@@ -74,7 +73,6 @@ public class BaseDao implements IDataAccessLayer {
 		if (StringUtils.isEmpty(item.getId())) {
 			//entityManager.persist(item);
 			Session session= entityManager.unwrap(Session.class);
-		    @SuppressWarnings("unused")
 			int result = -1;
 		    try {
 		        Serializable ser = session.save(item);
@@ -193,6 +191,7 @@ public class BaseDao implements IDataAccessLayer {
 	}
 	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<T> getListFromNamedQuery(String namedQueryString) {
 		Query query = null;
@@ -239,5 +238,20 @@ public class BaseDao implements IDataAccessLayer {
 		@SuppressWarnings("unchecked")
 		List<T> resultList = query.getResultList();
 		return resultList;
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> getListFromNamedQueryWithParameter(String namedQueryString, Map<String, Object> parameters) {
+		Query query = null;
+		List<T> returnList = null;
+		if(namedQueryString != null){
+			query = entityManager.createNamedQuery(namedQueryString);
+			for(Map.Entry<String, Object> param : parameters.entrySet()){
+				query.setParameter(param.getKey(), param.getValue());
+			}
+			returnList = query.getResultList();
+		}
+		return returnList;
 	}
 }

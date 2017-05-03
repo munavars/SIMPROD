@@ -2,6 +2,7 @@ package com.ytc.common.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class ProgramDetail extends Model{
 
@@ -42,6 +43,9 @@ public class ProgramDetail extends Model{
 
 	private ProgramPaidOn programPaidOn;
 	private ProgramAchieveOn programAchieveOn;
+	private List<ProgramTierDetail> programTierDetailList = null;
+	private String amountTypeTier;
+	private Integer actualMarker;
 	
 	public ProgramPaidOn getProgramPaidOn() {
 		return programPaidOn;
@@ -222,7 +226,27 @@ public class ProgramDetail extends Model{
 		this.displayEndDate = displayEndDate;
 	}
 	
+	public List<ProgramTierDetail> getProgramTierDetailList() {
+		return programTierDetailList;
+	}
 	
+	public void setProgramTierDetailList(List<ProgramTierDetail> programTierDetailList) {
+		this.programTierDetailList = programTierDetailList;
+	}
 	
+	public String getAmountTypeTier() {
+		return amountTypeTier;
+	}
 	
+	public void setAmountTypeTier(String amountTypeTier) {
+		this.amountTypeTier = amountTypeTier;
+	}
+	
+	public Integer getActualMarker() {
+		return actualMarker;
+	}
+	
+	public void setActualMarker(Integer actualMarker) {
+		this.actualMarker = actualMarker;
+	}	
 }

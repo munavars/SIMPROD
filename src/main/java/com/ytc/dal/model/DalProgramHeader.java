@@ -17,6 +17,11 @@ import javax.persistence.Table;
 	
 public class DalProgramHeader  extends DalAuditableModel{
 	
+	/**
+	 * Default Serial version.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private DalCustomer customer;
 	
 	private Integer accessPgmId;

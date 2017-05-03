@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.enums.BTLEnum;
@@ -20,6 +19,7 @@ import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramDetailsDropDown;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramPaidOn;
+import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
@@ -74,12 +74,46 @@ public class ProgramServiceImpl implements IProgramService {
 			populatePaidBasedOnData(programHeader, dalProgramHeader, dalProgramDetail);
 			
 			populateAchieveBasedOnData(programHeader, dalProgramHeader, dalProgramDetail);
+			
+			populateTierData(programHeader, dalProgramDetail);
 		}	
 		else{
 			populateDropDownValues(programHeader, customerId); //Customer id should be 
 		}
 		
 		return programHeader;
+	}
+	
+
+	private void populateTierData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+		if(dalProgramDetail != null && programHeader != null){
+			List<ProgramTierDetail> programTierDetailSet = null;
+			String amountTypeTier = null;
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("programDetailId", dalProgramDetail.getId());
+			List<DalProgramDetailTier> dalProgramTierList = baseDao.getListFromNamedQueryWithParameter("DalProgramDetailTier.getAllTierForProgramId", 
+															parameters);
+			
+			if(dalProgramTierList != null){
+				programTierDetailSet = new ArrayList<ProgramTierDetail>();
+				for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierList){
+					ProgramTierDetail detail = new ProgramTierDetail();
+					detail.setId(dalProgramDetailTier.getId());
+					detail.setLevel(dalProgramDetailTier.getLevel());
+					detail.setProgramDetailId(dalProgramDetailTier.getProgramDetailId());
+					detail.setTierType(dalProgramDetailTier.getTierType());
+					if(amountTypeTier == null){
+						amountTypeTier = dalProgramDetailTier.getTierType();
+					}
+					detail.setAmount(new BigDecimal(dalProgramDetailTier.getAmount()));
+					detail.setBeginRange(dalProgramDetailTier.getBeginRange());
+					programTierDetailSet.add(detail);
+				}
+				programHeader.getProgramDetailList().get(0).setProgramTierDetailList(programTierDetailSet);
+				programHeader.getProgramDetailList().get(0).setAmountTypeTier(amountTypeTier);
+				programHeader.getProgramDetailList().get(0).setActualMarker(dalProgramDetail.getActualMarker());
+			}
+		}
 	}
 
 	private void populateProgramHeaderDetails(ProgramHeader programHeader, DalProgramHeader dalProgramHeader, DalProgramDetail dalProgramDetail) {
@@ -562,12 +596,13 @@ public class ProgramServiceImpl implements IProgramService {
 	 * @see com.ytc.service.IProgramService#updateProgramTier(java.lang.String)
 	 */
 	@Override
-	public String updateProgramTier(String id) {
+	public String updateProgramTier(ProgramTierDetail programTierDetail) {
 		String status="success";
 		DalProgramDetailTier dalProgramDetailTier=new DalProgramDetailTier();
 		try {
-			dalProgramDetailTier=new ObjectMapper().readValue(id, DalProgramDetailTier.class);
+			dalProgramDetailTier= baseDao.getById(DalProgramDetailTier.class, programTierDetail.getId());// new ObjectMapper().readValue(programTierDetail.getId(), DalProgramDetailTier.class);
 			if((null!=dalProgramDetailTier.getId())&&(!"".equalsIgnoreCase(dalProgramDetailTier.getId().toString()))){
+				dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
 				baseDao.update(dalProgramDetailTier, 5);
 			}else{
 				baseDao.create(dalProgramDetailTier, 5);	

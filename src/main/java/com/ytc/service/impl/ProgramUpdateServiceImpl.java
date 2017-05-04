@@ -360,7 +360,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setPaidType(Integer.valueOf(programDetail.getPaidType()));
 			
 			}				
-			dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "0" : "1");
+			dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "1" : "0");
 			dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
 			dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
 			

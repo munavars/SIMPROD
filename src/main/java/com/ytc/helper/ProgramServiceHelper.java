@@ -26,6 +26,14 @@ public class ProgramServiceHelper {
 		return returnValue;
 	}
 
+	public static Integer convertToInteger(Object obj){
+		Integer returnValue = null;
+		if(obj != null){
+			returnValue = Integer.parseInt(obj.toString());
+		}
+		return returnValue;
+	}
+	
 	public static Date convertToDateFromCalendar(Calendar input1){
 		Date newDate = null;
 		if(input1 != null){

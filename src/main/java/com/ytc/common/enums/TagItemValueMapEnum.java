@@ -14,20 +14,20 @@ import java.util.Map;
  */
 public enum TagItemValueMapEnum {
 
-	ZERO(0,"0","",""),	
-	BILL_TO_NUMBER(1,"Bill To", "DalShipToMaster","billToNumber"),
-	CHANNEL_3(2,"Channel3","DalShipToMaster","channelCode"),		
-	BUSINESS_UNIT(3,"Business Unit","DalShipToMaster","businessUnit"),
+	ZERO(0, "0", "", ""),	
+	BILL_TO_NUMBER(1,"Bill To", "DalShipToMaster","CONCAT(billToNumber, ' - ', billToName)"),
+	CHANNEL_3(2,"Channel3","DalShipToMaster","CONCAT(channelCode, ' - ', channelName)"),
+	BUSINESS_UNIT(3,"Business Unit","DalShipToMaster","CONCAT(businessUnit, ' - ', businessUnitName)"),
 	BRAND(4,"Brand","DalPartMaster","brand"),
 	PRODUCT_LINE(5,"Prod Line","DalPartMaster","productLine"),
 	TREAD_DESC(6,"Tread","DalPartMaster","treadDesc"),
-	PART_NUMBER(7,"All Products","DalPartMaster","partNumber"),
-	ALL_CUSTOMERS(8,"All Customers", "DalShipToMaster","billToNumber"),		
-	ALL_PRODUCTS(9,"Part","DalPartMaster","partNumber"),		
-	SHIP_TO_NUMBER(10,"Ship To","DalShipToMaster","shipToNumber"),
-	CORP_NUMBER(11,"Corp","DalShipToMaster","corpNumber"),
-	CHANNEL_CODE(12,"Channel1","DalShipToMaster","channelGroup"),
-	CHANNEL_GROUP(13,"Channel2","DalShipToMaster","SUBSTRING(channelCode, 1, 2)");
+	PART_NUMBER(7,"All Products","DalPartMaster","CONCAT(partNumber, ' - ', partDesc)"),
+	ALL_CUSTOMERS(8,"All Customers", "DalShipToMaster","CONCAT(billToNumber, ' - ', billToName)"),		
+	ALL_PRODUCTS(9,"Part","DalPartMaster","CONCAT(partNumber, ' - ', partDesc)"),
+	SHIP_TO_NUMBER(10,"Ship To","DalShipToMaster","CONCAT(shipToNumber, ' - ', shipToName)"),
+	CORP_NUMBER(11,"Corp","DalShipToMaster","CONCAT(corpNumber, ' - ', corpName)"),
+	CHANNEL_CODE(12,"Channel1","DalShipToMaster","CONCAT(channelGroup, ' - ', channelGroupName)"),
+	CHANNEL_GROUP(13,"Channel2","DalShipToMaster","CONCAT(SUBSTRING(channelCode, 1, 2), ' - ', channelName)"); 
 
 	private static final Map<Integer, TagItemValueMapEnum> map = new HashMap<>(values().length, 0.75f);
 	
@@ -63,7 +63,7 @@ public enum TagItemValueMapEnum {
 	public String getFetchColumnName() {
 		return fetchColumnName;
 	}
-	
+
 	/**
 	 * Method to get the table details based on tag id passed.
 	 * @param tagId tagId.

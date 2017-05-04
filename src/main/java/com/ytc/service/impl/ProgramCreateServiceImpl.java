@@ -69,16 +69,19 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		if(programTierDetailList != null){
 			for(ProgramTierDetail programTierDetail : programTierDetailList){
 				//newly added
-				if(dalProgramTierAddedList == null){
-					dalProgramTierAddedList = new ArrayList<DalProgramDetailTier>();
+				if(programTierDetail.getLevel() != null){ //Even if no row is added in UI, we are getting a blank row in service. 
+														  //to avoid the insertion or fatal error of blank row, this condition is added.
+					if(dalProgramTierAddedList == null){
+						dalProgramTierAddedList = new ArrayList<DalProgramDetailTier>();
+					}
+					DalProgramDetailTier dalProgramDetailTier = new DalProgramDetailTier();
+					dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
+					dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
+					dalProgramDetailTier.setLevel(programTierDetail.getLevel());
+					dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
+					dalProgramDetailTier.setProgramDetailId(id);
+					dalProgramTierAddedList.add(dalProgramDetailTier);	
 				}
-				DalProgramDetailTier dalProgramDetailTier = new DalProgramDetailTier();
-				dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
-				dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
-				dalProgramDetailTier.setLevel(programTierDetail.getLevel());
-				dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
-				dalProgramDetailTier.setProgramDetailId(id);
-				dalProgramTierAddedList.add(dalProgramDetailTier);
 			}
 			
 			if(dalProgramTierAddedList != null && !dalProgramTierAddedList.isEmpty()){
@@ -121,7 +124,14 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 					for(String value : userIncluded){
 						DalProgramDetAchieved dalProgramDetAchieved = new DalProgramDetAchieved();
 						dalProgramDetAchieved.setAchMethod(method);
-						dalProgramDetAchieved.setAchValue(value);
+						if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+							String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
+							dalProgramDetAchieved.setAchValue(delimitedValue[0].trim());
+						}
+						else{
+							dalProgramDetAchieved.setAchValue(value);	
+						}
+						dalProgramDetAchieved.setDisplayValue(value);
 						dalProgramDetAchieved.setAchTagId(Integer.valueOf(includeMap.getKey()));
 						dalProgramDetAchieved.setDalProgramDetail(dalProgramDetail);
 						newlyAddedAchieveOnList.add(dalProgramDetAchieved);
@@ -163,7 +173,15 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 					for(String value : userIncluded){
 						DalProgramDetPaid dalProgramDetPaid = new DalProgramDetPaid();
 						dalProgramDetPaid.setMethod(method);
-						dalProgramDetPaid.setValue(value);
+						if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+							String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
+							dalProgramDetPaid.setValue(delimitedValue[0].trim());
+						}
+						else{
+							dalProgramDetPaid.setValue(value);
+						}
+
+						dalProgramDetPaid.setDisplayValue(value);
 						dalProgramDetPaid.setTagId(Integer.valueOf(includeMap.getKey()));
 						dalProgramDetPaid.setDalProgramDetails(dalProgramDetail);
 						newlyAddedPaidOnList.add(dalProgramDetPaid);

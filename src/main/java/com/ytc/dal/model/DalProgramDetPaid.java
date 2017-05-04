@@ -1,6 +1,5 @@
 package com.ytc.dal.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -11,7 +10,12 @@ import javax.persistence.Table;
 @Table(name = "PGM_DET_PAID")
 public class DalProgramDetPaid extends DalAuditableModel{
 	
-    private DalProgramDetail dalProgramDetails;
+    /**
+	 * Default serial version.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private DalProgramDetail dalProgramDetails;
     
     private String method;
 
@@ -19,6 +23,8 @@ public class DalProgramDetPaid extends DalAuditableModel{
     
     private String value;
 
+    private String displayValue;
+    
 	@ManyToOne
 	@JoinColumn(name = "PGM_DETAIL_ID", referencedColumnName = "ID")
 	public DalProgramDetail getDalProgramDetails() {
@@ -55,5 +61,13 @@ public class DalProgramDetPaid extends DalAuditableModel{
 	public void setValue(String value) {
 		this.value = value;
 	}
-     
+
+	@Column(name = "DISPLAY_VALUE")
+	public String getDisplayValue() {
+		return displayValue;
+	}
+
+	public void setDisplayValue(String displayValue) {
+		this.displayValue = displayValue;
+	}
 }

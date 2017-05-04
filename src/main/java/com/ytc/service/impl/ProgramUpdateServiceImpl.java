@@ -45,36 +45,38 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		List<DalProgramDetPaid> deletedPaidEntityList = null;
 		if(programHeader.getId() != null){
 			
-			DalProgramHeader dalProgramHeader =  baseDao.getById(DalProgramHeader.class, programHeader.getId());
+		
+			DalProgramDetail dalProgramDetail = baseDao.getById(DalProgramDetail.class, programHeader.getProgramDetailList().get(0).getId());
 			
-			if(dalProgramHeader != null){
+			if(dalProgramDetail != null){
 				/** If control is here, then user is editing the existing program details.*/
 			
 				/** Save Program Detail section information*/
-				DalProgramDetail dalProgramDetail =  updateProgramDetailsData(dalProgramHeader, programHeader);
+				updateProgramDetailsData(dalProgramDetail.getDalProgramHeader(), programHeader);
 
 				/** save Program Paid Based on*/
-				deletedPaidEntityList = updateProgramPaidBasedOnData(dalProgramHeader, programHeader, dalProgramDetail);
+				deletedPaidEntityList = updateProgramPaidBasedOnData(programHeader, dalProgramDetail);
 								
 				/** save Program Achieved Based on*/
-				deletedAchievedEntityList = updateProgramAchieveBasedOnData(dalProgramHeader, programHeader, dalProgramDetail);
-				
-				
-				
-				baseDao.update(dalProgramHeader);
+				deletedAchievedEntityList = updateProgramAchieveBasedOnData(programHeader, dalProgramDetail);
 				
 				if(deletedPaidEntityList != null && !deletedPaidEntityList.isEmpty()){
 					for(DalProgramDetPaid dalProgramDetPaid : deletedPaidEntityList){
-						dalProgramDetPaid.getDalProgramDetails().getDalProgramDetPaidList().remove(dalProgramDetPaid);
-						baseDao.delete(DalProgramDetPaid.class, dalProgramDetPaid.getId());
-					}
-				}
-				if(deletedAchievedEntityList != null && !deletedAchievedEntityList.isEmpty()){
-					for(DalProgramDetAchieved dalProgramDetAchieved : deletedAchievedEntityList){
-						baseDao.delete(DalProgramDetAchieved.class, dalProgramDetAchieved.getId());
+						dalProgramDetail.getDalProgramDetPaidList().remove(dalProgramDetPaid);
 					}
 				}
 				
+				
+				if(deletedAchievedEntityList != null && !deletedAchievedEntityList.isEmpty()){
+					for(DalProgramDetAchieved dalProgramDetAchieved : deletedAchievedEntityList){
+						baseDao.delete(DalProgramDetAchieved.class, dalProgramDetAchieved.getId());
+						dalProgramDetail.getDalProgramDetAchievedList().remove(dalProgramDetAchieved);
+					}
+				}
+				
+				baseDao.update(dalProgramDetail);
+
+				/** tier detail is saved seperately as of now.*/
 				updateProgramTierData(dalProgramDetail, programHeader);
 				
 				isSuccess = Boolean.TRUE;
@@ -113,33 +115,35 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				existingTierIdSet.add(dalProgramDetailTier.getId());
 			}
 			for(ProgramTierDetail programTierDetail : programTierDetailList){
-				if(existingTierIdSet.contains(programTierDetail.getId())){
-					UserTierIdSet.add(programTierDetail.getId());
-					//modification
-					for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierList){
-						if(programTierDetail.getId().equals(dalProgramDetailTier.getId())){
-							dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
-							dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
-							dalProgramDetailTier.setLevel(programTierDetail.getLevel());
-							dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
-							dalProgramDetailTier.setProgramDetailId(dalProgramDetail.getId());
-							break;
+				if(programTierDetail.getLevel() != null){
+					if(existingTierIdSet.contains(programTierDetail.getId())){
+						UserTierIdSet.add(programTierDetail.getId());
+						//modification
+						for(DalProgramDetailTier dalProgramDetailTier : dalProgramTierList){
+							if(programTierDetail.getId().equals(dalProgramDetailTier.getId())){
+								dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
+								dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
+								dalProgramDetailTier.setLevel(programTierDetail.getLevel());
+								dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
+								dalProgramDetailTier.setProgramDetailId(dalProgramDetail.getId());
+								break;
+							}
 						}
 					}
-				}
-				else{
-					//newly added
-					if(dalProgramTierAddedList == null){
-						dalProgramTierAddedList = new ArrayList<DalProgramDetailTier>();
+					else{
+						//newly added
+						if(dalProgramTierAddedList == null){
+							dalProgramTierAddedList = new ArrayList<DalProgramDetailTier>();
+						}
+						DalProgramDetailTier dalProgramDetailTier = new DalProgramDetailTier();
+						dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
+						dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
+						dalProgramDetailTier.setLevel(programTierDetail.getLevel());
+						dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
+						dalProgramDetailTier.setProgramDetailId(dalProgramDetail.getId());
+						dalProgramTierAddedList.add(dalProgramDetailTier);
 					}
-					DalProgramDetailTier dalProgramDetailTier = new DalProgramDetailTier();
-					dalProgramDetailTier.setAmount(programTierDetail.getAmount().doubleValue());
-					dalProgramDetailTier.setBeginRange(programTierDetail.getBeginRange());
-					dalProgramDetailTier.setLevel(programTierDetail.getLevel());
-					dalProgramDetailTier.setTierType(programHeader.getProgramDetailList().get(0).getAmountTypeTier());
-					dalProgramDetailTier.setProgramDetailId(dalProgramDetail.getId());
-					dalProgramTierAddedList.add(dalProgramDetailTier);
-				}
+				}					
 			}
 			
 			if(dalProgramTierList != null && !dalProgramTierList.isEmpty()){
@@ -164,12 +168,12 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		
 	}
 
-	private List<DalProgramDetAchieved> updateProgramAchieveBasedOnData(DalProgramHeader dalProgramHeader, ProgramHeader programHeader,
+	private List<DalProgramDetAchieved> updateProgramAchieveBasedOnData(ProgramHeader programHeader,
 			DalProgramDetail dalProgramDetail) {
 		Map<String, Set<String>> existingIncludedMap = null;
 		Map<String, Set<String>> existingExcludedMap = null;
 		List<DalProgramDetAchieved> deletedEntityList = null;
-		if(dalProgramHeader != null && programHeader != null && dalProgramDetail.getDalProgramDetPaidList() != null){
+		if( programHeader != null && dalProgramDetail.getDalProgramDetPaidList() != null){
 			existingIncludedMap = new HashMap<String, Set<String>>();
 			existingExcludedMap = new HashMap<String, Set<String>>();
 			Set<DalProgramDetAchieved> newlyAddedAchieveOnList = new HashSet<DalProgramDetAchieved>();
@@ -200,7 +204,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			for(DalProgramDetAchieved dalProgramDetAchieved : dalProgramDetAchievedList){
 				if(deletedList != null && deletedList.get(String.valueOf(dalProgramDetAchieved.getAchTagId())) != null){
 					Set<String> deletedValue = deletedList.get(String.valueOf(dalProgramDetAchieved.getAchTagId()));
-					if(deletedValue.contains(dalProgramDetAchieved.getAchValue())){
+					if(deletedValue.contains(dalProgramDetAchieved.getDisplayValue())){
 						deletedEntityList.add(dalProgramDetAchieved);
 					}
 				}
@@ -211,11 +215,11 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		
 	}
 	
-	private List<DalProgramDetPaid> updateProgramPaidBasedOnData(DalProgramHeader dalProgramHeader, ProgramHeader programHeader,DalProgramDetail dalProgramDetail) {
+	private List<DalProgramDetPaid> updateProgramPaidBasedOnData(ProgramHeader programHeader,DalProgramDetail dalProgramDetail) {
 		Map<String, Set<String>> existingIncludedMap = null;
 		Map<String, Set<String>> existingExcludedMap = null;
 		List<DalProgramDetPaid> deletedEntityList = null;
-		if(dalProgramHeader != null && programHeader != null && dalProgramDetail.getDalProgramDetPaidList() != null){
+		if( programHeader != null && dalProgramDetail.getDalProgramDetPaidList() != null){
 			existingIncludedMap = new HashMap<String, Set<String>>();
 			existingExcludedMap = new HashMap<String, Set<String>>();
 			Set<DalProgramDetPaid> newlyAddedPaidOnList = new HashSet<DalProgramDetPaid>();
@@ -248,7 +252,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			for(DalProgramDetPaid dalProgramDetPaid : dalProgramDetPaidList){
 				if(deletedList != null && deletedList.get(String.valueOf(dalProgramDetPaid.getTagId())) != null){
 					Set<String> deletedValue = deletedList.get(String.valueOf(dalProgramDetPaid.getTagId()));
-					if(deletedValue.contains(dalProgramDetPaid.getValue())){
+					if(deletedValue.contains(dalProgramDetPaid.getDisplayValue())){
 						deletedEntityList.add(dalProgramDetPaid);
 					}
 				}
@@ -287,7 +291,14 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 							//add
 							DalProgramDetPaid dalProgramDetPaid = new DalProgramDetPaid();
 							dalProgramDetPaid.setMethod(method);
-							dalProgramDetPaid.setValue(value);
+							if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+								String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
+								dalProgramDetPaid.setValue(delimitedValue[0].trim());
+							}
+							else{
+								dalProgramDetPaid.setValue(value);
+							}
+							dalProgramDetPaid.setDisplayValue(value);
 							dalProgramDetPaid.setTagId(Integer.valueOf(includeMap.getKey()));
 							dalProgramDetPaid.setDalProgramDetails(dalProgramDetail);
 							newlyAddedPaidOnList.add(dalProgramDetPaid);
@@ -307,7 +318,14 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			for(String value : userIncluded){
 				DalProgramDetPaid dalProgramDetPaid = new DalProgramDetPaid();
 				dalProgramDetPaid.setMethod(method);
-				dalProgramDetPaid.setValue(value);
+				if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+					String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
+					dalProgramDetPaid.setValue(delimitedValue[0].trim());
+				}
+				else{
+					dalProgramDetPaid.setValue(value);
+				}
+				dalProgramDetPaid.setDisplayValue(value);
 				dalProgramDetPaid.setTagId(Integer.valueOf(tagId));
 				dalProgramDetPaid.setDalProgramDetails(dalProgramDetail);
 				newlyAddedPaidOnList.add(dalProgramDetPaid);
@@ -392,8 +410,14 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 						if(!existingInc.contains(value)){
 							//add
 							DalProgramDetAchieved dalProgramDetAchieved = new DalProgramDetAchieved();
-							dalProgramDetAchieved.setAchMethod(method);
-							dalProgramDetAchieved.setAchValue(value);
+							if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+								String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
+								dalProgramDetAchieved.setAchValue(delimitedValue[0].trim());
+							}
+							else{
+								dalProgramDetAchieved.setAchValue(value);	
+							}
+							dalProgramDetAchieved.setDisplayValue(value);
 							dalProgramDetAchieved.setAchTagId(Integer.valueOf(includeMap.getKey()));
 							dalProgramDetAchieved.setDalProgramDetail(dalProgramDetail);
 							newlyAddedAchieveOnList.add(dalProgramDetAchieved);
@@ -413,7 +437,14 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			for(String value : userIncluded){
 				DalProgramDetAchieved dalProgramDetAchieved = new DalProgramDetAchieved();
 				dalProgramDetAchieved.setAchMethod(method);
-				dalProgramDetAchieved.setAchValue(value);
+				if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+					String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
+					dalProgramDetAchieved.setAchValue(delimitedValue[0].trim());
+				}
+				else{
+					dalProgramDetAchieved.setAchValue(value);	
+				}
+				dalProgramDetAchieved.setDisplayValue(value);
 				dalProgramDetAchieved.setAchTagId(Integer.valueOf(tagId));
 				dalProgramDetAchieved.setDalProgramDetail(dalProgramDetail);
 				newlyAddedAchieveOnList.add(dalProgramDetAchieved);

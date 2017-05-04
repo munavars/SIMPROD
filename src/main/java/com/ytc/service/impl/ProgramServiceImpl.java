@@ -179,13 +179,13 @@ public class ProgramServiceImpl implements IProgramService {
 							/*Below condition has to be revisited. dalProgramDetail.getDalProgramDetPaidList() returns duplicate rows. 
 							 * this has to be corrected. As a work around, below condition is added.*/
 							if(!includeList.contains(dalProgramDetPaid.getValue())){
-								includeList.add(dalProgramDetPaid.getValue());	
+								includeList.add(dalProgramDetPaid.getDisplayValue());	
 							}
 							
 						}
 						else{
 							List<String> includeList = new ArrayList<String>();
-							includeList.add(dalProgramDetPaid.getValue());
+							includeList.add(dalProgramDetPaid.getDisplayValue());
 							includedMap.put(String.valueOf(dalProgramDetPaid.getTagId()), includeList);
 						}
 					}
@@ -195,13 +195,13 @@ public class ProgramServiceImpl implements IProgramService {
 							List<String> excludeList = excludedMap.get(String.valueOf(dalProgramDetPaid.getTagId()));
 							/*Below condition has to be revisited. dalProgramDetail.getDalProgramDetPaidList() returns duplicate rows. 
 							 * this has to be corrected. As a work around, below condition is added.*/
-							if(!excludeList.contains(dalProgramDetPaid.getValue())){
-								excludeList.add(dalProgramDetPaid.getValue());	
+							if(!excludeList.contains(dalProgramDetPaid.getDisplayValue())){
+								excludeList.add(dalProgramDetPaid.getDisplayValue());	
 							}
 						}
 						else{
 							List<String> excludeList = new ArrayList<String>();
-							excludeList.add(dalProgramDetPaid.getValue());
+							excludeList.add(dalProgramDetPaid.getDisplayValue());
 							excludedMap.put(String.valueOf(dalProgramDetPaid.getTagId()), excludeList);
 						}
 					}
@@ -231,13 +231,13 @@ public class ProgramServiceImpl implements IProgramService {
 						/**Include values*/
 						if(includedMap.get(String.valueOf(dalProgramDetAchieved.getAchTagId())) != null){
 							List<String> includeList = includedMap.get(String.valueOf(dalProgramDetAchieved.getAchTagId()));
-							if(!includeList.contains(dalProgramDetAchieved.getAchValue())){
-								includeList.add(dalProgramDetAchieved.getAchValue());	
+							if(!includeList.contains(dalProgramDetAchieved.getDisplayValue())){
+								includeList.add(dalProgramDetAchieved.getDisplayValue());	
 							}
 						}
 						else{
 							List<String> includeList = new ArrayList<String>();
-							includeList.add(dalProgramDetAchieved.getAchValue());
+							includeList.add(dalProgramDetAchieved.getDisplayValue());
 							includedMap.put(String.valueOf(dalProgramDetAchieved.getAchTagId()), includeList);
 						}
 					}
@@ -245,14 +245,14 @@ public class ProgramServiceImpl implements IProgramService {
 						/**Include values*/
 						if(excludedMap.get(String.valueOf(dalProgramDetAchieved.getAchTagId())) != null){
 							List<String> excludeList = excludedMap.get(String.valueOf(dalProgramDetAchieved.getAchTagId()));
-							if(!excludeList.contains(dalProgramDetAchieved.getAchValue())){
-								excludeList.add(dalProgramDetAchieved.getAchValue());	
+							if(!excludeList.contains(dalProgramDetAchieved.getDisplayValue())){
+								excludeList.add(dalProgramDetAchieved.getDisplayValue());	
 							}
 							
 						}
 						else{
 							List<String> excludeList = new ArrayList<String>();
-							excludeList.add(dalProgramDetAchieved.getAchValue());
+							excludeList.add(dalProgramDetAchieved.getDisplayValue());
 							excludedMap.put(String.valueOf(dalProgramDetAchieved.getAchTagId()), excludeList);
 						}
 					}
@@ -511,17 +511,21 @@ public class ProgramServiceImpl implements IProgramService {
 		if(tagId != null){
 			tagItemValueMapEnum = TagItemValueMapEnum.tableDetail(tagId);
 			if(tagItemValueMapEnum != null){
+				/*query = String.format(QueryConstant.TAG_VALUE_LIST_BY_TAG_ID, tagItemValueMapEnum.getFetchColumnName(), tagItemValueMapEnum.getTableName()) 
+						+ String.format(QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE, tagItemValueMapEnum.getFetchColumnName());*/
 				query = String.format(QueryConstant.TAG_VALUE_LIST_BY_TAG_ID, tagItemValueMapEnum.getFetchColumnName(), tagItemValueMapEnum.getTableName()) 
-						+ String.format(QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE, tagItemValueMapEnum.getFetchColumnName());
+						+ QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE;
 				tagValueList = baseDao.getTagValue(query);
 				for(String value : tagValueList){
-					DropDown dropDown = new DropDown();
-					dropDown.setKey(value);
-					dropDown.setValue(value);
-					if(dropdownList == null){
-						dropdownList = new ArrayList<DropDown>();
+					if(value != null){
+						DropDown dropDown = new DropDown();
+						dropDown.setKey(value);
+						dropDown.setValue(value);
+						if(dropdownList == null){
+							dropdownList = new ArrayList<DropDown>();
+						}
+						dropdownList.add(dropDown);	
 					}
-					dropdownList.add(dropDown);
 				}
 			}
 		}

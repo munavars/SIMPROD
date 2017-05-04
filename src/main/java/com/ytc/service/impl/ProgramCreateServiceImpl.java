@@ -26,6 +26,7 @@ import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalStatus;
+import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 
 public class ProgramCreateServiceImpl implements IProgramCreateService {
@@ -38,12 +39,14 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		DalProgramHeader dalProgramHeader = new DalProgramHeader();	
 		dalProgramHeader.setBu("P");
 		dalProgramHeader.setCustomer(baseDao.getById(DalCustomer.class, 47));
-		dalProgramHeader.setStatus(baseDao.getById(DalStatus.class, 3));
+		if(programHeader.getStatus() != null){
+			dalProgramHeader.setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
+		}
 		DalEmployee emp = new DalEmployee();
 		emp.setEMP_ID(47);
 		dalProgramHeader.setRequest(emp);
 		DalProgramDetail dalProgramDetail =  createProgramDetailsData(dalProgramHeader, programHeader);
-		dalProgramDetail.setStatusId(3);
+		dalProgramDetail.setStatusId(Integer.parseInt(programHeader.getStatus()));
 		dalProgramDetail.setDalProgramHeader(dalProgramHeader);
 		Random rand = new Random();
 		int  n = rand.nextInt(1000) + 1;

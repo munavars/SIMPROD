@@ -562,9 +562,9 @@
       
           <div class="clearfix"></div>
 
-          <div class="clearfix">
+<!--           <div class="clearfix">
               <a class="btn btn-info finish" id="finish" data-toggle="modal" href="#myModal"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
-              <!-- Modal -->
+              Modal
                               <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                       <div class="modal-content">
@@ -585,7 +585,61 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                                       </div>
                                   </div>
                               </div>
+          </div> -->
+          
+          
+           <div class="modal-footer">
+		      <a href="index.html#pending-approvals"><button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
+              <a class="btn btn-success" id="finish" data-toggle="modal" href="#myModal"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
+              <a class="btn btn-info finish" id="finish" data-toggle="modal" href="#myModal1"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
+				<div class="space15">&nbsp;</div>
+				<div class="text-center"> If you want to save these changes for later, click 'Save Changes'. If you want to submit these changes, click "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
+                <div class="space15"></div>
+              <!-- Modal -->
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                		<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                               	<h4 class="modal-title">Submit for Approval?</h4>
+                            </div>
+                            <div class="modal-body">
+								<div class="space15">&nbsp;</div>
+								 <div class="text-center"> Are you sure you want to Submit for approval? If you still want to submit for approval, click the OK button. If you don't want to submit, click the "Cancel" button below and your program will not be submitted. </div>
+                                <div class="space15"></div>
+                            </div>
+                            <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+									<a href="javascript: submitForApproval()"><button class="btn btn-info" type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;OK</button></a>
+                            </div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Save Program Changes?</h4>
+                            </div>
+							<div class="modal-body">
+								<div class="space15">&nbsp;</div>
+								<div class="text-center">Are you sure you want to Save Changes? If you still want to save your changes, click the OK button. If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
+                                <div class="space15"></div>
+							</div>
+							<div class="modal-footer">
+								<button data-dismiss="modal" class="btn btn-default"
+									type="button">Cancel</button>
+								<a href="javascript: saveDraft()"><button class="btn btn-info" type="button">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+									</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
           </div>
+          
+          
         </div>
        </div>
       </section>
@@ -911,14 +965,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          		}
          	}
 
-         	
-         	
-         	function saveDraft(){
-         		submitForApproval();
-         	}
-         	
-			function submitForApproval(){
-				responseOnload.status = "0";
+         	function prepareDataForSubmit(){
+         		
 				responseOnload.programDetailList[0].amount = $("#amount").val();
 				responseOnload.programDetailList[0].amountType = $('input:radio[name=optionsRadiosDenomination]:checked').val();
  				responseOnload.programDetailList[0].beginDate = $.datepicker.parseDate( "mm/dd/yy", $('#from').val());
@@ -966,8 +1014,23 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					responseOnload.programDetailList[0].amountTypeTier = '$';
 				}
 				responseOnload.programDetailList[0].actualMarker = parseInt($('#actual_marker').val());
-				  
-				
+         	}
+
+         	function saveDraft(){
+         		responseOnload.status = "3";
+         		prepareDataForSubmit();
+         		fnCallService();
+         		$('#myModal1').modal('toggle');
+         	}
+         	
+			function submitForApproval(){
+  				responseOnload.status = "0";
+				prepareDataForSubmit();
+				fnCallService();
+				$('#myModal').modal('toggle');
+			}
+			
+			function fnCallService(){
 				/*Service call to save the data.*/				
 			    $.ajax({
 					type: "POST",
@@ -977,7 +1040,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					data: JSON.stringify(responseOnload),
 					success: function (response) {
 			            if (response) {
-			            	$('#myModal').modal('toggle');
 			                alert("Data Saved!!");
 			            } else {
 							alert("Issue while saving the data. Please try again after sometime.!!");

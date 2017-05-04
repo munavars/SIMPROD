@@ -23,7 +23,6 @@ import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
 import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalProgramDetailTier;
-import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
@@ -52,7 +51,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				/** If control is here, then user is editing the existing program details.*/
 			
 				/** Save Program Detail section information*/
-				updateProgramDetailsData(dalProgramDetail.getDalProgramHeader(), programHeader);
+				updateProgramDetailsData(dalProgramDetail, programHeader);
 
 				/** save Program Paid Based on*/
 				deletedPaidEntityList = updateProgramPaidBasedOnData(programHeader, dalProgramDetail);
@@ -333,53 +332,49 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		}
 	}
 
-	private DalProgramDetail updateProgramDetailsData(DalProgramHeader dalProgramHeader, ProgramHeader programHeader) {
-		DalProgramDetail dalProgramDetail = null;
-		for(DalProgramDetail dalProgramDet : dalProgramHeader.getDalProgramDetailList()){
-			if(programHeader.getProgramDetailList().get(0).getId() != null &&
-					programHeader.getProgramDetailList().get(0).getId().equals(dalProgramDet.getId()) ){
-				ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
-				if(programDetail.getPaidBasedOn() != null){
-					dalProgramDet.setPaidBasedOn(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getPaidBasedOn())));
-				}
-				if(programDetail.getPayoutFrequency() != null){
-					dalProgramDet.setPaidFrequency(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getPayoutFrequency())));
-				}
-				Calendar cal = Calendar.getInstance();
-				cal.setTimeInMillis(programDetail.getBeginDate().getTime());
-				dalProgramDet.setProgramStartDate(cal);
-				Calendar cal1 = Calendar.getInstance();
-				cal1.setTimeInMillis(programDetail.getEndDate().getTime());
-				dalProgramDet.setProgramEndDate(cal1);
-				dalProgramDet.setBTL( ("Yes".equals(programDetail.getBTL()) ? "Y" : "N"));
-				if(programDetail.getPricingType() != null){
-					dalProgramDet.setPricingType(Integer.valueOf(programDetail.getPricingType()));
-				
-				}
-				dalProgramDet.setProgramMaster(baseDao.getById(DalProgramMaster.class, Integer.valueOf(programDetail.getProgramName())));
-				dalProgramDet.setAccrualAmount(programDetail.getAmount().doubleValue());
-				dalProgramDet.setAccrualType(programDetail.getAmountType());
-				dalProgramDet.setPayTo(programDetail.getPayTo());
-				if(programDetail.getPaidType()!= null){
-					dalProgramDet.setPaidType(Integer.valueOf(programDetail.getPaidType()));
-				
-				}				
-				dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "0" : "1");
-				dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
-				dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
-				
-				if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){
-					dalProgramDet.setAchBasedMetric(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn())));				
-				}
-				if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
-					dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));				
-				}
-				dalProgramDet.setActualMarker(programDetail.getActualMarker());
-				dalProgramDetail = dalProgramDet;
-				break;
+	private DalProgramDetail updateProgramDetailsData(DalProgramDetail dalProgramDet, ProgramHeader programHeader) {
+		ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
+		if(programDetail != null && dalProgramDet != null){
+			if(programDetail.getPaidBasedOn() != null){
+				dalProgramDet.setPaidBasedOn(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getPaidBasedOn())));
 			}
+			if(programDetail.getPayoutFrequency() != null){
+				dalProgramDet.setPaidFrequency(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getPayoutFrequency())));
+			}
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(programDetail.getBeginDate().getTime());
+			dalProgramDet.setProgramStartDate(cal);
+			Calendar cal1 = Calendar.getInstance();
+			cal1.setTimeInMillis(programDetail.getEndDate().getTime());
+			dalProgramDet.setProgramEndDate(cal1);
+			dalProgramDet.setBTL( ("Yes".equals(programDetail.getBTL()) ? "Y" : "N"));
+			if(programDetail.getPricingType() != null){
+				dalProgramDet.setPricingType(Integer.valueOf(programDetail.getPricingType()));
+			
+			}
+			dalProgramDet.setProgramMaster(baseDao.getById(DalProgramMaster.class, Integer.valueOf(programDetail.getProgramName())));
+			dalProgramDet.setAccrualAmount(programDetail.getAmount().doubleValue());
+			dalProgramDet.setAccrualType(programDetail.getAmountType());
+			dalProgramDet.setPayTo(programDetail.getPayTo());
+			if(programDetail.getPaidType()!= null){
+				dalProgramDet.setPaidType(Integer.valueOf(programDetail.getPaidType()));
+			
+			}				
+			dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "0" : "1");
+			dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
+			dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
+			
+			if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){
+				dalProgramDet.setAchBasedMetric(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn())));				
+			}
+			if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
+				dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));				
+			}
+			dalProgramDet.setActualMarker(programDetail.getActualMarker());
+			dalProgramDet.setStatusId(ProgramServiceHelper.convertToInteger(programHeader.getStatus()));
 		}
-		return dalProgramDetail;
+
+		return dalProgramDet;
 	}
 	
 	public void getNewlyAddedAchieveDetails(Map<String, Set<String>> existingIncludedMap,

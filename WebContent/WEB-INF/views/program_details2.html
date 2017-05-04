@@ -426,7 +426,7 @@
                                             <div class="space15 clearfix"></div>
                                   <div class="form-group">
              <!-- START ACHIEVE based on -->
-                      <div class="form-group">
+                      <div id="ahieve-based-on" class="form-group">
                         <div class="form-group col-lg-5 md-4 col-sm-4">
                              <h4 class="paid-achieve">Achieve Based On</h4>
                             <div class="">
@@ -511,7 +511,7 @@
                 <!-- END Achieve -->
                                       
                         <!-- Start Tier -->
-                                    <div class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                                    <div id="program-tier" class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
                                         <div class="adv-table editable-table">
                                            
                                          <h4 class="tableHeader">Program Schedules</h4>
@@ -522,11 +522,11 @@
                                                   <tr><td  colspan="3" class="noborders text-left"><label class="control-label" for="inputSuccess">Amount Type</label>&nbsp;&nbsp;
                                                       <div class="radio-inline inline-flex">
                                                        <label class="control-label" for="inputSuccess">
-                                                       <input type="radio"  name="optionsRadiosDenomination" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>  
+                                                       <input type="radio"  name="optionsRadiosDenominationTier" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>  
                                                     </div>
                                                     <div class="radio-inline inline-flex">
                                                        <label class="control-label" for="inputSuccess">
-                                                       <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSignTier1" value="$" class="radio-inline denomination required" checked="checked">$</label> 
+                                                       <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier1" value="$" class="radio-inline denomination required" checked="checked">$</label> 
                                                     </div></td>
                                                     
                                                       <td colspan="3" class="noborders text-right"><label class="control-label" for="inputSuccess">Actual Marker</label>&nbsp;&nbsp;
@@ -829,9 +829,13 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                 	fnPopulateDropdown('paidBasedOn', response.data.programDetailList[0].programPaidOn.tagItemList);
                 	if(response.data.programDetailList[0].programPaidOn.isTiered == true){
                 		$("#optionsRadiosTierYes").prop('checked', true);
+                		$("#ahieve-based-on").show();
+						$("#program-tier").show();
                 	}
                 	else{
                 		$("#optionsRadiosTierNo").prop('checked', true);
+                		$("#ahieve-based-on").hide();
+						$("#program-tier").hide();
                 	}
                 	
                 	if(response.data.programDetailList[0].programPaidOn.isTrueUp == true){
@@ -955,7 +959,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				
 				/*Save Tier information*/
 				fnGetTierData(responseOnload);
-				if( $('input:radio[name=optionsRadiosDenomination]:checked').val() == '%'){
+				if( $('input:radio[name=optionsRadiosDenominationTier]:checked').val() == '%'){
 					responseOnload.programDetailList[0].amountTypeTier = '%';
 				}
 				else{
@@ -987,7 +991,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			
 			function fnGetTierData(responseOnload){
 				/* var programDetailTierList= {}; */
-                var tiertype=$('input[name=optionsRadiosDenomination]:checked').val();
+                var tiertype=$('input[name=optionsRadiosDenominationTier]:checked').val();
                 $('#tier-schedule tbody').find('tr').each(function(i) {
 
                     var tds = $(this).find('td'),
@@ -1037,6 +1041,28 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					resetFormForMandatoryCheck(elementId);
 	         	}
 			}
+         
+         	$('#optionsRadiosTier').live('click', function (e) {
+                if ($(this).val() == "Yes") {
+                  	$("#ahieve-based-on").show();
+					$("#program-tier").show();
+                } else {
+					$("#ahieve-based-on").hide();
+					$("#program-tier").hide();
+                }
+            });
+            
+            $("input[name=optionsRadiosTier]").on( "change", function() {
+				var test = $(this).val();
+				if(test == 'Yes'){
+					$("#ahieve-based-on").show();
+					$("#program-tier").show();
+				}
+				else{
+					$("#ahieve-based-on").hide();
+					$("#program-tier").hide();
+				}
+    		} );
          
        </script>
        

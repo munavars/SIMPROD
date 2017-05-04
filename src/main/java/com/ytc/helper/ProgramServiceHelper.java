@@ -71,22 +71,22 @@ public class ProgramServiceHelper {
 				if(ProgramConstant.INCLUDED.equals(dalProgramDetPaid.getMethod())){
 					if(existingIncludedMap.get(String.valueOf(dalProgramDetPaid.getTagId())) != null){
 						existingIncludeList = existingIncludedMap.get(String.valueOf(dalProgramDetPaid.getTagId()));
-						existingIncludeList.add(dalProgramDetPaid.getValue());
+						existingIncludeList.add(dalProgramDetPaid.getDisplayValue());
 					}
 					else{
 						existingIncludeList = new HashSet<String>(); 
-						existingIncludeList.add(dalProgramDetPaid.getValue());
+						existingIncludeList.add(dalProgramDetPaid.getDisplayValue());
 						existingIncludedMap.put(String.valueOf(dalProgramDetPaid.getTagId()), existingIncludeList);
 					}
 				}
 				else if(ProgramConstant.EXCLUDED.equals(dalProgramDetPaid.getMethod())){
 					if(existingExcludedMap.get(String.valueOf(dalProgramDetPaid.getTagId())) != null){
 						existingExcludeList = existingExcludedMap.get(String.valueOf(dalProgramDetPaid.getTagId()));
-						existingExcludeList.add(dalProgramDetPaid.getValue());
+						existingExcludeList.add(dalProgramDetPaid.getDisplayValue());
 					}
 					else{
 						existingExcludeList = new HashSet<String>(); 
-						existingExcludeList.add(dalProgramDetPaid.getValue());
+						existingExcludeList.add(dalProgramDetPaid.getDisplayValue());
 						existingExcludedMap.put(String.valueOf(dalProgramDetPaid.getTagId()), existingExcludeList);
 					}
 				}
@@ -106,22 +106,22 @@ public class ProgramServiceHelper {
 				if(ProgramConstant.INCLUDED.equals(dalProgramDetPaid.getAchMethod())){
 					if(existingIncludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagId())) != null){
 						existingIncludeList = existingIncludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagId()));
-						existingIncludeList.add(dalProgramDetPaid.getAchValue());
+						existingIncludeList.add(dalProgramDetPaid.getDisplayValue());
 					}
 					else{
 						existingIncludeList = new HashSet<String>(); 
-						existingIncludeList.add(dalProgramDetPaid.getAchValue());
+						existingIncludeList.add(dalProgramDetPaid.getDisplayValue());
 						existingIncludedMap.put(String.valueOf(dalProgramDetPaid.getAchTagId()), existingIncludeList);
 					}
 				}
 				else if(ProgramConstant.EXCLUDED.equals(dalProgramDetPaid.getAchMethod())){
 					if(existingExcludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagId())) != null){
 						existingExcludeList = existingExcludedMap.get(String.valueOf(dalProgramDetPaid.getAchTagId()));
-						existingExcludeList.add(dalProgramDetPaid.getAchValue());
+						existingExcludeList.add(dalProgramDetPaid.getDisplayValue());
 					}
 					else{
 						existingExcludeList = new HashSet<String>(); 
-						existingExcludeList.add(dalProgramDetPaid.getAchValue());
+						existingExcludeList.add(dalProgramDetPaid.getDisplayValue());
 						existingExcludedMap.put(String.valueOf(dalProgramDetPaid.getAchTagId()), existingExcludeList);
 					}
 				}

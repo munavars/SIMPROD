@@ -4,20 +4,26 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PGM_DET_ACHIEVED")
 public class DalProgramDetAchieved extends DalAuditableModel{
 
-    private DalProgramDetail dalProgramDetail;
+    /**
+	 * Default serial version.
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private DalProgramDetail dalProgramDetail;
    
     private String achMethod;
     
     private Integer achTagId;
 
 	private String achValue;
+	
+	private String displayValue;
 
     @ManyToOne
 	@JoinColumn(name = "PGM_DETAIL_ID", referencedColumnName = "ID")
@@ -54,5 +60,15 @@ public class DalProgramDetAchieved extends DalAuditableModel{
 
 	public void setAchTagId(Integer achTagId) {
 		this.achTagId = achTagId;
+	}
+	
+
+	@Column(name = "DISPLAY_VALUE")
+	public String getDisplayValue() {
+		return displayValue;
+	}
+
+	public void setDisplayValue(String displayValue) {
+		this.displayValue = displayValue;
 	}
 }

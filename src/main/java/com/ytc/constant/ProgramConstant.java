@@ -8,5 +8,5 @@ public class ProgramConstant {
 	public static final String NO = "No";
 	public static final String ZERO="0";
 	
-	
+	public static final String TAG_VALUE_DELIMITER = "-";
 }

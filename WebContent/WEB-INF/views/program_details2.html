@@ -589,7 +589,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
           
           
            <div class="modal-footer">
-		      <a href="index.html#pending-approvals"><button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
+		      <a id="cancelLink" href="/SIMO/customer?custId="><button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
               <a class="btn btn-success" id="finish" data-toggle="modal" href="#myModal"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
               <a class="btn btn-info finish" id="finish" data-toggle="modal" href="#myModal1"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
 				<div class="space15">&nbsp;</div>
@@ -793,6 +793,9 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
              		excludePaid = response.data.programDetailList[0].programPaidOn.excludedMap;
              		includeAchieve = response.data.programDetailList[0].programAchieveOn.includedMap;
              		excludeAchieve = response.data.programDetailList[0].programAchieveOn.excludedMap;
+             		
+             		var a = document.getElementById('cancelLink'); //for now. this has to be revisited.
+					a.href = "/SIMO/customer?custId=" + response.data.customerId;
              		
              		/*Program Header Section*/
              		$("#customerId").html(response.data.customerId);

@@ -165,7 +165,7 @@ public class ProgramServiceImpl implements IProgramService {
 		ProgramPaidOn programPaidOn = null;
 		if(programHeader != null && dalProgramDetail != null && dalProgramHeader != null){
 			programPaidOn = programHeader.getProgramDetailList().get(0).getProgramPaidOn();
-			programPaidOn.setIsTiered("0".equals(dalProgramDetail.getIsTiered()) ? true : false);
+			programPaidOn.setIsTiered("0".equals(dalProgramDetail.getIsTiered()) ? false : true);
 			programPaidOn.setIsTrueUp("Y".equals(dalProgramDetail.getTrueUp()) ? true : false);
 			programPaidOn.setProgramDescription(dalProgramDetail.getLongDesc());
 			if(dalProgramDetail.getDalProgramDetPaidList() != null){

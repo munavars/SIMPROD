@@ -37,8 +37,8 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 	@Override
 	public Boolean createProgramDetails(ProgramHeader programHeader) {
 		DalProgramHeader dalProgramHeader = new DalProgramHeader();	
-		dalProgramHeader.setBu("P");
-		dalProgramHeader.setCustomer(baseDao.getById(DalCustomer.class, 47));
+		dalProgramHeader.setBu(programHeader.getBusinessUnit());
+		dalProgramHeader.setCustomer(baseDao.getById(DalCustomer.class, programHeader.getCustomerId()));
 		if(programHeader.getStatus() != null){
 			dalProgramHeader.setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
 		}
@@ -212,7 +212,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		dalProgramDet.setAccrualType(programDetail.getAmountType());
 		dalProgramDet.setPayTo(programDetail.getPayTo());
 		dalProgramDet.setPaidType(Integer.valueOf(programDetail.getPaidType()));
-		dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "0" : "1");
+		dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "1" : "0");
 		dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
 		dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
 		dalProgramDetailList.add(dalProgramDet);

@@ -133,13 +133,13 @@
                      </a>
                   </li>
                   <li>
-                     <a class="" href="program_details.html">
+                     <a id="create-program" class="" href="program_details2.html">
                      <i class="fa fa-tasks"></i>
                      <span>Create New Program</span>
                      </a>
                   </li>
                   <li>
-                     <a class="active" href="program_details_existing.html">
+                     <a id="edit-program" class="" href="program_details2.html">
                      <i class="fa fa-tasks"></i>
                      <span>Edit Program</span>
                      </a>
@@ -169,7 +169,7 @@
          <section id="main-content">
             <section class="wrapper site-min-height">
                <!-- page start-->
-                <div class="row">
+                <div id="program-parent-div" class="row">
                   <div class="col-lg-12">
                      <!--progress bar start-->
                      <section class="panel">
@@ -419,7 +419,7 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                              <label class="control-label" for="inputSuccess">Program Description</label>
-                                             <textarea id="programDescription" class="form-control" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" data-toggle="tooltip" data-placement="top" rows="3" placeholder="Add description details of your customer" value="Dealer has three shops in his county"></textarea>
+                                             <textarea id="programDescription" class="form-control" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" data-toggle="tooltip" data-trigger = "hover" data-placement="top" rows="3" placeholder="Add description details of your customer" value="Dealer has three shops in his county"></textarea>
                                           </div>
                                         </div><!-- END ROW 5 -->
                                         <div class="row">
@@ -516,36 +516,52 @@
                                            
                                          <h4 class="tableHeader">Program Schedules</h4>
                                             
-                                          <div class="table-responsive">    
-                                            <table class="table table-striped table-hover table-bordered" id="tier-schedule">
-                                              <thead>
-                                                  <tr><td  colspan="3" class="noborders text-left"><label class="control-label" for="inputSuccess">Amount Type</label>&nbsp;&nbsp;
-                                                      <div class="radio-inline inline-flex">
-                                                       <label class="control-label" for="inputSuccess">
-                                                       <input type="radio"  name="optionsRadiosDenominationTier" id="optionsRadiosPercentageTier1" value="%" class="radio-inline denomination ">%</label>  
-                                                    </div>
-                                                    <div class="radio-inline inline-flex">
-                                                       <label class="control-label" for="inputSuccess">
-                                                       <input type="radio" name="optionsRadiosDenominationTier" id="optionsRadiosDollarSignTier1" value="$" class="radio-inline denomination required" checked="checked">$</label> 
-                                                    </div></td>
-                                                    
-                                                      <td colspan="3" class="noborders text-right"><label class="control-label" for="inputSuccess">Actual Marker</label>&nbsp;&nbsp;
-                                                <input id="actual_marker" name="actual_marker" type="text" size="3" class="form-control" value=""></td>
-                                                
-                                                </tr>
-                                              <tr>
-                                                <th>Marker</th>
-                                                <th>Amount</th>
-                                              <!--   <th>Amount Type</th> -->
-                                                <th>Beginning Range</th>
-                                                <th>Edit</th>
-                                                <th>Delete</th>
-                                              </tr>
-                                              </thead>
-                                              <tbody>
-                                              </tbody>
-                                          </table>
-                                          </div>
+                                          <div class="table-responsive">
+												<table
+													class="table table-striped table-hover table-bordered"
+													id="tier-schedule">
+													<thead>
+														<tr>
+															<td colspan="3" class="noborders text-left"><label
+																class="control-label" for="inputSuccess">Amount
+																	Type</label>&nbsp;&nbsp;
+																<div class="radio-inline inline-flex">
+																	<label class="control-label" for="inputSuccess">
+																		<input type="radio"
+																		name="optionsRadiosDenominationTier"
+																		id="optionsRadiosPercentageTier1" value="%"
+																		class="radio-inline denomination ">%
+																	</label>
+																</div>
+																<div class="radio-inline inline-flex">
+																	<label class="control-label" for="inputSuccess">
+																		<input type="radio"
+																		name="optionsRadiosDenominationTier"
+																		id="optionsRadiosDollarSignTier1" value="$"
+																		class="radio-inline denomination required"
+																		checked="checked">$
+																	</label>
+																</div></td>
+
+															<td colspan="3" class="noborders text-right"><label
+																class="control-label" for="inputSuccess">Actual
+																	Marker</label>&nbsp;&nbsp; <input id="actual_marker"
+																name="actual_marker" type="text" size="3"
+																class="form-control" value=""></td>
+
+														</tr>
+														<tr>
+															<th>Marker</th>
+															<th>Amount</th>
+															<th>Beginning Range</th>
+															<th>Edit</th>
+															<th>Delete</th>
+														</tr>
+													</thead>
+													<tbody>
+													</tbody>
+												</table>
+											</div>
                                       </div>
                                         <div class="clearfix">
                                             <div class="btn-group">
@@ -589,7 +605,9 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
           
           
            <div class="modal-footer">
-		      <a id="cancelLink" href="/SIMO/customer?custId="><button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
+		      <a id="cancelLink" href="/SIMO/customer?custId=">
+		      <button id="program-cancel" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
+		      <a class="btn btn-info" id="reject-program" data-toggle="modal" href="#myModal2"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a> &nbsp;
               <a class="btn btn-success" id="finish" data-toggle="modal" href="#myModal"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
               <a class="btn btn-info finish" id="finish" data-toggle="modal" href="#myModal1"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
 				<div class="space15">&nbsp;</div>
@@ -632,6 +650,28 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 									type="button">Cancel</button>
 								<a href="javascript: saveDraft()"><button class="btn btn-info" type="button">
 										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+									</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Reject Program Changes?</h4>
+                            </div>
+							<div class="modal-body">
+								<div class="space15">&nbsp;</div>
+								<div class="text-center">Are you sure you want to Reject Changes? If you still want to reject your changes, click the OK button. If you don't want to reject your changes, click the "Cancel" button below and your program will not reject these changes. </div>
+                                <div class="space15"></div>
+							</div>
+							<div class="modal-footer">
+								<button data-dismiss="modal" class="btn btn-default"
+									type="button">Cancel</button>
+								<a href="javascript: rejectProgram()"><button class="btn btn-info" type="button">
+										<i class="fa fa-times-circle"></i>&nbsp;&nbsp;OK
 									</button></a>
 							</div>
 						</div>
@@ -778,156 +818,162 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
        		var responseOnload;
 			getParams = new URLSearchParams(window.location.search);
 			var programId =getParams.get('pgmId'); 
+			if(programId == null){
+				$("#create-program").addClass("active");
+				$("#reject-program").hide();
+			}
+			else{
+				$("#edit-program").addClass("active");
+			}
 			var custId = getParams.get('custId'); 
 			var url="/SIMO/program/v1/getProgramDetail/" + programId;
 			if(null==programId){
 				url="/SIMO/program/v1/getProgramDetailCreate/" + custId;
 			}
-         	$.ajax({ 
-             	type: "GET",
-             	dataType: "json",
-            	url: url,
-             	success: function(response){
-             		responseOnload = response.data;
-             		includePaid = response.data.programDetailList[0].programPaidOn.includedMap;
-             		excludePaid = response.data.programDetailList[0].programPaidOn.excludedMap;
-             		includeAchieve = response.data.programDetailList[0].programAchieveOn.includedMap;
-             		excludeAchieve = response.data.programDetailList[0].programAchieveOn.excludedMap;
-             		
-             		var a = document.getElementById('cancelLink'); //for now. this has to be revisited.
-					a.href = "/SIMO/customer?custId=" + response.data.customerId;
-             		
-             		/*Program Header Section*/
-             		$("#customerId").html(response.data.customerId);
-                	$("#customerName").html(response.data.customerName);
-                	$("#businessUnit").html(response.data.businessUnit);
-                	$("#programId").html(response.data.programDetailList[0].id);
-                	$("#requestId").html(response.data.requestId);
-                	$("#requestedBy").html(response.data.requestedBy);
-                	if(response.data.requestedDate != null){
-                		$('#requestedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.requestedDate)));
-                	}
-                	$('#createdBy').html(response.data.createdBy);
-                	if(response.data.createdDate != null){
-                		$('#createdDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.createdDate)));
-                	}
-                	$('#status').html(response.data.status);
-                	
-                	$('#zoneManagerApprovedBy').html(response.data.zoneManagerApprovedBy);
-                	if(response.data.zoneManagerApprovedDate != null){
-                		$('#zoneManagerApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.zoneManagerApprovedDate)));
-                	}
-                	$('#directorApprovedBy').html(response.data.directorApprovedBy);
-                	if(response.data.directorApprovedDate != null){
-                		$('#directorApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.directorApprovedDate)));
-                	}
-                	$('#executiveApprovedBy').html(response.data.executiveApprovedBy);
-                	if(response.data.executiveApprovedDate != null){
-                		$('#executiveApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.executiveApprovedDate)));
-                	}
-                	$('#tbpApprovedBy').html(response.data.tbpApprovedBy);
-                	if(response.data.tbpApprovedDate != null){
-                		$('#tbpApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.tbpApprovedDate)));
-                	}
-                	
-                	
-                	
-                	$('#accrualAmount').html(response.data.accrualAmount);
-                	$('#paidAmount').html(response.data.paidAmount);
-                	$('#balance').html(response.data.balance);
-                	
-                	/*Program Detail Section*/
-                	$("#detailProgramId").val(response.data.programDetailList[0].id);
-                	$("#amount").val(response.data.programDetailList[0].amount);
-                	if(response.data.programDetailList[0].amountType == "%"){
-                		$("#optionsRadiosPercentage").prop('checked', true);
-                	}
-                	else{
-                		$("#optionsRadiosDollarSign").prop('checked', true);
-                	}         	
-                	
-                	$('#from').datepicker({ 
-    					dateFormat: 'mm/dd/yy'
-     				}); 
-     							
-     				                	
-                	$('#to').datepicker({ 
-						dateFormat: 'mm/dd/yy'
-     				});
-                	$('#from').val($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].beginDate)));
-                	$('#to').val($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].endDate)));
-                	$('#from').datepicker('update', new Date(response.data.programDetailList[0].beginDate));
-                	$('#to').datepicker('update', new Date(response.data.programDetailList[0].endDate));
-                	resetFormForMandatoryCheck("from");
-                	resetFormForMandatoryCheck("to");
-                	
-                	fnPopulateDropdown('program_name_inputselect', response.data.programDetailList[0].dropdownList.programNameList);
-                	$('#program_name_inputselect').val(response.data.programDetailList[0].programName);
-                	
-                	fnPopulateDropdown('payout_freq_inputselect', response.data.programDetailList[0].dropdownList.payoutFrequenceList);
-                	$('#payout_freq_inputselect').val(response.data.programDetailList[0].payoutFrequency);
-                	
-                	fnPopulateDropdown('btl_inputselect', response.data.programDetailList[0].dropdownList.btlList);
-                	$('#btl_inputselect').val(response.data.programDetailList[0].btl);
-                	
-                	fnPopulateDropdown('payto_inputselect', response.data.programDetailList[0].dropdownList.payToList);
-                	$('#payto_inputselect').val(response.data.programDetailList[0].payTo);
-                	
-                	fnPopulateDropdown('payment_method_inputselect', response.data.programDetailList[0].dropdownList.paidTypeList);
-                	$('#payment_method_inputselect').val(response.data.programDetailList[0].paidType);
-                	
-                	fnPopulateDropdown('paid_basedon_inputselect', response.data.programDetailList[0].dropdownList.paidBasedOnList);
-                	$('#paid_basedon_inputselect').val(response.data.programDetailList[0].paidBasedOn);
-                	
-                	fnPopulateDropdown('pricing_type_inputselect', response.data.programDetailList[0].dropdownList.pricingTypeList);
-                	$('#pricing_type_inputselect').val(response.data.programDetailList[0].pricingType);
-                	
-                	/*Program Paid Based on section*/
-                	fnPopulateDropdown('paidBasedOn', response.data.programDetailList[0].programPaidOn.tagItemList);
-                	if(response.data.programDetailList[0].programPaidOn.isTiered == true){
-                		$("#optionsRadiosTierYes").prop('checked', true);
-                		$("#ahieve-based-on").show();
-						$("#program-tier").show();
-                	}
-                	else{
-                		$("#optionsRadiosTierNo").prop('checked', true);
-                		$("#ahieve-based-on").hide();
-						$("#program-tier").hide();
-                	}
-                	
-                	if(response.data.programDetailList[0].programPaidOn.isTrueUp == true){
-                		$("#optionsRadiosTrueUpYes").prop('checked', true);
-                	}
-                	else{
-                		$("#optionsRadiosTrueUpNo").prop('checked', true);
-                	}
-                	$('#programDescription').val(response.data.programDetailList[0].programPaidOn.programDescription);
-                	fnPopulatePaidDetails(response);
-                	                	
-                	/*Program Achieve Based on section*/
-                	fnPopulateDropdown('achieve_basedon_inputselect', response.data.programDetailList[0].programAchieveOn.achieveBasedOnList);
-                	$('#achieve_basedon_inputselect').val(response.data.programDetailList[0].programAchieveOn.achieveBasedOn);
-                	fnPopulateDropdown('achieve_freq_inputselect', response.data.programDetailList[0].programAchieveOn.achieveFrequencyList);
-                	$('#achieve_freq_inputselect').val(response.data.programDetailList[0].programAchieveOn.achieveFrequency);
-                	
-                	
-                	fnPopulateDropdown('achievedBasedOn', response.data.programDetailList[0].programAchieveOn.tagItemList);
-                	
-                	/*Program Tier details*/
-                	if(response.data.programDetailList[0].amountTypeTier == '%'){
-                		$("#optionsRadiosPercentageTier1").prop('checked', true);
-                	}
-                	else{
-                		$("#optionsRadiosDollarSignTier1").prop('checked', true);
-                	}
-                	$('#actual_marker').val(response.data.programDetailList[0].actualMarker);
-                	fnPopulateProgramTier(response.data.programDetailList[0].programTierDetailList);
-             	},
-             	failure: function(response){
-             		alert("Wrongly done");
-             	}
-             	
-         	});
+			$(window).ready(function(){
+	         	$.ajax({ 
+	             	type: "GET",
+	             	dataType: "json",
+	            	url: url,
+	             	success: function(response){
+	             		responseOnload = response.data;
+	             		includePaid = response.data.programDetailList[0].programPaidOn.includedMap;
+	             		excludePaid = response.data.programDetailList[0].programPaidOn.excludedMap;
+	             		includeAchieve = response.data.programDetailList[0].programAchieveOn.includedMap;
+	             		excludeAchieve = response.data.programDetailList[0].programAchieveOn.excludedMap;
+	             		
+	             		var a = document.getElementById('cancelLink'); //for now. this has to be revisited.
+						a.href = "/SIMO/customer?custId=" + response.data.customerId;
+	             		
+	             		/*Program Header Section*/
+	             		$("#customerId").html(response.data.customerId);
+	                	$("#customerName").html(response.data.customerName);
+	                	$("#businessUnit").html(response.data.businessUnit);
+	                	$("#programId").html(response.data.programDetailList[0].id);
+	                	$("#requestId").html(response.data.requestId);
+	                	$("#requestedBy").html(response.data.requestedBy);
+	                	if(response.data.requestedDate != null){
+	                		$('#requestedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.requestedDate)));
+	                	}
+	                	$('#createdBy').html(response.data.createdBy);
+	                	if(response.data.createdDate != null){
+	                		$('#createdDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.createdDate)));
+	                	}
+	                	$('#status').html(response.data.status);
+	                	
+	                	$('#zoneManagerApprovedBy').html(response.data.zoneManagerApprovedBy);
+	                	if(response.data.zoneManagerApprovedDate != null){
+	                		$('#zoneManagerApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.zoneManagerApprovedDate)));
+	                	}
+	                	$('#directorApprovedBy').html(response.data.directorApprovedBy);
+	                	if(response.data.directorApprovedDate != null){
+	                		$('#directorApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.directorApprovedDate)));
+	                	}
+	                	$('#executiveApprovedBy').html(response.data.executiveApprovedBy);
+	                	if(response.data.executiveApprovedDate != null){
+	                		$('#executiveApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.executiveApprovedDate)));
+	                	}
+	                	$('#tbpApprovedBy').html(response.data.tbpApprovedBy);
+	                	if(response.data.tbpApprovedDate != null){
+	                		$('#tbpApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.tbpApprovedDate)));
+	                	}
+	                	
+	                	$('#accrualAmount').html(response.data.accrualAmount);
+	                	$('#paidAmount').html(response.data.paidAmount);
+	                	$('#balance').html(response.data.balance);
+	                	
+	                	/*Program Detail Section*/
+	                	$("#detailProgramId").val(response.data.programDetailList[0].id);
+	                	$("#amount").val(response.data.programDetailList[0].amount);
+	                	if(response.data.programDetailList[0].amountType == "%"){
+	                		$("#optionsRadiosPercentage").prop('checked', true);
+	                	}
+	                	else{
+	                		$("#optionsRadiosDollarSign").prop('checked', true);
+	                	}         	
+	                	
+	                	$('#from').datepicker({ 
+	    					dateFormat: 'mm/dd/yy'
+	     				}); 
+	     							
+	     				                	
+	                	$('#to').datepicker({ 
+							dateFormat: 'mm/dd/yy'
+	     				});
+	                	$('#from').val($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].beginDate)));
+	                	$('#to').val($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].endDate)));
+	                	$('#from').datepicker('update', new Date(response.data.programDetailList[0].beginDate));
+	                	$('#to').datepicker('update', new Date(response.data.programDetailList[0].endDate));
+	                	resetFormForMandatoryCheck("from");
+	                	resetFormForMandatoryCheck("to");
+	                	
+	                	fnPopulateDropdown('program_name_inputselect', response.data.programDetailList[0].dropdownList.programNameList);
+	                	$('#program_name_inputselect').val(response.data.programDetailList[0].programName);
+	                	
+	                	fnPopulateDropdown('payout_freq_inputselect', response.data.programDetailList[0].dropdownList.payoutFrequenceList);
+	                	$('#payout_freq_inputselect').val(response.data.programDetailList[0].payoutFrequency);
+	                	
+	                	fnPopulateDropdown('btl_inputselect', response.data.programDetailList[0].dropdownList.btlList);
+	                	$('#btl_inputselect').val(response.data.programDetailList[0].btl);
+	                	
+	                	fnPopulateDropdown('payto_inputselect', response.data.programDetailList[0].dropdownList.payToList);
+	                	$('#payto_inputselect').val(response.data.programDetailList[0].payTo);
+	                	
+	                	fnPopulateDropdown('payment_method_inputselect', response.data.programDetailList[0].dropdownList.paidTypeList);
+	                	$('#payment_method_inputselect').val(response.data.programDetailList[0].paidType);
+	                	
+	                	fnPopulateDropdown('paid_basedon_inputselect', response.data.programDetailList[0].dropdownList.paidBasedOnList);
+	                	$('#paid_basedon_inputselect').val(response.data.programDetailList[0].paidBasedOn);
+	                	
+	                	fnPopulateDropdown('pricing_type_inputselect', response.data.programDetailList[0].dropdownList.pricingTypeList);
+	                	$('#pricing_type_inputselect').val(response.data.programDetailList[0].pricingType);
+	                	
+	                	/*Program Paid Based on section*/
+	                	fnPopulateDropdown('paidBasedOn', response.data.programDetailList[0].programPaidOn.tagItemList);
+	                	if(response.data.programDetailList[0].programPaidOn.isTiered == true){
+	                		$("#optionsRadiosTierYes").prop('checked', true);
+	                		$("#ahieve-based-on").show();
+							$("#program-tier").show();
+	                	}
+	                	else{
+	                		$("#optionsRadiosTierNo").prop('checked', true);
+	                		$("#ahieve-based-on").hide();
+							$("#program-tier").hide();
+	                	}
+	                	
+	                	if(response.data.programDetailList[0].programPaidOn.isTrueUp == true){
+	                		$("#optionsRadiosTrueUpYes").prop('checked', true);
+	                	}
+	                	else{
+	                		$("#optionsRadiosTrueUpNo").prop('checked', true);
+	                	}
+	                	$('#programDescription').val(response.data.programDetailList[0].programPaidOn.programDescription);
+	                	fnPopulatePaidDetails(response);
+	                	                	
+	                	/*Program Achieve Based on section*/
+	                	fnPopulateDropdown('achieve_basedon_inputselect', response.data.programDetailList[0].programAchieveOn.achieveBasedOnList);
+	                	$('#achieve_basedon_inputselect').val(response.data.programDetailList[0].programAchieveOn.achieveBasedOn);
+	                	fnPopulateDropdown('achieve_freq_inputselect', response.data.programDetailList[0].programAchieveOn.achieveFrequencyList);
+	                	$('#achieve_freq_inputselect').val(response.data.programDetailList[0].programAchieveOn.achieveFrequency);
+	                	
+	                	
+	                	fnPopulateDropdown('achievedBasedOn', response.data.programDetailList[0].programAchieveOn.tagItemList);
+	                	
+	                	/*Program Tier details*/
+	                	if(response.data.programDetailList[0].amountTypeTier == '%'){
+	                		$("#optionsRadiosPercentageTier1").prop('checked', true);
+	                	}
+	                	else{
+	                		$("#optionsRadiosDollarSignTier1").prop('checked', true);
+	                	}
+	                	$('#actual_marker').val(response.data.programDetailList[0].actualMarker);
+	                	fnPopulateProgramTier(response.data.programDetailList[0].programTierDetailList);
+	             	},
+	             	failure: function(response){
+	             		alert("Wrongly done");
+	             	}
+	         	});
+			});
          	
          	function fnPopulateProgramTier(tierData){                
                 var table = $("#tier-schedule").DataTable();
@@ -961,6 +1007,10 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 								dest.add(newOption.value,null);
 							}
 							catch(error){
+								if(dest == null){
+									console.log("dest value cannot be null here. Having this logger for testing purpose.. value of element id : "+elementId);
+									dest = document.getElementById(elementId);
+								}
 								dest.add(newOption);
 							}
 					    });
@@ -1019,6 +1069,12 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				responseOnload.programDetailList[0].actualMarker = parseInt($('#actual_marker').val());
          	}
 
+			function rejectProgram(){
+				responseOnload.status = "1";
+				fnCallService();
+				$('#myModal2').modal('toggle');
+				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
+			}
          	function saveDraft(){
          		responseOnload.status = "3";
          		prepareDataForSubmit();
@@ -1031,6 +1087,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				prepareDataForSubmit();
 				fnCallService();
 				$('#myModal').modal('toggle');
+				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
 			}
 			
 			function fnCallService(){
@@ -1106,17 +1163,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					resetFormForMandatoryCheck(elementId);
 	         	}
 			}
-         
-         	$('#optionsRadiosTier').live('click', function (e) {
-                if ($(this).val() == "Yes") {
-                  	$("#ahieve-based-on").show();
-					$("#program-tier").show();
-                } else {
-					$("#ahieve-based-on").hide();
-					$("#program-tier").hide();
-                }
-            });
-            
+             
             $("input[name=optionsRadiosTier]").on( "change", function() {
 				var test = $(this).val();
 				if(test == 'Yes'){
@@ -1127,8 +1174,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					$("#ahieve-based-on").hide();
 					$("#program-tier").hide();
 				}
-    		} );
-         
+    		} ); 
+ 
        </script>
        
        <!-- END JAVASCRIPTS -->

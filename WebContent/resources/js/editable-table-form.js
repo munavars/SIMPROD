@@ -141,6 +141,7 @@ var EditableTable = function () {
 
             $('#editable-sample a.edit,#tier-schedule a.edit').live('click', function (e) {
                 e.preventDefault();
+                var tierAmountType =  $('input:radio[name=optionsRadiosDenominationTier]:checked').val();
 
                 /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
@@ -159,6 +160,13 @@ var EditableTable = function () {
                     editRow(oTable, nRow);
                     nEditing = nRow;
                 }
+                
+            	if(tierAmountType == '%'){
+            		$("#optionsRadiosPercentageTier1").prop('checked', true);
+            	}
+            	else{
+            		$("#optionsRadiosDollarSignTier1").prop('checked', true);
+            	}
             });
         }
 

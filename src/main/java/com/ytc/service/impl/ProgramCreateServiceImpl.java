@@ -48,6 +48,11 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		DalProgramDetail dalProgramDetail =  createProgramDetailsData(dalProgramHeader, programHeader);
 		dalProgramDetail.setStatusId(Integer.parseInt(programHeader.getStatus()));
 		dalProgramDetail.setDalProgramHeader(dalProgramHeader);
+		if(programHeader.getRequestedDate() != null){
+			Calendar cal = Calendar.getInstance();
+			cal.setTimeInMillis(programHeader.getRequestedDate().getTime());
+			dalProgramHeader.setRequestDate(cal);	
+		}
 		Random rand = new Random();
 		int  n = rand.nextInt(1000) + 1;
 		dalProgramHeader.setAccessPgmId(n);

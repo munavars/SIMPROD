@@ -40,16 +40,18 @@ public class DalProgramDetail extends DalAuditableModel {
 	private int forecastMarker;
 	private int actualMarker;
 	private String trueUp;
-
+	
 	private DalEmployee zmAppById;
 	private Calendar zmAppDate;
+	private Integer zmAppStatus;
+	private DalEmployee tbpAppById;
+	private Calendar tbpAppDate;
+	private Integer tbAppStatus;
 	private DalEmployee dirAppById;
 	private Calendar dirAppDate;
 	private DalEmployee execAppById;
 	private Calendar execAppDate;
-	private DalEmployee tbpAppById;
-	private Calendar tbpAppDate;
-
+	
 	private int statusId;
 	private DalProgramMaster programMaster;
 	private DalProgramHeader dalProgramHeader;
@@ -306,7 +308,7 @@ public class DalProgramDetail extends DalAuditableModel {
     public void setDirAppDate(Calendar dirAppDate) {
                     this.dirAppDate = dirAppDate;
     }
-    /**
+   /**
     * @return the execAppById
     */
     @OneToOne(fetch = FetchType.EAGER)
@@ -428,7 +430,7 @@ public class DalProgramDetail extends DalAuditableModel {
                     this.dalProgramHeader = dalProgramHeader;
     }
     
-    @OneToMany(mappedBy="dalProgramDetail", cascade=CascadeType.ALL, fetch =FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy="dalProgramDetail", cascade=CascadeType.ALL, fetch =FetchType.EAGER)
     public Set<DalProgramDetAchieved> getDalProgramDetAchievedList() {
                     return dalProgramDetAchievedList;
     }
@@ -436,7 +438,7 @@ public class DalProgramDetail extends DalAuditableModel {
                     this.dalProgramDetAchievedList = dalProgramDetAchievedList;
     }
     
-    @OneToMany(mappedBy="dalProgramDetails", cascade=CascadeType.ALL, fetch =FetchType.EAGER, orphanRemoval = true)
+    @OneToMany(mappedBy="dalProgramDetails", cascade=CascadeType.ALL, fetch =FetchType.EAGER)
     public Set<DalProgramDetPaid> getDalProgramDetPaidList() {
                     return dalProgramDetPaidList;
     }
@@ -445,6 +447,7 @@ public class DalProgramDetail extends DalAuditableModel {
     }
                 
     /**
+>>>>>>> Stashed changes
 	 * @return the pgmDetailTier
 	 */
 
@@ -491,6 +494,32 @@ public class DalProgramDetail extends DalAuditableModel {
 	}
 	public void setPaidType(Integer paidType) {
 		this.paidType = paidType;
+	}
+	/**
+	 * @return the zmAppStatus
+	 */
+	 @Column(name = "ZM_APP_STATUS_ID")
+	public Integer getZmAppStatus() {
+		return zmAppStatus;
+	}
+	/**
+	 * @param zmAppStatus the zmAppStatus to set
+	 */
+	public void setZmAppStatus(Integer zmAppStatus) {
+		this.zmAppStatus = zmAppStatus;
+	}
+	/**
+	 * @return the tbAppStatus
+	 */
+	 @Column(name = "TBP_APP_STATUS_ID")
+	public Integer getTbAppStatus() {
+		return tbAppStatus;
+	}
+	/**
+	 * @param tbAppStatus the tbAppStatus to set
+	 */
+	public void setTbAppStatus(Integer tbAppStatus) {
+		this.tbAppStatus = tbAppStatus;
 	}
 
 /*	

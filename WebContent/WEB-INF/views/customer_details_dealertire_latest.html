@@ -129,7 +129,7 @@
                     targets:1,
                     render: function ( data, type, row, meta ) {
                         if(type === 'display'){
-                            data = '<span data-toggle="tooltip" title="' + data + '">' + data + '</span>';
+                            data = '<span data-toggle="tooltip" title="' + row.longDesc + '">' + data + '</span>';
                         }
 
                         return data;

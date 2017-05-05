@@ -140,6 +140,12 @@ public class ProgramController extends BaseController {
 		return new ListResult<ProgramDetail>( getService(request).getProgram(id, status));
 	}
 	
+	@RequestMapping(value = "/dashboard/{id}", method = RequestMethod.GET)
+	public @ResponseBody ListResult<ProgramDetail> getProgramDashboard(HttpServletRequest request,@PathVariable String id) {
+		
+		return new ListResult<ProgramDetail>( getService(request).getProgramDashboard(Integer.parseInt(id)));
+	}
+	
 	@RequestMapping(value = "v1/addTier", method = RequestMethod.GET)
 	public @ResponseBody DataResult<String> addProgramTier(HttpServletRequest request) {
 		

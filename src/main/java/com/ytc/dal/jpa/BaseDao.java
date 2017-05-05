@@ -202,6 +202,21 @@ public class BaseDao implements IDataAccessLayer {
 		}
 		return returnList;
 	}
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> getListFromNativeQuery(String namedQueryString, Map<String, Object> parameters) {
+		Query query = null;
+		List<T> returnList = null;
+		if(namedQueryString != null){
+			query = entityManager.createNativeQuery(namedQueryString);
+			for (Entry<String, Object> param : parameters.entrySet()) {
+				query.setParameter(param.getKey(), param.getValue());
+			}
+			returnList = query.getResultList();
+		}
+		return returnList;
+	}
 
 	public <T> T getEntityById(Class<T> class1, Integer id){
 		if (id == null) {

@@ -6,6 +6,7 @@ import com.ytc.common.model.DropDown;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramTierDetail;
+import com.ytc.common.result.Result;
 
 public interface IProgramService {
 	
@@ -20,5 +21,7 @@ public interface IProgramService {
 	List<ProgramDetail> getProgram(String customerId, String status);
 	
 	ProgramHeader getProgramDetails(Integer programDetId, Integer custId);
+
+	List<ProgramDetail> getProgramDashboard(Integer id);
 
 }

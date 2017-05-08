@@ -61,10 +61,10 @@ public class ProgramController extends BaseController {
 	}
 	
 	@RequestMapping(value = "v1/saveProgramDetails", method = RequestMethod.POST)
-	public @ResponseBody Boolean saveProgramDetails(@RequestBody ProgramHeader programHeader) {
-		Boolean returnValue = Boolean.FALSE;
-		returnValue = (Boolean)(getPersistService().saveProgramDetails(programHeader));
-		return returnValue;
+	public @ResponseBody ModelResult<ProgramHeader> saveProgramDetails(@RequestBody ProgramHeader programHeader) {
+		ModelResult<ProgramHeader> returnData = null;
+		returnData =  new ModelResult<ProgramHeader>(getPersistService().saveProgramDetails(programHeader));
+		return returnData;
 	}
 
 	@RequestMapping(value = "v1/getTagValueDropDown/{tagId}", method = RequestMethod.GET)

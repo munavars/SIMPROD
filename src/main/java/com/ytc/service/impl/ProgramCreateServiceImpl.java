@@ -35,27 +35,41 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 	private IDataAccessLayer baseDao;
 
 	@Override
-	public Boolean createProgramDetails(ProgramHeader programHeader) {
-		DalProgramHeader dalProgramHeader = new DalProgramHeader();	
-		dalProgramHeader.setBu(programHeader.getBusinessUnit());
-		dalProgramHeader.setCustomer(baseDao.getById(DalCustomer.class, programHeader.getCustomerId()));
-		if(programHeader.getStatus() != null){
-			dalProgramHeader.setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
+	public ProgramHeader createProgramDetails(ProgramHeader programHeader) {
+		DalProgramHeader dalProgramHeader = null;
+		if(programHeader != null && programHeader.isNewProgram() && programHeader.getId() == null){
+			dalProgramHeader = new DalProgramHeader();	
+			dalProgramHeader.setBu(programHeader.getBusinessUnit());
+			dalProgramHeader.setCustomer(baseDao.getById(DalCustomer.class, programHeader.getCustomerId()));
+			if(programHeader.getStatus() != null){
+				dalProgramHeader.setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
+			}
+			DalEmployee emp = new DalEmployee();
+			emp.setId(programHeader.getRequestId());
+			dalProgramHeader.setRequest(emp);	
+			if(programHeader.getRequestedDate() != null){
+				Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(programHeader.getRequestedDate().getTime());
+				dalProgramHeader.setRequestDate(cal);	
+			}
+			Random rand = new Random();
+			int  n = rand.nextInt(1000) + 1;
+			dalProgramHeader.setAccessPgmId(n);
 		}
-		DalEmployee emp = new DalEmployee();
-		emp.setEMP_ID(47);
-		dalProgramHeader.setRequest(emp);
-		DalProgramDetail dalProgramDetail =  createProgramDetailsData(dalProgramHeader, programHeader);
-		dalProgramDetail.setStatusId(Integer.parseInt(programHeader.getStatus()));
+		else if(programHeader != null && programHeader.isNewProgram() && programHeader.getId() != null){
+			dalProgramHeader = baseDao.getById(DalProgramHeader.class, programHeader.getId());
+			if(programHeader.getStatus() != null){
+				dalProgramHeader.setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
+			}
+		}
+
+		DalProgramDetail dalProgramDetail =  createProgramDetailsData(programHeader);
+		dalProgramDetail.setStatus(dalProgramHeader.getStatus());
+		if(dalProgramHeader != null && dalProgramHeader.getDalProgramDetailList() != null){
+			dalProgramHeader.getDalProgramDetailList().add(dalProgramDetail);
+		}
 		dalProgramDetail.setDalProgramHeader(dalProgramHeader);
-		if(programHeader.getRequestedDate() != null){
-			Calendar cal = Calendar.getInstance();
-			cal.setTimeInMillis(programHeader.getRequestedDate().getTime());
-			dalProgramHeader.setRequestDate(cal);	
-		}
-		Random rand = new Random();
-		int  n = rand.nextInt(1000) + 1;
-		dalProgramHeader.setAccessPgmId(n);
+
 		/** save Program Paid Based on*/
 		createProgramPaidBasedOnData(dalProgramHeader, programHeader, dalProgramDetail);
 		
@@ -66,9 +80,22 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		
 		if(returnEntity != null && returnEntity.getId() != null){
 			createProgramTierData(returnEntity.getId(), programHeader);
+			/** Reset the value the value again*/
+			
+			programHeader.setId(returnEntity.getDalProgramHeader().getId());
+			programHeader.getProgramDetailList().get(0).setId(returnEntity.getId());
+			programHeader.setSuccess(true);
+			programHeader.setStatus(returnEntity.getStatus().getType());
+			if(returnEntity.getDalProgramHeader().getStatus() != null 
+					&& !ProgramConstant.IN_PROGRESS_STATUS.equals(returnEntity.getDalProgramHeader().getStatus().getType())){
+				programHeader.setNewProgram(true);
+			}
+			else{
+				programHeader.setNewProgram(false);
+			}
 		}
 		
-		return Boolean.TRUE;
+		return programHeader;
 	}
 
 	private void createProgramTierData(Integer id, ProgramHeader programHeader) {
@@ -199,8 +226,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		}
 	}
 	
-	private DalProgramDetail createProgramDetailsData(DalProgramHeader dalProgramHeader, ProgramHeader programHeader) {
-		List<DalProgramDetail> dalProgramDetailList = new ArrayList<DalProgramDetail>();
+	private DalProgramDetail createProgramDetailsData(ProgramHeader programHeader) {
 		DalProgramDetail dalProgramDet = new DalProgramDetail();
 		ProgramDetail programDetail = programHeader.getProgramDetailList().get(0);
 		dalProgramDet.setPaidBasedOn(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getPaidBasedOn())));
@@ -220,9 +246,6 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "1" : "0");
 		dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
 		dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
-		dalProgramDetailList.add(dalProgramDet);
-		dalProgramDet.setDalProgramHeader(dalProgramHeader);
-		dalProgramHeader.setDalProgramDetailList(dalProgramDetailList);
 		dalProgramDet.setProgramMaster(baseDao.getById(DalProgramMaster.class, Integer.valueOf(programDetail.getProgramName())));
 		
 		if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){

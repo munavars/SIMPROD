@@ -26,6 +26,7 @@ import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
+import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
@@ -78,6 +79,10 @@ public class ProgramServiceImpl implements IProgramService {
 			populateAchieveBasedOnData(programHeader, dalProgramHeader, dalProgramDetail);
 			
 			populateTierData(programHeader, dalProgramDetail);
+			
+			if(dalProgramHeader.getStatus() != null && !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramHeader.getStatus().getType())){
+				programHeader.setNewProgram(true);
+			}
 		}	
 		else{
 			populateDropDownValues(programHeader, String.valueOf(custId)); //Customer id should be 
@@ -85,9 +90,13 @@ public class ProgramServiceImpl implements IProgramService {
 			programHeader.setCustomerId(customer.getId());
 			programHeader.setCustomerName(customer.getCustomerName());
 			programHeader.setBusinessUnit(customer.getBu());
-			programHeader.setRequestId(1);
+			
+			DalEmployee emp = baseDao.getById(DalEmployee.class, 47); // this should be logged in user.
 			programHeader.setRequestedDate(new Date());
-			programHeader.setRequestedBy("1");
+			programHeader.setRequestId(emp.getId());
+			programHeader.setRequestedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
+			
+			programHeader.setNewProgram(true);
 		}
 		
 		return programHeader;
@@ -130,29 +139,28 @@ public class ProgramServiceImpl implements IProgramService {
 		programHeader.setCustomerId(dalProgramHeader.getCustomer().getId());
 		programHeader.setBusinessUnit(dalProgramHeader.getBu());
 		programHeader.setId(dalProgramHeader.getId());
-		programHeader.setRequestId(dalProgramHeader.getRequest().getEMP_ID()); 
-		programHeader.setRequestedBy(dalProgramHeader.getRequest().getFIRST_NAME() + " " + dalProgramHeader.getRequest().getLAST_NAME());																		
+		programHeader.setRequestId(dalProgramHeader.getRequest().getId()); 
+		programHeader.setRequestedBy(dalProgramHeader.getRequest().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramHeader.getRequest().getLAST_NAME());																		
 		programHeader.setRequestedDate( (dalProgramHeader.getRequestDate() != null ) ? dalProgramHeader.getRequestDate().getTime() : null);
 		if(dalProgramHeader.getCreatedBy() != null){
 			programHeader.setCreatedBy(dalProgramHeader.getCreatedBy().getUserName());
 		}
 		
 		programHeader.setCreatedDate(dalProgramHeader.getCreatedDate().getTime());
-		programHeader.setStatus( ProgramServiceHelper.convertToString(dalProgramHeader.getStatus().getType()));
 		if(dalProgramDetail.getZmAppById() != null){
-			programHeader.setZoneManagerApprovedBy(dalProgramDetail.getZmAppById().getFIRST_NAME() + " " + dalProgramDetail.getZmAppById().getLAST_NAME());
+			programHeader.setZoneManagerApprovedBy(dalProgramDetail.getZmAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getZmAppById().getLAST_NAME());
 			programHeader.setZoneManagerApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getZmAppDate()));	
 		}
 		if(dalProgramDetail.getDirAppById() != null){
-			programHeader.setDirectorApprovedBy(dalProgramDetail.getDirAppById().getFIRST_NAME() + " " + dalProgramDetail.getDirAppById().getLAST_NAME());
+			programHeader.setDirectorApprovedBy(dalProgramDetail.getDirAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getDirAppById().getLAST_NAME());
 			programHeader.setDirectorApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getDirAppDate()));	
 		}
 		if(dalProgramDetail.getExecAppById() != null){
-			programHeader.setExecutiveApprovedBy(dalProgramDetail.getExecAppById().getFIRST_NAME() + " " + dalProgramDetail.getExecAppById().getLAST_NAME());
+			programHeader.setExecutiveApprovedBy(dalProgramDetail.getExecAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getExecAppById().getLAST_NAME());
 			programHeader.setExecutiveApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getExecAppDate()));	
 		}
 		if(dalProgramDetail.getTbpAppById() != null){
-			programHeader.setTbpApprovedBy(dalProgramDetail.getTbpAppById().getFIRST_NAME() + " "+ dalProgramDetail.getTbpAppById().getLAST_NAME());
+			programHeader.setTbpApprovedBy(dalProgramDetail.getTbpAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getTbpAppById().getLAST_NAME());
 			programHeader.setTbpApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getTbpAppDate()));	
 		}
 		
@@ -281,6 +289,7 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetail.setPaidBasedOn( (dalProgramDetail.getPaidBasedOn() != null) ?
 									ProgramServiceHelper.convertToString(dalProgramDetail.getPaidBasedOn().getId()) : 
 										null);
+		programHeader.setStatus( ProgramServiceHelper.convertToString(dalProgramDetail.getStatus().getType()));
 	}
 
 	/**

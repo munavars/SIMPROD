@@ -9,4 +9,11 @@ public class ProgramConstant {
 	public static final String ZERO="0";
 	
 	public static final String TAG_VALUE_DELIMITER = "-";
+	public static final String NAME_DELIMITER = " ";
+	
+	public static final String ACTIVE_STATUS = "ACTIVE";
+	public static final String APPROVED_STATUS = "APPROVED";
+	public static final String IN_ACTIVE_STATUS = "IN ACTIVE";
+	public static final String IN_PROGRESS_STATUS = "IN PROGRESS";
+	public static final String PENDING_STATUS = "PENDING";
 }

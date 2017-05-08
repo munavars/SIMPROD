@@ -2,17 +2,17 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="EMPLOYEE")
-public class DalEmployee {
+public class DalEmployee extends DalModel {
 	
-	@Id
-	@Column(name="ID")
-	private Integer EMP_ID;
-	
+	/**
+	 * default serial version.
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Column(name="FIRST_NAME")
 	private String FIRST_NAME;
 	
@@ -53,13 +53,6 @@ public class DalEmployee {
 		LOGIN_ID = e.LOGIN_ID;
 	}
 
-	public Integer getEMP_ID() {
-		return EMP_ID;
-	}
-
-	public void setEMP_ID(Integer eMP_ID) {
-		EMP_ID = eMP_ID;
-	}
 
 	public String getFIRST_NAME() {
 		return FIRST_NAME;
@@ -81,7 +74,7 @@ public class DalEmployee {
 		return TITLE_ID;
 	}
 
-	public void setTITLE_id(String tITLE_ID) {
+	public void setTITLE_ID(String tITLE_ID) {
 		TITLE_ID = tITLE_ID;
 	}
 

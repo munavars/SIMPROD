@@ -4,5 +4,5 @@ import com.ytc.common.model.ProgramHeader;
 
 public interface IProgramUpdateService {
 
-	Boolean saveProgramDetails(ProgramHeader programHeader); 
+	ProgramHeader saveProgramDetails(ProgramHeader programHeader); 
 }

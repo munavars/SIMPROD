@@ -1,0 +1,203 @@
+/* Demo */
+/*body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+    min-height: 100vh;
+    
+    <div class="status-icons">
+  <a class="status-icon status-icon--pending">
+    <i class="fa fa-ellipsis-h"></i>
+    <div class="tooltip">Pending 03/21/17</div>
+  </a>
+  <a class="status-icon status-icon--rejected">
+    <i class="fa fa-times"></i>
+    <div class="tooltip">Rejected 03/21/17</div>
+  </a>
+  <a class="status-icon status-icon--approved">
+    <i class="fa fa-check"></i>
+    <div class="tooltip">Approved 03/21/17</div>
+  </a>
+  <a class="status-icon status-icon--saved">
+    <i class="fa fa-save"></i>
+    <div class="tooltip">Saved 03/21/17</div>
+  </a>
+</div>
+}
+*/
+
+
+/* Color Variables */
+/* Social Icon Mixin */
+/* Social Icons */
+.status-icons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.status-icon {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: inline-flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+  width: 22px;
+  height: 22px;
+  margin: 0.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+  font-family: 'AvenirNextLTPro-Regular', Arial, sans-serif;
+  font-size: 1.3rem;
+  text-decoration: none;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  -webkit-transition: all 0.15s ease;
+  transition: all 0.15s ease;
+}
+.status-icon:hover {
+  color: #fff;
+}
+.status-icon:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+  -webkit-transform: translate(-50%, -150%);
+          transform: translate(-50%, -150%);
+}
+.status-icon:active {
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.4) inset;
+}
+.status-icon--rejected {
+  background: #af0505;
+  background: -webkit-linear-gradient(#af0505, #980707);
+  background: linear-gradient(#6e0d0d, #af0505);
+  border-bottom: 1px solid #520000;
+  color: #fdf8e7;
+}
+.status-icon--rejected:hover {
+  color: #fff;
+  text-shadow: 0px 1px 0px #6e0d0d;
+}
+.status-icon--rejected .tooltip {
+  background: #660000;
+  background: -webkit-linear-gradient(#7d2626, #660000);
+  background: linear-gradient(#7d2626, #660000);
+  color: #e0cccc;
+}
+.status-icon--rejected .tooltip:after {
+  border-top-color: #660000;
+}
+.status-icon--saved {
+  background: #999;
+  background: -webkit-linear-gradient(#9e9e9e, #919191);
+  background: linear-gradient(#9e9e9e, #919191);
+  border-bottom: 1px solid #7a7a7a;
+  color: #fdf8e7;
+}
+.status-icon--saved:hover {
+  color: #fff;
+  text-shadow: 0px 1px 0px #7a7a7a;
+}
+.status-icon--saved .tooltip {
+  background: #999;
+  background: -webkit-linear-gradient(#a8a8a8, #999);
+  background: linear-gradient(#a8a8a8, #999);
+  color: #fff;
+}
+.status-icon--saved .tooltip:after {
+  border-top-color: #999;
+}
+.status-icon--approved {
+  background: #43a608;
+  background: -webkit-linear-gradient(#4caa14, #409e08);
+  background: linear-gradient(#4caa14, #409e08);
+  border-bottom: 1px solid #368506;
+  color: #fdf8e7;
+}
+.status-icon--approved:hover {
+  color: #fff;
+  text-shadow: 0px 1px 0px #368506;
+}
+.status-icon--approved .tooltip {
+  background: #43a608;
+  background: -webkit-linear-gradient(#5fb32d, #43a608);
+  background: linear-gradient(#5fb32d, #43a608);
+  color: #fff;
+}
+.status-icon--approved .tooltip:after {
+  border-top-color: #43a608;
+}
+.status-icon--pending {
+  background: #ebac02;
+  background: -webkit-linear-gradient(#ecb00f, #dfa302);
+  background: linear-gradient(#ecb00f, #dfa302);
+  border-bottom: 1px solid #bc8a02;
+  color: #fdf8e7;
+}
+
+.status-icon--pending.status-icon i {
+  position: relative;
+  top: 1px;
+}
+
+.status-icon--pending:hover {
+  color: #fff;
+  text-shadow: 0px 1px 0px #bc8a02;
+}
+.status-icon--pending .tooltip {
+  background: #ebac02;
+  background: -webkit-linear-gradient(#eeb828, #ebac02);
+  background: linear-gradient(#eeb828, #ebac02);
+  color: #fff;
+}
+.status-icon--pending .tooltip:after {
+    border-top-color: #ebac02;
+}
+.status-icon i {
+  position: relative;
+  top: 0px;
+}
+
+/* Tooltips */
+.tooltip {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  padding: 0.3rem 1rem;
+  border-radius: 3px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  opacity: 0;
+  pointer-events: none;
+  text-transform: uppercase;
+  -webkit-transform: translate(-50%, -100%);
+          transform: translate(-50%, -100%);
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+.tooltip:after {
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  content: "";
+  border: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: transparent;
+  -webkit-transform: translate(-50%, 100%);
+          transform: translate(-50%, 100%);
+}

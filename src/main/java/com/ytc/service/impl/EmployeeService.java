@@ -1,11 +1,14 @@
 package com.ytc.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
@@ -66,14 +69,24 @@ public class EmployeeService implements IEmployeeService {
 		CriteriaQuery<DalEmployee> criteria = entityManager.getCriteriaBuilder().createQuery(DalEmployee.class);
 		Root<DalEmployee> data = criteria.from(DalEmployee.class); 
 		criteria.select(data);
+		criteria.where(entityManager.getCriteriaBuilder().equal(data.get("LOGIN_ID"), loginId));
 		List<DalEmployee> dalEmployee = entityManager.createQuery(criteria).getResultList();
-		//logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created dalEmployee");
-		ModelMapper modelMapper = new ModelMapper();
-		//logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created modelMapper");
-		Employee employee = modelMapper.map(dalEmployee, Employee.class);
-		logger.info("inside com.ytc.service.impl.EmployeeService.getDetail created employee: "+employee);
-		return employee;
+		List<Employee> employeeList = new ArrayList<>();
+		
+		for(DalEmployee dalEmp : dalEmployee){
+			Employee employee = new Employee();
+			employee.setACTIVE(dalEmp.getACTIVE());
+			employee.setBUSINESS_UNIT(dalEmp.getBUSINESS_UNIT());
+			employee.setEMAIL(dalEmp.getEMAIL());
+			employee.setEMP_ID(dalEmp.getEMP_ID());
+			employee.setLAST_NAME(dalEmp.getLAST_NAME());
+			employee.setLOGIN_ID(dalEmp.getLOGIN_ID());
+			employee.setMANAGER_ID(dalEmp.getMANAGER_ID());
+			employee.setTITLE_ID(dalEmp.getTITLE_ID());
+			employeeList.add(employee);
 
+		}
+		return employeeList.get(0);
 	}
 	
 

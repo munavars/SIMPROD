@@ -550,13 +550,14 @@ public class ProgramServiceImpl implements IProgramService {
 			DalProgramDetail dalProgramDetail = (DalProgramDetail) iterator.next();
 			ProgramDetail programDetail =new ProgramDetail();
 			//String queryString="select cast(CUSTOMER_NAME as varchar) CUSTOMER_NAME from CUSTOMER where Id in(select CUSTOMER_id from PROGRAM_HEADER where Id in(select pgm_hdr_id from PROGRAM_DETAIL where id=:id))";
-			String queryString="select * from CUSTOMER where Id in(select CUSTOMER_id from PROGRAM_HEADER where Id in(select pgm_hdr_id from PROGRAM_DETAIL where id=:id))";
+/*			String queryString="select * from CUSTOMER where Id in(select CUSTOMER_id from PROGRAM_HEADER where Id in(select pgm_hdr_id from PROGRAM_DETAIL where id=:id))";
 			Map<String, Object> querParams = new HashMap<>();
 			querParams.put("id", dalProgramDetail.getId());
-			//List<String> custlist=baseDao.getListFromNativeQuery(queryString,querParams);
 			List<DalCustomer> custlist=baseDao.getlist(DalCustomer.class,queryString,querParams);
 			programDetail.setCustomerName(custlist.get(0).getCustomerName());
-			programDetail.setCustomerId(custlist.get(0).getId().toString());
+			programDetail.setCustomerId(custlist.get(0).getId().toString());*/
+			programDetail.setCustomerName(dalProgramDetail.getDalProgramHeader().getCustomer().getCustomerName());
+			programDetail.setCustomerId(dalProgramDetail.getDalProgramHeader().getCustomer().getId().toString());
 			programDetail.setProgramId(dalProgramDetail.getId());
 			programDetail.setProgramName(dalProgramDetail.getProgramMaster().getProgram());
 			programDetail.setPayoutFrequency(dalProgramDetail.getPaidFrequency().getFrequency());

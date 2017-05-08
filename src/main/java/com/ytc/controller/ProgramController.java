@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ytc.common.model.DropDown;
+import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramTierDetail;
@@ -140,10 +141,10 @@ public class ProgramController extends BaseController {
 		return new ListResult<ProgramDetail>( getService(request).getProgram(id, status));
 	}
 	
-	@RequestMapping(value = "/dashboard/{id}", method = RequestMethod.GET)
-	public @ResponseBody ListResult<ProgramDetail> getProgramDashboard(HttpServletRequest request,@PathVariable String id) {
-		
-		return new ListResult<ProgramDetail>( getService(request).getProgramDashboard(Integer.parseInt(id)));
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public @ResponseBody ListResult<ProgramDetail> getProgramDashboard(HttpServletRequest request) {
+		Employee employee=(Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
+		return new ListResult<ProgramDetail>( getService(request).getProgramDashboard(employee.getEMP_ID()));
 	}
 	
 	@RequestMapping(value = "v1/addTier", method = RequestMethod.GET)

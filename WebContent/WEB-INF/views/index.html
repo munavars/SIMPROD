@@ -70,19 +70,22 @@
 	   getParams = new URLSearchParams(window.location.search);
 	   var loginId=getParams.get('loginId'); 
 	   var table=$("#customeroverview").DataTable( {
-			 oLanguage: {
+			oLanguage: {
 				 "sEmptyTable": "No data available for this customer"
 				 },
 				 
+			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	
+			 
 		    ajax: {
-		        url: '/SIMO/program/dashboard/'+loginId,
+		        //url: '/SIMO/program/dashboard/'+loginId ,
+		        url: '/SIMO/program/dashboard/',
 		        dataSrc: "data",
 		        type: "GET",
 		    },
 		  
 		    columnDefs: [
 
-              { className: "dt-right", "targets": [11,15,16,17,18,19] },
+              { className: "dt-right", "targets": [12,16,17,18,19,20] },
               {
                   targets:0,
                   render: function ( data, type, row, meta ) {
@@ -142,8 +145,11 @@
 				 "sEmptyTable": "No data available for this customer"
 				 },
 				 
+			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
+			
 		    ajax: {
-		        url: '/SIMO/v1/customer/getDetailDash/'+loginId,
+		        //url: '/SIMO/v1/customer/getDetailDash/'+loginId,
+		        url: '/SIMO/v1/customer/getDetailDash/',
 		        dataSrc: "data",
 		        type: "GET",
 		    },
@@ -200,7 +206,16 @@
 		    	
 		    	{ data: "customerNumber" },   
    				{ data: "customerName" },
-   				{ data: "programId" },
+   				{ data: "programId",
+   				 
+                    render: function ( data, type, row, meta ) {
+                        if(type === 'display'){
+                            data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        }
+
+                        return data;
+                    }
+   				},
 	            { data: "programName" },
 	            { data: "bu" },
 	            { data: "submitDate" ,className:"center" },
@@ -215,11 +230,11 @@
                     		date=row.zmAppDate;
                     	}
                     	if(data=='2'){
-                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending '+date+'</div></a>';
+                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+date+'</div></a>';
                     	}else if(data=='1'){
-                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected '+date+'</div></a>';	
+                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+date+'</div></a>';	
                     	}else if(data=='3'){
-                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved '+date+'</div></a>';	
+                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+date+'</div></a>';	
                     	}
                     }
 
@@ -229,11 +244,11 @@
 	              render: function ( data, type, row, meta ) {
                     if(type === 'display'){
                     	if(data=='2'){
-                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending '+row.zmAppDate+'</div></a>';
+                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.zmAppDate+'</div></a>';
                     	}else if(data=='1'){
-                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected '+row.zmAppDate+'</div></a>';	
+                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.zmAppDate+'</div></a>';	
                     	}else if(data=='3'){
-                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved '+row.zmAppDate+'</div></a>';	
+                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.zmAppDate+'</div></a>';	
                     	}
                     }
 
@@ -246,11 +261,11 @@
 	            	render: function ( data, type, row, meta ) {
 	                    if(type === 'display'){
 	                    	if(data=='2'){
-	                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending '+row.tbpAppDate+'</div></a>';
+	                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.tbpAppDate+'</div></a>';
 	                    	}else if(data=='1'){
-	                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected '+row.tbpAppDate+'</div></a>';	
+	                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.tbpAppDate+'</div></a>';	
 	                    	}else if(data=='3'){
-	                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved '+row.tbpAppDate+'</div></a>';	
+	                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.tbpAppDate+'</div></a>';	
 	                    	}
 	                    }
 

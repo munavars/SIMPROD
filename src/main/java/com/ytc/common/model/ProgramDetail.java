@@ -336,7 +336,8 @@ public class ProgramDetail extends Model{
 	 * @return the bu
 	 */
 	public String getBu() {
-		return bu;
+		//return bu;
+		return ("P".equalsIgnoreCase(bu)?"Consumer":"Customer");
 	}
 	/**
 	 * @param bu the bu to set

@@ -34,7 +34,8 @@ public class ProgramController extends BaseController {
 		 * details related to program id and need to show it to user.
 		 * In both cases, initializing dropdown values are same.
 		 * */
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(programId, null));
+		Employee employee = (Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(programId, null, employee));
 		
 		return returnData;
 	}
@@ -48,7 +49,8 @@ public class ProgramController extends BaseController {
 		 * details related to program id and need to show it to user.
 		 * In both cases, initializing dropdown values are same.
 		 * */
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(null,custId));
+		Employee employee = (Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(null,custId, employee));
 		
 		return returnData;
 	}

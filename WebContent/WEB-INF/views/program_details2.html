@@ -164,6 +164,7 @@
          <!-- hidden values start-->
          <input type="hidden" id="customerId" name="customerId"/>
          <input type="hidden" id="detailProgramId" name="detailProgramId"/>
+         <input type="hidden" id="loggedInUserValue" name="loggedInUserValue" />
          <!-- hidden values end-->
          <!--main content start-->
          <section id="main-content">
@@ -832,6 +833,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			if(null==programId){
 				url="/SIMO/program/v1/getProgramDetailCreate/" + custId;
 			}
+			
 			$(window).ready(function(){
 	         	$.ajax({ 
 	             	type: "GET",
@@ -980,7 +982,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	}
                	$('#actual_marker').val(response.data.programDetailList[0].actualMarker);
                	fnPopulateProgramTier(response.data.programDetailList[0].programTierDetailList);
-               	if(programId != null){
+               	if(programId != null ){
                		disableFields();
                	}
          	}
@@ -1088,8 +1090,11 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				
 				 //.btn.disabled
 				$("#program-parent-div").find('a').addClass("disabled");
-				$('#edit-button').attr('disabled', false);
-				$('#edit-button').removeClass("disabled");
+				if(responseOnload.authorizedUser == 'Yes'){
+					$('#edit-button').attr('disabled', false);
+					$('#edit-button').removeClass("disabled");
+				}
+				
 				 
 			}
 			

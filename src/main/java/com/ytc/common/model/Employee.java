@@ -7,7 +7,7 @@ public class Employee extends Model {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String EMP_ID;
+	private Integer EMP_ID;
 	private String FIRST_NAME;
 	private String LAST_NAME;
 	private String TITLE_ID;
@@ -34,11 +34,11 @@ public class Employee extends Model {
 		LOGIN_ID = e.LOGIN_ID;
 	}
 
-	public String getEMP_ID() {
+	public Integer getEMP_ID() {
 		return EMP_ID;
 	}
 
-	public void setEMP_ID(String eMP_ID) {
+	public void setEMP_ID(Integer eMP_ID) {
 		EMP_ID = eMP_ID;
 	}
 

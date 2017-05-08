@@ -543,11 +543,12 @@ public class ProgramServiceImpl implements IProgramService {
 	
 	
 	@Override
-	public List<ProgramDetail> getProgram(String customerId, String status) {
+	public List<ProgramDetail> getProgram(String custId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
 		DecimalFormat df = new DecimalFormat("#.##"); 
 		String sql=QueryConstant.PROGRAM_LIST;
 		List<String> selectedValues = Arrays.asList(status.split(","));
+		List<String> customerId = Arrays.asList(custId.split(","));
 		Map<String, Object> queryParams = new HashMap<>();
 		queryParams.put("custId", customerId);
 		queryParams.put("status", selectedValues);
@@ -557,6 +558,15 @@ public class ProgramServiceImpl implements IProgramService {
 		for (Iterator<DalProgramDetail> iterator = resultList.iterator(); iterator.hasNext();) {
 			DalProgramDetail dalProgramDetail = (DalProgramDetail) iterator.next();
 			ProgramDetail programDetail =new ProgramDetail();
+			//String queryString="select cast(CUSTOMER_NAME as varchar) CUSTOMER_NAME from CUSTOMER where Id in(select CUSTOMER_id from PROGRAM_HEADER where Id in(select pgm_hdr_id from PROGRAM_DETAIL where id=:id))";
+/*			String queryString="select * from CUSTOMER where Id in(select CUSTOMER_id from PROGRAM_HEADER where Id in(select pgm_hdr_id from PROGRAM_DETAIL where id=:id))";
+			Map<String, Object> querParams = new HashMap<>();
+			querParams.put("id", dalProgramDetail.getId());
+			List<DalCustomer> custlist=baseDao.getlist(DalCustomer.class,queryString,querParams);
+			programDetail.setCustomerName(custlist.get(0).getCustomerName());
+			programDetail.setCustomerId(custlist.get(0).getId().toString());*/
+			programDetail.setCustomerName(dalProgramDetail.getDalProgramHeader().getCustomer().getCustomerName());
+			programDetail.setCustomerId(dalProgramDetail.getDalProgramHeader().getCustomer().getId().toString());
 			programDetail.setProgramId(dalProgramDetail.getId());
 			programDetail.setProgramName(dalProgramDetail.getProgramMaster().getProgram());
 			programDetail.setPayoutFrequency(dalProgramDetail.getPaidFrequency().getFrequency());
@@ -587,6 +597,7 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setCreditAmount(0);
 			programDetail.setPayables(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getTotalPaidAmount():0);
 			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getBalance():ProgramConstant.ZERO);
+			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Empty");
 			programDetailList.add(programDetail);
 		}
 		
@@ -656,6 +667,28 @@ public class ProgramServiceImpl implements IProgramService {
 		
 		return status;
 		
+	}
+	
+	/* (non-Javadoc)
+	 * @see com.ytc.service.IProgramService#getProgramDashboard()
+	 */
+	@Override
+	public List<ProgramDetail> getProgramDashboard(Integer id){
+		Integer empId=id;
+		List<ProgramDetail> pgm=new ArrayList<ProgramDetail>();
+		String queryString = "SELECT BASE_EMP_ID FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = '"+ empId+"' or LVL1_EMP_ID = '"+empId+"' or LVL2_EMP_ID = '"+empId+
+					"' or LVL3_EMP_ID = '"+empId+"' or LVL4_EMP_ID = '"+empId+"' or LVL5_EMP_ID = '"+empId+"'";
+
+			Map<String, Object> queryParams = new HashMap<>();
+			List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+			if(userIdList.size()>1){
+				String sql="select ID from CUSTOMER where ACCOUNT_MANAGER in(:userId)";
+				queryParams.put("userId", userIdList);
+				List<String> customerId=baseDao.getListFromNativeQuery(sql, queryParams);		
+				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4");
+			}
+			
+		return pgm;
 	}
 	
 }

@@ -1,8 +1,11 @@
 package com.ytc.common.model;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import com.ytc.dal.model.DalEmployee;
 
 public class ProgramDetail extends Model{
 
@@ -36,8 +39,16 @@ public class ProgramDetail extends Model{
 	private double creditAmount;
 	private double payables;
 	private String glBalance;
-	
-	
+	private String customerId;
+	private String customerName;
+	private String customerNumber;
+	private String zmAppStatus;
+	private String zmAppDate;
+	private String tbpAppStatus;
+	private String tbpAppDate;
+	private String bu;
+	private String submitDate;
+	private String longDesc;
 	
 	private ProgramDetailsDropDown dropdownList;
 
@@ -248,5 +259,127 @@ public class ProgramDetail extends Model{
 	
 	public void setActualMarker(Integer actualMarker) {
 		this.actualMarker = actualMarker;
-	}	
+	}
+	/**
+	 * @return the customerName
+	 */
+	public String getCustomerName() {
+		return customerName;
+	}
+	/**
+	 * @param customerName the customerName to set
+	 */
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+	/**
+	 * @return the customerNumber
+	 */
+	public String getCustomerNumber() {
+		return customerNumber;
+	}
+	/**
+	 * @param customerNumber the customerNumber to set
+	 */
+	public void setCustomerNumber(String customerNumber) {
+		this.customerNumber = customerNumber;
+	}
+	/**
+	 * @return the zmAppStatus
+	 */
+	public String getZmAppStatus() {
+		return zmAppStatus;
+	}
+	/**
+	 * @param zmAppStatus the zmAppStatus to set
+	 */
+	public void setZmAppStatus(String zmAppStatus) {
+		this.zmAppStatus = zmAppStatus;
+	}
+	/**
+	 * @return the zmAppDate
+	 */
+	public String getZmAppDate() {
+		return zmAppDate;
+	}
+	/**
+	 * @param zmAppDate the zmAppDate to set
+	 */
+	public void setZmAppDate(String zmAppDate) {
+		this.zmAppDate = zmAppDate;
+	}
+	/**
+	 * @return the tbpAppStatus
+	 */
+	public String getTbpAppStatus() {
+		return tbpAppStatus;
+	}
+	/**
+	 * @param tbpAppStatus the tbpAppStatus to set
+	 */
+	public void setTbpAppStatus(String tbpAppStatus) {
+		this.tbpAppStatus = tbpAppStatus;
+	}
+	/**
+	 * @return the tbpAppDate
+	 */
+	public String getTbpAppDate() {
+		return tbpAppDate;
+	}
+	/**
+	 * @param tbpAppDate the tbpAppDate to set
+	 */
+	public void setTbpAppDate(String tbpAppDate) {
+		this.tbpAppDate = tbpAppDate;
+	}
+	/**
+	 * @return the bu
+	 */
+	public String getBu() {
+		return bu;
+	}
+	/**
+	 * @param bu the bu to set
+	 */
+	public void setBu(String bu) {
+		this.bu = bu;
+	}
+	/**
+	 * @return the submitDate
+	 */
+	public String getSubmitDate() {
+		return submitDate;
+	}
+	/**
+	 * @param submitDate the submitDate to set
+	 */
+	public void setSubmitDate(String submitDate) {
+		this.submitDate = submitDate;
+	}
+	/**
+	 * @return the longDesc
+	 */
+	public String getLongDesc() {
+		return longDesc;
+	}
+	/**
+	 * @param longDesc the longDesc to set
+	 */
+	public void setLongDesc(String longDesc) {
+		this.longDesc = longDesc;
+	}
+	/**
+	 * @return the customerId
+	 */
+	public String getCustomerId() {
+		return customerId;
+	}
+	/**
+	 * @param customerId the customerId to set
+	 */
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
+	}
+	
+	
 }

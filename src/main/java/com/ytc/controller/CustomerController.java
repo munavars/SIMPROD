@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ytc.common.model.Customer;
 import com.ytc.common.model.CustomerDetail;
+import com.ytc.common.model.Employee;
+import com.ytc.common.model.ProgramDetail;
+import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ModelResult;
 import com.ytc.service.ICustomerService;
 
@@ -23,6 +26,12 @@ public class CustomerController extends BaseController  {
 	@RequestMapping(value = "/getDetail/{id}", method = RequestMethod.GET)
 	public @ResponseBody ModelResult<CustomerDetail> getCustDetail(HttpServletRequest request, @PathVariable Integer id) {
 		return new ModelResult<CustomerDetail>(getService(request).getCustomerDetail(id));
+	}
+	
+	@RequestMapping(value = "/getDetailDash", method = RequestMethod.GET)
+	public @ResponseBody ListResult<ProgramDetail> getCustDetailDashboard(HttpServletRequest request) {
+		Employee emp=(Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
+		return new ListResult<ProgramDetail>(getService(request).getCustomerDetailDashboard(emp.getEMP_ID()));
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

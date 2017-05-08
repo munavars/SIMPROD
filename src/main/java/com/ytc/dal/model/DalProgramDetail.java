@@ -52,8 +52,6 @@ public class DalProgramDetail extends DalAuditableModel {
 	private DalEmployee execAppById;
 	private Calendar execAppDate;
 
-	private DalEmployee tbpAppById;
-	private Calendar tbpAppDate;
 	private DalProgramMaster programMaster;
 	private DalProgramHeader dalProgramHeader;
 	private Integer paidType;

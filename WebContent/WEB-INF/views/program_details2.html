@@ -164,7 +164,6 @@
          <!-- hidden values start-->
          <input type="hidden" id="customerId" name="customerId"/>
          <input type="hidden" id="detailProgramId" name="detailProgramId"/>
-         <input type="hidden" id="loggedInUserValue" name="loggedInUserValue" />
          <!-- hidden values end-->
          <!--main content start-->
          <section id="main-content">
@@ -233,23 +232,23 @@
                                            <h5>Program Details</h5>
                                            <div class="row">
                                                <div class="col-lg-4 col-sm-4">
-                                                <label class="control-label" for="inputSuccess">Program Name</label>
+                                                <label class="control-label" for="program_name_inputselect">Program Name</label>
                                                 <select class="form-control input-sm m-bot15 required" id="program_name_inputselect" name="program_name_inputselect">
                                                    <!-- <option disabled class="required" value="">- Select -</option> -->
                                                 </select>
                                              </div>
                                             <div class="col-lg-4 col-sm-4">
-                                                <label class="control-label" for="inputSuccess">Payout Frequency</label>
+                                                <label class="control-label" for="payout_freq_inputselect">Payout Frequency</label>
                                                 <select class="form-control input-sm m-bot15" id="payout_freq_inputselect" name="payout_freq_inputselect">
                                                   <!-- <option disabled class="" value="">- Select -</option> -->
                                               </select>
                                             </div>
                                               <div class="form-group">
                                                   <div class="col-lg-4 col-sm-4">
-                                                    <label class="control-label">Begin/End Dates:</label>
-                                                        <div class="input-group input-medium" data-date="01/01/2017" data-date-format="mm/dd/yy">
-                                                            <input type="text" class="form-control dpd1 required" id="from" name="from" placeholder="Begin Date" ><span class="input-group-addon">To</span>
-                                                            <input type="text" class="form-control dpd2 required" id="to" name="to" placeholder="End Date">
+                                                    <label class="control-label" for="from">Begin/End Dates:</label>
+                                                        <div class="input-group input-medium" data-date-format="mm/dd/yy">
+                                                            <input type="text" class="form-control required" id="from" name="from" placeholder="Begin Date" ><span class="input-group-addon" for="to">To</span>
+                                                            <input type="text" class="form-control required" id="to" name="to" placeholder="End Date">
                                                         </div>
                                                     </div>
                                               </div>
@@ -817,6 +816,10 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
        </script>
        
        <script>
+            $(document).ready(function(){
+                 $('#from').datepicker();
+                 $('#to').datepicker();
+            });
        		var responseOnload;
 			getParams = new URLSearchParams(window.location.search);
 			var programId =getParams.get('pgmId'); 
@@ -847,6 +850,32 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 	             		alert("Wrongly done");
 	             	}
 	         	});
+			});
+			
+			$(document).ready(function(){
+				var nowTemp = new Date();
+				var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+				 
+				var checkin = $('#from').datepicker({
+					onRender: function(date) {
+					  return date.valueOf() < now.valueOf() ? 'disabled' : '';
+					}
+				}).on('changeDate', function(ev) {
+					if (ev.date.valueOf() > checkout.getDate().valueOf()) {
+						var newDate = new Date(ev.date)
+						newDate.setDate(newDate.getDate() + 1);
+						checkout.setValue(newDate);
+					}
+					checkin.hide();
+					$('#to')[0].focus();
+				}).data('datepicker');
+				var checkout = $('#to').datepicker({
+					onRender: function(date) {
+						return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+					}
+				}).on('changeDate', function(ev) {
+					checkout.hide();
+				}).data('datepicker');
 			});
          	
          	function fnPopulateProgramDetails(response){
@@ -904,7 +933,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	}
                	else{
                		$("#optionsRadiosDollarSign").prop('checked', true);
-               	}         	
+               	}  
                	
                	$('#from').datepicker({ 
    					dateFormat: 'mm/dd/yy'
@@ -914,8 +943,10 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	$('#to').datepicker({ 
 					dateFormat: 'mm/dd/yy'
     				});
-               	$('#from').val($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].beginDate)));
-               	$('#to').val($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].endDate)));
+    			$('#from').datepicker('setValue', $.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].beginDate)));
+    			$('#to').datepicker('setValue', $.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].endDate)));
+/*                	$('#from').val($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].beginDate)));
+               	$('#to').val($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.programDetailList[0].endDate))); */
                	$('#from').datepicker('update', new Date(response.data.programDetailList[0].beginDate));
                	$('#to').datepicker('update', new Date(response.data.programDetailList[0].endDate));
                	resetFormForMandatoryCheck("from");
@@ -989,12 +1020,14 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          	
          	function fnPopulateProgramTier(tierData){                
                 var table = $("#tier-schedule").DataTable();
-                $.each(tierData, function(idx, item) {
-						table.fnAddData([item.level, item.amount,item.beginRange,
-										'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
-										'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
-                    ]);
-                }); 
+                if(tierData != null){
+	                $.each(tierData, function(idx, item) {
+							table.fnAddData([item.level, item.amount,item.beginRange,
+											'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
+											'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
+	                    ]);
+	                });
+                }
          	}
          	
          	
@@ -1094,8 +1127,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					$('#edit-button').attr('disabled', false);
 					$('#edit-button').removeClass("disabled");
 				}
-				
-				 
+				$('#program-cancel').attr('disabled', false);
+				$('#program-cancel').removeClass("disabled");
 			}
 			
 			function rejectProgram(){

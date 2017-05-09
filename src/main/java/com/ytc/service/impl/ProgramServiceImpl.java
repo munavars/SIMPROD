@@ -62,7 +62,7 @@ public class ProgramServiceImpl implements IProgramService {
 			dalProgramDetail =  baseDao.getById(DalProgramDetail.class, programDetId);
 		}
 		String customerId = ""; 
-			
+		
 		if(dalProgramDetail != null){
 			if(dalProgramDetail.getPayTo() != null){
 				customerId = String.valueOf( dalProgramDetail.getPayTo());	
@@ -91,7 +91,10 @@ public class ProgramServiceImpl implements IProgramService {
 			programHeader.setCustomerId(customer.getId());
 			programHeader.setCustomerName(customer.getCustomerName());
 			programHeader.setBusinessUnit(customer.getBu());
-			Integer employeeId = employee.getEMP_ID();
+			Integer employeeId = null;
+			if(employee != null){
+				employeeId = employee.getEMP_ID();
+			}
 			if(employeeId == null){ // Temporary code, this should be removed after integration testing.
 				employeeId = 47;
 			}
@@ -99,6 +102,8 @@ public class ProgramServiceImpl implements IProgramService {
 			programHeader.setRequestedDate(new Date());
 			programHeader.setRequestId(emp.getId());
 			programHeader.setRequestedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
+			programHeader.setCreatedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
+			programHeader.setCreatedDate(new Date());
 			programHeader.setNewProgram(true);
 			programHeader.setAuthorizedUser(ProgramConstant.YES);
 		}

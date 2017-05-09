@@ -27,6 +27,7 @@ import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
+import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
@@ -681,7 +682,7 @@ public class ProgramServiceImpl implements IProgramService {
 
 			Map<String, Object> queryParams = new HashMap<>();
 			List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
-			if(userIdList.size()>1){
+			if((userIdList.size()>1)||((userIdList.size()==1)&&(baseDao.getEntityById(DalEmployeeHierarchy.class, Integer.parseInt(userIdList.get(0))).getBaseTitle().equalsIgnoreCase("Account Manager")))){
 				String sql="select ID from CUSTOMER where ACCOUNT_MANAGER in(:userId)";
 				queryParams.put("userId", userIdList);
 				List<String> customerId=baseDao.getListFromNativeQuery(sql, queryParams);		

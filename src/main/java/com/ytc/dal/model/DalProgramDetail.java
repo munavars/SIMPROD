@@ -51,8 +51,7 @@ public class DalProgramDetail extends DalAuditableModel {
 	private Calendar dirAppDate;
 	private DalEmployee execAppById;
 	private Calendar execAppDate;
-	
-	private int statusId;
+
 	private DalProgramMaster programMaster;
 	private DalProgramHeader dalProgramHeader;
 	private Integer paidType;
@@ -60,6 +59,8 @@ public class DalProgramDetail extends DalAuditableModel {
     private Set<DalProgramDetPaid> dalProgramDetPaidList;
     private DalProgramDetailTier pgmDetailTier;
     private DalAccrualData accuralData;
+    
+    private DalStatus status;
     /*private Set<DalProgramDetailTier> dalProgramDetailTierSet;*/
     
     
@@ -362,19 +363,6 @@ public class DalProgramDetail extends DalAuditableModel {
     public void setTbpAppDate(Calendar tbpAppDate) {
                     this.tbpAppDate = tbpAppDate;
     }
-    /**
-    * @return the statusId
-    */
-    @Column(name = "STATUS_ID")
-    public int getStatusId() {
-                    return statusId;
-    }
-    /**
-    * @param statusId the statusId to set
-    */
-    public void setStatusId(int statusId) {
-                    this.statusId = statusId;
-    }
 
     /**
     * @return the paidFrequency
@@ -447,7 +435,6 @@ public class DalProgramDetail extends DalAuditableModel {
     }
                 
     /**
->>>>>>> Stashed changes
 	 * @return the pgmDetailTier
 	 */
 
@@ -531,5 +518,15 @@ public class DalProgramDetail extends DalAuditableModel {
 	public void setDalProgramDetailTierSet(Set<DalProgramDetailTier> dalProgramDetailTierSet) {
 		this.dalProgramDetailTierSet = dalProgramDetailTierSet;
 	}*/
+	
+	@OneToOne
+	@JoinColumn(name = "STATUS_ID", referencedColumnName = "ID")
+	public DalStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(DalStatus status) {
+		this.status = status;
+	}
 
 }

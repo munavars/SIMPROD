@@ -35,6 +35,11 @@ public class ProgramHeader extends Model{
 	private BigDecimal balance;
 	/** common fields used in Create and Edit program - End*/
 	
+	/** For save/submit logic checks*/
+	private boolean isNewProgram;
+	private String action;
+	private boolean isSuccess;
+	
 	private List<ProgramDetail> programDetailList = new ArrayList<ProgramDetail>();
 	
 	public List<ProgramDetail> getProgramDetailList() {
@@ -162,5 +167,23 @@ public class ProgramHeader extends Model{
 	}
 	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
+	}
+	public boolean isNewProgram() {
+		return isNewProgram;
+	}
+	public void setNewProgram(boolean isNewProgram) {
+		this.isNewProgram = isNewProgram;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
+	public boolean isSuccess() {
+		return isSuccess;
+	}
+	public void setSuccess(boolean isSuccess) {
+		this.isSuccess = isSuccess;
 	}
 }

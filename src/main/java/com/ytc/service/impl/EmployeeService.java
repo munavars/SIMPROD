@@ -6,23 +6,18 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.ParameterExpression;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
-import org.modelmapper.ModelMapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.User;
-import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ResultCode;
 import com.ytc.common.result.ResultException;
-import com.ytc.controller.UserController;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalUser;
@@ -78,7 +73,7 @@ public class EmployeeService implements IEmployeeService {
 			employee.setACTIVE(dalEmp.getACTIVE());
 			employee.setBUSINESS_UNIT(dalEmp.getBUSINESS_UNIT());
 			employee.setEMAIL(dalEmp.getEMAIL());
-			employee.setEMP_ID(dalEmp.getEMP_ID());
+			employee.setEMP_ID(dalEmp.getId());
 			employee.setLAST_NAME(dalEmp.getLAST_NAME());
 			employee.setLOGIN_ID(dalEmp.getLOGIN_ID());
 			employee.setMANAGER_ID(dalEmp.getMANAGER_ID());

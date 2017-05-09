@@ -24,6 +24,7 @@ import com.ytc.dal.model.DalProgramDetPaid;
 import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramMaster;
+import com.ytc.dal.model.DalStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramUpdateService;
@@ -37,19 +38,19 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	private IProgramCreateService programCreateService;
 	
 	@Override
-	public Boolean saveProgramDetails(ProgramHeader programHeader) {
+	public ProgramHeader saveProgramDetails(ProgramHeader programHeader) {
 		
-		Boolean isSuccess = Boolean.FALSE;
 		List<DalProgramDetAchieved> deletedAchievedEntityList = null;
 		List<DalProgramDetPaid> deletedPaidEntityList = null;
 		if(programHeader.getId() != null){
-			
 		
 			DalProgramDetail dalProgramDetail = baseDao.getById(DalProgramDetail.class, programHeader.getProgramDetailList().get(0).getId());
 			
-			if(dalProgramDetail != null){
+			if(dalProgramDetail != null && !programHeader.isNewProgram()){
 				/** If control is here, then user is editing the existing program details.*/
-			
+				if(programHeader.getStatus() != null && dalProgramDetail.getDalProgramHeader() != null){
+					dalProgramDetail.getDalProgramHeader().setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
+				}
 				/** Save Program Detail section information*/
 				updateProgramDetailsData(dalProgramDetail, programHeader);
 
@@ -78,18 +79,26 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				/** tier detail is saved seperately as of now.*/
 				updateProgramTierData(dalProgramDetail, programHeader);
 				
-				isSuccess = Boolean.TRUE;
+				/**Setting the value to true */
+				if(dalProgramDetail.getDalProgramHeader().getStatus() != null 
+						&& !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())){
+					programHeader.setNewProgram(true);
+				}
+				else{
+					programHeader.setNewProgram(false);
+				}
+				programHeader.setSuccess(true);
+				programHeader.setStatus(dalProgramDetail.getStatus().getType());
 			}
 			else{
-				isSuccess = programCreateService.createProgramDetails(programHeader);
+				programCreateService.createProgramDetails(programHeader);
 			}
 		}
 		else{
-			isSuccess = programCreateService.createProgramDetails(programHeader);
+			programCreateService.createProgramDetails(programHeader);
 		}
-
 						
-		return isSuccess;
+		return programHeader;
 	}
 
 	private void updateProgramTierData(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {
@@ -371,7 +380,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));				
 			}
 			dalProgramDet.setActualMarker(programDetail.getActualMarker());
-			dalProgramDet.setStatusId(ProgramServiceHelper.convertToInteger(programHeader.getStatus()));
+			dalProgramDet.setStatus(dalProgramDet.getDalProgramHeader().getStatus());
 		}
 
 		return dalProgramDet;

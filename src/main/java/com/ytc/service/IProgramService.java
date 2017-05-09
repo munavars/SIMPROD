@@ -3,10 +3,10 @@ package com.ytc.service;
 import java.util.List;
 
 import com.ytc.common.model.DropDown;
+import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramTierDetail;
-import com.ytc.common.result.Result;
 
 public interface IProgramService {
 	
@@ -20,7 +20,7 @@ public interface IProgramService {
 
 	List<ProgramDetail> getProgram(String customerId, String status);
 	
-	ProgramHeader getProgramDetails(Integer programDetId, Integer custId);
+	ProgramHeader getProgramDetails(Integer programDetId, Integer custId, Employee employee);
 
 	List<ProgramDetail> getProgramDashboard(Integer id);
 

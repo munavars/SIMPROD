@@ -39,6 +39,7 @@ public class ProgramHeader extends Model{
 	private boolean isNewProgram;
 	private String action;
 	private boolean isSuccess;
+	private String authorizedUser;
 	
 	private List<ProgramDetail> programDetailList = new ArrayList<ProgramDetail>();
 	
@@ -185,5 +186,11 @@ public class ProgramHeader extends Model{
 	}
 	public void setSuccess(boolean isSuccess) {
 		this.isSuccess = isSuccess;
+	}
+	public String getAuthorizedUser() {
+		return authorizedUser;
+	}
+	public void setAuthorizedUser(String authorizedUser) {
+		this.authorizedUser = authorizedUser;
 	}
 }

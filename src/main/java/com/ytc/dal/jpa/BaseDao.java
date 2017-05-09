@@ -15,6 +15,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -25,6 +26,7 @@ import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalAuditableModel;
 import com.ytc.dal.model.DalModel;
 import com.ytc.dal.model.DalUser;
+import com.ytc.service.ServiceContext;
 
 
 /**
@@ -40,6 +42,8 @@ public class BaseDao implements IDataAccessLayer {
 	@PersistenceContext
 	protected EntityManager entityManager;
 
+	@Autowired
+	private ServiceContext serviceContext;
 
 	@Override
 	public void flush() {
@@ -55,7 +59,7 @@ public class BaseDao implements IDataAccessLayer {
 	@Override
 	@Transactional
 	public <T extends DalModel> T create(T item) {
-		return create(item, 6);
+		return create(item, serviceContext.getEmployee().getEMP_ID());
 	}
 
 	@Override
@@ -98,7 +102,7 @@ public class BaseDao implements IDataAccessLayer {
 	@Override
 	@Transactional
 	public <T extends DalModel> T update(T item) {
-		return update(item, 6);
+		return update(item, serviceContext.getEmployee().getEMP_ID());
 	}
 
 	@Override

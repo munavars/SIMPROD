@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,10 +22,15 @@ import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ModelResult;
 import com.ytc.service.IProgramService;
 import com.ytc.service.IProgramUpdateService;
+import com.ytc.service.ServiceContext;
 
 @Controller
 @RequestMapping(value = "/program/")
 public class ProgramController extends BaseController {
+	
+	@Autowired
+	private ServiceContext serviceContext;
+	
 	@RequestMapping(value = "v1/getProgramDetail/{programId}", method = RequestMethod.GET)
 	public @ResponseBody ModelResult<ProgramHeader> getDetail(HttpServletRequest request, @PathVariable("programId") Integer programId) {
 		ModelResult<ProgramHeader> returnData = null;
@@ -34,7 +40,14 @@ public class ProgramController extends BaseController {
 		 * details related to program id and need to show it to user.
 		 * In both cases, initializing dropdown values are same.
 		 * */
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(programId, null));
+		Employee employee = null;
+		if(serviceContext != null){
+			employee = serviceContext.getEmployee();
+		}
+		else{
+			employee = (Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
+		}
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(programId, null, employee));
 		
 		return returnData;
 	}
@@ -48,7 +61,14 @@ public class ProgramController extends BaseController {
 		 * details related to program id and need to show it to user.
 		 * In both cases, initializing dropdown values are same.
 		 * */
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(null,custId));
+		Employee employee = null;
+		if(serviceContext != null){
+			employee = serviceContext.getEmployee();
+		}
+		else{
+			employee = (Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
+		};
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(null,custId, employee));
 		
 		return returnData;
 	}

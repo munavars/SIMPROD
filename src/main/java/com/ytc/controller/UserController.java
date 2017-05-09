@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +17,15 @@ import com.tiredex.yoko.utils.LdapUtil;
 import com.ytc.common.model.Employee;
 import com.ytc.common.result.ModelResult;
 import com.ytc.service.IEmployeeService;
+import com.ytc.service.ServiceContext;
 
 @Controller
 // @RequestMapping(value = "/")
 public class UserController extends BaseController {
 
+	@Autowired
+	private ServiceContext serviceContext;
+	
 	private org.slf4j.Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@RequestMapping(value = "/getEmployee/{loginId}", method = RequestMethod.GET)
@@ -77,6 +82,9 @@ public class UserController extends BaseController {
 				
 //              get all data from employee table that matches the loginID
 				Employee employee = getService(request).getDetail(loginID);
+				if(serviceContext != null){
+					serviceContext.setEmployee(employee);
+				}
 				request.getSession().setAttribute("EMPLOYEE_INFO", employee);
 				logger.info("UserController.processLogin employee: "+employee.toString());
 

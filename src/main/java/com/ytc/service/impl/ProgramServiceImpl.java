@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ytc.common.enums.BTLEnum;
 import com.ytc.common.enums.TagItemValueMapEnum;
 import com.ytc.common.model.DropDown;
+import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramAchieveOn;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramDetailsDropDown;
@@ -51,7 +52,7 @@ public class ProgramServiceImpl implements IProgramService {
 	private IDataAccessLayer baseDao;
 
 	@Override
-	public ProgramHeader getProgramDetails(Integer programDetId, Integer custId) {
+	public ProgramHeader getProgramDetails(Integer programDetId, Integer custId, Employee employee) {
 		ProgramHeader programHeader = new ProgramHeader();
 		/**
 		 * Irrespective of whether program id is null or not, drop down list has to be initialized.
@@ -62,7 +63,7 @@ public class ProgramServiceImpl implements IProgramService {
 			dalProgramDetail =  baseDao.getById(DalProgramDetail.class, programDetId);
 		}
 		String customerId = ""; 
-			
+		
 		if(dalProgramDetail != null){
 			if(dalProgramDetail.getPayTo() != null){
 				customerId = String.valueOf( dalProgramDetail.getPayTo());	
@@ -70,7 +71,7 @@ public class ProgramServiceImpl implements IProgramService {
 			populateDropDownValues(programHeader, customerId);
 			DalProgramHeader dalProgramHeader = dalProgramDetail.getDalProgramHeader();
 			
-			populateProgramHeaderDetails(programHeader, dalProgramHeader, dalProgramDetail);
+			populateProgramHeaderDetails(programHeader, dalProgramHeader, dalProgramDetail, employee);
 			/** few more columns has to be populated here. That has to be worked on. For now, only main fields are considered.*/
 			
 			populateProgramDetailData(programHeader, dalProgramDetail);
@@ -91,13 +92,21 @@ public class ProgramServiceImpl implements IProgramService {
 			programHeader.setCustomerId(customer.getId());
 			programHeader.setCustomerName(customer.getCustomerName());
 			programHeader.setBusinessUnit(customer.getBu());
-			
-			DalEmployee emp = baseDao.getById(DalEmployee.class, 47); // this should be logged in user.
+			Integer employeeId = null;
+			if(employee != null){
+				employeeId = employee.getEMP_ID();
+			}
+			if(employeeId == null){ // Temporary code, this should be removed after integration testing.
+				employeeId = 47;
+			}
+			DalEmployee emp = baseDao.getById(DalEmployee.class, employeeId); // this should be logged in user.
 			programHeader.setRequestedDate(new Date());
 			programHeader.setRequestId(emp.getId());
 			programHeader.setRequestedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
-			
+			programHeader.setCreatedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
+			programHeader.setCreatedDate(new Date());
 			programHeader.setNewProgram(true);
+			programHeader.setAuthorizedUser(ProgramConstant.YES);
 		}
 		
 		return programHeader;
@@ -135,13 +144,20 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 	}
 
-	private void populateProgramHeaderDetails(ProgramHeader programHeader, DalProgramHeader dalProgramHeader, DalProgramDetail dalProgramDetail) {
+	private void populateProgramHeaderDetails(ProgramHeader programHeader, DalProgramHeader dalProgramHeader, DalProgramDetail dalProgramDetail,
+											Employee employee) {
 		programHeader.setCustomerName(dalProgramHeader.getCustomer().getCustomerName());
 		programHeader.setCustomerId(dalProgramHeader.getCustomer().getId());
 		programHeader.setBusinessUnit(dalProgramHeader.getBu());
 		programHeader.setId(dalProgramHeader.getId());
 		programHeader.setRequestId(dalProgramHeader.getRequest().getId()); 
-		programHeader.setRequestedBy(dalProgramHeader.getRequest().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramHeader.getRequest().getLAST_NAME());																		
+		programHeader.setRequestedBy(dalProgramHeader.getRequest().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramHeader.getRequest().getLAST_NAME());
+		if(employee != null && employee.getLOGIN_ID().equals(dalProgramHeader.getRequest().getLOGIN_ID())){
+			programHeader.setAuthorizedUser(ProgramConstant.YES);
+		}
+		else{
+			programHeader.setAuthorizedUser(ProgramConstant.NO);
+		}
 		programHeader.setRequestedDate( (dalProgramHeader.getRequestDate() != null ) ? dalProgramHeader.getRequestDate().getTime() : null);
 		if(dalProgramHeader.getCreatedBy() != null){
 			programHeader.setCreatedBy(dalProgramHeader.getCreatedBy().getUserName());

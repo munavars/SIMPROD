@@ -2,13 +2,21 @@ package com.ytc.service;
 
 import java.util.UUID;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
+
+import com.ytc.common.model.Employee;
 
 
-
+@Component
+@Scope(value=WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class ServiceContext {
 	
 	private Integer userId;
 
+	private Employee employee;
 
 	private static final ThreadLocal<ServiceContext> serviceContext = new ThreadLocal<ServiceContext>() {
 		@Override
@@ -43,8 +51,12 @@ public class ServiceContext {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	
-	
 
+	public Employee getEmployee() {
+		return employee;
+	}
 
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
 }

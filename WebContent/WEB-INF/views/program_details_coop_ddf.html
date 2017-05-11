@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="description" content="Program Details Form Wizard">
+      <meta name="author" content="Yokohama">
+      <meta name="keyword" content="YMPACT">
+      <title>Program Details</title>
+      <!-- Bootstrap core CSS -->
+      <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+      <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
+
+      <!--external css-->
+      <link href="resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+      <!--Date Picker--> 
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datepicker/css/datepicker.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/jquery-multi-select/css/multi-select.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-timepicker/compiled/timepicker.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datetimepicker/css/datetimepicker.css" />
+     
+      <!--select 2-->
+      <link rel="stylesheet" type="text/css" href="resources/assets/select2/css/select2.min.css"/>
+      <!--right slidebar-->
+      <link href="resources/css/slidebars.css" rel="stylesheet">
+       <!--Form Wizard-->
+      <link rel="stylesheet" type="text/css" href="resources/css/jquery.steps.css" />
+      <!-- Custom styles for this template -->
+      <link href="resources/css/style.css" rel="stylesheet">
+      <link href="resources/css/style-responsive.css" rel="stylesheet" />
+      
+      <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltips and media queries -->
+      <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+      <![endif]-->
+    
+       <script src="resources/js/paidAchieve.js"></script>
+
+      <script>
+         function sync()
+         {
+           var n1 = document.getElementById('include');
+           var n2 = document.getElementById('input4');
+           n2.value = n1.value;
+         }
+      </script>
+   </head>
+   <body onload="prdValue();include();exclude();achPrdValue();achInclude();achExclude();">
+      <section id="container" class="">
+         <!--header start-->
+         <header class="header dark-bg">
+            <div class="sidebar-toggle-box">
+               <i class="fa fa-bars"></i>
+            </div>
+            <!--logo start-->
+            <a href="index.html" class="logo"><img src="resources/img/yokohama-logo.svg" width="132" height="52"></a>
+            <!--logo end-->
+            <div class="nav notify-row" id="top_menu">
+               <!--  notification start -->
+               <ul class="nav top-menu">
+              <!-- settings start -->
+              <!-- settings end -->
+             
+            <!-- notification dropdown start-->
+             <li id="header_notification_bar" class="dropdown">
+                  <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                      <i class="fa fa-bell-o"></i>
+                      <span class="badge bg-important">7</span>
+                  </a>
+                  <ul class="dropdown-menu extended notification">
+                      <div class="notify-arrow notify-arrow-yellow"></div>
+                      <li>
+                          <p class="yellow">You have 7 new notifications</p>
+                      </li>
+                      <li>
+                          <a href="#">
+                              <span class="label label-success"><i class="fa fa-bell"></i></span>
+                              #20543 has been approved
+                              <span class="small italic">30 mins</span>
+                          </a>
+                      </li>
+                      <li>
+                          <a href="#">
+                              <span class="label label-danger"><i class="fa fa-bolt"></i></span>
+                               #20543 has been rejected
+                              <span class="small italic">4 hrs</span>
+                          </a>
+                      </li>
+                  </ul>
+              </li>
+              <!-- notification dropdown end -->
+          </ul>
+            </div>
+            <div class="top-nav ">
+               <ul class="nav pull-right top-menu">
+                  <li>
+                     <input type="text" class="form-control search" placeholder="Search">
+                  </li>
+                  <!-- user login dropdown start-->
+                  <li class="dropdown">
+                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                     <span class="username">John Doe</span>
+                     <b class="caret"></b>
+                     </a>
+                     <ul class="dropdown-menu extended logout">
+                        <div class="log-arrow-up"></div>
+                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                        <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                        <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                     </ul>
+                  </li>
+                  <!-- user login dropdown end -->
+               </ul>
+            </div>
+         </header>
+         <!--header end-->
+         <!--sidebar start-->
+         <aside>
+            <div id="sidebar"  class="nav-collapse ">
+               <!-- sidebar menu start-->
+               <ul class="sidebar-menu" id="nav-accordion">
+                  <li>
+                     <a class="" href="index.html">
+                     <i class="fa fa-dashboard"></i>
+                     <span>My Dashboard</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a class="active" href="program_details.html">
+                     <i class="fa fa-tasks"></i>
+                     <span>Create New Program</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a class="" href="program_details_existing.html">
+                     <i class="fa fa-tasks"></i>
+                     <span>Edit Program</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a class="" href="program_details_rejected.html">
+                     <i class="fa fa-tasks"></i>
+                     <span>Edit Rejected Program</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a href="login.html">
+                     <i class="fa fa-user"></i>
+                     <span>Login Page</span>
+                     </a>
+                  </li>
+               </ul>
+               <!-- sidebar menu end-->
+            </div>
+         </aside>
+         <!--sidebar end-->
+         <!--main content start-->
+         <section id="main-content">
+            <section class="wrapper site-min-height">
+               <!-- page start-->
+                <div class="row">
+                  <div class="col-lg-12">
+                     <!--progress bar start-->
+                     <section class="panel">
+                        <header class="panel-heading">
+                           <h3>Program Item Detail</h3>
+                        </header>
+                        <div class="panel-body">
+                          <div class="clearfix">
+                             <div class="col-lg-12">
+                                <h5 data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Customer Details</h5>
+                                <!-- Edit button Begin -->
+                                 <a class="btn btn-info finish" id="edit-button" href="#myModalEdit"><i class="fa fa-edit"></i>&nbsp;&nbsp;Edit</a>
+                               	 <!-- Modal -->
+				                <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				                	<div class="modal-dialog">
+				                		<div class="modal-content">
+				                        	<div class="modal-header">
+				                            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				                               	<h4 class="modal-title">Edit confirmation</h4>
+				                            </div>
+				                            <div class="modal-body">
+												<div class="space15">&nbsp;</div>
+												 <div class="text-center"> Are you sure you want to Edit? If you still want to Edit, click the OK button. If you don't want to Edit, click the "Cancel" button below and your program will not be editable. </div>
+				                                <div class="space15"></div>
+				                            </div>
+				                            <div class="modal-footer">
+				                                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+													<a href="javascript: enableFields()"><button class="btn btn-info" type="button"><i class="fa fa-edit"></i>&nbsp;&nbsp;OK</button></a>
+				                            </div>
+										</div>
+									</div>
+								</div>
+								<!-- Edit button End -->
+                                 <ul class="list-inline w-list">
+                                    <li>Customer Name: <strong><span class="yokohamared" id="customerName"></span></strong></li>
+                                    <li>Program ID: <strong><span id="programId"></span></strong></li>
+                                    <li class="p-right10">Business Unit: <strong><span id="businessUnit"></span></strong></li>
+                                    <li><button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
+                                 </ul>
+                               <div id="demo" class="collapse out">
+                                <div class="col-lg-3 col-md-4 col-sm-4 p-left0">
+                                   <ul class="list-unstyled w-list">
+                                    <li>Request ID: <span id="requestId"></span></li>
+                                    <li>Requested By: <span id="requestedBy"></span></li>
+                                    <li>Requested Date: <span id="requestedDate"></span></li>
+                                    <li>Created By: <span id="createdBy"></span></li>
+                                    <li>Created Date: <span id="createdDate"></span></li>
+                                 </ul>
+                                </div>
+                               <div class="col-lg-4 col-md-5 col-sm-4">
+                                   <ul class="list-unstyled w-list">
+                                    <li>Zone Manager Approved By: <span id="zoneManagerApprovedBy"></li>
+                                    <li>Zone Manager Approved Date: <span id="zoneManagerApprovedDate"></li>
+                                    <li>Director Approved By: <span id="directorApprovedBy"></li>
+                                    <li>Director Approved Date: <span id="directorApprovedDate"></li>
+                                    <li>Executive Approved By: <span id="executiveApprovedBy"</li>
+                                    <li>Executive Approved Date: <span id="executiveApprovedDate"</li>
+                                    <li>TBP Approved By: <span id="tbpApprovedBy"</li>
+                                    <li>TBP Approved Date: <span id="tbpApprovedDate"</li>
+                                    <li>Status: <span id="status"</li>
+
+                                 </ul>
+                                </div>
+                                <div class="col-lg-4 col-md-3 col-sm-4">
+                                   <ul class="list-unstyled w-list">
+                                    <li>Accrual Amount: <span class="text-right" id="accrualAmount">$ </span></li>
+                                    <li>Paid Amount: <span class="text-right" id="paidAmount">$ </span></li>
+                                    <li>Balance: <span class="text-right" id="balance">$ </span></li>
+                                 </ul>
+                              </div>
+                           </div>
+                       </div>
+                       </div>
+						
+                		   <!-- START STEP 1: PROGRAM INFO -->
+                           <form id="wizard-validation-form" class="cmxform" action="#">
+                              <div>
+                                 <section>
+                                    <div class="form-group clearfix">
+                                        
+                                       <div class="col-lg-12">
+                                           <h5>Program Details</h5>
+													<div class="row">
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label" for="program_name_inputselect">Program
+																Name</label> <select
+																class="form-control input-sm m-bot15 required"
+																id="program_name_inputselect"
+																name="program_name_inputselect">
+															</select>
+														</div>
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label" for="payout_freq_inputselect">Payout
+																Frequency</label> <select class="form-control input-sm m-bot15"
+																id="payout_freq_inputselect"
+																name="payout_freq_inputselect">
+															</select>
+														</div>
+														<div class="form-group">
+															<div class="col-lg-4 col-sm-4">
+																<label class="control-label" for="from">Begin/End Dates:</label>
+																<div class="input-group input-medium"
+																	data-date-format="mm/dd/yy">
+																	<input type="text" class="form-control dpd1 required"
+																		name="from" id="from" placeholder="Begin Date">
+																		<span class="input-group-addon">To</span> 
+																	<input type="text"
+																		class="form-control dpd2 required" name="to" id="to"
+																		placeholder="End Date">
+																</div>
+															</div>
+														</div>
+													</div>
+													<!-- ROW 1 ENDS -->
+													<!-- ROW 2 STARTS -->
+													<div class="row">
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label" for="payto_inputselect">Pay
+																To</label> <select
+																class="form-control input-sm m-bot15 required"
+																id="payto_inputselect"
+																name="payto_inputselect">
+															</select>
+														</div>
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label" for="payment_method_inputselect">Paid
+																Type</label> <select
+																class="form-control input-sm m-bot15 required"
+																id="payment_method_inputselect"
+																name="payment_method_inputselect">
+															</select>
+														</div>
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label" for="inputSuccess">Paid
+																Based On</label> <select class="form-control input-sm m-bot15"
+																id="paid_basedon_inputselect"
+																name="paid_basedon_inputselect">
+															</select>
+														</div>
+													</div>
+													<!-- ROW 2 ENDS -->
+													<!-- ROW 3 STARTS -->
+													<div class="row">
+														<div class="form-group">
+															<div class="col-lg-4 col-sm-4">
+																<label class="control-label" for="amount">Amount</label>
+																<input id="amount" name="amount" type="text"
+																	class="form-control" value="">
+															</div>
+															<div class="col-lg-2 col-sm-2">
+																<div class="radio-inline accrualtype inline-flex">
+																	<label for="inputSuccess"> <input type="radio"
+																		selected name="optionsRadiosDenomination"
+																		id="optionsRadiosPercentage" value="%"
+																		class="radio-inline denomination required">%
+																	</label>
+																</div>
+																<div class="radio-inline accrualtype inline-flex">
+																	<label class="control-label" for="inputSuccess">
+																		<input type="radio" name="optionsRadiosDenomination"
+																		id="optionsRadiosDollarSign" value="$"
+																		class="radio-inline denomination required"
+																		checked="checked">$
+																	</label>
+																</div>
+															</div>
+														</div>
+													</div>
+                                      				<!-- ROW 3 ENDS -->
+                                      <div class="row">
+                                        <div class="form-group">  
+                                        <div class="col-lg-5 col-md-7 col-sm-7">
+                                           <h4>Paid Based On</h4>
+                                            <div class="table"> 
+                                          <table class="table-responsive">
+                                              <tbody>
+                                              <tr class="">
+                                                  <td class="yk-vertalign" rowspan="2">
+                                                      <select class="paidachieve" name="paidBasedOn" id="paidBasedOn" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+                                                     </select>
+
+                                                     <div class="form-group last">
+                                                       <div class="" id="div1">
+                                                          <script type="text/javascript" language="JavaScript">
+                                                             function prdValue(){
+                                                               var el = document.getElementById('div1');
+                                                                  el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';}
+                                                            </script>
+                                                       </div>
+                                                    </div>
+                                                  </td>
+                                                  <td class="va-bot">
+                                                    <div>
+                                                        <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'include')">&#62;&#62;</a>
+                                                           <br/>
+                                                        <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('include', 'prdvalue')">&#60;&#60;</a>
+                                                    </div>
+                                                  </td>
+                                                  <td>
+                                                  <h5 class="paid-achieve">Include</h5>
+                                                   <div class="" id="div2">
+                                                   <script type="text/javascript" language="JavaScript">
+                                                      function include(){
+                                                      var el = document.getElementById('div2');
+                                                                el.innerHTML = '<select name="include" multiple="multiple" class="multi-select paidachieve_box2" id="include"></select>';
+
+                                                         }
+                                                   </script>
+                                                   </div>
+                                            </td>
+                                          </tr>
+                                          <tr class="">
+                                              <td>
+                                                  <div>
+                                                       <a href="#" aria-activedescendant="" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'exclude')">&#62;&#62;</a>
+                                                       <br/>
+                                                       <a href="#" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('exclude', 'prdvalue')">&#60;&#60;</a>
+                                                   </div>
+                                              </td>
+                                              <td>
+                                                  <h5 class="paid-achieve">Exclude</h5>
+                                                  <div class="" id="div3">
+                                                    <script type="text/javascript" language="JavaScript">
+                                                       function exclude(){
+                                                       var el = document.getElementById('div3');
+                                                                 el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select paidachieve_box2" id="exclude"></select>';
+                                                          }
+                                                    </script>
+                                                  </div>
+                                                  </td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                            </div>
+                            </div>
+                   
+        <!-- END PAID based on --> 
+                                        </div>
+                                        </div>
+                                        <!-- END ROW 4 -->
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                             <label class="control-label" for="inputSuccess">Program Description</label>
+                                             <textarea class="form-control" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" data-toggle="tooltip" data-trigger="hover" data-placement="top" rows="3" placeholder="Add description details of your customer" value="Dealer has three shops in his county"></textarea>
+                                          </div>
+                                        </div><!-- END ROW 5 -->
+                                        <div class="row">
+                                            <div class="space15 clearfix"></div>
+                                  <div class="form-group">
+
+                                  
+      <!---- START Submit -->
+      
+          <div class="clearfix"></div>
+
+          <div class="clearfix">
+              <a class="btn btn-info finish" id="finish" data-toggle="modal" href="#myModal"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
+              <!-- Modal -->
+                              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                              <h4 class="modal-title">Save Program Changes?</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                              <div class="space15">&nbsp;</div>
+If you want to save these changes for later, select 'Save As Draft'. If you want to submit these changes, select "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes.
+                                              <div class="space15"></div>
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+                                              <button class="btn btn-info" type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;Save As Draft</button>
+                                              <a href="index.html#pending-approvals"><button class="btn btn-success" type="button"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+          </div>
+        </div>
+       </div>
+      </section>
+      <!---- END Review / Confirm Section -->
+      </div>
+       </form>
+        </div>
+      </section><!-- end panel section -->
+      </div>
+      </div>
+      <!-- page end-->
+      </section><!-- end wrapper site-min-height -->
+      </section><!-- end #maincontent -->
+      <!--main content end-->
+          
+      <!--footer start-->
+      <footer class="site-footer">
+         <div class="text-center">
+            2017 &copy; Yokohama Tire Corporation. All rights reserved. The Yokohama Rubber Company Limited
+            <a href="#" class="go-top">
+            <i class="fa fa-angle-up"></i>
+            </a>
+         </div>
+      </footer>
+      <!--footer end-->
+      </section>
+      <!-- END section id="container" FIRST section after opening body tag  -->
+       
+      <!-- js placed at the end of the document so the pages load faster -->
+      <script src="resources/js/jquery.js"></script>
+      <script src="resources/js/bootstrap.min.js"></script>
+      <script src="resources/js/jquery-ui-1.9.2.custom.min.js"></script>
+      <script src="resources/js/jquery-migrate-1.2.1.min.js"></script>
+      <script class="include" type="text/javascript" src="resources/js/jquery.dcjqaccordion.2.7.js"></script>
+      <script src="resources/js/jquery.scrollTo.min.js"></script>
+      <script src="resources/js/jquery.nicescroll.js" type="text/javascript"></script>
+      <script src="resources/js/respond.min.js" ></script>
+      <script src="resources/js/jquery.stepy.js"></script>
+      <!--right slidebar-->
+      <script src="resources/js/slidebars.min.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-daterangepicker/moment.min.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+      <script type="text/javascript" src="resources/assets/jquery-multi-select/js/jquery.multi-select.js"></script>
+      <script type="text/javascript" src="resources/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
+      <script type="text/javascript" src="resources/assets/data-tables/jquery.dataTables.js"></script>
+      <script type="text/javascript" src="resources/assets/data-tables/DT_bootstrap.js"></script>
+      <!--select2-->
+      <script type="text/javascript" src="resources/assets/select2/js/select2.min.js"></script>
+      <!--Form Validation-->
+      <script src="resources/js/bootstrap-validator.min.js" type="text/javascript"></script>
+      <!--Form Wizard-->
+      <!--script src="js/jquery.steps.min.js" type="text/javascript"></script-->
+      <script src="resources/js/jquery.validate.min.js" type="text/javascript"></script>
+      <!--common script for all pages-->
+      <script src="resources/js/common-scripts.js"></script>
+      <!--script for this page-->
+      <script>
+         //step wizard
+         
+         $(function() {
+             $('#default').stepy({
+                 backLabel: 'Cancel',
+                 block: true,
+                 nextLabel: 'Save As Draft',
+                 titleClick: true,
+                 titleTarget: '.stepy-tab'
+             });
+         });
+      </script>
+
+    <script type="text/javascript">
+
+      $(document).ready(function () {
+          var form = $("#wizard-validation-form");
+              onFinishing: {
+                  form.validate().settings.ignore = ":disabled";
+                  return form.valid();
+              }
+              onFinished: {
+                     alert("You've successfully submitted this program for approval. You'll be notified of its status soon."); 
+                     location.href = 'index.html#pending-approvals';
+              }
+      });
+
+  </script>
+      <!--select2-->
+      <script type="text/javascript">
+         $(document).ready(function () {
+             $(".js-example-basic-single").select2();
+         
+             $(".js-example-basic-multiple").select2();
+         });
+      </script>
+      <!--this page  script only-->
+      <script src="resources/js/advanced-form-components.js"></script>
+      <script src="resources/js/editable-table-form.js"></script>
+      
+      <script>
+         jQuery(document).ready(function() {
+             EditableTable.init();
+         });
+      </script>
+ <!--Tooltips -->
+       <script>
+            $(document).ready(function(){
+                $('input[rel="txtTooltip"]').tooltip();
+            });
+       </script>
+       <script>
+           $(function(){
+
+            // Enabling Popover Example 1 - HTML (content and title from html tags of element)
+            $("[data-toggle=popover]").popover();
+
+            // Enabling Popover Example 2 - JS (hidden content and title capturing)
+            $(".form-control").popover({
+                html : true, 
+                content: function() {
+                  return $('.js-tooltip').html();
+                },
+                title: function() {
+                  return $('.js-tooltip').html();
+                }
+            });
+
+
+        });
+       </script>
+       
+       <!-- END JAVASCRIPTS -->
+       
+   </body>
+</html>

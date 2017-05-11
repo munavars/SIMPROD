@@ -51,7 +51,7 @@
                 return date.valueOf() < now.valueOf() ? 'disabled' : '';
             }
         }).on('changeDate', function(ev) {
-                if (ev.date.valueOf() > checkout.date.valueOf()) {
+                if (ev.date.valueOf() > checkout.viewDate.valueOf()) {
                     var newDate = new Date(ev.date)
                     newDate.setDate(newDate.getDate() + 1);
                     checkout.setValue(newDate);
@@ -61,7 +61,7 @@
             }).data('datepicker');
         var checkout = $('.dpd2').datepicker({
             onRender: function(date) {
-                return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+                return date.valueOf() <= checkin.viewDate.valueOf() ? 'disabled' : '';
             }
         }).on('changeDate', function(ev) {
                 checkout.hide();

@@ -21,4 +21,9 @@ public class TestController  extends BaseController {
 			//Need to call service implementation here
 			return "index";
 		}
+		
+	@RequestMapping(value = "/programddf", method = RequestMethod.GET)
+	public String gotoProgramDetail() {
+		return "program_details_coop_ddf";
+	}
 }

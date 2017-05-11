@@ -180,8 +180,28 @@
                           <div class="clearfix">
                              <div class="col-lg-12">
                                 <h5 data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Customer Details</h5>
-                                <a class="btn btn-info finish" id="edit-button" href = "javascript:void(0);" onclick="javascript : enableFields()"><i class="fa fa-edit"></i>&nbsp;&nbsp;Edit</a>
-                                 <ul class="list-inline w-list">
+                                <a class="btn btn-info finish" id="edit-button" data-toggle="modal"  href="#myModalEdit"><i class="fa fa-edit"></i>&nbsp;&nbsp;Edit</a>
+                               	<!-- Modal -->
+				                <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				                	<div class="modal-dialog">
+				                		<div class="modal-content">
+				                        	<div class="modal-header">
+				                            	<button id="modal-edit-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				                               	<h4 class="modal-title">Edit confirmation</h4>
+				                            </div>
+				                            <div class="modal-body">
+												<div class="space15">&nbsp;</div>
+												 <div class="text-center"> Are you sure you want to Edit? If you still want to Edit, click the OK button. If you don't want to Edit, click the "Cancel" button below and your program will not be editable. </div>
+				                                <div class="space15"></div>
+				                            </div>
+				                            <div class="modal-footer">
+				                                    <button id="modal-edit-cancel" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+													<a href="javascript: enableFields()"><button id="modal-edit-ok" class="btn btn-info" type="button"><i class="fa fa-edit"></i>&nbsp;&nbsp;OK</button></a>
+				                            </div>
+										</div>
+									</div>
+								</div>
+	                          <ul class="list-inline w-list">
                                  	<li>Customer Name: <strong><span class="yokohamared" id="customerName"></span></strong></li>
                                     <li>Program ID: <strong><span id="programId"></span></strong></li>
                                     <li class="p-right10">Business Unit: <strong><span id="businessUnit"></span></strong></li>
@@ -272,7 +292,7 @@
                                           </div>
                                            <div class="form-group clearfix">
                                              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-8">
-                                                <label class="control-label" for="inputSuccess">Amount</label>
+                                                <label class="control-label" for="amount">Amount</label>
                                                 <input id="amount" name="amount" type="text" class="form-control" value="">
                                              </div>
                                              <div class="col-lg-2 col-md-2 col-sm-2">
@@ -289,14 +309,14 @@
                                         </div><!-- END ROW 2 -->
                                         <div class="row">
                                            <div class="col-lg-4 col-sm-4">
-                                             <label class="control-label" for="inputSuccess">Pay To</label>
+                                             <label class="control-label" for="payto_inputselect">Pay To</label>
                                              <select class="form-control input-sm m-bot15 required" id="payto_inputselect" name="payto_inputselect">
 <!--                                                 <option disabled class="required" value="">- Select -</option>
                                                 <option selected id="payout_freq_annually" value="22031" name="payto_inputselect">22031</option> -->
                                              </select>
                                           </div>
                                           <div class="col-lg-4 col-sm-4">
-                                            <label class="control-label" for="inputSuccess">Paid Type</label>
+                                            <label class="control-label" for="payment_method_inputselect">Paid Type</label>
                                                 <select class="form-control input-sm m-bot15 required" id="payment_method_inputselect" name="payment_method_inputselect">
 <!--                                                    <option disabled class="required" value="">- Select -</option>
                                                    <option id="payment_method_inputselect1" value="Credit">CR Memo</option>
@@ -304,7 +324,7 @@
                                                 </select>
                                           </div>
                                           <div class="col-lg-4 col-sm-4">
-                                              <label class="control-label" for="inputSuccess">Paid Based On</label>
+                                              <label class="control-label" for="paid_basedon_inputselect">Paid Based On</label>
                                               <select class="form-control input-sm m-bot15" id="paid_basedon_inputselect" name="paid_basedon_inputselect">
                                                  <!--  <option disabled class="" value="">- Select -</option>
                                                   <option id="bonusable_units_only_plus_nadunits_inputselect" value="Bonusable Units Only + NAD Units">Bonusable Units Only + NAD Units</option>
@@ -607,10 +627,10 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
           
            <div class="modal-footer">
 		      <a id="cancelLink" href="/SIMO/customer?custId=">
-		      <button id="program-cancel" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
+		      <button id="cancel-program" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
 		      <a class="btn btn-info" id="reject-program" data-toggle="modal" href="#myModal2"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a> &nbsp;
-              <a class="btn btn-success" id="finish" data-toggle="modal" href="#myModal"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
-              <a class="btn btn-info finish" id="finish" data-toggle="modal" href="#myModal1"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
+              <a class="btn btn-success" id="submit-program" data-toggle="modal" href="#myModal"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
+              <a class="btn btn-info finish" id="save-program" data-toggle="modal" href="#myModal1"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
 				<div class="space15">&nbsp;</div>
 				<div class="text-center"> If you want to save these changes for later, click 'Save Changes'. If you want to submit these changes, click "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
                 <div class="space15"></div>
@@ -1013,8 +1033,14 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	}
                	$('#actual_marker').val(response.data.programDetailList[0].actualMarker);
                	fnPopulateProgramTier(response.data.programDetailList[0].programTierDetailList);
-               	if(programId != null ){
+               	if(programId != null){
                		disableFields();
+               	}
+               	if(response.data.newProgram == false){
+               		$('#submit-program').attr('disabled', false);
+					$('#submit-program').removeClass("disabled");
+					$('#save-program').hide();
+					$('#reject-program').hide();
                	}
          	}
          	
@@ -1117,6 +1143,11 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			function enableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',false);
 				$("#program-parent-div").find('a').removeClass("disabled");
+				$('#myModalEdit').modal('toggle');
+				if(responseOnload.newProgram == false){
+					$('#save-program').show();
+					$('#reject-program').show();
+               	}
 			}
 			function disableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
@@ -1126,9 +1157,12 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				if(responseOnload.authorizedUser == 'Yes'){
 					$('#edit-button').attr('disabled', false);
 					$('#edit-button').removeClass("disabled");
+					$('#modal-edit-cancel').attr('disabled', false);
+					$('#modal-edit-ok').attr('disabled', false);
+					$('#modal-edit-close').attr('disabled', false);
 				}
-				$('#program-cancel').attr('disabled', false);
-				$('#program-cancel').removeClass("disabled");
+				$('#cancel-program').attr('disabled', false);
+				$('#cancel-program').removeClass("disabled");
 			}
 			
 			function rejectProgram(){

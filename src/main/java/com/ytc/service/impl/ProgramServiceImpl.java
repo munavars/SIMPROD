@@ -20,6 +20,7 @@ import com.ytc.common.model.ProgramAchieveOn;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramDetailsDropDown;
 import com.ytc.common.model.ProgramHeader;
+import com.ytc.common.model.ProgramInputParam;
 import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.constant.ProgramConstant;
@@ -38,6 +39,7 @@ import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
+import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalTagItems;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramService;
@@ -52,64 +54,110 @@ public class ProgramServiceImpl implements IProgramService {
 	private IDataAccessLayer baseDao;
 
 	@Override
-	public ProgramHeader getProgramDetails(Integer programDetId, Integer custId, Employee employee) {
+	public ProgramHeader getProgramDetails(ProgramInputParam inputParam) {
 		ProgramHeader programHeader = new ProgramHeader();
 		/**
 		 * Irrespective of whether program id is null or not, drop down list has to be initialized.
 		 * First step in this method is create program master dropdown value.
 		 * */
 		DalProgramDetail dalProgramDetail = null;
-		if(programDetId != null){
-			dalProgramDetail =  baseDao.getById(DalProgramDetail.class, programDetId);
+		if(inputParam.getProgramDetailId() != null){
+			dalProgramDetail =  baseDao.getById(DalProgramDetail.class, inputParam.getProgramDetailId() );
 		}
-		String customerId = ""; 
+		getProgramTypeDetails(inputParam, programHeader);
 		
 		if(dalProgramDetail != null){
-			if(dalProgramDetail.getPayTo() != null){
-				customerId = String.valueOf( dalProgramDetail.getPayTo());	
+			getExistingProgramDetails(inputParam.getEmployee(), programHeader, dalProgramDetail);
+		}	
+		else{
+			getNewProgramDetails(inputParam.getCustomerId(), inputParam.getEmployee(), programHeader);
+		}
+		programHeader.getProgramDetailList().get(0).setProgramTypeId(inputParam.getProgramTypeId());
+		
+		return programHeader;
+	}
+
+
+	private void getProgramTypeDetails(ProgramInputParam inputParam, ProgramHeader programHeader) {
+		if(inputParam.getProgramType() != null){
+			List<DalProgramType> dalProgramTypeList = baseDao.getListFromNamedQuery("DalProgramType.getAllDetails");
+			if(dalProgramTypeList != null){
+				for(DalProgramType dalProgramType : dalProgramTypeList){
+					if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalProgramType.getType()) && 
+							dalProgramType.getType().equalsIgnoreCase(inputParam.getProgramType()) ){
+						inputParam.setProgramTypeId(dalProgramType.getId());
+						programHeader.setCalculatedProgram(true);
+					}
+					else if(dalProgramType.getType().equalsIgnoreCase(inputParam.getProgramType())){
+						inputParam.setProgramTypeId(dalProgramType.getId());
+						programHeader.setCalculatedProgram(false);						
+					}
+				}
 			}
-			populateDropDownValues(programHeader, customerId);
-			DalProgramHeader dalProgramHeader = dalProgramDetail.getDalProgramHeader();
-			
-			populateProgramHeaderDetails(programHeader, dalProgramHeader, dalProgramDetail, employee);
-			/** few more columns has to be populated here. That has to be worked on. For now, only main fields are considered.*/
-			
-			populateProgramDetailData(programHeader, dalProgramDetail);
-			
-			populatePaidBasedOnData(programHeader, dalProgramHeader, dalProgramDetail);
-			
+		}
+		else{
+			programHeader.setCalculatedProgram(true);
+			List<DalProgramType> dalProgramTypeList = baseDao.getListFromNamedQuery("DalProgramType.getAllDetails");
+			if(dalProgramTypeList != null){
+				for(DalProgramType dalProgramType : dalProgramTypeList){
+					if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalProgramType.getType()) ){
+						inputParam.setProgramTypeId(dalProgramType.getId());
+					}
+				}
+			}
+		}
+	}
+
+
+	private void getExistingProgramDetails(Employee employee, ProgramHeader programHeader,
+			DalProgramDetail dalProgramDetail) {
+		String customerId = ""; 
+		if(dalProgramDetail.getPayTo() != null){
+			customerId = String.valueOf( dalProgramDetail.getPayTo());	
+		}
+		populateDropDownValues(programHeader, customerId);
+		DalProgramHeader dalProgramHeader = dalProgramDetail.getDalProgramHeader();
+		
+		populateProgramHeaderDetails(programHeader, dalProgramHeader, dalProgramDetail, employee);
+		/** few more columns has to be populated here. That has to be worked on. For now, only main fields are considered.*/
+		
+		populateProgramDetailData(programHeader, dalProgramDetail);
+		
+		populatePaidBasedOnData(programHeader, dalProgramHeader, dalProgramDetail);
+		
+		if(programHeader.isCalculatedProgram()){
 			populateAchieveBasedOnData(programHeader, dalProgramHeader, dalProgramDetail);
 			
 			populateTierData(programHeader, dalProgramDetail);
-			
-			if(dalProgramHeader.getStatus() != null && !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramHeader.getStatus().getType())){
-				programHeader.setNewProgram(true);
-			}
-		}	
-		else{
-			populateDropDownValues(programHeader, String.valueOf(custId)); //Customer id should be 
-			DalCustomer customer=baseDao.getById(DalCustomer.class, custId);
-			programHeader.setCustomerId(customer.getId());
-			programHeader.setCustomerName(customer.getCustomerName());
-			programHeader.setBusinessUnit(customer.getBu());
-			Integer employeeId = null;
-			if(employee != null){
-				employeeId = employee.getEMP_ID();
-			}
-			if(employeeId == null){ // Temporary code, this should be removed after integration testing.
-				employeeId = 47;
-			}
-			DalEmployee emp = baseDao.getById(DalEmployee.class, employeeId); // this should be logged in user.
-			programHeader.setRequestedDate(new Date());
-			programHeader.setRequestId(emp.getId());
-			programHeader.setRequestedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
-			programHeader.setCreatedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
-			programHeader.setCreatedDate(new Date());
-			programHeader.setNewProgram(true);
-			programHeader.setAuthorizedUser(ProgramConstant.YES);
 		}
 		
-		return programHeader;
+		if(dalProgramHeader.getStatus() != null && !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramHeader.getStatus().getType())){
+			programHeader.setNewProgram(true);
+		}
+	}
+
+
+	private void getNewProgramDetails(Integer custId, Employee employee, ProgramHeader programHeader) {
+		populateDropDownValues(programHeader, String.valueOf(custId)); //Customer id should be 
+		DalCustomer customer=baseDao.getById(DalCustomer.class, custId);
+		programHeader.setCustomerId(customer.getId());
+		programHeader.setCustomerName(customer.getCustomerName());
+		programHeader.setBusinessUnit(customer.getBu());
+		Integer employeeId = null;
+		if(employee != null){
+			employeeId = employee.getEMP_ID();
+		}
+		if(employeeId == null){ // Temporary code, this should be removed after integration testing.
+			employeeId = 47;
+		}
+		DalEmployee emp = baseDao.getById(DalEmployee.class, employeeId); // this should be logged in user.
+		programHeader.setRequestedDate(new Date());
+		programHeader.setRequestId(emp.getId());
+		programHeader.setRequestedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
+		programHeader.setCreatedBy(emp.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + emp.getLAST_NAME());
+		programHeader.setCreatedDate(new Date());
+		programHeader.setNewProgram(true);
+		programHeader.setAuthorizedUser(ProgramConstant.YES);
 	}
 
 
@@ -181,9 +229,16 @@ public class ProgramServiceImpl implements IProgramService {
 			programHeader.setTbpApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getTbpAppDate()));	
 		}
 		
-		programHeader.setAccrualAmount(new BigDecimal(0));
-		programHeader.setPaidAmount(new BigDecimal(0));
-		programHeader.setBalance(new BigDecimal(0));
+		if(dalProgramDetail.getAccuralData() != null){
+			programHeader.setAccrualAmount(new BigDecimal(dalProgramDetail.getAccuralData().getTotalAccuredAmount()));
+			programHeader.setPaidAmount(new BigDecimal(dalProgramDetail.getAccuralData().getTotalPaidAmount()));
+			programHeader.setBalance(new BigDecimal(dalProgramDetail.getAccuralData().getBalance()));	
+		}
+		else{
+			programHeader.setAccrualAmount(new BigDecimal(0));
+			programHeader.setPaidAmount(new BigDecimal(0));
+			programHeader.setBalance(new BigDecimal(0));	
+		}
 	}
 
 	private void populatePaidBasedOnData(ProgramHeader programHeader, DalProgramHeader dalProgramHeader, DalProgramDetail dalProgramDetail) {
@@ -592,13 +647,24 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setDisplayBeginDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramStartDate().getTime(), ProgramConstant.DATE_FORMAT));
 			programDetail.setDisplayEndDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramEndDate().getTime(), ProgramConstant.DATE_FORMAT));
 			programDetail.setBTL("Y".equalsIgnoreCase(dalProgramDetail.getBTL())?ProgramConstant.YES:ProgramConstant.NO);
-			programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());
-			programDetail.setPaidBasedOn(dalProgramDetail.getPaidBasedOn().getBaseItem());
-			programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().getBaseItem());
-			programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase(ProgramConstant.ZERO)?ProgramConstant.YES:ProgramConstant.NO);
+			if(dalProgramDetail.getDalProgramType() != null && dalProgramDetail.getDalProgramType().getId() == 1){
+				programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());	
+			}
+			if(dalProgramDetail.getPaidBasedOn() != null){
+				programDetail.setPaidBasedOn(dalProgramDetail.getPaidBasedOn().getBaseItem());	
+			}
+			if(dalProgramDetail.getAchBasedMetric() != null){
+				programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().getBaseItem());	
+			}
+			if(dalProgramDetail.getIsTiered() != null){
+				programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase(ProgramConstant.ZERO)?ProgramConstant.YES:ProgramConstant.NO);	
+			}
+			if(dalProgramDetail.getTrueUp() != null){
+				programDetail.setTrueUp(dalProgramDetail.getTrueUp().equalsIgnoreCase("Y")?ProgramConstant.YES:ProgramConstant.NO);	
+			}
 			programDetail.setAccrualAmount(Double.valueOf(df.format(dalProgramDetail.getAccrualAmount())));
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
-			programDetail.setTrueUp(dalProgramDetail.getTrueUp().equalsIgnoreCase("Y")?ProgramConstant.YES:ProgramConstant.NO);
+			
 			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getForecastMarker()));
 			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?Integer.toString(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
 			String tierRate=ProgramConstant.ZERO;

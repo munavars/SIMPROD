@@ -22,7 +22,7 @@ public class TestController  extends BaseController {
 			return "index";
 		}
 		
-	@RequestMapping(value = "/programddf", method = RequestMethod.GET)
+	@RequestMapping(value = "/programddfcoop", method = RequestMethod.GET)
 	public String gotoProgramDetail() {
 		return "program_details_coop_ddf";
 	}

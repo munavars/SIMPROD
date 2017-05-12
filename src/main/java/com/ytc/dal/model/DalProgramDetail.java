@@ -62,7 +62,7 @@ public class DalProgramDetail extends DalAuditableModel {
     
     private DalStatus status;
     /*private Set<DalProgramDetailTier> dalProgramDetailTierSet;*/
-    
+    private DalProgramType dalProgramType;
     
     @Column(name = "LONG_DESC")
     public String getLongDesc() {
@@ -527,6 +527,16 @@ public class DalProgramDetail extends DalAuditableModel {
 
 	public void setStatus(DalStatus status) {
 		this.status = status;
+	}
+	
+	@OneToOne
+	@JoinColumn(name = "PGM_TYPE_ID", referencedColumnName = "ID")
+	public DalProgramType getDalProgramType() {
+		return dalProgramType;
+	}
+	
+	public void setDalProgramType(DalProgramType dalProgramType) {
+		this.dalProgramType = dalProgramType;
 	}
 
 }

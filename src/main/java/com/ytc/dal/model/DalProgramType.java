@@ -7,20 +7,20 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "PAID_TYPE")
+@Table(name = "PROGRAM_TYPE")
 @NamedQueries({
-	@NamedQuery(name="DalPaidType.getAllDetails", query = "select o from DalPaidType o order by o.type")
+	@NamedQuery(name="DalProgramType.getAllDetails", query = "select o from DalProgramType o order by o.type")
 })
-public class DalPaidType extends DalModel{
-	
+public class DalProgramType extends DalModel{
+
 	/**
-	 * Serial Version default.
+	 * Default serial version.
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	@Column(name="TYPE")
+
 	private String type;
 
+	@Column(name="TYPE")
 	public String getType() {
 		return type;
 	}

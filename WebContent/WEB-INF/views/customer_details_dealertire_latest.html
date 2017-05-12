@@ -187,6 +187,14 @@
 				alert("Kindly choose a Program Type to create new program");
 				return false;
 			}
+			else{
+				if(type=='Calculated Program'){
+					$('#create_new_pgm').attr('href','/SIMO/programDetail?custId='+custId);
+				}
+				else if(type=='DDF' || type=='COOP'){
+					$('#create_new_pgm').attr('href','/SIMO/programddfcoop?custId='+custId);
+				}
+			}
 		 });
 		 
 		 //tool tip on hover
@@ -370,7 +378,7 @@
                                   <div class="">
                                                 <select class="form-control input-sm m-bot15 required" id="program_type_select" name="Program Type_inputselect">
                                                    <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
-                                                   <option id="program_type_vbs" value="VBS">Calculated Program</option>
+                                                   <option id="program_type_vbs" value="Calculated Program">Calculated Program</option>
                                                    <option id="program_type_ddf" value="DDF">DDF</option>
                                                     <option id="program_type_coop" value="COOP">COOP</option>
                                                     <option id="program_type_fixed" value="Fixed $">Fixed $</option>

@@ -15,14 +15,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tiredex.yoko.utils.LdapUtil;
 import com.ytc.common.model.Employee;
-import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.result.ListResult;
-import com.ytc.common.result.ModelResult;
 import com.ytc.service.IEmployeeService;
 
 @Controller
@@ -38,9 +35,9 @@ public class UserController extends BaseController {
 	}
 
 	@RequestMapping(value = "/getEmployeeHierarchy/{empId}", method = RequestMethod.GET)
-	public @ResponseBody List getEmployeeHierarchy(HttpServletRequest request, @PathVariable Integer empId) {
+	public @ResponseBody List<String> getEmployeeHierarchy(HttpServletRequest request, @PathVariable Integer empId) {
 		logger.info("UserController /getEmployeeHierarchy/{empId}"+empId);
-		List aList = getHierarchyQueryResult(request, empId.toString());
+		List<String> aList = getHierarchyQueryResult(request, empId);
 		logger.info("UserController getHiearchyQueryResult: ["+aList+"]");
 		return aList;
 	}
@@ -167,7 +164,7 @@ public class UserController extends BaseController {
 //		return resultList;
 //	}
 	
-	public List<String> getHierarchyQueryResult(HttpServletRequest request, String empId) {
+	public List<String> getHierarchyQueryResult(HttpServletRequest request,Integer empId) {
 		List<String> resultList = null;
 		String queryString = "SELECT * FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = '"+ empId+"' or LVL1_EMP_ID = '"+empId+"' or LVL2_EMP_ID = '"+empId+
 				"' or LVL3_EMP_ID = '"+empId+"' or LVL4_EMP_ID = '"+empId+"' or LVL5_EMP_ID = '"+empId+"'";

@@ -59,7 +59,7 @@ public class EmployeeService implements IEmployeeService {
 	}
 	
 	@Override
-	public Employee getDetail(String loginId) {
+	public List<Employee> getDetail(String loginId) {
 		logger.info("inside com.ytc.service.impl.EmployeeService.getDetail loginId: "+loginId);
 		CriteriaQuery<DalEmployee> criteria = entityManager.getCriteriaBuilder().createQuery(DalEmployee.class);
 		Root<DalEmployee> data = criteria.from(DalEmployee.class); 
@@ -81,7 +81,7 @@ public class EmployeeService implements IEmployeeService {
 			employeeList.add(employee);
 
 		}
-		return employeeList.get(0);
+		return employeeList;
 	}
 	
 

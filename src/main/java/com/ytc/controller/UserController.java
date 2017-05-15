@@ -132,7 +132,7 @@ public class UserController extends BaseController {
 					String activeStatus = employee.get(0).getACTIVE();
 					logger.info("UserController.processLogin finally, employee activeStatus: "+activeStatus);
 					if (activeStatus.equalsIgnoreCase("1")) {
-						destination = "redirect:http://caecodev03:9081/SIMS/dashboard?accMgrID="+employee.get(0).getEMP_ID();
+						destination = "index";
 					}
 				}
 			} 

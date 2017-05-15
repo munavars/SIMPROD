@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ytc.common.model.Customer;
 import com.ytc.common.model.CustomerDetail;
-import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ModelResult;
@@ -30,8 +29,7 @@ public class CustomerController extends BaseController  {
 	
 	@RequestMapping(value = "/getDetailDash", method = RequestMethod.GET)
 	public @ResponseBody ListResult<ProgramDetail> getCustDetailDashboard(HttpServletRequest request) {
-		Employee emp=(Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
-		return new ListResult<ProgramDetail>(getService(request).getCustomerDetailDashboard(emp.getEMP_ID()));
+		return new ListResult<ProgramDetail>(getService(request).getCustomerDetailDashboard(Integer.parseInt(request.getSession().getAttribute("EMPLOYEE_INFO").toString())));
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)

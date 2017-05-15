@@ -857,7 +857,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			var custId = getParams.get('custId'); 
 			var url="/SIM/program/v1/getProgramDetail/" + programId;
 			if(null==programId){
-				url="/SIMO/program/v1/getProgramDetailCreate/"+ programType + "/" + custId;
+				url="/SIM/program/v1/getProgramDetailCreate/"+ programType + "/" + custId;
 			}
 			
 			$(window).ready(function(){

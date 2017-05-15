@@ -100,7 +100,7 @@ public class UserController extends BaseController {
 				
 //              get all data from employee table that matches the loginID
 				employee = getService(request).getDetail(loginID);
-				request.getSession().setAttribute("EMPLOYEE_INFO", employee.get(0).getId());
+				request.getSession().setAttribute("EMPLOYEE_INFO", employee.get(0).getEMP_ID());
 				logger.info("UserController.processLogin, employee employee.get(0).getEMP_ID(): "+employee.get(0).getEMP_ID());
 				logger.info("UserController.processLogin, employee employee.get(0).getId(): "+employee.get(0).getId());
 				logger.info("UserController.processLogin employee: "+employee.toString());

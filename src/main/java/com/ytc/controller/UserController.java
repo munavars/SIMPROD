@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 //import org.hibernate.cfg.Configuration;
 //import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +22,16 @@ import com.tiredex.yoko.utils.LdapUtil;
 import com.ytc.common.model.Employee;
 import com.ytc.common.result.ListResult;
 import com.ytc.service.IEmployeeService;
+import com.ytc.service.ServiceContext;
 
 @Controller
 // @RequestMapping(value = "/")
 public class UserController extends BaseController {
 
 	private org.slf4j.Logger logger = LoggerFactory.getLogger(UserController.class);
+	
+	@Autowired
+	private ServiceContext serviceContext;
 	
 	@RequestMapping(value = "/getEmployee/{loginId}", method = RequestMethod.GET)
 	public @ResponseBody ListResult<Employee> getDetail(HttpServletRequest request, @PathVariable String loginId) {
@@ -50,7 +55,7 @@ public class UserController extends BaseController {
 //		return aList;
 //	}
 
-	@RequestMapping(value = { "/programDetail" })
+	@RequestMapping(value = { "/", "/programDetail" })
 	public String gotoProgramDetail() {
 		logger.info("UserController.ProgramDetailsPage");
 		return "program_details2";
@@ -105,6 +110,9 @@ public class UserController extends BaseController {
 				logger.info("UserController.processLogin, employee employee.get(0).getId(): "+employee.get(0).getId());
 				logger.info("UserController.processLogin employee: "+employee.toString());
 				model.addAttribute("EmployeeInfo", employee);
+				if(serviceContext != null && employee.get(0) != null){
+					serviceContext.setEmployee(employee.get(0));
+				}
 
 //				get employee hierarchy that matches the employee id
 				List<String> list = getHierarchyQueryResult(request, employee.get(0).getEMP_ID());

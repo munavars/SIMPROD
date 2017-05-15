@@ -43,6 +43,7 @@ import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalTagItems;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramService;
+import com.ytc.service.util.PdfGenerator;
 
 /**
  * @author Cognizant.
@@ -787,6 +788,12 @@ public class ProgramServiceImpl implements IProgramService {
 			}
 			
 		return pgm;
+	}
+	
+	@Override
+	public  byte[] downloadPDF(String id) {
+		PdfGenerator pdf=new PdfGenerator();
+		return pdf.generatePdf(baseDao, id);
 	}
 	
 }

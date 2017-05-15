@@ -9,9 +9,9 @@ import com.ytc.common.model.ProgramInputParam;
 import com.ytc.common.model.ProgramTierDetail;
 
 public interface IProgramService {
-	
+
 	List<DropDown> getTagValueDropDown(Integer tagId);
-	
+
 	String updateProgramTier(ProgramTierDetail programTierDetail);
 
 	String deleteProgramTier(String id);
@@ -19,8 +19,10 @@ public interface IProgramService {
 	String addProgramTier(String id);
 
 	List<ProgramDetail> getProgram(String customerId, String status);
-	
+
 	ProgramHeader getProgramDetails(ProgramInputParam inputParam);
 
 	List<ProgramDetail> getProgramDashboard(Integer id);
+
+	byte[] downloadPDF(String id);
 }

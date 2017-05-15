@@ -79,12 +79,13 @@
 		//alert(window.location.search.substr(1)); 	
 		getParams = new URLSearchParams(window.location.search);
 		var custId=getParams.get('custId'); 
+
 		//loading the customer details
 
 		$.ajax({ 
 			   type: "GET",
 			   dataType: "json",
-			   url: '/SIMO/v1/customer/getDetail/'+custId,
+			   url: '/SIM/v1/customer/getDetail/'+custId,
 			   success: function(cust){
 				   $("#custname").text(cust.data.customerName);
 				   $("#custno").html("<strong>"+cust.data.customerNumber+"</strong>");
@@ -106,8 +107,8 @@
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
 			
 		    ajax: {
-		        //url: '/SIMO/program/'+custId+'/0',
-		        url: '/SIMO/program/'+custId+'/'+$('#program_status').val(),
+		        //url: '/SIM/program/'+custId+'/0',
+		        url: '/SIM/program/'+custId+'/'+$('#program_status').val(),
 		        dataSrc: "data",
 		        type: "GET",
 		    },
@@ -120,6 +121,7 @@
                     render: function ( data, type, row, meta ) {
                         if(type === 'display' && row.programType == 'Calculated Program'){
                             data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+
                         }
                         else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
                         	data = '<a href="/SIMO/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
@@ -174,12 +176,12 @@
 		 
 		 $('#program_status').on('change',function() {
 			 
-		  	  var url='/SIMO/program/'+custId+'/'+$(this).val();
+		  	  var url='/SIM/program/'+custId+'/'+$(this).val();
 		  	  if($(this).val()){
 		  	  	  table.ajax.url(url).load();
 		  	  }else {
 		  		  alert("Status cannot be Empty. Kindly choose");
-		  		  url='/SIMO/program/'+custId+'/1000000';
+		  		  url='/SIM/program/'+custId+'/1000000';
 		  		  table.ajax.url(url).load();
 		  	  }
 		  	  
@@ -390,7 +392,7 @@
                                           </div>
                               </div>
                                    <div class="btn-group m-left8">
-                                  <a href="/SIMO/programDetail?custId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
+                                  <a href="/SIM/programDetail?custId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
                               </div>
                                  <div class="btn-group m-left8">
                                   <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('editabletest', 'Program Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>

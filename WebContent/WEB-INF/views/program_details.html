@@ -833,23 +833,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
         });
        </script>
        
-       <script>
-			alert('ajax');
-         	$.ajax({ 
-             	type: "GET",
-             	dataType: "json",
-             	url: "/SIMO/index/getAllProgram/47/1234",
-             	success: function(data){        
-                	alert(data);
-                	$("#customerName").html(data.data.programHeader.customerName);
-             	},
-             	failure: function(data){
-             		alert("Wrongly done");
-             	}
-             	
-         	});
-       </script>
-       
        <!-- END JAVASCRIPTS -->
        
    </body>

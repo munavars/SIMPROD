@@ -628,7 +628,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
           
           
            <div class="modal-footer">
-		      <a id="cancelLink" href="/SIMO/customer?custId=">
+		      <a id="cancelLink" href="/SIM/customer?custId=">
 		      <button id="cancel-program" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
 		      <a class="btn btn-info" id="reject-program" data-toggle="modal" href="#myModal2"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a> &nbsp;
               <a class="btn btn-success" id="submit-program" data-toggle="modal" href="#myModal"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
@@ -855,7 +855,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			}
 			var programType = getParams.get('programType');
 			var custId = getParams.get('custId'); 
-			var url="/SIMO/program/v1/getProgramDetail/" + programId;
+			var url="/SIM/program/v1/getProgramDetail/" + programId;
 			if(null==programId){
 				url="/SIMO/program/v1/getProgramDetailCreate/"+ programType + "/" + custId;
 			}
@@ -909,7 +909,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				excludeAchieve = response.data.programDetailList[0].programAchieveOn.excludedMap;
             		
 				var a = document.getElementById('cancelLink'); //for now. this has to be revisited.
-				a.href = "/SIMO/customer?custId=" + response.data.customerId;
+				a.href = "/SIM/customer?custId=" + response.data.customerId;
             		
             	/*Program Header Section*/
 				$("#customerId").html(response.data.customerId);
@@ -1203,7 +1203,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				/*Service call to save the data.*/				
 			    $.ajax({
 					type: "POST",
-					url: "/SIMO/program/v1/saveProgramDetails",
+					url: "/SIM/program/v1/saveProgramDetails",
 					dataType: 'json',
 					contentType: 'application/json',
 					data: JSON.stringify(responseOnload),

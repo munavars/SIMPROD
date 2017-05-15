@@ -14,7 +14,7 @@ import com.ytc.common.model.User;;
  *
  */
 public interface IEmployeeService {
-	Employee getDetail(String loginId);
+	List<Employee> getDetail(String loginId);
 	
 	List<String> getQueryResult(String empId);
 

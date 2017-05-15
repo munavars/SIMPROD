@@ -64,7 +64,17 @@ public class ProgramServiceImpl implements IProgramService {
 		if(inputParam.getProgramDetailId() != null){
 			dalProgramDetail =  baseDao.getById(DalProgramDetail.class, inputParam.getProgramDetailId() );
 		}
-		getProgramTypeDetails(inputParam, programHeader);
+		
+		if(inputParam.isExistingDetail()){
+			if(dalProgramDetail.getDalProgramType() != null && dalProgramDetail.getDalProgramType().getType() != null){
+				inputParam.setProgramType(dalProgramDetail.getDalProgramType().getType());
+				inputParam.setProgramTypeId( dalProgramDetail.getDalProgramType().getId());
+				getProgramTypeDetails(inputParam, programHeader);
+			}
+		}
+		else{
+			getProgramTypeDetails(inputParam, programHeader);	
+		}
 		
 		if(dalProgramDetail != null){
 			getExistingProgramDetails(inputParam.getEmployee(), programHeader, dalProgramDetail);
@@ -87,10 +97,12 @@ public class ProgramServiceImpl implements IProgramService {
 							dalProgramType.getType().equalsIgnoreCase(inputParam.getProgramType()) ){
 						inputParam.setProgramTypeId(dalProgramType.getId());
 						programHeader.setCalculatedProgram(true);
+						break;
 					}
 					else if(dalProgramType.getType().equalsIgnoreCase(inputParam.getProgramType())){
 						inputParam.setProgramTypeId(dalProgramType.getId());
-						programHeader.setCalculatedProgram(false);						
+						programHeader.setCalculatedProgram(false);
+						break;
 					}
 				}
 			}
@@ -102,6 +114,7 @@ public class ProgramServiceImpl implements IProgramService {
 				for(DalProgramType dalProgramType : dalProgramTypeList){
 					if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalProgramType.getType()) ){
 						inputParam.setProgramTypeId(dalProgramType.getId());
+						break;
 					}
 				}
 			}
@@ -110,11 +123,12 @@ public class ProgramServiceImpl implements IProgramService {
 
 
 	private void getExistingProgramDetails(Employee employee, ProgramHeader programHeader,
-			DalProgramDetail dalProgramDetail) {
+											DalProgramDetail dalProgramDetail) {
 		String customerId = ""; 
 		if(dalProgramDetail.getPayTo() != null){
 			customerId = String.valueOf( dalProgramDetail.getPayTo());	
 		}
+
 		populateDropDownValues(programHeader, customerId);
 		DalProgramHeader dalProgramHeader = dalProgramDetail.getDalProgramHeader();
 		
@@ -681,6 +695,7 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setPayables(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getTotalPaidAmount():0);
 			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getBalance():ProgramConstant.ZERO);
 			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Empty");
+			programDetail.setProgramType(dalProgramDetail.getDalProgramType() != null ? dalProgramDetail.getDalProgramType().getType() : null);
 			programDetailList.add(programDetail);
 		}
 		

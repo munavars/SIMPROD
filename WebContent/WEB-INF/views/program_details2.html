@@ -207,7 +207,7 @@
                                  	<li>Customer Name: <strong><span class="yokohamared" id="customerName"></span></strong></li>
                                     <li>Program ID: <strong><span id="programId"></span></strong></li>
                                     <li class="p-right10">Business Unit: <strong><span id="businessUnit"></span></strong></li>
-                                    <li><button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
+                                    <li><button id="program-expand" type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
                                  </ul>
                                <div id="demo" class="collapse out">
                                 <div class="col-lg-3 col-md-4 col-sm-4 p-left0">
@@ -441,7 +441,7 @@
                                         <!-- END ROW 4 -->
                                         <div class="row">
                                             <div class="col-lg-12">
-                                             <label class="control-label" for="inputSuccess">Program Description</label>
+                                             <label class="control-label" for="programDescription">Program Description</label>
                                              <textarea id="programDescription" class="form-control" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" data-toggle="tooltip" data-trigger = "hover" data-placement="top" rows="3" placeholder="Add description details of your customer" value="Dealer has three shops in his county"></textarea>
                                           </div>
                                         </div><!-- END ROW 5 -->
@@ -641,7 +641,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                 	<div class="modal-dialog">
                 		<div class="modal-content">
                         	<div class="modal-header">
-                            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            	<button id="program-submit-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                	<h4 class="modal-title">Submit for Approval?</h4>
                             </div>
                             <div class="modal-body">
@@ -650,8 +650,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                                 <div class="space15"></div>
                             </div>
                             <div class="modal-footer">
-                                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-									<a href="javascript: submitForApproval()"><button class="btn btn-info" type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;OK</button></a>
+                                    <button id="program-submit-modal-cancel" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+									<a href="javascript: submitForApproval()"><button id="program-submit-modal-ok" class="btn btn-info" type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;OK</button></a>
                             </div>
 						</div>
 					</div>
@@ -853,10 +853,11 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			else{
 				$("#edit-program").addClass("active");
 			}
+			var programType = getParams.get('programType');
 			var custId = getParams.get('custId'); 
 			var url="/SIMO/program/v1/getProgramDetail/" + programId;
 			if(null==programId){
-				url="/SIMO/program/v1/getProgramDetailCreate/" + custId;
+				url="/SIMO/program/v1/getProgramDetailCreate/"+ programType + "/" + custId;
 			}
 			
 			$(window).ready(function(){
@@ -1041,9 +1042,14 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	if(response.data.newProgram == false){
                		$('#submit-program').attr('disabled', false);
 					$('#submit-program').removeClass("disabled");
+					$('#program-submit-modal-cancel').attr('disabled', false);
+					$('#program-submit-modal-ok').attr('disabled', false);
+					$('#program-submit-modal-close').attr('disabled', false);	
+					
 					$('#save-program').hide();
 					$('#reject-program').hide();
                	}
+               	enabledExpandProgramButton();
          	}
          	
          	function fnPopulateProgramTier(tierData){                
@@ -1162,9 +1168,14 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					$('#modal-edit-cancel').attr('disabled', false);
 					$('#modal-edit-ok').attr('disabled', false);
 					$('#modal-edit-close').attr('disabled', false);
+					enabledExpandProgramButton();
 				}
 				$('#cancel-program').attr('disabled', false);
 				$('#cancel-program').removeClass("disabled");
+			}
+			function enabledExpandProgramButton(){
+				$('#program-expand').attr('disabled', false);
+				$('#program-expand').removeClass("disabled");
 			}
 			
 			function rejectProgram(){

@@ -55,6 +55,7 @@ public class ProgramDetail extends Model{
 	private String amountTypeTier;
 	private Integer actualMarker;
 	private Integer programTypeId;
+	private String programType;
 	
 	public ProgramPaidOn getProgramPaidOn() {
 		return programPaidOn;
@@ -385,5 +386,11 @@ public class ProgramDetail extends Model{
 	}
 	public void setProgramTypeId(Integer programTypeId) {
 		this.programTypeId = programTypeId;
+	}
+	public String getProgramType() {
+		return programType;
+	}
+	public void setProgramType(String programType) {
+		this.programType = programType;
 	}
 }

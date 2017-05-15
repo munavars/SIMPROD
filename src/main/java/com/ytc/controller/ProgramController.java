@@ -21,7 +21,6 @@ import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.common.result.DataResult;
 import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ModelResult;
-import com.ytc.constant.ProgramConstant;
 import com.ytc.service.IProgramService;
 import com.ytc.service.IProgramUpdateService;
 import com.ytc.service.ServiceContext;
@@ -49,14 +48,14 @@ public class ProgramController extends BaseController {
 		ProgramInputParam inputParam = new ProgramInputParam();
 		inputParam.setProgramDetailId(programId);
 		inputParam.setEmployee(employee);
-		inputParam.setProgramType(ProgramConstant.CALCULATED_PROGRAM_TYPE);
+		inputParam.setExistingDetail(true);
 		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(inputParam));
 		
 		return returnData;
 	}
 	
-	@RequestMapping(value = "v1/getProgramDetailCreate/{custId}", method = RequestMethod.GET)
-	public @ResponseBody ModelResult<ProgramHeader> getDetailNew(HttpServletRequest request, @PathVariable Integer custId) {
+	@RequestMapping(value = "v1/getProgramDetailCreate/{programType}/{custId}", method = RequestMethod.GET)
+	public @ResponseBody ModelResult<ProgramHeader> getDetailNew(HttpServletRequest request, @PathVariable String programType, @PathVariable Integer custId) {
 		ModelResult<ProgramHeader> returnData = null;
 		/**
 		 * Assumption, if program id is null, then it is create request.
@@ -71,51 +70,7 @@ public class ProgramController extends BaseController {
 		ProgramInputParam inputParam = new ProgramInputParam();
 		inputParam.setCustomerId(custId);
 		inputParam.setEmployee(employee);
-		inputParam.setProgramType(ProgramConstant.CALCULATED_PROGRAM_TYPE);
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(inputParam));
-		
-		return returnData;
-	}
-
-	@RequestMapping(value = "v1/getDDFCOOPProgramDetail/{programId}", method = RequestMethod.GET)
-	public @ResponseBody ModelResult<ProgramHeader> getDetailDDF(HttpServletRequest request, @PathVariable("programId") Integer programId) {
-		ModelResult<ProgramHeader> returnData = null;
-		/**
-		 * Assumption, if program id is null, then it is create request.
-		 * If Program id is not null, then user is viewing the program id in edit mode. In this case, we need ot fetch all the
-		 * details related to program id and need to show it to user.
-		 * In both cases, initializing dropdown values are same.
-		 * */
-		Employee employee = null;
-		if(serviceContext != null){
-			employee = serviceContext.getEmployee();
-		}
-		ProgramInputParam inputParam = new ProgramInputParam();
-		inputParam.setProgramDetailId(programId);
-		inputParam.setEmployee(employee);
-		inputParam.setProgramType(ProgramConstant.DDF_PROGRAM_TYPE);
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(inputParam));
-		
-		return returnData;
-	}
-	
-	@RequestMapping(value = "v1/getDDFCOOPProgramDetailCreate/{custId}", method = RequestMethod.GET)
-	public @ResponseBody ModelResult<ProgramHeader> getDetailNewDDF(HttpServletRequest request, @PathVariable Integer custId) {
-		ModelResult<ProgramHeader> returnData = null;
-		/**
-		 * Assumption, if program id is null, then it is create request.
-		 * If Program id is not null, then user is viewing the program id in edit mode. In this case, we need ot fetch all the
-		 * details related to program id and need to show it to user.
-		 * In both cases, initializing dropdown values are same.
-		 * */
-		Employee employee = null;
-		if(serviceContext != null){
-			employee = serviceContext.getEmployee();
-		}
-		ProgramInputParam inputParam = new ProgramInputParam();
-		inputParam.setCustomerId(custId);
-		inputParam.setEmployee(employee);
-		inputParam.setProgramType(ProgramConstant.DDF_PROGRAM_TYPE);
+		inputParam.setProgramType(programType);
 		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(inputParam));
 		
 		return returnData;

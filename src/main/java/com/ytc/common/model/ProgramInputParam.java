@@ -13,6 +13,7 @@ public class ProgramInputParam {
 	private Employee employee;
 	private Integer programTypeId;
 	private String programType;
+	private boolean existingDetail;
 	
 	public Integer getProgramDetailId() {
 		return programDetailId;
@@ -43,5 +44,11 @@ public class ProgramInputParam {
 	}
 	public void setProgramType(String programType) {
 		this.programType = programType;
+	}
+	public boolean isExistingDetail() {
+		return existingDetail;
+	}
+	public void setExistingDetail(boolean existingDetail) {
+		this.existingDetail = existingDetail;
 	}
 }

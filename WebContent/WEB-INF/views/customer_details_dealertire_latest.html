@@ -79,8 +79,6 @@
 		//alert(window.location.search.substr(1)); 	
 		getParams = new URLSearchParams(window.location.search);
 		var custId=getParams.get('custId'); 
-		$('#create_new_pgm').attr('href','/SIMO/programDetail?custId='+custId);
-		
 		//loading the customer details
 
 		$.ajax({ 
@@ -120,11 +118,13 @@
                 {
                     targets:0,
                     render: function ( data, type, row, meta ) {
-                        if(type === 'display'){
+                        if(type === 'display' && row.programType == 'Calculated Program'){
                             data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
                         }
-
-                        return data;
+                        else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
+                        	data = '<a href="/SIMO/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        }
+						return data;
                     }
                 },   
                 {
@@ -136,9 +136,12 @@
 
                         return data;
                     }
+                },   
+                {
+                    targets: 20,
+                    visible: false,
+                	searchable: false
                 }
-                
-
          ],
 		    columns: [
 				   
@@ -161,7 +164,8 @@
 	            { data: "accruedAmount" },
 	            { data: "creditAmount" },
 	            { data: "payables" },
-	            { data: "glBalance" }
+	            { data: "glBalance" },
+	            { data: "programType" }
         ]
 		} );
 			  	
@@ -189,11 +193,11 @@
 			}
 			else{
 				if(type=='Calculated Program'){
-					$('#create_new_pgm').attr('href','/SIMO/programDetail?custId='+custId);
+					$('#create_new_pgm').attr('href','/SIMO/programDetail?programType='+type+'&custId='+custId);
 				}
-				else if(type=='DDF' || type=='COOP'){
-					$('#create_new_pgm').attr('href','/SIMO/programddfcoop?custId='+custId);
-				}
+				else if(type=='DDF' || type=='COOP' || type=='Fixed $'){ 
+					$('#create_new_pgm').attr('href','/SIMO/programddfcoop?programType='+type+'&custId='+custId);
+ 				} 
 			}
 		 });
 		 

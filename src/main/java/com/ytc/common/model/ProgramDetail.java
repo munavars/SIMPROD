@@ -1,11 +1,8 @@
 package com.ytc.common.model;
 
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import com.ytc.dal.model.DalEmployee;
 
 public class ProgramDetail extends Model{
 
@@ -57,6 +54,8 @@ public class ProgramDetail extends Model{
 	private List<ProgramTierDetail> programTierDetailList = null;
 	private String amountTypeTier;
 	private Integer actualMarker;
+	private Integer programTypeId;
+	private String programType;
 	
 	public ProgramPaidOn getProgramPaidOn() {
 		return programPaidOn;
@@ -382,5 +381,16 @@ public class ProgramDetail extends Model{
 		this.customerId = customerId;
 	}
 	
-	
+	public Integer getProgramTypeId() {
+		return programTypeId;
+	}
+	public void setProgramTypeId(Integer programTypeId) {
+		this.programTypeId = programTypeId;
+	}
+	public String getProgramType() {
+		return programType;
+	}
+	public void setProgramType(String programType) {
+		this.programType = programType;
+	}
 }

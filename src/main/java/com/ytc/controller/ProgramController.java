@@ -16,6 +16,7 @@ import com.ytc.common.model.DropDown;
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
+import com.ytc.common.model.ProgramInputParam;
 import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.common.result.DataResult;
 import com.ytc.common.result.ListResult;
@@ -44,16 +45,17 @@ public class ProgramController extends BaseController {
 		if(serviceContext != null){
 			employee = serviceContext.getEmployee();
 		}
-		else{
-			employee = (Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
-		}
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(programId, null, employee));
+		ProgramInputParam inputParam = new ProgramInputParam();
+		inputParam.setProgramDetailId(programId);
+		inputParam.setEmployee(employee);
+		inputParam.setExistingDetail(true);
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(inputParam));
 		
 		return returnData;
 	}
 	
-	@RequestMapping(value = "v1/getProgramDetailCreate/{custId}", method = RequestMethod.GET)
-	public @ResponseBody ModelResult<ProgramHeader> getDetailNew(HttpServletRequest request, @PathVariable Integer custId) {
+	@RequestMapping(value = "v1/getProgramDetailCreate/{programType}/{custId}", method = RequestMethod.GET)
+	public @ResponseBody ModelResult<ProgramHeader> getDetailNew(HttpServletRequest request, @PathVariable String programType, @PathVariable Integer custId) {
 		ModelResult<ProgramHeader> returnData = null;
 		/**
 		 * Assumption, if program id is null, then it is create request.
@@ -65,14 +67,15 @@ public class ProgramController extends BaseController {
 		if(serviceContext != null){
 			employee = serviceContext.getEmployee();
 		}
-		else{
-			employee = (Employee) request.getSession().getAttribute("EMPLOYEE_INFO");
-		};
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(null,custId, employee));
+		ProgramInputParam inputParam = new ProgramInputParam();
+		inputParam.setCustomerId(custId);
+		inputParam.setEmployee(employee);
+		inputParam.setProgramType(programType);
+		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(inputParam));
 		
 		return returnData;
 	}
-
+	
 	private IProgramService getService(HttpServletRequest request) {
 		return getServiceLocator(request).getProgramService();
 	}
@@ -94,66 +97,6 @@ public class ProgramController extends BaseController {
 		dropdownList = (List<DropDown>)(getService(request).getTagValueDropDown(tagId));
 		return dropdownList;
 	}
-
-
-/*	private ProgramMaster populateProgramMaster() {
-		ProgramMaster programMaster = new ProgramMaster();
-		
-		ProgramHeader programHeader = new ProgramHeader();
-		programHeader.setCustomerName("YOKO 1");
-		programHeader.setBusinessUnit("YOKO TEST");
-//		programHeader.setProgramId(programId);
-		
-		ProgramDetail programDetail = new ProgramDetail();
-		programDetail.setProgramName("1234");
-		programDetail.setPaidBasedOn(String.valueOf(6));
-		programDetail.setPayoutFrequency(String.valueOf(7));
-		programDetail.setBeginDate(new Date());
-		programDetail.setEndDate(new Date());
-		programDetail.setBtl(true);
-		programDetail.setPricingType(String.valueOf(2));
-		programDetail.setAmount(new BigDecimal(1234));
-		programDetail.setAmountType("$");
-		programDetail.setPayTo("Yaaro");
-		programDetail.setPaidType(String.valueOf(1));
-		
-		ProgramPaidOn programPaidOn = new ProgramPaidOn();
-		programPaidOn.setIsTiered(true);
-		programPaidOn.setIsTrueUp(true);
-		programPaidOn.setProgramDescription("Bossu");
-		Map<String, List<String>> includedMap = new HashMap<String, List<String>>();
-		List<String> list1 = Arrays.asList("19611","17354", "19611");
-		List<String> list2 = Arrays.asList("REFRIGERATED TRANS., INC.","BRISK TRANSPORTATION","DRAKE REFRIGERATION");
-		includedMap.put(String.valueOf(1), list1);
-		includedMap.put(String.valueOf(10), list2);
-		Map<String, List<String>> excludedMap = new HashMap<String, List<String>>();
-		List<String> list3 = Arrays.asList("CLARKSVILLE REFRIG LINES");
-		excludedMap.put(String.valueOf(1), list3);
-		
-		programPaidOn.setExcludedMap(excludedMap);
-		programPaidOn.setIncludedMap(includedMap);
-		
-		ProgramAchieveOn programAchieveOn = new ProgramAchieveOn();
-		Map<String, List<String>> includedMap1 = new HashMap<String, List<String>>();
-		List<String> list4 = Arrays.asList("19611","17354", "19611");
-		List<String> list5 = Arrays.asList("REFRIGERATED TRANS., INC.","BRISK TRANSPORTATION","DRAKE REFRIGERATION");
-		includedMap1.put(String.valueOf(1), list4);
-		includedMap1.put(String.valueOf(10), list5);
-		Map<String, List<String>> excludedMap1 = new HashMap<String, List<String>>();
-		List<String> list6 = Arrays.asList("CLARKSVILLE REFRIG LINES");
-		excludedMap1.put(String.valueOf(1), list6);
-		
-		programAchieveOn.setExcludedMap(excludedMap1);
-		programAchieveOn.setIncludedMap(includedMap1);
-		
-		programMaster.setProgramAchieveOn(programAchieveOn);
-		programMaster.setProgramPaidOn(programPaidOn);
-		programMaster.setProgramDetail(programDetail);
-		programMaster.setProgramHeader(programHeader);
-		
-		return programMaster;
-	}*/
-	
 	
 	@RequestMapping(value = "/{id}/{status}", method = RequestMethod.GET)
 	public @ResponseBody ListResult<ProgramDetail> getProgram(HttpServletRequest request, @PathVariable String id,  @PathVariable String status) {

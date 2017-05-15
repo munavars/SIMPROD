@@ -49,35 +49,39 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			if(dalProgramDetail != null && !programHeader.isNewProgram()){
 				/** If control is here, then user is editing the existing program details.*/
 				if(programHeader.getStatus() != null && dalProgramDetail.getDalProgramHeader() != null){
-					dalProgramDetail.getDalProgramHeader().setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
+					dalProgramDetail.getDalProgramHeader().setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));
+					dalProgramDetail.getDalProgramHeader().setModifiedBy(dalProgramDetail.getModifiedBy());
 				}
 				/** Save Program Detail section information*/
 				updateProgramDetailsData(dalProgramDetail, programHeader);
 
 				/** save Program Paid Based on*/
 				deletedPaidEntityList = updateProgramPaidBasedOnData(programHeader, dalProgramDetail);
-								
-				/** save Program Achieved Based on*/
-				deletedAchievedEntityList = updateProgramAchieveBasedOnData(programHeader, dalProgramDetail);
-				
+			
 				if(deletedPaidEntityList != null && !deletedPaidEntityList.isEmpty()){
 					for(DalProgramDetPaid dalProgramDetPaid : deletedPaidEntityList){
 						dalProgramDetail.getDalProgramDetPaidList().remove(dalProgramDetPaid);
 					}
 				}
 				
-				
-				if(deletedAchievedEntityList != null && !deletedAchievedEntityList.isEmpty()){
-					for(DalProgramDetAchieved dalProgramDetAchieved : deletedAchievedEntityList){
-						baseDao.delete(DalProgramDetAchieved.class, dalProgramDetAchieved.getId());
-						dalProgramDetail.getDalProgramDetAchievedList().remove(dalProgramDetAchieved);
+				/** save Program Achieved Based on*/
+				if(programHeader.isCalculatedProgram()){
+					deletedAchievedEntityList = updateProgramAchieveBasedOnData(programHeader, dalProgramDetail);
+					
+					if(deletedAchievedEntityList != null && !deletedAchievedEntityList.isEmpty()){
+						for(DalProgramDetAchieved dalProgramDetAchieved : deletedAchievedEntityList){
+							baseDao.delete(DalProgramDetAchieved.class, dalProgramDetAchieved.getId());
+							dalProgramDetail.getDalProgramDetAchievedList().remove(dalProgramDetAchieved);
+						}
 					}
 				}
 				
 				baseDao.update(dalProgramDetail);
 
 				/** tier detail is saved seperately as of now.*/
-				updateProgramTierData(dalProgramDetail, programHeader);
+				if(programHeader.isCalculatedProgram()){
+					updateProgramTierData(dalProgramDetail, programHeader);	
+				}
 				
 				/**Setting the value to true */
 				if(dalProgramDetail.getDalProgramHeader().getStatus() != null 

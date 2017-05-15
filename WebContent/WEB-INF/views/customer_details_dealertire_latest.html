@@ -79,8 +79,7 @@
 		//alert(window.location.search.substr(1)); 	
 		getParams = new URLSearchParams(window.location.search);
 		var custId=getParams.get('custId'); 
-		$('#create_new_pgm').attr('href','/SIM/programDetail?custId='+custId);
-		
+
 		//loading the customer details
 
 		$.ajax({ 
@@ -120,11 +119,14 @@
                 {
                     targets:0,
                     render: function ( data, type, row, meta ) {
-                        if(type === 'display'){
-                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
-                        }
+                        if(type === 'display' && row.programType == 'Calculated Program'){
+                            data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
 
-                        return data;
+                        }
+                        else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
+                        	data = '<a href="/SIMO/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        }
+						return data;
                     }
                 },   
                 {
@@ -136,9 +138,12 @@
 
                         return data;
                     }
+                },   
+                {
+                    targets: 20,
+                    visible: false,
+                	searchable: false
                 }
-                
-
          ],
 		    columns: [
 				   
@@ -161,7 +166,8 @@
 	            { data: "accruedAmount" },
 	            { data: "creditAmount" },
 	            { data: "payables" },
-	            { data: "glBalance" }
+	            { data: "glBalance" },
+	            { data: "programType" }
         ]
 		} );
 			  	
@@ -186,6 +192,14 @@
 			 if(type=='Program Type'){
 				alert("Kindly choose a Program Type to create new program");
 				return false;
+			}
+			else{
+				if(type=='Calculated Program'){
+					$('#create_new_pgm').attr('href','/SIMO/programDetail?programType='+type+'&custId='+custId);
+				}
+				else if(type=='DDF' || type=='COOP' || type=='Fixed $'){ 
+					$('#create_new_pgm').attr('href','/SIMO/programddfcoop?programType='+type+'&custId='+custId);
+ 				} 
 			}
 		 });
 		 
@@ -370,7 +384,7 @@
                                   <div class="">
                                                 <select class="form-control input-sm m-bot15 required" id="program_type_select" name="Program Type_inputselect">
                                                    <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
-                                                   <option id="program_type_vbs" value="VBS">Calculated Program</option>
+                                                   <option id="program_type_vbs" value="Calculated Program">Calculated Program</option>
                                                    <option id="program_type_ddf" value="DDF">DDF</option>
                                                     <option id="program_type_coop" value="COOP">COOP</option>
                                                     <option id="program_type_fixed" value="Fixed $">Fixed $</option>

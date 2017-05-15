@@ -40,6 +40,7 @@ public class ProgramHeader extends Model{
 	private String action;
 	private boolean isSuccess;
 	private String authorizedUser;
+	private boolean calculatedProgram;
 	
 	private List<ProgramDetail> programDetailList = new ArrayList<ProgramDetail>();
 	
@@ -192,5 +193,11 @@ public class ProgramHeader extends Model{
 	}
 	public void setAuthorizedUser(String authorizedUser) {
 		this.authorizedUser = authorizedUser;
+	}
+	public boolean isCalculatedProgram() {
+		return calculatedProgram;
+	}
+	public void setCalculatedProgram(boolean calculatedProgram) {
+		this.calculatedProgram = calculatedProgram;
 	}
 }

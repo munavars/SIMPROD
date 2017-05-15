@@ -3,6 +3,7 @@ package com.ytc.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.Produces;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -127,6 +128,13 @@ public class ProgramController extends BaseController {
 		
 		return new DataResult<String>(getService(request).deleteProgramTier(id));
 		
+	}
+	
+	@Produces({ "application/pdf" })
+	@RequestMapping(value = "v1/downloadPDF/{id}",  method = RequestMethod.GET, produces = "application/pdf")
+	public @ResponseBody  byte[] downloadPDF(HttpServletRequest request,@PathVariable String id) {
+		
+		return getService(request).downloadPDF(id);
 	}
 	
 }

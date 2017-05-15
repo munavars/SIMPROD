@@ -36,6 +36,9 @@ public class DalEmployee extends DalModel {
 	
 	@Column(name="LOGIN_ID")
 	private String LOGIN_ID;
+		
+	@Column(name="SECURITY")
+	private String SECURITY;
 	
 	public DalEmployee() {
 		
@@ -116,6 +119,15 @@ public class DalEmployee extends DalModel {
 
 	public void setLOGIN_ID(String lOGIN_ID) {
 		LOGIN_ID = lOGIN_ID;
+	}
+
+
+	public String getSECURITY() {
+		return SECURITY;
+	}
+
+	public void setSECURITY(String sECURITY) {
+		SECURITY = sECURITY;
 	}
 
 	

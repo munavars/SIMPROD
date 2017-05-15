@@ -31,6 +31,7 @@
       <!-- Custom styles for this template -->
       <link href="resources/css/style.css" rel="stylesheet">
       <link href="resources/css/style-responsive.css" rel="stylesheet" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
       
       <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltips and media queries -->
       <!--[if lt IE 9]>
@@ -39,6 +40,19 @@
       <![endif]-->
     
        <script src="resources/js/paidAchieve.js"></script>
+       
+       <script type="text/javascript">
+				
+		$(document).ready(function() {
+		$('#btn').click(function () {
+			//alert(responseOnload.programDetailList[0].id);
+			var a = document.createElement('a');
+		    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
+			a.download =  'cust.pdf';
+		    a.click(); 
+		});
+		});
+		</script>
 
       <script>
          function sync()
@@ -180,6 +194,8 @@
                           <div class="clearfix">
                              <div class="col-lg-12">
                                 <h5 data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Customer Details</h5>
+                                <div class="space15">&nbsp;</div>
+                                <button id="btn" class="btn finish">Generate PDF</button>
                                 <!-- EDIT BUTTON START -->
                                 <a class="btn btn-info finish" id="edit-button" data-toggle="modal"  href="#myModalEdit"><i class="fa fa-edit"></i>&nbsp;&nbsp;Edit</a>
                                	<!-- Modal -->
@@ -1050,6 +1066,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					$('#reject-program').hide();
                	}
                	enabledExpandProgramButton();
+               	$('#btn').attr('disabled', false);
          	}
          	
          	function fnPopulateProgramTier(tierData){                

@@ -120,11 +120,11 @@
                     targets:0,
                     render: function ( data, type, row, meta ) {
                         if(type === 'display' && row.programType == 'Calculated Program'){
-                            data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
 
                         }
                         else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
-                        	data = '<a href="/SIMO/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
                         }
 						return data;
                     }
@@ -195,10 +195,10 @@
 			}
 			else{
 				if(type=='Calculated Program'){
-					$('#create_new_pgm').attr('href','/SIMO/programDetail?programType='+type+'&custId='+custId);
+					$('#create_new_pgm').attr('href','/SIM/programDetail?programType='+type+'&custId='+custId);
 				}
 				else if(type=='DDF' || type=='COOP' || type=='Fixed $'){ 
-					$('#create_new_pgm').attr('href','/SIMO/programddfcoop?programType='+type+'&custId='+custId);
+					$('#create_new_pgm').attr('href','/SIM/programddfcoop?programType='+type+'&custId='+custId);
  				} 
 			}
 		 });

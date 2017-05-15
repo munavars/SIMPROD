@@ -77,8 +77,8 @@
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	
 			 
 		    ajax: {
-		        //url: '/SIMO/program/dashboard/'+loginId ,
-		        url: '/SIMO/program/dashboard/',
+		        //url: '/SIM/program/dashboard/'+loginId ,
+		        url: '/SIM/program/dashboard/',
 		        dataSrc: "data",
 		        type: "GET",
 		    },
@@ -90,7 +90,7 @@
                   targets:0,
                   render: function ( data, type, row, meta ) {
                       if(type === 'display'){
-                          data = '<a href="/SIMO/customer?custId=' + encodeURIComponent(row.customerId) + '">' + data + '</a>';
+                          data = '<a href="/SIM/customer?custId=' + encodeURIComponent(row.customerId) + '">' + data + '</a>';
                       }
 
                       return data;
@@ -148,8 +148,8 @@
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
 			
 		    ajax: {
-		        //url: '/SIMO/v1/customer/getDetailDash/'+loginId,
-		        url: '/SIMO/v1/customer/getDetailDash/',
+		        //url: '/SIM/v1/customer/getDetailDash/'+loginId,
+		        url: '/SIM/v1/customer/getDetailDash/',
 		        dataSrc: "data",
 		        type: "GET",
 		    },
@@ -160,7 +160,7 @@
                 targets:0,
                 render: function ( data, type, row, meta ) {
                     if(type === 'display'){
-                        data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
                     }
 
                     return data;
@@ -210,7 +210,7 @@
    				 
                     render: function ( data, type, row, meta ) {
                         if(type === 'display'){
-                            data = '<a href="/SIMO/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
                         }
 
                         return data;

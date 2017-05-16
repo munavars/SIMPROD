@@ -107,7 +107,15 @@ public class ProgramController extends BaseController {
 	
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public @ResponseBody ListResult<ProgramDetail> getProgramDashboard(HttpServletRequest request) {
-		return new ListResult<ProgramDetail>( getService(request).getProgramDashboard(Integer.parseInt(request.getSession().getAttribute("EMPLOYEE_INFO").toString())));
+		Employee employee = null;
+		if(serviceContext != null){
+			employee = serviceContext.getEmployee();
+		}
+		Integer employeeId=employee.getEMP_ID();
+		if("N".equalsIgnoreCase(employee.getSECURITY())){
+			employeeId=0;
+		}
+		return new ListResult<ProgramDetail>( getService(request).getProgramDashboard(employeeId));
 	}
 	
 	@RequestMapping(value = "v1/addTier", method = RequestMethod.GET)

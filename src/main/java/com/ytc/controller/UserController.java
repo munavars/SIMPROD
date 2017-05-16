@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tiredex.yoko.utils.LdapUtil;
 import com.ytc.common.model.Employee;
 import com.ytc.common.result.ListResult;
+import com.ytc.constant.ProgramConstant;
 import com.ytc.service.IEmployeeService;
 import com.ytc.service.ServiceContext;
 
@@ -55,12 +56,6 @@ public class UserController extends BaseController {
 //		return aList;
 //	}
 
-	@RequestMapping(value = { "/", "/programDetail" })
-	public String gotoProgramDetail() {
-		logger.info("UserController.ProgramDetailsPage");
-		return "program_details2";
-	}
-	
 	@RequestMapping(value = { "/", "/login" })
 	public String presentHomePage() {
 		logger.info("UserController.presentHomePage");

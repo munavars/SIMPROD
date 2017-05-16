@@ -13,9 +13,11 @@ import javax.persistence.MappedSuperclass;
 public abstract class DalAuditableModel extends DalModel {
 
 
-    protected DalUser createdBy;
+    /*protected DalUser createdBy;*/
+    protected DalEmployee createdBy;
     protected Calendar createdDate;
-    protected DalUser modifiedBy;
+    /*protected DalUser modifiedBy;*/
+    protected DalEmployee modifiedBy;
     protected Calendar modifiedDate;
     
     public DalAuditableModel() {
@@ -37,13 +39,13 @@ public abstract class DalAuditableModel extends DalModel {
         this.createdDate = m.createdDate;
     }
 
-    @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = com.ytc.dal.model.DalEmployee.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "CREATED_BY", updatable = false, insertable = true)
-    public DalUser getCreatedBy() {
+    public DalEmployee getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(DalUser createdBy) {
+    public void setCreatedBy(DalEmployee createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -56,13 +58,13 @@ public abstract class DalAuditableModel extends DalModel {
         this.createdDate = createdDate;
     }
 
-    @ManyToOne(targetEntity = com.ytc.dal.model.DalUser.class, fetch = FetchType.EAGER)
+    @ManyToOne(targetEntity = com.ytc.dal.model.DalEmployee.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "MODIFIED_BY")
-    public DalUser getModifiedBy() {
+    public DalEmployee getModifiedBy() {
         return modifiedBy;
     }
 
-    public void setModifiedBy(DalUser modifiedBy) {
+    public void setModifiedBy(DalEmployee modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
 

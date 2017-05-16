@@ -107,6 +107,8 @@ public class UserController extends BaseController {
 				model.addAttribute("EmployeeInfo", employee);
 				if(serviceContext != null && employee.get(0) != null){
 					serviceContext.setEmployee(employee.get(0));
+					String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+					model.addAttribute("loginUserNameValue", userName);
 				}
 
 //				get employee hierarchy that matches the employee id

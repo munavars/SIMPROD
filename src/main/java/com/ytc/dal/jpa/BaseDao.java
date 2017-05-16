@@ -24,8 +24,8 @@ import com.ytc.common.result.ResultCode;
 import com.ytc.common.result.ResultException;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalAuditableModel;
+import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalModel;
-import com.ytc.dal.model.DalUser;
 import com.ytc.service.ServiceContext;
 
 
@@ -66,7 +66,7 @@ public class BaseDao implements IDataAccessLayer {
 	@Transactional
 	public <T extends DalModel> T create(T item, Integer userId) {
 		if (item instanceof DalAuditableModel) {
-			DalUser dbUser = getReference(DalUser.class, userId);
+			DalEmployee dbUser = getReference(DalEmployee.class, userId);
 			DalAuditableModel aItem = (DalAuditableModel) item;
 			aItem.setCreatedBy(dbUser);
 			aItem.setModifiedBy(dbUser);
@@ -124,7 +124,7 @@ public class BaseDao implements IDataAccessLayer {
 		}
 
 		if (existingItem instanceof DalAuditableModel) {
-			DalUser dbUser = getReference(DalUser.class, userId);
+			DalEmployee dbUser = getReference(DalEmployee.class, userId);
 			DalAuditableModel itemToUpdate = (DalAuditableModel) item;
 			itemToUpdate.setModifiedBy(dbUser);
 			entityManager.detach(existingItem);

@@ -309,11 +309,11 @@
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                       <i class="fa fa-bell-o"></i>
-                      <span class="badge bg-important">7</span>
+                      <!-- <span class="badge bg-important">7</span> -->
                   </a>
                   <ul class="dropdown-menu extended notification">
                       <div class="notify-arrow notify-arrow-yellow"></div>
-                      <li>
+                      <!-- <li>
                           <p class="yellow">You have 7 new notifications</p>
                       </li>
                       <li>
@@ -329,7 +329,7 @@
                                #20543 has been rejected
                               <span class="small italic">4 hrs</span>
                           </a>
-                      </li>
+                      </li> -->
                   </ul>
               </li>
               <!-- notification dropdown end -->
@@ -343,14 +343,14 @@
                   <!-- user login dropdown start-->
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                          <span class="username">John Doe</span>
+                          <span class="username" id="loginUserName"></span>
                           <b class="caret"></b>
                       </a>
                       <ul class="dropdown-menu extended logout">
                           <div class="log-arrow-up"></div>
-                          <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
+                          <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                           <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                          <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
+                          <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li> -->
                           <li><a href="login.html"><i class="fa fa-key"></i>Log Out</a></li>
                       </ul>
                   </li>
@@ -1142,7 +1142,18 @@
 		     } );
     
       </script>
+      
+    <!-- Inline javascript to set the user name from model attribute Begin -->
+	<script type="text/javascript" th:inline="javascript">
+		$(document).ready(function() {
+		   var modelAttributeValue = [[${loginUserNameValue}]];
+		   $("#loginUserName").html(modelAttributeValue);
+		});
+	</script>
+	<!-- Inline javascript to set the user name from model attribute End -->
+	
       <!--common script for all pages-->
+      
     <script src="resources/js/common-scripts.js"></script>
 
   </body>

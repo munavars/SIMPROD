@@ -223,7 +223,7 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		programHeader.setRequestedDate( (dalProgramHeader.getRequestDate() != null ) ? dalProgramHeader.getRequestDate().getTime() : null);
 		if(dalProgramDetail.getCreatedBy() != null){
-			programHeader.setCreatedBy(dalProgramDetail.getCreatedBy().getUserName());
+			programHeader.setCreatedBy(dalProgramHeader.getRequest().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramHeader.getRequest().getLAST_NAME());
 		}
 		
 		programHeader.setCreatedDate(dalProgramDetail.getCreatedDate().getTime());

@@ -35,7 +35,7 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
       <![endif]-->
-    
+    	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
        <script src="resources/js/paidAchieve.js"></script>
 
       <script>
@@ -68,7 +68,7 @@
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                       <i class="fa fa-bell-o"></i>
-                      <span class="badge bg-important">7</span>
+                      <!-- <span class="badge bg-important">7</span> -->
                   </a>
 <!--                   <ul class="dropdown-menu extended notification">
                       <div class="notify-arrow notify-arrow-yellow"></div>
@@ -654,6 +654,7 @@
 			$("#create-program").addClass("active");
 			$("#reject-program").hide();
 			$("#edit-button").hide();
+			$("#pdf-button").hide();
 		}
 		else{
 			$("#edit-program").addClass("active");
@@ -672,6 +673,7 @@
             	url: url,
              	success: function(response){
              		responseOnload = response.data;
+             		closeSideBar();
 					fnPopulateProgramDetails(response);
              	},
              	failure: function(response){
@@ -679,6 +681,19 @@
              	}
          	});
 		});
+		
+		function closeSideBar(){
+			if ($('#sidebar > ul').is(":visible") === true) {
+	            $('#main-content').css({
+	                'margin-left': '0px'
+	            });
+	            $('#sidebar').css({
+	                'margin-left': '-210px'
+	            });
+	            $('#sidebar > ul').hide();
+	            $("#container").addClass("sidebar-closed");
+       		}
+		}
 		
 		function fnPopulateProgramDetails(response){
          	
@@ -789,7 +804,6 @@
 					$('#reject-program').hide();
                	}
                	enabledExpandProgramButton();
-               	$('#pdf-button').attr('disabled', false);
          	}
          	
          	function fnPopulatePaidDetails(response){
@@ -861,6 +875,7 @@
 					$('#modal-edit-cancel').attr('disabled', false);
 					$('#modal-edit-ok').attr('disabled', false);
 					$('#modal-edit-close').attr('disabled', false);
+					$('#pdf-button').attr('disabled', false);
 					enabledExpandProgramButton();
 				}
 				$('#cancel-program').attr('disabled', false);

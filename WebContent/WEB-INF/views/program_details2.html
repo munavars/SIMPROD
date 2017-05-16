@@ -285,8 +285,8 @@
                                                   <div class="col-lg-4 col-sm-4">
                                                     <label class="control-label" for="from">Begin/End Dates:</label>
                                                         <div class="input-group input-medium" data-date-format="mm/dd/yy">
-                                                            <input type="text" class="form-control required" id="from" name="from" placeholder="Begin Date" ><span class="input-group-addon" for="to">To</span>
-                                                            <input type="text" class="form-control required" id="to" name="to" placeholder="End Date">
+                                                            <input type="text" class="form-control dpd1 required" id="from" name="from" placeholder="Begin Date" ><span class="input-group-addon" for="to">To</span>
+                                                            <input type="text" class="form-control dpd2 required" id="to" name="to" placeholder="End Date">
                                                         </div>
                                                     </div>
                                               </div>
@@ -889,32 +889,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 	             		alert("Wrongly done");
 	             	}
 	         	});
-			});
-			
-			$(document).ready(function(){
-				var nowTemp = new Date();
-				var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-				 
-				var checkin = $('#from').datepicker({
-					onRender: function(date) {
-					  return date.valueOf() < now.valueOf() ? 'disabled' : '';
-					}
-				}).on('changeDate', function(ev) {
-					if (ev.date.valueOf() > checkout.getDate().valueOf()) {
-						var newDate = new Date(ev.date)
-						newDate.setDate(newDate.getDate() + 1);
-						checkout.setValue(newDate);
-					}
-					checkin.hide();
-					$('#to')[0].focus();
-				}).data('datepicker');
-				var checkout = $('#to').datepicker({
-					onRender: function(date) {
-						return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
-					}
-				}).on('changeDate', function(ev) {
-					checkout.hide();
-				}).data('datepicker');
 			});
          	
          	function fnPopulateProgramDetails(response){

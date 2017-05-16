@@ -672,7 +672,7 @@ public class ProgramServiceImpl implements IProgramService {
 				programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().getBaseItem());	
 			}
 			if(dalProgramDetail.getIsTiered() != null){
-				programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase(ProgramConstant.ZERO)?ProgramConstant.YES:ProgramConstant.NO);	
+				programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase(ProgramConstant.ZERO)?ProgramConstant.NO:ProgramConstant.YES);	
 			}
 			if(dalProgramDetail.getTrueUp() != null){
 				programDetail.setTrueUp(dalProgramDetail.getTrueUp().equalsIgnoreCase("Y")?ProgramConstant.YES:ProgramConstant.NO);	

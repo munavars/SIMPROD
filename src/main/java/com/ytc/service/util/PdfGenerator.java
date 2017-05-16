@@ -181,7 +181,7 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 	         
-	         cell = new PdfPCell(new Paragraph(""));
+	         cell = new PdfPCell(new Paragraph("Program Type: "+dalpgm.getDalProgramType().getType()));
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -250,23 +250,25 @@ public class PdfGenerator {
 	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         table.addCell(cell1);
 	         
-	         cell1 = new PdfPCell(new Paragraph("BTL: "+("Y".equalsIgnoreCase(dalpgm.getBTL())?ProgramConstant.YES:ProgramConstant.NO)));
-	         cell.setBorderColor(BaseColor.BLACK);
-	         cell1.setPaddingLeft(10);
-	         //cell4.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         table.addCell(cell1);
-	  
-	         if(dalpgm.getPricingType()!=null){
-	         cell1 = new PdfPCell(new Paragraph("Pricing Type: "+baseDao.getById(DalPricingType.class, dalpgm.getPricingType()).getType()));
-	         }else{
-	        	 cell1 = new PdfPCell(new Paragraph("Pricing Type: "));
+	         if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalpgm.getDalProgramType().getType())){
+	        	 cell1 = new PdfPCell(new Paragraph("BTL: "+("Y".equalsIgnoreCase(dalpgm.getBTL())?ProgramConstant.YES:ProgramConstant.NO)));
+		         cell.setBorderColor(BaseColor.BLACK);
+		         cell1.setPaddingLeft(10);
+		         //cell4.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         table.addCell(cell1);
+		  
+		         if(dalpgm.getPricingType()!=null){
+		         cell1 = new PdfPCell(new Paragraph("Pricing Type: "+baseDao.getById(DalPricingType.class, dalpgm.getPricingType()).getType()));
+		         }else{
+		        	 cell1 = new PdfPCell(new Paragraph("Pricing Type: "));
+		         }
+		         cell1.setBorderColor(BaseColor.BLACK);
+		         cell1.setPaddingLeft(10);
+		         //cell5.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         table.addCell(cell1);	 
 	         }
-	         cell1.setBorderColor(BaseColor.BLACK);
-	         cell1.setPaddingLeft(10);
-	         //cell5.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         table.addCell(cell1);
 	  
 	         cell1 = new PdfPCell(new Paragraph("Amount: "+(float) dalpgm.getAccrualAmount()+dalpgm.getAccrualType()));
 	         cell1.setBorderColor(BaseColor.BLACK);
@@ -296,44 +298,44 @@ public class PdfGenerator {
 	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         table.addCell(cell1);
 	         
-	         cell1 = new PdfPCell(new Paragraph("Achieve Based On: "+dalpgm.getAchBasedMetric().getBaseItem()));
-	         cell1.setBorderColor(BaseColor.BLACK);
-	         cell1.setPaddingLeft(10);
-	         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         table.addCell(cell1);
-	         
-	         cell1 = new PdfPCell(new Paragraph("Is True Up: "+("Y".equalsIgnoreCase(dalpgm.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO)));
-	         cell1.setBorderColor(BaseColor.BLACK);
-	         cell1.setPaddingLeft(10);
-	         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         table.addCell(cell1);
-	         
-	         cell1 = new PdfPCell(new Paragraph("Is Tiered: "+(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES)));
-	         cell1.setBorderColor(BaseColor.BLACK);
-	         cell1.setPaddingLeft(10);
-	         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         table.addCell(cell1);
-	         if(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered())){
-	        	 cell1 = new PdfPCell(new Paragraph(""));
-	         }else{
-	        	 
-	        	 if((null!=dalpgm.getPgmDetailTier())&&(null!=dalpgm.getPgmDetailTier().getLevel())&&(null!=dalpgm.getPgmDetailTier().getTierType())){
-	        	 cell1 = new PdfPCell(new Paragraph("Marker: "+dalpgm.getPgmDetailTier().getLevel()+", Tier Type: "+dalpgm.getPgmDetailTier().getTierType())); 
-	        	 }else{
-	        		 cell1 = new PdfPCell(new Paragraph(""));
-	        	 }
+	         if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalpgm.getDalProgramType().getType())){
+	        	 cell1 = new PdfPCell(new Paragraph("Achieve Based On: "+dalpgm.getAchBasedMetric().getBaseItem()));
+		         cell1.setBorderColor(BaseColor.BLACK);
+		         cell1.setPaddingLeft(10);
+		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         table.addCell(cell1);
+		         
+		         cell1 = new PdfPCell(new Paragraph("Is True Up: "+("Y".equalsIgnoreCase(dalpgm.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO)));
+		         cell1.setBorderColor(BaseColor.BLACK);
+		         cell1.setPaddingLeft(10);
+		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         table.addCell(cell1);
+		         
+		         cell1 = new PdfPCell(new Paragraph("Is Tiered: "+(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES)));
+		         cell1.setBorderColor(BaseColor.BLACK);
+		         cell1.setPaddingLeft(10);
+		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         table.addCell(cell1);
+		         if(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered()) && dalpgm.getActualMarker() == 0){
+		        	 cell1 = new PdfPCell(new Paragraph(""));
+		         }else{
+		        	 
+		        	 if((null!=dalpgm.getPgmDetailTier())&&(null!=dalpgm.getPgmDetailTier().getLevel())&&(null!=dalpgm.getPgmDetailTier().getTierType())){
+		        		 cell1 = new PdfPCell(new Paragraph("Marker: "+dalpgm.getPgmDetailTier().getLevel()+", Tier Type: "+dalpgm.getPgmDetailTier().getTierType())); 
+		        	 }else{
+		        		 cell1 = new PdfPCell(new Paragraph(""));
+		        	 }
+		         }
+		         
+		         cell1.setBorderColor(BaseColor.BLACK);
+		         cell1.setPaddingLeft(10);
+		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         table.addCell(cell1);
 	         }
-	         
-	         cell1.setBorderColor(BaseColor.BLACK);
-	         cell1.setPaddingLeft(10);
-	         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         table.addCell(cell1);         
-	               
-	        
 	         
 	         cell1 = new PdfPCell(new Paragraph(""));
 	         cell1.setBorderColor(BaseColor.BLACK);
@@ -432,75 +434,75 @@ public class PdfGenerator {
 	         
 	         document.add(paidBaseTable);
 	         
-	         
-	         document.add(new Paragraph("ACHIEVED BASED ON",f2));
-	         PdfPTable achievedBaseTable = new PdfPTable(3); // 3 columns.
-	         achievedBaseTable.setWidthPercentage(100); //Width 100%
-	         achievedBaseTable.setSpacingBefore(10f); //Space before table
-	         achievedBaseTable.setSpacingAfter(10f); //Space after table
-	  
-	         //Set Column widths
-	         achievedBaseTable.setWidths(columnWidths);
-	  
-	         cell = new PdfPCell(new Paragraph("TAG"));
-	         cell.setBorderColor(BaseColor.BLACK);
-	         cell.setPaddingLeft(10);
-	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         achievedBaseTable.addCell(cell);
-
-	         
-	         cell = new PdfPCell(new Paragraph("INCLUDE"));
-	         cell.setBorderColor(BaseColor.BLACK);
-	         cell.setPaddingLeft(10);
-	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         achievedBaseTable.addCell(cell);
-	         
-	         cell = new PdfPCell(new Paragraph("EXCLUDE"));
-	         cell.setBorderColor(BaseColor.BLACK);
-	         cell.setPaddingLeft(10);
-	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-	         achievedBaseTable.addCell(cell);
-	         
-	         for (Iterator iterator = dalpgm.getDalProgramDetAchievedList().iterator(); iterator.hasNext();) {
-	        	 DalProgramDetAchieved type = (DalProgramDetAchieved) iterator.next();
-	        	 cell = new PdfPCell(new Paragraph(baseDao.getEntityById(DalTagItems.class, type.getAchTagId()).getItem()));
+	         if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalpgm.getDalProgramType().getType())){
+		         document.add(new Paragraph("ACHIEVED BASED ON",f2));
+		         PdfPTable achievedBaseTable = new PdfPTable(3); // 3 columns.
+		         achievedBaseTable.setWidthPercentage(100); //Width 100%
+		         achievedBaseTable.setSpacingBefore(10f); //Space before table
+		         achievedBaseTable.setSpacingAfter(10f); //Space after table
+		  
+		         //Set Column widths
+		         achievedBaseTable.setWidths(columnWidths);
+		  
+		         cell = new PdfPCell(new Paragraph("TAG"));
 		         cell.setBorderColor(BaseColor.BLACK);
 		         cell.setPaddingLeft(10);
 		         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         achievedBaseTable.addCell(cell);
-		         if("1".equalsIgnoreCase(type.getAchMethod())){
-		        	 cell = new PdfPCell(new Paragraph(type.getDisplayValue())); 
-		         }else{
-		        	 cell = new PdfPCell(new Paragraph("")); 
-		         }
-	        	 
+
+		         
+		         cell = new PdfPCell(new Paragraph("INCLUDE"));
 		         cell.setBorderColor(BaseColor.BLACK);
 		         cell.setPaddingLeft(10);
 		         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         achievedBaseTable.addCell(cell);
 		         
-		         if("2".equalsIgnoreCase(type.getAchMethod())){
-		        	 cell = new PdfPCell(new Paragraph(type.getDisplayValue())); 
-		         }else{
-		        	 cell = new PdfPCell(new Paragraph("")); 
-		         }
+		         cell = new PdfPCell(new Paragraph("EXCLUDE"));
 		         cell.setBorderColor(BaseColor.BLACK);
 		         cell.setPaddingLeft(10);
 		         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         achievedBaseTable.addCell(cell);
-				
-			}
-	         
-	         document.add(achievedBaseTable);
-	        
-	                
-	         
+		         
+		         for (Iterator iterator = dalpgm.getDalProgramDetAchievedList().iterator(); iterator.hasNext();) {
+		        	 DalProgramDetAchieved type = (DalProgramDetAchieved) iterator.next();
+		        	 cell = new PdfPCell(new Paragraph(baseDao.getEntityById(DalTagItems.class, type.getAchTagId()).getItem()));
+			         cell.setBorderColor(BaseColor.BLACK);
+			         cell.setPaddingLeft(10);
+			         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			         achievedBaseTable.addCell(cell);
+			         if("1".equalsIgnoreCase(type.getAchMethod())){
+			        	 cell = new PdfPCell(new Paragraph(type.getDisplayValue())); 
+			         }else{
+			        	 cell = new PdfPCell(new Paragraph("")); 
+			         }
+		        	 
+			         cell.setBorderColor(BaseColor.BLACK);
+			         cell.setPaddingLeft(10);
+			         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			         achievedBaseTable.addCell(cell);
+			         
+			         if("2".equalsIgnoreCase(type.getAchMethod())){
+			        	 cell = new PdfPCell(new Paragraph(type.getDisplayValue())); 
+			         }else{
+			        	 cell = new PdfPCell(new Paragraph("")); 
+			         }
+			         cell.setBorderColor(BaseColor.BLACK);
+			         cell.setPaddingLeft(10);
+			         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			         achievedBaseTable.addCell(cell);
+					
+				}
+		         
+		         document.add(achievedBaseTable);
+		        
+	         }
+
 	         document.close();
 	         writer.close();
 	         System.out.println("file generated");

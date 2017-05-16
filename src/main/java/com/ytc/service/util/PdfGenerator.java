@@ -134,8 +134,11 @@ public class PdfGenerator {
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
-	         
+	         if(dalpgm.getDalProgramHeader()!=null && dalpgm.getDalProgramHeader().getRequestDate() !=null ){
 	         cell = new PdfPCell(new Paragraph("Requested Date: "+ProgramServiceHelper.convertDateToString(dalpgm.getDalProgramHeader().getRequestDate().getTime(), ProgramConstant.DATE_FORMAT)));
+	         }else{
+	        	 cell = new PdfPCell(new Paragraph("Requested Date: "));
+	         }
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);

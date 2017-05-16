@@ -84,7 +84,7 @@ public class ProgramServiceImpl implements IProgramService {
 			getNewProgramDetails(inputParam.getCustomerId(), inputParam.getEmployee(), programHeader);
 		}
 		programHeader.getProgramDetailList().get(0).setProgramTypeId(inputParam.getProgramTypeId());
-		
+		programHeader.getProgramDetailList().get(0).setProgramType(inputParam.getProgramType());
 		return programHeader;
 	}
 
@@ -222,11 +222,11 @@ public class ProgramServiceImpl implements IProgramService {
 			programHeader.setAuthorizedUser(ProgramConstant.NO);
 		}
 		programHeader.setRequestedDate( (dalProgramHeader.getRequestDate() != null ) ? dalProgramHeader.getRequestDate().getTime() : null);
-		if(dalProgramHeader.getCreatedBy() != null){
-			programHeader.setCreatedBy(dalProgramHeader.getCreatedBy().getUserName());
+		if(dalProgramDetail.getCreatedBy() != null){
+			programHeader.setCreatedBy(dalProgramDetail.getCreatedBy().getUserName());
 		}
 		
-		programHeader.setCreatedDate(dalProgramHeader.getCreatedDate().getTime());
+		programHeader.setCreatedDate(dalProgramDetail.getCreatedDate().getTime());
 		if(dalProgramDetail.getZmAppById() != null){
 			programHeader.setZoneManagerApprovedBy(dalProgramDetail.getZmAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getZmAppById().getLAST_NAME());
 			programHeader.setZoneManagerApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getZmAppDate()));	
@@ -662,7 +662,11 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setDisplayBeginDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramStartDate().getTime(), ProgramConstant.DATE_FORMAT));
 			programDetail.setDisplayEndDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramEndDate().getTime(), ProgramConstant.DATE_FORMAT));
 			programDetail.setBTL("Y".equalsIgnoreCase(dalProgramDetail.getBTL())?ProgramConstant.YES:ProgramConstant.NO);
-			if(dalProgramDetail.getDalProgramType() != null && dalProgramDetail.getDalProgramType().getId() == 1){
+			/**Below commented condition is wrong. Need to check.*/
+/*			if(dalProgramDetail.getDalProgramType() != null && dalProgramDetail.getDalProgramType().getId() == 1){
+				programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());	
+			}*/
+			if(dalProgramDetail.getPricingType() != null && dalProgramDetail.getDalProgramType() != null && dalProgramDetail.getDalProgramType().getId() == 1){
 				programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());	
 			}
 			if(dalProgramDetail.getPaidBasedOn() != null){

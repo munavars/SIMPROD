@@ -74,6 +74,7 @@ public class EmployeeService implements IEmployeeService {
 			employee.setBUSINESS_UNIT(dalEmp.getBUSINESS_UNIT());
 			employee.setEMAIL(dalEmp.getEMAIL());
 			employee.setEMP_ID(dalEmp.getId());
+			employee.setFIRST_NAME(dalEmp.getFIRST_NAME());
 			employee.setLAST_NAME(dalEmp.getLAST_NAME());
 			employee.setLOGIN_ID(dalEmp.getLOGIN_ID());
 			employee.setMANAGER_ID(dalEmp.getMANAGER_ID());

@@ -84,6 +84,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		DalProgramDetail returnEntity = baseDao.create(dalProgramDetail);
 		
 		if(returnEntity != null && returnEntity.getId() != null){
+			
+			returnEntity.getDalProgramHeader().setCreatedBy(returnEntity.getCreatedBy());
+			
 			if(programHeader.isCalculatedProgram()){
 				createProgramTierData(returnEntity.getId(), programHeader);	
 			}

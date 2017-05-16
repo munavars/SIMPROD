@@ -70,7 +70,7 @@
                       <i class="fa fa-bell-o"></i>
                       <span class="badge bg-important">7</span>
                   </a>
-                  <ul class="dropdown-menu extended notification">
+<!--                   <ul class="dropdown-menu extended notification">
                       <div class="notify-arrow notify-arrow-yellow"></div>
                       <li>
                           <p class="yellow">You have 7 new notifications</p>
@@ -89,7 +89,7 @@
                               <span class="small italic">4 hrs</span>
                           </a>
                       </li>
-                  </ul>
+                  </ul> -->
               </li>
               <!-- notification dropdown end -->
           </ul>
@@ -102,14 +102,12 @@
                   <!-- user login dropdown start-->
                   <li class="dropdown">
                      <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                     <span class="username">John Doe</span>
+                     <span class="username" id="loginUserName"></span>
+                     
                      <b class="caret"></b>
                      </a>
                      <ul class="dropdown-menu extended logout">
                         <div class="log-arrow-up"></div>
-                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
                         <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
                      </ul>
                   </li>
@@ -174,13 +172,18 @@
                              <div class="col-lg-12">
                                 <h5 data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Customer Details</h5>
                                 <!-- Edit button Begin -->
-                                 <a class="btn btn-info finish" id="edit-button" data-toggle="modal" href="#myModalEdit"><i class="fa fa-edit"></i>&nbsp;&nbsp;Edit</a>
+								<div class="modal-footer">
+	                                <button id="pdf-button" class="btn ">Generate PDF</button> <!-- <div class="space15">&nbsp;</div> -->
+	                                &nbsp;
+	                                <!-- EDIT BUTTON START -->
+	                                <a class="btn btn-info finish" id="edit-button" data-toggle="modal"  href="#myModalEdit"><i class="fa fa-edit"></i>&nbsp;&nbsp;Edit</a>
+                                </div>
                                	 <!-- Modal -->
 				                <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				                	<div class="modal-dialog">
 				                		<div class="modal-content">
 				                        	<div class="modal-header">
-				                            	<button id="modal-edit-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				                            	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 				                               	<h4 class="modal-title">Edit confirmation</h4>
 				                            </div>
 				                            <div class="modal-body">
@@ -189,8 +192,8 @@
 				                                <div class="space15"></div>
 				                            </div>
 				                            <div class="modal-footer">
-				                                    <button  id="modal-edit-cancel" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-													<a href="javascript: enableFields()"><button id="modal-edit-ok" class="btn btn-info" type="button"><i class="fa fa-edit"></i>&nbsp;&nbsp;OK</button></a>
+				                                    <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+													<a href="javascript: enableFields()"><button class="btn btn-info" type="button"><i class="fa fa-edit"></i>&nbsp;&nbsp;OK</button></a>
 				                            </div>
 										</div>
 									</div>
@@ -210,6 +213,7 @@
                                     <li>Requested Date: <span id="requestedDate"></span></li>
                                     <li>Created By: <span id="createdBy"></span></li>
                                     <li>Created Date: <span id="createdDate"></span></li>
+                                    <li>Program Type: <span id="programTypeHeader"></span></li>
                                  </ul>
                                 </div>
                                <div class="col-lg-4 col-md-5 col-sm-4">
@@ -626,12 +630,23 @@
 
         });
        </script>
-       
-      <script>
-		$(document).ready(function(){
-		       $('#from').datepicker();
-		       $('#to').datepicker();
+    
+    <!-- Inline javascript to set the user name from model attribute Begin -->
+	<script type="text/javascript" th:inline="javascript">
+		$(document).ready(function() {
+		   var modelAttributeValue = [[${loginUserNameValue}]];
+		   $("#loginUserName").html(modelAttributeValue);
 		});
+	</script>
+	<!-- Inline javascript to set the user name from model attribute End -->
+	
+	<script>
+		$(document).ready(function(){
+	       $('#from').datepicker();
+	       $('#to').datepicker();
+		});
+		
+		
 		var responseOnload;
 		getParams = new URLSearchParams(window.location.search);
 		var programId =getParams.get('pgmId'); 
@@ -687,6 +702,8 @@
                	if(response.data.createdDate != null){
                		$('#createdDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.createdDate)));
                	}
+               	$('#createdBy').html(response.data.createdBy);
+               	$('#programTypeHeader').html(response.data.programDetailList[0].programType);
                	$('#status').html(response.data.status);
                	
                	$('#zoneManagerApprovedBy').html(response.data.zoneManagerApprovedBy);
@@ -771,6 +788,8 @@
 					$('#save-program').hide();
 					$('#reject-program').hide();
                	}
+               	enabledExpandProgramButton();
+               	$('#pdf-button').attr('disabled', false);
          	}
          	
          	function fnPopulatePaidDetails(response){
@@ -918,8 +937,20 @@
 			}
 
 	</script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#pdf-button').click(function () {
+				//alert(responseOnload.programDetailList[0].id);
+				var a = document.createElement('a');
+			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
+				a.download =  'cust.pdf';
+			    a.click(); 
+			});
+		});
+	</script>
+
+	<!-- END JAVASCRIPTS -->
        
-       <!-- END JAVASCRIPTS -->
-       
-   </body>
+	</body>
 </html>

@@ -539,4 +539,43 @@ public class DalProgramDetail extends DalAuditableModel {
 		this.dalProgramType = dalProgramType;
 	}
 
+	@Override
+	public void setCreatedBy(DalEmployee createdBy) {
+		if(dalProgramHeader != null && dalProgramHeader.getId() == null){
+			dalProgramHeader.setCreatedBy(createdBy);
+		}
+		if(dalProgramDetPaidList != null && !dalProgramDetPaidList.isEmpty()){
+			for(DalProgramDetPaid dalProgramDetPaid : dalProgramDetPaidList){
+				if(dalProgramDetPaid.getId() == null){
+					dalProgramDetPaid.setCreatedBy(createdBy);
+				}
+			}
+		}
+		if(dalProgramDetAchievedList != null && !dalProgramDetAchievedList.isEmpty()){
+			for(DalProgramDetAchieved dalProgramDetAchieved  : dalProgramDetAchievedList){
+				if(dalProgramDetAchieved.getId() == null){
+					dalProgramDetAchieved.setCreatedBy(createdBy);
+				}
+			}
+		}
+		super.setCreatedBy(createdBy);
+	}
+	
+	@Override
+	public void setModifiedBy(DalEmployee modifiedBy) {
+		if(dalProgramHeader != null){
+			dalProgramHeader.setModifiedBy(modifiedBy);
+		}
+		if(dalProgramDetPaidList != null && !dalProgramDetPaidList.isEmpty()){
+			for(DalProgramDetPaid dalProgramDetPaid : dalProgramDetPaidList){
+				dalProgramDetPaid.setModifiedBy(modifiedBy);
+			}
+		}
+		if(dalProgramDetAchievedList != null && !dalProgramDetAchievedList.isEmpty()){
+			for(DalProgramDetAchieved dalProgramDetAchieved : dalProgramDetAchievedList){
+				dalProgramDetAchieved.setModifiedBy(modifiedBy);
+			}
+		}
+		super.setModifiedBy(modifiedBy);
+	}
 }

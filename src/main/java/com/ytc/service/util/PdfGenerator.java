@@ -163,7 +163,7 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 	         
-	         cell = new PdfPCell(new Paragraph("Created By: "+dalpgm.getCreatedBy().getUserName()));
+	         cell = new PdfPCell(new Paragraph("Created By: "+dalpgm.getCreatedBy().getFIRST_NAME()+" "+dalpgm.getCreatedBy().getLAST_NAME()));
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);

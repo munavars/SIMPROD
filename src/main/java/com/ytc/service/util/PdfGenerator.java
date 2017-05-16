@@ -4,9 +4,10 @@
 package com.ytc.service.util;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -20,15 +21,14 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
-import com.ytc.dal.jpa.BaseDao;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
 import com.ytc.dal.model.DalProgramDetail;
+import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalTagItems;
 import com.ytc.helper.ProgramServiceHelper;
-import com.ytc.service.impl.ProgramServiceImpl;
 
 /**
  * @author ArunP
@@ -344,26 +344,33 @@ public class PdfGenerator {
 	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         table.addCell(cell1);
 	         
+
+	         //To avoid having the cell border and the content overlap, if you are having thick cell borders
+	         //cell1.setUserBorderPadding(true);
+	         //cell2.setUserBorderPadding(true);
+	         //cell3.setUserBorderPadding(true);
+	        
+	         cell1 = new PdfPCell(new Paragraph("Achieved Based Frequency: "+dalpgm.getAchBasedFreq().getFrequency()));
+	         cell1.setBorderColor(BaseColor.BLACK);
+	         cell1.setPaddingLeft(10);
+	         //cell8.setHorizontalAlignment(Element.ALIGN_CENTER);
+	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	         table.addCell(cell1);
+	  
+	         cell1 = new PdfPCell(new Paragraph("Program Description: "+dalpgm.getLongDesc()));
+	         cell1.setBorderColor(BaseColor.BLACK);
+	         cell1.setPaddingLeft(10);
+	         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
+	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	         table.addCell(cell1);
+	         
 	         cell1 = new PdfPCell(new Paragraph(""));
 	         cell1.setBorderColor(BaseColor.BLACK);
 	         cell1.setPaddingLeft(10);
 	         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
 	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         table.addCell(cell1);
-	         //To avoid having the cell border and the content overlap, if you are having thick cell borders
-	         //cell1.setUserBorderPadding(true);
-	         //cell2.setUserBorderPadding(true);
-	         //cell3.setUserBorderPadding(true);
-	         /*table.addCell(cell1);
-	         table.addCell(cell2);
-	         table.addCell(cell3);
-	         table.addCell(cell4);
-	         table.addCell(cell5);
-	         table.addCell(cell6);
-	         table.addCell(cell7);
-	         table.addCell(cell8);
-	         table.addCell(cell9);*/
-	  
+	         
 	         document.add(table);
 	         
 	         document.add(new Paragraph("PAID BASED ON",f2));
@@ -465,25 +472,79 @@ public class PdfGenerator {
 		         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         achievedBaseTable.addCell(cell);
+
 		         
 		         for (Iterator iterator = dalpgm.getDalProgramDetAchievedList().iterator(); iterator.hasNext();) {
 		        	 DalProgramDetAchieved type = (DalProgramDetAchieved) iterator.next();
 		        	 cell = new PdfPCell(new Paragraph(baseDao.getEntityById(DalTagItems.class, type.getAchTagId()).getItem()));
+
+				
+			}
+	         
+	         document.add(achievedBaseTable);
+	        
+	         document.add(new Paragraph("PROGRAM SCHEDULE",f2));
+	         PdfPTable programScheduleTable = new PdfPTable(3); // 3 columns.
+	         programScheduleTable.setWidthPercentage(100); //Width 100%
+	         programScheduleTable.setSpacingBefore(10f); //Space before table
+	         programScheduleTable.setSpacingAfter(10f); //Space after table
+	  
+	         //Set Column widths
+	         programScheduleTable.setWidths(columnWidths);
+	  
+	         cell = new PdfPCell(new Paragraph("MARKER"));
+	         cell.setBorderColor(BaseColor.BLACK);
+	         cell.setPaddingLeft(10);
+	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	         programScheduleTable.addCell(cell);
+
+	         
+	         cell = new PdfPCell(new Paragraph("AMOUNT"));
+	         cell.setBorderColor(BaseColor.BLACK);
+	         cell.setPaddingLeft(10);
+	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	         programScheduleTable.addCell(cell);
+	         
+	         cell = new PdfPCell(new Paragraph("BEGINNING RANGE"));
+	         cell.setBorderColor(BaseColor.BLACK);
+	         cell.setPaddingLeft(10);
+	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+	         programScheduleTable.addCell(cell);     
+	         
+	         
+	         Map<String, Object> parameters = new HashMap<String, Object>();
+	         parameters.put("programDetailId", dalpgm.getId());
+				List<DalProgramDetailTier> dalProgramTierList = baseDao.getListFromNamedQueryWithParameter("DalProgramDetailTier.getAllTierForProgramId", 
+																parameters);
+				for (Iterator iterator = dalProgramTierList.iterator(); iterator.hasNext();) {
+					DalProgramDetailTier dalProgramDetailTier = (DalProgramDetailTier) iterator.next();
+					cell = new PdfPCell(new Paragraph(dalProgramDetailTier.getLevel().toString()));
+
 			         cell.setBorderColor(BaseColor.BLACK);
 			         cell.setPaddingLeft(10);
 			         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
 			         achievedBaseTable.addCell(cell);
 			         if("1".equalsIgnoreCase(type.getAchMethod())){
 			        	 cell = new PdfPCell(new Paragraph(type.getDisplayValue())); 
 			         }else{
 			        	 cell = new PdfPCell(new Paragraph("")); 
 			         }
-		        	 
+		        	
+			         programScheduleTable.addCell(cell);
+
+			         
+			         cell = new PdfPCell(new Paragraph(Double.toString(dalProgramDetailTier.getAmount())));
+
 			         cell.setBorderColor(BaseColor.BLACK);
 			         cell.setPaddingLeft(10);
 			         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
 			         achievedBaseTable.addCell(cell);
 			         
 			         if("2".equalsIgnoreCase(type.getAchMethod())){
@@ -491,10 +552,14 @@ public class PdfGenerator {
 			         }else{
 			        	 cell = new PdfPCell(new Paragraph("")); 
 			         }
+			         programScheduleTable.addCell(cell);
+			         
+			         cell = new PdfPCell(new Paragraph(dalProgramDetailTier.getBeginRange().toString()))
 			         cell.setBorderColor(BaseColor.BLACK);
 			         cell.setPaddingLeft(10);
 			         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+
 			         achievedBaseTable.addCell(cell);
 					
 				}
@@ -503,6 +568,13 @@ public class PdfGenerator {
 		        
 	         }
 
+			         programScheduleTable.addCell(cell);
+					
+				}
+				
+	         
+	         document.add(programScheduleTable);
+	     
 	         document.close();
 	         writer.close();
 	         System.out.println("file generated");

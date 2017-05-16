@@ -634,29 +634,29 @@ public class ProgramServiceImpl implements IProgramService {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
 		DecimalFormat df = new DecimalFormat("#.##"); 
 		String sql=QueryConstant.PROGRAM_LIST;
-		List<String> selectedValues = Arrays.asList(status.split(","));
-		List<String> customerId = Arrays.asList(custId.split(","));
 		Map<String, Object> queryParams = new HashMap<>();
-		queryParams.put("custId", customerId);
-		queryParams.put("status", selectedValues);
+		if("0".equalsIgnoreCase(custId)){
+			sql=QueryConstant.PROGRAM_LIST_ALL;
+			List<String> selectedValues = Arrays.asList(status.split(","));
+			queryParams.put("status", selectedValues);
+		}else{
+			List<String> selectedValues = Arrays.asList(status.split(","));
+			List<String> customerId = Arrays.asList(custId.split(","));
+			queryParams.put("custId", customerId);
+			queryParams.put("status", selectedValues);
+		}
+		
 		
 		List<DalProgramDetail> resultList =baseDao.getlist(DalProgramDetail.class, sql, queryParams);
 		//This section shld be moved to converter object
 		for (Iterator<DalProgramDetail> iterator = resultList.iterator(); iterator.hasNext();) {
 			DalProgramDetail dalProgramDetail = (DalProgramDetail) iterator.next();
 			ProgramDetail programDetail =new ProgramDetail();
-			//String queryString="select cast(CUSTOMER_NAME as varchar) CUSTOMER_NAME from CUSTOMER where Id in(select CUSTOMER_id from PROGRAM_HEADER where Id in(select pgm_hdr_id from PROGRAM_DETAIL where id=:id))";
-/*			String queryString="select * from CUSTOMER where Id in(select CUSTOMER_id from PROGRAM_HEADER where Id in(select pgm_hdr_id from PROGRAM_DETAIL where id=:id))";
-			Map<String, Object> querParams = new HashMap<>();
-			querParams.put("id", dalProgramDetail.getId());
-			List<DalCustomer> custlist=baseDao.getlist(DalCustomer.class,queryString,querParams);
-			programDetail.setCustomerName(custlist.get(0).getCustomerName());
-			programDetail.setCustomerId(custlist.get(0).getId().toString());*/
 			programDetail.setCustomerName(dalProgramDetail.getDalProgramHeader().getCustomer().getCustomerName());
 			programDetail.setCustomerId(dalProgramDetail.getDalProgramHeader().getCustomer().getId().toString());
 			programDetail.setProgramId(dalProgramDetail.getId());
 			programDetail.setProgramName(dalProgramDetail.getProgramMaster().getProgram());
-			programDetail.setPayoutFrequency(dalProgramDetail.getPaidFrequency().getFrequency());
+			programDetail.setPayoutFrequency(null!=dalProgramDetail.getPaidFrequency()?dalProgramDetail.getPaidFrequency().getFrequency():"");
 			programDetail.setBeginDate(dalProgramDetail.getProgramStartDate().getTime());
 			programDetail.setEndDate(dalProgramDetail.getProgramEndDate().getTime());
 			programDetail.setDisplayBeginDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getProgramStartDate().getTime(), ProgramConstant.DATE_FORMAT));
@@ -667,23 +667,22 @@ public class ProgramServiceImpl implements IProgramService {
 				programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());	
 			}*/
 			if(dalProgramDetail.getPricingType() != null && dalProgramDetail.getDalProgramType() != null && dalProgramDetail.getDalProgramType().getId() == 1){
+
 				programDetail.setPricingType(baseDao.getById(DalPricingType.class, dalProgramDetail.getPricingType()).getType());	
+			}else{
+				programDetail.setPricingType("");
 			}
-			if(dalProgramDetail.getPaidBasedOn() != null){
-				programDetail.setPaidBasedOn(dalProgramDetail.getPaidBasedOn().getBaseItem());	
-			}
-			if(dalProgramDetail.getAchBasedMetric() != null){
-				programDetail.setAchievedBasedOn(dalProgramDetail.getAchBasedMetric().getBaseItem());	
-			}
+			
+			programDetail.setPaidBasedOn(null!=dalProgramDetail.getPaidBasedOn()?dalProgramDetail.getPaidBasedOn().getBaseItem():"");
+			programDetail.setAchievedBasedOn(null!=dalProgramDetail.getAchBasedMetric()?dalProgramDetail.getAchBasedMetric().getBaseItem():"");
 			if(dalProgramDetail.getIsTiered() != null){
-				programDetail.setIsTiered(dalProgramDetail.getIsTiered().equalsIgnoreCase(ProgramConstant.ZERO)?ProgramConstant.NO:ProgramConstant.YES);	
-			}
-			if(dalProgramDetail.getTrueUp() != null){
-				programDetail.setTrueUp(dalProgramDetail.getTrueUp().equalsIgnoreCase("Y")?ProgramConstant.YES:ProgramConstant.NO);	
+				programDetail.setIsTiered(ProgramConstant.ZERO.equalsIgnoreCase(dalProgramDetail.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES);
 			}
 			programDetail.setAccrualAmount(Double.valueOf(df.format(dalProgramDetail.getAccrualAmount())));
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
-			
+			if(dalProgramDetail.getTrueUp() != null){
+				programDetail.setTrueUp("Y".equalsIgnoreCase(dalProgramDetail.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO);
+			}
 			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getForecastMarker()));
 			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?Integer.toString(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
 			String tierRate=ProgramConstant.ZERO;
@@ -700,7 +699,8 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setPayables(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getTotalPaidAmount():0);
 			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getBalance():ProgramConstant.ZERO);
 			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Empty");
-			programDetail.setProgramType(dalProgramDetail.getDalProgramType() != null ? dalProgramDetail.getDalProgramType().getType() : null);
+			programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
+			//programDetail.setProgramTypeId( dalProgramDetail.getDalProgramType().getId());
 			programDetailList.add(programDetail);
 		}
 		
@@ -779,7 +779,10 @@ public class ProgramServiceImpl implements IProgramService {
 	public List<ProgramDetail> getProgramDashboard(Integer id){
 		Integer empId=id;
 		List<ProgramDetail> pgm=new ArrayList<ProgramDetail>();
-		String queryString = "SELECT BASE_EMP_ID FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = '"+ empId+"' or LVL1_EMP_ID = '"+empId+"' or LVL2_EMP_ID = '"+empId+
+		if(empId==0){
+			pgm=getProgram("0","0,4");
+		}else{
+			String queryString = "SELECT BASE_EMP_ID FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = '"+ empId+"' or LVL1_EMP_ID = '"+empId+"' or LVL2_EMP_ID = '"+empId+
 					"' or LVL3_EMP_ID = '"+empId+"' or LVL4_EMP_ID = '"+empId+"' or LVL5_EMP_ID = '"+empId+"'";
 
 			Map<String, Object> queryParams = new HashMap<>();
@@ -791,8 +794,11 @@ public class ProgramServiceImpl implements IProgramService {
 				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4");
 			}
 			
+		}
+			
 		return pgm;
 	}
+	
 	
 	@Override
 	public  byte[] downloadPDF(String id) {

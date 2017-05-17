@@ -42,6 +42,7 @@ public class ProgramHeader extends Model{
 	private String authorizedUser;
 	private boolean calculatedProgram;
 	
+	private ProgramButton programButton = new ProgramButton();
 	private List<ProgramDetail> programDetailList = new ArrayList<ProgramDetail>();
 	
 	public List<ProgramDetail> getProgramDetailList() {
@@ -199,5 +200,11 @@ public class ProgramHeader extends Model{
 	}
 	public void setCalculatedProgram(boolean calculatedProgram) {
 		this.calculatedProgram = calculatedProgram;
+	}
+	public ProgramButton getProgramButton() {
+		return programButton;
+	}
+	public void setProgramButton(ProgramButton programButton) {
+		this.programButton = programButton;
 	}
 }

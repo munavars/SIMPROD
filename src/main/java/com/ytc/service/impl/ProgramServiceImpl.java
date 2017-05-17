@@ -30,6 +30,7 @@ import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalEmployeeHierarchy;
+import com.ytc.dal.model.DalEmployeeTitle;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
@@ -42,6 +43,7 @@ import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalTagItems;
 import com.ytc.helper.ProgramServiceHelper;
+import com.ytc.helper.ProgramServiceWorkflowHelper;
 import com.ytc.service.IProgramService;
 import com.ytc.service.util.PdfGenerator;
 
@@ -79,13 +81,32 @@ public class ProgramServiceImpl implements IProgramService {
 		
 		if(dalProgramDetail != null){
 			getExistingProgramDetails(inputParam.getEmployee(), programHeader, dalProgramDetail);
+			getButtonBehaviorDetails(inputParam.getEmployee(), programHeader, dalProgramDetail);
 		}	
 		else{
 			getNewProgramDetails(inputParam.getCustomerId(), inputParam.getEmployee(), programHeader);
+			getNewProgramButtonBehaviorDetails(programHeader);
 		}
 		programHeader.getProgramDetailList().get(0).setProgramTypeId(inputParam.getProgramTypeId());
 		programHeader.getProgramDetailList().get(0).setProgramType(inputParam.getProgramType());
 		return programHeader;
+	}
+
+
+	private void getNewProgramButtonBehaviorDetails(ProgramHeader programHeader) {
+		if(programHeader != null){
+			ProgramServiceWorkflowHelper.setNewProgramButtonProperties(programHeader);
+		}
+	}
+
+
+	private void getButtonBehaviorDetails(Employee employee, ProgramHeader programHeader,
+			DalProgramDetail dalProgramDetail) {
+		if(employee != null && programHeader != null && dalProgramDetail != null){
+			DalEmployeeTitle dalEmployeeTitle = baseDao.getById(DalEmployeeTitle.class, Integer.valueOf(employee.getTITLE_ID()));
+			ProgramServiceWorkflowHelper.setProgramButtonProperties(dalEmployeeTitle, programHeader, dalProgramDetail);
+		}
+		
 	}
 
 
@@ -146,9 +167,9 @@ public class ProgramServiceImpl implements IProgramService {
 			populateTierData(programHeader, dalProgramDetail);
 		}
 		
-		if(dalProgramHeader.getStatus() != null && !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramHeader.getStatus().getType())){
+/*		if(dalProgramHeader.getStatus() != null && !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramHeader.getStatus().getType())){
 			programHeader.setNewProgram(true);
-		}
+		}*/
 	}
 
 
@@ -223,7 +244,7 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		programHeader.setRequestedDate( (dalProgramHeader.getRequestDate() != null ) ? dalProgramHeader.getRequestDate().getTime() : null);
 		if(dalProgramDetail.getCreatedBy() != null){
-			programHeader.setCreatedBy(dalProgramHeader.getRequest().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramHeader.getRequest().getLAST_NAME());
+			programHeader.setCreatedBy(dalProgramDetail.getCreatedBy().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getCreatedBy().getLAST_NAME());
 		}
 		
 		programHeader.setCreatedDate(dalProgramDetail.getCreatedDate().getTime());

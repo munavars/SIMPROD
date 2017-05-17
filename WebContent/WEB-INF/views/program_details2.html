@@ -230,10 +230,10 @@
                                    <ul class="list-unstyled w-list">
                                     <li>Zone Manager Approved By: <span id="zoneManagerApprovedBy"></li>
                                     <li>Zone Manager Approved Date: <span id="zoneManagerApprovedDate"></li>
-                                    <li>Director Approved By: <span id="directorApprovedBy"></li>
+                                   <!--  <li>Director Approved By: <span id="directorApprovedBy"></li>
                                     <li>Director Approved Date: <span id="directorApprovedDate"></li>
                                     <li>Executive Approved By: <span id="executiveApprovedBy"</li>
-                                    <li>Executive Approved Date: <span id="executiveApprovedDate"</li>
+                                    <li>Executive Approved Date: <span id="executiveApprovedDate"</li> -->
                                     <li>TBP Approved By: <span id="tbpApprovedBy"</li>
                                     <li>TBP Approved Date: <span id="tbpApprovedDate"</li>
                                     <li>Status: <span id="status"</li>
@@ -247,6 +247,55 @@
                                     <li>Balance: <span class="text-right" id="balance">$ </span></li>
                                  </ul>
                               </div>
+                              
+                             <table class="table table-striped table-hover table-bordered" id="editabletest">
+							<thead>
+                              <tr class="rowvis" style="background-color: #cacbce;">
+                                <th>Pgm ID</th>
+                                <th>Program</th>
+                                <th>Frequency</th>								
+                                <th>Begin Date</th>
+                                <th>End Date</th>
+                                <th>BTL</th>
+                                <th>LT / Promo</th>	
+                                <th>Paid Based On</th>								
+                                <th>Tiered </th>
+                                <th>Achieve Based On</th>
+                                <th>True Up</th>								
+                                <th>Accrual Amount</th>
+                                <th>Accrual Type</th>
+								<th>Current Tier</th>
+								<th>Begin Range</th>
+								<th>Tier Rate</th>								
+                                <th>Accrued Amount</th>
+                                <th>Credit Amount</th>
+                                <th>Payables</th>								
+                                <th>GL Balance</th>
+                              </tr></thead>
+                              <tbody>
+                              <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              </tr>
+                              </tbody></table>
                            </div>
                        </div>
                        </div>
@@ -907,7 +956,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			}
          	
          	function fnPopulateProgramDetails(response){
-         	
 				includePaid = response.data.programDetailList[0].programPaidOn.includedMap;
 				excludePaid = response.data.programDetailList[0].programPaidOn.excludedMap;
 				includeAchieve = response.data.programDetailList[0].programAchieveOn.includedMap;
@@ -915,7 +963,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
             		
 				var a = document.getElementById('cancelLink'); //for now. this has to be revisited.
 				a.href = "/SIM/customer?custId=" + response.data.customerId;
-            		
+            	//alert($('#program_name_inputselect').val);	
+								
             	/*Program Header Section*/
 				$("#customerId").html(response.data.customerId);
                	$("#customerName").html(response.data.customerName);
@@ -1056,6 +1105,53 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					$('#reject-program').hide();
                	}
                	enabledExpandProgramButton();
+               	fnPopulateProgramDetailTable();
+               
+         	}
+         	
+         	function fnPopulateProgramDetailTable(){                
+         		$('#editabletest tbody').find('tr').each(function(i) {
+
+                    var $tds = $(this).find('td'),
+                    marker = $tds.eq(0).text(),
+                    amount = $tds.eq(1).text(),
+                    range = $tds.eq(2).text();
+                    $tds.eq(0).text(responseOnload.programDetailList[0].id);
+                    $tds.eq(1).text($('#program_name_inputselect option:selected').text());
+                    $tds.eq(2).text($('#payout_freq_inputselect option:selected').text());
+                    $tds.eq(3).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].beginDate)));
+                    $tds.eq(4).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].endDate)));
+                    $tds.eq(5).text($('#btl_inputselect option:selected').text());
+                    $tds.eq(6).text($('#pricing_type_inputselect option:selected').text());
+                    $tds.eq(7).text($('#paid_basedon_inputselect option:selected').text());
+                    $tds.eq(8).text((responseOnload.programDetailList[0].programPaidOn.isTiered==true)?'Yes':'No');
+                    $tds.eq(9).text($('#achieve_basedon_inputselect option:selected').text());
+                    $tds.eq(10).text((responseOnload.programDetailList[0].programPaidOn.isTrueUp==true)?'Yes':'No');
+                    $tds.eq(11).text($("#amount").val());
+                    $tds.eq(12).text(responseOnload.programDetailList[0].amountType);
+                    $('#tier-schedule tbody').find('tr').each(function(i) {
+                    	 var tds = $(this).find('td'),
+                         marker = tds.eq(0).text(),
+                         amount = tds.eq(1).text(),
+                         range = tds.eq(2).text();
+                    	 
+                    	 if(marker==responseOnload.programDetailList[0].actualMarker){
+                    		 $tds.eq(13).text(responseOnload.programDetailList[0].actualMarker);
+                             $tds.eq(14).text(range);
+                             $tds.eq(15).text(amount+responseOnload.programDetailList[0].amountTypeTier); 
+                             if('$'==responseOnload.programDetailList[0].amountTypeTier){
+                            	 $tds.eq(15).text(responseOnload.programDetailList[0].amountTypeTier+amount);  
+                             }
+                    	 }
+                    });
+                   
+                    $tds.eq(16).text(0);
+                    $tds.eq(17).text(0);
+                    $tds.eq(18).text(0);
+                    $tds.eq(19).text(0);
+                                            
+                    
+                });
          	}
          	
          	function fnPopulateProgramTier(tierData){                
@@ -1165,7 +1261,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			}
 			function disableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
-				
+				$('#pdf-button').attr('disabled', false);
 				 //.btn.disabled
 				$("#program-parent-div").find('a').addClass("disabled");
 				if(responseOnload.authorizedUser == 'Yes'){
@@ -1174,7 +1270,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					$('#modal-edit-cancel').attr('disabled', false);
 					$('#modal-edit-ok').attr('disabled', false);
 					$('#modal-edit-close').attr('disabled', false);
-					$('#pdf-button').attr('disabled', false);
 					enabledExpandProgramButton();
 				}
 				$('#cancel-program').attr('disabled', false);
@@ -1300,10 +1395,9 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#pdf-button').click(function () {
-				//alert(responseOnload.programDetailList[0].id);
 				var a = document.createElement('a');
 			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
-				a.download =  'cust.pdf';
+				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
 			    a.click(); 
 			});
 		});

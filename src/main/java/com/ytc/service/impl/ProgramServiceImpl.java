@@ -683,7 +683,7 @@ public class ProgramServiceImpl implements IProgramService {
 			if(dalProgramDetail.getTrueUp() != null){
 				programDetail.setTrueUp("Y".equalsIgnoreCase(dalProgramDetail.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO);
 			}
-			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getForecastMarker()));
+			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getActualMarker()));
 			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?Integer.toString(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
 			String tierRate=ProgramConstant.ZERO;
 			if(null!=dalProgramDetail.getPgmDetailTier()){

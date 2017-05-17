@@ -18,6 +18,7 @@ import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
+import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
@@ -28,6 +29,7 @@ import com.ytc.dal.model.DalStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramUpdateService;
+import com.ytc.service.ServiceContext;
 
 public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	
@@ -36,6 +38,9 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	
 	@Autowired
 	private IProgramCreateService programCreateService;
+	
+	@Autowired
+	private ServiceContext serviceContext;
 	
 	@Override
 	public ProgramHeader saveProgramDetails(ProgramHeader programHeader) {
@@ -85,7 +90,8 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				
 				/**Setting the value to true */
 				if(dalProgramDetail.getDalProgramHeader().getStatus() != null 
-						&& !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())){
+						&& !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
+						&& "1".equals(programHeader.getProgramButton().getUserLevel())){
 					programHeader.setNewProgram(true);
 				}
 				else{
@@ -371,7 +377,6 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			dalProgramDet.setPayTo(programDetail.getPayTo());
 			if(programDetail.getPaidType()!= null){
 				dalProgramDet.setPaidType(Integer.valueOf(programDetail.getPaidType()));
-			
 			}				
 			dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "1" : "0");
 			dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
@@ -383,8 +388,24 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
 				dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));				
 			}
-			dalProgramDet.setActualMarker(programDetail.getActualMarker());
+			if(programDetail.getActualMarker() != null){
+				dalProgramDet.setActualMarker(programDetail.getActualMarker());	
+			}
 			dalProgramDet.setStatus(dalProgramDet.getDalProgramHeader().getStatus());
+			if(ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel())){
+				if(serviceContext != null && serviceContext.getEmployee() != null){
+					dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, serviceContext.getEmployee().getEMP_ID()));
+					dalProgramDet.setZmAppDate(Calendar.getInstance());
+					dalProgramDet.setZmAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
+				}
+			}
+			else if(ProgramConstant.USER_LEVEL_3.equals(programHeader.getProgramButton().getUserLevel())){
+				if(serviceContext != null && serviceContext.getEmployee() != null){
+					dalProgramDet.setTbpAppById(baseDao.getById(DalEmployee.class, serviceContext.getEmployee().getEMP_ID()));
+					dalProgramDet.setTbpAppDate(Calendar.getInstance());
+					dalProgramDet.setTbAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
+				}
+			}
 		}
 
 		return dalProgramDet;

@@ -804,8 +804,53 @@
 					$('#reject-program').hide();
                	}
                	enabledExpandProgramButton();
+               	fnPopulateProgramDetailTable();
          	}
          	
+		function fnPopulateProgramDetailTable(){                
+     		$('#editabletest tbody').find('tr').each(function(i) {
+
+                var $tds = $(this).find('td'),
+                marker = $tds.eq(0).text(),
+                amount = $tds.eq(1).text(),
+                range = $tds.eq(2).text();
+                $tds.eq(0).text(responseOnload.programDetailList[0].id);
+                $tds.eq(1).text($('#program_name_inputselect option:selected').text());
+                $tds.eq(2).text($('#payout_freq_inputselect option:selected').text());
+                $tds.eq(3).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].beginDate)));
+                $tds.eq(4).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].endDate)));
+                $tds.eq(5).text($('#btl_inputselect option:selected').text());
+                $tds.eq(6).text($('#pricing_type_inputselect option:selected').text());
+                $tds.eq(7).text($('#paid_basedon_inputselect option:selected').text());
+                $tds.eq(8).text((responseOnload.programDetailList[0].programPaidOn.isTiered==true)?'Yes':'No');
+                $tds.eq(9).text($('#achieve_basedon_inputselect option:selected').text());
+                $tds.eq(10).text((responseOnload.programDetailList[0].programPaidOn.isTrueUp==true)?'Yes':'No');
+                $tds.eq(11).text($("#amount").val());
+                $tds.eq(12).text(responseOnload.programDetailList[0].amountType);
+                $('#tier-schedule tbody').find('tr').each(function(i) {
+                	 var tds = $(this).find('td'),
+                     marker = tds.eq(0).text(),
+                     amount = tds.eq(1).text(),
+                     range = tds.eq(2).text();
+                	 
+                	 if(marker==responseOnload.programDetailList[0].actualMarker){
+                		 $tds.eq(13).text(responseOnload.programDetailList[0].actualMarker);
+                         $tds.eq(14).text(range);
+                         $tds.eq(15).text(amount+responseOnload.programDetailList[0].amountTypeTier); 
+                         if('$'==responseOnload.programDetailList[0].amountTypeTier){
+                        	 $tds.eq(15).text(responseOnload.programDetailList[0].amountTypeTier+amount);  
+                         }
+                	 }
+                });
+               
+                $tds.eq(16).text(0);
+                $tds.eq(17).text(0);
+                $tds.eq(18).text(0);
+                $tds.eq(19).text(0);
+                                        
+                
+            });
+     	}
          	function fnPopulatePaidDetails(response){
 				fnPopulateTextArea(response.data.programDetailList[0].programPaidOn.includedMap, 'include');
 				fnPopulateTextArea(response.data.programDetailList[0].programPaidOn.excludedMap, 'exclude');
@@ -866,7 +911,7 @@
 			}
 			function disableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
-				
+				$('#pdf-button').attr('disabled', false);
 				 //.btn.disabled
 				$("#program-parent-div").find('a').addClass("disabled");
 				if(responseOnload.authorizedUser == 'Yes'){
@@ -875,7 +920,7 @@
 					$('#modal-edit-cancel').attr('disabled', false);
 					$('#modal-edit-ok').attr('disabled', false);
 					$('#modal-edit-close').attr('disabled', false);
-					$('#pdf-button').attr('disabled', false);
+					
 					enabledExpandProgramButton();
 				}
 				$('#cancel-program').attr('disabled', false);

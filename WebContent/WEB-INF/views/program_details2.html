@@ -1126,20 +1126,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                		
                		hideShowButtonsOnLoad(response.data);
                	}
-<<<<<<< Updated upstream
-               	if(response.data.newProgram == false){
-               		$('#submit-program').attr('disabled', false);
-					$('#submit-program').removeClass("disabled");
-					$('#program-submit-modal-cancel').attr('disabled', false);
-					$('#program-submit-modal-ok').attr('disabled', false);
-					$('#program-submit-modal-close').attr('disabled', false);	
-					
-					$('#save-program').hide();
-					$('#reject-program').hide();
-               	}
-               	enabledExpandProgramButton();
+               	enabledButtonApplicableToAll();
                	fnPopulateProgramDetailTable();
-               
          	}
          	
          	function fnPopulateProgramDetailTable(){                
@@ -1185,8 +1173,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                                             
                     
                 });
-=======
-               	enabledButtonApplicableToAll();
          	}
          	
 			function hideShowButtonsOnLoad(responseOnload1){

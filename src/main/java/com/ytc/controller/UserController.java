@@ -73,6 +73,11 @@ public class UserController extends BaseController {
 	public String validateLoginPage(HttpServletRequest request, Model model) {
 
 		logger.info("UserController.processLogin");
+		if((serviceContext.getEmployee() != null)&&("1".equalsIgnoreCase(serviceContext.getEmployee().getACTIVE()))){
+			String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			model.addAttribute("loginUserNameValue", userName);
+			return "index";
+		}
 		List<Employee> employee = null;
 		String destination = "loginError";
 		String theUserid = request.getParameter("userid");

@@ -13,6 +13,16 @@ $(function() {
     });
 });
 
+window.onbeforeunload = function (){
+	 $.ajax({
+			type: "POST",
+			url: "/SIM/browserclose",
+			dataType: 'json',
+			contentType: 'application/json',
+			data: {}
+	    });
+};
+
 // right slidebar
 
 $(function(){

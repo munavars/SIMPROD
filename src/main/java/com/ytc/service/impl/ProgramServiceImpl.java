@@ -799,17 +799,17 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgramDashboard(Integer id){
 		Integer empId=id;
+		Map<String, Object> queryParams = new HashMap<>();
 		List<ProgramDetail> pgm=new ArrayList<ProgramDetail>();
 		if(empId==0){
 			pgm=getProgram("0","0,4");
 		}else{
-			String queryString = "SELECT BASE_EMP_ID FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = '"+ empId+"' or LVL1_EMP_ID = '"+empId+"' or LVL2_EMP_ID = '"+empId+
-					"' or LVL3_EMP_ID = '"+empId+"' or LVL4_EMP_ID = '"+empId+"' or LVL5_EMP_ID = '"+empId+"'";
-
-			Map<String, Object> queryParams = new HashMap<>();
+			String queryString = QueryConstant.EMPLOYEE_HIER_LIST;
+			queryParams.put("loginId", empId);
 			List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+			queryParams = new HashMap<>();
 			if((userIdList.size()>1)||((userIdList.size()==1)&&(baseDao.getEntityById(DalEmployeeHierarchy.class, Integer.parseInt(userIdList.get(0))).getBaseTitle().equalsIgnoreCase("Account Manager")))){
-				String sql="select ID from CUSTOMER where ACCOUNT_MANAGER in(:userId)";
+				String sql=QueryConstant.CUSTOMER_LIST_MGR;
 				queryParams.put("userId", userIdList);
 				List<String> customerId=baseDao.getListFromNativeQuery(sql, queryParams);		
 				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4");

@@ -66,12 +66,14 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 
 		DalProgramDetail dalProgramDetail =  createProgramDetailsData(programHeader);
 		dalProgramDetail.setStatus(dalProgramHeader.getStatus());
+		setApproverLevelStatus(dalProgramDetail, programHeader);
 		if(dalProgramHeader != null && dalProgramHeader.getDalProgramDetailList() != null){
 			dalProgramHeader.getDalProgramDetailList().add(dalProgramDetail);
 			dalProgramHeader.setCreatedBy(dalProgramDetail.getCreatedBy());
 			dalProgramHeader.setModifiedBy(dalProgramDetail.getModifiedBy());
 		}
 		dalProgramDetail.setDalProgramHeader(dalProgramHeader);
+		
 
 		/** save Program Paid Based on*/
 		createProgramPaidBasedOnData(dalProgramHeader, programHeader, dalProgramDetail);
@@ -95,7 +97,8 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			programHeader.setSuccess(true);
 			programHeader.setStatus(returnEntity.getStatus().getType());
 			if(returnEntity.getDalProgramHeader().getStatus() != null 
-					&& !ProgramConstant.IN_PROGRESS_STATUS.equals(returnEntity.getDalProgramHeader().getStatus().getType()) 
+					&& !ProgramConstant.IN_PROGRESS_STATUS.equals(returnEntity.getDalProgramHeader().getStatus().getType())
+					&& !ProgramConstant.REJECTED_STATUS.equals(returnEntity.getDalProgramHeader().getStatus().getType())
 					&& "1".equals(programHeader.getProgramButton().getUserLevel())){
 				programHeader.setNewProgram(true);
 			}
@@ -105,6 +108,30 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		}
 		
 		return programHeader;
+	}
+	
+	/**
+	 * This method is to set the Zone manager and TBP manage status based on the current status or action
+	 * taken by the logged in user.
+	 * @param dalProgramDet dalProgramDet
+	 * @param programHeader programHeader
+	 */
+	private void setApproverLevelStatus(DalProgramDetail dalProgramDet, ProgramHeader programHeader) {
+		List<DalStatus> dalStatusList =  baseDao.getListFromNamedQuery("DalStatus.getAllDetails");
+		if(ProgramConstant.USER_LEVEL_1.equals(programHeader.getProgramButton().getUserLevel())){
+			if(ProgramConstant.PENDING_STATUS.equals(dalProgramDet.getStatus().getType())){
+				if(dalStatusList != null && !dalStatusList.isEmpty()){
+					for(DalStatus dalStatus : dalStatusList){
+						if(ProgramConstant.WAITING_STATUS.equals(dalStatus.getType())){
+							dalProgramDet.setTbAppStatus(dalStatus.getId());
+							break;
+						}
+					}
+				}
+				dalProgramDet.setZmAppStatus(dalProgramDet.getStatus().getId());
+			}
+
+		}
 	}
 
 	private void createProgramTierData(Integer id, ProgramHeader programHeader) {

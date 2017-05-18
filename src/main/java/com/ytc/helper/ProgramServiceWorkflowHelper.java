@@ -28,22 +28,20 @@ public class ProgramServiceWorkflowHelper {
 			if(consumerProgramStatusEnum != null && loggedInUserLevel != null){
 				if(ConsumerProgramStatusEnum.INPROGRESS.getProgramStatus().equalsIgnoreCase(programStatus)){
 					setInProgressBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel);
+					programHeader.setNewProgram(false);
 				}
 				else if(ConsumerProgramStatusEnum.PENDING.getProgramStatus().equalsIgnoreCase(programStatus)){
 					setPendingManagerApprovalBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel, dalProgramDetail);
+					programHeader.setNewProgram(false);
 				}
-/*				else if(ConsumerProgramStatusEnum.PENDING_TBP_APPROVAL.getProgramStatus().equalsIgnoreCase(programStatus)){
-					setPendingTBPApprovalBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel);
-				}*/
-				else if(ConsumerProgramStatusEnum.ACTIVE.getProgramStatus().equalsIgnoreCase(programStatus)){
+				else if(ConsumerProgramStatusEnum.ACTIVE.getProgramStatus().equalsIgnoreCase(programStatus) ||  
+						ConsumerProgramStatusEnum.APPROVED.getProgramStatus().equalsIgnoreCase(programStatus)){
 					setApprovedBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel);
 					programHeader.setNewProgram(true);
 				}
-				else if(ConsumerProgramStatusEnum.REJECTED_BY_MANAGER.getProgramStatus().equalsIgnoreCase(programStatus)){
+				else if(ConsumerProgramStatusEnum.REJECTED.getProgramStatus().equalsIgnoreCase(programStatus)){
 					setRejectedBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel);
-				}
-				else if(ConsumerProgramStatusEnum.REJECTED_BY_TBP.getProgramStatus().equalsIgnoreCase(programStatus)){
-					setRejectedBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel);
+					programHeader.setNewProgram(false);
 				}
 			}
 		}
@@ -51,101 +49,57 @@ public class ProgramServiceWorkflowHelper {
 
 	private static void setRejectedBehaviour(ProgramHeader programHeader,
 			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel) {
-		programHeader.getProgramButton().setCancel(true);
-		programHeader.getProgramButton().setApprove(false);
-		programHeader.getProgramButton().setReject(false);
+		programHeader.getProgramButton().setApprover(false);
 		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel())){
-			programHeader.getProgramButton().setEdit(true);
-			programHeader.getProgramButton().setSave(true);
-			programHeader.getProgramButton().setSubmit(true);	
+			programHeader.getProgramButton().setCreater(true);	
 		}
 		else{
-			programHeader.getProgramButton().setEdit(false);
-			programHeader.getProgramButton().setSave(false);
-			programHeader.getProgramButton().setSubmit(false);
+			programHeader.getProgramButton().setCreater(false);
 		}
 	}
 
 	private static void setApprovedBehaviour(ProgramHeader programHeader,
 			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel) {
-		programHeader.getProgramButton().setCancel(true);
-		programHeader.getProgramButton().setApprove(false);
-		programHeader.getProgramButton().setReject(false);
+		programHeader.getProgramButton().setApprover(false);
 		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel())){
-			programHeader.getProgramButton().setEdit(true);
-			programHeader.getProgramButton().setSave(true);
-			programHeader.getProgramButton().setSubmit(true);	
+			programHeader.getProgramButton().setCreater(true);	
 		}
 		else{
-			programHeader.getProgramButton().setEdit(false);
-			programHeader.getProgramButton().setSave(false);
-			programHeader.getProgramButton().setSubmit(false);
+			programHeader.getProgramButton().setCreater(false);	
 		}
 	}
 
-/*	private static void setPendingTBPApprovalBehaviour(ProgramHeader programHeader,
-			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel) {
-		programHeader.getProgramButton().setCancel(true);
-		programHeader.getProgramButton().setEdit(false);
-		programHeader.getProgramButton().setSave(false);
-		programHeader.getProgramButton().setSubmit(false);
-		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel())){
-			programHeader.getProgramButton().setApprove(true);
-			programHeader.getProgramButton().setReject(true);
-		}
-		else{
-			programHeader.getProgramButton().setApprove(false);
-			programHeader.getProgramButton().setReject(false);
-		}
-	}
-*/
 	private static void setPendingManagerApprovalBehaviour(ProgramHeader programHeader,
 			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel,
 			DalProgramDetail dalProgramDetail) {
-		programHeader.getProgramButton().setCancel(true);
-		programHeader.getProgramButton().setEdit(false);
-		programHeader.getProgramButton().setSave(false);
-		programHeader.getProgramButton().setSubmit(false);
+		programHeader.getProgramButton().setCreater(false);	
 		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel()) && dalProgramDetail.getZmAppById() == null){
-			programHeader.getProgramButton().setApprove(true);
-			programHeader.getProgramButton().setReject(true);
+			programHeader.getProgramButton().setApprover(true);
 		}
-		else if(dalProgramDetail.getZmAppById() != null && ProgramConstant.USER_LEVEL_3.equals(loggedInUserLevel) && dalProgramDetail.getTbpAppById() == null) {
-			programHeader.getProgramButton().setApprove(true);
-			programHeader.getProgramButton().setReject(true);
+		else if(dalProgramDetail.getZmAppById() != null && Integer.valueOf(ProgramConstant.USER_LEVEL_3).equals(loggedInUserLevel) && dalProgramDetail.getTbpAppById() == null) {
+			programHeader.getProgramButton().setApprover(true);
 		}
 		else{
-			programHeader.getProgramButton().setApprove(false);
-			programHeader.getProgramButton().setReject(false);
+			programHeader.getProgramButton().setApprover(false);
 		}
 		
 	}
 
 	private static void setInProgressBehaviour(ProgramHeader programHeader,
 			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel) {
-		programHeader.getProgramButton().setCancel(true);
-		programHeader.getProgramButton().setApprove(false);
-		programHeader.getProgramButton().setReject(false);
+		programHeader.getProgramButton().setApprover(false);
 		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel())){
-			programHeader.getProgramButton().setEdit(true);
-			programHeader.getProgramButton().setSave(true);
-			programHeader.getProgramButton().setSubmit(true);	
+			programHeader.getProgramButton().setCreater(true);		
 		}
 		else{
-			programHeader.getProgramButton().setEdit(false);
-			programHeader.getProgramButton().setSave(false);
-			programHeader.getProgramButton().setSubmit(false);
+			programHeader.getProgramButton().setCreater(false);	
 		}
 	}
 
 	public static void setNewProgramButtonProperties(ProgramHeader programHeader) {
 		programHeader.getProgramButton().setUserLevel(ConsumerProgramStatusEnum.INPROGRESS.getUserLevel().toString());
-		programHeader.getProgramButton().setCancel(true);
-		programHeader.getProgramButton().setApprove(false);
-		programHeader.getProgramButton().setReject(false);
-		programHeader.getProgramButton().setEdit(true);
-		programHeader.getProgramButton().setSave(true);
-		programHeader.getProgramButton().setSubmit(true);
+		programHeader.getProgramButton().setApprover(false);
+		programHeader.getProgramButton().setCreater(true);	
 	}
 
 }

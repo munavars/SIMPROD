@@ -91,6 +91,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				/**Setting the value to true */
 				if(dalProgramDetail.getDalProgramHeader().getStatus() != null 
 						&& !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
+						&& !ProgramConstant.REJECTED_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
 						&& "1".equals(programHeader.getProgramButton().getUserLevel())){
 					programHeader.setNewProgram(true);
 				}
@@ -392,23 +393,59 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setActualMarker(programDetail.getActualMarker());	
 			}
 			dalProgramDet.setStatus(dalProgramDet.getDalProgramHeader().getStatus());
-			if(ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel())){
-				if(serviceContext != null && serviceContext.getEmployee() != null){
-					dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, serviceContext.getEmployee().getEMP_ID()));
-					dalProgramDet.setZmAppDate(Calendar.getInstance());
-					dalProgramDet.setZmAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
-				}
-			}
-			else if(ProgramConstant.USER_LEVEL_3.equals(programHeader.getProgramButton().getUserLevel())){
-				if(serviceContext != null && serviceContext.getEmployee() != null){
-					dalProgramDet.setTbpAppById(baseDao.getById(DalEmployee.class, serviceContext.getEmployee().getEMP_ID()));
-					dalProgramDet.setTbpAppDate(Calendar.getInstance());
-					dalProgramDet.setTbAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
-				}
-			}
+			setApproverLevelStatus(dalProgramDet, programHeader);
 		}
 
 		return dalProgramDet;
+	}
+
+	/**
+	 * This method is to set the Zone manager and TBP manage status based on the current status or action
+	 * taken by the logged in user.
+	 * @param dalProgramDet dalProgramDet
+	 * @param programHeader programHeader
+	 */
+	private void setApproverLevelStatus(DalProgramDetail dalProgramDet, ProgramHeader programHeader) {
+		List<DalStatus> dalStatusList =  baseDao.getListFromNamedQuery("DalStatus.getAllDetails");
+		if(ProgramConstant.USER_LEVEL_1.equals(programHeader.getProgramButton().getUserLevel())){
+			if(ProgramConstant.PENDING_STATUS.equals(dalProgramDet.getStatus().getType())){
+				if(dalStatusList != null && !dalStatusList.isEmpty()){
+					for(DalStatus dalStatus : dalStatusList){
+						if(ProgramConstant.WAITING_STATUS.equals(dalStatus.getType())){
+							dalProgramDet.setTbAppStatus(dalStatus.getId());
+							break;
+						}
+					}
+				}
+				dalProgramDet.setZmAppStatus(dalProgramDet.getStatus().getId());
+			}
+
+		}
+		if(ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel())){
+			if(serviceContext != null && serviceContext.getEmployee() != null){
+				dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, serviceContext.getEmployee().getEMP_ID()));
+				dalProgramDet.setZmAppDate(Calendar.getInstance());
+				if(dalStatusList != null && !dalStatusList.isEmpty() && ProgramConstant.PENDING_STATUS.equals(dalProgramDet.getDalProgramHeader().getStatus().getType())){
+					dalProgramDet.setTbAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
+					for(DalStatus dalStatus : dalStatusList){
+						if(ProgramConstant.APPROVED_STATUS.equals(dalStatus.getType())){
+							dalProgramDet.setZmAppStatus(dalStatus.getId());
+							break;
+						}
+					}
+				}
+				else{
+					dalProgramDet.setZmAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
+				}
+			}
+		}
+		else if(ProgramConstant.USER_LEVEL_3.equals(programHeader.getProgramButton().getUserLevel())){
+			if(serviceContext != null && serviceContext.getEmployee() != null){
+				dalProgramDet.setTbpAppById(baseDao.getById(DalEmployee.class, serviceContext.getEmployee().getEMP_ID()));
+				dalProgramDet.setTbpAppDate(Calendar.getInstance());
+				dalProgramDet.setTbAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
+			}
+		}
 	}
 	
 	public void getNewlyAddedAchieveDetails(Map<String, Set<String>> existingIncludedMap,

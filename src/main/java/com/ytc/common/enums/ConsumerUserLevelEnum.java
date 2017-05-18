@@ -14,7 +14,7 @@ public enum ConsumerUserLevelEnum {
 	FIRST_1("Account Manager",1),
 	SECOND_1("Zone Manager",2),
 	SECOND_2("DM",2),
-	THIRD_1("TBP",3);
+	THIRD_1("Sr. Director, Consumer Sales",3);
 	
 	private static final Map<String, ConsumerUserLevelEnum> map = new HashMap<>(values().length, 0.75f);
 	private final Integer level;

@@ -17,7 +17,6 @@ public class Employee extends Model {
 	private String MANAGER_ID;
 	private String LOGIN_ID;
 	private String SECURITY;
-	private String ROLE_ID;
 	
 	public Employee() {
 		
@@ -114,14 +113,6 @@ public class Employee extends Model {
 
 	public void setSECURITY(String sECURITY) {
 		SECURITY = sECURITY;
-	}
-
-	public String getROLE_ID() {
-		return ROLE_ID;
-	}
-
-	public void setROLE_ID(String rOLE_ID) {
-		ROLE_ID = rOLE_ID;
 	}
 	
 

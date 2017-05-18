@@ -80,7 +80,6 @@ public class EmployeeService implements IEmployeeService {
 			employee.setMANAGER_ID(dalEmp.getMANAGER_ID());
 			employee.setTITLE_ID(dalEmp.getTITLE_ID());
 			employee.setSECURITY(dalEmp.getSECURITY());
-			employee.setROLE_ID(dalEmp.getROLE_ID());
 			employeeList.add(employee);
 
 		}

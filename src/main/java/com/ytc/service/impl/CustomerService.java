@@ -56,7 +56,9 @@ public class CustomerService implements ICustomerService {
 		Map<String, Object> queryParams = new HashMap<>();
 		queryParams.put("loginId", loginId);
 		List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
-		
+		if(userIdList.isEmpty()){
+			return dashboardDetailList;
+		}
 		String sql=QueryConstant.CUSTOMER_LIST;
 		queryParams = new HashMap<>();
 		queryParams.put("requestId", userIdList);

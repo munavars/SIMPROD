@@ -248,10 +248,8 @@
                         data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+date+'</div></a>';
                     	}else if(data=='1'){
                     	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+date+'</div></a>';	
-                    	}else if(data=='4'){
+                    	}else if(data=='3'){
                     	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+date+'</div></a>';	
-                    	}else if(data=='5'){
-                    	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+date+'</div></a>';	
                     	}
                     }
 
@@ -264,10 +262,8 @@
                         data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.zmAppDate+'</div></a>';
                     	}else if(data=='1'){
                     	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.zmAppDate+'</div></a>';	
-                    	}else if(data=='4'){
+                    	}else if(data=='3'){
                     	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.zmAppDate+'</div></a>';	
-                    	}else if(data=='5'){
-                    	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.zmAppDate+'</div></a>';	
                     	}
                     }
 
@@ -283,10 +279,8 @@
 	                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.tbpAppDate+'</div></a>';
 	                    	}else if(data=='1'){
 	                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.tbpAppDate+'</div></a>';	
-	                    	}else if(data=='4'){
+	                    	}else if(data=='3'){
 	                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.tbpAppDate+'</div></a>';	
-	                    	}else if(data=='5'){
-	                        	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.tbpAppDate+'</div></a>';	
 	                    	}
 	                    }
 
@@ -318,7 +312,7 @@
               <i class="fa fa-bars"></i>
           </div>
           <!--logo start-->
-          <a href="#" class="logo"><img src="resources/img/yokohama-logo.svg" width="132" height="52"></a>
+          <a href="" class="logo"><img src="resources/img/yokohama-logo.svg" width="132" height="52"></a>
           <!--logo end-->
           <div class="nav notify-row" id="top_menu">
             <!--  notification start -->
@@ -372,7 +366,7 @@
                           <!-- <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                           <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                           <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li> -->
-                          <li><a href="login.html"><i class="fa fa-key"></i>Log Out</a></li>
+                          <li><a id="logout-btn" href="/SIM/logout"><i class="fa fa-key"></i> Log Out</a></li>
                       </ul>
                   </li>
                   <!-- user login dropdown end -->
@@ -1169,8 +1163,6 @@
 		$(document).ready(function() {
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
-		   var emp = [[${EmployeeInfo}]];
-		   console.log(JSON.stringify(emp[0].ROLE_ID));
 		});
 	</script>
 	<!-- Inline javascript to set the user name from model attribute End -->

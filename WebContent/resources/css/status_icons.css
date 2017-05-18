@@ -163,35 +163,6 @@
 .status-icon--pending .tooltip:after {
     border-top-color: #ebac02;
 }
-
-
-.status-icon--waiting {
-  background: #ffcc99;
-  background: -webkit-linear-gradient(#63dae6, #97a3ce);
-  background: linear-gradient(#63dae6, #97a3ce);
-  border-bottom: 1px solid #bc8a02;
-  color: #2a3542;
-}
-
-.status-icon--waiting.status-icon i {
-  position: relative;
-  top: 1px;
-}
-
-.status-icon--waiting:hover {
-  color: #fff;
-  text-shadow: 0px 1px 0px #bc8a02;
-}
-.status-icon--waiting .tooltip {
-  background: #ebac02;
-  background: -webkit-linear-gradient(#63dae6, #97a3ce);
-  background: linear-gradient(#63dae6, #97a3ce);
-  color: #fff;
-}
-.status-icon--waiting .tooltip:after {
-    border-top-color: #97a3ce;
-}
-
 .status-icon i {
   position: relative;
   top: 0px;

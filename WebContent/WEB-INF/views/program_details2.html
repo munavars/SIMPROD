@@ -58,7 +58,7 @@
                <i class="fa fa-bars"></i>
             </div>
             <!--logo start-->
-            <a href="#" class="logo"><img src="resources/img/yokohama-logo.svg" width="132" height="52"></a>
+            <a href="" class="logo"><img src="resources/img/yokohama-logo.svg" width="132" height="52"></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                <!--  notification start -->
@@ -114,7 +114,7 @@
 <!--                         <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
                         <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
                         <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li> -->
-                        <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                        <li><a id="logout-btn" href="/SIM/logout"><i class="fa fa-key"></i> Log Out</a></li>
                      </ul>
                   </li>
                   <!-- user login dropdown end -->
@@ -924,8 +924,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 		$(document).ready(function() {
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
-		   var emp = [[${EmployeeInfo}]];
-		   
 		});
 	</script>
 	<!-- Inline javascript to set the user name from model attribute End -->
@@ -1178,14 +1176,14 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          	}
          	
 			function hideShowButtonsOnLoad(responseOnload1){
-         		if(responseOnload1.authorizedUser == 'Yes' && responseOnload1.programButton.userLevel == "1" && responseOnload1.programButton.edit == true){
+         		if(responseOnload1.authorizedUser == 'Yes' && responseOnload1.programButton.userLevel == "1" && responseOnload1.programButton.creater == true){
 					$('#edit-button').attr('disabled', false);
 					$('#edit-button').removeClass("disabled");
 					$('#modal-edit-cancel').attr('disabled', false);
 					$('#modal-edit-ok').attr('disabled', false);
 					$('#modal-edit-close').attr('disabled', false);
 					hideApproverButtons();
-					if(responseOnload1.newProgram == false){
+					if(responseOnload1.newProgram == false && responseOnload1.status != 'REJECTED'){
 	               		$('#submit-program').attr('disabled', false);
 						$('#submit-program').removeClass("disabled");
 						$('#program-submit-modal-cancel').attr('disabled', false);
@@ -1193,9 +1191,12 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 						$('#program-submit-modal-close').attr('disabled', false);	
 						$('#save-program').hide();
                		}
+               		else if(responseOnload1.newProgram == false){
+               			showCreatorButtons();
+               		}
 				}
 				/*For simplicity , for now check only one button property to set all the approver button property value.*/
-				else if(responseOnload1.programButton.approve == true){
+				else if(responseOnload1.programButton.approver == true){
 					hideCreatorButtons();
 					showApproverButtons();
 					$('#edit-button').hide();
@@ -1370,7 +1371,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					responseOnload.status = "2";
 				}
 				else{
-					responseOnload.status = "0";
+					responseOnload.status = "4";
 				}
 				fnCallService();
 				$('#myModal3').modal('toggle');
@@ -1378,12 +1379,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			}
 			
 			function rejectProgram(){
-				if(responseOnload.programButton.userLevel == "2"){
-					responseOnload.status = "7";
-				}
-				else{
-					responseOnload.status = "8";
-				}
+				responseOnload.status = "1";
 				fnCallService();
 				$('#myModal2').modal('toggle');
 				disableFields();

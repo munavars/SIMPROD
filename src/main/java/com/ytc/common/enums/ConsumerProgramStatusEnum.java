@@ -11,12 +11,11 @@ import java.util.Map;
 public enum ConsumerProgramStatusEnum {
 
 	INPROGRESS("IN PROGRESS", 1),
-	/*PENDING_MANAGER_APPROVAL("PENDING MANAGER APPROVAL", 2),
-	PENDING_TBP_APPROVAL("PENDING TBP APPROVAL", 3),*/
 	PENDING("PENDING",2),
-	ACTIVE("ACTIVE", 0),
-	REJECTED_BY_MANAGER("REJECTED BY MANAGER", 1),
-	REJECTED_BY_TBP("REJECTED BY TBP", 1);
+	ACTIVE("ACTIVE", 1),
+	APPROVED("APPROVED",1),
+	WAITING("WAITING",3),
+	REJECTED("REJECTED", 1);
 	
 	private final String programStatus;
 	private final Integer userLevel;

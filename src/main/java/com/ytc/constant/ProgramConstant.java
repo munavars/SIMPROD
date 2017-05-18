@@ -16,6 +16,8 @@ public class ProgramConstant {
 	public static final String IN_ACTIVE_STATUS = "IN ACTIVE";
 	public static final String IN_PROGRESS_STATUS = "IN PROGRESS";
 	public static final String PENDING_STATUS = "PENDING";
+	public static final String WAITING_STATUS = "WAITING";
+	public static final String REJECTED_STATUS = "REJECTED";
 	
 	public static final String CALCULATED_PROGRAM_TYPE = "CALCULATED PROGRAM";
 	public static final String DDF_PROGRAM_TYPE = "DDF";

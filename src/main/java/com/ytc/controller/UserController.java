@@ -62,6 +62,29 @@ public class UserController extends BaseController {
 		logger.info("UserController.presentHomePage");
 		return "login";
 	}
+	
+	@RequestMapping(value = { "/logout" })
+	public String logoutUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		logger.info("UserController.presentHomePage");
+		request.getSession().removeAttribute("EMPLOYEE_INFO");
+		request.getSession().removeAttribute("EMPLOYEE_HIERARCHY");
+		if(serviceContext != null){
+			serviceContext.setEmployee(null);
+		}
+		request.getSession().invalidate();
+        return "login";
+	}
+	
+	@RequestMapping(value = { "/browserclose" })
+	public void browserClose(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		logger.info("UserController.presentHomePage");
+		request.getSession().removeAttribute("EMPLOYEE_INFO");
+		request.getSession().removeAttribute("EMPLOYEE_HIERARCHY");
+		if(serviceContext != null){
+			serviceContext.setEmployee(null);
+		}
+		request.getSession().invalidate();
+	}
 
 	@RequestMapping(value = { "/customerprogram" })
 	public String presentCustomerProgramPage() {

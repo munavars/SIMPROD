@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
@@ -425,8 +426,8 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         paidBaseTable.addCell(cell);
 	         
-	         
-	         for (Iterator iterator = dalpgm.getDalProgramDetPaidList().iterator(); iterator.hasNext();) {
+	         List<DalProgramDetPaid> dalProgramDetPaidList = dalpgm.getDalProgramDetPaidList().stream().sorted((e1, e2) -> e1.getTagId().compareTo(e2.getTagId())).collect(Collectors.toList());
+	         for (Iterator iterator = dalProgramDetPaidList.iterator(); iterator.hasNext();) {
 	        	 DalProgramDetPaid type = (DalProgramDetPaid) iterator.next();
 	        	 cell = new PdfPCell(new Paragraph(baseDao.getEntityById(DalTagItems.class, type.getTagId()).getItem()));
 		         cell.setBorderColor(BaseColor.BLACK);
@@ -493,8 +494,8 @@ public class PdfGenerator {
 		         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         achievedBaseTable.addCell(cell);
-		         
-		         for (Iterator iterator = dalpgm.getDalProgramDetAchievedList().iterator(); iterator.hasNext();) {
+		         List<DalProgramDetAchieved> dalProgramDetAchieved = dalpgm.getDalProgramDetAchievedList().stream().sorted((e1, e2) -> e1.getAchTagId().compareTo(e2.getAchTagId())).collect(Collectors.toList());
+		         for (Iterator iterator = dalProgramDetAchieved.iterator(); iterator.hasNext();) {
 		        	 DalProgramDetAchieved type = (DalProgramDetAchieved) iterator.next();
 		        	 cell = new PdfPCell(new Paragraph(baseDao.getEntityById(DalTagItems.class, type.getAchTagId()).getItem()));
 			         cell.setBorderColor(BaseColor.BLACK);

@@ -51,9 +51,15 @@ public class CustomerService implements ICustomerService {
 	public List<ProgramDetail> getCustomerDetailDashboard(Integer loginId) {
 		
 		List<ProgramDetail> dashboardDetailList= new ArrayList<ProgramDetail>();
-		String sql=QueryConstant.CUSTOMER_LIST;
+
+		String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
 		Map<String, Object> queryParams = new HashMap<>();
-		queryParams.put("requestId", loginId);
+		queryParams.put("loginId", loginId);
+		List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+		
+		String sql=QueryConstant.CUSTOMER_LIST;
+		queryParams = new HashMap<>();
+		queryParams.put("requestId", userIdList);
 		List<DalProgramHeader> resultList=baseDao.getlist(DalProgramHeader.class, sql, queryParams);
 		for (Iterator<DalProgramHeader> iterator = resultList.iterator(); iterator.hasNext();) {
 			DalProgramHeader dalProgramHeader = (DalProgramHeader) iterator.next();

@@ -13,7 +13,7 @@ $(function() {
     });
 });
 
-window.onbeforeunload = function (){
+/*window.onbeforeunload = function (){
 	 $.ajax({
 			type: "POST",
 			url: "/SIM/browserclose",
@@ -21,7 +21,7 @@ window.onbeforeunload = function (){
 			contentType: 'application/json',
 			data: {}
 	    });
-};
+};*/
 
 // right slidebar
 

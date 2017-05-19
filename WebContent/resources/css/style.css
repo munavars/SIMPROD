@@ -511,6 +511,7 @@ a.logo {
     float: left;
     margin-top: 5px;
     text-transform: uppercase;
+	cursor:default;
 }
 
 a.logo:hover, a.logo:focus {

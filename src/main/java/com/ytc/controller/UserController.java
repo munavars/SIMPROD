@@ -1,6 +1,7 @@
 package com.ytc.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -98,12 +99,16 @@ public class UserController extends BaseController {
 	public String validateLoginPage(HttpServletRequest request, Model model) {
 
 		logger.info("UserController.processLogin");
+		List<Employee> employee = null;
 		if((serviceContext.getEmployee() != null)&&("1".equalsIgnoreCase(serviceContext.getEmployee().getACTIVE()))){
 			String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
 			model.addAttribute("loginUserNameValue", userName);
+			employee=new ArrayList<Employee>();
+			employee.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employee);
 			return "index";
 		}
-		List<Employee> employee = null;
+		
 		String destination = "loginError";
 		String theUserid = request.getParameter("userid");
 		logger.info("UserController.processLogin userid: " + theUserid);

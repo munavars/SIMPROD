@@ -1013,14 +1013,14 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	if(response.data.zoneManagerApprovedDate != null){
                		$('#zoneManagerApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.zoneManagerApprovedDate)));
                	}
-               	$('#directorApprovedBy').html(response.data.directorApprovedBy);
+               	/* $('#directorApprovedBy').html(response.data.directorApprovedBy);
                	if(response.data.directorApprovedDate != null){
                		$('#directorApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.directorApprovedDate)));
                	}
                	$('#executiveApprovedBy').html(response.data.executiveApprovedBy);
                	if(response.data.executiveApprovedDate != null){
                		$('#executiveApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.executiveApprovedDate)));
-               	}
+               	} */
                	$('#tbpApprovedBy').html(response.data.tbpApprovedBy);
                	if(response.data.tbpApprovedDate != null){
                		$('#tbpApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.tbpApprovedDate)));

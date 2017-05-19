@@ -40,6 +40,9 @@ public class DalEmployee extends DalModel {
 	@Column(name="SECURITY")
 	private String SECURITY;
 	
+	@Column(name="ROLE_ID")
+	private String ROLE_ID;
+	
 	public DalEmployee() {
 		
 	}
@@ -128,6 +131,14 @@ public class DalEmployee extends DalModel {
 
 	public void setSECURITY(String sECURITY) {
 		SECURITY = sECURITY;
+	}
+
+	public String getROLE_ID() {
+		return ROLE_ID;
+	}
+
+	public void setROLE_ID(String rOLE_ID) {
+		ROLE_ID = rOLE_ID;
 	}
 
 	

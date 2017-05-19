@@ -54,7 +54,7 @@
       <section id="container" class="">
          <!--header start-->
          <header class="header dark-bg">
-            <div class="sidebar-toggle-box">
+            <div class="sidebar-toggle-box" id="sidebar-toggle-box">
                <i class="fa fa-bars"></i>
             </div>
             <!--logo start-->
@@ -128,7 +128,7 @@
                <!-- sidebar menu start-->
                <ul class="sidebar-menu" id="nav-accordion">
                   <li>
-                     <a class="" href="index.html">
+                     <a class="" href="processLogin">
                      <i class="fa fa-dashboard"></i>
                      <span>My Dashboard</span>
                      </a>
@@ -152,7 +152,7 @@
                      </a>
                   </li>
                   <li>
-                     <a href="login.html">
+                     <a href="login">
                      <i class="fa fa-user"></i>
                      <span>Login Page</span>
                      </a>
@@ -882,6 +882,22 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          
              $(".js-example-basic-multiple").select2();
          });
+         
+         function closeSidebar(){
+  			if ($('#sidebar > ul').is(":visible") === true) {
+  	            $('#main-content').css({
+  	                'margin-left': '0px'
+  	            });
+  	            $('#sidebar').css({
+  	                'margin-left': '-210px'
+  	            });
+  	            $('#sidebar > ul').hide();
+  	            $("#container").addClass("sidebar-closed");
+         		}
+  			$('#sidebar-toggle-box').css({
+  		           'display': 'none'
+  		       });
+  		}
       </script>
       <!--this page  script only-->
       <script src="resources/js/advanced-form-components.js"></script>
@@ -917,14 +933,23 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 
 
         });
+           
        </script>
        
     <!-- Inline javascript to set the user name from model attribute Begin -->
 	<script type="text/javascript" th:inline="javascript">
+	
 		$(document).ready(function() {
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
+		   var emp = [[${EmployeeInfo}]];
+		   if(2==emp[0].ROLE_ID)
+		   	{
+		   		closeSidebar();
+			}
 		});
+		
+		
 	</script>
 	<!-- Inline javascript to set the user name from model attribute End -->
 
@@ -960,7 +985,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 	            	url: url,
 	             	success: function(response){
 	             		responseOnload = response.data;
-	             		closeSideBar();
+	             		
 						fnPopulateProgramDetails(response);
 	             	},
 	             	failure: function(response){
@@ -969,18 +994,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 	         	});
 			});
 			
-			function closeSideBar(){
-				if ($('#sidebar > ul').is(":visible") === true) {
-		            $('#main-content').css({
-		                'margin-left': '0px'
-		            });
-		            $('#sidebar').css({
-		                'margin-left': '-210px'
-		            });
-		            $('#sidebar > ul').hide();
-		            $("#container").addClass("sidebar-closed");
-        		}
-			}
+			
          	
          	function fnPopulateProgramDetails(response){
 				includePaid = response.data.programDetailList[0].programPaidOn.includedMap;

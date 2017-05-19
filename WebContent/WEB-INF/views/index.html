@@ -65,7 +65,7 @@
    	  }
    	})()
    
-   $(window).ready(function(){
+/*    $(window).ready(function(){
     		
              		if ($('#sidebar > ul').is(":visible") === true) {
     		            $('#main-content').css({
@@ -79,7 +79,23 @@
             		}
              
 	
-	});
+	}); */
+   
+   function closeSidebar(){
+	   if ($('#sidebar > ul').is(":visible") === true) {
+           $('#main-content').css({
+               'margin-left': '0px'
+           });
+           $('#sidebar').css({
+               'margin-left': '-210px'
+           });
+           $('#sidebar > ul').hide();
+           $("#container").addClass("sidebar-closed");
+		}   
+	   $('#sidebar-toggle-box').css({
+           'display': 'none'
+       });
+   }
 	
    $(document).ready(function () { 
 	   getParams = new URLSearchParams(window.location.search);
@@ -251,8 +267,10 @@
                         data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+date+'</div></a>';
                     	}else if(data=='1'){
                     	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+date+'</div></a>';	
-                    	}else if(data=='3'){
+                    	}else if(data=='4'){
                     	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+date+'</div></a>';	
+                    	}else if(data=='5'){
+                    	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+date+'</div></a>';	
                     	}
                     }
 
@@ -265,8 +283,10 @@
                         data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.zmAppDate+'</div></a>';
                     	}else if(data=='1'){
                     	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.zmAppDate+'</div></a>';	
-                    	}else if(data=='3'){
+                    	}else if(data=='4'){
                     	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.zmAppDate+'</div></a>';	
+                    	}else if(data=='5'){
+                    	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.zmAppDate+'</div></a>';	
                     	}
                     }
 
@@ -282,8 +302,10 @@
 	                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.tbpAppDate+'</div></a>';
 	                    	}else if(data=='1'){
 	                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.tbpAppDate+'</div></a>';	
-	                    	}else if(data=='3'){
+	                    	}else if(data=='4'){
 	                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.tbpAppDate+'</div></a>';	
+	                    	}else if(data=='5'){
+	                        	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.tbpAppDate+'</div></a>';	
 	                    	}
 	                    }
 
@@ -316,7 +338,7 @@
   <section id="container" class="">
        <!--header start-->
       <header class="header dark-bg">
-          <div class="sidebar-toggle-box">
+          <div class="sidebar-toggle-box" id="sidebar-toggle-box">
               <i class="fa fa-bars"></i>
           </div>
           <!--logo start-->
@@ -389,7 +411,7 @@
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
                   <li>
-                      <a class="active" href="index.html">
+                      <a class="active" href="processLogin">
                           <i class="fa fa-dashboard"></i>
                           <span>My Dashboard</span>
                       </a>
@@ -413,7 +435,7 @@
                       </a>
                   </li>
                   <li>
-                      <a href="login.html">
+                      <a href="login">
                           <i class="fa fa-user"></i>
                           <span>Login Page</span>
                       </a>
@@ -1171,6 +1193,12 @@
 		$(document).ready(function() {
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
+		   var emp = [[${EmployeeInfo}]];
+		   console.log(JSON.stringify(modelAttributeValue));
+		   if(2==emp[0].ROLE_ID)
+		   	{
+		   		closeSidebar();
+			}
 		});
 	</script>
 	<!-- Inline javascript to set the user name from model attribute End -->

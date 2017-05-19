@@ -252,14 +252,14 @@ public class ProgramServiceImpl implements IProgramService {
 			programHeader.setZoneManagerApprovedBy(dalProgramDetail.getZmAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getZmAppById().getLAST_NAME());
 			programHeader.setZoneManagerApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getZmAppDate()));	
 		}
-		if(dalProgramDetail.getDirAppById() != null){
+		/*if(dalProgramDetail.getDirAppById() != null){
 			programHeader.setDirectorApprovedBy(dalProgramDetail.getDirAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getDirAppById().getLAST_NAME());
 			programHeader.setDirectorApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getDirAppDate()));	
 		}
 		if(dalProgramDetail.getExecAppById() != null){
 			programHeader.setExecutiveApprovedBy(dalProgramDetail.getExecAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getExecAppById().getLAST_NAME());
 			programHeader.setExecutiveApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getExecAppDate()));	
-		}
+		}*/
 		if(dalProgramDetail.getTbpAppById() != null){
 			programHeader.setTbpApprovedBy(dalProgramDetail.getTbpAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getTbpAppById().getLAST_NAME());
 			programHeader.setTbpApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getTbpAppDate()));	

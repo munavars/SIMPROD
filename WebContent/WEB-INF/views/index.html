@@ -224,11 +224,14 @@
    				{ data: "programId",
    				 
                     render: function ( data, type, row, meta ) {
-                        if(type === 'display'){
+						if(type === 'display' && row.programType == 'Calculated Program'){
                             data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
-                        }
 
-                        return data;
+                        }
+                        else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
+                        	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        }
+						return data;
                     }
    				},
 	            { data: "programName" },
@@ -288,6 +291,11 @@
 	                },className:"center" 	
 	            	
 	            	
+	            },
+	            {
+	            	data: "programType" ,
+	            	visible: false,
+                	searchable: false
 	            }
 
     ]

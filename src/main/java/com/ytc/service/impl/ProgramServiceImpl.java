@@ -740,6 +740,7 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getBalance():ProgramConstant.ZERO);
 			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Empty");
 			programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
+			programDetail.setRecordCount(resultCount.get(0));
 			//programDetail.setProgramTypeId( dalProgramDetail.getDalProgramType().getId());
 			programDetailList.add(programDetail);
 		}
@@ -816,12 +817,12 @@ public class ProgramServiceImpl implements IProgramService {
 	 * @see com.ytc.service.IProgramService#getProgramDashboard()
 	 */
 	@Override
-	public List<ProgramDetail> getProgramDashboard(Integer id){
+	public List<ProgramDetail> getProgramDashboard(Integer id, Integer start, Integer count){
 		Integer empId=id;
 		Map<String, Object> queryParams = new HashMap<>();
 		List<ProgramDetail> pgm=new ArrayList<ProgramDetail>();
 		if(empId==0){
-			pgm=getProgram("0","0,4");
+			pgm=getProgram("0","0,4",start,count);
 		}else{
 			String queryString = QueryConstant.EMPLOYEE_HIER_LIST;
 			queryParams.put("loginId", empId);
@@ -831,7 +832,7 @@ public class ProgramServiceImpl implements IProgramService {
 				String sql=QueryConstant.CUSTOMER_LIST_MGR;
 				queryParams.put("userId", userIdList);
 				List<String> customerId=baseDao.getListFromNativeQuery(sql, queryParams);		
-				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4");
+				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4",start,count);
 			}
 			
 		}

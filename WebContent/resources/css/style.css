@@ -512,6 +512,7 @@ a.logo {
     margin-top: 5px;
     text-transform: uppercase;
 	cursor:default;
+	pointer-events: none;
 }
 
 a.logo:hover, a.logo:focus {

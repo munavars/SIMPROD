@@ -18,11 +18,11 @@ public interface IProgramService {
 
 	String addProgramTier(String id);
 
-	List<ProgramDetail> getProgram(String customerId, String status);
+	List<ProgramDetail> getProgram(String customerId, String status,Integer start, Integer count);
 
 	ProgramHeader getProgramDetails(ProgramInputParam inputParam);
 
-	List<ProgramDetail> getProgramDashboard(Integer id);
+	List<ProgramDetail> getProgramDashboard(Integer id,Integer start,Integer count);
 
 	byte[] downloadPDF(String id);
 }

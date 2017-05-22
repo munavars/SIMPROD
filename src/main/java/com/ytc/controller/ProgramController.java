@@ -101,16 +101,12 @@ public class ProgramController extends BaseController {
 	
 	@RequestMapping(value = "/{id}/{status}", method = RequestMethod.GET)
 	public @ResponseBody ListResult<ProgramDetail> getProgram(HttpServletRequest request, @PathVariable String id,  @PathVariable String status) {
-		String length=request.getParameter("length");
-		String start=request.getParameter("start");
-		return new ListResult<ProgramDetail>( getService(request).getProgram(id, status,Integer.parseInt(start),Integer.parseInt(length)));
+		
+		return new ListResult<ProgramDetail>( getService(request).getProgram(id, status));
 	}
 	
 	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 	public @ResponseBody ListResult<ProgramDetail> getProgramDashboard(HttpServletRequest request) {
-		String length=request.getParameter("length");
-		String start=request.getParameter("start");
-			
 		Employee employee = null;
 		if(serviceContext != null){
 			employee = serviceContext.getEmployee();
@@ -119,7 +115,7 @@ public class ProgramController extends BaseController {
 		if("N".equalsIgnoreCase(employee.getSECURITY())){
 			employeeId=0;
 		}
-		return new ListResult<ProgramDetail>( getService(request).getProgramDashboard(employeeId,Integer.parseInt(start),Integer.parseInt(length)));
+		return new ListResult<ProgramDetail>( getService(request).getProgramDashboard(employeeId));
 	}
 	
 	@RequestMapping(value = "v1/addTier", method = RequestMethod.GET)

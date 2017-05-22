@@ -651,43 +651,24 @@ public class ProgramServiceImpl implements IProgramService {
 	
 	
 	@Override
-	public List<ProgramDetail> getProgram(String custId, String status, Integer start, Integer count) {
+	public List<ProgramDetail> getProgram(String custId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
 		DecimalFormat df = new DecimalFormat("#.##"); 
-		String sql=QueryConstant.PROGRAM_LIST_FILTER;
-		String sqlCount=QueryConstant.PROGRAM_LIST_COUNT;
+		String sql=QueryConstant.PROGRAM_LIST;
 		Map<String, Object> queryParams = new HashMap<>();
-		
 		if("0".equalsIgnoreCase(custId)){
-			sql=QueryConstant.PROGRAM_LIST_ALL_FILTER;
-			sqlCount=QueryConstant.PROGRAM_LIST_ALL_COUNT;
+			sql=QueryConstant.PROGRAM_LIST_ALL;
 			List<String> selectedValues = Arrays.asList(status.split(","));
 			queryParams.put("status", selectedValues);
-			queryParams.put("start", start);
-			queryParams.put("end", (start+count));
-			if(count==-1){
-				sql=QueryConstant.PROGRAM_LIST_ALL;
-				queryParams.remove("start");
-				queryParams.remove("end");
-			}
 		}else{
 			List<String> selectedValues = Arrays.asList(status.split(","));
 			List<String> customerId = Arrays.asList(custId.split(","));
 			queryParams.put("custId", customerId);
 			queryParams.put("status", selectedValues);
-			queryParams.put("start", start);
-			queryParams.put("end", (start+count));
-			if(count==-1){
-				sql=QueryConstant.PROGRAM_LIST;
-				queryParams.remove("start");
-				queryParams.remove("end");
-			}
 		}
 		
+		
 		List<DalProgramDetail> resultList =baseDao.getlist(DalProgramDetail.class, sql, queryParams);
-		queryParams.remove("start");
-		queryParams.remove("end");
-		List<Integer> resultCount =baseDao.getListFromNativeQuery(sqlCount, queryParams);
 		//This section shld be moved to converter object
 		for (Iterator<DalProgramDetail> iterator = resultList.iterator(); iterator.hasNext();) {
 			DalProgramDetail dalProgramDetail = (DalProgramDetail) iterator.next();

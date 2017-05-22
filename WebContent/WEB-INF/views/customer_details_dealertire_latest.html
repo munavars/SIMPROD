@@ -136,20 +136,12 @@
 				 },
 				 
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
-			serverSide: true,
-			processing: true,
+			
 		    ajax: {
 		        //url: '/SIM/program/'+custId+'/0',
 		        url: '/SIM/program/'+custId+'/'+$('#program_status').val(),
 		        dataSrc: "data",
 		        type: "GET",
-		        dataFilter: function(data){
-		            var json = jQuery.parseJSON( data );
- 		            json.recordsTotal = json.data[0].recordCount;
-		            json.recordsFiltered = json.data[0].recordCount;
-		 
-		            return JSON.stringify( json );  // return JSON string
-		        }
 		    },
 		  
 		    columnDefs: [
@@ -351,7 +343,7 @@
                           <span>My Dashboard</span>
                       </a>
                   </li>
-                 <!--  <li>
+                  <li>
                       <a class="" href="program_details.html">
                               <i class="fa fa-tasks"></i>
                               <span>Create New Program</span>
@@ -374,7 +366,7 @@
                           <i class="fa fa-user"></i>
                           <span>Login Page</span>
                       </a>
-                  </li> -->
+                  </li>
               </ul>
               <!-- sidebar menu end-->
           </div>

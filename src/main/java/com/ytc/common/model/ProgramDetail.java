@@ -56,7 +56,6 @@ public class ProgramDetail extends Model{
 	private Integer actualMarker;
 	private Integer programTypeId;
 	private String programType;
-	private Integer recordCount;
 	
 	public ProgramPaidOn getProgramPaidOn() {
 		return programPaidOn;
@@ -394,11 +393,4 @@ public class ProgramDetail extends Model{
 	public void setProgramType(String programType) {
 		this.programType = programType;
 	}
-	public Integer getRecordCount() {
-		return recordCount;
-	}
-	public void setRecordCount(Integer recordCount) {
-		this.recordCount = recordCount;
-	}
-	
 }

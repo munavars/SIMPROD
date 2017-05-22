@@ -109,7 +109,7 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 	         
-	         cell = new PdfPCell(new Paragraph("Accrual Amount: 0"));
+	         cell = new PdfPCell(new Paragraph("Accrued Amount: 0"));
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);

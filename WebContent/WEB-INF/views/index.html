@@ -106,12 +106,20 @@
 				 },
 				 
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	
-			 
+			serverSide: true,
+			processing: true,
 		    ajax: {
 		        //url: '/SIM/program/dashboard/'+loginId ,
 		        url: '/SIM/program/dashboard/',
 		        dataSrc: "data",
 		        type: "GET",
+		        dataFilter: function(data){
+		            var json = jQuery.parseJSON( data );
+ 		            json.recordsTotal = json.data[0].recordCount;
+		            json.recordsFiltered = json.data[0].recordCount;
+		 
+		            return JSON.stringify( json );  // return JSON string
+		        }
 		    },
 		  
 		    columnDefs: [
@@ -416,30 +424,30 @@
                           <span>My Dashboard</span>
                       </a>
                   </li>
-                  <li>
-                      <a class="" href="program_details.html">
+<!--                   <li>
+                      <a class="" href="#">
                               <i class="fa fa-tasks"></i>
                               <span>Create New Program</span>
                       </a>
                   </li>
                    <li>
-                      <a class="" href="program_details_existing.html">
+                      <a class="" href="#">
                               <i class="fa fa-tasks"></i>
                               <span>Edit Program</span>
                       </a>
                   </li>
                   <li>
-                      <a class="" href="program_details_rejected.html">
+                      <a class="" href="#">
                               <i class="fa fa-tasks"></i>
-                              <span>Edit Rejected Program</span>
+                              <span>Edit Rejected Program</span> 
                       </a>
                   </li>
                   <li>
-                      <a href="login">
+                      <a href="#">
                           <i class="fa fa-user"></i>
-                          <span>Login Page</span>
+                          <span>Login Page</span> 
                       </a>
-                  </li>
+                  </li> -->
               </ul>
               <!-- sidebar menu end-->
           </div>

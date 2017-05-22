@@ -18,7 +18,9 @@
     <!-- Custom styles for this template -->
     <link href="resources/css/style.css" rel="stylesheet">
     <link href="resources/css/style-responsive.css" rel="stylesheet" />
-
+     <script src="resources/js/jquery.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
@@ -81,9 +83,25 @@
 
 
 	<!-- js placed at the end of the document so the pages load faster -->
-    <script src="resources/js/jquery.js"></script>
-    <script src="resources/js/bootstrap.min.js"></script>
 
+    <script>
+	    $(function(){
+	        $('html').keyup(function(e){
+	            var key = e.which;
+	            if(e.altKey == true && key == 37) { //37 - left arrorw
+	            	$.ajax({
+	         			type: "POST",
+	         			url: "/SIM/browserclose",
+	         			dataType: 'json',
+	         			contentType: 'application/json',
+	         			data: {}
+	         	    }); 
+	         	    window.location="login"; 
+	            }
+	            
+	        });
+	    });
+    </script>
 
   </body>
 </html>

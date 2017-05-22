@@ -1041,6 +1041,7 @@
 					responseOnload.status = "4";
 				}
 				fnCallService();
+				alert("Data approved successfully !!!");
 				$('#myModal3').modal('toggle');
 				disableFields();
 			}
@@ -1048,6 +1049,7 @@
 			function rejectProgram(){
 				responseOnload.status = "1";
 				fnCallService();
+				alert("Data rejected successfully !!!");
 				$('#myModal2').modal('toggle');
 				disableFields();
 			}
@@ -1055,6 +1057,7 @@
          		responseOnload.status = "3";
          		prepareDataForSubmit();
          		fnCallService();
+         		alert("Data saved successfully !!!");
          		$('#myModal1').modal('toggle');
          	}
          	
@@ -1062,6 +1065,7 @@
   				responseOnload.status = "2";
 				prepareDataForSubmit();
 				fnCallService();
+				alert("Data submitted for approval successfully !!!");
 				$('#myModal').modal('toggle');
 				disableFields();
 			}
@@ -1079,7 +1083,6 @@
 			            	responseOnload = response.data;
 			            	$("#programId").html(response.data.programDetailList[0].id);
 							$('#status').html(response.data.status);
-			                alert("Data Saved!!");
 			            } else {
 							alert("Issue while saving the data. Please try again after sometime.!!");
 			            }

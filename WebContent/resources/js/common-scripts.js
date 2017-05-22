@@ -159,8 +159,23 @@ var Script = function () {
         })
     }
 
-
-
+    $(function(){
+        $('html').keyup(function(e){
+            var key = e.which;
+            if(e.altKey == true && key == 37) { //37 - left arrorw
+            	 $.ajax({
+         			type: "POST",
+         			url: "/SIM/browserclose",
+         			dataType: 'json',
+         			contentType: 'application/json',
+         			data: {},
+         			success: function(response){
+         				 window.location="login";
+					}
+         	    });
+            } 
+        });
+    });
 
 
 

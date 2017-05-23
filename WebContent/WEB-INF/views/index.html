@@ -173,7 +173,7 @@
 	   //Pending approval table
 	   var table=$("#pending_approvals").DataTable( {
 			 oLanguage: {
-				 "sEmptyTable": "No data available for this customer"
+				 "sEmptyTable": "No matching records found"
 				 },
 				 
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
@@ -235,9 +235,9 @@
      ],*/
 		    columns: [
 		    	
-		    	{ data: "customerNumber" },   
+		    	{ data: "customerNumber",className:"center" },   
    				{ data: "customerName" },
-   				{ data: "programId",
+   				{ data: "programId",className:"center",
    				 
                     render: function ( data, type, row, meta ) {
 						if(type === 'display' && row.programType == 'Calculated Program'){

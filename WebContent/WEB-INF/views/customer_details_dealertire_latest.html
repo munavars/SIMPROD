@@ -164,7 +164,14 @@
                     targets:1,
                     render: function ( data, type, row, meta ) {
                         if(type === 'display'){
-                            data = '<span data-toggle="tooltip" title="' + row.longDesc + '">' + data + '</span>';
+                        	var desc;
+                        	if(row.longDesc != null && row.longDesc.toUpperCase() != 'Empty'.toUpperCase()){
+                        		desc = row.longDesc;
+                        	}
+                        	else{
+                        		desc = "Long description not available";
+                        	}
+                        	data = '<span data-toggle="tooltip" title="' + desc + '">' + data + '</span>';
                         }
 
                         return data;

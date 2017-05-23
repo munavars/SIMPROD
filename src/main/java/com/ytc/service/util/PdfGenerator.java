@@ -4,6 +4,8 @@
 package com.ytc.service.util;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -569,6 +571,7 @@ public class PdfGenerator {
 		         parameters.put("programDetailId", dalpgm.getId());
 					List<DalProgramDetailTier> dalProgramTierList = baseDao.getListFromNamedQueryWithParameter("DalProgramDetailTier.getAllTierForProgramId", 
 																	parameters);
+					DecimalFormat format = new DecimalFormat("#,###.#");
 					for (Iterator iterator = dalProgramTierList.iterator(); iterator.hasNext();) {
 						DalProgramDetailTier dalProgramDetailTier = (DalProgramDetailTier) iterator.next();
 						cell = new PdfPCell(new Paragraph(dalProgramDetailTier.getLevel().toString()));
@@ -577,9 +580,8 @@ public class PdfGenerator {
 				         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				         programScheduleTable.addCell(cell);
-
 				         
-				         cell = new PdfPCell(new Paragraph(Double.toString(dalProgramDetailTier.getAmount())));
+				         cell = new PdfPCell(new Paragraph(format.format(dalProgramDetailTier.getAmount())));
 				         cell.setBorderColor(BaseColor.BLACK);
 				         cell.setPaddingLeft(10);
 				         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);

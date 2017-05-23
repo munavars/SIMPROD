@@ -228,15 +228,15 @@
                                 </div>
                                <div class="col-lg-4 col-md-5 col-sm-4">
                                    <ul class="list-unstyled w-list">
-                                    <li>Zone Manager Approved By: <span id="zoneManagerApprovedBy"></li>
-                                    <li>Zone Manager Approved Date: <span id="zoneManagerApprovedDate"></li>
+                                    <li>Zone Manager Approved By: <span id="zoneManagerApprovedBy"></span> </li>
+                                    <li>Zone Manager Approved Date: <span id="zoneManagerApprovedDate"> </span></li>
                                    <!--  <li>Director Approved By: <span id="directorApprovedBy"></li>
                                     <li>Director Approved Date: <span id="directorApprovedDate"></li>
                                     <li>Executive Approved By: <span id="executiveApprovedBy"</li>
                                     <li>Executive Approved Date: <span id="executiveApprovedDate"</li> -->
-                                    <li>TBP Approved By: <span id="tbpApprovedBy"</li>
-                                    <li>TBP Approved Date: <span id="tbpApprovedDate"</li>
-                                    <li>Status: <span id="status"</li>
+                                    <li>TBP Approved By: <span id="tbpApprovedBy"></span> </li>
+                                    <li>TBP Approved Date: <span id="tbpApprovedDate"></span> </li>
+                                    <li>Status: <span id="status"></span> </li>
 
                                  </ul>
                                 </div>
@@ -301,7 +301,7 @@
                        </div>
 						
                 <!-- START STEP 1: PROGRAM INFO -->
-                           <form id="wizard-validation-form" class="cmxform" action="#">
+                           <form id="wizard-validation-form" name="wizard-validation-form" class="cmxform" action="#">
                               <div>
                                  <section>
                                     <div class="form-group clearfix">
@@ -311,7 +311,7 @@
                                            <div class="row">
                                                <div class="col-lg-4 col-sm-4">
                                                 <label class="control-label" for="program_name_inputselect">Program Name</label>
-                                                <select class="form-control input-sm m-bot15 required" id="program_name_inputselect" name="program_name_inputselect">
+                                                <select class="form-control input-sm m-bot15" id="program_name_inputselect" name="program_name_inputselect">
                                                    <!-- <option disabled class="required" value="">- Select -</option> -->
                                                 </select>
                                              </div>
@@ -325,24 +325,24 @@
                                                   <div class="col-lg-4 col-sm-4">
                                                     <label class="control-label" for="from">Begin/End Dates:</label>
                                                         <div class="input-group input-medium" data-date-format="mm/dd/yy">
-                                                            <input type="text" class="form-control dpd1 required" id="from" name="from" placeholder="Begin Date" ><span class="input-group-addon" for="to">To</span>
-                                                            <input type="text" class="form-control dpd2 required" id="to" name="to" placeholder="End Date">
+                                                            <input type="text" class="form-control dpd1" id="from" name="from" placeholder="Begin Date" ><span class="input-group-addon" for="to">To</span>
+                                                            <input type="text" class="form-control dpd2" id="to" name="to" placeholder="End Date">
                                                         </div>
                                                     </div>
                                               </div>
                                            </div>
                                            <div class="row">
                                           <div class="col-lg-4 col-md-4 col-sm-4">
-                                             <label class="control-label" for="inputSuccess">BTL (Behind The Line)</label>
-                                             <select class="form-control input-sm m-bot15 required" id="btl_inputselect" name="btl_inputselect">
+                                             <label class="control-label" for="btl_inputselect">BTL (Behind The Line)</label>
+                                             <select class="form-control input-sm m-bot15" id="btl_inputselect" name="btl_inputselect">
 <!--                                                 <option disabled class="required" value="">- Select BTL -</option>
                                                 <option id="btl_inputselect_yes" name="btl_inputselect_yes" value="Yes">Yes</option>
                                                 <option id="btl_inputselect_no" name="btl_inputselect_no" value="No">No</option> -->
                                              </select>
                                           </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4">
-                                             <label class="control-label" for="inputSuccess">Pricing Type</label>
-                                             <select class="form-control input-sm m-bot15 required" id="pricing_type_inputselect" name="pricing_type_inputselect">
+                                             <label class="control-label" for="pricing_type_inputselect">Pricing Type</label>
+                                             <select class="form-control input-sm m-bot15" id="pricing_type_inputselect" name="pricing_type_inputselect">
                                                 <!-- <option disabled class="required" value="">- Select -</option>
                                                 <option selected id="pricing_type_inputselect1" name="pricing_type_inputselect1" value="Long-Term">LongTerm</option>
                                                 <option id="pricing_type_inputselect2" name="pricing_type_inputselect2" value="Promotion">Promotion</option> -->
@@ -355,12 +355,12 @@
                                              </div>
                                              <div class="col-lg-2 col-md-2 col-sm-2">
                                                 <div class="radio-inline accrualtype inline-flex">
-                                                   <label  for="inputSuccess">
-                                                   <input type="radio" selected name="optionsRadiosDenomination" id="optionsRadiosPercentage" value="%" class="radio-inline denomination required">%</label>  
+                                                   <label  for="optionsRadiosDenomination">
+                                                   <input type="radio" selected name="optionsRadiosDenomination" id="optionsRadiosPercentage" value="%" class="radio-inline denomination">%</label>  
                                                 </div>
                                                 <div class="radio-inline accrualtype inline-flex">
-                                                   <label class="control-label" for="inputSuccess">
-                                                   <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSign" value="$" class="radio-inline denomination required" checked="checked">$</label> 
+                                                   <label class="control-label" for="optionsRadiosDenomination">
+                                                   <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSign" value="$" class="radio-inline denomination" checked="checked">$</label> 
                                                 </div>
                                              </div>
                                            </div>
@@ -368,14 +368,14 @@
                                         <div class="row">
                                            <div class="col-lg-4 col-sm-4">
                                              <label class="control-label" for="payto_inputselect">Pay To</label>
-                                             <select class="form-control input-sm m-bot15 required" id="payto_inputselect" name="payto_inputselect">
+                                             <select class="form-control input-sm m-bot15" id="payto_inputselect" name="payto_inputselect">
 <!--                                                 <option disabled class="required" value="">- Select -</option>
                                                 <option selected id="payout_freq_annually" value="22031" name="payto_inputselect">22031</option> -->
                                              </select>
                                           </div>
                                           <div class="col-lg-4 col-sm-4">
                                             <label class="control-label" for="payment_method_inputselect">Paid Type</label>
-                                                <select class="form-control input-sm m-bot15 required" id="payment_method_inputselect" name="payment_method_inputselect">
+                                                <select class="form-control input-sm m-bot15" id="payment_method_inputselect" name="payment_method_inputselect">
 <!--                                                    <option disabled class="required" value="">- Select -</option>
                                                    <option id="payment_method_inputselect1" value="Credit">CR Memo</option>
                                                    <option selected id="payment_method_inputselect2" value="Check">Check</option> -->
@@ -782,6 +782,48 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					</div>
 				</div>
 				
+								<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-confirmation-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Confirmation</h4>
+                            </div>
+							<div class="modal-body">
+								<!-- <div class="space15">&nbsp;</div> -->
+								<div class="text-center"> <span id="confirmMessage"></span> </div>
+                                <!-- <div class="space15"></div> -->
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-info" type="button" id="program-confirmation-modal-ok" onclick="javascript : closeConfirmationBox()">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-error-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Error / Warning (s)</h4>
+                            </div>
+							<div class="modal-body">
+								<!-- <div class="space15">&nbsp;</div> -->
+								<div class="text-center"> <span id="errorMessageModal"></span> </div>
+                                <!-- <div class="space15"></div> -->
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-info" type="button" id="program-error-modal-ok" onclick="javascript : closeWarningBox()">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
           </div>
           
           
@@ -860,21 +902,85 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          });
       </script>
 
+	<!--  Validation setup Begins -->
     <script type="text/javascript">
 
       $(document).ready(function () {
-          var form = $("#wizard-validation-form");
-              onFinishing: {
-                  form.validate().settings.ignore = ":disabled";
-                  return form.valid();
-              }
-              onFinished: {
-                     alert("You've successfully submitted this program for approval. You'll be notified of its status soon."); 
-                     location.href = 'index.html#pending-approvals';
-              }
+			$.validator.addMethod("actualMarkerCheck", function (value, element) {
+				var isSame = false;
+                    $('#tier-schedule tbody').find('tr').each(function(i) {
+                    	 var tds = $(this).find('td'),
+                         marker = tds.eq(0).text();
+                    	 if(marker==value){
+                    	 	isSame = true;
+                    	 }
+                    });							
+			    return isSame;
+			}, 'Acutal Marker should match maker value available');
+      
+			$("#wizard-validation-form").validate({
+				rules: {
+					program_name_inputselect: {
+						required: true
+					},
+					payout_freq_inputselect:{
+						required: true
+					},
+					from: {
+						required: true
+					},
+					to: {
+						required: true
+					},
+					btl_inputselect: {
+						required: true
+					},
+					pricing_type_inputselect: {
+						required: true
+					},
+					amount: {
+						required: true,
+						number: true
+					},
+					optionsRadiosDenomination: {
+						required: true
+					},
+					payto_inputselect: {
+						required: true
+					},
+					payment_method_inputselect:{
+						required: true
+					},
+					paid_basedon_inputselect: {
+						required: true
+					},
+					actual_marker: {
+						actualMarkerCheck:{
+							depends: function(element) {
+								return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
+							}
+						}
+					}
+				},
+				messages: {
+					required: "This field is required",
+				   	amount: {
+					   	number: "Please enter only numeric values"
+				   	},
+				}
+			});
+          	/* var form = $("#wizard-validation-form");
+			onFinishing: {
+			    form.validate().settings.ignore = ":disabled";
+			    return form.valid();
+			}
+			onFinished: {
+			       alert("You've successfully submitted this program for approval. You'll be notified of its status soon."); 
+			       location.href = 'index.html#pending-approvals';
+			} */
       });
-
   </script>
+  <!--  Validation setup Ends -->
       <!--select2-->
       <script type="text/javascript">
          $(document).ready(function () {
@@ -1378,6 +1484,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				$('#pdf-button').attr('disabled', false);
 				$('#cancel-program').attr('disabled', false);
 				$('#cancel-program').removeClass("disabled");
+				$('#myModal5').find('button').attr('disabled',false);
+				$('#myModal4').find('button').attr('disabled',false);
 			}
 			
 			function approveProgram(){
@@ -1388,8 +1496,9 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					responseOnload.status = "4";
 				}
 				fnCallService();
-				alert("Data approved successfully !!!");
 				$('#myModal3').modal('toggle');
+				$("#confirmMessage").html("Data approved successfully !!!");
+				$('#myModal4').modal('toggle');
 				disableFields();
 			}
 			
@@ -1397,24 +1506,41 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				responseOnload.status = "1";
 				fnCallService();
 				$('#myModal2').modal('toggle');
-				alert("Data rejected successfully !!!");
+				$("#confirmMessage").html("Data rejected successfully !!!");
+				$('#myModal4').modal('toggle');
 				disableFields();
 			}
          	function saveDraft(){
-         		responseOnload.status = "3";
-         		prepareDataForSubmit();
-         		fnCallService();
-         		alert("Data saved successfully !!!");
-         		$('#myModal1').modal('toggle');
+	         	if($("#wizard-validation-form").valid()){
+	         		responseOnload.status = "3";
+	         		prepareDataForSubmit();
+	         		fnCallService();
+	         		$('#myModal1').modal('toggle');
+	         		$("#confirmMessage").html("Data saved successfully !!!");
+					$('#myModal4').modal('toggle');
+	         	}
+	         	else{
+	         		$('#myModal1').modal('toggle');
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+	         	}
          	}
          	
 			function submitForApproval(){
-  				responseOnload.status = "2";
-				prepareDataForSubmit();
-				fnCallService();
-				alert("Data submitted for approval successfully !!!");
-				$('#myModal').modal('toggle');
-				disableFields();
+				if($("#wizard-validation-form").valid()){
+		 			responseOnload.status = "2";
+					prepareDataForSubmit();
+					fnCallService();
+					$('#myModal').modal('toggle');
+					$("#confirmMessage").html("Data submitted for approval successfully !!!");
+					$('#myModal4').modal('toggle');
+					disableFields();
+				}
+				else{
+					$('#myModal').modal('toggle');
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+				}
 			}
 			
 			function fnCallService(){
@@ -1503,8 +1629,18 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					$("#ahieve-based-on").hide();
 					$("#program-tier").hide();
 				}
-    		} ); 
- 
+    		} );
+    		
+    		function closeConfirmationBox(){
+				$('#myModal4').modal('toggle');
+				return false;
+			}
+			
+			function closeWarningBox(){
+				$('#myModal5').modal('toggle');
+				return false;
+			}
+    		
 	</script>
        
 	<script type="text/javascript">

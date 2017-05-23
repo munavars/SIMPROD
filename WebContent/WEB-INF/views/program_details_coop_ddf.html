@@ -220,15 +220,15 @@
                                 </div>
                                <div class="col-lg-4 col-md-5 col-sm-4">
                                    <ul class="list-unstyled w-list">
-                                    <li>Zone Manager Approved By: <span id="zoneManagerApprovedBy"></li>
-                                    <li>Zone Manager Approved Date: <span id="zoneManagerApprovedDate"></li>
+                                    <li>Zone Manager Approved By: <span id="zoneManagerApprovedBy"></span> </li>
+                                    <li>Zone Manager Approved Date: <span id="zoneManagerApprovedDate"></span> </li>
                                     <!-- <li>Director Approved By: <span id="directorApprovedBy"></li>
                                     <li>Director Approved Date: <span id="directorApprovedDate"></li>
                                     <li>Executive Approved By: <span id="executiveApprovedBy"</li>
                                     <li>Executive Approved Date: <span id="executiveApprovedDate"</li> -->
-                                    <li>TBP Approved By: <span id="tbpApprovedBy"</li>
-                                    <li>TBP Approved Date: <span id="tbpApprovedDate"</li>
-                                    <li>Status: <span id="status"</li>
+                                    <li>TBP Approved By: <span id="tbpApprovedBy"></span> </li>
+                                    <li>TBP Approved Date: <span id="tbpApprovedDate"></span> </li>
+                                    <li>Status: <span id="status"></span> </li>
 
                                  </ul>
                                 </div>
@@ -350,7 +350,7 @@
 															</select>
 														</div>
 														<div class="col-lg-4 col-sm-4">
-															<label class="control-label" for="inputSuccess">Paid
+															<label class="control-label" for="paid_basedon_inputselect">Paid
 																Based On</label> <select class="form-control input-sm m-bot15"
 																id="paid_basedon_inputselect"
 																name="paid_basedon_inputselect">
@@ -368,14 +368,14 @@
 															</div>
 															<div class="col-lg-2 col-sm-2">
 																<div class="radio-inline accrualtype inline-flex">
-																	<label for="inputSuccess"> <input type="radio"
+																	<label for="optionsRadiosDenomination"> <input type="radio"
 																		selected name="optionsRadiosDenomination"
 																		id="optionsRadiosPercentage" value="%"
 																		class="radio-inline denomination required">%
 																	</label>
 																</div>
 																<div class="radio-inline accrualtype inline-flex">
-																	<label class="control-label" for="inputSuccess">
+																	<label class="control-label" for="optionsRadiosDenomination">
 																		<input type="radio" name="optionsRadiosDenomination"
 																		id="optionsRadiosDollarSign" value="$"
 																		class="radio-inline denomination required"
@@ -569,6 +569,48 @@
 						</div>
 					</div>
 				</div>
+				
+				<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-confirmation-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Confirmation</h4>
+                            </div>
+							<div class="modal-body">
+								<!-- <div class="space15">&nbsp;</div> -->
+								<div class="text-center"> <span id="confirmMessage"></span> </div>
+                                <!-- <div class="space15"></div> -->
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-info" type="button" id="program-confirmation-modal-ok" onclick="javascript : closeConfirmationBox()">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-error-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Error / Warning (s)</h4>
+                            </div>
+							<div class="modal-body">
+								<!-- <div class="space15">&nbsp;</div> -->
+								<div class="text-center"> <span id="errorMessageModal"></span> </div>
+                                <!-- <div class="space15"></div> -->
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-info" type="button" id="program-error-modal-ok" onclick="javascript : closeWarningBox()">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			              
 			<div class="space15">&nbsp;</div>
 			<div class="text-center"> If you want to save these changes for later, click 'Save Changes'. If you want to submit these changes, click "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
@@ -653,15 +695,54 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
-          var form = $("#wizard-validation-form");
-              onFinishing: {
-                  form.validate().settings.ignore = ":disabled";
-                  return form.valid();
-              }
-              onFinished: {
-                     alert("You've successfully submitted this program for approval. You'll be notified of its status soon."); 
-                     location.href = 'index.html#pending-approvals';
-              }
+      		$("#wizard-validation-form").validate({
+				rules: {
+					program_name_inputselect: {
+						required: true
+					},
+					payout_freq_inputselect:{
+						required: true
+					},
+					from: {
+						required: true
+					},
+					to: {
+						required: true
+					},
+					payto_inputselect: {
+						required: true
+					},
+					payment_method_inputselect: {
+						required: true
+					},
+					paid_basedon_inputselect: {
+						required: true
+					},
+					amount: {
+						required: true,
+						number: true
+					},
+					optionsRadiosDenomination: {
+						required: true
+					}
+				},
+				messages: {
+					required: "This field is required",
+				   	amount: {
+					   	number: "Please enter only numeric values"
+				   	},
+				}
+			});
+      
+			/* var form = $("#wizard-validation-form");
+			onFinishing: {
+			    form.validate().settings.ignore = ":disabled";
+			    return form.valid();
+			}
+			onFinished: {
+			       alert("You've successfully submitted this program for approval. You'll be notified of its status soon."); 
+			       location.href = 'index.html#pending-approvals';
+			} */
       });
 
   </script>
@@ -1081,6 +1162,8 @@
 				$('#cancel-program').attr('disabled', false);
 				$('#cancelLink').attr('disabled', false);
 				$('#cancelLink').removeClass("disabled");
+				$('#myModal5').find('button').attr('disabled',false);
+				$('#myModal4').find('button').attr('disabled',false);
 			}
 			
 			function approveProgram(){
@@ -1091,33 +1174,53 @@
 					responseOnload.status = "4";
 				}
 				fnCallService();
-				alert("Data approved successfully !!!");
 				$('#myModal3').modal('toggle');
+         		$("#confirmMessage").html("Data approved successfully !!!");
+				$('#myModal4').modal('toggle');
 				disableFields();
 			}
 			
 			function rejectProgram(){
 				responseOnload.status = "1";
 				fnCallService();
-				alert("Data rejected successfully !!!");
 				$('#myModal2').modal('toggle');
+         		$("#confirmMessage").html("Data rejected successfully !!!");
+				$('#myModal4').modal('toggle');
 				disableFields();
 			}
          	function saveDraft(){
-         		responseOnload.status = "3";
-         		prepareDataForSubmit();
-         		fnCallService();
-         		alert("Data saved successfully !!!");
-         		$('#myModal1').modal('toggle');
+	         	if($("#wizard-validation-form").valid()){
+	         		responseOnload.status = "3";
+	         		prepareDataForSubmit();
+	         		fnCallService();
+	         		$('#myModal1').modal('toggle');
+	         		//alert("Data saved successfully !!!");
+	         		$("#confirmMessage").html("Data saved successfully !!!");
+					$('#myModal4').modal('toggle');
+	         	}
+				else{
+					$('#myModal1').modal('toggle');
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+				}
          	}
          	
 			function submitForApproval(){
-  				responseOnload.status = "2";
-				prepareDataForSubmit();
-				fnCallService();
-				alert("Data submitted for approval successfully !!!");
-				$('#myModal').modal('toggle');
-				disableFields();
+				if($("#wizard-validation-form").valid()){
+	  				responseOnload.status = "2";
+					prepareDataForSubmit();
+					fnCallService();
+					$('#myModal').modal('toggle');
+					$("#confirmMessage").html("Data submitted for approval successfully !!!");
+					$('#myModal4').modal('toggle');
+					//alert("Data submitted for approval successfully !!!");
+					disableFields();
+				}
+				else{
+					$('#myModal').modal('toggle');
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+				}
 			}
 			
 			function fnCallService(){
@@ -1160,6 +1263,14 @@
 					});
 					resetFormForMandatoryCheck(elementId);
 	         	}
+			}
+			function closeConfirmationBox(){
+				$('#myModal4').modal('toggle');
+				return false;
+			}
+			function closeWarningBox(){
+				$('#myModal5').modal('toggle');
+				return false;
 			}
 
 	</script>

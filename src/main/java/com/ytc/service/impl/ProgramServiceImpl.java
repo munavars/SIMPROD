@@ -653,7 +653,7 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgram(String custId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
-		DecimalFormat df = new DecimalFormat("#.##"); 
+		DecimalFormat df = new DecimalFormat("#.00"); 
 		String sql=QueryConstant.PROGRAM_LIST;
 		Map<String, Object> queryParams = new HashMap<>();
 		if("0".equalsIgnoreCase(custId)){
@@ -699,7 +699,7 @@ public class ProgramServiceImpl implements IProgramService {
 			if(dalProgramDetail.getIsTiered() != null){
 				programDetail.setIsTiered(ProgramConstant.ZERO.equalsIgnoreCase(dalProgramDetail.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES);
 			}
-			programDetail.setAccrualAmount(Double.valueOf(df.format(dalProgramDetail.getAccrualAmount())));
+			programDetail.setAccrualAmount(df.format(dalProgramDetail.getAccrualAmount()));
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
 			if(dalProgramDetail.getTrueUp() != null){
 				programDetail.setTrueUp("Y".equalsIgnoreCase(dalProgramDetail.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO);
@@ -709,17 +709,17 @@ public class ProgramServiceImpl implements IProgramService {
 			String tierRate=ProgramConstant.ZERO;
 			if(null!=dalProgramDetail.getPgmDetailTier()){
 				if("$".equalsIgnoreCase(dalProgramDetail.getPgmDetailTier().getTierType())){
-					tierRate=(dalProgramDetail.getPgmDetailTier().getTierType()+Double.toString(dalProgramDetail.getPgmDetailTier().getAmount()));
+					tierRate=(dalProgramDetail.getPgmDetailTier().getTierType()+df.format(dalProgramDetail.getPgmDetailTier().getAmount()));
 				}else{
-					tierRate=(Double.toString(dalProgramDetail.getPgmDetailTier().getAmount())+dalProgramDetail.getPgmDetailTier().getTierType());
+					tierRate=(df.format(dalProgramDetail.getPgmDetailTier().getAmount())+dalProgramDetail.getPgmDetailTier().getTierType());
 				}
 			}
 			programDetail.setTierRate(tierRate);
-			programDetail.setAccruedAmount(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getTotalAccuredAmount():0);
-			programDetail.setCreditAmount(0);
-			programDetail.setPayables(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getTotalPaidAmount():0);
-			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?dalProgramDetail.getAccuralData().getBalance():ProgramConstant.ZERO);
-			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Empty");
+			programDetail.setAccruedAmount(null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getTotalAccuredAmount()):ProgramConstant.ZERO);
+			programDetail.setCreditAmount(ProgramConstant.ZERO);
+			programDetail.setPayables(null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getTotalPaidAmount()):ProgramConstant.ZERO);
+			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getBalance()):ProgramConstant.ZERO);
+			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Not Available");
 			programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
 			//programDetail.setProgramTypeId( dalProgramDetail.getDalProgramType().getId());
 			programDetailList.add(programDetail);

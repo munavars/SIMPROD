@@ -26,15 +26,15 @@ public class ProgramDetail extends Model{
 	private Integer programId;
 	private String achievedBasedOn;
 	private String isTiered;
-	private double accrualAmount;
+	private String accrualAmount;
 	private String accrualType;
 	private String currentTier;
 	private String beginRange;
 	private String trueUp;
 	private String tierRate;
-	private double accruedAmount;
-	private double creditAmount;
-	private double payables;
+	private String accruedAmount;
+	private String creditAmount;
+	private String payables;
 	private String glBalance;
 	private String customerId;
 	private String customerName;
@@ -159,10 +159,10 @@ public class ProgramDetail extends Model{
 	public void setIsTiered(String isTiered) {
 		this.isTiered = isTiered;
 	}
-	public double getAccrualAmount() {
+	public String getAccrualAmount() {
 		return accrualAmount;
 	}
-	public void setAccrualAmount(double accrualAmount) {
+	public void setAccrualAmount(String accrualAmount) {
 		this.accrualAmount = accrualAmount;
 	}
 	public String getAccrualType() {
@@ -195,22 +195,22 @@ public class ProgramDetail extends Model{
 	public void setTierRate(String tierRate) {
 		this.tierRate = tierRate;
 	}
-	public double getAccruedAmount() {
+	public String getAccruedAmount() {
 		return accruedAmount;
 	}
-	public void setAccruedAmount(double accruedAmount) {
+	public void setAccruedAmount(String accruedAmount) {
 		this.accruedAmount = accruedAmount;
 	}
-	public double getCreditAmount() {
+	public String getCreditAmount() {
 		return creditAmount;
 	}
-	public void setCreditAmount(double creditAmount) {
+	public void setCreditAmount(String creditAmount) {
 		this.creditAmount = creditAmount;
 	}
-	public double getPayables() {
+	public String getPayables() {
 		return payables;
 	}
-	public void setPayables(double payables) {
+	public void setPayables(String payables) {
 		this.payables = payables;
 	}
 	public String getGlBalance() {

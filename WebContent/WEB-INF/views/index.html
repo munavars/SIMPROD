@@ -235,9 +235,9 @@
      ],*/
 		    columns: [
 		    	
-		    	{ data: "customerNumber",className:"center" },   
+		    	{ data: "customerNumber" },   
    				{ data: "customerName" },
-   				{ data: "programId",className:"center",
+   				{ data: "programId",
    				 
                     render: function ( data, type, row, meta ) {
 						if(type === 'display' && row.programType == 'Calculated Program'){
@@ -467,8 +467,8 @@
                               <thead>
                                 <tr>
                                     <th colspan="2" class="center toptheader">Customer</th>
-                                    <th colspan="2" class="center toptheader">Program</th>
-                                    <th colspan="3" class="toptheader">&nbsp;</th>
+                                    <th colspan="5" class="center toptheader">Program</th>
+                                    <!-- <th colspan="3" class="toptheader">&nbsp;</th> -->
                                     <th colspan="4" class="center toptheader">Status</th>
                               </tr>
                               <tr class="rowvis">
@@ -663,7 +663,7 @@
 <!-- START 'Pending Approvals' table -->
                           <div class="btn-group pull-right">
                             <div class="btn-group">
-                            <a href="#"><button class="btn btn-default" onclick="tableToExcel('customeroverview', 'Program Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                            <a href="#"><button class="btn btn-default" onclick="tableToExcel('customeroverview', 'Customers Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
                             </div>   
                         </div>
                          <h3 class="tableHeader">Customers</h3>

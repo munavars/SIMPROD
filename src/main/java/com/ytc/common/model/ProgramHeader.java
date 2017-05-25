@@ -42,6 +42,11 @@ public class ProgramHeader extends Model{
 	private String authorizedUser;
 	private boolean calculatedProgram;
 	
+	/** For email link*/
+	private String contextPath;
+	private String url;
+	/** For email link*/
+	
 	private ProgramButton programButton = new ProgramButton();
 	private List<ProgramDetail> programDetailList = new ArrayList<ProgramDetail>();
 	
@@ -206,5 +211,17 @@ public class ProgramHeader extends Model{
 	}
 	public void setProgramButton(ProgramButton programButton) {
 		this.programButton = programButton;
+	}
+	public String getContextPath() {
+		return contextPath;
+	}
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

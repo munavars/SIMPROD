@@ -30,7 +30,6 @@ import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalEmployeeHierarchy;
-import com.ytc.dal.model.DalEmployeeTitle;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
@@ -103,8 +102,7 @@ public class ProgramServiceImpl implements IProgramService {
 	private void getButtonBehaviorDetails(Employee employee, ProgramHeader programHeader,
 			DalProgramDetail dalProgramDetail) {
 		if(employee != null && programHeader != null && dalProgramDetail != null){
-			DalEmployeeTitle dalEmployeeTitle = baseDao.getById(DalEmployeeTitle.class, Integer.valueOf(employee.getTITLE_ID()));
-			ProgramServiceWorkflowHelper.setProgramButtonProperties(dalEmployeeTitle, programHeader, dalProgramDetail);
+			ProgramServiceWorkflowHelper.setProgramButtonProperties(employee, programHeader, dalProgramDetail);
 		}
 		
 	}

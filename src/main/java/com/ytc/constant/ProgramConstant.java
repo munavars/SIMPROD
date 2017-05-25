@@ -26,4 +26,10 @@ public class ProgramConstant {
 	public static final String USER_LEVEL_1 = "1";
 	public static final String USER_LEVEL_2 = "2";
 	public static final String USER_LEVEL_3 = "3";
+	
+	public static final Integer EMP_HIERARCHY_1 = 1;
+	public static final Integer EMP_HIERARCHY_2 = 2;
+	public static final Integer EMP_HIERARCHY_3 = 3;
+	public static final Integer EMP_HIERARCHY_4 = 4;
+	public static final Integer EMP_HIERARCHY_5 = 5;	
 }

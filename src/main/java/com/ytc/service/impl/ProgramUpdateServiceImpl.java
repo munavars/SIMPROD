@@ -28,6 +28,7 @@ import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
+import com.ytc.service.IProgramEmailService;
 import com.ytc.service.IProgramUpdateService;
 import com.ytc.service.ServiceContext;
 
@@ -42,74 +43,86 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	@Autowired
 	private ServiceContext serviceContext;
 	
+	@Autowired
+	private IProgramEmailService programEmailService;  
+	
 	@Override
 	public ProgramHeader saveProgramDetails(ProgramHeader programHeader) {
 		
-		List<DalProgramDetAchieved> deletedAchievedEntityList = null;
-		List<DalProgramDetPaid> deletedPaidEntityList = null;
 		if(programHeader.getId() != null){
 		
 			DalProgramDetail dalProgramDetail = baseDao.getById(DalProgramDetail.class, programHeader.getProgramDetailList().get(0).getId());
 			
 			if(dalProgramDetail != null && !programHeader.isNewProgram()){
 				/** If control is here, then user is editing the existing program details.*/
-				if(programHeader.getStatus() != null && dalProgramDetail.getDalProgramHeader() != null){
-					dalProgramDetail.getDalProgramHeader().setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));
-					dalProgramDetail.getDalProgramHeader().setModifiedBy(dalProgramDetail.getModifiedBy());
-				}
-				/** Save Program Detail section information*/
-				updateProgramDetailsData(dalProgramDetail, programHeader);
-
-				/** save Program Paid Based on*/
-				deletedPaidEntityList = updateProgramPaidBasedOnData(programHeader, dalProgramDetail);
-			
-				if(deletedPaidEntityList != null && !deletedPaidEntityList.isEmpty()){
-					for(DalProgramDetPaid dalProgramDetPaid : deletedPaidEntityList){
-						dalProgramDetail.getDalProgramDetPaidList().remove(dalProgramDetPaid);
-					}
-				}
-				
-				/** save Program Achieved Based on*/
-				if(programHeader.isCalculatedProgram()){
-					deletedAchievedEntityList = updateProgramAchieveBasedOnData(programHeader, dalProgramDetail);
-					
-					if(deletedAchievedEntityList != null && !deletedAchievedEntityList.isEmpty()){
-						for(DalProgramDetAchieved dalProgramDetAchieved : deletedAchievedEntityList){
-							baseDao.delete(DalProgramDetAchieved.class, dalProgramDetAchieved.getId());
-							dalProgramDetail.getDalProgramDetAchievedList().remove(dalProgramDetAchieved);
-						}
-					}
-				}
-				
-				baseDao.update(dalProgramDetail);
-
-				/** tier detail is saved seperately as of now.*/
-				if(programHeader.isCalculatedProgram()){
-					updateProgramTierData(dalProgramDetail, programHeader);	
-				}
-				
-				/**Setting the value to true */
-				if(dalProgramDetail.getDalProgramHeader().getStatus() != null 
-						&& !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
-						&& !ProgramConstant.REJECTED_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
-						&& "1".equals(programHeader.getProgramButton().getUserLevel())){
-					programHeader.setNewProgram(true);
-				}
-				else{
-					programHeader.setNewProgram(false);
-				}
-				programHeader.setSuccess(true);
-				programHeader.setStatus(dalProgramDetail.getStatus().getType());
+				updateProgramDetails(programHeader, dalProgramDetail);
 			}
 			else{
+				/** Only Program detail id will be generated.*/
 				programCreateService.createProgramDetails(programHeader);
 			}
 		}
 		else{
+			/** Both Program header and detail id will be generated.*/
 			programCreateService.createProgramDetails(programHeader);
-		}
-						
+		}		
+		
 		return programHeader;
+	}
+
+	private void updateProgramDetails(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+		
+		List<DalProgramDetAchieved> deletedAchievedEntityList = null;
+		List<DalProgramDetPaid> deletedPaidEntityList = null;
+		
+		if(programHeader.getStatus() != null && dalProgramDetail.getDalProgramHeader() != null){
+			dalProgramDetail.getDalProgramHeader().setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));
+			dalProgramDetail.getDalProgramHeader().setModifiedBy(dalProgramDetail.getModifiedBy());
+		}
+		/** Save Program Detail section information*/
+		updateProgramDetailsData(dalProgramDetail, programHeader);
+
+		/** save Program Paid Based on*/
+		deletedPaidEntityList = updateProgramPaidBasedOnData(programHeader, dalProgramDetail);
+
+		if(deletedPaidEntityList != null && !deletedPaidEntityList.isEmpty()){
+			for(DalProgramDetPaid dalProgramDetPaid : deletedPaidEntityList){
+				dalProgramDetail.getDalProgramDetPaidList().remove(dalProgramDetPaid);
+			}
+		}
+		
+		/** save Program Achieved Based on*/
+		if(programHeader.isCalculatedProgram()){
+			deletedAchievedEntityList = updateProgramAchieveBasedOnData(programHeader, dalProgramDetail);
+			
+			if(deletedAchievedEntityList != null && !deletedAchievedEntityList.isEmpty()){
+				for(DalProgramDetAchieved dalProgramDetAchieved : deletedAchievedEntityList){
+					baseDao.delete(DalProgramDetAchieved.class, dalProgramDetAchieved.getId());
+					dalProgramDetail.getDalProgramDetAchievedList().remove(dalProgramDetAchieved);
+				}
+			}
+		}
+		
+		baseDao.update(dalProgramDetail);
+
+		/** tier detail is saved seperately as of now.*/
+		if(programHeader.isCalculatedProgram()){
+			updateProgramTierData(dalProgramDetail, programHeader);	
+		}
+		
+		/**Setting the value to true */
+		if(dalProgramDetail.getDalProgramHeader().getStatus() != null 
+				&& !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
+				&& !ProgramConstant.REJECTED_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
+				&& "1".equals(programHeader.getProgramButton().getUserLevel())){
+			programHeader.setNewProgram(true);
+		}
+		else{
+			programHeader.setNewProgram(false);
+		}
+		programHeader.setSuccess(true);
+		programHeader.setStatus(dalProgramDetail.getStatus().getType());
+		programEmailService.sendEmailData(programHeader, dalProgramDetail);
 	}
 
 	private void updateProgramTierData(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {

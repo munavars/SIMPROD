@@ -625,14 +625,13 @@
 																</div></td>
 
 															<td colspan="3" class="noborders text-right"><label
-																class="control-label" for="inputSuccess">Actual
-																	Marker</label>&nbsp;&nbsp; <input id="actual_marker"
+																class="control-label" for="inputSuccess">Accrued Tier</label>&nbsp;&nbsp; <input id="actual_marker"
 																name="actual_marker" type="text" size="3"
 																class="form-control" value=""></td>
 
 														</tr>
 														<tr>
-															<th>Marker</th>
+															<th>Tier</th>
 															<th>Amount</th>
 															<th>Beginning Range</th>
 															<th>Edit</th>
@@ -1378,7 +1377,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                 var table = $("#tier-schedule").DataTable();
                 if(tierData != null){
 	                $.each(tierData, function(idx, item) {
-							table.fnAddData([item.level, item.amount,item.beginRange,
+							table.fnAddData([item.level, item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),item.beginRange,
 											'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
 											'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
 	                    ]);
@@ -1592,7 +1591,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                     }
                     programDetailTier.programDetailId = responseOnload.programDetailList[0].id;
                     programDetailTier.level = parseInt(marker);
-                    programDetailTier.amount = parseInt(amount);
+                    //programDetailTier.amount = parseInt(amount);
+                    programDetailTier.amount = parseInt(amount.replace(/,/g, ""));
                     programDetailTier.tierType = tiertype;
                     programDetailTier.beginRange = parseInt(range.replace(regex, ''));
                    

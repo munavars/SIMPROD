@@ -43,7 +43,7 @@ Website: http://yokohamatire.com/
 }
 
 body {
-    color: #666;
+    color: #000;
     background: #d5d5d5;
     font-family: 'AvenirNextLTPro-Regular', Arial, sans-serif;
     padding: 0px !important;
@@ -4725,7 +4725,7 @@ select.paidachieve {
 }
 
 select.paidachieve_box {
-    height: 128px !important;
+    height: 240px !important;
     width: 134px;
 }
 @media screen and (max-width: 475px) {
@@ -4734,7 +4734,8 @@ select.paidachieve_box {
 }
 }
 select.paidachieve_box2 {
-    width: 134px;
+    width: 234px;
+    height: 90px;
 }
 @media screen and (max-width: 475px) {
 select.paidachieve_box2 {

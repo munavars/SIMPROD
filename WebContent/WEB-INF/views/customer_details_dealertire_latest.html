@@ -107,6 +107,7 @@
     
 	$(document).ready(function () { 
 
+		$('#editabletest th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
 		//alert(window.location.search.substr(1)); 	
 		getParams = new URLSearchParams(window.location.search);
 		var custId=getParams.get('custId'); 
@@ -205,7 +206,9 @@
 	            { data: "creditAmount" },
 	            { data: "payables" },
 	            { data: "glBalance" },
-	            { data: "programType" }
+	            { data: "programType" },  
+	            { data: "modifiedDate" },
+	            { data: "createdDate" }
         ]
 		} );
 			  	
@@ -443,7 +446,7 @@
                              <thead>
 
                               <tr class="rowvis" style="background-color: #cacbce;">
-                                <th class="center rowvis" >Pgm ID</th>
+                                <th>Pgm ID</th>
                                 <th>Program</th>
                                 <th>Frequency</th>								
                                 <th>Begin Date</th>
@@ -463,6 +466,9 @@
                                 <th>Credit Amount</th>
                                 <th>Payables</th>								
                                 <th>GL Balance</th>
+                                <th></th>
+                                <th>Modified Date</th>
+                                <th>Created Date</th>
                               </tr>
                               </thead>
                               <tbody>

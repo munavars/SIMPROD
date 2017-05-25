@@ -98,6 +98,7 @@
    }
 	
    $(document).ready(function () { 
+	   $('#customeroverview th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');	
 	   getParams = new URLSearchParams(window.location.search);
 	   var loginId=getParams.get('loginId'); 
 	   var table=$("#customeroverview").DataTable( {

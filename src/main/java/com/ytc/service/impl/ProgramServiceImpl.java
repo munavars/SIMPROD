@@ -465,6 +465,7 @@ public class ProgramServiceImpl implements IProgramService {
 			List<DalTagItems> dalTagItemsList =  baseDao.getListFromNamedQuery(namedQueryValue);
 			if(dalTagItemsList != null){
 				for(DalTagItems dalTagItems : dalTagItemsList){
+					if(dalTagItems.getTagLevel()!=0){
 					DropDown dropDown = new DropDown();
 					dropDown.setKey(String.valueOf(dalTagItems.getId()));
 					dropDown.setValue(dalTagItems.getItem());
@@ -472,6 +473,7 @@ public class ProgramServiceImpl implements IProgramService {
 						dropdownList = new ArrayList<DropDown>();
 					}
 					dropdownList.add(dropDown);
+					}
 				}
 			}
 			
@@ -541,6 +543,7 @@ public class ProgramServiceImpl implements IProgramService {
 			List<DalFrequency> dalFrequencyList =  baseDao.getListFromNamedQuery(namedQueryValue);
 			if(dalFrequencyList != null){
 				for(DalFrequency dalFrequency : dalFrequencyList){
+					if(!"0".equalsIgnoreCase(dalFrequency.getFrequency())){
 					DropDown dropDown = new DropDown();
 					dropDown.setKey(String.valueOf(dalFrequency.getId()));
 					dropDown.setValue(dalFrequency.getFrequency());
@@ -548,6 +551,7 @@ public class ProgramServiceImpl implements IProgramService {
 						dropdownList = new ArrayList<DropDown>();
 					}
 					dropdownList.add(dropDown);
+					}
 				}
 			}
 			
@@ -604,6 +608,7 @@ public class ProgramServiceImpl implements IProgramService {
 			List<DalBaseItems> dalBaseItemsList =  baseDao.getListFromNamedQuery(namedQueryValue);
 			if(dalBaseItemsList != null){
 				for(DalBaseItems dalBaseItems : dalBaseItemsList){
+					if(!"0".equalsIgnoreCase(dalBaseItems.getBaseItem())){
 					DropDown dropDown = new DropDown();
 					dropDown.setKey(String.valueOf(dalBaseItems.getId()));
 					dropDown.setValue(dalBaseItems.getBaseItem());
@@ -611,6 +616,7 @@ public class ProgramServiceImpl implements IProgramService {
 						dropdownList = new ArrayList<DropDown>();
 					}
 					dropdownList.add(dropDown);
+					}
 				}
 			}
 			
@@ -722,6 +728,8 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Not Available");
 			programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
 			//programDetail.setProgramTypeId( dalProgramDetail.getDalProgramType().getId());
+			programDetail.setCreatedDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
+			programDetail.setModifiedDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT));
 			programDetailList.add(programDetail);
 		}
 		
@@ -802,7 +810,7 @@ public class ProgramServiceImpl implements IProgramService {
 		Map<String, Object> queryParams = new HashMap<>();
 		List<ProgramDetail> pgm=new ArrayList<ProgramDetail>();
 		if(empId==0){
-			pgm=getProgram("0","0,4");
+			pgm=getProgram("0","0,4,3");
 		}else{
 			String queryString = QueryConstant.EMPLOYEE_HIER_LIST;
 			queryParams.put("loginId", empId);
@@ -812,7 +820,7 @@ public class ProgramServiceImpl implements IProgramService {
 				String sql=QueryConstant.CUSTOMER_LIST_MGR;
 				queryParams.put("userId", userIdList);
 				List<String> customerId=baseDao.getListFromNativeQuery(sql, queryParams);		
-				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4");
+				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4,3");
 			}
 			
 		}

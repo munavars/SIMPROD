@@ -56,6 +56,8 @@ public class ProgramDetail extends Model{
 	private Integer actualMarker;
 	private Integer programTypeId;
 	private String programType;
+	private String createdDate;
+	private String modifiedDate;
 	
 	public ProgramPaidOn getProgramPaidOn() {
 		return programPaidOn;
@@ -392,5 +394,17 @@ public class ProgramDetail extends Model{
 	}
 	public void setProgramType(String programType) {
 		this.programType = programType;
+	}
+	public String getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(String createdDate) {
+		this.createdDate = createdDate;
+	}
+	public String getModifiedDate() {
+		return modifiedDate;
+	}
+	public void setModifiedDate(String modifiedDate) {
+		this.modifiedDate = modifiedDate;
 	}
 }

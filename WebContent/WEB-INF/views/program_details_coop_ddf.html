@@ -1122,7 +1122,7 @@
          	}
 
          	function prepareDataForSubmit(){
-         		
+         		responseOnload.url = window.location.href;
 				responseOnload.programDetailList[0].amount = $("#amount").val();
 				responseOnload.programDetailList[0].amountType = $('input:radio[name=optionsRadiosDenomination]:checked').val();
  				responseOnload.programDetailList[0].beginDate = $.datepicker.parseDate( "mm/dd/yy", $('#from').val());
@@ -1175,6 +1175,7 @@
 				else{
 					responseOnload.status = "4";
 				}
+				responseOnload.url = window.location.href;
 				fnCallService();
 				$('#myModal3').modal('toggle');
          		$("#confirmMessage").html("Data approved successfully !!!");
@@ -1184,6 +1185,7 @@
 			
 			function rejectProgram(){
 				responseOnload.status = "1";
+				responseOnload.url = window.location.href;
 				fnCallService();
 				$('#myModal2').modal('toggle');
          		$("#confirmMessage").html("Data rejected successfully !!!");

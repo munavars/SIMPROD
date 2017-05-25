@@ -59,7 +59,6 @@ public class DalEmployeeHierarchy {
 	/**
 	 * @return the baseEmpId
 	 */
-
 	@Column(name = "BASE_EMP_ID")
 	public String getBaseEmpId() {
 		return baseEmpId;

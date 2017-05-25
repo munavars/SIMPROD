@@ -1,46 +1,42 @@
 package com.ytc.helper;
 
 import com.ytc.common.enums.ConsumerProgramStatusEnum;
-import com.ytc.common.enums.ConsumerUserLevelEnum;
+import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.constant.ProgramConstant;
-import com.ytc.dal.model.DalEmployeeTitle;
 import com.ytc.dal.model.DalProgramDetail;
 
 public class ProgramServiceWorkflowHelper {
 
-	public static void setProgramButtonProperties(DalEmployeeTitle dalEmployeeTitle, ProgramHeader programHeader,
+	public static void setProgramButtonProperties(Employee employee, ProgramHeader programHeader,
 			DalProgramDetail dalProgramDetail) {
-		if(dalEmployeeTitle != null && programHeader != null && dalProgramDetail != null){
+		if(employee != null && programHeader != null && dalProgramDetail != null){
 			/**
 			 * 1.Current status of the program.
 			 * 2.Current user level.
 			 * 3.Set button enable/disable value accordingly
 			 * */
-			Integer loggedInUserLevel = null;
 			String programStatus = dalProgramDetail.getStatus().getType();
-			ConsumerUserLevelEnum userLevelEnum = ConsumerUserLevelEnum.getUserLevel(dalEmployeeTitle.getTitle());
-			if(userLevelEnum != null){
-				programHeader.getProgramButton().setUserLevel(String.valueOf(userLevelEnum.getLevel()));
-				loggedInUserLevel = userLevelEnum.getLevel();
-			}
 			ConsumerProgramStatusEnum consumerProgramStatusEnum = ConsumerProgramStatusEnum.getProgramStatus(programStatus);
-			if(consumerProgramStatusEnum != null && loggedInUserLevel != null){
+			if(consumerProgramStatusEnum != null){
+				programHeader.getProgramButton().setUserLevel(String.valueOf(consumerProgramStatusEnum.getUserLevel()));
+				
 				if(ConsumerProgramStatusEnum.INPROGRESS.getProgramStatus().equalsIgnoreCase(programStatus)){
-					setInProgressBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel);
+					setInProgressBehaviour(programHeader, dalProgramDetail, employee);
+					
 					programHeader.setNewProgram(false);
 				}
 				else if(ConsumerProgramStatusEnum.PENDING.getProgramStatus().equalsIgnoreCase(programStatus)){
-					setPendingManagerApprovalBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel, dalProgramDetail);
+					setPendingManagerApprovalBehaviour(programHeader, dalProgramDetail, employee);
 					programHeader.setNewProgram(false);
 				}
 				else if(ConsumerProgramStatusEnum.ACTIVE.getProgramStatus().equalsIgnoreCase(programStatus) ||  
 						ConsumerProgramStatusEnum.APPROVED.getProgramStatus().equalsIgnoreCase(programStatus)){
-					setApprovedBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel);
+					setApprovedBehaviour(programHeader, dalProgramDetail, employee);
 					programHeader.setNewProgram(true);
 				}
 				else if(ConsumerProgramStatusEnum.REJECTED.getProgramStatus().equalsIgnoreCase(programStatus)){
-					setRejectedBehaviour(programHeader, consumerProgramStatusEnum, loggedInUserLevel);
+					setRejectedBehaviour(programHeader, dalProgramDetail, employee);
 					programHeader.setNewProgram(false);
 				}
 			}
@@ -48,9 +44,10 @@ public class ProgramServiceWorkflowHelper {
 	}
 
 	private static void setRejectedBehaviour(ProgramHeader programHeader,
-			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel) {
+												DalProgramDetail dalProgramDetail,
+												Employee employee) {
 		programHeader.getProgramButton().setApprover(false);
-		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel())){
+		if(employee.getEMP_ID() != null && employee.getEMP_ID().equals(dalProgramDetail.getCreatedBy().getId()) ){
 			programHeader.getProgramButton().setCreater(true);	
 		}
 		else{
@@ -59,9 +56,10 @@ public class ProgramServiceWorkflowHelper {
 	}
 
 	private static void setApprovedBehaviour(ProgramHeader programHeader,
-			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel) {
+												DalProgramDetail dalProgramDetail,
+												Employee employee) {
 		programHeader.getProgramButton().setApprover(false);
-		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel())){
+		if(employee.getEMP_ID() != null && employee.getEMP_ID().equals(dalProgramDetail.getCreatedBy().getId()) ){
 			programHeader.getProgramButton().setCreater(true);	
 		}
 		else{
@@ -70,25 +68,37 @@ public class ProgramServiceWorkflowHelper {
 	}
 
 	private static void setPendingManagerApprovalBehaviour(ProgramHeader programHeader,
-			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel,
-			DalProgramDetail dalProgramDetail) {
+															DalProgramDetail dalProgramDetail,
+															Employee employee) {
 		programHeader.getProgramButton().setCreater(false);	
-		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel()) && dalProgramDetail.getZmAppById() == null){
-			programHeader.getProgramButton().setApprover(true);
-		}
-		else if(dalProgramDetail.getZmAppById() != null && Integer.valueOf(ProgramConstant.USER_LEVEL_3).equals(loggedInUserLevel) && dalProgramDetail.getTbpAppById() == null) {
-			programHeader.getProgramButton().setApprover(true);
-		}
-		else{
-			programHeader.getProgramButton().setApprover(false);
+		programHeader.getProgramButton().setApprover(false);
+		
+		if(employee.getEMP_ID() != null){
+			if(employee.getEMP_ID().equals(dalProgramDetail.getZmAppById().getId())){
+				programHeader.getProgramButton().setUserLevel(ProgramConstant.USER_LEVEL_2);
+				if(dalProgramDetail.getZmAppDate() == null){
+					programHeader.getProgramButton().setApprover(true);	
+				}
+				/** Hard coded below value is not correct. This should be dynamic. For now, hard coding this value.*/
+				else if(2 == dalProgramDetail.getZmAppStatus()){
+					programHeader.getProgramButton().setApprover(true);
+				}
+			}
+			else if(employee.getEMP_ID().equals(dalProgramDetail.getTbpAppById().getId())){
+				programHeader.getProgramButton().setUserLevel(ProgramConstant.USER_LEVEL_3);
+				if(4 == dalProgramDetail.getZmAppStatus()){
+					programHeader.getProgramButton().setApprover(true);
+				}
+			}
 		}
 		
 	}
 
 	private static void setInProgressBehaviour(ProgramHeader programHeader,
-			ConsumerProgramStatusEnum consumerProgramStatusEnum, Integer loggedInUserLevel) {
+												DalProgramDetail dalProgramDetail,
+												Employee employee) {
 		programHeader.getProgramButton().setApprover(false);
-		if(loggedInUserLevel.equals(consumerProgramStatusEnum.getUserLevel())){
+		if(employee.getEMP_ID() != null && employee.getEMP_ID().equals(dalProgramDetail.getCreatedBy().getId()) ){
 			programHeader.getProgramButton().setCreater(true);		
 		}
 		else{

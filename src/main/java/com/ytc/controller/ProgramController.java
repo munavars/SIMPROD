@@ -60,7 +60,7 @@ public class ProgramController extends BaseController {
 		ModelResult<ProgramHeader> returnData = null;
 		/**
 		 * Assumption, if program id is null, then it is create request.
-		 * If Program id is not null, then user is viewing the program id in edit mode. In this case, we need ot fetch all the
+		 * If Program id is not null, then user is viewing the program id in edit mode. In this case, we need to fetch all the
 		 * details related to program id and need to show it to user.
 		 * In both cases, initializing dropdown values are same.
 		 * */
@@ -86,8 +86,11 @@ public class ProgramController extends BaseController {
 	}
 	
 	@RequestMapping(value = "v1/saveProgramDetails", method = RequestMethod.POST)
-	public @ResponseBody ModelResult<ProgramHeader> saveProgramDetails(@RequestBody ProgramHeader programHeader) {
+	public @ResponseBody ModelResult<ProgramHeader> saveProgramDetails(HttpServletRequest request, @RequestBody ProgramHeader programHeader) {
 		ModelResult<ProgramHeader> returnData = null;
+		if(programHeader != null && request != null){
+			programHeader.setContextPath(request.getContextPath());
+		}
 		returnData =  new ModelResult<ProgramHeader>(getPersistService().saveProgramDetails(programHeader));
 		return returnData;
 	}

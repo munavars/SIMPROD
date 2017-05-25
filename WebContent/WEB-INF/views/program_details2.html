@@ -824,6 +824,27 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					</div>
 				</div>
 				
+				<div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-info-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Information</h4>
+                            </div>
+							<div class="modal-body">
+								<!-- <div class="space15">&nbsp;</div> -->
+								<div class="text-center"> <span id="informationMessageModal"></span> </div>
+                                <!-- <div class="space15"></div> -->
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-info" type="button" id="program-info-modal-ok" data-toggle="modal" href="#myModal6">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
           </div>
           
           
@@ -1418,7 +1439,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          	}
 
          	function prepareDataForSubmit(){
-         		
+         		responseOnload.url = window.location.href;
 				responseOnload.programDetailList[0].amount = $("#amount").val();
 				responseOnload.programDetailList[0].amountType = $('input:radio[name=optionsRadiosDenomination]:checked').val();
  				responseOnload.programDetailList[0].beginDate = $.datepicker.parseDate( "mm/dd/yy", $('#from').val());
@@ -1501,6 +1522,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				else{
 					responseOnload.status = "4";
 				}
+				responseOnload.url = window.location.href;
 				fnCallService();
 				$('#myModal3').modal('toggle');
 				$("#confirmMessage").html("Data approved successfully !!!");
@@ -1510,6 +1532,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			
 			function rejectProgram(){
 				responseOnload.status = "1";
+				responseOnload.url = window.location.href;
 				fnCallService();
 				$('#myModal2').modal('toggle');
 				$("#confirmMessage").html("Data rejected successfully !!!");

@@ -41,9 +41,16 @@
 	<bean id="programUpdateService" class="com.ytc.service.impl.ProgramUpdateServiceImpl">
 	</bean>
 	
-		
 	<bean id="programCreateService" class="com.ytc.service.impl.ProgramCreateServiceImpl">
 	</bean>
 	
+	<bean id="ytcMailConnectorService" class="com.ytc.mail.impl.YTCMailConnectorServiceImpl">
+	</bean>
+	
+	<bean id="ytcMailSenderService" class="com.ytc.mail.impl.YTCMailSenderServiceImpl">
+	</bean>
+	
+	<bean id="programEmailService" class="com.ytc.service.impl.ProgramEmailServiceImpl">
+	</bean>
 	
 </beans>

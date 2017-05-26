@@ -74,9 +74,9 @@ public class CustomerService implements ICustomerService {
 				programDetail.setProgramId(dalProgramDetail.getId());
 				programDetail.setBu(dalProgramHeader.getCustomer().getBu());
 				programDetail.setSubmitDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
-				programDetail.setZmAppStatus(null!=dalProgramDetail.getZmAppStatus()?dalProgramDetail.getZmAppStatus().toString():"0");
+				programDetail.setZmAppStatus(null!=dalProgramDetail.getZmAppStatus()?dalProgramDetail.getZmAppStatus().getId().toString():"0");
 				programDetail.setZmAppDate(null!=dalProgramDetail.getZmAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getZmAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
-				programDetail.setTbpAppStatus(null!=dalProgramDetail.getTbAppStatus()?dalProgramDetail.getTbAppStatus().toString():"0");
+				programDetail.setTbpAppStatus(null!=dalProgramDetail.getTbAppStatus()?dalProgramDetail.getTbAppStatus().getId().toString():"0");
 				programDetail.setTbpAppDate(null!=dalProgramDetail.getTbpAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getTbpAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
 				programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
 				dashboardDetailList.add(programDetail);

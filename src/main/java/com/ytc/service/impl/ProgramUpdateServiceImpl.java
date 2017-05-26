@@ -26,6 +26,7 @@ import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalStatus;
+import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramEmailService;
@@ -103,6 +104,9 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			}
 		}
 		
+		/**Approver information*/
+		updateApproverInformation(dalProgramDetail, programHeader);
+		
 		baseDao.update(dalProgramDetail);
 
 		/** tier detail is saved seperately as of now.*/
@@ -123,6 +127,31 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		programHeader.setSuccess(true);
 		programHeader.setStatus(dalProgramDetail.getStatus().getType());
 		programEmailService.sendEmailData(programHeader, dalProgramDetail);
+	}
+
+	private void updateApproverInformation(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {
+		/**Only if User level is 1 or 2, save the approver details in WORKFLOW_STATUS table.*/
+		if(programHeader != null && (ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel()) || 
+				ProgramConstant.USER_LEVEL_3.equals(programHeader.getProgramButton().getUserLevel())) ){
+			DalWorkflowStatus dalWorkflowStatus = new DalWorkflowStatus();
+			dalWorkflowStatus.setApprovalComment(programHeader.getUserComments());
+			dalWorkflowStatus.setApprovalStatus(dalProgramDetail.getStatus());
+			String decision = null;
+			if( ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel()) ){
+				decision = ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType()) ? ProgramConstant.Y : ProgramConstant.N;
+			}
+			else {
+				decision = ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getTbAppStatus().getType()) ? ProgramConstant.Y : ProgramConstant.N;
+			}
+			dalWorkflowStatus.setDecisionMade(decision);
+			dalWorkflowStatus.setWfStatusDate(Calendar.getInstance());
+			dalWorkflowStatus.setDalProgramDetailWf(dalProgramDetail);
+			if(dalProgramDetail.getDalWorkflowStatusList() == null){
+				dalProgramDetail.setDalWorkflowStatusList(new ArrayList<DalWorkflowStatus>());
+			}
+			dalProgramDetail.getDalWorkflowStatusList().add(dalWorkflowStatus);
+		}
+		
 	}
 
 	private void updateProgramTierData(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {
@@ -431,12 +460,12 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				if(dalStatusList != null && !dalStatusList.isEmpty()){
 					for(DalStatus dalStatus : dalStatusList){
 						if(ProgramConstant.WAITING_STATUS.equals(dalStatus.getType())){
-							dalProgramDet.setTbAppStatus(dalStatus.getId());
+							dalProgramDet.setTbAppStatus(dalStatus);
 							break;
 						}
 					}
 				}
-				dalProgramDet.setZmAppStatus(dalProgramDet.getStatus().getId());
+				dalProgramDet.setZmAppStatus(dalProgramDet.getStatus());
 			}
 
 		}
@@ -445,16 +474,16 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, serviceContext.getEmployee().getEMP_ID()));
 				dalProgramDet.setZmAppDate(Calendar.getInstance());
 				if(dalStatusList != null && !dalStatusList.isEmpty() && ProgramConstant.PENDING_STATUS.equals(dalProgramDet.getDalProgramHeader().getStatus().getType())){
-					dalProgramDet.setTbAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
+					dalProgramDet.setTbAppStatus(dalProgramDet.getDalProgramHeader().getStatus());
 					for(DalStatus dalStatus : dalStatusList){
 						if(ProgramConstant.APPROVED_STATUS.equals(dalStatus.getType())){
-							dalProgramDet.setZmAppStatus(dalStatus.getId());
+							dalProgramDet.setZmAppStatus(dalStatus);
 							break;
 						}
 					}
 				}
 				else{
-					dalProgramDet.setZmAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
+					dalProgramDet.setZmAppStatus(dalProgramDet.getDalProgramHeader().getStatus());
 				}
 			}
 		}
@@ -462,7 +491,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			if(serviceContext != null && serviceContext.getEmployee() != null){
 				dalProgramDet.setTbpAppById(baseDao.getById(DalEmployee.class, serviceContext.getEmployee().getEMP_ID()));
 				dalProgramDet.setTbpAppDate(Calendar.getInstance());
-				dalProgramDet.setTbAppStatus(dalProgramDet.getDalProgramHeader().getStatus().getId());
+				dalProgramDet.setTbAppStatus(dalProgramDet.getDalProgramHeader().getStatus());
 			}
 		}
 	}

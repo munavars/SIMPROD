@@ -1,6 +1,7 @@
 package com.ytc.dal.model;
 
 import java.util.Calendar;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -43,10 +44,10 @@ public class DalProgramDetail extends DalAuditableModel {
 	
 	private DalEmployee zmAppById;
 	private Calendar zmAppDate;
-	private Integer zmAppStatus;
+	private DalStatus zmAppStatus;
 	private DalEmployee tbpAppById;
 	private Calendar tbpAppDate;
-	private Integer tbAppStatus;
+	private DalStatus tbAppStatus;
 	private DalEmployee dirAppById;
 	private Calendar dirAppDate;
 	private DalEmployee execAppById;
@@ -63,6 +64,8 @@ public class DalProgramDetail extends DalAuditableModel {
     private DalStatus status;
     /*private Set<DalProgramDetailTier> dalProgramDetailTierSet;*/
     private DalProgramType dalProgramType;
+    private List<DalWorkflowStatus> dalWorkflowStatusList;
+    
     
     @Column(name = "LONG_DESC")
     public String getLongDesc() {
@@ -485,27 +488,29 @@ public class DalProgramDetail extends DalAuditableModel {
 	/**
 	 * @return the zmAppStatus
 	 */
-	 @Column(name = "ZM_APP_STATUS_ID")
-	public Integer getZmAppStatus() {
+	@OneToOne
+	@JoinColumn(name = "ZM_APP_STATUS_ID", referencedColumnName = "ID")
+	public DalStatus getZmAppStatus() {
 		return zmAppStatus;
 	}
 	/**
 	 * @param zmAppStatus the zmAppStatus to set
 	 */
-	public void setZmAppStatus(Integer zmAppStatus) {
+	public void setZmAppStatus(DalStatus zmAppStatus) {
 		this.zmAppStatus = zmAppStatus;
 	}
 	/**
 	 * @return the tbAppStatus
 	 */
-	 @Column(name = "TBP_APP_STATUS_ID")
-	public Integer getTbAppStatus() {
+	@OneToOne
+	@JoinColumn(name = "TBP_APP_STATUS_ID", referencedColumnName = "ID")
+	public DalStatus getTbAppStatus() {
 		return tbAppStatus;
 	}
 	/**
 	 * @param tbAppStatus the tbAppStatus to set
 	 */
-	public void setTbAppStatus(Integer tbAppStatus) {
+	public void setTbAppStatus(DalStatus tbAppStatus) {
 		this.tbAppStatus = tbAppStatus;
 	}
 
@@ -558,6 +563,14 @@ public class DalProgramDetail extends DalAuditableModel {
 				}
 			}
 		}
+/*		if(dalWorkflowStatusList != null && !dalWorkflowStatusList.isEmpty()){
+			for(DalWorkflowStatus dalWorkflowStatus : dalWorkflowStatusList){
+				if(dalWorkflowStatus.getId() == null){
+					dalWorkflowStatus.setCreatedBy(createdBy);
+					dalWorkflowStatus.setApprover(createdBy);
+				}
+			}
+		}*/
 		super.setCreatedBy(createdBy);
 	}
 	
@@ -576,6 +589,28 @@ public class DalProgramDetail extends DalAuditableModel {
 				dalProgramDetAchieved.setModifiedBy(modifiedBy);
 			}
 		}
+		if(dalWorkflowStatusList != null && !dalWorkflowStatusList.isEmpty()){
+			for(DalWorkflowStatus dalWorkflowStatus : dalWorkflowStatusList){
+				if(dalWorkflowStatus.getId() == null){
+					/**Updating created by here is because, for already existing program detail,
+					 * approver will add comments, in such case, createdBy setter will not get called.
+					 * only modified by setter will be called, since the person will be same in 
+					 * all the three fields, populating all these from here is the correct approach.*/
+					dalWorkflowStatus.setCreatedBy(modifiedBy);
+					dalWorkflowStatus.setApprover(modifiedBy);
+					dalWorkflowStatus.setModifiedBy(modifiedBy);
+				}
+			}
+		}
 		super.setModifiedBy(modifiedBy);
+	}
+	
+	@OneToMany(mappedBy = "dalProgramDetailWf", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public List<DalWorkflowStatus> getDalWorkflowStatusList() {
+		return dalWorkflowStatusList;
+	}
+	
+	public void setDalWorkflowStatusList(List<DalWorkflowStatus> dalWorkflowStatusList) {
+		this.dalWorkflowStatusList = dalWorkflowStatusList;
 	}
 }

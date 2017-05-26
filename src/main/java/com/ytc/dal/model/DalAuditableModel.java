@@ -13,7 +13,11 @@ import javax.persistence.MappedSuperclass;
 public abstract class DalAuditableModel extends DalModel {
 
 
-    /*protected DalUser createdBy;*/
+    /**
+	 * Default serial version.
+	 */
+	private static final long serialVersionUID = 1L;
+	/*protected DalUser createdBy;*/
     protected DalEmployee createdBy;
     protected Calendar createdDate;
     /*protected DalUser modifiedBy;*/

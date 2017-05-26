@@ -101,8 +101,8 @@ public class ProgramEmailServiceImpl implements IProgramEmailService {
 		StringBuilder html = new StringBuilder();
 		
 		html.append(EmailConstant.HTML_BEGIN);
-		html.append(String.format(EmailConstant.HTML_BODY_GREETING, getName(dalProgramDetail.getCreatedBy())+ EmailConstant.L_AND + 
-																	getName(dalProgramDetail.getZmAppById())) + EmailConstant.COMMA);
+		html.append(String.format(EmailConstant.HTML_BODY_GREETING, (getName(dalProgramDetail.getCreatedBy())+ EmailConstant.L_AND + 
+																	getName(dalProgramDetail.getZmAppById())) + EmailConstant.COMMA));
 		html.append(String.format(EmailConstant.HTML_BODY_ACTION_TAKEN, 
 				getName(dalProgramDetail.getModifiedBy()) + " has approved the program details."));
 		html.append(String.format(EmailConstant.HTML_BODY_PROGRAM_ID, dalProgramDetail.getId()));

@@ -41,6 +41,7 @@ public class ProgramHeader extends Model{
 	private boolean isSuccess;
 	private String authorizedUser;
 	private boolean calculatedProgram;
+	private String userComments;
 	
 	/** For email link*/
 	private String contextPath;
@@ -223,5 +224,11 @@ public class ProgramHeader extends Model{
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getUserComments() {
+		return userComments;
+	}
+	public void setUserComments(String userComments) {
+		this.userComments = userComments;
 	}
 }

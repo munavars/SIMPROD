@@ -689,8 +689,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 		      
               <a class="btn btn-success" id="submit-program" href="javascript: validateBeforeSubmit('#myModal')" ><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
               <a class="btn btn-info finish" id="save-program" href="javascript: validateBeforeSubmit('#myModal1')"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
-              <a class="btn btn-info" id="reject-program" data-toggle="modal" href="#myModal2"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a> &nbsp;
-			  <a class="btn btn-success finish" id="approve-program" data-toggle="modal" href="#myModal3"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve</button></a>&nbsp;
+              <a class="btn btn-info" id="reject-program" data-toggle="modal" href="#myModal8"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a> &nbsp;
+			  <a class="btn btn-success finish" id="approve-program" data-toggle="modal" href="#myModal7"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve</button></a>&nbsp;
 				<div class="space15">&nbsp;</div>
 				<div class="text-center"> If you want to save these changes for later, click 'Save Changes'. If you want to submit these changes, click "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
                 <div class="space15"></div>
@@ -737,7 +737,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					</div>
 				</div>
 							
-				<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<!-- <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 	<div class="modal-dialog">
                     	<div class="modal-content">
                         	<div class="modal-header">
@@ -758,8 +758,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				</div> -->
+				<!-- <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 	<div class="modal-dialog">
                     	<div class="modal-content">
                         	<div class="modal-header">
@@ -780,7 +780,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 				
 				<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 	<div class="modal-dialog">
@@ -840,6 +840,62 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 								<button class="btn btn-info" type="button" id="program-info-modal-ok" data-toggle="modal" href="#myModal6">
 										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
 								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-comment-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Confirmation</h4>
+                            </div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="text-left">
+											<label class="control-label;text-align: center;" for="approveComments">Please enter comments: </label>
+										</div>
+											<textarea maxlength="2000" id="approveComments" name="approveComments" class="form-control"></textarea>
+                                    </div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button data-dismiss="modal" class="btn btn-default" id="program-comment-modal-cancel"
+									type="button">Cancel</button>
+								<a href="javascript: approveProgram()"><button class="btn btn-info" type="button" id="program-comment-modal-ok">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK</button>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-rej-comment-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Confirmation</h4>
+                            </div>
+							<div class="modal-body">
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="text-left">
+											<label class="control-label;text-align: center;" for="rejectionComments">Please enter comments: </label>
+										</div>
+											<textarea maxlength="2000" id="rejectionComments" name="rejectionComments" class="form-control"></textarea>
+                                    </div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button data-dismiss="modal" class="btn btn-default" id="program-rej-comment-modal-cancel"
+									type="button">Cancel</button>
+								<a href="javascript: rejectProgram()"><button class="btn btn-info" type="button" id="program-rej-comment-modal-ok">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK</button>
+								</a>
 							</div>
 						</div>
 					</div>
@@ -1382,15 +1438,15 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
          		$('#reject-program').show();
          		$('#reject-program').attr('disabled', false);
          		$('#reject-program').removeClass("disabled");
-         		$('#program-reject-modal-close').attr('disabled', false);
+         		/* $('#program-reject-modal-close').attr('disabled', false);
          		$('#program-reject-modal-cancel').attr('disabled', false);
-         		$('#program-reject-modal-ok').attr('disabled', false);
+         		$('#program-reject-modal-ok').attr('disabled', false); */
          		$('#approve-program').show();
          		$('#approve-program').attr('disabled', false);
          		$('#approve-program').removeClass("disabled");
-         		$('#program-approve-modal-close').attr('disabled', false);
+         		/* $('#program-approve-modal-close').attr('disabled', false);
          		$('#program-approve-modal-cancel').attr('disabled', false);
-         		$('#program-approve-modal-ok').attr('disabled', false);
+         		$('#program-approve-modal-ok').attr('disabled', false); */
          	}
          	
          	function fnPopulateProgramTier(tierData){                
@@ -1511,6 +1567,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				$('#cancelLink').removeClass("disabled");
 				$('#myModal5').find('button').attr('disabled',false);
 				$('#myModal4').find('button').attr('disabled',false);
+				$('#myModal7').find('button, a, textarea').attr('disabled',false);
+				$('#myModal8').find('button, a, textarea').attr('disabled',false);
 				$('#header-button').removeAttr('hidden');
 				$('#footer-button').removeAttr('hidden');
 			}
@@ -1523,8 +1581,9 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 					responseOnload.status = "4";
 				}
 				responseOnload.url = window.location.href;
+				responseOnload.userComments = $("#approveComments").val();
 				fnCallService();
-				$('#myModal3').modal('toggle');
+				$('#myModal7').modal('toggle');
 				$("#confirmMessage").html("Data approved successfully !!!");
 				$('#myModal4').modal('toggle');
 				disableFields();
@@ -1533,8 +1592,9 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 			function rejectProgram(){
 				responseOnload.status = "1";
 				responseOnload.url = window.location.href;
+				responseOnload.userComments = $("#rejectionComments").val();
 				fnCallService();
-				$('#myModal2').modal('toggle');
+				$('#myModal8').modal('toggle');
 				$("#confirmMessage").html("Data rejected successfully !!!");
 				$('#myModal4').modal('toggle');
 				disableFields();

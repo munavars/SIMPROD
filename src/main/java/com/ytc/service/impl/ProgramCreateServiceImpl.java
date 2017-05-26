@@ -138,12 +138,12 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 				if(dalStatusList != null && !dalStatusList.isEmpty()){
 					for(DalStatus dalStatus : dalStatusList){
 						if(ProgramConstant.WAITING_STATUS.equals(dalStatus.getType())){
-							dalProgramDet.setTbAppStatus(dalStatus.getId());
+							dalProgramDet.setTbAppStatus(dalStatus);
 							break;
 						}
 					}
 				}
-				dalProgramDet.setZmAppStatus(dalProgramDet.getStatus().getId());
+				dalProgramDet.setZmAppStatus(dalProgramDet.getStatus());
 			}
 		}
 	}

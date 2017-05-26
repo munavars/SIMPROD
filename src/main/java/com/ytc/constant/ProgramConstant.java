@@ -6,6 +6,8 @@ public class ProgramConstant {
 	public static final String DATE_FORMAT = "MM/dd/yyyy";
 	public static final String YES = "Yes";
 	public static final String NO = "No";
+	public static final String Y = "Y";
+	public static final String N = "N";
 	public static final String ZERO="0";
 	
 	public static final String TAG_VALUE_DELIMITER = "-";

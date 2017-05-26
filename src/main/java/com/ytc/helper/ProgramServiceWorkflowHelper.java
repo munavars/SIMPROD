@@ -80,13 +80,13 @@ public class ProgramServiceWorkflowHelper {
 					programHeader.getProgramButton().setApprover(true);	
 				}
 				/** Hard coded below value is not correct. This should be dynamic. For now, hard coding this value.*/
-				else if(2 == dalProgramDetail.getZmAppStatus()){
+				else if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType())){//PENDING
 					programHeader.getProgramButton().setApprover(true);
 				}
 			}
 			else if(employee.getEMP_ID().equals(dalProgramDetail.getTbpAppById().getId())){
 				programHeader.getProgramButton().setUserLevel(ProgramConstant.USER_LEVEL_3);
-				if(4 == dalProgramDetail.getZmAppStatus()){
+				if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType())){//APPROVED
 					programHeader.getProgramButton().setApprover(true);
 				}
 			}

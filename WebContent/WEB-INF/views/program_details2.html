@@ -334,6 +334,15 @@
                                               </div>
                                            </div>
                                            <div class="row">
+                                            <div class="col-lg-4 col-md-4 col-sm-4">
+                                             <label class="control-label" for="btl_inputselect">Long Description</label>
+<!--                                              <select class="form-control input-sm m-bot15" id="btl_inputselect" name="btl_inputselect">
+                                                <option disabled class="required" value="">- Select BTL -</option>
+                                                <option id="btl_inputselect_yes" name="btl_inputselect_yes" value="Yes">Yes</option>
+                                                <option id="btl_inputselect_no" name="btl_inputselect_no" value="No">No</option>
+                                             </select> -->
+                                             <input id="longDesc" name="longDesc" id="longDesc" type="text" class="form-control" value="">
+                                          </div>
                                           <div class="col-lg-4 col-md-4 col-sm-4">
                                              <label class="control-label" for="btl_inputselect">BTL (Behind The Line)</label>
                                              <select class="form-control input-sm m-bot15" id="btl_inputselect" name="btl_inputselect">
@@ -350,8 +359,8 @@
                                                 <option id="pricing_type_inputselect2" name="pricing_type_inputselect2" value="Promotion">Promotion</option> -->
                                              </select>
                                           </div>
-                                           <div class="form-group clearfix">
-                                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-8">
+                                          <!--  <div class="form-group clearfix">
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-8">
                                                 <label class="control-label" for="amount">Amount</label>
                                                 <input id="amount" name="amount" type="text" class="form-control" value="">
                                              </div>
@@ -364,8 +373,8 @@
                                                    <label class="control-label" for="optionsRadiosDenomination">
                                                    <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSign" value="$" class="radio-inline denomination" checked="checked">$</label> 
                                                 </div>
-                                             </div>
-                                           </div>
+                                             </div> 
+                                           </div> -->
                                         </div><!-- END ROW 2 -->
                                         <div class="row">
                                            <div class="col-lg-4 col-sm-4">
@@ -478,6 +487,23 @@
                                                 </label> 
                                              </div>
                                         </div>
+                                        <!-- <div class="col-lg-5 col-md-5 col-sm-5 inline-flex">
+                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-8">
+                                                <label class="control-label" for="amount">Amount</label>
+                                                <input id="amount" name="amount" type="text" class="form-control" value="">
+                                             </div>
+                                             <div class="col-lg-2 col-md-2 col-sm-2">
+                                                <div class="radio-inline">
+                                                   <label  for="optionsRadiosDenomination">
+                                                   <input type="radio" selected name="optionsRadiosDenomination" id="optionsRadiosPercentage" value="%" class="radio-inline denomination">%</label>  
+                                                </div>
+                                                <div class="radio-inline">
+                                                   <label class="control-label" for="optionsRadiosDenomination">
+                                                   <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSign" value="$" class="radio-inline denomination" checked="checked">$</label> 
+                                                </div>
+                                             </div>
+                                           </div> --><br>
+                                          <br><br>
                                         <div class="col-lg-5 col-md-5 col-sm-5 inline-flex">
                                              <label class="control-label" for="inputSuccess">Is this 'True-up'?</label>
                                              <div class="radio-inline">
@@ -490,6 +516,22 @@
                                                 <label class="control-label" for="inputSuccess">
                                                 <input type="radio" name="optionsRadiosTrueUp" id="optionsRadiosTrueUpNo" value="No" class="radio-inline required">
                                                 No
+                                                </label> 
+                                             </div>
+                                          </div><br><br><br>
+                                           <div class="col-lg-5 col-md-5 col-sm-5 inline-flex" id="amountdiv">
+                                             <label class="control-label" for="amount">Amount</label>&nbsp;&nbsp;
+                                            <input id="amount" name="amount" type="text" class="form-control" style="width:80px;" value="">
+                                             <div class="radio-inline">
+                                                <label class="control-label" for="optionsRadiosDenomination">
+                                                <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosPercentage" value="%" class="radio-inline required"  style="padding-top: 20px;">
+                                                %
+                                                </label>
+                                             </div>
+                                             <div class="radio-inline">
+                                                <label class="control-label" for="optionsRadiosDenomination">
+                                                <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSign" value="$" class="radio-inline required" checked="checked">
+                                                $
                                                 </label> 
                                              </div>
                                           </div>
@@ -539,7 +581,7 @@
                                        </div>
                                        </div>
                                   </td>
-                                  <td class="va-bot">
+                                  <td class="va-botl">
                                       <div>
                                         <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('achPrdvalue', 'achInclude')">&#62;&#62;</a>
                                         <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('achInclude', 'achPrdvalue')">&#60;&#60;</a>
@@ -559,7 +601,7 @@
                                 </td>
                               </tr>
                               <tr class="">
-                                  <td class="va-bot">
+                                  <td class="va-botl">
                                      <div class="">
                                         <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5 va-bot" onclick="listbox_moveacross('achPrdvalue', 'achExclude')">&#62;&#62;</a>
                                         <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5 va-bot" onclick="listbox_moveacross('achExclude', 'achPrdvalue')">&#60;&#60;</a>
@@ -1206,6 +1248,8 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	fnPopulateDropdown('payout_freq_inputselect', response.data.programDetailList[0].dropdownList.payoutFrequenceList);
                	$('#payout_freq_inputselect').val(response.data.programDetailList[0].payoutFrequency);
                	
+            	$('#longDesc').val(response.data.programDetailList[0].longDesc);
+               	
                	fnPopulateDropdown('btl_inputselect', response.data.programDetailList[0].dropdownList.btlList);
                	$('#btl_inputselect').val(response.data.programDetailList[0].btl);
                	
@@ -1227,11 +1271,13 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                		$("#optionsRadiosTierYes").prop('checked', true);
                		$("#ahieve-based-on").show();
 					$("#program-tier").show();
+					$("#amountdiv").hide();
                	}
                	else{
                		$("#optionsRadiosTierNo").prop('checked', true);
                		$("#ahieve-based-on").hide();
 					$("#program-tier").hide();
+					$("#amountdiv").show();
                	}
                	
                	if(response.data.programDetailList[0].programPaidOn.isTrueUp == true){
@@ -1445,6 +1491,7 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
  				responseOnload.programDetailList[0].beginDate = $.datepicker.parseDate( "mm/dd/yy", $('#from').val());
 				responseOnload.programDetailList[0].endDate = $.datepicker.parseDate( "mm/dd/yy", $('#to').val());  
 				responseOnload.programDetailList[0].programName = $('#program_name_inputselect').val();
+				responseOnload.programDetailList[0].longDesc = $("#longDesc").val();
 				responseOnload.programDetailList[0].btl = $('#btl_inputselect').val();
 				responseOnload.programDetailList[0].payTo = $('#payto_inputselect').val();
 				responseOnload.programDetailList[0].paidType = $('#payment_method_inputselect').val();
@@ -1652,10 +1699,12 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				if(test == 'Yes'){
 					$("#ahieve-based-on").show();
 					$("#program-tier").show();
+					$("#amountdiv").hide();
 				}
 				else{
 					$("#ahieve-based-on").hide();
 					$("#program-tier").hide();
+					$("#amountdiv").show();
 				}
     		} );
     		

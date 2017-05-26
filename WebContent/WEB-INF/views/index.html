@@ -42,6 +42,9 @@
 	 td,th {
 	  white-space:nowrap;
 	}
+	th{
+		text-align: center;
+	}
 	.dataTables_wrapper .dataTables_filter {
 	    width: 50%;
 	}
@@ -148,8 +151,8 @@
      			{ data: "programId" },
 	            { data: "programName" },
 	            { data: "payoutFrequency" },
-	            { data: "displayBeginDate" },
-	            { data: "displayEndDate" },
+	            { data: "displayBeginDate",className:"center" },
+	            { data: "displayEndDate",className:"center" },
 	            { data: "btl" },
 	            { data: "pricingType" },				            
 	            { data: "paidBasedOn" },
@@ -473,17 +476,17 @@
                                     <th colspan="4" class="center toptheader">Status</th>
                               </tr>
                               <tr class="rowvis">
-                                <th class="center">Number</th>
+                                <th>Number</th>
                                 <th>Name</th>
-                                <th class="center">ID</th>
+                                <th>ID</th>
                                 <th>Name</th>
                                 <th>Bus. Unit</th>
-                                <th class="center">Submitted</th>
-                                <th class="center">Status</th>
-                                <th class="center">Zone Manager</th>
+                                <th>Submitted</th>
+                                <th>Status</th>
+                                <th>Zone Manager</th>
 <!--                                 <th class="center">Director</th>
                                 <th class="center">Execs</th> -->
-                                <th class="center">TBP</th>
+                                <th>TBP</th>
                               </tr>
                               </thead>
                               <tbody>

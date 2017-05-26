@@ -50,6 +50,9 @@
  td,th {
     white-space:nowrap;
 }
+th{
+		text-align: center;
+	}
 .dataTables_wrapper .dataTables_filter {
     width: 50%;
 }
@@ -189,8 +192,8 @@
        			{ data: "programId" },
 	            { data: "programName" },
 	            { data: "payoutFrequency" },
-	            { data: "displayBeginDate" },
-	            { data: "displayEndDate" },
+	            { data: "displayBeginDate" ,className:"center"},
+	            { data: "displayEndDate" ,className:"center"},
 	            { data: "btl" },
 	            { data: "pricingType" },				            
 	            { data: "paidBasedOn" },
@@ -207,8 +210,8 @@
 	            { data: "payables" },
 	            { data: "glBalance" },
 	            { data: "programType" },  
-	            { data: "modifiedDate" },
-	            { data: "createdDate" }
+	            { data: "modifiedDate" ,className:"center"},
+	            { data: "createdDate" ,className:"center"}
         ]
 		} );
 			  	
@@ -446,15 +449,15 @@
                              <thead>
 
                               <tr class="rowvis" style="background-color: #cacbce;">
-                                <th>Pgm ID</th>
+                                <th>Program ID</th>
                                 <th>Program</th>
                                 <th>Frequency</th>								
                                 <th>Begin Date</th>
                                 <th>End Date</th>
                                 <th>BTL</th>
-                                <th>LT / Promo</th>	
+                                <th>LT Pricing/PGM</th>	
                                 <th>Paid Based On</th>								
-                                <th>Tiered </th>
+                                <th>Tiered Program </th>
                                 <th>Achieve Based On</th>
                                 <th>True Up</th>								
                                 <th>Accrual Amount</th>

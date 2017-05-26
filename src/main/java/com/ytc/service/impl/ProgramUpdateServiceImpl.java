@@ -397,9 +397,10 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
 			}
 			
-			if(programDetail.getProgramPaidOn() != null){
+			/*if(programDetail.getProgramPaidOn() != null){
 				dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());	
-			}
+			}*/
+			dalProgramDet.setLongDesc(programDetail.getLongDesc());
 			
 			if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){
 				dalProgramDet.setAchBasedMetric(baseDao.getById(DalBaseItems.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveBasedOn())));				

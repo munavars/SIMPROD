@@ -395,7 +395,9 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetail.setPaidBasedOn( (dalProgramDetail.getPaidBasedOn() != null) ?
 									ProgramServiceHelper.convertToString(dalProgramDetail.getPaidBasedOn().getId()) : 
 										null);
+		programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Not Available");
 		programHeader.setStatus( ProgramServiceHelper.convertToString(dalProgramDetail.getStatus().getType()));
+		
 	}
 
 	/**

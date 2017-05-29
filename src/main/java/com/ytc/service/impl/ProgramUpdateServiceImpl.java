@@ -26,6 +26,7 @@ import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalStatus;
+import com.ytc.dal.model.DalUserComments;
 import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
@@ -102,6 +103,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 					dalProgramDetail.getDalProgramDetAchievedList().remove(dalProgramDetAchieved);
 				}
 			}
+			saveUserComments(programHeader, dalProgramDetail);
 		}
 		
 		/**Approver information*/
@@ -127,6 +129,21 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		programHeader.setSuccess(true);
 		programHeader.setStatus(dalProgramDetail.getStatus().getType());
 		programEmailService.sendEmailData(programHeader, dalProgramDetail);
+	}
+	
+	private void saveUserComments(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+		if(programHeader != null && dalProgramDetail != null){
+			if(programHeader.getProgramDetailList().get(0).getComments() != null 
+					&& !programHeader.getProgramDetailList().get(0).getComments().isEmpty() ){
+				DalUserComments dalUserComments = new DalUserComments();
+				dalUserComments.setDalProgramDetailForComment(dalProgramDetail);
+				dalUserComments.setUserComments(programHeader.getProgramDetailList().get(0).getComments());
+				dalUserComments.setCommentedDate(Calendar.getInstance());
+				
+				dalProgramDetail.setDalUserComments(dalUserComments);
+			}
+		}
+		
 	}
 
 	private void updateApproverInformation(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {

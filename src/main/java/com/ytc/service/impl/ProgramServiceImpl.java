@@ -163,11 +163,20 @@ public class ProgramServiceImpl implements IProgramService {
 			populateAchieveBasedOnData(programHeader, dalProgramHeader, dalProgramDetail);
 			
 			populateTierData(programHeader, dalProgramDetail);
+			
+			populateCommentaryData(programHeader, dalProgramDetail);
 		}
 		
 /*		if(dalProgramHeader.getStatus() != null && !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramHeader.getStatus().getType())){
 			programHeader.setNewProgram(true);
 		}*/
+	}
+
+
+	private void populateCommentaryData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+		if(programHeader != null && dalProgramDetail != null && dalProgramDetail.getDalUserComments() != null){
+			programHeader.getProgramDetailList().get(0).setComments(dalProgramDetail.getDalUserComments().getUserComments());
+		}
 	}
 
 
@@ -485,11 +494,28 @@ public class ProgramServiceImpl implements IProgramService {
 	private List<DropDown> getPayToDropDownList(String customerId){
 		
 		List<DropDown> dropdownList = null;
-		
 		if(customerId != null){
+			DalCustomer dalCustomer = null;
+			
+			Map<String, Object> inputMap = new HashMap<String, Object>();
+			inputMap.put("id", Integer.valueOf(customerId));
+			List<DalCustomer> dalCustomerList = baseDao.getListFromNamedQueryWithParameter("DalCustomer.getCustomerNumber", inputMap);
+			if(dalCustomerList != null && !dalCustomerList.isEmpty()){
+				dalCustomer = dalCustomerList.get(0);
+			}
+			
 			DropDown dropDown = new DropDown();
 			dropDown.setKey(customerId);
-			dropDown.setValue(customerId);
+			if(dalCustomer != null){
+				dropDown.setValue(dalCustomer.getCustomerNumber());	
+			}
+			else{
+				/** Below line is needed for some legacy data, as pay to value in certain records are not matching
+				 * with customer information and data is missing in customer table.
+				 * In almost all cases, newly created record will not satisfy this below condition.*/
+				dropDown.setValue(customerId);
+			}
+			
 			dropdownList = new ArrayList<DropDown>();
 			dropdownList.add(dropDown);
 		}

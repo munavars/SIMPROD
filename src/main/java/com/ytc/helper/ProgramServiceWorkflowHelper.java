@@ -74,19 +74,19 @@ public class ProgramServiceWorkflowHelper {
 		programHeader.getProgramButton().setApprover(false);
 		
 		if(employee.getEMP_ID() != null){
-			if(employee.getEMP_ID().equals(dalProgramDetail.getZmAppById().getId())){
+			if(dalProgramDetail.getZmAppById() != null && (employee.getEMP_ID().equals(dalProgramDetail.getZmAppById().getId())) ){
 				programHeader.getProgramButton().setUserLevel(ProgramConstant.USER_LEVEL_2);
 				if(dalProgramDetail.getZmAppDate() == null){
 					programHeader.getProgramButton().setApprover(true);	
 				}
 				/** Hard coded below value is not correct. This should be dynamic. For now, hard coding this value.*/
-				else if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType())){//PENDING
+				else if(dalProgramDetail.getZmAppStatus() != null && ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType())){//PENDING
 					programHeader.getProgramButton().setApprover(true);
 				}
 			}
-			else if(employee.getEMP_ID().equals(dalProgramDetail.getTbpAppById().getId())){
+			else if(dalProgramDetail.getTbpAppById() != null && employee.getEMP_ID().equals(dalProgramDetail.getTbpAppById().getId())){
 				programHeader.getProgramButton().setUserLevel(ProgramConstant.USER_LEVEL_3);
-				if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType())){//APPROVED
+				if(dalProgramDetail.getZmAppStatus() != null && ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType())){//APPROVED
 					programHeader.getProgramButton().setApprover(true);
 				}
 			}

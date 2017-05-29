@@ -30,6 +30,7 @@ import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalStatus;
+import com.ytc.dal.model.DalUserComments;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramEmailService;
@@ -93,6 +94,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		if(programHeader.isCalculatedProgram()){
 			/** save Program Achieved Based on*/
 			createProgramAchieveBasedOnData(dalProgramHeader, programHeader, dalProgramDetail);	
+			
+			/** Commentary/Special instructions*/
+			saveUserComments(programHeader, dalProgramDetail);
 		}
 		
 		DalProgramDetail returnEntity = baseDao.create(dalProgramDetail);
@@ -123,6 +127,21 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		return programHeader;
 	}
 	
+	private void saveUserComments(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+		if(programHeader != null && dalProgramDetail != null){
+			if(programHeader.getProgramDetailList().get(0).getComments() != null 
+					&& !programHeader.getProgramDetailList().get(0).getComments().isEmpty() ){
+				DalUserComments dalUserComments = new DalUserComments();
+				dalUserComments.setDalProgramDetailForComment(dalProgramDetail);
+				dalUserComments.setUserComments(programHeader.getProgramDetailList().get(0).getComments());
+				dalUserComments.setCommentedDate(Calendar.getInstance());
+				
+				dalProgramDetail.setDalUserComments(dalUserComments);
+			}
+		}
+		
+	}
+
 	/**
 	 * This method is to set the Zone manager and TBP manage status based on the current status or action
 	 * taken by the logged in user.
@@ -320,7 +339,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			dalProgramDet.setDalProgramType(baseDao.getById(DalProgramType.class, programHeader.getProgramDetailList().get(0).getProgramTypeId() ));
 		}
 	
-		dalProgramDet.setAccrualAmount(programDetail.getAmount().doubleValue());
+		if(programDetail.getAmount() != null){
+			dalProgramDet.setAccrualAmount(programDetail.getAmount().doubleValue());	
+		}
 		dalProgramDet.setAccrualType(programDetail.getAmountType());
 		dalProgramDet.setPayTo(programDetail.getPayTo());
 		dalProgramDet.setPaidType(Integer.valueOf(programDetail.getPaidType()));

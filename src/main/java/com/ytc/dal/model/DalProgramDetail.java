@@ -66,6 +66,7 @@ public class DalProgramDetail extends DalAuditableModel {
     private DalProgramType dalProgramType;
     private List<DalWorkflowStatus> dalWorkflowStatusList;
     
+    private DalUserComments dalUserComments;
     
     @Column(name = "LONG_DESC")
     public String getLongDesc() {
@@ -563,6 +564,12 @@ public class DalProgramDetail extends DalAuditableModel {
 				}
 			}
 		}
+		if(dalUserComments != null){
+			if(dalUserComments.getId() == null){
+				dalUserComments.setCreatedBy(createdBy);
+				dalUserComments.setUser(createdBy);
+			}
+		}
 /*		if(dalWorkflowStatusList != null && !dalWorkflowStatusList.isEmpty()){
 			for(DalWorkflowStatus dalWorkflowStatus : dalWorkflowStatusList){
 				if(dalWorkflowStatus.getId() == null){
@@ -602,6 +609,13 @@ public class DalProgramDetail extends DalAuditableModel {
 				}
 			}
 		}
+		if(dalUserComments != null){
+			if(dalUserComments.getId() == null){
+				dalUserComments.setCreatedBy(modifiedBy);
+				dalUserComments.setUser(modifiedBy);
+			}
+			dalUserComments.setModifiedBy(modifiedBy);
+		}
 		super.setModifiedBy(modifiedBy);
 	}
 	
@@ -612,5 +626,14 @@ public class DalProgramDetail extends DalAuditableModel {
 	
 	public void setDalWorkflowStatusList(List<DalWorkflowStatus> dalWorkflowStatusList) {
 		this.dalWorkflowStatusList = dalWorkflowStatusList;
+	}
+	
+	@OneToOne(mappedBy="dalProgramDetailForComment", cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+	public DalUserComments getDalUserComments() {
+		return dalUserComments;
+	}
+	
+	public void setDalUserComments(DalUserComments dalUserComments) {
+		this.dalUserComments = dalUserComments;
 	}
 }

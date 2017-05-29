@@ -2,12 +2,17 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 
 
 @Entity
 @Table(name = "CUSTOMER")
+@NamedQueries({
+	@NamedQuery(name="DalCustomer.getCustomerNumber", query = "select o from DalCustomer o where o.id=:id")
+})
 public class DalCustomer extends DalAuditableModel {
 
 	/**

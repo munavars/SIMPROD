@@ -59,6 +59,9 @@ public class ProgramDetail extends Model{
 	private String createdDate;
 	private String modifiedDate;
 	
+	/**Commentary/Special Instructions attribute to hold the user entered comments.*/
+	private String comments;
+	
 	public ProgramPaidOn getProgramPaidOn() {
 		return programPaidOn;
 	}
@@ -406,5 +409,11 @@ public class ProgramDetail extends Model{
 	}
 	public void setModifiedDate(String modifiedDate) {
 		this.modifiedDate = modifiedDate;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 }

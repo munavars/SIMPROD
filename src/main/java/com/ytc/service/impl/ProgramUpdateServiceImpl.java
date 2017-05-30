@@ -103,8 +103,9 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 					dalProgramDetail.getDalProgramDetAchievedList().remove(dalProgramDetAchieved);
 				}
 			}
-			saveUserComments(programHeader, dalProgramDetail);
 		}
+		
+		saveUserComments(programHeader, dalProgramDetail);
 		
 		/**Approver information*/
 		updateApproverInformation(dalProgramDetail, programHeader);
@@ -132,7 +133,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	}
 	
 	private void saveUserComments(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
-		if(programHeader != null && dalProgramDetail != null){
+		if(programHeader != null && dalProgramDetail != null && dalProgramDetail.getDalUserComments() == null){
 			if(programHeader.getProgramDetailList().get(0).getComments() != null 
 					&& !programHeader.getProgramDetailList().get(0).getComments().isEmpty() ){
 				DalUserComments dalUserComments = new DalUserComments();
@@ -142,6 +143,12 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				
 				dalProgramDetail.setDalUserComments(dalUserComments);
 			}
+		}
+		else if (programHeader != null && dalProgramDetail != null && dalProgramDetail.getDalUserComments() != null){
+			DalUserComments dalUserComments = dalProgramDetail.getDalUserComments();
+			dalUserComments.setDalProgramDetailForComment(dalProgramDetail);
+			dalUserComments.setUserComments(programHeader.getProgramDetailList().get(0).getComments());
+			dalUserComments.setCommentedDate(Calendar.getInstance());
 		}
 		
 	}
@@ -432,7 +439,9 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			
 			}
 			dalProgramDet.setProgramMaster(baseDao.getById(DalProgramMaster.class, Integer.valueOf(programDetail.getProgramName())));
-			dalProgramDet.setAccrualAmount(programDetail.getAmount().doubleValue());
+			if(programDetail.getAmount() != null){
+				dalProgramDet.setAccrualAmount(programDetail.getAmount().doubleValue());	
+			}
 			dalProgramDet.setAccrualType(programDetail.getAmountType());
 			dalProgramDet.setPayTo(programDetail.getPayTo());
 			if(programDetail.getPaidType()!= null){

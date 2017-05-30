@@ -162,10 +162,10 @@ public class ProgramServiceImpl implements IProgramService {
 		if(programHeader.isCalculatedProgram()){
 			populateAchieveBasedOnData(programHeader, dalProgramHeader, dalProgramDetail);
 			
-			populateTierData(programHeader, dalProgramDetail);
-			
-			populateCommentaryData(programHeader, dalProgramDetail);
+			populateTierData(programHeader, dalProgramDetail);			
 		}
+		/**Comments section*/
+		populateCommentaryData(programHeader, dalProgramDetail);
 		
 /*		if(dalProgramHeader.getStatus() != null && !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramHeader.getStatus().getType())){
 			programHeader.setNewProgram(true);
@@ -290,7 +290,6 @@ public class ProgramServiceImpl implements IProgramService {
 			programPaidOn = programHeader.getProgramDetailList().get(0).getProgramPaidOn();
 			programPaidOn.setIsTiered("0".equals(dalProgramDetail.getIsTiered()) ? false : true);
 			programPaidOn.setIsTrueUp("Y".equals(dalProgramDetail.getTrueUp()) ? true : false);
-			programPaidOn.setProgramDescription(dalProgramDetail.getLongDesc());
 			if(dalProgramDetail.getDalProgramDetPaidList() != null){
 				Map<String, List<String>> includedMap = new HashMap<String, List<String>>();
 				Map<String, List<String>> excludedMap = new HashMap<String, List<String>>();
@@ -404,7 +403,7 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetail.setPaidBasedOn( (dalProgramDetail.getPaidBasedOn() != null) ?
 									ProgramServiceHelper.convertToString(dalProgramDetail.getPaidBasedOn().getId()) : 
 										null);
-		programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Not Available");
+		programDetail.setLongDesc(dalProgramDetail.getLongDesc());
 		programHeader.setStatus( ProgramServiceHelper.convertToString(dalProgramDetail.getStatus().getType()));
 		
 	}
@@ -751,7 +750,7 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setCreditAmount(ProgramConstant.ZERO);
 			programDetail.setPayables(null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getTotalPaidAmount()):ProgramConstant.ZERO);
 			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getBalance()):ProgramConstant.ZERO);
-			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():"Not Available");
+			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():ProgramConstant.PROGRAM_DESCRIPTION_NOT_FOUND);
 			programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
 			//programDetail.setProgramTypeId( dalProgramDetail.getDalProgramType().getId());
 			programDetail.setCreatedDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));

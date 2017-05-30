@@ -14,15 +14,7 @@ public class ProgramPaidOn {
 	private Boolean isTiered;
 	
 	private Boolean isTrueUp;
-	
-	private String programDescription;
-	
-	public String getProgramDescription() {
-		return programDescription;
-	}
-	public void setProgramDescription(String programDescription) {
-		this.programDescription = programDescription;
-	}
+
 	public List<DropDown> getTagItemList() {
 		return tagItemList;
 	}

@@ -94,4 +94,12 @@ public class TestController  extends BaseController {
 		return returnModel;
 	}
 	
+	@RequestMapping(value = "/pricing", method = RequestMethod.GET)
+	public String pricingForm(HttpServletRequest request, Model model) {
+		String returnModel = null;
+		returnModel ="pricing_request";
+		return returnModel;
+		
+	}
+	
 }

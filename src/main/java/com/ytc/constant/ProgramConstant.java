@@ -33,5 +33,7 @@ public class ProgramConstant {
 	public static final Integer EMP_HIERARCHY_2 = 2;
 	public static final Integer EMP_HIERARCHY_3 = 3;
 	public static final Integer EMP_HIERARCHY_4 = 4;
-	public static final Integer EMP_HIERARCHY_5 = 5;	
+	public static final Integer EMP_HIERARCHY_5 = 5;
+	
+	public static final String PROGRAM_DESCRIPTION_NOT_FOUND = "Program Description not available";
 }

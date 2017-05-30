@@ -334,15 +334,12 @@
                                               </div>
                                            </div>
                                            <div class="row">
-                                            <div class="col-lg-4 col-md-4 col-sm-4">
-                                             <label class="control-label" for="btl_inputselect">Long Description</label>
-<!--                                              <select class="form-control input-sm m-bot15" id="btl_inputselect" name="btl_inputselect">
-                                                <option disabled class="required" value="">- Select BTL -</option>
-                                                <option id="btl_inputselect_yes" name="btl_inputselect_yes" value="Yes">Yes</option>
-                                                <option id="btl_inputselect_no" name="btl_inputselect_no" value="No">No</option>
-                                             </select> -->
-                                             <input id="longDesc" name="longDesc" id="longDesc" type="text" class="form-control" value="">
+                                            <div class="col-lg-12">
+                                             <label class="control-label " for="longDesc">Program Description</label>
+                                             <textarea id="longDesc" name="longDesc" class="form-control m-bot15"></textarea>
+                                            </div>
                                           </div>
+                                          <div class="row">
                                           <div class="col-lg-4 col-md-4 col-sm-4">
                                              <label class="control-label" for="btl_inputselect">BTL (Behind The Line)</label>
                                              <select class="form-control input-sm m-bot15" id="btl_inputselect" name="btl_inputselect">
@@ -357,6 +354,13 @@
                                                 <!-- <option disabled class="required" value="">- Select -</option>
                                                 <option selected id="pricing_type_inputselect1" name="pricing_type_inputselect1" value="Long-Term">LongTerm</option>
                                                 <option id="pricing_type_inputselect2" name="pricing_type_inputselect2" value="Promotion">Promotion</option> -->
+                                             </select>
+                                          </div>
+										 <div class="col-lg-4 col-sm-4">
+                                             <label class="control-label" for="payto_inputselect">Pay To</label>
+                                             <select class="form-control input-sm m-bot15" id="payto_inputselect" name="payto_inputselect">
+<!--                                                 <option disabled class="required" value="">- Select -</option>
+                                                <option selected id="payout_freq_annually" value="22031" name="payto_inputselect">22031</option> -->
                                              </select>
                                           </div>
                                           <!--  <div class="form-group clearfix">
@@ -377,13 +381,6 @@
                                            </div> -->
                                         </div><!-- END ROW 2 -->
                                         <div class="row">
-                                           <div class="col-lg-4 col-sm-4">
-                                             <label class="control-label" for="payto_inputselect">Pay To</label>
-                                             <select class="form-control input-sm m-bot15" id="payto_inputselect" name="payto_inputselect">
-<!--                                                 <option disabled class="required" value="">- Select -</option>
-                                                <option selected id="payout_freq_annually" value="22031" name="payto_inputselect">22031</option> -->
-                                             </select>
-                                          </div>
                                           <div class="col-lg-4 col-sm-4">
                                             <label class="control-label" for="payment_method_inputselect">Paid Type</label>
                                                 <select class="form-control input-sm m-bot15" id="payment_method_inputselect" name="payment_method_inputselect">
@@ -402,553 +399,621 @@
                                                   <option id="nad_units_inputselect" value="NAD Units" name="nad_units">NAD Units</option> -->
                                               </select>
                                         </div>
-                                      </div><!-- END ROW 3 -->
-                                      <div class="row">
-                                        <div class="form-group">  
-                                        <div class="col-lg-5 col-md-5 col-sm-6">
-                                           <h4>Paid Based On</h4>
-                                            <div class="table"> 
-                                          <table class="table-responsive">
-                                              <tbody>
-                                              <tr class="">
-                                                  <td class="yk-vertalign" rowspan="2">
-                                                      <select class="paidachieve" name="paidBasedOn" id="paidBasedOn" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
-                                                     </select>
+                                      </div>
+                                      <!-- END ROW 3 -->
+													<div class="row">
+														<div class="form-group">
+															<div class="col-lg-8 col-md-8 col-sm-8">
+																<h4>Paid Based On</h4>
+																<div class="table">
+																	<table class="table-responsive">
+																		<tbody>
+																			<tr class="">
+																				<td class="yk-vertalign" rowspan="2"><select
+																					class="paidachieve" name="paidBasedOn"
+																					id="paidBasedOn"
+																					onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+																				</select>
 
-                                                     <div class="form-group last">
-                                                       <div class="" id="div1">
-                                                          <script type="text/javascript" language="JavaScript">
-                                                             function prdValue(){
-                                                               var el = document.getElementById('div1');
-                                                                  el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';}
-                                                            </script>
-                                                       </div>
-                                                    </div>
-                                                  </td>
-                                                  <td class="va-botl">
-                                                    <div>
-                                                        <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'include')">&#62;&#62;</a>
-                                                           <br/>
-                                                        <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('include', 'prdvalue')">&#60;&#60;</a>
-                                                    </div>
-                                                  </td>
-                                                  <td>
-                                                  <h5 class="paid-achieve">Include</h5>
-                                                   <div class="" id="div2">
-                                                   <script type="text/javascript" language="JavaScript">
-                                                      function include(){
-                                                      var el = document.getElementById('div2');
-                                                                el.innerHTML = '<select name="include" multiple="multiple" class="multi-select paidachieve_box2" id="include"></select>';
-
-                                                         }
-                                                   </script>
-                                                   </div>
-                                            </td>
-                                          </tr>
-                                          <tr class="">
-                                              <td>
-                                                  <div>
-                                                       <a href="javascript:void(0);" aria-activedescendant="" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'exclude')">&#62;&#62;</a>
-                                                       <br/>
-                                                       <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('exclude', 'prdvalue')">&#60;&#60;</a>
-                                                   </div>
-                                              </td>
-                                              <td>
-                                                  <h5 class="paid-achieve">Exclude</h5>
-                                                  <div class="" id="div3">
-                                                    <script type="text/javascript" language="JavaScript">
-                                                       function exclude(){
-                                                       var el = document.getElementById('div3');
-                                                                 el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select paidachieve_box2" id="exclude"></select>';
-                                                          }
-                                                    </script>
-                                                  </div>
-                                                  </td>
-                                            </tr>
-                                        </tbody>
-                                </table>
-                            </div>
-                            </div>
-                   
-        <!-- END PAID based on --> 
-                                    <div class="form-group">
-                                        <div class="col-lg-5 col-md-5 col-sm-5 inline-flex m-top45">
-                                             <label class="control-label popovers" for="inputSuccess" data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." data-placement="top" data-trigger="hover">Is this 'Tiered'?</label>
-                                             <div class="radio-inline">
-                                                <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosTier" id="optionsRadiosTierYes" value="Yes" class="radio-inline required" rel="txtTooltip" checked="checked">
-                                                Yes
-                                                </label>
-                                            </div>
-                                             <div class="radio-inline">
-                                                <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosTier" id="optionsRadiosTierNo" value="No" class="radio-inline required">
-                                                No
-                                                </label> 
-                                             </div>
-                                        </div>
-                                        <!-- <div class="col-lg-5 col-md-5 col-sm-5 inline-flex">
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-8">
-                                                <label class="control-label" for="amount">Amount</label>
-                                                <input id="amount" name="amount" type="text" class="form-control" value="">
-                                             </div>
-                                             <div class="col-lg-2 col-md-2 col-sm-2">
-                                                <div class="radio-inline">
-                                                   <label  for="optionsRadiosDenomination">
-                                                   <input type="radio" selected name="optionsRadiosDenomination" id="optionsRadiosPercentage" value="%" class="radio-inline denomination">%</label>  
-                                                </div>
-                                                <div class="radio-inline">
-                                                   <label class="control-label" for="optionsRadiosDenomination">
-                                                   <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSign" value="$" class="radio-inline denomination" checked="checked">$</label> 
-                                                </div>
-                                             </div>
-                                           </div> --><br>
-                                          <br><br>
-                                        <div class="col-lg-5 col-md-5 col-sm-5 inline-flex">
-                                             <label class="control-label" for="inputSuccess">Is this 'True-up'?</label>
-                                             <div class="radio-inline">
-                                                <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosTrueUp" id="optionsRadiosTrueUpYes" value="Yes" class="radio-inline required" checked="checked" style="padding-top: 20px;">
-                                                Yes
-                                                </label>
-                                             </div>
-                                             <div class="radio-inline">
-                                                <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosTrueUp" id="optionsRadiosTrueUpNo" value="No" class="radio-inline required">
-                                                No
-                                                </label> 
-                                             </div>
-                                          </div><br><br><br>
-                                           <div class="col-lg-5 col-md-5 col-sm-5 inline-flex" id="amountdiv">
-                                             <label class="control-label" for="amount">Amount</label>&nbsp;&nbsp;
-                                            <input id="amount" name="amount" type="text" class="form-control" style="width:80px;" value="">
-                                             <div class="radio-inline">
-                                                <label class="control-label" for="optionsRadiosDenomination">
-                                                <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosPercentage" value="%" class="radio-inline required"  style="padding-top: 20px;">
-                                                %
-                                                </label>
-                                             </div>
-                                             <div class="radio-inline">
-                                                <label class="control-label" for="optionsRadiosDenomination">
-                                                <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSign" value="$" class="radio-inline required" checked="checked">
-                                                $
-                                                </label> 
-                                             </div>
-                                          </div>
-                                        </div>
-                                        </div>
-                                        </div>
-                                        <!-- END ROW 4 -->
-                                        <div class="row">
-                                            <div class="space15 clearfix"></div>
-                                  <div class="form-group">
-             <!-- START ACHIEVE based on -->
-                      <div id="ahieve-based-on" class="form-group">
-                        <div class="form-group col-lg-5 md-4 col-sm-4">
-                             <h4 class="paid-achieve">Achieve Based On</h4>
-                            <div class="">
-                            <div class="space15"></div>
-                                <label class="control-label" for="achieve_basedon_inputselect">Achieve Based On</label>
-                                    <select class="form-control input-sm m-bot15 " id="achieve_basedon_inputselect" name="achieve_basedon_inputselect">
-                                    </select>
-                        </div>
-                        <div class="">
-                                <label class="control-label" for="achieve_freq_inputselect">Achieve Frequency</label>
-                                    <select class="form-control input-sm m-bot15 " id="achieve_freq_inputselect" name="achieve_freq_inputselect">
-                                    </select>
-                        </div>
-                <!--END Achieve Based On dropdowns-->
-
-                <!--Start Achieve Based On Multi-select-->
-              
-                     <div class="col-lg-4 col-md-4 col-sm-4 p-left0">
-                       <div class="table">
-                            <table class="table-responsive">
-                              <tbody>
-                                <tr class="">
-                                  <td class="yk-vertalign" rowspan="2">
-                                      <select class="paidachieve" name="achievedBasedOn" id="achievedBasedOn" onchange="javascript: achDynamicdropdown(this.options[this.selectedIndex].value);">
-                                     </select>
-
-                                       <div class="form-group">
-                                       <div class="" id="div4">
-                                       <script type="text/javascript" language="JavaScript">
-                                          function achPrdValue(){
-                                          var el = document.getElementById('div4');
-                                                    el.innerHTML = '<select name="achPrdvalue" id="achPrdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';
-                                             }
-                                       </script>
-                                       </div>
-                                       </div>
-                                  </td>
-                                  <td class="va-botl">
-                                      <div>
-                                        <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('achPrdvalue', 'achInclude')">&#62;&#62;</a>
-                                        <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('achInclude', 'achPrdvalue')">&#60;&#60;</a>
-                                    </div>
-                                  </td>
-                                  <td>
-                                      <h5 class="paid-achieve">Include</h5>
-                                        <div class="" id="div5">
-                                        <script type="text/javascript" language="JavaScript">
-                                           function achInclude(){
-                                           var el = document.getElementById('div5');
-                                                     el.innerHTML = '<select name="achInclude" multiple="multiple" class="multi-select paidachieve_box2" id="achInclude"></select>';
-
-                                              }
-                                        </script>
-                                        </div>
-                                </td>
-                              </tr>
-                              <tr class="">
-                                  <td class="va-botl">
-                                     <div class="">
-                                        <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5 va-bot" onclick="listbox_moveacross('achPrdvalue', 'achExclude')">&#62;&#62;</a>
-                                        <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5 va-bot" onclick="listbox_moveacross('achExclude', 'achPrdvalue')">&#60;&#60;</a>
-                                    </div>
-                                  </td>
-                                  <td>
-                                      <h5 class="paid-achieve">Exclude</h5>
-                                       <div class="" id="div6">
-                                         <script type="text/javascript" language="JavaScript">
-                                            function achExclude(){
-                                            var el = document.getElementById('div6');
-                                               el.innerHTML = '<select name="achExclude" multiple="multiple" class="multi-select paidachieve_box2" id="achExclude"></select>';
-                                               }
-                                         </script>
-                                    </div>
-                                  </td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div>
-                    </div>
-                  </div>
-                 </div>
-                <!-- END Achieve -->
-                                      
-                        <!-- Start Tier -->
-                                    <div id="program-tier" class="col-lg-7 col-md-6 col-sm-12 col-xs-12">
-                                        <div class="adv-table editable-table">
-                                           
-                                         <h4 class="tableHeader">Program Schedules</h4>
-                                            
-                                          <div class="table-responsive">
-												<table
-													class="table table-striped table-hover table-bordered"
-													id="tier-schedule">
-													<thead>
-														<tr>
-															<td colspan="3" class="noborders text-left"><label
-																class="control-label" for="inputSuccess">Amount
-																	Type</label>&nbsp;&nbsp;
-																<div class="radio-inline inline-flex">
-																	<label class="control-label" for="inputSuccess">
-																		<input type="radio"
-																		name="optionsRadiosDenominationTier"
-																		id="optionsRadiosPercentageTier1" value="%"
-																		class="radio-inline denomination ">%
-																	</label>
+																					<div class="form-group last">
+																						<div class="" id="div1">
+																							<script type="text/javascript"
+																								language="JavaScript">
+								                                                             		function prdValue(){
+								                                                               			var el = document.getElementById('div1');
+								                                                                  		el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';
+								                                                                  	}
+								                                                            </script>
+																						</div>
+																					</div></td>
+																				<td class="va-bot">
+																					<div>
+																						<a href="javascript:void(0);"
+																							class="btn btn-default btn-sm m-bot5"
+																							onclick="listbox_moveacross('prdvalue', 'include')">&#62;&#62;</a>
+																						<br /> <a href="javascript:void(0);"
+																							class="btn btn-default btn-sm m-bot5"
+																							onclick="listbox_moveacross('include', 'prdvalue')">&#60;&#60;</a>
+																					</div>
+																				</td>
+																				<td>
+																					<h5 class="paid-achieve">Include</h5>
+																					<div class="paidachieve-padding" id="div2">
+																						<script type="text/javascript"
+																							language="JavaScript">
+										                                                      	function include(){
+										                                                      		var el = document.getElementById('div2');
+										                                                            el.innerHTML = '<select name="include" multiple="multiple" class="multi-select paidachieve_box2" id="include"></select>';
+										
+																								}
+																						</script>
+																					</div>
+																				</td>
+																			</tr>
+																			<tr class="">
+																				<td>
+																					<div>
+																						<a href="javascript:void(0);"
+																							aria-activedescendant=""
+																							class="btn btn-default btn-sm m-bot5"
+																							onclick="listbox_moveacross('prdvalue', 'exclude')">&#62;&#62;</a>
+																						<br /> <a href="javascript:void(0);"
+																							class="btn btn-default btn-sm m-bot5"
+																							onclick="listbox_moveacross('exclude', 'prdvalue')">&#60;&#60;</a>
+																					</div>
+																				</td>
+																				<td>
+																					<h5 class="paid-achieve">Exclude</h5>
+																					<div class="paidachieve-padding" id="div3">
+																						<script type="text/javascript"
+																							language="JavaScript">
+									                                                       function exclude(){
+									                                                       var el = document.getElementById('div3');
+									                                                                 el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select paidachieve_box2" id="exclude"></select>';
+									                                                          }
+									                                                    </script>
+																					</div>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
 																</div>
-																<div class="radio-inline inline-flex">
-																	<label class="control-label" for="inputSuccess">
-																		<input type="radio"
-																		name="optionsRadiosDenominationTier"
-																		id="optionsRadiosDollarSignTier1" value="$"
-																		class="radio-inline denomination required"
-																		checked="checked">$
-																	</label>
-																</div></td>
+															</div>
 
-															<td colspan="3" class="noborders text-right"><label
-																class="control-label" for="inputSuccess">Accrued Tier</label>&nbsp;&nbsp; <input id="actual_marker"
-																name="actual_marker" type="text" size="3"
-																class="form-control" value=""></td>
+															<!-- END PAID based on -->
+															<div class="form-group">
+																<div
+																	class="col-lg-4 col-md-4 col-sm-4 inline-flex m-top45">
+																	<label class="control-label popovers"
+																		for="inputSuccess"
+																		data-original-title="Customer Details"
+																		data-content="Click on the grey button below to see more info about this customer. Click again to hide it."
+																		data-placement="top" data-trigger="hover">Is
+																		this 'Tiered'?</label>
+																	<div class="radio-inline">
+																		<label class="control-label" for="inputSuccess">
+																			<input type="radio" name="optionsRadiosTier"
+																			id="optionsRadiosTierYes" value="Yes"
+																			class="radio-inline required m-bot15" rel="txtTooltip"
+																			checked="checked"> Yes
+																		</label>
+																	</div>
+																	<div class="radio-inline">
+																		<label class="control-label" for="inputSuccess">
+																			<input type="radio" name="optionsRadiosTier"
+																			id="optionsRadiosTierNo" value="No"
+																			class="radio-inline required m-bot15"> No
+																		</label>
+																	</div>
+																</div>
+																<br> <br> <br>
+																<div class="col-lg-4 col-md-4 col-sm-4 inline-flex">
+																	<label class="control-label" for="inputSuccess">Is
+																		this 'True-up'?</label>
+																	<div class="radio-inline">
+																		<label class="control-label" for="inputSuccess">
+																			<input type="radio" name="optionsRadiosTrueUp"
+																			id="optionsRadiosTrueUpYes" value="Yes"
+																			class="radio-inline required m-bot15" checked="checked"
+																			style="padding-top: 20px;"> Yes
+																		</label>
+																	</div>
+																	<div class="radio-inline">
+																		<label class="control-label" for="inputSuccess">
+																			<input type="radio" name="optionsRadiosTrueUp"
+																			id="optionsRadiosTrueUpNo" value="No"
+																			class="radio-inline required m-bot15"> No
+																		</label>
+																	</div>
+																</div>
+																<br> <br> <br>
+																<div class="col-lg-4 col-md-4 col-sm-4 inline-flex"
+																	id="amountdiv">
+																	<label class="control-label" for="amount">Amount</label>&nbsp;&nbsp;
+																	<input id="amount" name="amount" type="text"
+																		class="form-control m-bot15" style="width: 80px;" value="">
+																	<div class="radio-inline">
+																		<label class="control-label"
+																			for="optionsRadiosDenomination"> <input
+																			type="radio" name="optionsRadiosDenomination"
+																			id="optionsRadiosPercentage" value="%"
+																			class="radio-inline required m-bot15"
+																			style="padding-top: 20px;"> %
+																		</label>
+																	</div>
+																	<div class="radio-inline">
+																		<label class="control-label"
+																			for="optionsRadiosDenomination"> <input
+																			type="radio" name="optionsRadiosDenomination"
+																			id="optionsRadiosDollarSign" value="$"
+																			class="radio-inline required m-bot15" checked="checked">
+																			$
+																		</label>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!-- END ROW 4 -->
+													<div class="col-lg-12 p-left0">
+														<div id="achieve-based-on" class=>
+																<h4>Achieve Based On</h4>
+																<div class="space15 clearfix"></div>
+																<div class="row">
+																	<div class="col-lg-4 col-md-4 col-sm-4">
+																		<!-- <div class="space15"></div> -->
+																		<label class="control-label"
+																			for="achieve_basedon_inputselect">Achieve
+																			Based On</label> <select
+																			class="form-control input-sm m-bot15 "
+																			id="achieve_basedon_inputselect"
+																			name="achieve_basedon_inputselect">
+																		</select>
+																	</div>
+																	<div class="col-lg-4 col-md-4 col-sm-4 paidachieve-padding">
+																		<!-- <div class="space15"></div> -->
+																		<label class="control-label"
+																			for="achieve_freq_inputselect">Achieve Frequency</label> 
+																		<select
+																			class="form-control input-sm m-bot15 "
+																			id="achieve_freq_inputselect"
+																			name="achieve_freq_inputselect">
+																		</select>
+																	</div>
+																</div>
+																<div class="row">
+																	<!--END Achieve Based On dropdowns-->
 
-														</tr>
-														<tr>
-															<th>Tier</th>
-															<th>Amount</th>
-															<th>Beginning Range</th>
-															<th>Edit</th>
-															<th>Delete</th>
-														</tr>
-													</thead>
-													<tbody>
-													</tbody>
-												</table>
-											</div>
-                                      </div>
-                                        <div class="clearfix">
-                                            <div class="btn-group">
-                                                <button id="tier-schedule_new" class="btn btn-default">Add New Tier <i class="fa fa-plus"></i></button>
-                                            </div>
-                                        </div>
-                                </div>
-                        </div>
-               </div><!-- END ROW 6 -->
-        
-      <!---- END TIER Schedule -->
-                                  
-      <!---- START Submit -->
-      
-          <div class="clearfix"></div>
+																	<!--Start Achieve Based On Multi-select-->
 
-<!--           <div class="clearfix">
-              <a class="btn btn-info finish" id="finish" data-toggle="modal" href="#myModal"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
-              Modal
-                              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                      <div class="modal-content">
-                                          <div class="modal-header">
-                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                              <h4 class="modal-title">Save Program Changes?</h4>
-                                          </div>
-                                          <div class="modal-body">
-                                              <div class="space15">&nbsp;</div>
-If you want to save these changes for later, select 'Save As Draft'. If you want to submit these changes, select "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes.
-                                              <div class="space15"></div>
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                                              <button class="btn btn-info" type="button" onclick="javascript: saveDraft()"><i class="fa fa-save" ></i>&nbsp;&nbsp;Save As Draft</button>
-                                              <a href="javascript: submitForApproval()"><button class="btn btn-success" type="button"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div>
-          </div> -->
-          
-          <div class="row">
-                                            <div class="col-lg-12">
-                                             <label class="control-label" for="userComments">Commentary/Special Instructions</label>
-                                             <textarea id="userComments" name="userComments" class="form-control" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" data-toggle="tooltip" data-trigger = "hover" data-placement="top" rows="3" placeholder="Add description details" ></textarea>
-                                          </div>
-                                        </div><!-- END ROW 5 -->
-           <div id="footer-button" class="modal-footer" hidden="true">
-		      <a id="cancelLink" href="/SIM/customer?custId=">
-		      <button id="cancel-program" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
-		      
-              <a class="btn btn-success" id="submit-program" href="javascript: validateBeforeSubmit('#myModal')" ><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
-              <a class="btn btn-info finish" id="save-program" href="javascript: validateBeforeSubmit('#myModal1')"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
-              <a class="btn btn-info" id="reject-program" data-toggle="modal" href="#myModal8"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a> &nbsp;
-			  <a class="btn btn-success finish" id="approve-program" data-toggle="modal" href="#myModal7"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve</button></a>&nbsp;
-				<div class="space15">&nbsp;</div>
-				<div class="text-center"> If you want to save these changes for later, click 'Save Changes'. If you want to submit these changes, click "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
-                <div class="space15"></div>
-              	<!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                		<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-submit-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                               	<h4 class="modal-title">Submit for Approval?</h4>
-                            </div>
-                            <div class="modal-body">
-								<div class="space15">&nbsp;</div>
-								 <div class="text-center"> Are you sure you want to Submit for approval? If you still want to submit for approval, click the OK button. If you don't want to submit, click the "Cancel" button below and your program will not be submitted. </div>
-                                <div class="space15"></div>
-                            </div>
-                            <div class="modal-footer">
-                                    <button id="program-submit-modal-cancel" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-									<a href="javascript: submitForApproval()"><button id="program-submit-modal-ok" class="btn btn-info" type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;OK</button></a>
-                            </div>
-						</div>
-					</div>
-				</div>
-				<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-save-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Save Program Changes?</h4>
-                            </div>
-							<div class="modal-body">
-								<div class="space15">&nbsp;</div>
-								<div class="text-center">Are you sure you want to Save Changes? If you still want to save your changes, click the OK button. If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
-                                <div class="space15"></div>
-							</div>
-							<div class="modal-footer">
-								<button data-dismiss="modal" class="btn btn-default" id="program-save-modal-cancel"
-									type="button">Cancel</button>
-								<a href="javascript: saveDraft()"><button class="btn btn-info" id="program-save-modal-ok" type="button">
-										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-									</button></a>
-							</div>
-						</div>
-					</div>
-				</div>
-							
-				<!-- <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-reject-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Reject Program Changes?</h4>
-                            </div>
-							<div class="modal-body">
-								<div class="space15">&nbsp;</div>
-								<div class="text-center">Are you sure you want to Reject Changes? If you still want to reject your changes, click the OK button. If you don't want to reject your changes, click the "Cancel" button below and your program will not reject these changes. </div>
-                                <div class="space15"></div>
-							</div>
-							<div class="modal-footer">
-								<button data-dismiss="modal" class="btn btn-default" id="program-reject-modal-cancel"
-									type="button">Cancel</button>
-								<a href="javascript: rejectProgram()"><button id="program-reject-modal-ok" class="btn btn-info" type="button">
-										<i class="fa fa-times-circle"></i>&nbsp;&nbsp;OK
-									</button></a>
-							</div>
-						</div>
-					</div>
-				</div> -->
-				<!-- <div class="modal fade" id="myModal3" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-approve-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Approve Program Changes?</h4>
-                            </div>
-							<div class="modal-body">
-								<div class="space15">&nbsp;</div>
-								<div class="text-center">Are you sure you want to Approve Changes? If you still want to Approve your changes, click the OK button. If you don't want to approve your changes, click the "Cancel" button below and your program will not approve these changes. </div>
-                                <div class="space15"></div>
-							</div>
-							<div class="modal-footer">
-								<button data-dismiss="modal" class="btn btn-default" id="program-approve-modal-cancel"
-									type="button">Cancel</button>
-								<a href="javascript: approveProgram()"><button id="program-approve-modal-ok" class="btn btn-info" type="button">
-										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-									</button></a>
-							</div>
-						</div>
-					</div>
-				</div> -->
-				
-				<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-confirmation-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Confirmation</h4>
-                            </div>
-							<div class="modal-body">
-								<!-- <div class="space15">&nbsp;</div> -->
-								<div class="text-center"> <span id="confirmMessage"></span> </div>
-                                <!-- <div class="space15"></div> -->
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-info" type="button" id="program-confirmation-modal-ok" data-toggle="modal" href="#myModal4">
-										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-error-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Error / Warning (s)</h4>
-                            </div>
-							<div class="modal-body">
-								<!-- <div class="space15">&nbsp;</div> -->
-								<div class="text-center"> <span id="errorMessageModal"></span> </div>
-                                <!-- <div class="space15"></div> -->
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-info" type="button" id="program-error-modal-ok" data-toggle="modal" href="#myModal5">
-										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-info-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Information</h4>
-                            </div>
-							<div class="modal-body">
-								<!-- <div class="space15">&nbsp;</div> -->
-								<div class="text-center"> <span id="informationMessageModal"></span> </div>
-                                <!-- <div class="space15"></div> -->
-							</div>
-							<div class="modal-footer">
-								<button class="btn btn-info" type="button" id="program-info-modal-ok" data-toggle="modal" href="#myModal6">
-										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-								</button>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="modal fade" id="myModal7" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-comment-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Confirmation</h4>
-                            </div>
-							<div class="modal-body">
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="text-left">
-											<label class="control-label;text-align: center;" for="approveComments">Please enter comments: </label>
-										</div>
-											<textarea maxlength="2000" id="approveComments" name="approveComments" class="form-control"></textarea>
-                                    </div>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button data-dismiss="modal" class="btn btn-default" id="program-comment-modal-cancel"
-									type="button">Cancel</button>
-								<a href="javascript: approveProgram()"><button class="btn btn-info" type="button" id="program-comment-modal-ok">
-										<i class="fa fa-save"></i>&nbsp;&nbsp;OK</button>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="modal fade" id="myModal8" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-rej-comment-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Confirmation</h4>
-                            </div>
-							<div class="modal-body">
-								<div class="row">
-									<div class="col-lg-12">
-										<div class="text-left">
-											<label class="control-label;text-align: center;" for="rejectionComments">Please enter comments: </label>
-										</div>
-											<textarea maxlength="2000" id="rejectionComments" name="rejectionComments" class="form-control"></textarea>
-                                    </div>
-								</div>
-							</div>
-							<div class="modal-footer">
-								<button data-dismiss="modal" class="btn btn-default" id="program-rej-comment-modal-cancel"
-									type="button">Cancel</button>
-								<a href="javascript: rejectProgram()"><button class="btn btn-info" type="button" id="program-rej-comment-modal-ok">
-										<i class="fa fa-save"></i>&nbsp;&nbsp;OK</button>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-				
-          </div>
-          
-          
-        </div>
-       </div>
-      </section>
+																	<div class="col-lg-8 col-md-8 col-sm-8">
+																		<div class="table">
+																			<table class="table-responsive">
+																				<tbody>
+																					<tr class="">
+																						<td class="yk-vertalign" rowspan="2"><select
+																							class="paidachieve" name="achievedBasedOn"
+																							id="achievedBasedOn"
+																							onchange="javascript: achDynamicdropdown(this.options[this.selectedIndex].value);">
+																						</select>
+
+																							<div class="form-group">
+																								<div class="" id="div4">
+																									<script type="text/javascript"
+																										language="JavaScript">
+																                                          function achPrdValue(){
+																                                          var el = document.getElementById('div4');
+																                                                    el.innerHTML = '<select name="achPrdvalue" id="achPrdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';
+																                                             }
+																                                       </script>
+																								</div>
+																							</div></td>
+																						<td class="va-botl">
+																							<div>
+																								<a href="javascript:void(0);"
+																									class="btn btn-default btn-sm m-bot5"
+																									onclick="listbox_moveacross('achPrdvalue', 'achInclude')">&#62;&#62;</a>
+																								<a href="javascript:void(0);"
+																									class="btn btn-default btn-sm m-bot5"
+																									onclick="listbox_moveacross('achInclude', 'achPrdvalue')">&#60;&#60;</a>
+																							</div>
+																						</td>
+																						<td>
+																							<h5 class="paid-achieve">Include</h5>
+																							<div class="paidachieve-padding" id="div5">
+																								<script type="text/javascript"
+																									language="JavaScript">
+																                                     function achInclude(){
+																                                     var el = document.getElementById('div5');
+																                                               el.innerHTML = '<select name="achInclude" multiple="multiple" class="multi-select paidachieve_box2" id="achInclude"></select>';
+																
+																                                        }
+																                                  </script>
+																							</div>
+																						</td>
+																					</tr>
+																					<tr class="">
+																						<td class="va-botl">
+																							<div class="">
+																								<a href="javascript:void(0);"
+																									class="btn btn-default btn-sm m-bot5 va-bot"
+																									onclick="listbox_moveacross('achPrdvalue', 'achExclude')">&#62;&#62;</a>
+																								<a href="javascript:void(0);"
+																									class="btn btn-default btn-sm m-bot5 va-bot"
+																									onclick="listbox_moveacross('achExclude', 'achPrdvalue')">&#60;&#60;</a>
+																							</div>
+																						</td>
+																						<td>
+																							<h5 class="paid-achieve">Exclude</h5>
+																							<div class="paidachieve-padding" id="div6">
+																								<script type="text/javascript"
+																									language="JavaScript">
+														                                            function achExclude(){
+														                                            var el = document.getElementById('div6');
+														                                               el.innerHTML = '<select name="achExclude" multiple="multiple" class="multi-select paidachieve_box2" id="achExclude"></select>';
+														                                               }
+														                                         </script>
+																							</div>
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<!-- END Achieve -->
+														</div>
+													<!-- END ROW 6 -->
+														
+														<!-- END ROW 7 -->
+														<!-- Start Tier -->
+													<div class="row">
+														<div class="space15 clearfix"></div>
+														<div class="form-group">
+															<div id="program-tier"
+																class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+																<div class="adv-table editable-table">
+
+																	<h4 class="tableHeader">Program Schedules</h4>
+
+																	<div class="table-responsive">
+																		<table
+																			class="table table-striped table-hover table-bordered"
+																			id="tier-schedule">
+																			<thead>
+																				<tr>
+																					<td colspan="3" class="noborders text-left"><label
+																						class="control-label" for="inputSuccess">Amount
+																							Type</label>&nbsp;&nbsp;
+																						<div class="radio-inline inline-flex">
+																							<label class="control-label" for="inputSuccess">
+																								<input type="radio"
+																								name="optionsRadiosDenominationTier"
+																								id="optionsRadiosPercentageTier1" value="%"
+																								class="radio-inline denomination ">%
+																							</label>
+																						</div>
+																						<div class="radio-inline inline-flex">
+																							<label class="control-label" for="inputSuccess">
+																								<input type="radio"
+																								name="optionsRadiosDenominationTier"
+																								id="optionsRadiosDollarSignTier1" value="$"
+																								class="radio-inline denomination required"
+																								checked="checked">$
+																							</label>
+																						</div></td>
+
+																					<td colspan="3" class="noborders text-right"><label
+																						class="control-label" for="inputSuccess">Accrued
+																							Tier</label>&nbsp;&nbsp; <input id="actual_marker"
+																						name="actual_marker" type="text" size="3"
+																						class="form-control" value=""></td>
+
+																				</tr>
+																				<tr>
+																					<th>Tier</th>
+																					<th>Amount</th>
+																					<th>Beginning Range</th>
+																					<th>Edit</th>
+																					<th>Delete</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+																			</tbody>
+																		</table>
+																	</div>
+																</div>
+																<div class="clearfix">
+																	<div class="btn-group">
+																		<button id="tier-schedule_new" class="btn btn-default">
+																			Add New Tier <i class="fa fa-plus"></i>
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<!---- END TIER Schedule -->
+													<!-- End of ROW 7  -->
+													<!-- Start ROW 8 -->
+													<div class="clearfix"></div>
+													<div class="row">
+														<div class="col-lg-12">
+															<label class="control-label" for="userComments">Commentary/Special
+																Instructions</label>
+															<textarea id="userComments" name="userComments"
+																class="form-control" rel="txtTooltip"
+																data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
+																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+																data-toggle="tooltip" data-trigger="hover"
+																data-placement="top" rows="3"
+																placeholder="Add description details"></textarea>
+														</div>
+													</div>
+													<!-- END ROW 8 -->
+													
+															<!---- START Submit -->
+															<div class="clearfix"></div>
+															<div id="footer-button" class="modal-footer"
+																hidden="true">
+																<a id="cancelLink" href="/SIM/customer?custId=">
+																	<button id="cancel-program" data-dismiss="modal"
+																		class="btn btn-default" type="button">Cancel</button>
+																</a> &nbsp; <a class="btn btn-success" id="submit-program"
+																	href="javascript: validateBeforeSubmit('#myModal')"><i
+																	class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
+																	Approval
+																	</button></a>&nbsp; <a class="btn btn-info finish" id="save-program"
+																	href="javascript: validateBeforeSubmit('#myModal1')"><i
+																	class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a> <a
+																	class="btn btn-info" id="reject-program"
+																	data-toggle="modal" href="#myModal8"><i
+																	class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a>
+																&nbsp; <a class="btn btn-success finish"
+																	id="approve-program" data-toggle="modal"
+																	href="#myModal7"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve
+																	</button></a>&nbsp;
+																<div class="space15">&nbsp;</div>
+																<div class="text-center">If you want to save these
+																	changes for later, click 'Save Changes'. If you want to
+																	submit these changes, click "Submit For Approval". If
+																	you don't want to save your changes, click the "Cancel"
+																	button below and your program will not save these
+																	changes.</div>
+																<div class="space15"></div>
+																<!-- Modal -->
+																<div class="modal fade" id="myModal" tabindex="-1"
+																	role="dialog" aria-labelledby="myModalLabel"
+																	aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button id="program-submit-modal-close"
+																					type="button" class="close" data-dismiss="modal"
+																					aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">Submit for Approval?</h4>
+																			</div>
+																			<div class="modal-body">
+																				<div class="space15">&nbsp;</div>
+																				<div class="text-center">Are you sure you want
+																					to Submit for approval? If you still want to submit
+																					for approval, click the OK button. If you don't
+																					want to submit, click the "Cancel" button below and
+																					your program will not be submitted.</div>
+																				<div class="space15"></div>
+																			</div>
+																			<div class="modal-footer">
+																				<button id="program-submit-modal-cancel"
+																					data-dismiss="modal" class="btn btn-default"
+																					type="button">Cancel</button>
+																				<a href="javascript: submitForApproval()"><button
+																						id="program-submit-modal-ok" class="btn btn-info"
+																						type="button">
+																						<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																					</button></a>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="modal fade" id="myModal1" tabindex="-1"
+																	role="dialog" aria-labelledby="myModalLabel"
+																	aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button id="program-save-modal-close" type="button"
+																					class="close" data-dismiss="modal"
+																					aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">Save Program Changes?</h4>
+																			</div>
+																			<div class="modal-body">
+																				<div class="space15">&nbsp;</div>
+																				<div class="text-center">Are you sure you want
+																					to Save Changes? If you still want to save your
+																					changes, click the OK button. If you don't want to
+																					save your changes, click the "Cancel" button below
+																					and your program will not save these changes.</div>
+																				<div class="space15"></div>
+																			</div>
+																			<div class="modal-footer">
+																				<button data-dismiss="modal" class="btn btn-default"
+																					id="program-save-modal-cancel" type="button">Cancel</button>
+																				<a href="javascript: saveDraft()"><button
+																						class="btn btn-info" id="program-save-modal-ok"
+																						type="button">
+																						<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																					</button></a>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="modal fade" id="myModal4" tabindex="-1"
+																	role="dialog" aria-labelledby="myModalLabel"
+																	aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button id="program-confirmation-modal-close"
+																					type="button" class="close" data-dismiss="modal"
+																					aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">Confirmation</h4>
+																			</div>
+																			<div class="modal-body">
+																				<!-- <div class="space15">&nbsp;</div> -->
+																				<div class="text-center">
+																					<span id="confirmMessage"></span>
+																				</div>
+																				<!-- <div class="space15"></div> -->
+																			</div>
+																			<div class="modal-footer">
+																				<button class="btn btn-info" type="button"
+																					id="program-confirmation-modal-ok"
+																					data-toggle="modal" href="#myModal4">
+																					<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="modal fade" id="myModal5" tabindex="-1"
+																	role="dialog" aria-labelledby="myModalLabel"
+																	aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button id="program-error-modal-close" type="button"
+																					class="close" data-dismiss="modal"
+																					aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">Error / Warning (s)</h4>
+																			</div>
+																			<div class="modal-body">
+																				<!-- <div class="space15">&nbsp;</div> -->
+																				<div class="text-center">
+																					<span id="errorMessageModal"></span>
+																				</div>
+																				<!-- <div class="space15"></div> -->
+																			</div>
+																			<div class="modal-footer">
+																				<button class="btn btn-info" type="button"
+																					id="program-error-modal-ok" data-toggle="modal"
+																					href="#myModal5">
+																					<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="modal fade" id="myModal6" tabindex="-1"
+																	role="dialog" aria-labelledby="myModalLabel"
+																	aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button id="program-info-modal-close" type="button"
+																					class="close" data-dismiss="modal"
+																					aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">Information</h4>
+																			</div>
+																			<div class="modal-body">
+																				<!-- <div class="space15">&nbsp;</div> -->
+																				<div class="text-center">
+																					<span id="informationMessageModal"></span>
+																				</div>
+																				<!-- <div class="space15"></div> -->
+																			</div>
+																			<div class="modal-footer">
+																				<button class="btn btn-info" type="button"
+																					id="program-info-modal-ok" data-toggle="modal"
+																					href="#myModal6">
+																					<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="modal fade" id="myModal7" tabindex="-1"
+																	role="dialog" aria-labelledby="myModalLabel"
+																	aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button id="program-comment-modal-close"
+																					type="button" class="close" data-dismiss="modal"
+																					aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">Confirmation</h4>
+																			</div>
+																			<div class="modal-body">
+																				<div class="row">
+																					<div class="col-lg-12">
+																						<div class="text-left">
+																							<label class="control-label;text-align: center;"
+																								for="approveComments">Please enter
+																								comments: </label>
+																						</div>
+																						<textarea maxlength="2000" id="approveComments"
+																							name="approveComments" class="form-control"></textarea>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="modal-footer">
+																				<button data-dismiss="modal" class="btn btn-default"
+																					id="program-comment-modal-cancel" type="button">Cancel</button>
+																				<a href="javascript: approveProgram()"><button
+																						class="btn btn-info" type="button"
+																						id="program-comment-modal-ok">
+																						<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																					</button> </a>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+																<div class="modal fade" id="myModal8" tabindex="-1"
+																	role="dialog" aria-labelledby="myModalLabel"
+																	aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button id="program-rej-comment-modal-close"
+																					type="button" class="close" data-dismiss="modal"
+																					aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">Confirmation</h4>
+																			</div>
+																			<div class="modal-body">
+																				<div class="row">
+																					<div class="col-lg-12">
+																						<div class="text-left">
+																							<label class="control-label;text-align: center;"
+																								for="rejectionComments">Please enter
+																								comments: </label>
+																						</div>
+																						<textarea maxlength="2000" id="rejectionComments"
+																							name="rejectionComments" class="form-control"></textarea>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="modal-footer">
+																				<button data-dismiss="modal" class="btn btn-default"
+																					id="program-rej-comment-modal-cancel" type="button">Cancel</button>
+																				<a href="javascript: rejectProgram()"><button
+																						class="btn btn-info" type="button"
+																						id="program-rej-comment-modal-ok">
+																						<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																					</button> </a>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+
+															</div>
+
+
+														</div>
+													</div></section>
       <!---- END Review / Confirm Section -->
       </div>
        </form>
@@ -1325,13 +1390,13 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	fnPopulateDropdown('paidBasedOn', response.data.programDetailList[0].programPaidOn.tagItemList);
                	if(response.data.programDetailList[0].programPaidOn.isTiered == true){
                		$("#optionsRadiosTierYes").prop('checked', true);
-               		$("#ahieve-based-on").show();
+               		$("#achieve-based-on").show();
 					$("#program-tier").show();
 					$("#amountdiv").hide();
                	}
                	else{
                		$("#optionsRadiosTierNo").prop('checked', true);
-               		$("#ahieve-based-on").hide();
+               		$("#achieve-based-on").hide();
 					$("#program-tier").hide();
 					$("#amountdiv").show();
                	}
@@ -1342,7 +1407,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                	else{
                		$("#optionsRadiosTrueUpNo").prop('checked', true);
                	}
-               	$('#programDescription').val(response.data.programDetailList[0].programPaidOn.programDescription);
                	fnPopulatePaidDetails(response);
                	                	
                	/*Program Achieve Based on section*/
@@ -1577,8 +1641,6 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 				else{
 					responseOnload.programDetailList[0].programPaidOn.isTrueUp = false;
 				}
-				//responseOnload.programDetailList[0].programPaidOn.isTrueUp = $('input:radio[name=optionsRadiosTrueUp]:checked').val();
-				responseOnload.programDetailList[0].programPaidOn.programDescription = $('#programDescription').val();
 				
 				responseOnload.programDetailList[0].programPaidOn.includedMap = includePaid;
 				responseOnload.programDetailList[0].programPaidOn.excludedMap = excludePaid;
@@ -1768,12 +1830,12 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
             $("input[name=optionsRadiosTier]").on( "change", function() {
 				var test = $(this).val();
 				if(test == 'Yes'){
-					$("#ahieve-based-on").show();
+					$("#achieve-based-on").show();
 					$("#program-tier").show();
 					$("#amountdiv").hide();
 				}
 				else{
-					$("#ahieve-based-on").hide();
+					$("#achieve-based-on").hide();
 					$("#program-tier").hide();
 					$("#amountdiv").show();
 				}

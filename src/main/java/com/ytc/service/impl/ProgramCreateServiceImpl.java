@@ -94,10 +94,10 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		if(programHeader.isCalculatedProgram()){
 			/** save Program Achieved Based on*/
 			createProgramAchieveBasedOnData(dalProgramHeader, programHeader, dalProgramDetail);	
-			
-			/** Commentary/Special instructions*/
-			saveUserComments(programHeader, dalProgramDetail);
 		}
+		
+		/** Commentary/Special instructions*/
+		saveUserComments(programHeader, dalProgramDetail);
 		
 		DalProgramDetail returnEntity = baseDao.create(dalProgramDetail);
 		

@@ -73,6 +73,7 @@ h3.tableHeader, h4.tableHeader {
 h4.paid-achieve, h5.paid-achieve {
     margin-top: 2px !important;
     margin-bottom: 1px !important;
+    padding-left: 20px !important;
     line-height: 1;
 }
 
@@ -4714,9 +4715,14 @@ select.paidachieve {
     margin: .2em 0 .4em 0 !important;
     padding-top: 3px;
     padding-bottom: 3px;
-    width: 134px !important;
+    width: 325px !important;
     vertical-align: text-top !important;
 }
+
+.paidachieve-padding {
+	padding-left: 20px;
+}
+
 
 @media screen and (max-width: 475px) {
 select.paidachieve {
@@ -4726,7 +4732,7 @@ select.paidachieve {
 
 select.paidachieve_box {
     height: 240px !important;
-    width: 134px;
+    width: 325px;
 }
 @media screen and (max-width: 475px) {
 select.paidachieve_box {
@@ -4734,7 +4740,7 @@ select.paidachieve_box {
 }
 }
 select.paidachieve_box2 {
-    width: 234px;
+    width: 375px;
     height: 90px;
 }
 @media screen and (max-width: 475px) {

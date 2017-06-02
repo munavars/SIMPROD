@@ -241,7 +241,7 @@
                                     <li><strong>Status:</strong> <span id="status"></span> &nbsp; 
                                     
                                    		<a id="view-program-workflow" data-toggle="modal" href="#myModal9">
-                                   			<button type="button" class="btn btn-default btn-xs">
+                                   			<button  id="program-workflow-btn" type="button" class="btn btn-default btn-xs">
                                    			<i class="fa fa-list-alt" aria-hidden="true"></i> </button> </a>
 									</li>
 
@@ -422,8 +422,8 @@
 																class="form-control input-sm m-bot15"
 																id="paid_basedon_inputselect"
 																name="paid_basedon_inputselect">
-																<!--  <option disabled class="" value="">- Select -</option>
-                                                  <option id="bonusable_units_only_plus_nadunits_inputselect" value="Bonusable Units Only + NAD Units">Bonusable Units Only + NAD Units</option>
+																<!-- <option disabled class="" value="">- Select -</option> -->
+                                                  <!--<option id="bonusable_units_only_plus_nadunits_inputselect" value="Bonusable Units Only + NAD Units">Bonusable Units Only + NAD Units</option>
                                                   <option id="all_units_sold_plus_nad_units_inputselect" value="All Units Sold + NAD Units">All Units Sold + NAD Units</option>
                                                   <option selected id="bonusable_units_only_inputselect" value="Bonusable Units Only">Bonusable Units Only</option>
                                                   <option id="nad_units_inputselect" value="NAD Units" name="nad_units">NAD Units</option> -->
@@ -1786,6 +1786,9 @@
 				$('#myModal9').find('button, a, textarea').attr('disabled',false);
 				$('#header-button').removeAttr('hidden');
 				$('#footer-button').removeAttr('hidden');
+				$('#view-program-workflow').attr('disabled', false);
+				$('#view-program-workflow').removeClass("disabled");
+				$('#program-workflow-btn').attr('disabled', false);
 			}
 			
 			function approveProgram(){

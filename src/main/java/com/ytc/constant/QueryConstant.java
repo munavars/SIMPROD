@@ -11,8 +11,12 @@ public class QueryConstant {
 	
 	public static final String CUSTOMER_LIST="select * from PROGRAM_HEADER where REQUEST_ID in (:requestId) and STATUS_ID=2";
 	
+	public static final String TBP_CUSTOMER_LIST="select * from PROGRAM_HEADER where STATUS_ID=2";
+	
 	public static final String EMPLOYEE_HIER_LIST= "SELECT BASE_EMP_ID FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = :loginId or LVL1_EMP_ID = :loginId or LVL2_EMP_ID = :loginId or LVL3_EMP_ID = :loginId or LVL4_EMP_ID = :loginId or LVL5_EMP_ID = :loginId";
 	
 	public static final String CUSTOMER_LIST_MGR="select ID from CUSTOMER where ACCOUNT_MANAGER in(:userId)";
 
+	public static final String TBP_QUERY = "select DISTINCT EMP_ID from WORKFLOW_MATRIX where id in ("
+											+"select Max(id) from WORKFLOW_MATRIX where COMMENTS = 'TBP' group by SUBJECT_AREA, BUSINESS_UNIT)";
 }

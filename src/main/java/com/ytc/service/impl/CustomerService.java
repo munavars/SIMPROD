@@ -52,16 +52,26 @@ public class CustomerService implements ICustomerService {
 		
 		List<ProgramDetail> dashboardDetailList= new ArrayList<ProgramDetail>();
 
-		String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
+		String sql = null;
 		Map<String, Object> queryParams = new HashMap<>();
-		queryParams.put("loginId", loginId);
-		List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
-		if(userIdList.isEmpty()){
-			return dashboardDetailList;
+		String tbpQuery = QueryConstant.TBP_QUERY;
+		List<String> tbpList = baseDao.getListFromNativeQuery(tbpQuery, new HashMap<String, Object>());
+		if(tbpList.contains(loginId)){
+			sql = QueryConstant.TBP_CUSTOMER_LIST;
 		}
-		String sql=QueryConstant.CUSTOMER_LIST;
-		queryParams = new HashMap<>();
-		queryParams.put("requestId", userIdList);
+		else{
+			String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
+			
+			queryParams.put("loginId", loginId);
+			List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+			if(userIdList.isEmpty()){
+				return dashboardDetailList;
+			}
+			sql=QueryConstant.CUSTOMER_LIST;
+			queryParams = new HashMap<>();
+			queryParams.put("requestId", userIdList);
+		}
+
 		List<DalProgramHeader> resultList=baseDao.getlist(DalProgramHeader.class, sql, queryParams);
 		for (Iterator<DalProgramHeader> iterator = resultList.iterator(); iterator.hasNext();) {
 			DalProgramHeader dalProgramHeader = (DalProgramHeader) iterator.next();
@@ -92,7 +102,6 @@ public class CustomerService implements ICustomerService {
 		ModelMapper modelMapper = new ModelMapper();
 		Customer customer = modelMapper.map(dalCustomer, Customer.class);
 		return customer;
-
 	}
 }
 

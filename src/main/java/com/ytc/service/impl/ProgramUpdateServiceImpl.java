@@ -18,7 +18,6 @@ import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
-import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
@@ -473,7 +472,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setActualMarker(programDetail.getActualMarker());	
 			}
 			dalProgramDet.setStatus(dalProgramDet.getDalProgramHeader().getStatus());
-			setApproverLevelStatus(dalProgramDet, programHeader);
+			//setApproverLevelStatus(dalProgramDet, programHeader);
 		}
 
 		return dalProgramDet;
@@ -485,7 +484,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	 * @param dalProgramDet dalProgramDet
 	 * @param programHeader programHeader
 	 */
-	private void setApproverLevelStatus(DalProgramDetail dalProgramDet, ProgramHeader programHeader) {
+/*	private void setApproverLevelStatus(DalProgramDetail dalProgramDet, ProgramHeader programHeader) {
 		List<DalStatus> dalStatusList =  baseDao.getListFromNamedQuery("DalStatus.getAllDetails");
 		if(ProgramConstant.USER_LEVEL_1.equals(programHeader.getProgramButton().getUserLevel())){
 			if(ProgramConstant.PENDING_STATUS.equals(dalProgramDet.getStatus().getType())){
@@ -527,7 +526,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			}
 		}
 	}
-	
+	*/
 	public void getNewlyAddedAchieveDetails(Map<String, Set<String>> existingIncludedMap,
 			Map<String, Set<String>> existingExcludedMap, ProgramAchieveOn programAchieveOn,
 			Set<DalProgramDetAchieved> newlyAddedAchieveOnList, DalProgramDetail dalProgramDetail) {

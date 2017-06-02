@@ -53,4 +53,7 @@
 	<bean id="programEmailService" class="com.ytc.service.impl.ProgramEmailServiceImpl">
 	</bean>
 	
+	<bean id="programWorkflowService" class="com.ytc.service.impl.ProgramWorkflowServiceImpl">
+	</bean>
+	
 </beans>

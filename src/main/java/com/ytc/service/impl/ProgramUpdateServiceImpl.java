@@ -27,11 +27,11 @@ import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalStatus;
 import com.ytc.dal.model.DalUserComments;
-import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramEmailService;
 import com.ytc.service.IProgramUpdateService;
+import com.ytc.service.IProgramWorkflowService;
 import com.ytc.service.ServiceContext;
 
 public class ProgramUpdateServiceImpl implements IProgramUpdateService{
@@ -47,6 +47,9 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	
 	@Autowired
 	private IProgramEmailService programEmailService;  
+	
+	@Autowired
+	private IProgramWorkflowService programWorkflowService;
 	
 	@Override
 	public ProgramHeader saveProgramDetails(ProgramHeader programHeader) {
@@ -154,8 +157,11 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	}
 
 	private void updateApproverInformation(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {
+		
+		programWorkflowService.updateWorkflowDetails(dalProgramDetail, programHeader, serviceContext.getEmployee());
+		
 		/**Only if User level is 1 or 2, save the approver details in WORKFLOW_STATUS table.*/
-		if(programHeader != null && (ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel()) || 
+		/*if(programHeader != null && (ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel()) || 
 				ProgramConstant.USER_LEVEL_3.equals(programHeader.getProgramButton().getUserLevel())) ){
 			DalWorkflowStatus dalWorkflowStatus = new DalWorkflowStatus();
 			dalWorkflowStatus.setApprovalComment(programHeader.getUserComments());
@@ -174,7 +180,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDetail.setDalWorkflowStatusList(new ArrayList<DalWorkflowStatus>());
 			}
 			dalProgramDetail.getDalWorkflowStatusList().add(dalWorkflowStatus);
-		}
+		}*/
 		
 	}
 

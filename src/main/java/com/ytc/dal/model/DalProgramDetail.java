@@ -603,8 +603,12 @@ public class DalProgramDetail extends DalAuditableModel {
 					 * approver will add comments, in such case, createdBy setter will not get called.
 					 * only modified by setter will be called, since the person will be same in 
 					 * all the three fields, populating all these from here is the correct approach.*/
-					dalWorkflowStatus.setCreatedBy(modifiedBy);
-					dalWorkflowStatus.setApprover(modifiedBy);
+					if(dalWorkflowStatus.getCreatedBy() == null){
+						dalWorkflowStatus.setCreatedBy(modifiedBy);	
+					}
+					if(dalWorkflowStatus.getApprover() == null){
+						dalWorkflowStatus.setApprover(modifiedBy);	
+					}
 					dalWorkflowStatus.setModifiedBy(modifiedBy);
 				}
 			}

@@ -238,7 +238,12 @@
                                     <li>Executive Approved Date: <span id="executiveApprovedDate"</li> -->
                                     <li><strong>TBP Approved By:</strong> <span id="tbpApprovedBy"></span> </li>
                                     <li><strong>TBP Approved Date:</strong> <span id="tbpApprovedDate"></span> </li>
-                                    <li><strong>Status:</strong> <span id="status"></span> </li>
+                                    <li><strong>Status:</strong> <span id="status"></span> &nbsp; 
+                                    
+                                   		<a id="view-program-workflow" data-toggle="modal" href="#myModal9">
+                                   			<button type="button" class="btn btn-default btn-xs">
+                                   			<i class="fa fa-list-alt" aria-hidden="true"></i> </button> </a>
+									</li>
 
                                  </ul>
                                 </div>
@@ -307,63 +312,82 @@
                               <div>
                                  <section>
                                     <div class="form-group clearfix">
-                                        
-                                       <div class="col-lg-12">
-                                           <h5>Program Details</h5>
-                                           <div class="row">
-                                               <div class="col-lg-4 col-sm-4">
-                                                <label class="control-label" for="program_name_inputselect">Program Name</label>
-                                                <select class="form-control input-sm m-bot15" id="program_name_inputselect" name="program_name_inputselect">
-                                                   <!-- <option disabled class="required" value="">- Select -</option> -->
-                                                </select>
-                                             </div>
-                                            <div class="col-lg-4 col-sm-4">
-                                                <label class="control-label" for="payout_freq_inputselect">Payout Frequency</label>
-                                                <select class="form-control input-sm m-bot15" id="payout_freq_inputselect" name="payout_freq_inputselect">
-                                                  <!-- <option disabled class="" value="">- Select -</option> -->
-                                              </select>
-                                            </div>
-                                              <div class="form-group">
-                                                  <div class="col-lg-4 col-sm-4">
-                                                    <label class="control-label" for="from">Begin/End Dates:</label>
-                                                        <div class="input-group input-medium" data-date-format="mm/dd/yy">
-                                                            <input type="text" class="form-control dpd1" id="from" name="from" placeholder="Begin Date" ><span class="input-group-addon" for="to">To</span>
-                                                            <input type="text" class="form-control dpd2" id="to" name="to" placeholder="End Date">
-                                                        </div>
-                                                    </div>
-                                              </div>
-                                           </div>
-                                           <div class="row">
-                                            <div class="col-lg-12">
-                                             <label class="control-label " for="longDesc">Program Description</label>
-                                             <textarea id="longDesc" name="longDesc" class="form-control m-bot15"></textarea>
-                                            </div>
-                                          </div>
-                                          <div class="row">
-                                          <div class="col-lg-2 col-md-2 col-sm-2">
-                                             <label class="control-label" for="btl_inputselect">BTL (Behind The Line)</label>
-                                             <select class="form-control input-sm m-bot15" id="btl_inputselect" name="btl_inputselect">
-<!--                                                 <option disabled class="required" value="">- Select BTL -</option>
+
+												<div class="col-lg-12">
+													<h5>Program Details</h5>
+													<div class="row">
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label"
+																for="program_name_inputselect">Program Name</label> <select
+																class="form-control input-sm m-bot15"
+																id="program_name_inputselect"
+																name="program_name_inputselect">
+																<!-- <option disabled class="required" value="">- Select -</option> -->
+															</select>
+														</div>
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label"
+																for="payout_freq_inputselect">Payout Frequency</label> <select
+																class="form-control input-sm m-bot15"
+																id="payout_freq_inputselect"
+																name="payout_freq_inputselect">
+																<!-- <option disabled class="" value="">- Select -</option> -->
+															</select>
+														</div>
+														<div class="form-group">
+															<div class="col-lg-4 col-sm-4">
+																<label class="control-label" for="from">Begin/End
+																	Dates:</label>
+																<div class="input-group input-medium"
+																	data-date-format="mm/dd/yy">
+																	<input type="text" class="form-control dpd1" id="from"
+																		name="from" placeholder="Begin Date"><span
+																		class="input-group-addon" for="to">To</span> <input
+																		type="text" class="form-control dpd2" id="to"
+																		name="to" placeholder="End Date">
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-12">
+															<label class="control-label " for="longDesc">Program
+																Description</label>
+															<textarea id="longDesc" name="longDesc"
+																class="form-control m-bot15"></textarea>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+															<label class="control-label" for="btl_inputselect">BTL
+																(Behind The Line)</label> <select
+																class="form-control input-sm m-bot15"
+																id="btl_inputselect" name="btl_inputselect">
+																<!--                                                 <option disabled class="required" value="">- Select BTL -</option>
                                                 <option id="btl_inputselect_yes" name="btl_inputselect_yes" value="Yes">Yes</option>
                                                 <option id="btl_inputselect_no" name="btl_inputselect_no" value="No">No</option> -->
-                                             </select>
-                                          </div>
-                                        <div class="col-lg-2 col-md-2 col-sm-2">
-                                             <label class="control-label" for="pricing_type_inputselect">Pricing Type</label>
-                                             <select class="form-control input-sm m-bot15" id="pricing_type_inputselect" name="pricing_type_inputselect">
-                                                <!-- <option disabled class="required" value="">- Select -</option>
+															</select>
+														</div>
+														<div class="col-lg-2 col-md-2 col-sm-2">
+															<label class="control-label"
+																for="pricing_type_inputselect">Pricing Type</label> <select
+																class="form-control input-sm m-bot15"
+																id="pricing_type_inputselect"
+																name="pricing_type_inputselect">
+																<!-- <option disabled class="required" value="">- Select -</option>
                                                 <option selected id="pricing_type_inputselect1" name="pricing_type_inputselect1" value="Long-Term">LongTerm</option>
                                                 <option id="pricing_type_inputselect2" name="pricing_type_inputselect2" value="Promotion">Promotion</option> -->
-                                             </select>
-                                          </div>
-										 <div class="col-lg-2 col-sm-2">
-                                             <label class="control-label" for="payto_inputselect">Pay To</label>
-                                             <select class="form-control input-sm m-bot15" id="payto_inputselect" name="payto_inputselect">
-<!--                                                 <option disabled class="required" value="">- Select -</option>
+															</select>
+														</div>
+														<div class="col-lg-2 col-sm-2">
+															<label class="control-label" for="payto_inputselect">Pay
+																To</label> <select class="form-control input-sm m-bot15"
+																id="payto_inputselect" name="payto_inputselect">
+																<!--                                                 <option disabled class="required" value="">- Select -</option>
                                                 <option selected id="payout_freq_annually" value="22031" name="payto_inputselect">22031</option> -->
-                                             </select>
-                                          </div>
-                                          <!--  <div class="form-group clearfix">
+															</select>
+														</div>
+														<!--  <div class="form-group clearfix">
                                             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-8">
                                                 <label class="control-label" for="amount">Amount</label>
                                                 <input id="amount" name="amount" type="text" class="form-control" value="">
@@ -379,28 +403,34 @@
                                                 </div>
                                              </div> 
                                            </div> -->
-                                        
-                                        
-                                          <div class="col-lg-2 col-sm-2">
-                                            <label class="control-label" for="payment_method_inputselect">Paid Type</label>
-                                                <select class="form-control input-sm m-bot15" id="payment_method_inputselect" name="payment_method_inputselect">
-<!--                                                    <option disabled class="required" value="">- Select -</option>
+
+
+														<div class="col-lg-2 col-sm-2">
+															<label class="control-label"
+																for="payment_method_inputselect">Paid Type</label> <select
+																class="form-control input-sm m-bot15"
+																id="payment_method_inputselect"
+																name="payment_method_inputselect">
+																<!--                                                    <option disabled class="required" value="">- Select -</option>
                                                    <option id="payment_method_inputselect1" value="Credit">CR Memo</option>
                                                    <option selected id="payment_method_inputselect2" value="Check">Check</option> -->
-                                                </select>
-                                          </div>
-                                          <div class="col-lg-4 col-sm-4">
-                                              <label class="control-label" for="paid_basedon_inputselect">Paid Based On</label>
-                                              <select class="form-control input-sm m-bot15" id="paid_basedon_inputselect" name="paid_basedon_inputselect">
-                                                 <!--  <option disabled class="" value="">- Select -</option>
+															</select>
+														</div>
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label"
+																for="paid_basedon_inputselect">Paid Based On</label> <select
+																class="form-control input-sm m-bot15"
+																id="paid_basedon_inputselect"
+																name="paid_basedon_inputselect">
+																<!--  <option disabled class="" value="">- Select -</option>
                                                   <option id="bonusable_units_only_plus_nadunits_inputselect" value="Bonusable Units Only + NAD Units">Bonusable Units Only + NAD Units</option>
                                                   <option id="all_units_sold_plus_nad_units_inputselect" value="All Units Sold + NAD Units">All Units Sold + NAD Units</option>
                                                   <option selected id="bonusable_units_only_inputselect" value="Bonusable Units Only">Bonusable Units Only</option>
                                                   <option id="nad_units_inputselect" value="NAD Units" name="nad_units">NAD Units</option> -->
-                                              </select>
-                                        </div>
-                                      </div>
-                                      <!-- END ROW 3 -->
+															</select>
+														</div>
+													</div>
+													<!-- END ROW 3 -->
 													<div class="row">
 														<div class="form-group">
 															<div class="col-lg-8 col-md-8 col-sm-8">
@@ -494,8 +524,8 @@
 																		<label class="control-label" for="inputSuccess">
 																			<input type="radio" name="optionsRadiosTier"
 																			id="optionsRadiosTierYes" value="Yes"
-																			class="radio-inline required m-bot15" rel="txtTooltip"
-																			checked="checked"> Yes
+																			class="radio-inline required m-bot15"
+																			rel="txtTooltip" checked="checked"> Yes
 																		</label>
 																	</div>
 																	<div class="radio-inline">
@@ -514,8 +544,9 @@
 																		<label class="control-label" for="inputSuccess">
 																			<input type="radio" name="optionsRadiosTrueUp"
 																			id="optionsRadiosTrueUpYes" value="Yes"
-																			class="radio-inline required m-bot15" checked="checked"
-																			style="padding-top: 20px;"> Yes
+																			class="radio-inline required m-bot15"
+																			checked="checked" style="padding-top: 20px;">
+																			Yes
 																		</label>
 																	</div>
 																	<div class="radio-inline">
@@ -531,7 +562,8 @@
 																	id="amountdiv">
 																	<label class="control-label" for="amount">Amount</label>&nbsp;&nbsp;
 																	<input id="amount" name="amount" type="text"
-																		class="form-control m-bot15" style="width: 80px;" value="">
+																		class="form-control m-bot15" style="width: 80px;"
+																		value="">
 																	<div class="radio-inline">
 																		<label class="control-label"
 																			for="optionsRadiosDenomination"> <input
@@ -546,8 +578,8 @@
 																			for="optionsRadiosDenomination"> <input
 																			type="radio" name="optionsRadiosDenomination"
 																			id="optionsRadiosDollarSign" value="$"
-																			class="radio-inline required m-bot15" checked="checked">
-																			$
+																			class="radio-inline required m-bot15"
+																			checked="checked"> $
 																		</label>
 																	</div>
 																</div>
@@ -665,7 +697,8 @@
 																<!-- END Achieve -->
 																<div class="form-group">
 																	<div id="program-tier"
-																		class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right" style="margin-top: -8%;">
+																		class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right"
+																		style="margin-top: -8%;">
 																		<div class="adv-table editable-table">
 
 																			<h4 class="tableHeader">Program Schedules</h4>
@@ -675,7 +708,7 @@
 																					class="table table-striped table-hover table-bordered"
 																					id="tier-schedule">
 																					<thead>
-																						<tr class>
+																						<tr>
 																							<td colspan="5" class="zeroborders text-left"><label
 																								class="control-label" for="inputSuccess">Amount
 																									Type</label>&nbsp;&nbsp;
@@ -748,268 +781,303 @@
 														</div>
 													</div>
 													<!-- END ROW 8 -->
-													
-															<!---- START Submit -->
-															<div class="clearfix"></div>
-															<div id="footer-button" class="modal-footer"
-																hidden="true">
-																<a id="cancelLink" href="/SIM/customer?custId=">
-																	<button id="cancel-program" data-dismiss="modal"
-																		class="btn btn-default" type="button">Cancel</button>
-																</a> &nbsp; <a class="btn btn-success" id="submit-program"
-																	href="javascript: validateBeforeSubmit('#myModal')"><i
-																	class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
-																	Approval
-																	</button></a>&nbsp; <a class="btn btn-info finish" id="save-program"
-																	href="javascript: validateBeforeSubmit('#myModal1')"><i
-																	class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a> <a
-																	class="btn btn-info" id="reject-program"
-																	data-toggle="modal" href="#myModal8"><i
-																	class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a>
-																&nbsp; <a class="btn btn-success finish"
-																	id="approve-program" data-toggle="modal"
-																	href="#myModal7"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve
-																	</button></a>&nbsp;
-																<div class="space15">&nbsp;</div>
-																<div class="text-center">If you want to save these
-																	changes for later, click 'Save Changes'. If you want to
-																	submit these changes, click "Submit For Approval". If
-																	you don't want to save your changes, click the "Cancel"
-																	button below and your program will not save these
-																	changes.</div>
-																<div class="space15"></div>
-																<!-- Modal -->
-																<div class="modal fade" id="myModal" tabindex="-1"
-																	role="dialog" aria-labelledby="myModalLabel"
-																	aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<button id="program-submit-modal-close"
-																					type="button" class="close" data-dismiss="modal"
-																					aria-hidden="true">&times;</button>
-																				<h4 class="modal-title">Submit for Approval?</h4>
-																			</div>
-																			<div class="modal-body">
-																				<div class="space15">&nbsp;</div>
-																				<div class="text-center">Are you sure you want
-																					to Submit for approval? If you still want to submit
-																					for approval, click the OK button. If you don't
-																					want to submit, click the "Cancel" button below and
-																					your program will not be submitted.</div>
-																				<div class="space15"></div>
-																			</div>
-																			<div class="modal-footer">
-																				<button id="program-submit-modal-cancel"
-																					data-dismiss="modal" class="btn btn-default"
-																					type="button">Cancel</button>
-																				<a href="javascript: submitForApproval()"><button
-																						id="program-submit-modal-ok" class="btn btn-info"
-																						type="button">
-																						<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																					</button></a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-																<div class="modal fade" id="myModal1" tabindex="-1"
-																	role="dialog" aria-labelledby="myModalLabel"
-																	aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<button id="program-save-modal-close" type="button"
-																					class="close" data-dismiss="modal"
-																					aria-hidden="true">&times;</button>
-																				<h4 class="modal-title">Save Program Changes?</h4>
-																			</div>
-																			<div class="modal-body">
-																				<div class="space15">&nbsp;</div>
-																				<div class="text-center">Are you sure you want
-																					to Save Changes? If you still want to save your
-																					changes, click the OK button. If you don't want to
-																					save your changes, click the "Cancel" button below
-																					and your program will not save these changes.</div>
-																				<div class="space15"></div>
-																			</div>
-																			<div class="modal-footer">
-																				<button data-dismiss="modal" class="btn btn-default"
-																					id="program-save-modal-cancel" type="button">Cancel</button>
-																				<a href="javascript: saveDraft()"><button
-																						class="btn btn-info" id="program-save-modal-ok"
-																						type="button">
-																						<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																					</button></a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-																<div class="modal fade" id="myModal4" tabindex="-1"
-																	role="dialog" aria-labelledby="myModalLabel"
-																	aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<button id="program-confirmation-modal-close"
-																					type="button" class="close" data-dismiss="modal"
-																					aria-hidden="true">&times;</button>
-																				<h4 class="modal-title">Confirmation</h4>
-																			</div>
-																			<div class="modal-body">
-																				<!-- <div class="space15">&nbsp;</div> -->
-																				<div class="text-center">
-																					<span id="confirmMessage"></span>
-																				</div>
-																				<!-- <div class="space15"></div> -->
-																			</div>
-																			<div class="modal-footer">
-																				<button class="btn btn-info" type="button"
-																					id="program-confirmation-modal-ok"
-																					data-toggle="modal" href="#myModal4">
-																					<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																				</button>
-																			</div>
-																		</div>
-																	</div>
-																</div>
 
-																<div class="modal fade" id="myModal5" tabindex="-1"
-																	role="dialog" aria-labelledby="myModalLabel"
-																	aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<button id="program-error-modal-close" type="button"
-																					class="close" data-dismiss="modal"
-																					aria-hidden="true">&times;</button>
-																				<h4 class="modal-title">Error / Warning (s)</h4>
-																			</div>
-																			<div class="modal-body">
-																				<!-- <div class="space15">&nbsp;</div> -->
-																				<div class="text-center">
-																					<span id="errorMessageModal"></span>
-																				</div>
-																				<!-- <div class="space15"></div> -->
-																			</div>
-																			<div class="modal-footer">
-																				<button class="btn btn-info" type="button"
-																					id="program-error-modal-ok" data-toggle="modal"
-																					href="#myModal5">
-																					<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																				</button>
-																			</div>
-																		</div>
+													<!---- START Submit -->
+													<div class="clearfix"></div>
+													<div id="footer-button" class="modal-footer" hidden="true">
+														<a id="cancelLink" href="/SIM/customer?custId=">
+															<button id="cancel-program" data-dismiss="modal"
+																class="btn btn-default" type="button">Cancel</button>
+														</a> &nbsp; <a class="btn btn-success" id="submit-program"
+															href="javascript: validateBeforeSubmit('#myModal')"><i
+															class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
+															Approval
+														</a>&nbsp; 
+														<a class="btn btn-info finish" id="save-program"
+															href="javascript: validateBeforeSubmit('#myModal1')"><i
+															class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a> <a
+															class="btn btn-info" id="reject-program"
+															data-toggle="modal" href="#myModal8"><i
+															class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject 
+														</a> &nbsp;
+														<a class="btn btn-success finish" id="approve-program"
+															data-toggle="modal" href="#myModal7"><i
+															class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve
+														</a>&nbsp;
+														<div class="space15">&nbsp;</div>
+														<div class="text-center">If you want to save these
+															changes for later, click 'Save Changes'. If you want to
+															submit these changes, click "Submit For Approval". If you
+															don't want to save your changes, click the "Cancel"
+															button below and your program will not save these
+															changes.</div>
+														<div class="space15"></div>
+														<!-- Modal -->
+														<div class="modal fade" id="myModal" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-submit-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Submit for Approval?</h4>
+																	</div>
+																	<div class="modal-body">
+																		<div class="space15">&nbsp;</div>
+																		<div class="text-center">Are you sure you want
+																			to Submit for approval? If you still want to submit
+																			for approval, click the OK button. If you don't want
+																			to submit, click the "Cancel" button below and your
+																			program will not be submitted.</div>
+																		<div class="space15"></div>
+																	</div>
+																	<div class="modal-footer">
+																		<button id="program-submit-modal-cancel"
+																			data-dismiss="modal" class="btn btn-default"
+																			type="button">Cancel</button>
+																		<a href="javascript: submitForApproval()"><button
+																				id="program-submit-modal-ok" class="btn btn-info"
+																				type="button">
+																				<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																			</button></a>
 																	</div>
 																</div>
-
-																<div class="modal fade" id="myModal6" tabindex="-1"
-																	role="dialog" aria-labelledby="myModalLabel"
-																	aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<button id="program-info-modal-close" type="button"
-																					class="close" data-dismiss="modal"
-																					aria-hidden="true">&times;</button>
-																				<h4 class="modal-title">Information</h4>
-																			</div>
-																			<div class="modal-body">
-																				<!-- <div class="space15">&nbsp;</div> -->
-																				<div class="text-center">
-																					<span id="informationMessageModal"></span>
-																				</div>
-																				<!-- <div class="space15"></div> -->
-																			</div>
-																			<div class="modal-footer">
-																				<button class="btn btn-info" type="button"
-																					id="program-info-modal-ok" data-toggle="modal"
-																					href="#myModal6">
-																					<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																				</button>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="modal fade" id="myModal7" tabindex="-1"
-																	role="dialog" aria-labelledby="myModalLabel"
-																	aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<button id="program-comment-modal-close"
-																					type="button" class="close" data-dismiss="modal"
-																					aria-hidden="true">&times;</button>
-																				<h4 class="modal-title">Confirmation</h4>
-																			</div>
-																			<div class="modal-body">
-																				<div class="row">
-																					<div class="col-lg-12">
-																						<div class="text-left">
-																							<label class="control-label;text-align: center;"
-																								for="approveComments">Please enter
-																								comments: </label>
-																						</div>
-																						<textarea maxlength="2000" id="approveComments"
-																							name="approveComments" class="form-control"></textarea>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="modal-footer">
-																				<button data-dismiss="modal" class="btn btn-default"
-																					id="program-comment-modal-cancel" type="button">Cancel</button>
-																				<a href="javascript: approveProgram()"><button
-																						class="btn btn-info" type="button"
-																						id="program-comment-modal-ok">
-																						<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																					</button> </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
-																<div class="modal fade" id="myModal8" tabindex="-1"
-																	role="dialog" aria-labelledby="myModalLabel"
-																	aria-hidden="true">
-																	<div class="modal-dialog">
-																		<div class="modal-content">
-																			<div class="modal-header">
-																				<button id="program-rej-comment-modal-close"
-																					type="button" class="close" data-dismiss="modal"
-																					aria-hidden="true">&times;</button>
-																				<h4 class="modal-title">Confirmation</h4>
-																			</div>
-																			<div class="modal-body">
-																				<div class="row">
-																					<div class="col-lg-12">
-																						<div class="text-left">
-																							<label class="control-label;text-align: center;"
-																								for="rejectionComments">Please enter
-																								comments: </label>
-																						</div>
-																						<textarea maxlength="2000" id="rejectionComments"
-																							name="rejectionComments" class="form-control"></textarea>
-																					</div>
-																				</div>
-																			</div>
-																			<div class="modal-footer">
-																				<button data-dismiss="modal" class="btn btn-default"
-																					id="program-rej-comment-modal-cancel" type="button">Cancel</button>
-																				<a href="javascript: rejectProgram()"><button
-																						class="btn btn-info" type="button"
-																						id="program-rej-comment-modal-ok">
-																						<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																					</button> </a>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-
 															</div>
-
-
 														</div>
-													</div></section>
+														<div class="modal fade" id="myModal1" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-save-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Save Program Changes?</h4>
+																	</div>
+																	<div class="modal-body">
+																		<div class="space15">&nbsp;</div>
+																		<div class="text-center">Are you sure you want
+																			to Save Changes? If you still want to save your
+																			changes, click the OK button. If you don't want to
+																			save your changes, click the "Cancel" button below
+																			and your program will not save these changes.</div>
+																		<div class="space15"></div>
+																	</div>
+																	<div class="modal-footer">
+																		<button data-dismiss="modal" class="btn btn-default"
+																			id="program-save-modal-cancel" type="button">Cancel</button>
+																		<a href="javascript: saveDraft()"><button
+																				class="btn btn-info" id="program-save-modal-ok"
+																				type="button">
+																				<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																			</button></a>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="modal fade" id="myModal4" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-confirmation-modal-close"
+																			type="button" class="close" data-dismiss="modal"
+																			aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Confirmation</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="confirmMessage"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-confirmation-modal-ok"
+																			data-toggle="modal" href="#myModal4">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="modal fade" id="myModal5" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-error-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Error / Warning (s)</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="errorMessageModal"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-error-modal-ok" data-toggle="modal"
+																			href="#myModal5">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="modal fade" id="myModal6" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-info-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Information</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="informationMessageModal"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-info-modal-ok" data-toggle="modal"
+																			href="#myModal6">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="modal fade" id="myModal7" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-comment-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Confirmation</h4>
+																	</div>
+																	<div class="modal-body">
+																		<div class="row">
+																			<div class="col-lg-12">
+																				<div class="text-left">
+																					<label class="control-label;text-align: center;"
+																						for="approveComments">Please enter
+																						comments: </label>
+																				</div>
+																				<textarea maxlength="2000" id="approveComments"
+																					name="approveComments" class="form-control"></textarea>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="modal-footer">
+																		<button data-dismiss="modal" class="btn btn-default"
+																			id="program-comment-modal-cancel" type="button">Cancel</button>
+																		<a href="javascript: approveProgram()"><button
+																				class="btn btn-info" type="button"
+																				id="program-comment-modal-ok">
+																				<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																			</button> </a>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="modal fade" id="myModal8" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-rej-comment-modal-close"
+																			type="button" class="close" data-dismiss="modal"
+																			aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Confirmation</h4>
+																	</div>
+																	<div class="modal-body">
+																		<div class="row">
+																			<div class="col-lg-12">
+																				<div class="text-left">
+																					<label class="control-label;text-align: center;"
+																						for="rejectionComments">Please enter
+																						comments: </label>
+																				</div>
+																				<textarea maxlength="2000" id="rejectionComments"
+																					name="rejectionComments" class="form-control"></textarea>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="modal-footer">
+																		<button data-dismiss="modal" class="btn btn-default"
+																			id="program-rej-comment-modal-cancel" type="button">Cancel</button>
+																		<a href="javascript: rejectProgram()"><button
+																				class="btn btn-info" type="button"
+																				id="program-rej-comment-modal-ok">
+																				<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																			</button> </a>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="modal fade" id="myModal9" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-workflow-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Workflow status</h4>
+																	</div>
+																	<div class="modal-body">
+																		<div class="read_only">
+																			<table
+																				class="table table-striped table-hover table-bordered"
+																				id="workflow-status-table">
+																				<thead>
+																					<tr>
+																						<th class="text-center">Approver Name</th>
+																						<th class="text-center">Approver Role</th>
+																						<th class="text-center">Action</th>
+																						<th class="text-center">Date</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-workflow-ok" data-dismiss="modal">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+
+												</div>
+											</div>
+											</section>
       <!---- END Review / Confirm Section -->
       </div>
        </form>
@@ -1194,7 +1262,22 @@
              EditableTable.init();
          });
       </script>
- <!--Tooltips -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+            $('#workflow-status-table').dataTable({
+            	"iDisplayLength": 50,
+            	"sPaginationType": "bootstrap",
+            	"sDom": 't',
+				"aoColumns": [
+					{ "sClass": "text-left" },
+					{ "sClass": "text-left" },
+					{ "sClass": "text-left" },
+					{ "sClass": "center" }
+				]
+            });
+		});	
+	</script>
+	<!--Tooltips -->
        <script>
             $(document).ready(function(){
                 $('input[rel="txtTooltip"]').tooltip();
@@ -1427,6 +1510,8 @@
                	/**Commentary/ Special instructions*/
                	$("#userComments").val(response.data.programDetailList[0].comments);
                	
+               	fnPopulateProgramWorkflowStatus(response.data.programWorkflowStatusList);
+               	
                	if(programId != null){
                	
                		/**By calling the below method, all the fields, button and hyperlink will be disabled.
@@ -1575,6 +1660,19 @@
                 }
          	}
          	
+         	function fnPopulateProgramWorkflowStatus(workflowStatus){
+         		var table = $("#workflow-status-table").DataTable();
+         		if(workflowStatus != null){
+         			$.each(workflowStatus, function(idx, item) {
+         					var date = null;
+         					if(item.approvalDate != null){
+         						date = $.datepicker.formatDate( "mm/dd/yy", new Date(item.approvalDate));
+         					}
+							table.fnAddData([item.approverName, item.approverRole, item.status, date
+	                    ]);
+	                });
+         		}
+         	}
          	
          	function fnPopulatePaidDetails(response){
 				fnPopulateTextArea(response.data.programDetailList[0].programPaidOn.includedMap, 'include');
@@ -1685,17 +1783,16 @@
 				$('#myModal4').find('button').attr('disabled',false);
 				$('#myModal7').find('button, a, textarea').attr('disabled',false);
 				$('#myModal8').find('button, a, textarea').attr('disabled',false);
+				$('#myModal9').find('button, a, textarea').attr('disabled',false);
 				$('#header-button').removeAttr('hidden');
 				$('#footer-button').removeAttr('hidden');
 			}
 			
 			function approveProgram(){
-				if(responseOnload.programButton.userLevel == "2"){
-					responseOnload.status = "2";
-				}
-				else{
-					responseOnload.status = "4";
-				}
+				/**Approve program from here will always carry status as Pending,
+				In service, after checking the approver level from matrix table, this will be
+				changed to Approved if applicable.*/
+				responseOnload.status = "2";
 				responseOnload.url = window.location.href;
 				responseOnload.userComments = $("#approveComments").val();
 				fnCallService();
@@ -1849,7 +1946,7 @@
 			});
 		});
 	</script>
-
+	
 	<!-- END JAVASCRIPTS -->
        
    </body>

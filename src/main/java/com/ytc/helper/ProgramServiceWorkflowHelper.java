@@ -1,10 +1,14 @@
 package com.ytc.helper;
 
+import java.util.Collections;
+import java.util.List;
+
+import com.ytc.common.comparator.WorkflowStatusComparatorByModifiedDate;
 import com.ytc.common.enums.ConsumerProgramStatusEnum;
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramHeader;
-import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.model.DalProgramDetail;
+import com.ytc.dal.model.DalWorkflowStatus;
 
 public class ProgramServiceWorkflowHelper {
 
@@ -74,12 +78,24 @@ public class ProgramServiceWorkflowHelper {
 		programHeader.getProgramButton().setApprover(false);
 		
 		if(employee.getEMP_ID() != null){
-			if(dalProgramDetail.getZmAppById() != null && (employee.getEMP_ID().equals(dalProgramDetail.getZmAppById().getId())) ){
+			
+			if(dalProgramDetail.getDalWorkflowStatusList() != null){
+				List<DalWorkflowStatus> dalWorkflowStatusList =  dalProgramDetail.getDalWorkflowStatusList(); 
+				Collections.sort(dalWorkflowStatusList, new WorkflowStatusComparatorByModifiedDate());
+				int size = dalWorkflowStatusList.size();
+				DalWorkflowStatus dalWorkflowStatus = dalWorkflowStatusList.get(size-1);
+				
+				if(dalWorkflowStatus.getApprover() != null && (employee.getEMP_ID().equals(dalWorkflowStatus.getApprover().getId()))){
+					programHeader.getProgramButton().setApprover(true);
+				}
+			}
+			
+/*			if(dalProgramDetail.getZmAppById() != null && (employee.getEMP_ID().equals(dalProgramDetail.getZmAppById().getId())) ){
 				programHeader.getProgramButton().setUserLevel(ProgramConstant.USER_LEVEL_2);
 				if(dalProgramDetail.getZmAppDate() == null){
 					programHeader.getProgramButton().setApprover(true);	
 				}
-				/** Hard coded below value is not correct. This should be dynamic. For now, hard coding this value.*/
+				*//** Hard coded below value is not correct. This should be dynamic. For now, hard coding this value.*//*
 				else if(dalProgramDetail.getZmAppStatus() != null && ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType())){//PENDING
 					programHeader.getProgramButton().setApprover(true);
 				}
@@ -89,7 +105,7 @@ public class ProgramServiceWorkflowHelper {
 				if(dalProgramDetail.getZmAppStatus() != null && ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType())){//APPROVED
 					programHeader.getProgramButton().setApprover(true);
 				}
-			}
+			}*/
 		}
 		
 	}

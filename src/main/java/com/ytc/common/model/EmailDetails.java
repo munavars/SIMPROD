@@ -13,6 +13,8 @@ public class EmailDetails {
 	private String subject;
 	private String text;
 	private List<String> ccAddress;
+	
+	private StringBuilder toNames;
 	public String getHost() {
 		return host;
 	}
@@ -66,5 +68,11 @@ public class EmailDetails {
 	}
 	public void setCcAddress(List<String> ccAddress) {
 		this.ccAddress = ccAddress;
+	}
+	public StringBuilder getToNames() {
+		return toNames;
+	}
+	public void setToNames(StringBuilder toNames) {
+		this.toNames = toNames;
 	}
 }

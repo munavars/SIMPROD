@@ -24,6 +24,7 @@ public class ProgramConstant {
 	public static final String CALCULATED_PROGRAM_TYPE = "CALCULATED PROGRAM";
 	public static final String DDF_PROGRAM_TYPE = "DDF";
 	public static final String COOP_PROGRAM_TYPE = "COOP";
+
 	
 	public static final String USER_LEVEL_1 = "1";
 	public static final String USER_LEVEL_2 = "2";
@@ -36,4 +37,11 @@ public class ProgramConstant {
 	public static final Integer EMP_HIERARCHY_5 = 5;
 	
 	public static final String PROGRAM_DESCRIPTION_NOT_FOUND = "Program Description not available";
+	
+	public static final String FORWARD_SLASH = "/";
+	public static final String NO_LIMIT = "No Limit";
+	
+	public static final String OPERATOR_GE = ">=";
+	public static final String OPERATOR_LE = "<=";
+	
 }

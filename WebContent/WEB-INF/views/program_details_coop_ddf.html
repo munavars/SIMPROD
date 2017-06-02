@@ -228,7 +228,13 @@
                                     <li>Executive Approved Date: <span id="executiveApprovedDate"</li> -->
                                     <li>TBP Approved By: <span id="tbpApprovedBy"></span> </li>
                                     <li>TBP Approved Date: <span id="tbpApprovedDate"></span> </li>
-                                    <li>Status: <span id="status"></span> </li>
+                                    <li>Status: <span id="status"></span> 
+                                    
+										<a id="view-program-workflow" data-toggle="modal" href="#myModal9">
+                               			<button id="program-workflow-btn" type="button" class="btn btn-default btn-xs">
+                               			<i class="fa fa-list-alt" aria-hidden="true"></i> </button> </a>
+                                    
+                                    </li>
 
                                  </ul>
                                 </div>
@@ -239,7 +245,7 @@
                                     <li>Balance: <span class="text-right" id="balance">$ </span></li>
                                  </ul>
                               </div>
-                                                           <table class="table table-striped table-hover table-bordered" id="editabletest">
+                          <table class="table table-striped table-hover table-bordered" id="editabletest">
 							<thead>
                               <tr class="rowvis" style="background-color: #cacbce;">
                                 <th>Pgm ID</th>
@@ -499,10 +505,10 @@
             
 		      <a id="cancelLink" href="/SIM/customer?custId=">
 		      <button id="cancel-program" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
-              <a class="btn btn-success" id="submit-program" href="javascript: validateBeforeSubmit('#myModal')" ><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>&nbsp;	  
+              <a class="btn btn-success" id="submit-program" href="javascript: validateBeforeSubmit('#myModal')" ><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</a>&nbsp;	  
               <a class="btn btn-info finish" id="save-program"  href="javascript: validateBeforeSubmit('#myModal1')"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
               <a class="btn btn-info" id="reject-program" data-toggle="modal" href="#myModal7"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a> &nbsp;
-			  <a class="btn btn-success finish" id="approve-program" data-toggle="modal" href="#myModal6"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve</button></a>&nbsp;
+			  <a class="btn btn-success finish" id="approve-program" data-toggle="modal" href="#myModal6"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Approve</a>&nbsp;
               
               <!-- Modal -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -689,8 +695,45 @@
 						</div>
 					</div>
 				</div>
-			              
-			<div class="space15">&nbsp;</div>
+																<div class="modal fade" id="myModal9" tabindex="-1"
+																	role="dialog" aria-labelledby="myModalLabel"
+																	aria-hidden="true">
+																	<div class="modal-dialog">
+																		<div class="modal-content">
+																			<div class="modal-header">
+																				<button id="program-workflow-close" type="button"
+																					class="close" data-dismiss="modal"
+																					aria-hidden="true">&times;</button>
+																				<h4 class="modal-title">Workflow status</h4>
+																			</div>
+																			<div class="modal-body">
+																				<div class="read_only">
+																					<table
+																						class="table table-striped table-hover table-bordered"
+																						id="workflow-status-table">
+																						<thead>
+																							<tr>
+																								<th class="text-center">Approver Name</th>
+																								<th class="text-center">Approver Role</th>
+																								<th class="text-center">Action</th>
+																								<th class="text-center">Date</th>
+																							</tr>
+																						</thead>
+																						<tbody>
+																						</tbody>
+																					</table>
+																				</div>
+																			</div>
+																			<div class="modal-footer">
+																				<button class="btn btn-info" type="button"
+																					id="program-workflow-ok" data-dismiss="modal">
+																					<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																				</button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<div class="space15">&nbsp;</div>
 			<div class="text-center"> If you want to save these changes for later, click 'Save Changes'. If you want to submit these changes, click "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
 			<div class="space15"></div>
 			
@@ -883,6 +926,22 @@
 
         });
        </script>
+       
+     <script type="text/javascript">
+		$(document).ready(function(){
+            $('#workflow-status-table').dataTable({
+            	"iDisplayLength": 50,
+            	"sPaginationType": "bootstrap",
+            	"sDom": 't',
+				"aoColumns": [
+					{ "sClass": "text-left" },
+					{ "sClass": "text-left" },
+					{ "sClass": "text-left" },
+					{ "sClass": "center" }
+				]
+            });
+		});	
+	</script>
     
     <!-- Inline javascript to set the user name from model attribute Begin -->
 	<script type="text/javascript" th:inline="javascript">
@@ -1040,6 +1099,8 @@
                 /**Commentary/ Special instructions*/
                	$("#userComments").val(response.data.programDetailList[0].comments);
                
+               	/**WORKFLOW related information*/
+                fnPopulateProgramWorkflowStatus(response.data.programWorkflowStatusList);
                 /* Field enable and disable logic during page load.*/
                	if(programId != null){
                	
@@ -1057,6 +1118,21 @@
                	fnPopulateProgramDetailTable();
                	
                	enabledButtonApplicableToAll();
+         	}
+         	
+         	function fnPopulateProgramWorkflowStatus(workflowStatus){
+         		var table = $("#workflow-status-table").DataTable();
+         		if(workflowStatus != null){
+         			$.each(workflowStatus, function(idx, item) {
+         					var date = null;
+         					if(item.approvalDate != null){
+         						date = $.datepicker.formatDate( "mm/dd/yy", new Date(item.approvalDate));
+         					}
+							table.fnAddData([item.approverName, item.approverRole, item.status, date
+	                    ]);
+	                });
+         		}
+         		table.fnDraw();
          	}
          	
 			function hideShowButtonsOnLoad(responseOnload1){
@@ -1253,17 +1329,16 @@
 				$('#myModal5').find('button').attr('disabled',false);
 				$('#myModal6').find('button, a, textarea').attr('disabled',false);
 				$('#myModal7').find('button, a, textarea').attr('disabled',false);
+				$('#myModal9').find('button, a, textarea').attr('disabled',false);
 				$('#header-button').removeAttr('hidden');
 				$('#footer-button').removeAttr('hidden');
+				$('#view-program-workflow').attr('disabled', false);
+				$('#view-program-workflow').removeClass("disabled");
+				$('#program-workflow-btn').attr('disabled', false);
 			}
 			
 			function approveProgram(){
-				if(responseOnload.programButton.userLevel == "2"){
-					responseOnload.status = "2";
-				}
-				else{
-					responseOnload.status = "4";
-				}
+				responseOnload.status = "2";
 				responseOnload.userComments = $("#approveComments").val();
 				responseOnload.url = window.location.href;
 				fnCallService();

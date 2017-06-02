@@ -13,6 +13,7 @@ import java.util.Set;
 import com.ytc.common.model.ProgramAchieveOn;
 import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.constant.ProgramConstant;
+import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
 
@@ -287,5 +288,18 @@ public class ProgramServiceHelper {
 
 		}
 		return deletedValueForTagId;
+	}
+	
+	/**
+	 * Method to get the first name  and last name concatenated.
+	 * @param dalEmployee dalEmployee
+	 * @return String i.e, first name and last name.
+	 */
+	public static String getName(DalEmployee dalEmployee){
+		String name = null;
+		if(dalEmployee != null){
+			name = dalEmployee.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalEmployee.getLAST_NAME();
+		}
+		return name;
 	}
 }

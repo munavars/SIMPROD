@@ -30,6 +30,8 @@ public class DalWorkflowStatus extends DalAuditableModel{
 	private String decisionMade;
 
 	private DalEmployee approver;
+	
+	private Integer wfMatrixId;
 
 	@ManyToOne
 	@JoinColumn(name= "PGM_DETAIL_ID", referencedColumnName = "ID")
@@ -87,4 +89,13 @@ public class DalWorkflowStatus extends DalAuditableModel{
 	public void setApprover(DalEmployee approver) {
 		this.approver = approver;
 	}
+
+	@Column(name = "WF_MATRIX_ID")
+	public Integer getWfMatrixId() {
+		return wfMatrixId;
+	}
+
+	public void setWfMatrixId(Integer wfMatrixId) {
+		this.wfMatrixId = wfMatrixId;
+	}	
 }

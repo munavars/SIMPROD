@@ -23,6 +23,7 @@ import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramInputParam;
 import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.common.model.ProgramTierDetail;
+import com.ytc.common.model.ProgramWorkflowStatus;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
@@ -30,6 +31,7 @@ import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalEmployeeHierarchy;
+import com.ytc.dal.model.DalEmployeeTitle;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
@@ -41,6 +43,7 @@ import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalTagItems;
+import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.helper.ProgramServiceWorkflowHelper;
 import com.ytc.service.IProgramService;
@@ -167,9 +170,28 @@ public class ProgramServiceImpl implements IProgramService {
 		/**Comments section*/
 		populateCommentaryData(programHeader, dalProgramDetail);
 		
-/*		if(dalProgramHeader.getStatus() != null && !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramHeader.getStatus().getType())){
-			programHeader.setNewProgram(true);
-		}*/
+		/**populate the workflow status*/
+		populateWorkflowStatusData(programHeader, dalProgramDetail);
+	}
+
+
+	private void populateWorkflowStatusData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+		if(programHeader != null && dalProgramDetail != null){
+			if(dalProgramDetail.getDalWorkflowStatusList() != null && !dalProgramDetail.getDalWorkflowStatusList().isEmpty()){
+				for(DalWorkflowStatus dalWorkflowStatus : dalProgramDetail.getDalWorkflowStatusList()){
+					ProgramWorkflowStatus programWorkflowStatus = new ProgramWorkflowStatus();
+					
+					programWorkflowStatus.setApprovalDate(dalWorkflowStatus.getModifiedDate().getTime());
+					programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
+					programWorkflowStatus.setApproverRole(baseDao.getById(DalEmployeeTitle.class, Integer.valueOf(dalWorkflowStatus.getApprover().getTITLE_ID())).getTitle());
+					programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
+					if(programHeader.getProgramWorkflowStatusList() == null){
+						programHeader.setProgramWorkflowStatusList(new ArrayList<ProgramWorkflowStatus>());
+					}
+					programHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
+				}
+			}
+		}
 	}
 
 
@@ -189,9 +211,6 @@ public class ProgramServiceImpl implements IProgramService {
 		Integer employeeId = null;
 		if(employee != null){
 			employeeId = employee.getEMP_ID();
-		}
-		if(employeeId == null){ // Temporary code, this should be removed after integration testing.
-			employeeId = 47;
 		}
 		DalEmployee emp = baseDao.getById(DalEmployee.class, employeeId); // this should be logged in user.
 		programHeader.setRequestedDate(new Date());
@@ -273,9 +292,13 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		
 		if(dalProgramDetail.getAccuralData() != null){
-			programHeader.setAccrualAmount(new BigDecimal(dalProgramDetail.getAccuralData().getTotalAccuredAmount()));
+			/**Commenting the below lines due to recent changes in ACCRUAL_DATA table.*/
+			/*programHeader.setAccrualAmount(new BigDecimal(dalProgramDetail.getAccuralData().getTotalAccuredAmount()));
 			programHeader.setPaidAmount(new BigDecimal(dalProgramDetail.getAccuralData().getTotalPaidAmount()));
-			programHeader.setBalance(new BigDecimal(dalProgramDetail.getAccuralData().getBalance()));	
+			programHeader.setBalance(new BigDecimal(dalProgramDetail.getAccuralData().getBalance()));	*/
+			programHeader.setAccrualAmount(new BigDecimal(0));
+			programHeader.setPaidAmount(new BigDecimal(0));
+			programHeader.setBalance(new BigDecimal(0));	
 		}
 		else{
 			programHeader.setAccrualAmount(new BigDecimal(0));
@@ -746,10 +769,10 @@ public class ProgramServiceImpl implements IProgramService {
 				}
 			}
 			programDetail.setTierRate(tierRate);
-			programDetail.setAccruedAmount(null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getTotalAccuredAmount()):ProgramConstant.ZERO);
+			programDetail.setAccruedAmount("0");//null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getTotalAccuredAmount()):ProgramConstant.ZERO);
 			programDetail.setCreditAmount(ProgramConstant.ZERO);
-			programDetail.setPayables(null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getTotalPaidAmount()):ProgramConstant.ZERO);
-			programDetail.setGlBalance(null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getBalance()):ProgramConstant.ZERO);
+			programDetail.setPayables("0");//null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getTotalPaidAmount()):ProgramConstant.ZERO);
+			programDetail.setGlBalance("0");//null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getBalance()):ProgramConstant.ZERO);
 			programDetail.setLongDesc(null!=dalProgramDetail.getLongDesc()?dalProgramDetail.getLongDesc():ProgramConstant.PROGRAM_DESCRIPTION_NOT_FOUND);
 			programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
 			//programDetail.setProgramTypeId( dalProgramDetail.getDalProgramType().getId());

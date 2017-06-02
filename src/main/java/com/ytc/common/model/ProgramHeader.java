@@ -51,6 +51,8 @@ public class ProgramHeader extends Model{
 	private ProgramButton programButton = new ProgramButton();
 	private List<ProgramDetail> programDetailList = new ArrayList<ProgramDetail>();
 	
+	private List<ProgramWorkflowStatus> programWorkflowStatusList;
+		
 	public List<ProgramDetail> getProgramDetailList() {
 		return programDetailList;
 	}
@@ -230,5 +232,11 @@ public class ProgramHeader extends Model{
 	}
 	public void setUserComments(String userComments) {
 		this.userComments = userComments;
+	}
+	public List<ProgramWorkflowStatus> getProgramWorkflowStatusList() {
+		return programWorkflowStatusList;
+	}
+	public void setProgramWorkflowStatusList(List<ProgramWorkflowStatus> programWorkflowStatusList) {
+		this.programWorkflowStatusList = programWorkflowStatusList;
 	}
 }

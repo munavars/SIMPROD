@@ -20,7 +20,6 @@ import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
-import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
@@ -34,6 +33,7 @@ import com.ytc.dal.model.DalUserComments;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramEmailService;
+import com.ytc.service.IProgramWorkflowService;
 import com.ytc.service.ServiceContext;
 
 public class ProgramCreateServiceImpl implements IProgramCreateService {
@@ -46,6 +46,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 	
 	@Autowired
 	private IProgramEmailService programEmailService;  
+	
+	@Autowired
+	private IProgramWorkflowService programWorkflowService;
 	
 	@Override
 	@Transactional
@@ -76,8 +79,8 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 				dalProgramHeader.setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
 			}
 		}
-
 		DalProgramDetail dalProgramDetail =  createProgramDetailsData(programHeader);
+		dalProgramDetail.setDalProgramHeader(dalProgramHeader);
 		dalProgramDetail.setStatus(dalProgramHeader.getStatus());
 		setApproverLevelStatus(dalProgramDetail, programHeader, serviceContext.getEmployee());
 		if(dalProgramHeader != null && dalProgramHeader.getDalProgramDetailList() != null){
@@ -150,6 +153,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 	 * @param employee Employee type.
 	 */
 	private void setApproverLevelStatus(DalProgramDetail dalProgramDet, ProgramHeader programHeader, Employee employee) {
+		
+		programWorkflowService.updateWorkflowDetails(dalProgramDet, programHeader, employee);
+/*		
 		List<DalStatus> dalStatusList =  baseDao.getListFromNamedQuery("DalStatus.getAllDetails");
 		if(ProgramConstant.USER_LEVEL_1.equals(programHeader.getProgramButton().getUserLevel())){
 			setApproverIds(dalProgramDet, employee);
@@ -164,9 +170,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 				}
 				dalProgramDet.setZmAppStatus(dalProgramDet.getStatus());
 			}
-		}
+		}*/
 	}
-
+/*
 	private void setApproverIds(DalProgramDetail dalProgramDet, Employee employee) {
 		if(employee != null && dalProgramDet != null){
 			DalEmployeeHierarchy dalEmployeeHierarchy = baseDao.getEntityById(DalEmployeeHierarchy.class, employee.getEMP_ID());
@@ -185,12 +191,12 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 				}
 				else if(ProgramConstant.EMP_HIERARCHY_4 == dalEmployeeHierarchy.getFixedHierLvl()){
 					dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, Integer.valueOf(dalEmployeeHierarchy.getLvl5EmpId())));
-					/**We cannot set tbp app id in this case.*/
+					*//**We cannot set tbp app id in this case.*//*
 				}
-				/** IF employee's fixed hierarchy is 5, then that request cannot have next level approvers. This is a error case*/
+				*//** IF employee's fixed hierarchy is 5, then that request cannot have next level approvers. This is a error case*//*
 			}
 		}
-	}
+	}*/
 
 	private void createProgramTierData(Integer id, ProgramHeader programHeader) {
 		List<ProgramTierDetail> programTierDetailList = programHeader.getProgramDetailList().get(0).getProgramTierDetailList();

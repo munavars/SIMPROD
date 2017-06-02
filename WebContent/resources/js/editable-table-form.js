@@ -154,7 +154,8 @@ var EditableTable = function () {
                     /* Editing this row and want to save it */
                     saveRow(oTable, nEditing);
                     nEditing = null;
-                    alert(" Please click on 'Save Changes' button to permanently  update these changes in database !!!");
+                    $("#informationMessageModal").html("Please click on 'Save Changes' button to permanently  update these changes in database !!!");
+                    $('#myModal6').modal('toggle');
                 } else {
                     /* No edit in progress - let's start one */
                     editRow(oTable, nRow);

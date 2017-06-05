@@ -367,6 +367,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
 				dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));
 			}	
+			if(programDetail.getActualMarker() != null){
+				dalProgramDet.setActualMarker(programDetail.getActualMarker());	
+			}
 		}
 		
 		return dalProgramDet;

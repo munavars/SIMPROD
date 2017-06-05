@@ -311,8 +311,7 @@
                            <form id="wizard-validation-form" name="wizard-validation-form" class="cmxform" action="#">
                               <div>
                                  <section>
-                                    <div class="form-group clearfix">
-
+											<div class="form-group clearfix">
 												<div class="col-lg-12">
 													<h5>Program Details</h5>
 													<div class="row">
@@ -363,9 +362,6 @@
 																(Behind The Line)</label> <select
 																class="form-control input-sm m-bot15"
 																id="btl_inputselect" name="btl_inputselect">
-																<!--                                                 <option disabled class="required" value="">- Select BTL -</option>
-                                                <option id="btl_inputselect_yes" name="btl_inputselect_yes" value="Yes">Yes</option>
-                                                <option id="btl_inputselect_no" name="btl_inputselect_no" value="No">No</option> -->
 															</select>
 														</div>
 														<div class="col-lg-2 col-md-2 col-sm-2">
@@ -374,35 +370,14 @@
 																class="form-control input-sm m-bot15"
 																id="pricing_type_inputselect"
 																name="pricing_type_inputselect">
-																<!-- <option disabled class="required" value="">- Select -</option>
-                                                <option selected id="pricing_type_inputselect1" name="pricing_type_inputselect1" value="Long-Term">LongTerm</option>
-                                                <option id="pricing_type_inputselect2" name="pricing_type_inputselect2" value="Promotion">Promotion</option> -->
 															</select>
 														</div>
 														<div class="col-lg-2 col-sm-2">
 															<label class="control-label" for="payto_inputselect">Pay
 																To</label> <select class="form-control input-sm m-bot15"
-																id="payto_inputselect" name="payto_inputselect">
-																<!--                                                 <option disabled class="required" value="">- Select -</option>
-                                                <option selected id="payout_freq_annually" value="22031" name="payto_inputselect">22031</option> -->
+																id="payto_inputselect" name="payto_inputselect">\
 															</select>
 														</div>
-														<!--  <div class="form-group clearfix">
-                                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-8">
-                                                <label class="control-label" for="amount">Amount</label>
-                                                <input id="amount" name="amount" type="text" class="form-control" value="">
-                                             </div>
-                                             <div class="col-lg-2 col-md-2 col-sm-2">
-                                                <div class="radio-inline accrualtype inline-flex">
-                                                   <label  for="optionsRadiosDenomination">
-                                                   <input type="radio" selected name="optionsRadiosDenomination" id="optionsRadiosPercentage" value="%" class="radio-inline denomination">%</label>  
-                                                </div>
-                                                <div class="radio-inline accrualtype inline-flex">
-                                                   <label class="control-label" for="optionsRadiosDenomination">
-                                                   <input type="radio" name="optionsRadiosDenomination" id="optionsRadiosDollarSign" value="$" class="radio-inline denomination" checked="checked">$</label> 
-                                                </div>
-                                             </div> 
-                                           </div> -->
 
 
 														<div class="col-lg-2 col-sm-2">
@@ -411,9 +386,6 @@
 																class="form-control input-sm m-bot15"
 																id="payment_method_inputselect"
 																name="payment_method_inputselect">
-																<!--                                                    <option disabled class="required" value="">- Select -</option>
-                                                   <option id="payment_method_inputselect1" value="Credit">CR Memo</option>
-                                                   <option selected id="payment_method_inputselect2" value="Check">Check</option> -->
 															</select>
 														</div>
 														<div class="col-lg-4 col-sm-4">
@@ -422,147 +394,127 @@
 																class="form-control input-sm m-bot15"
 																id="paid_basedon_inputselect"
 																name="paid_basedon_inputselect">
-																<!-- <option disabled class="" value="">- Select -</option> -->
-                                                  <!--<option id="bonusable_units_only_plus_nadunits_inputselect" value="Bonusable Units Only + NAD Units">Bonusable Units Only + NAD Units</option>
-                                                  <option id="all_units_sold_plus_nad_units_inputselect" value="All Units Sold + NAD Units">All Units Sold + NAD Units</option>
-                                                  <option selected id="bonusable_units_only_inputselect" value="Bonusable Units Only">Bonusable Units Only</option>
-                                                  <option id="nad_units_inputselect" value="NAD Units" name="nad_units">NAD Units</option> -->
 															</select>
 														</div>
 													</div>
-													<!-- END ROW 3 -->
-													<div class="row">
-														<div class="form-group">
-															<div class="col-lg-8 col-md-8 col-sm-8">
-																<h4>Paid Based On</h4>
-																<div class="table">
-																	<table class="table-responsive">
-																		<tbody>
-																			<tr class="">
-																				<td class="yk-vertalign" rowspan="2"><select
-																					class="paidachieve" name="paidBasedOn"
-																					id="paidBasedOn"
-																					onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
-																				</select>
+												</div>
+												<!-- END ROW 3 & Program Details section-->
 
-																					<div class="form-group last">
-																						<div class="" id="div1">
-																							<script type="text/javascript"
-																								language="JavaScript">
-								                                                             		function prdValue(){
-								                                                               			var el = document.getElementById('div1');
-								                                                                  		el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';
-								                                                                  	}
-								                                                            </script>
-																						</div>
-																					</div></td>
-																				<td class="va-bot">
-																					<div>
-																						<a href="javascript:void(0);"
-																							class="btn btn-default btn-sm m-bot5"
-																							onclick="listbox_moveacross('prdvalue', 'include')">&#62;&#62;</a>
-																						<br /> <a href="javascript:void(0);"
-																							class="btn btn-default btn-sm m-bot5"
-																							onclick="listbox_moveacross('include', 'prdvalue')">&#60;&#60;</a>
-																					</div>
-																				</td>
-																				<td>
-																					<h5 class="paid-achieve">Include</h5>
-																					<div class="paidachieve-padding" id="div2">
-																						<script type="text/javascript"
-																							language="JavaScript">
-										                                                      	function include(){
-										                                                      		var el = document.getElementById('div2');
-										                                                            el.innerHTML = '<select name="include" multiple="multiple" class="multi-select paidachieve_box2" id="include"></select>';
-										
-																								}
-																						</script>
-																					</div>
-																				</td>
-																			</tr>
-																			<tr class="">
-																				<td>
-																					<div>
-																						<a href="javascript:void(0);"
-																							aria-activedescendant=""
-																							class="btn btn-default btn-sm m-bot5"
-																							onclick="listbox_moveacross('prdvalue', 'exclude')">&#62;&#62;</a>
-																						<br /> <a href="javascript:void(0);"
-																							class="btn btn-default btn-sm m-bot5"
-																							onclick="listbox_moveacross('exclude', 'prdvalue')">&#60;&#60;</a>
-																					</div>
-																				</td>
-																				<td>
-																					<h5 class="paid-achieve">Exclude</h5>
-																					<div class="paidachieve-padding" id="div3">
-																						<script type="text/javascript"
-																							language="JavaScript">
-									                                                       function exclude(){
-									                                                       var el = document.getElementById('div3');
-									                                                                 el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select paidachieve_box2" id="exclude"></select>';
-									                                                          }
-									                                                    </script>
-																					</div>
-																				</td>
-																			</tr>
-																		</tbody>
-																	</table>
+												<!-- PAID BASED ON - BEGIN -->
+												<div class="col-lg-12">
+													<div class="form-group">
+														<h4>Paid Based On</h4>
+														<div class="space15 clearfix"></div>
+														<div class="row">
+															<div class="col-lg-3 col-md-3 col-sm-3">
+
+																<select class="paidachieve" name="paidBasedOn"
+																	id="paidBasedOn"
+																	onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+																	<option selected disabled value="select">-- Select --</option>
+																</select>
+
+																<div class="form-group last">
+																	<div class="" id="div1">
+																		<script type="text/javascript" language="JavaScript">
+	                                                             		function prdValue(){
+	                                                               			var el = document.getElementById('div1');
+	                                                                  		el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';
+	                                                                  	}
+																	</script>
+																	</div>
 																</div>
 															</div>
+															<div class="col-lg-1 col-md-1 col-sm-1 center">
+																<div class="m-bot15 m-top45">
+																	<a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('prdvalue', 'include')">&#62;&#62;</a>
+																	<br /> <a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('include', 'prdvalue')">&#60;&#60;</a>
+																</div>
 
-															<!-- END PAID based on -->
-															<div class="form-group">
-																<div
-																	class="col-lg-4 col-md-4 col-sm-4 inline-flex m-top45">
-																	<label class="control-label popovers"
-																		for="inputSuccess"
-																		data-original-title="Customer Details"
-																		data-content="Click on the grey button below to see more info about this customer. Click again to hide it."
-																		data-placement="top" data-trigger="hover">Is
-																		this 'Tiered'?</label>
-																	<div class="radio-inline">
-																		<label class="control-label" for="inputSuccess">
-																			<input type="radio" name="optionsRadiosTier"
-																			id="optionsRadiosTierYes" value="Yes"
-																			class="radio-inline required m-bot15"
-																			rel="txtTooltip" checked="checked"> Yes
-																		</label>
-																	</div>
-																	<div class="radio-inline">
-																		<label class="control-label" for="inputSuccess">
-																			<input type="radio" name="optionsRadiosTier"
-																			id="optionsRadiosTierNo" value="No"
-																			class="radio-inline required m-bot15"> No
-																		</label>
-																	</div>
+																<div class="m-top45">
+																	<a href="javascript:void(0);" aria-activedescendant=""
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('prdvalue', 'exclude')">&#62;&#62;</a>
+																	<br /> <a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('exclude', 'prdvalue')">&#60;&#60;</a>
 																</div>
-																<br> <br> <br>
-																<div class="col-lg-4 col-md-4 col-sm-4 inline-flex">
-																	<label class="control-label" for="inputSuccess">Is
-																		this 'True-up'?</label>
-																	<div class="radio-inline">
-																		<label class="control-label" for="inputSuccess">
-																			<input type="radio" name="optionsRadiosTrueUp"
-																			id="optionsRadiosTrueUpYes" value="Yes"
-																			class="radio-inline required m-bot15"
-																			checked="checked" style="padding-top: 20px;">
-																			Yes
-																		</label>
-																	</div>
-																	<div class="radio-inline">
-																		<label class="control-label" for="inputSuccess">
-																			<input type="radio" name="optionsRadiosTrueUp"
-																			id="optionsRadiosTrueUpNo" value="No"
-																			class="radio-inline required m-bot15"> No
-																		</label>
-																	</div>
+
+															</div>
+															<div class="col-lg-4 col-md-4 col-sm-4">
+
+																<h5 class="paid-achieve">Include</h5>
+																<div class="m-bot15" id="div2">
+																	<script type="text/javascript" language="JavaScript">
+				                                                      	function include(){
+				                                                      		var el = document.getElementById('div2');
+				                                                            el.innerHTML = '<select name="include" multiple="multiple" class="multi-select paidachieve_box2" id="include"></select>';
+				
+																		}
+																</script>
 																</div>
-																<br> <br> <br>
-																<div class="col-lg-4 col-md-4 col-sm-4 inline-flex"
-																	id="amountdiv">
+
+																<h5 class="paid-achieve">Exclude</h5>
+																<div class="" id="div3">
+																	<script type="text/javascript" language="JavaScript">
+			                                                       function exclude(){
+			                                                       var el = document.getElementById('div3');
+			                                                                 el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select paidachieve_box2" id="exclude"></select>';
+			                                                          }
+			                                                    </script>
+																</div>
+
+															</div>
+															<div
+																class="col-lg-4 col-md-4 col-sm-4 inline-flex m-top45">
+																<label class="control-label popovers" for="inputSuccess"
+																	data-original-title="Customer Details"
+																	data-content="Click on the grey button below to see more info about this customer. Click again to hide it."
+																	data-placement="top" data-trigger="hover">Is
+																	this 'Tiered'?</label>
+																<div class="radio-inline">
+																	<label class="control-label" for="inputSuccess">
+																		<input type="radio" name="optionsRadiosTier"
+																		id="optionsRadiosTierYes" value="Yes"
+																		class="radio-inline required m-bot15" rel="txtTooltip"
+																		checked="checked"> Yes
+																	</label>
+																</div>
+																<div class="radio-inline">
+																	<label class="control-label" for="inputSuccess">
+																		<input type="radio" name="optionsRadiosTier"
+																		id="optionsRadiosTierNo" value="No"
+																		class="radio-inline required m-bot15"> No
+																	</label>
+																</div>
+																<br> <label
+																	class="control-label" for="optionsRadiosTrueUp">Is
+																	this 'True-up'?</label>
+																<div class="radio-inline">
+																	<label class="control-label" for="optionsRadiosTrueUpYes">
+																		<input type="radio" name="optionsRadiosTrueUp"
+																		id="optionsRadiosTrueUpYes" value="Yes"
+																		class="radio-inline required m-bot15"
+																		checked="checked">
+																		Yes
+																	</label>
+																</div>
+																<div class="radio-inline">
+																	<label class="control-label" for="optionsRadiosTrueUpNo">
+																		<input type="radio" name="optionsRadiosTrueUp"
+																		id="optionsRadiosTrueUpNo" value="No"
+																		class="radio-inline required m-bot15"> No
+																	</label>
+																</div>
+																<br>
+																<div id="amountdiv">
 																	<label class="control-label" for="amount">Amount</label>&nbsp;&nbsp;
 																	<input id="amount" name="amount" type="text"
-																		class="form-control m-bot15" style="width: 80px;"
+																		class="form-control radio-inline m-bot15" style="width: 80px;"
 																		value="">
 																	<div class="radio-inline">
 																		<label class="control-label"
@@ -570,7 +522,7 @@
 																			type="radio" name="optionsRadiosDenomination"
 																			id="optionsRadiosPercentage" value="%"
 																			class="radio-inline required m-bot15"
-																			style="padding-top: 20px;"> %
+																			> %
 																		</label>
 																	</div>
 																	<div class="radio-inline">
@@ -586,201 +538,192 @@
 															</div>
 														</div>
 													</div>
-													<!-- END ROW 4 -->
-													<div class="col-lg-12 p-left0">
-														<div id="achieve-based-on">
-															<h4>Achieve Based On</h4>
-															<div class="space15 clearfix"></div>
-															<div class="row">
-																<div class="col-lg-4 col-md-4 col-sm-4">
-																	<!-- <div class="space15"></div> -->
-																	<label class="control-label"
-																		for="achieve_basedon_inputselect">Achieve
-																		Based On</label> <select
-																		class="form-control input-sm m-bot15 "
-																		id="achieve_basedon_inputselect"
-																		name="achieve_basedon_inputselect">
-																	</select>
-																</div>
-																<div
-																	class="col-lg-4 col-md-4 col-sm-4 paidachieve-padding">
-																	<!-- <div class="space15"></div> -->
-																	<label class="control-label"
-																		for="achieve_freq_inputselect">Achieve
-																		Frequency</label> <select
-																		class="form-control input-sm m-bot15 "
-																		id="achieve_freq_inputselect"
-																		name="achieve_freq_inputselect">
-																	</select>
-																</div>
+												</div>
+												<!-- PAID BASED ON - End -->
+
+												<!-- Paid Achieve on  Begin-->
+												<div class="col-lg-12">
+													<div id="achieve-based-on">
+														<h4>Achieve Based On</h4>
+														<div class="space15 clearfix"></div>
+														<div class="row">
+															<div class="col-lg-1 col-md-1 col-sm-1">
+																<!-- copy from paid -->
+																<a class="btn btn-info m-bot15" id="copy-paid-info-btn"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Copy from Paid Details</a>
 															</div>
-															<div class="row">
-																<!--END Achieve Based On dropdowns-->
+														</div>
+														<div class="row">
+															<div class="col-lg-4 col-md-4 col-sm-4">
+																<label class="control-label"
+																	for="achieve_basedon_inputselect">Achieve Based
+																	On</label> <select class="form-control input-sm m-bot15 "
+																	id="achieve_basedon_inputselect"
+																	name="achieve_basedon_inputselect">
+																</select>
+															</div>
+															<div
+																class="col-lg-4 col-md-4 col-sm-4">
+																<label class="control-label"
+																	for="achieve_freq_inputselect">Achieve
+																	Frequency</label> <select
+																	class="form-control input-sm m-bot15 "
+																	id="achieve_freq_inputselect"
+																	name="achieve_freq_inputselect">
+																</select>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-lg-3 col-md-3 col-sm-3">
+																<select class="paidachieve" name="achievedBasedOn"
+																	id="achievedBasedOn"
+																	onchange="javascript: achDynamicdropdown(this.options[this.selectedIndex].value);">
+																	<option selected disabled value="select">-- Select --</option>
+																</select>
 
-																<!--Start Achieve Based On Multi-select-->
-
-																<div class="col-lg-8 col-md-8 col-sm-8">
-																	<div class="table">
-																		<table class="table-responsive">
-																			<tbody>
-																				<tr class="">
-																					<td class="yk-vertalign" rowspan="2"><select
-																						class="paidachieve" name="achievedBasedOn"
-																						id="achievedBasedOn"
-																						onchange="javascript: achDynamicdropdown(this.options[this.selectedIndex].value);">
-																					</select>
-
-																						<div class="form-group">
-																							<div class="" id="div4">
-																								<script type="text/javascript"
-																									language="JavaScript">
-																                                          function achPrdValue(){
-																                                          var el = document.getElementById('div4');
-																                                                    el.innerHTML = '<select name="achPrdvalue" id="achPrdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';
-																                                             }
-																                                       </script>
-																							</div>
-																						</div></td>
-																					<td class="va-bot">
-																						<div>
-																							<a href="javascript:void(0);"
-																								class="btn btn-default btn-sm m-bot5"
-																								onclick="listbox_moveacross('achPrdvalue', 'achInclude')">&#62;&#62;</a>
-																							<br> <a href="javascript:void(0);"
-																								class="btn btn-default btn-sm m-bot5"
-																								onclick="listbox_moveacross('achInclude', 'achPrdvalue')">&#60;&#60;</a>
-																						</div>
-																					</td>
-																					<td>
-																						<h5 class="paid-achieve">Include</h5>
-																						<div class="paidachieve-padding" id="div5">
-																							<script type="text/javascript"
-																								language="JavaScript">
-																                                     function achInclude(){
-																                                     var el = document.getElementById('div5');
-																                                               el.innerHTML = '<select name="achInclude" multiple="multiple" class="multi-select paidachieve_box2" id="achInclude"></select>';
-																
-																                                        }
-																                                  </script>
-																						</div>
-																					</td>
-																				</tr>
-																				<tr class="">
-																					<td class="va-botl">
-																						<div class="">
-																							<a href="javascript:void(0);"
-																								class="btn btn-default btn-sm m-bot5 va-bot"
-																								onclick="listbox_moveacross('achPrdvalue', 'achExclude')">&#62;&#62;</a>
-																							<br> <a href="javascript:void(0);"
-																								class="btn btn-default btn-sm m-bot5 va-bot"
-																								onclick="listbox_moveacross('achExclude', 'achPrdvalue')">&#60;&#60;</a>
-																						</div>
-																					</td>
-																					<td>
-																						<h5 class="paid-achieve">Exclude</h5>
-																						<div class="paidachieve-padding" id="div6">
-																							<script type="text/javascript"
-																								language="JavaScript">
-														                                            function achExclude(){
-														                                            var el = document.getElementById('div6');
-														                                               el.innerHTML = '<select name="achExclude" multiple="multiple" class="multi-select paidachieve_box2" id="achExclude"></select>';
-														                                               }
-														                                         </script>
-																						</div>
-																					</td>
-																				</tr>
-																			</tbody>
-																		</table>
-																	</div>
-																</div>
-
-																<!-- END Achieve -->
 																<div class="form-group">
-																	<div id="program-tier"
-																		class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right"
-																		style="margin-top: -8%;">
-																		<div class="adv-table editable-table">
+																	<div class="" id="div4">
+																		<script type="text/javascript" language="JavaScript">
+									                                          function achPrdValue(){
+									                                          var el = document.getElementById('div4');
+									                                                    el.innerHTML = '<select name="achPrdvalue" id="achPrdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';
+									                                             }
+																       </script>
+																	</div>
+																</div>
 
-																			<h4 class="tableHeader">Program Schedules</h4>
 
-																			<div class="table-responsive">
-																				<table
-																					class="table table-striped table-hover table-bordered"
-																					id="tier-schedule">
-																					<thead>
-																						<tr>
-																							<td colspan="5" class="zeroborders text-left"><label
-																								class="control-label" for="inputSuccess">Amount
-																									Type</label>&nbsp;&nbsp;
-																								<div class="radio-inline inline-flex">
-																									<label class="control-label" for="inputSuccess">
-																										<input type="radio"
-																										name="optionsRadiosDenominationTier"
-																										id="optionsRadiosPercentageTier1" value="%"
-																										class="radio-inline denomination ">%
-																									</label>
-																								</div>
-																								<div class="radio-inline inline-flex">
-																									<label class="control-label" for="inputSuccess">
-																										<input type="radio"
-																										name="optionsRadiosDenominationTier"
-																										id="optionsRadiosDollarSignTier1" value="$"
-																										class="radio-inline denomination required"
-																										checked="checked">$
-																									</label>
-																								</div></td>
-																						</tr>
-																						<tr>
-																							<td colspan="5" class="zeroborderstlr text-left"><label
-																								class="control-label" for="inputSuccess">Accrued
-																									Tier</label>&nbsp;&nbsp; <input id="actual_marker"
-																								name="actual_marker" type="text" size="3"
-																								class="form-control inline-flex" value=""></td>
-																						</tr>
-																						<tr>
-																							<th class="text-center">Tier</th>
-																							<th class="text-center">Amount</th>
-																							<th class="text-center">Beginning Range</th>
-																							<th class="text-center">Edit</th>
-																							<th class="text-center">Delete</th>
-																						</tr>
-																					</thead>
-																					<tbody>
-																					</tbody>
-																				</table>
-																			</div>
+															</div>
+															<div class="col-lg-1 col-md-1 col-sm-1">
+																<div class="m-bot15 m-top45">
+																	<a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('achPrdvalue', 'achInclude')">&#62;&#62;</a>
+																	<br> <a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('achInclude', 'achPrdvalue')">&#60;&#60;</a>
+																</div>
+
+																<div class="m-top45">
+																	<a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('achPrdvalue', 'achExclude')">&#62;&#62;</a>
+																	<br> <a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('achExclude', 'achPrdvalue')">&#60;&#60;</a>
+																</div>
+
+															</div>
+
+															<div class="col-lg-4 col-md-4 col-sm-4">
+																<h5 class="paid-achieve">Include</h5>
+																<div class="m-bot15" id="div5">
+																	<script type="text/javascript" language="JavaScript">
+									                                     function achInclude(){
+									                                     var el = document.getElementById('div5');
+									                                               el.innerHTML = '<select name="achInclude" multiple="multiple" class="multi-select paidachieve_box2" id="achInclude"></select>';
+									
+									                                        }
+									                                  </script>
+																</div>
+																<h5 class="paid-achieve">Exclude</h5>
+																<div class="" id="div6">
+																	<script type="text/javascript" language="JavaScript">
+							                                            function achExclude(){
+							                                            var el = document.getElementById('div6');
+							                                               el.innerHTML = '<select name="achExclude" multiple="multiple" class="multi-select paidachieve_box2" id="achExclude"></select>';
+							                                               }
+							                                         </script>
+																</div>
+
+															</div>
+															<div class="form-group">
+																<div id="program-tier" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right"
+																	style="margin-top: -8%;">
+																	<div class="adv-table editable-table">
+
+																		<h4 class="tableHeader">Program Schedules</h4>
+
+																		<div class="table-responsive">
+																			<table
+																				class="table table-striped table-hover table-bordered"
+																				id="tier-schedule">
+																				<thead>
+																					<tr>
+																						<td colspan="5" class="zeroborders text-left"><label
+																							class="control-label" for="inputSuccess">Amount
+																								Type</label>&nbsp;&nbsp;
+																							<div class="radio-inline inline-flex">
+																								<label class="control-label" for="inputSuccess">
+																									<input type="radio"
+																									name="optionsRadiosDenominationTier"
+																									id="optionsRadiosPercentageTier1" value="%"
+																									class="radio-inline denomination ">%
+																								</label>
+																							</div>
+																							<div class="radio-inline inline-flex">
+																								<label class="control-label" for="inputSuccess">
+																									<input type="radio"
+																									name="optionsRadiosDenominationTier"
+																									id="optionsRadiosDollarSignTier1" value="$"
+																									class="radio-inline denomination required"
+																									checked="checked">$
+																								</label>
+																							</div></td>
+																					</tr>
+																					<tr>
+																						<td colspan="5" class="zeroborderstlr text-left"><label
+																							class="control-label" for="inputSuccess">Accrued
+																								Tier</label>&nbsp;&nbsp; <input id="actual_marker"
+																							name="actual_marker" type="text" size="3"
+																							class="form-control inline-flex" value=""></td>
+																					</tr>
+																					<tr>
+																						<th class="text-center">Tier</th>
+																						<th class="text-center">Amount</th>
+																						<th class="text-center">Beginning Range</th>
+																						<th class="text-center">Edit</th>
+																						<th class="text-center">Delete</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																				</tbody>
+																			</table>
 																		</div>
-																		<div class="clearfix">
-																			<div class="btn-group">
-																				<button id="tier-schedule_new"
-																					class="btn btn-default">
-																					Add New Tier <i class="fa fa-plus"></i>
-																				</button>
-																			</div>
+																	</div>
+																	<div class="clearfix">
+																		<div class="btn-group">
+																			<button id="tier-schedule_new"
+																				class="btn btn-default">
+																				Add New Tier <i class="fa fa-plus"></i>
+																			</button>
 																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-													<!---- END TIER Schedule -->
-													<!-- End of ROW 7  -->
-													<!-- Start ROW 8 -->
-													<div class="clearfix"></div>
-													<div class="row">
-														<div class="col-lg-12">
-															<label class="control-label" for="userComments">Commentary/Special
-																Instructions</label>
-															<textarea id="userComments" name="userComments"
-																class="form-control" rel="txtTooltip"
-																data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
-																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
-																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" rows="3"
-																placeholder="Add description details"></textarea>
-														</div>
-													</div>
-													<!-- END ROW 8 -->
+												</div>
+												<!-- Paid Achieve On End -->
+											</div> <!-- Div End - Program Detail-->
+
+											<!-- END ROW 4 -->
+
+											<!-- Start ROW 8 -->
+											<div class="clearfix"></div>
+											<div class="row">
+												<div class="col-lg-12">
+													<label class="control-label" for="userComments">Commentary/Special
+														Instructions</label>
+													<textarea id="userComments" name="userComments"
+														class="form-control" rel="txtTooltip"
+														data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
+														title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+														data-toggle="tooltip" data-trigger="hover"
+														data-placement="top" rows="3"
+														placeholder="Add description details"></textarea>
+												</div>
+											</div>
+											<!-- END ROW 8 -->
 
 													<!---- START Submit -->
 													<div class="clearfix"></div>
@@ -1072,10 +1015,39 @@
 															</div>
 														</div>
 
+														<div class="modal fade" id="myModal10" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="copy-warning-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Confirmation</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="copyWarningMessageModal"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button data-dismiss="modal" class="btn btn-default"
+																			id="copy-warning-modal-cancel" type="button">Cancel</button>
+																		<a href="javascript: copyPaidDetails()"><button
+																				class="btn btn-info" type="button"
+																				id="program-rej-comment-modal-ok">
+																				<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																			</button> </a>
+																	</div>
+																</div>
+															</div>
+														</div>
 													</div>
 
 
-												</div>
+												
 											</div>
 											</section>
       <!---- END Review / Confirm Section -->
@@ -1784,6 +1756,7 @@
 				$('#myModal7').find('button, a, textarea').attr('disabled',false);
 				$('#myModal8').find('button, a, textarea').attr('disabled',false);
 				$('#myModal9').find('button, a, textarea').attr('disabled',false);
+				$('#myModal10').find('button, a, textarea').attr('disabled',false);
 				$('#header-button').removeAttr('hidden');
 				$('#footer-button').removeAttr('hidden');
 				$('#view-program-workflow').attr('disabled', false);
@@ -1922,6 +1895,14 @@
 					resetFormForMandatoryCheck(elementId);
 	         	}
 			}
+            
+			function copyPaidDetails(){
+				$("#achieve_basedon_inputselect").val($("#paid_basedon_inputselect").val());
+				$("#achieve_freq_inputselect").val($("#payout_freq_inputselect").val());
+				
+				listboxCopy('include', 'achInclude');
+				listboxCopy('exclude', 'achExclude');
+			}
              
             $("input[name=optionsRadiosTier]").on( "change", function() {
 				var test = $(this).val();
@@ -1949,7 +1930,37 @@
 			});
 		});
 	</script>
-	
+
+	<script type="text/javascript">
+			$(document).ready(function() {
+				$('#copy-paid-info-btn').click(function () {
+					
+					var include1 = document.getElementById('include');
+					var exclude1 = document.getElementById('exclude');
+					
+					if( (include1 == null || include1.options.length == 0) && (exclude1 == null || exclude1.options.length == 0) &&
+						$("#paid_basedon_inputselect").val() == null && $("#payout_freq_inputselect").val() == null){
+						$("#informationMessageModal").html("No details available to copy. Kindly fill in paid details to copy.");
+						$('#myModal6').modal('toggle');
+						return false;
+					}
+					
+					var achinclude1 = document.getElementById('achInclude');
+					var achexclude1 = document.getElementById('achExclude');
+					
+					if($("#achieve_basedon_inputselect").val() != null || $("#achieve_freq_inputselect").val() != null || 
+					(achinclude1 != null && achinclude1.options.length > 0) ||  (achexclude1 != null && achexclude1.options.length > 0)){
+						/**There is few values already existing in achieve based on. show a warning pop up.*/
+						$("#copyWarningMessageModal").html("Achieve based on details already exists. If you click 'OK', then existing data in achieve based on will be lost and paid based on data will be copied. Click on 'Cancel', to retain existing data in achieve based on.");
+						$('#myModal10').modal('toggle');
+					}
+					else{
+						copyPaidDetails();
+					}
+				});
+			});
+	</script>
+
 	<!-- END JAVASCRIPTS -->
        
    </body>

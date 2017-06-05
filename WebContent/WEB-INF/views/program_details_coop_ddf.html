@@ -402,77 +402,78 @@
 														</div>
 													</div>
 													<!-- ROW 4 ENDS -->
-                                      <div class="row">
-                                        <div class="form-group">  
-                                        <div class="col-lg-5 col-md-7 col-sm-7">
-                                           <h4>Paid Based On</h4>
-                                            <div class="table"> 
-                                          <table class="table-responsive">
-                                              <tbody>
-                                              <tr class="">
-                                                  <td class="yk-vertalign" rowspan="2">
-                                                      <select class="paidachieve" name="paidBasedOn" id="paidBasedOn" onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
-                                                     </select>
+													<div class="row">
+														<div class="form-group">
+															<div class="space15 clearfix"></div>
+															<h4>Paid Based On</h4>
+															<div class="col-lg-3 col-md-3 col-sm-3">
+																<select class="paidachieve" name="paidBasedOn"
+																	id="paidBasedOn"
+																	onchange="javascript: dynamicdropdown(this.options[this.selectedIndex].value);">
+																	<option selected disabled value="select">-- Select --</option>
+																</select>
+																<div class="form-group last">
+																	<div class="" id="div1">
+																		<script type="text/javascript" language="JavaScript">
+				                                                             function prdValue(){
+				                                                               var el = document.getElementById('div1');
+				                                                                  el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';}
+			                                                            </script>
+																	</div>
+																</div>
+															</div>
+															<div class="col-lg-1 col-md-1 col-sm-1 center">
 
-                                                     <div class="form-group last">
-                                                       <div class="" id="div1">
-                                                          <script type="text/javascript" language="JavaScript">
-                                                             function prdValue(){
-                                                               var el = document.getElementById('div1');
-                                                                  el.innerHTML = '<select name="prdvalue" id="prdvalue" multiple="multiple" class="multi-select paidachieve_box"></select>';}
-                                                            </script>
-                                                       </div>
-                                                    </div>
-                                                  </td>
-                                                  <td class="va-bot">
-                                                    <div>
-                                                        <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'include')">&#62;&#62;</a>
-                                                           <br/>
-                                                        <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('include', 'prdvalue')">&#60;&#60;</a>
-                                                    </div>
-                                                  </td>
-                                                  <td>
-                                                  <h5 class="paid-achieve">Include</h5>
-                                                   <div class="paidachieve-padding" id="div2">
-                                                   <script type="text/javascript" language="JavaScript">
-                                                      function include(){
-                                                      var el = document.getElementById('div2');
-                                                                el.innerHTML = '<select name="include" multiple="multiple" class="multi-select paidachieve_box2" id="include"></select>';
+																<div class="m-bot15 m-top45">
+																	<a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('prdvalue', 'include')">&#62;&#62;</a>
+																	<br /> 
+																	<a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('include', 'prdvalue')">&#60;&#60;</a>
+																</div>
+																<br>
+																<div class="">
+																	<a href="javascript:void(0);" aria-activedescendant=""
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('prdvalue', 'exclude')">&#62;&#62;</a>
+																	<br /> <a href="javascript:void(0);"
+																		class="btn btn-default btn-sm m-bot5"
+																		onclick="listbox_moveacross('exclude', 'prdvalue')">&#60;&#60;</a>
+																</div>
+															</div>
 
-                                                         }
-                                                   </script>
-                                                   </div>
-                                            </td>
-                                          </tr>
-                                          <tr class="">
-                                              <td>
-                                                  <div>
-                                                       <a href="javascript:void(0);" aria-activedescendant="" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('prdvalue', 'exclude')">&#62;&#62;</a>
-                                                       <br/>
-                                                       <a href="javascript:void(0);" class="btn btn-default btn-sm m-bot5" onclick="listbox_moveacross('exclude', 'prdvalue')">&#60;&#60;</a>
-                                                   </div>
-                                              </td>
-                                              <td>
-                                                  <h5 class="paid-achieve">Exclude</h5>
-                                                  <div class="paidachieve-padding" id="div3">
-                                                    <script type="text/javascript" language="JavaScript">
-                                                       function exclude(){
-                                                       var el = document.getElementById('div3');
-                                                                 el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select paidachieve_box2" id="exclude"></select>';
-                                                          }
-                                                    </script>
-                                                  </div>
-                                                  </td>
-                                            </tr>
-                                        </tbody>
-                                </table>
-                            </div>
-                            </div>
-                   
-        <!-- END PAID based on --> 
-                                        </div>
-                                        </div>
-                                        <!-- END ROW 4 -->
+															<div class="col-lg-4 col-md-4 col-sm-4">
+
+																<h5 class="paid-achieve">Include</h5>
+																<div class="m-bot15" id="div2">
+																	<script type="text/javascript" language="JavaScript">
+					                                                      function include(){
+					                                                      var el = document.getElementById('div2');
+					                                                                el.innerHTML = '<select name="include" multiple="multiple" class="multi-select paidachieve_box2" id="include"></select>';
+					
+					                                                         }
+					                                                   </script>
+																</div>
+
+																<h5 class="paid-achieve">Exclude</h5>
+																<div class="" id="div3">
+																	<script type="text/javascript" language="JavaScript">
+					                                                       function exclude(){
+					                                                       var el = document.getElementById('div3');
+					                                                                 el.innerHTML = '<select name="exclude" multiple="multiple" class="multi-select paidachieve_box2" id="exclude"></select>';
+					                                                          }
+					                                                    </script>
+																</div>
+
+															</div>
+
+
+															<!-- END PAID based on -->
+														</div>
+													</div>
+													<!-- END ROW 4 -->
 													<!-- Start ROW 5 -->
 													<div class="clearfix"></div>
 													<div class="row">
@@ -489,6 +490,9 @@
 														</div>
 													</div>
 													<!-- END ROW 5 -->
+													
+													
+													</div>
 
 
 													<div class="row">

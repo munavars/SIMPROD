@@ -210,6 +210,17 @@ function listboxCopy(sourceID, destID) {
 	var src = document.getElementById(sourceID);
 	var dest = document.getElementById(destID);
 
+	/**If already if some data is present, remove it.*/
+	if (dest != null && dest.options.length > 0) {
+		for (var count = 0; count < dest.options.length; count++) {
+			try {
+				dest.remove(count, null);
+			} catch (error) {
+				dest.remove(count);
+			}
+		}
+	}
+	
 	if (src == null || src.options.length == 0) {
 		return;
 	}

@@ -1035,7 +1035,7 @@
 																	<div class="modal-footer">
 																		<button data-dismiss="modal" class="btn btn-default"
 																			id="copy-warning-modal-cancel" type="button">Cancel</button>
-																		<a href="javascript: copyPaidDetails()"><button
+																		<a href="javascript: copyPaidDetails('Y')"><button
 																				class="btn btn-info" type="button"
 																				id="program-rej-comment-modal-ok">
 																				<i class="fa fa-save"></i>&nbsp;&nbsp;OK
@@ -1896,12 +1896,15 @@
 	         	}
 			}
             
-			function copyPaidDetails(){
+			function copyPaidDetails(closeModal){
 				$("#achieve_basedon_inputselect").val($("#paid_basedon_inputselect").val());
 				$("#achieve_freq_inputselect").val($("#payout_freq_inputselect").val());
 				
 				listboxCopy('include', 'achInclude');
 				listboxCopy('exclude', 'achExclude');
+				if(closeModal == 'Y'){
+					$('#myModal10').modal('toggle');
+				}
 			}
              
             $("input[name=optionsRadiosTier]").on( "change", function() {
@@ -1955,7 +1958,7 @@
 						$('#myModal10').modal('toggle');
 					}
 					else{
-						copyPaidDetails();
+						copyPaidDetails('N');
 					}
 				});
 			});

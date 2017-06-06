@@ -150,7 +150,6 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 		
 		if(dalWorkflowMatrixList != null && !dalWorkflowMatrixList.isEmpty()){
 			programWorkflowMatrixDetail = new ProgramWorkflowMatrixDetail();
-			programWorkflowMatrixDetail.setTotalLevel(dalWorkflowMatrixList.size());
 			Integer employeeId = null;
 			if(dalProgramDetail.getCreatedBy() != null){
 				employeeId = dalProgramDetail.getCreatedBy().getId(); 
@@ -201,6 +200,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 				}
 			}
 			programWorkflowMatrixDetail.setCurrentUserLevel(currentUserLevel);
+			programWorkflowMatrixDetail.setTotalLevel(userLevel);
 		}
 		return programWorkflowMatrixDetail;
 	}

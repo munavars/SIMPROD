@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.Employee;
+import com.ytc.common.model.NewCustomerDetail;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramInputParam;
@@ -119,6 +120,11 @@ public class ProgramController extends BaseController {
 			employeeId=0;
 		}
 		return new ListResult<ProgramDetail>( getService(request).getProgramDashboard(employeeId));
+	}
+	
+	@RequestMapping(value = "/newcustomer", method = RequestMethod.GET)
+	public @ResponseBody ListResult<NewCustomerDetail> getNewCustomerData(HttpServletRequest request) {
+		return new ListResult<NewCustomerDetail>( getService(request).getNewCustomerData());
 	}
 	
 	@RequestMapping(value = "v1/addTier", method = RequestMethod.GET)

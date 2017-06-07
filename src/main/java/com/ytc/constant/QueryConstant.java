@@ -9,7 +9,7 @@ public class QueryConstant {
 	
 	public static final String PROGRAM_LIST_ALL="select * from PROGRAM_DETAIL where STATUS_ID in (:status)";
 	
-	public static final String CUSTOMER_LIST="select * from PROGRAM_HEADER where REQUEST_ID in (:requestId) and STATUS_ID=2";
+	public static final String CUSTOMER_LIST="select * from PROGRAM_HEADER where REQUEST_ID in (:requestId) and STATUS_ID in (1, 2)";
 	
 	public static final String TBP_CUSTOMER_LIST="select * from PROGRAM_HEADER where STATUS_ID=2";
 	
@@ -19,4 +19,6 @@ public class QueryConstant {
 
 	public static final String TBP_QUERY = "select DISTINCT EMP_ID from WORKFLOW_MATRIX where id in ("
 											+"select Max(id) from WORKFLOW_MATRIX where COMMENTS = 'TBP' group by SUBJECT_AREA, BUSINESS_UNIT)";
+	
+	public static final String NEW_CUSTOMER_QUERY = "SELECT * FROM CUSTOMER WHERE ID NOT IN (SELECT CUSTOMER_ID from PROGRAM_HEADER)";
 }

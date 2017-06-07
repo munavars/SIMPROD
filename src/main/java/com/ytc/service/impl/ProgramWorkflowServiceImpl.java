@@ -77,6 +77,10 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 							}
 							
 						}
+						else if(ProgramConstant.N.equals(decision)){
+							/**If it is N, then it will be rejected. Hence directly updating the value from Detail entity.*/
+							dalWorkflowStatus.setApprovalStatus(dalProgramDet.getStatus());
+						}
 						dalWorkflowStatus.setWfStatusDate(Calendar.getInstance());						
 					}
 				}
@@ -102,6 +106,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 				for(DalStatus dalStatus : dalStatusList){
 					if(ProgramConstant.APPROVED_STATUS.equals(dalStatus.getType())){
 						dalProgramDetail.setStatus(dalStatus);
+						dalProgramDetail.getDalProgramHeader().setStatus(dalStatus);
 						break;
 					}
 				}

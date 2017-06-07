@@ -78,7 +78,7 @@ public class EmployeeService implements IEmployeeService {
 			employee.setLAST_NAME(dalEmp.getLAST_NAME());
 			employee.setLOGIN_ID(dalEmp.getLOGIN_ID());
 			employee.setMANAGER_ID(dalEmp.getMANAGER_ID());
-			employee.setTITLE_ID(dalEmp.getTITLE_ID());
+			employee.setTITLE_ID(String.valueOf(dalEmp.getTITLE().getId()));
 			employee.setSECURITY(dalEmp.getSECURITY());
 			employee.setROLE_ID(dalEmp.getROLE_ID());
 			employeeList.add(employee);

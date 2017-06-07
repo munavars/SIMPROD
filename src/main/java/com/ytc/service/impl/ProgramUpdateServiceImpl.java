@@ -158,29 +158,6 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	private void updateApproverInformation(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {
 		
 		programWorkflowService.updateWorkflowDetails(dalProgramDetail, programHeader, serviceContext.getEmployee());
-		
-		/**Only if User level is 1 or 2, save the approver details in WORKFLOW_STATUS table.*/
-		/*if(programHeader != null && (ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel()) || 
-				ProgramConstant.USER_LEVEL_3.equals(programHeader.getProgramButton().getUserLevel())) ){
-			DalWorkflowStatus dalWorkflowStatus = new DalWorkflowStatus();
-			dalWorkflowStatus.setApprovalComment(programHeader.getUserComments());
-			dalWorkflowStatus.setApprovalStatus(dalProgramDetail.getStatus());
-			String decision = null;
-			if( ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel()) ){
-				decision = ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getZmAppStatus().getType()) ? ProgramConstant.Y : ProgramConstant.N;
-			}
-			else {
-				decision = ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getTbAppStatus().getType()) ? ProgramConstant.Y : ProgramConstant.N;
-			}
-			dalWorkflowStatus.setDecisionMade(decision);
-			dalWorkflowStatus.setWfStatusDate(Calendar.getInstance());
-			dalWorkflowStatus.setDalProgramDetailWf(dalProgramDetail);
-			if(dalProgramDetail.getDalWorkflowStatusList() == null){
-				dalProgramDetail.setDalWorkflowStatusList(new ArrayList<DalWorkflowStatus>());
-			}
-			dalProgramDetail.getDalWorkflowStatusList().add(dalWorkflowStatus);
-		}*/
-		
 	}
 
 	private void updateProgramTierData(DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {

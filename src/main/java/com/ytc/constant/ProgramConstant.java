@@ -44,4 +44,9 @@ public class ProgramConstant {
 	public static final String OPERATOR_GE = ">=";
 	public static final String OPERATOR_LE = "<=";
 	
+	public static final String BREAK_NEW_LINE_CODE = "&#013";
+	
+	public static final String COLON_WITH_SPACE = " : ";
+	public static final String BLANK = "";
+	public static final String STATUS_HISTORY_DATA_MESSAGE = "Status history details not available";
 }

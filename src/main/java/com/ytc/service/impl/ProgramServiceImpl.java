@@ -10,12 +10,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.NoResultException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.enums.BTLEnum;
+import com.ytc.common.enums.BusinessUnitDescriptionEnum;
 import com.ytc.common.enums.TagItemValueMapEnum;
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.Employee;
+import com.ytc.common.model.NewCustomerDetail;
 import com.ytc.common.model.ProgramAchieveOn;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramDetailsDropDown;
@@ -31,7 +35,6 @@ import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalEmployeeHierarchy;
-import com.ytc.dal.model.DalEmployeeTitle;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
@@ -183,7 +186,7 @@ public class ProgramServiceImpl implements IProgramService {
 					
 					programWorkflowStatus.setApprovalDate(dalWorkflowStatus.getModifiedDate().getTime());
 					programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
-					programWorkflowStatus.setApproverRole(baseDao.getById(DalEmployeeTitle.class, Integer.valueOf(dalWorkflowStatus.getApprover().getTITLE_ID())).getTitle());
+					programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
 					programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
 					if(programHeader.getProgramWorkflowStatusList() == null){
 						programHeader.setProgramWorkflowStatusList(new ArrayList<ProgramWorkflowStatus>());
@@ -881,6 +884,44 @@ public class ProgramServiceImpl implements IProgramService {
 	public  byte[] downloadPDF(String id) {
 		PdfGenerator pdf=new PdfGenerator();
 		return pdf.generatePdf(baseDao, id);
+	}
+
+
+	@Override
+	public List<NewCustomerDetail> getNewCustomerData() {
+		List<NewCustomerDetail> customerDetailsList = null;
+		String queryString = QueryConstant.NEW_CUSTOMER_QUERY;
+		List<DalCustomer> resultList = baseDao.getlist(DalCustomer.class, queryString, new HashMap<String, Object>());
+		if(resultList != null && !resultList.isEmpty()){
+			for(DalCustomer dalCustomer : resultList){
+				NewCustomerDetail customerDetail = new NewCustomerDetail();
+				
+				customerDetail.setCustomerId(String.valueOf(dalCustomer.getId()));
+				customerDetail.setCustomerName(dalCustomer.getCustomerName());
+				customerDetail.setCustomerNumber(dalCustomer.getCustomerNumber());
+				customerDetail.setBusinessUnit(BusinessUnitDescriptionEnum.getBUDescription(dalCustomer.getBu()).getBusinessUnitDescription());
+				String accountManagerName = null;
+				try{
+					DalEmployee accountManager = baseDao.getById(DalEmployee.class, Integer.valueOf(dalCustomer.getAccountManager()));
+					accountManagerName = ProgramServiceHelper.getName(accountManager);
+				}
+				catch(NoResultException e){
+					/**For now, if there is not matching account manager details, just return the account manager id.*/
+					accountManagerName = dalCustomer.getAccountManager();
+				}
+				
+				customerDetail.setAccountManager(accountManagerName);
+				customerDetail.setCreatedDate(null!=dalCustomer.getCreatedDate()?ProgramServiceHelper.convertDateToString(dalCustomer.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT):"");
+				customerDetail.setModifiedDate(null!=dalCustomer.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalCustomer.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT):"");
+				
+				if(customerDetailsList == null){
+					customerDetailsList = new ArrayList<NewCustomerDetail>();
+				}
+				customerDetailsList.add(customerDetail);
+			}
+		}
+		
+		return customerDetailsList;
 	}
 	
 }

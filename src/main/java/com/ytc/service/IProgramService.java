@@ -3,6 +3,7 @@ package com.ytc.service;
 import java.util.List;
 
 import com.ytc.common.model.DropDown;
+import com.ytc.common.model.NewCustomerDetail;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramInputParam;
@@ -25,4 +26,6 @@ public interface IProgramService {
 	List<ProgramDetail> getProgramDashboard(Integer id);
 
 	byte[] downloadPDF(String id);
+	
+	List<NewCustomerDetail> getNewCustomerData();
 }

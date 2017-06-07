@@ -174,9 +174,16 @@ function dynamicdropdown(listindex) {
 		dataType : "json",
 		url : "/SIM/program/v1/getTagValueDropDown/" + listindex,
 		success : function(response) {
-			$.each(response, function(i, response) {
+/*			$.each(response, function(i, response) {
 				document.getElementById("prdvalue").options[i] = new Option(
 						response.key, response.value);
+			});*/
+			
+     		$.each(response, function (i, item) {
+			    $('#prdvalue').append($('<option>', { 
+			        value: item.key,
+			        text : item.value 
+			    }));
 			});
 		},
 		failure : function(response) {
@@ -193,9 +200,17 @@ function achDynamicdropdown(listindex) {
 		dataType : "json",
 		url : "/SIM/program/v1/getTagValueDropDown/" + listindex,
 		success : function(response) {
-			$.each(response, function(i, response) {
+/*			$.each(response, function(i, response) {
 				document.getElementById("achPrdvalue").options[i] = new Option(
 						response.key, response.value);
+				
+			});*/
+			
+     		$.each(response, function (i, item) {
+			    $('#achPrdvalue').append($('<option>', { 
+			        value: item.key,
+			        text : item.value 
+			    }));
 			});
 		},
 		failure : function(response) {

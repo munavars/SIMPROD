@@ -2,6 +2,8 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -13,34 +15,24 @@ public class DalEmployee extends DalModel {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@Column(name="FIRST_NAME")
 	private String FIRST_NAME;
 	
-	@Column(name="LAST_NAME")
 	private String LAST_NAME;
 	
-	@Column(name="TITLE_ID")
-	private String TITLE_ID;
+	private DalEmployeeTitle TITLE;
 	
-	@Column(name="BUSINESS_UNIT")
 	private String BUSINESS_UNIT;
 	
-	@Column(name="EMAIL")
 	private String EMAIL;
 	
-	@Column(name="ACTIVE")
 	private String ACTIVE;
 	
-	@Column(name="MANAGER_ID")
 	private String MANAGER_ID;
 	
-	@Column(name="LOGIN_ID")
 	private String LOGIN_ID;
 		
-	@Column(name="SECURITY")
 	private String SECURITY;
 	
-	@Column(name="ROLE_ID")
 	private String ROLE_ID;
 	
 	public DalEmployee() {
@@ -51,7 +43,7 @@ public class DalEmployee extends DalModel {
 
 		FIRST_NAME = e.FIRST_NAME;
 		LAST_NAME = e.LAST_NAME;
-		TITLE_ID = e.TITLE_ID;
+		TITLE = e.TITLE;
 		BUSINESS_UNIT = e.BUSINESS_UNIT;
 		EMAIL = e.EMAIL;
 		ACTIVE = e.ACTIVE;
@@ -59,7 +51,7 @@ public class DalEmployee extends DalModel {
 		LOGIN_ID = e.LOGIN_ID;
 	}
 
-
+	@Column(name="FIRST_NAME")
 	public String getFIRST_NAME() {
 		return FIRST_NAME;
 	}
@@ -68,6 +60,7 @@ public class DalEmployee extends DalModel {
 		FIRST_NAME = fIRST_NAME;
 	}
 
+	@Column(name="LAST_NAME")
 	public String getLAST_NAME() {
 		return LAST_NAME;
 	}
@@ -76,14 +69,17 @@ public class DalEmployee extends DalModel {
 		LAST_NAME = lAST_NAME;
 	}
 
-	public String getTITLE_ID() {
-		return TITLE_ID;
+	@OneToOne
+	@JoinColumn(name="TITLE_ID", referencedColumnName = "ID")
+	public DalEmployeeTitle getTITLE() {
+		return TITLE;
 	}
 
-	public void setTITLE_ID(String tITLE_ID) {
-		TITLE_ID = tITLE_ID;
+	public void setTITLE(DalEmployeeTitle tITLE) {
+		TITLE = tITLE;
 	}
 
+	@Column(name="BUSINESS_UNIT")
 	public String getBUSINESS_UNIT() {
 		return BUSINESS_UNIT;
 	}
@@ -92,6 +88,7 @@ public class DalEmployee extends DalModel {
 		BUSINESS_UNIT = bUSINESS_UNIT;
 	}
 
+	@Column(name="EMAIL")
 	public String getEMAIL() {
 		return EMAIL;
 	}
@@ -100,6 +97,7 @@ public class DalEmployee extends DalModel {
 		EMAIL = eMAIL;
 	}
 
+	@Column(name="ACTIVE")
 	public String getACTIVE() {
 		return ACTIVE;
 	}
@@ -108,6 +106,7 @@ public class DalEmployee extends DalModel {
 		ACTIVE = aCTIVE;
 	}
 
+	@Column(name="MANAGER_ID")
 	public String getMANAGER_ID() {
 		return MANAGER_ID;
 	}
@@ -116,6 +115,7 @@ public class DalEmployee extends DalModel {
 		MANAGER_ID = mANAGER_ID;
 	}
 
+	@Column(name="LOGIN_ID")
 	public String getLOGIN_ID() {
 		return LOGIN_ID;
 	}
@@ -124,7 +124,7 @@ public class DalEmployee extends DalModel {
 		LOGIN_ID = lOGIN_ID;
 	}
 
-
+	@Column(name="SECURITY")
 	public String getSECURITY() {
 		return SECURITY;
 	}
@@ -133,6 +133,7 @@ public class DalEmployee extends DalModel {
 		SECURITY = sECURITY;
 	}
 
+	@Column(name="ROLE_ID")
 	public String getROLE_ID() {
 		return ROLE_ID;
 	}

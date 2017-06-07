@@ -171,8 +171,41 @@
       ]
 		} );
 	   
-	   
-	   
+	<!-- New Customer Details Begin-->
+	$(document).ready(function () { 
+		$('#newcustomeroverview th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');	
+			var table=$("#newcustomeroverview").DataTable( {
+				oLanguage: {
+				 "sEmptyTable": "New customer data not available"
+				},
+				lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+				ajax: {
+				    url: '/SIM/program/newcustomer/',
+				    dataSrc: "data",
+				    type: "GET",
+				},
+				columnDefs: [
+				    {
+						targets:0,
+						render: function ( data, type, row, meta ) {
+						    if(type === 'display'){
+						        data = '<a href="/SIM/customer?custId=' + encodeURIComponent(row.customerId) + '">' + data + '</a>';
+						    }
+						    return data;
+						}
+					}
+				],
+				columns: [
+					{ data: "customerName" },   
+					{ data: "customerNumber" },
+				    { data: "businessUnit" },
+				    { data: "accountManager" },
+				    { data: "createdDate",className:"center" },
+				    { data: "modifiedDate",className:"center" },
+				]
+		});
+	});
+	<!-- New Customer Details End -->
 	   
 	   //Pending approval table
 	   var table=$("#pending_approvals").DataTable( {
@@ -257,30 +290,23 @@
 	            { data: "programName" },
 	            { data: "bu" },
 	            { data: "submitDate" ,className:"center" },
-	            { data: "zmAppStatus",className:"center",	              
+	            { data: "programStatus",className:"center",	              
 	            	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
-                    	if(row.zmAppStatus>row.tbpAppStatus){
-                    		data=row.tbpAppStatus;
-                    		date=row.tbpAppDate;
-                    	}else{
-                    		data=row.zmAppStatus;
-                    		date=row.zmAppDate;
-                    	}
                     	if(data=='2'){
-                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+date+'</div></a>';
+                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.modifiedDate+'</div></a>';
                     	}else if(data=='1'){
-                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+date+'</div></a>';	
+                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.modifiedDate+'</div></a>';	
                     	}else if(data=='4'){
-                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+date+'</div></a>';	
+                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.modifiedDate+'</div></a>';	
                     	}else if(data=='5'){
-                    	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+date+'</div></a>';	
+                    	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.modifiedDate+'</div></a>';	
                     	}
                     }
 
                     return data;
                 }  },
-	            { data: "zmAppStatus",                
+/* 	            { data: "zmAppStatus",                
 	              render: function ( data, type, row, meta ) {
                     if(type === 'display'){
                     	if(data=='2'){
@@ -317,9 +343,36 @@
 	                },className:"center" 	
 	            	
 	            	
+	            }, */
+	         	{ data: "programStatus" ,
+	            	render: function ( data, type, row, meta ) {
+	            		
+	            		var divToolTip = "\""+row.statusHistory +"\""; 
+	            		
+	                    if(type === 'display'){
+	                    	if(data=='2'){
+	                        data = '<a class="status-icon status-icon--pending" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-ellipsis-h"></i></a>';
+	                    	}else if(data=='1'){
+	                    	data=	'<a class="status-icon status-icon--rejected" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-times"></i></a>';	
+	                    	}else if(data=='4'){
+	                    	data='<a class="status-icon status-icon--approved" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-check"></i></a>';	
+	                    	}else if(data=='5'){
+	                        	data='<a class="status-icon status-icon--waiting" data-placement="top" rel="tooltip"  title='+ divToolTip +'><i class="fa fa-ellipsis-h"></i></a>';	
+	                    	}
+	                    }
+
+	                    return data;
+	                },className:"center" 	
+	            	
+	            	
 	            },
 	            {
 	            	data: "programType" ,
+	            	visible: false,
+                	searchable: false
+	            },
+	            {
+	            	data: "statusHistory",
 	            	visible: false,
                 	searchable: false
 	            }
@@ -331,9 +384,11 @@
 		 $('#customeroverview').on('draw.dt', function () {
            $('[data-toggle="tooltip"]').tooltip();
        });
-	   
+/* 		$('#pending_approvals').on('draw.dt', function () {
+           $('[rel="tooltip"]').tooltip();
+       }); */
+       
    });
-   
    </script>
   </head>
 
@@ -483,10 +538,11 @@
                                 <th>Bus. Unit</th>
                                 <th>Submitted</th>
                                 <th>Status</th>
-                                <th>Zone Manager</th>
+                                <!-- <th>Zone Manager</th> -->
 <!--                                 <th class="center">Director</th>
                                 <th class="center">Execs</th> -->
-                                <th>TBP</th>
+                                <!-- <th>TBP</th> -->
+                                <th>Program Status History</th>
                               </tr>
                               </thead>
                               <tbody>
@@ -1148,8 +1204,48 @@
               </div>
   <!-- END of 'My Customers' table -->
 
-            
-              <!-- page end-->
+				<!-- START 'New Customers' table -->
+				<div class="row">
+					<div class="col-sm-12">
+						<section class="panel">
+							<!--header class="panel-heading">
+                    </header-->
+							<div class="panel-body">
+								<!-- START 'Pending Approvals' table -->
+								<div class="btn-group pull-right">
+									<div class="btn-group">
+										<a href="#"><button class="btn btn-default"
+												onclick="tableToExcel('newcustomeroverview', 'Customers Table')">
+												<i class="fa fa-arrow-down"></i> Export To Excel
+											</button></a>
+									</div>
+								</div>
+								<h3 class="tableHeader">New Customers</h3>
+								<div class="adv-table table-responsive">
+									<table class="table table-striped table-hover table-bordered"
+										id="newcustomeroverview">
+										<thead>
+											<tr class="rowvis" style="background-color: #cacbce;">
+												<th>Customer</th>
+												<th>Customer Number</th>
+												<th>Business Unit</th>
+												<th>Account Manager</th>
+												<th>Created Date</th>
+												<th>Last Modified Date</th>
+											</tr>
+										</thead>
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<!-- END of 'New Customers' table -->
+
+				<!-- page end-->
           </section>
       </section>
       <!--main content end-->

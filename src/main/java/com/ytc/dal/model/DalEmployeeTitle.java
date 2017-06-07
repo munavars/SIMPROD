@@ -1,6 +1,5 @@
 package com.ytc.dal.model;
 
-import javax.persistence.AttributeOverride;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -12,7 +11,6 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(name="DalEmployeeTitle.getAllDetails", query = "select o from DalEmployeeTitle o")
 })
-@AttributeOverride(name = "id", column = @Column(name = "TITLE_ID"))
 public class DalEmployeeTitle extends DalModel{
 	
 	/**

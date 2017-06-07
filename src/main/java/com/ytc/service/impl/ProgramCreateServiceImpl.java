@@ -155,48 +155,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 	private void setApproverLevelStatus(DalProgramDetail dalProgramDet, ProgramHeader programHeader, Employee employee) {
 		
 		programWorkflowService.updateWorkflowDetails(dalProgramDet, programHeader, employee);
-/*		
-		List<DalStatus> dalStatusList =  baseDao.getListFromNamedQuery("DalStatus.getAllDetails");
-		if(ProgramConstant.USER_LEVEL_1.equals(programHeader.getProgramButton().getUserLevel())){
-			setApproverIds(dalProgramDet, employee);
-			if(ProgramConstant.PENDING_STATUS.equals(dalProgramDet.getStatus().getType())){
-				if(dalStatusList != null && !dalStatusList.isEmpty()){
-					for(DalStatus dalStatus : dalStatusList){
-						if(ProgramConstant.WAITING_STATUS.equals(dalStatus.getType())){
-							dalProgramDet.setTbAppStatus(dalStatus);
-							break;
-						}
-					}
-				}
-				dalProgramDet.setZmAppStatus(dalProgramDet.getStatus());
-			}
-		}*/
 	}
-/*
-	private void setApproverIds(DalProgramDetail dalProgramDet, Employee employee) {
-		if(employee != null && dalProgramDet != null){
-			DalEmployeeHierarchy dalEmployeeHierarchy = baseDao.getEntityById(DalEmployeeHierarchy.class, employee.getEMP_ID());
-			if(dalEmployeeHierarchy != null){
-				if(ProgramConstant.EMP_HIERARCHY_1 == dalEmployeeHierarchy.getFixedHierLvl()){
-					dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, Integer.valueOf(dalEmployeeHierarchy.getLvl2EmpId())));
-					dalProgramDet.setTbpAppById(baseDao.getById(DalEmployee.class, Integer.valueOf(dalEmployeeHierarchy.getLvl3EmpId())));
-				}
-				else if(ProgramConstant.EMP_HIERARCHY_2 == dalEmployeeHierarchy.getFixedHierLvl()){
-					dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, Integer.valueOf(dalEmployeeHierarchy.getLvl3EmpId())));
-					dalProgramDet.setTbpAppById(baseDao.getById(DalEmployee.class, Integer.valueOf(dalEmployeeHierarchy.getLvl4EmpId())));
-				}
-				else if(ProgramConstant.EMP_HIERARCHY_3 == dalEmployeeHierarchy.getFixedHierLvl()){
-					dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, Integer.valueOf(dalEmployeeHierarchy.getLvl4EmpId())));
-					dalProgramDet.setTbpAppById(baseDao.getById(DalEmployee.class, Integer.valueOf(dalEmployeeHierarchy.getLvl5EmpId())));
-				}
-				else if(ProgramConstant.EMP_HIERARCHY_4 == dalEmployeeHierarchy.getFixedHierLvl()){
-					dalProgramDet.setZmAppById(baseDao.getById(DalEmployee.class, Integer.valueOf(dalEmployeeHierarchy.getLvl5EmpId())));
-					*//**We cannot set tbp app id in this case.*//*
-				}
-				*//** IF employee's fixed hierarchy is 5, then that request cannot have next level approvers. This is a error case*//*
-			}
-		}
-	}*/
 
 	private void createProgramTierData(Integer id, ProgramHeader programHeader) {
 		List<ProgramTierDetail> programTierDetailList = programHeader.getProgramDetailList().get(0).getProgramTierDetailList();

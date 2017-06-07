@@ -58,6 +58,8 @@ public class ProgramDetail extends Model{
 	private String programType;
 	private String createdDate;
 	private String modifiedDate;
+	private String statusHistory;
+	private String programStatus;
 	
 	/**Commentary/Special Instructions attribute to hold the user entered comments.*/
 	private String comments;
@@ -415,5 +417,17 @@ public class ProgramDetail extends Model{
 	}
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+	public String getStatusHistory() {
+		return statusHistory;
+	}
+	public void setStatusHistory(String statusHistory) {
+		this.statusHistory = statusHistory;
+	}
+	public String getProgramStatus() {
+		return programStatus;
+	}
+	public void setProgramStatus(String programStatus) {
+		this.programStatus = programStatus;
 	}
 }

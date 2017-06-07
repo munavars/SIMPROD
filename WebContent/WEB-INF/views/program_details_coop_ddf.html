@@ -1342,42 +1342,42 @@
 			}
 			
 			function approveProgram(){
+				var message = "Data approved successfully !!!";
+         		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "2";
 				responseOnload.userComments = $("#approveComments").val();
 				responseOnload.url = window.location.href;
-				fnCallService();
+				fnCallService(message, idBefore);
 				$('#myModal6').modal('toggle');
-         		$("#confirmMessage").html("Data approved successfully !!!");
-				$('#myModal4').modal('toggle');
 				disableFields();
 			}
 			
 			function rejectProgram(){
+				var message = "Data rejected successfully !!!";
+         		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "1";
 				responseOnload.url = window.location.href;
 				responseOnload.userComments = $("#rejectionComments").val();
-				fnCallService();
+				fnCallService(message, idBefore);
 				$('#myModal7').modal('toggle');
-         		$("#confirmMessage").html("Data rejected successfully !!!");
-				$('#myModal4').modal('toggle');
 				disableFields();
 			}
          	function saveDraft(){
+         		var message = "Data saved successfully !!!";
+         		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "3";
          		prepareDataForSubmit();
-         		fnCallService();
+         		fnCallService(message, idBefore);
          		$('#myModal1').modal('toggle');
-         		$("#confirmMessage").html("Data saved successfully !!!");
-				$('#myModal4').modal('toggle');
          	}
          	
 			function submitForApproval(){
+				var message = "Data submitted for approval successfully !!!";
+         		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "2";
 				prepareDataForSubmit();
-				fnCallService();
+				fnCallService(message, idBefore);
 				$('#myModal').modal('toggle');
-				$("#confirmMessage").html("Data submitted for approval successfully !!!");
-				$('#myModal4').modal('toggle');
 				disableFields();
 			}
 			
@@ -1393,7 +1393,7 @@
 				}
 			}
 			
-			function fnCallService(){
+			function fnCallService(message, idBefore){
 				/*Service call to save the data.*/				
 			    $.ajax({
 					type: "POST",
@@ -1406,6 +1406,15 @@
 			            	responseOnload = response.data;
 			            	$("#programId").html(response.data.programDetailList[0].id);
 							$('#status').html(response.data.status);
+							/**Appending program id in the modal message.- Begin*/
+							var idAfter = responseOnload.programDetailList[0].id;
+							if(idBefore != idAfter){
+								var newMessage = "New program id generated : <strong>"+ idAfter + "</strong><br> <br>"+ message;
+								message = newMessage; 
+							}
+							$("#confirmMessage").html(message);
+							$('#myModal4').modal('toggle');
+							/**Appending program id in the modal message.- End*/
 			            } else {
 							alert("Issue while saving the data. Please try again after sometime.!!");
 			            }

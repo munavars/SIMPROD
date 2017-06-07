@@ -20,6 +20,7 @@ import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalProgramHeader;
+import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.ICustomerService;
 
@@ -88,7 +89,10 @@ public class CustomerService implements ICustomerService {
 				programDetail.setZmAppDate(null!=dalProgramDetail.getZmAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getZmAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
 				programDetail.setTbpAppStatus(null!=dalProgramDetail.getTbAppStatus()?dalProgramDetail.getTbAppStatus().getId().toString():"0");
 				programDetail.setTbpAppDate(null!=dalProgramDetail.getTbpAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getTbpAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
+				programDetail.setModifiedDate(null!=dalProgramDetail.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT):"");
+				programDetail.setProgramStatus((dalProgramDetail.getStatus() != null) ? dalProgramDetail.getStatus().getId().toString() : "0" );
 				programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
+				programDetail.setStatusHistory(getProgramStatusHistory(dalProgramDetail));
 				dashboardDetailList.add(programDetail);
 			}
 		}
@@ -96,6 +100,31 @@ public class CustomerService implements ICustomerService {
 
 	}
 	
+	private String getProgramStatusHistory(DalProgramDetail dalProgramDetail) {
+		String statusHistory = null;
+		StringBuilder statusBuilder = null;
+		if(dalProgramDetail != null & dalProgramDetail.getDalWorkflowStatusList() != null){
+			for(DalWorkflowStatus dalWorkflowStatus : dalProgramDetail.getDalWorkflowStatusList()){
+				if(statusBuilder == null){
+					statusBuilder = new StringBuilder();
+				}
+				else{
+					//Add break;
+					statusBuilder.append(ProgramConstant.BREAK_NEW_LINE_CODE);
+				}
+				statusBuilder.append(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
+				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
+				statusBuilder.append(dalWorkflowStatus.getApprover().getTITLE().getTitle());
+				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
+				statusBuilder.append(dalWorkflowStatus.getApprovalStatus().getType());
+			}
+			
+			statusHistory = (statusBuilder != null) ? statusBuilder.toString() : ProgramConstant.STATUS_HISTORY_DATA_MESSAGE;
+		}
+		return statusHistory;
+	}
+
+
 	@Override
 	public Customer getDetail(Integer customerId) {
 		DalCustomer dalCustomer = baseDao.getById(DalCustomer.class, customerId);

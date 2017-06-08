@@ -169,16 +169,112 @@ function listbox_selectall(listID, isSelect) {
 
 function dynamicdropdown(listindex) {
 	document.getElementById("prdvalue").length = 0;
+	
+	if(listindex === 'COMMERCIAL' || listindex === 'CONSUMER' || listindex === 'OTR'){
+		$.ajax({
+			type : "GET",
+			dataType : "json",
+			url : "/SIM/program/v1/getTagValue/" + listindex,
+			success : function(response) {
+				populateTagDetails(response, 'prdvalue');
+			},
+			failure : function(response) {
+				alert("Wrongly done");
+			}
+		});	
+		
+	}
+	else{
+		dynamicDropdownCommon(listindex);
+	}
+	return true;
+}
+
+function populateTagDetails(response, elementId){
+	if(response != null){
+		if(response.includedMap != null){
+			if(elementId == 'prdvalue'){
+				fnPopulateTag(response.includedMap, 'include');	
+			}
+			else if(elementId === 'achPrdvalue'){
+				fnPopulateTag(response.includedMap, 'achInclude');
+			}
+			
+		}
+		if(response.excludedMap != null){
+			if(elementId == 'prdvalue'){
+				fnPopulateTag(response.excludedMap, 'exclude');	
+			}
+			else if(elementId === 'achPrdvalue'){
+				fnPopulateTag(response.excludedMap, 'achExclude');
+			}
+		}
+	}	
+}
+
+function fnPopulateTag(valueMap, elementId){
+    var includedList = valueMap;
+	var dest = document.getElementById(elementId);
+	if(includedList != null){
+	    $.each(includedList, function (i, mapValue) {
+		    $.each(mapValue, function (i, value) {
+				var newOption=document.createElement("option");
+				newOption.value=value;
+				newOption.text=value;
+				try{
+					dest.add(newOption.value,null);
+				}
+				catch(error){
+					if(dest == null){
+						console.log("dest value cannot be null here. Having this logger for testing purpose.. value of element id : "+elementId);
+						dest = document.getElementById(elementId);
+					}
+					dest.add(newOption);
+				}
+		    });
+		    /**Update respective map object to be sent to service.*/
+		    var tagMap;
+		    var reassignNeeded = true;
+		    if (elementId == 'include') {
+				tagMap = includePaid;
+			} else if (elementId == 'exclude') {
+				tagMap = excludePaid;
+			} else if (elementId == 'achInclude') {
+				tagMap = includeAchieve;
+			} else if (elementId == 'achExclude') {
+				tagMap = excludeAchieve;
+			}
+		    var tagTemp = getTagPropertyValue(i, tagMap);
+			if (tagTemp != null) {
+				tagMap[i] = tagTemp.concat(mapValue);
+			} else {
+				if (tagMap == null) {
+					tagMap = {};
+				}
+				tagMap[i] = mapValue;
+				if (reassignNeeded) {
+					if (elementId == 'include') {
+						includePaid = tagMap;
+					} else if (elementId == 'exclude') {
+						excludePaid = tagMap;
+					} else if (elementId == 'achInclude') {
+						includeAchieve = tagMap;
+					} else if (elementId == 'achExclude') {
+						excludeAchieve = tagMap;
+					}
+				}
+			}
+		});
+	}
+}
+
+function dynamicDropdownCommon(listindex){
+	
 	$.ajax({
 		type : "GET",
 		dataType : "json",
 		url : "/SIM/program/v1/getTagValueDropDown/" + listindex,
 		success : function(response) {
-/*			$.each(response, function(i, response) {
-				document.getElementById("prdvalue").options[i] = new Option(
-						response.key, response.value);
-			});*/
-			
      		$.each(response, function (i, item) {
 			    $('#prdvalue').append($('<option>', { 
 			        value: item.key,
@@ -189,23 +285,16 @@ function dynamicdropdown(listindex) {
 		failure : function(response) {
 			alert("Wrongly done");
 		}
-	});
-	return true;
+	});	
 }
 
-function achDynamicdropdown(listindex) {
-	document.getElementById("achPrdvalue").length = 0;
+
+function achDynamicDropdownCommon(listindex){
 	$.ajax({
 		type : "GET",
 		dataType : "json",
 		url : "/SIM/program/v1/getTagValueDropDown/" + listindex,
 		success : function(response) {
-/*			$.each(response, function(i, response) {
-				document.getElementById("achPrdvalue").options[i] = new Option(
-						response.key, response.value);
-				
-			});*/
-			
      		$.each(response, function (i, item) {
 			    $('#achPrdvalue').append($('<option>', { 
 			        value: item.key,
@@ -217,6 +306,30 @@ function achDynamicdropdown(listindex) {
 			alert("Wrongly done");
 		}
 	});
+	
+}
+
+function achDynamicdropdown(listindex) {
+	document.getElementById("achPrdvalue").length = 0;
+
+	if(listindex === 'COMMERCIAL' || listindex === 'CONSUMER' || listindex === 'OTR'){
+		$.ajax({
+			type : "GET",
+			dataType : "json",
+			url : "/SIM/program/v1/getTagValue/" + listindex,
+			success : function(response) {
+				populateTagDetails(response, 'achPrdvalue');
+			},
+			failure : function(response) {
+				alert("Wrongly done");
+			}
+		});	
+		
+	}
+	else{
+		achDynamicDropdownCommon(listindex);
+	}
+	
 	return true;
 }
 

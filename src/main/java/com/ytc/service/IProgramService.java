@@ -7,11 +7,14 @@ import com.ytc.common.model.NewCustomerDetail;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramInputParam;
+import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.common.model.ProgramTierDetail;
 
 public interface IProgramService {
 
 	List<DropDown> getTagValueDropDown(Integer tagId);
+	
+	ProgramPaidOn getTagDetails(String tag);
 
 	String updateProgramTier(ProgramTierDetail programTierDetail);
 

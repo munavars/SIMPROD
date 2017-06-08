@@ -297,7 +297,7 @@
                         data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.modifiedDate+'</div></a>';
                     	}else if(data=='1'){
                     	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.modifiedDate+'</div></a>';	
-                    	}else if(data=='4'){
+                    	}else if(data=='4' || data == '0'){
                     	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.modifiedDate+'</div></a>';	
                     	}else if(data=='5'){
                     	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.modifiedDate+'</div></a>';	
@@ -354,7 +354,7 @@
 	                        data = '<a class="status-icon status-icon--pending" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-ellipsis-h"></i></a>';
 	                    	}else if(data=='1'){
 	                    	data=	'<a class="status-icon status-icon--rejected" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-times"></i></a>';	
-	                    	}else if(data=='4'){
+	                    	}else if(data=='4'|| data == '0'){
 	                    	data='<a class="status-icon status-icon--approved" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-check"></i></a>';	
 	                    	}else if(data=='5'){
 	                        	data='<a class="status-icon status-icon--waiting" data-placement="top" rel="tooltip"  title='+ divToolTip +'><i class="fa fa-ellipsis-h"></i></a>';	

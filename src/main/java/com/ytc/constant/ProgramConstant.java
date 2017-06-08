@@ -1,5 +1,8 @@
 package com.ytc.constant;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ProgramConstant {
 	public static final String INCLUDED = "1";
 	public static final String EXCLUDED = "2";
@@ -49,4 +52,16 @@ public class ProgramConstant {
 	public static final String COLON_WITH_SPACE = " : ";
 	public static final String BLANK = "";
 	public static final String STATUS_HISTORY_DATA_MESSAGE = "Status history details not available";
+	
+	public static final String COMMERCIAL = "COMMERCIAL";
+	public static final String CONSUMER = "CONSUMER";
+	public static final String OTR = "OTR";
+	public static final List<Integer> COMMERCIAL_TAG_ID_LIST = Arrays.asList(5);
+	public static final List<String> COMMERCIAL_TAG_VALUE_LIST =Arrays.asList("TBS");
+	public static final List<Integer> CONSUMER_TAG_ID_LIST = Arrays.asList(5);
+	public static final List<Integer> CONSUMER_EXCLUDE_TAG_ID_LIST = Arrays.asList(4);
+	public static final List<String> CONSUMER_TAG_VALUE_LIST =Arrays.asList("A", "P", "HPT", "LTB", "LTR", "PCB", "PCR");
+	public static final List<String> CONSUMER_EXCLUDE_TAG_VALUE_LIST =Arrays.asList("A", "P");
+	public static final List<Integer> OTR_TAG_ID_LIST = Arrays.asList(5);
+	public static final List<String> OTR_TAG_VALUE_LIST =Arrays.asList("ORL", "ORM", "ORS", "ORX", "OTL", "OTM", "OTR", "OTS", "OTX");
 }

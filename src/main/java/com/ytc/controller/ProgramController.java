@@ -19,6 +19,7 @@ import com.ytc.common.model.NewCustomerDetail;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramInputParam;
+import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.common.result.DataResult;
 import com.ytc.common.result.ListResult;
@@ -101,6 +102,13 @@ public class ProgramController extends BaseController {
 		List<DropDown> dropdownList = null;
 		dropdownList = (List<DropDown>)(getService(request).getTagValueDropDown(tagId));
 		return dropdownList;
+	}
+	
+	@RequestMapping(value = "v1/getTagValue/{tag}", method = RequestMethod.GET)
+	public @ResponseBody ProgramPaidOn getTagValueDetails(HttpServletRequest request, @PathVariable("tag") String tag) {
+		ProgramPaidOn programTagValue = null;
+		programTagValue = (ProgramPaidOn)(getService(request).getTagDetails(tag));
+		return programTagValue;
 	}
 	
 	@RequestMapping(value = "/{id}/{status}", method = RequestMethod.GET)

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public enum TagItemValueMapEnum {
 
-	ZERO(0, "0", "", ""),	
+	ZERO(0, "0", "", ""),
 	BILL_TO_NUMBER(1,"Bill To", "DalShipToMaster","CONCAT(billToNumber, ' - ', billToName)"),
 	CHANNEL_3(2,"Channel3","DalShipToMaster","CONCAT(channelCode, ' - ', channelName)"),
 	BUSINESS_UNIT(3,"Business Unit","DalShipToMaster","CONCAT(businessUnit, ' - ', businessUnitName)"),
@@ -27,7 +27,12 @@ public enum TagItemValueMapEnum {
 	SHIP_TO_NUMBER(10,"Ship To","DalShipToMaster","CONCAT(shipToNumber, ' - ', shipToName)"),
 	CORP_NUMBER(11,"Corp","DalShipToMaster","CONCAT(corpNumber, ' - ', corpName)"),
 	CHANNEL_CODE(12,"Channel1","DalShipToMaster","CONCAT(channelGroup, ' - ', channelGroupName)"),
-	CHANNEL_GROUP(13,"Channel2","DalShipToMaster","CONCAT(SUBSTRING(channelCode, 1, 2), ' - ', channelName)"); 
+	CHANNEL_GROUP(13,"Channel2","DalShipToMaster","CONCAT(SUBSTRING(channelCode, 1, 2), ' - ', channelName)"),
+	/**As per new requirement, below values should be displayed to the user at the top of tag item
+	 * drop down.*/
+	COMMERCIAL_PRODUCT_LINE(14,"Commercial Product Line","",""),
+	CONSUMER_PRODUCT_LINE(15,"Consumer Product Line","",""),
+	OTR_PRODUCT_LINE(16,"OTR Product Line","","");
 
 	private static final Map<Integer, TagItemValueMapEnum> map = new HashMap<>(values().length, 0.75f);
 	

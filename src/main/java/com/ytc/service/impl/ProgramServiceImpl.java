@@ -494,19 +494,20 @@ public class ProgramServiceImpl implements IProgramService {
 	}
 	
 	private List<DropDown> getTagItemDropDownList(String namedQueryValue){
-		List<DropDown> dropdownList = null;
+		List<DropDown> dropdownList = new ArrayList<DropDown>();
+		populateDefaultValuesForTag(dropdownList);
 		if(namedQueryValue != null){
 			List<DalTagItems> dalTagItemsList =  baseDao.getListFromNamedQuery(namedQueryValue);
 			if(dalTagItemsList != null){
-				for(DalTagItems dalTagItems : dalTagItemsList){
-					if(dalTagItems.getTagLevel()!=0){
-					DropDown dropDown = new DropDown();
-					dropDown.setKey(String.valueOf(dalTagItems.getId()));
-					dropDown.setValue(dalTagItems.getItem());
-					if(dropdownList == null){
-						dropdownList = new ArrayList<DropDown>();
-					}
-					dropdownList.add(dropDown);
+				for (DalTagItems dalTagItems : dalTagItemsList) {
+					if (dalTagItems.getTagLevel() != 0) {
+						DropDown dropDown = new DropDown();
+						dropDown.setKey(String.valueOf(dalTagItems.getId()));
+						dropDown.setValue(dalTagItems.getItem());
+						if (dropdownList == null) {
+							dropdownList = new ArrayList<DropDown>();
+						}
+						dropdownList.add(dropDown);
 					}
 				}
 			}
@@ -516,6 +517,25 @@ public class ProgramServiceImpl implements IProgramService {
 		return dropdownList;
 	}
 	
+	private void populateDefaultValuesForTag(List<DropDown> dropdownList) {
+		//Commercial 
+		DropDown dropDown = new DropDown();
+		dropDown.setKey(ProgramConstant.COMMERCIAL);
+		dropDown.setValue(TagItemValueMapEnum.COMMERCIAL_PRODUCT_LINE.getMasterColumnName());
+		dropdownList.add(dropDown);
+		//Consumer
+		dropDown = new DropDown();
+		dropDown.setKey(ProgramConstant.CONSUMER);
+		dropDown.setValue(TagItemValueMapEnum.CONSUMER_PRODUCT_LINE.getMasterColumnName());
+		dropdownList.add(dropDown);
+		//OTR
+		dropDown = new DropDown();
+		dropDown.setKey(ProgramConstant.OTR);
+		dropDown.setValue(TagItemValueMapEnum.OTR_PRODUCT_LINE.getMasterColumnName());
+		dropdownList.add(dropDown);
+	}
+
+
 	private List<DropDown> getPayToDropDownList(String customerId){
 		
 		List<DropDown> dropdownList = null;
@@ -922,6 +942,92 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		
 		return customerDetailsList;
+	}
+
+
+	@Override
+	public ProgramPaidOn getTagDetails(String tag) {
+		ProgramPaidOn programPaidOn = null;
+		Map<String, List<String>> tagDetailsMap = null;
+		List<Integer> tagIdList = null;
+		List<String> tagValues = null;
+		List<Integer> tagExcludedIdList = null;
+		List<String> tagExcludedValues = null;
+		if(ProgramConstant.COMMERCIAL.equals(tag) || ProgramConstant.CONSUMER.equals(tag) || ProgramConstant.OTR.equals(tag)){
+			if(ProgramConstant.COMMERCIAL.equals(tag)){
+				tagIdList = ProgramConstant.COMMERCIAL_TAG_ID_LIST;
+				tagValues = ProgramConstant.COMMERCIAL_TAG_VALUE_LIST;
+			}
+			else if(ProgramConstant.CONSUMER.equals(tag)){
+				tagIdList = ProgramConstant.CONSUMER_TAG_ID_LIST;
+				tagValues = ProgramConstant.CONSUMER_TAG_VALUE_LIST;
+				tagExcludedIdList = ProgramConstant.CONSUMER_EXCLUDE_TAG_ID_LIST;
+				tagExcludedValues = ProgramConstant.CONSUMER_EXCLUDE_TAG_VALUE_LIST;
+			}
+			
+			else if(ProgramConstant.OTR.equals(tag)){
+				tagIdList = ProgramConstant.OTR_TAG_ID_LIST;
+				tagValues = ProgramConstant.OTR_TAG_VALUE_LIST;
+			}
+			/**Include */
+			tagDetailsMap = getTagValueMap(tagIdList, tagValues);
+			if(tagDetailsMap != null ){
+				if(programPaidOn == null){
+					programPaidOn = new ProgramPaidOn();
+				}
+				programPaidOn.setIncludedMap(tagDetailsMap);	
+			}
+			/**Exclude */
+			tagDetailsMap = getTagValueMap(tagExcludedIdList, tagExcludedValues);
+			if(tagDetailsMap != null ){
+				if(programPaidOn == null){
+					programPaidOn = new ProgramPaidOn();
+				}
+				programPaidOn.setExcludedMap(tagDetailsMap);	
+			}			
+		}
+		
+		return programPaidOn;
+	}
+
+
+	private Map<String, List<String>> getTagValueMap(List<Integer> tagIdList,
+			List<String> tagValues) {
+		Map<String, List<String>> tagDetailsMap = null;
+		if(tagIdList != null && tagValues != null){
+			for(Integer tagId : tagIdList){
+				List<String> returnList = getTagValueList(tagId);
+				List<String> validValueList = new ArrayList<String>();
+				for(String value : tagValues){
+					if(returnList.contains(value)){
+						validValueList.add(value);
+					}
+				}
+				if(tagDetailsMap == null){
+					tagDetailsMap = new HashMap<String, List<String>>();
+				}
+				if(!validValueList.isEmpty()){
+					tagDetailsMap.put(String.valueOf(tagId),validValueList);	
+				}
+			}
+		}
+		return tagDetailsMap;
+	}
+	
+	private List<String> getTagValueList(Integer tagId){
+		
+		TagItemValueMapEnum tagItemValueMapEnum = null;
+		List<String> tagValueList = null;
+		String query = null;
+		if(tagId != null){
+			tagItemValueMapEnum = TagItemValueMapEnum.tableDetail(tagId);
+			if(tagItemValueMapEnum != null){
+				query = String.format(QueryConstant.TAG_VALUE_LIST_BY_TAG_ID, tagItemValueMapEnum.getFetchColumnName(), tagItemValueMapEnum.getTableName()) 
+						+ QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE;
+				tagValueList = baseDao.getTagValue(query);
+			}
+		}
+		return tagValueList;
 	}
 	
 }

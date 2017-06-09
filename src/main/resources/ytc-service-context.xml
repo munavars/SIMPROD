@@ -41,6 +41,11 @@
 	<bean id="programUpdateService" class="com.ytc.service.impl.ProgramUpdateServiceImpl">
 	</bean>
 	
+		<bean id="pricingUpdateService" class="com.ytc.service.impl.PricingUpdateServiceImpl">
+	</bean>
+	
+		<bean id="pricingService" class="com.ytc.service.impl.PricingServiceImpl">
+	</bean>
 	<bean id="programCreateService" class="com.ytc.service.impl.ProgramCreateServiceImpl">
 	</bean>
 	
@@ -55,5 +60,6 @@
 	
 	<bean id="programWorkflowService" class="com.ytc.service.impl.ProgramWorkflowServiceImpl">
 	</bean>
+	
 	
 </beans>

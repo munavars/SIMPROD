@@ -67,6 +67,8 @@ public class DalProgramDetail extends DalAuditableModel {
     private List<DalWorkflowStatus> dalWorkflowStatusList;
     
     private DalUserComments dalUserComments;
+	private Integer tbpCheck;
+	private Integer glCode;
     
     @Column(name = "LONG_DESC")
     public String getLongDesc() {
@@ -640,4 +642,31 @@ public class DalProgramDetail extends DalAuditableModel {
 	public void setDalUserComments(DalUserComments dalUserComments) {
 		this.dalUserComments = dalUserComments;
 	}
+	
+	/**
+     * @return the tbpCheck
+     */
+     @Column(name = "TBP")
+     public Integer getTbpCheck() {
+                     return tbpCheck;
+     }
+     /**
+     * @param tbpCheck the tbpCheck to set
+     */
+     public void setTbpCheck(Integer tbpCheck) {
+                     this.tbpCheck = tbpCheck;
+     }
+     /**
+      * @return the glCode
+      */
+      @Column(name = "GL_CODE")
+      public Integer getGlCode() {
+                      return glCode;
+      }
+      /**
+      * @param getGlCode the getGlCode to set
+      */
+      public void setGlCode(Integer glCode) {
+                      this.glCode = glCode;
+      }
 }

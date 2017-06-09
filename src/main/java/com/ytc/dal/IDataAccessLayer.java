@@ -42,4 +42,11 @@ public interface IDataAccessLayer {
 	public <T> List<T> getListFromNamedQueryWithParameter(String namedQueryString, Map<String, Object> parameters);
 
 	public <T> List<T> getListFromNativeQuery(String namedQueryString, Map<String, Object> parameters);
+
+
+	public <T> List<T> getByType(String namedQueryString, Map<String, Object> queryParams);
+
+	public <T extends DalModel> T merge(T item);
+
+	public <T> List<T>  validate(String qlString);
 }

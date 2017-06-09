@@ -449,6 +449,8 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				dalProgramDet.setActualMarker(programDetail.getActualMarker());	
 			}
 			dalProgramDet.setStatus(dalProgramDet.getDalProgramHeader().getStatus());
+			dalProgramDet.setTbpCheck(programDetail.getTbpCheck());
+			dalProgramDet.setGlCode(programDetail.getGlCode());
 			//setApproverLevelStatus(dalProgramDet, programHeader);
 		}
 

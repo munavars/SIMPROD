@@ -11,7 +11,9 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "CUSTOMER")
 @NamedQueries({
-	@NamedQuery(name="DalCustomer.getCustomerNumber", query = "select o from DalCustomer o where o.id=:id")
+	@NamedQuery(name="DalCustomer.getCustomerNumber", query = "select o from DalCustomer o where o.id=:id"),
+	@NamedQuery(name="DalCustomer.getGroup", query = "select DISTINCT(customerName) from DalCustomer o where o.groupFlag=:groupFlag"),
+	@NamedQuery(name="DalCustomer.getCustomerName", query = "select DISTINCT(customerName) from DalCustomer")
 })
 public class DalCustomer extends DalAuditableModel {
 

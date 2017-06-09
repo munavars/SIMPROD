@@ -312,6 +312,8 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		dalProgramDet.setPaidType(Integer.valueOf(programDetail.getPaidType()));
 		
 		//dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
+		dalProgramDet.setTbpCheck(programDetail.getTbpCheck());
+		dalProgramDet.setGlCode(programDetail.getGlCode());
 		dalProgramDet.setLongDesc(programDetail.getLongDesc());
 		dalProgramDet.setProgramMaster(baseDao.getById(DalProgramMaster.class, Integer.valueOf(programDetail.getProgramName())));
 		

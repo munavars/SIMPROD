@@ -104,6 +104,14 @@ public class BaseDao implements IDataAccessLayer {
 	public <T extends DalModel> T update(T item) {
 		return update(item, serviceContext.getEmployee().getEMP_ID());
 	}
+	@Override
+	@Transactional
+	public <T extends DalModel> T merge(T item){
+		T t = entityManager.merge(item);
+		entityManager.flush();
+		return t;
+		
+	}
 
 	@Override
 	@Transactional
@@ -145,7 +153,20 @@ public class BaseDao implements IDataAccessLayer {
 
 		return entity;
 	}
-
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> getByType(String namedQueryString, Map<String, Object> queryParams) {
+		Query query = null;
+		List<T> returnList = null;
+		if(namedQueryString != null){
+			query = entityManager.createNamedQuery(namedQueryString);
+			for (Entry<String, Object> param : queryParams.entrySet()) {
+				query.setParameter(param.getKey(), param.getValue());
+			}
+			returnList = query.getResultList();
+		}
+		return returnList;
+	}
 	@Override
 	@Transactional
 	public int updateNative(String sql, Map<String, Object> queryParams) {
@@ -216,6 +237,7 @@ public class BaseDao implements IDataAccessLayer {
 			query = entityManager.createNativeQuery(namedQueryString);
 			for (Entry<String, Object> param : parameters.entrySet()) {
 				query.setParameter(param.getKey(), param.getValue());
+				
 			}
 			returnList = query.getResultList();
 		}
@@ -272,5 +294,12 @@ public class BaseDao implements IDataAccessLayer {
 			returnList = query.getResultList();
 		}
 		return returnList;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> validate(String qlString) {
+		Query query = entityManager.createNativeQuery(qlString);
+		List<T> resultList = query.getResultList();
+		return resultList;
 	}
 }

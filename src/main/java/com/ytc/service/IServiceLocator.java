@@ -8,6 +8,7 @@ public interface IServiceLocator {
 	IEmployeeService getEmployeeService();
 
 	IProgramService getProgramService();
-	
+	IPricingService getPricingService();
 	IProgramUpdateService getProgramPersistService();
+	IPricingUpdateService getPricingPersistService();
 }

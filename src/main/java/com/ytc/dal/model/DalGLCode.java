@@ -14,7 +14,7 @@ import javax.persistence.Table;
 public class DalGLCode extends DalModel {
 private static final long serialVersionUID = 1L;
 	
-	@Column(name="GLBucket")
+	@Column(name="GLNo")
 	private String glBucket;
 
 

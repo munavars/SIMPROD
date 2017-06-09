@@ -30,5 +30,5 @@ public interface IProgramService {
 
 	byte[] downloadPDF(String id);
 	
-	List<NewCustomerDetail> getNewCustomerData();
+	List<NewCustomerDetail> getNewCustomerData(Integer employeeId);
 }

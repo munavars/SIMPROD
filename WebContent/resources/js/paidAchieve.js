@@ -194,9 +194,13 @@ function populateTagDetails(response, elementId){
 	if(response != null){
 		if(response.includedMap != null){
 			if(elementId == 'prdvalue'){
+				removeOptions('include');
+				removeOptions('exclude');
 				fnPopulateTag(response.includedMap, 'include');	
 			}
 			else if(elementId === 'achPrdvalue'){
+				removeOptions('achInclude');
+				removeOptions('achExclude');
 				fnPopulateTag(response.includedMap, 'achInclude');
 			}
 			
@@ -212,9 +216,42 @@ function populateTagDetails(response, elementId){
 	}	
 }
 
+function removeOptions(elementId){
+	var dest = document.getElementById(elementId);
+	/**If already if some data is present, remove it.*/
+	if (dest != null && dest.options.length > 0) {
+		var totalLength = dest.options.length;
+		while(totalLength > 0){
+			for (var count = 0; count < totalLength; count++) {
+				try {
+					dest.remove(count, null);
+				} catch (error) {
+					dest.remove(count);
+				}
+			}	
+			totalLength = dest.options.length;
+		}
+	}
+	
+	var tagMap = {};
+	if (true) {
+		if (elementId == 'include') {
+			includePaid = tagMap;
+		} else if (elementId == 'exclude') {
+			excludePaid = tagMap;
+		} else if (elementId == 'achInclude') {
+			includeAchieve = tagMap;
+		} else if (elementId == 'achExclude') {
+			excludeAchieve = tagMap;
+		}
+	}
+	
+}
+
 function fnPopulateTag(valueMap, elementId){
     var includedList = valueMap;
 	var dest = document.getElementById(elementId);
+
 	if(includedList != null){
 	    $.each(includedList, function (i, mapValue) {
 		    $.each(mapValue, function (i, value) {
@@ -244,10 +281,10 @@ function fnPopulateTag(valueMap, elementId){
 			} else if (elementId == 'achExclude') {
 				tagMap = excludeAchieve;
 			}
-		    var tagTemp = getTagPropertyValue(i, tagMap);
+/*		    var tagTemp = getTagPropertyValue(i, tagMap);
 			if (tagTemp != null) {
-				tagMap[i] = tagTemp.concat(mapValue);
-			} else {
+				tagMap[i] = mapValue;
+			} else {*/
 				if (tagMap == null) {
 					tagMap = {};
 				}
@@ -263,7 +300,7 @@ function fnPopulateTag(valueMap, elementId){
 						excludeAchieve = tagMap;
 					}
 				}
-			}
+/*			}*/
 		});
 	}
 }

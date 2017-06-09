@@ -535,6 +535,21 @@
 																		</label>
 																	</div>
 																</div>
+																 </br>
+																<div id="tbpcheck">
+																<label class="control-label"
+																			for="tbpcheck">TBP Check</label>&nbsp;&nbsp;
+																			 <input
+																			type="checkbox" name="tbpCheck"
+																			id="tbpCheck"/>
+																</div>
+																</br>
+																<div id="glcocde">
+																<label class="control-label"
+																			for="glcode_dropdown">GL Code</label>&nbsp;&nbsp;
+																			 <select  id="glcode_dropdown" name="glcode_dropdown"/>
+																</div> 
+																</div>
 															</div>
 														</div>
 													</div>
@@ -1437,6 +1452,11 @@
                	fnPopulateDropdown('pricing_type_inputselect', response.data.programDetailList[0].dropdownList.pricingTypeList);
                	$('#pricing_type_inputselect').val(response.data.programDetailList[0].pricingType);
                	
+               	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
+               	$('#glcode_dropdown').val(response.data.programDetailList[0].glcode);
+               	
+               	
+               	
                	/*Program Paid Based on section*/
                	fnPopulateDropdown('paidBasedOn', response.data.programDetailList[0].programPaidOn.tagItemList);
                	if(response.data.programDetailList[0].programPaidOn.isTiered == true){
@@ -1692,7 +1712,15 @@
 				responseOnload.programDetailList[0].paidBasedOn = $('#paid_basedon_inputselect').val();
 				responseOnload.programDetailList[0].pricingType= $('#pricing_type_inputselect').val();
 				responseOnload.programDetailList[0].payoutFrequency = $('#payout_freq_inputselect').val();
-				
+				responseOnload.programDetailList[0].glCode = parseInt($('#glcode_dropdown').val());
+				responseOnload.programDetailList[0].tbpCheck = parseInt($('#tbpCheck').val());
+				if($('#tbpCheck').is(":checked")){
+					responseOnload.programDetailList[0].tbpCheck = '1';
+				}
+				else
+				{
+				    responseOnload.programDetailList[0].tbpCheck = '0';
+				}
 				/*Save Program Paid details*/
 				//responseOnload.programDetailList[0].programPaidOn.isTiered = $('input:radio[name=optionsRadiosTier]:checked').val();
 				if($('input:radio[name=optionsRadiosTier]:checked').val() == 'Yes'){
@@ -1850,6 +1878,7 @@
 					}
 			    });
 			}
+
 			
 			function fnGetTierData(responseOnload){
 				/* var programDetailTierList= {}; */
@@ -1929,7 +1958,6 @@
 					$("#amountdiv").show();
 				}
     		} );
-    		
 	</script>
        
 	<script type="text/javascript">

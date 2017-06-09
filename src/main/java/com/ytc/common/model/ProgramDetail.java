@@ -47,6 +47,7 @@ public class ProgramDetail extends Model{
 	private String submitDate;
 	private String longDesc;
 	
+	
 	private ProgramDetailsDropDown dropdownList;
 
 	private ProgramPaidOn programPaidOn;
@@ -60,6 +61,9 @@ public class ProgramDetail extends Model{
 	private String modifiedDate;
 	private String statusHistory;
 	private String programStatus;
+	
+	private Integer tbpCheck;
+	private Integer glCode;
 	
 	/**Commentary/Special Instructions attribute to hold the user entered comments.*/
 	private String comments;
@@ -429,5 +433,18 @@ public class ProgramDetail extends Model{
 	}
 	public void setProgramStatus(String programStatus) {
 		this.programStatus = programStatus;
+	}
+	
+	public Integer getTbpCheck() {
+		return tbpCheck;
+	}
+	public void setTbpcheck(Integer tbpCheck) {
+		this.tbpCheck = tbpCheck;
+	}
+	public Integer getGlCode() {
+		return glCode;
+	}
+	public void setGlCode(Integer glCode) {
+		this.glCode = glCode;
 	}
 }

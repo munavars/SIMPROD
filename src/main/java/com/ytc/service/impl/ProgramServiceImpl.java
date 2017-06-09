@@ -908,10 +908,22 @@ public class ProgramServiceImpl implements IProgramService {
 
 
 	@Override
-	public List<NewCustomerDetail> getNewCustomerData() {
-		List<NewCustomerDetail> customerDetailsList = null;
+	public List<NewCustomerDetail> getNewCustomerData(Integer employeeId) {
+		
+		List<NewCustomerDetail> customerDetailsList =  new ArrayList<NewCustomerDetail>();
+		Map<String, Object> queryParams = new HashMap<String, Object>();
+		
 		String queryString = QueryConstant.NEW_CUSTOMER_QUERY;
-		List<DalCustomer> resultList = baseDao.getlist(DalCustomer.class, queryString, new HashMap<String, Object>());
+		if (employeeId != 0 ) {
+			String empQueryString = QueryConstant.EMPLOYEE_HIER_LIST;
+			queryParams.put("loginId", employeeId);
+			List<String> userIdList = baseDao.getListFromNativeQuery(empQueryString,queryParams);
+			queryParams.clear();
+			queryParams.put("userIdList", userIdList);
+			queryString += QueryConstant.NEW_CUSTOMER_ACCOUNT_MANAGER_CHECK;
+		}		
+		
+		List<DalCustomer> resultList = baseDao.getlist(DalCustomer.class, queryString, queryParams);
 		if(resultList != null && !resultList.isEmpty()){
 			for(DalCustomer dalCustomer : resultList){
 				NewCustomerDetail customerDetail = new NewCustomerDetail();

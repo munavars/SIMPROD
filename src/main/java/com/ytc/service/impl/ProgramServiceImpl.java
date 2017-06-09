@@ -36,6 +36,7 @@ import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalFrequency;
+import com.ytc.dal.model.DalGLCode;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
 import com.ytc.dal.model.DalProgramDetAchieved;
@@ -463,6 +464,7 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetailsDropDown.setPaidBasedOnList(getBaseItemsDropDownList("DalBaseItems.getAllDetails"));
 		programDetailsDropDown.setBtlList(getBTLDropDownList());
 		programDetailsDropDown.setPayToList(getPayToDropDownList(customerId));
+		programDetailsDropDown.setGlCodeList(getGLCodeDropDownList("DalGLCode.getAllDetails"));
 		programDetail.setBeginDate(new Date());
 		programDetail.setEndDate(new Date());
 		programDetail.setDropdownList(programDetailsDropDown);
@@ -1028,6 +1030,26 @@ public class ProgramServiceImpl implements IProgramService {
 			}
 		}
 		return tagValueList;
+	}
+	
+	private List<DropDown> getGLCodeDropDownList(String namedQueryValue){
+		List<DropDown> dropdownList = null;
+		if(namedQueryValue != null){
+			List<DalGLCode> dalGLCodeList =  baseDao.getListFromNamedQuery(namedQueryValue);
+			if(dalGLCodeList != null){
+				for(DalGLCode dalGlcode : dalGLCodeList){
+					DropDown dropDown = new DropDown();
+					dropDown.setKey(String.valueOf(dalGlcode.getId()));
+					dropDown.setValue(dalGlcode.getGlBucket());
+					if(dropdownList == null){
+						dropdownList = new ArrayList<DropDown>();
+					}
+					dropdownList.add(dropDown);
+				}
+			}
+			
+		}
+		return dropdownList;
 	}
 	
 }

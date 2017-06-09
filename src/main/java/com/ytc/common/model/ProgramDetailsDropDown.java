@@ -10,6 +10,8 @@ public class ProgramDetailsDropDown {
 	private List<DropDown> payToList;
 	private List<DropDown> paidTypeList;
 	private List<DropDown> paidBasedOnList;
+	private List<DropDown> glCodeList;
+	
 	public List<DropDown> getProgramNameList() {
 		return programNameList;
 	}
@@ -51,5 +53,11 @@ public class ProgramDetailsDropDown {
 	}
 	public void setPaidBasedOnList(List<DropDown> paidBasedOnList) {
 		this.paidBasedOnList = paidBasedOnList;
+	}
+	public List<DropDown> getGlCodeList() {
+		return glCodeList;
+	}
+	public void setGlCodeList(List<DropDown> glCodeList) {
+		this.glCodeList = glCodeList;
 	}
 }

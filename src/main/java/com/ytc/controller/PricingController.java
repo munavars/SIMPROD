@@ -3,6 +3,7 @@
  */
 package com.ytc.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,17 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.PricingHeader;
-import com.ytc.common.model.ProgramHeader;
-import com.ytc.common.model.ProgramInputParam;
 import com.ytc.common.result.ModelResult;
+import com.ytc.constant.ProgramConstant;
 import com.ytc.service.IPricingService;
 import com.ytc.service.IPricingUpdateService;
 import com.ytc.service.ServiceContext;
 
 @Controller
 @RequestMapping(value = "/pricing")
-
-	
 public class PricingController extends BaseController {
 
 	@Autowired
@@ -52,8 +50,14 @@ public class PricingController extends BaseController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String pricingForm(HttpServletRequest request, Model model) {
 		String returnModel = null;
+		List<Employee> employee = null;
+		String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
 		/*ModelResult<PricingHeader> returnData = null;
 		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());*/
+		model.addAttribute("loginUserNameValue", userName);
+		employee=new ArrayList<Employee>();
+		employee.add(serviceContext.getEmployee());
+		model.addAttribute("EmployeeInfo", employee);
 		returnModel ="pricing_request";
 		return returnModel;
 		

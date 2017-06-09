@@ -7,7 +7,7 @@
     <meta name="author" content="Yokohama">
     <meta name="keyword" content="">
 
-    <title>Blank</title>
+    <title>Pricing Form</title>
 
     <!-- Bootstrap core CSS -->
     <link href="resources/css/bootstrap.min.css" rel="stylesheet">
@@ -585,17 +585,45 @@ function handleFile(e) {
 			} */
   </script>
   <!--  Validation setup Ends -->
-			
+<script type="text/javascript">
+	function closeSidebar() {
+		if ($('#sidebar > ul').is(":visible") === true) {
+			$('#main-content').css({
+				'margin-left' : '0px'
+			});
+			$('#sidebar').css({
+				'margin-left' : '-210px'
+			});
+			$('#sidebar > ul').hide();
+			$("#container").addClass("sidebar-closed");
+		}
+		$('#sidebar-toggle-box').css({
+			'display' : 'none'
+		});
+	}
+</script>
 
+<!-- Inline javascript to set the user name from model attribute Begin -->
+<script type="text/javascript" th:inline="javascript">
+	$(document).ready(function() {
+	   var modelAttributeValue = [[${loginUserNameValue}]];
+	   $("#loginUserName").html(modelAttributeValue);
+	   var emp = [[${EmployeeInfo}]];
+	   if(2==emp[0].ROLE_ID)
+	   	{
+	   		closeSidebar();
+		}
+	});
+</script>
+<!-- Inline javascript to set the user name from model attribute End -->
 
-      
-   </head>
+</head>
    <body>
 
   <section id="container" class="">
      <!--header start-->
          <header class="header dark-bg">
-            <div class="sidebar-toggle-box">
+            <div class="sidebar-toggle-box" id="sidebar-toggle-box">
                <i class="fa fa-bars"></i>
             </div>
             <!--logo start-->
@@ -608,7 +636,7 @@ function handleFile(e) {
               <!-- settings end -->
              
             <!-- notification dropdown start-->
-             <li id="header_notification_bar" class="dropdown">
+             <!-- <li id="header_notification_bar" class="dropdown">
                   <a data-toggle="dropdown" class="dropdown-toggle" href="#">
 
                       <i class="fa fa-bell-o"></i>
@@ -634,28 +662,25 @@ function handleFile(e) {
                           </a>
                       </li>
                   </ul>
-              </li>
+              </li> -->
               <!-- notification dropdown end -->
           </ul>
             </div>
             <div class="top-nav">
                <ul class="nav pull-right top-menu">
-                  <li>
+                  <!-- <li>
                      <input type="text" class="form-control search" placeholder="Search">
-                  </li>
+                  </li> -->
                   <!-- user login dropdown start-->
                   <li class="dropdown">
-                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                     <!--img alt="" src="resources/img/avatar1_small.jpg"-->
-                     <span class="username">John Doe</span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                     <span class="username" id="loginUserName"></span>
+                     
                      <b class="caret"></b>
                      </a>
                      <ul class="dropdown-menu extended logout">
                         <div class="log-arrow-up"></div>
-                        <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                        <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="#"><i class="fa fa-bell-o"></i> Notification</a></li>
-                        <li><a href="login.html"><i class="fa fa-key"></i> Log Out</a></li>
+                        <li><a id="logout-btn" href="/SIM/logout"><i class="fa fa-key"></i> Log Out</a></li>
                      </ul>
                   </li>
                   <!-- user login dropdown end -->
@@ -674,7 +699,7 @@ function handleFile(e) {
                      <span>My Dashboard</span>
                      </a>
                   </li>
-                  <li>
+                  <!-- <li>
                      <a class="" href="program_details.html">
                      <i class="fa fa-tasks"></i>
                      <span>Create New Program</span>
@@ -697,7 +722,7 @@ function handleFile(e) {
                      <i class="fa fa-user"></i>
                      <span>Login Page</span>
                      </a>
-                  </li>
+                  </li> -->
                </ul>
                <!-- sidebar menu end-->
             </div>

@@ -3,10 +3,18 @@ package com.ytc.dal.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PART_MASTER")
+@NamedQueries({
+	@NamedQuery(name="DalPartMaster.getPartNumber", query = "select o.partNumber from DalPartMaster o where o.partNumber in :partNumber"),
+	@NamedQuery(name="DalPartMaster.getProductLine", query = "select o.productLine from DalPartMaster o where o.productLine in :productLine"),
+	@NamedQuery(name="DalPartMaster.getTreadDesc", query = "select o.treadDesc from DalPartMaster o where o.treadDesc in :treadDesc")
+
+})
 public class DalPartMaster {
 	private String partNumber;
 	private String partDesc;

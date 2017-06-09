@@ -3,10 +3,16 @@ package com.ytc.dal.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "SHIP_TO_MASTER")
+@NamedQueries({
+	@NamedQuery(name="DalShipToMaster.getShipToName", query = "select DISTINCT(shipToName) from DalShipToMaster"),
+	@NamedQuery(name="DalShipToMaster.getBillToName", query = "select DISTINCT(billToName) from DalShipToMaster")
+})
 public class DalShipToMaster {
 	private String shipToNumber;
 	private String shipToName;

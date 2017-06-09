@@ -70,10 +70,20 @@
       
 
     <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
     <script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
+     <script src="resources/js/jquery-ui-1.9.2.custom.min.js"></script>
     <!-- Ignite UI Required Combined JavaScript Files -->
-
-      
+  <!--Form Validation-->
+      <script src="resources/js/bootstrap-validator.min.js" type="text/javascript"></script>
+      <!--Form Wizard-->
+      <!--script src="js/jquery.steps.min.js" type="text/javascript"></script-->
+      <script src="resources/js/jquery.validate.min.js" type="text/javascript"></script>
+            <script src="resources/js/slidebars.min.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-daterangepicker/moment.min.js"></script>
+      <script type="text/javascript" src="resources/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
 
 
 <style>
@@ -91,8 +101,6 @@
 }
 a { text-decoration: none }
 </style>
-
-	    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 
 		<script src="resources/js/editablegrid.js"></script>
 		<script src="resources/js/editablegrid_renderers.js" ></script>
@@ -121,6 +129,7 @@ a { text-decoration: none }
 <script src="resources/js/jszip.js"></script>
 <script src="resources/js/xlsx.js"></script>
 <script>
+var fileData ={};
 /*jshint browser:true */
 /*global XLSX */
 var X = XLSX;
@@ -276,6 +285,7 @@ function process_wb(wb) {
 				editableGrid = new EditableGrid(title);
 				editableGrid.load({"metadata": metadata, "data": data});
 				editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
+				fileData = data;
 			} 
 
 			
@@ -314,6 +324,7 @@ function handleFile(e) {
 }
 
 
+
 </script>
 <!-- 
 <script type="text/javascript">
@@ -328,6 +339,253 @@ function handleFile(e) {
 	})();
 </script>
  -->
+ <script type="text/javascript">
+ 	var responseOnload;
+			$(window).ready(function(){
+			
+				var url="/SIM/pricing/v1/getPricingDetails";
+	         	$.ajax({ 
+	             	type: "GET",
+	             	dataType: "json",
+	            	url: url,
+	            	async: false,
+	             	success: function(response){
+	             		responseOnload = response.data;
+	             		
+					fnPopulateDropdown('termsCode_inputselect', response.data.dropdownList.termsCodeList);
+              	$('#termsCode_inputselect').val(response.data.dropdownList.termsCodeList[0].key);
+              	if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.definitionList[0].key){
+            	$('#program_terms_definition').val(response.data.dropdownList.definitionList[0].value);
+            	}
+              	if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.dueDatesList[0].key){
+            	$('#program_terms_duedates').val(response.data.dropdownList.dueDatesList[0].value);
+            	}
+            		if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.cashList[0].key){
+            	$('#program_terms_cash').val(response.data.dropdownList.cashList[0].value);
+            	}
+               	fnPopulateDropdown('Other_Ship_Reqs_inputselect', response.data.dropdownList.otherShipReqsList);
+             	fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
+             	$("#customerGroup").val($("#custByName_inputselect").val());
+               	
+	             	},
+	             	failure: function(response){
+	             		alert("Wrongly done");
+	             	}
+	         	});
+	         	
+	         	var test,selectTerm;
+            $("input[name=optionsRadiosSourcePathName]").on( "click", function() {
+				 test = $(this).val();
+				 if(test == 'Group'){
+				
+				fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.groupList);
+				$("#customerGroup").val($("#custByName_inputselect").val());
+				}
+				else if(test == 'BillTo'){
+				
+				fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
+				$("#customerGroup").val($("#custByName_inputselect").val());
+				}
+				else if(test == 'Name'){
+					
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custByNameList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
+				}	else if(test == 'ShipTo'){
+				fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custShipToList);
+				$("#customerGroup").val($("#custByName_inputselect").val());
+				
+				}
+				
+				
+    		});
+    		$("select[name=custByName_inputselect]").on( "change", function() {
+				var test = $(this).val();
+			
+				$("#customerGroup").val(test);
+				});
+				$("select[name=termsCode_inputselect]").on( "change", function() {
+				 selectTerm = $(this).val();
+				var checkDefn =responseOnload.dropdownList.definitionList;
+				var checkDueDates=responseOnload.dropdownList.dueDatesList;
+				var checkCash=responseOnload.dropdownList.cashList;
+				fnPopulateProgramTerms('program_terms_definition', checkDefn,selectTerm);
+				fnPopulateProgramTerms('program_terms_duedates', checkDueDates,selectTerm);
+				fnPopulateProgramTerms('program_terms_cash', checkCash,selectTerm);
+				program_terms_cash
+			});
+    		function resetFormForMandatoryCheck(elementId){
+         		if( $('#'+ elementId).valid()){
+				   $('#'+ elementId).validate().resetForm(); 
+				}
+         	}
+         	
+         	
+         	function fnPopulateDropdown(elementId, items){
+	         	if(items != null){
+	         		$('#'+ elementId).empty();
+	         		$.each(items, function (i, item) {
+					    $('#'+ elementId).append($('<option>', { 
+					        value: item.key,
+					        text : item.value 
+					    },'</option>' ));
+					    
+					});
+					//resetFormForMandatoryCheck(elementId);
+	         	}
+			}
+			function fnPopulateProgramTerms(elementId, items,item){
+			var check = item;
+	         	if(items != null){
+	         	console.log(items);
+	         		$('#'+ elementId).empty();
+	         		$.each(items, function (i, item) {
+					   /*  $('#'+ elementId).append($('<option>', { 
+					        value: item.key,
+					        text : item.value 
+					    },'</option>' )); */
+					    if(check == item.key){
+					    $('#'+ elementId).val(item.value); 
+					    }
+					});
+					//resetFormForMandatoryCheck(elementId);
+	         	}
+			}	
+			});
+		
+			</script>
+			<script type="text/javascript">
+			var responseOnload = {};
+			function saveDraft(){
+         		//responseOnload.status = "3";
+         		prepareDataForSubmit();
+         		fnCallService();
+         		
+         	}
+         	var formData=[];
+         	function prepareDataForSubmit(){
+         		//responseOnload.url = window.location.href;
+				formData= $('form#pricingRequest').serializeArray();
+				responseOnload.customerType=formData[0].value;
+				responseOnload.customerGroup=formData[1].value;
+				responseOnload.customerId=formData[2].value;
+				responseOnload.userComments=formData[4].value;
+				responseOnload.termCode=formData[5].value;
+				responseOnload.definition=formData[6].value;
+				responseOnload.dueDates=formData[7].value;
+				responseOnload.cash=formData[8].value;
+				responseOnload.shippingReqs=formData[9].value;
+				responseOnload.otherShippingReqs=formData[10].value;
+				var fileDataList = [];
+			
+				$.each(fileData, function(key, data) {
+					console.log( $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']));
+					var fileDataRow = {'id': data.id, 'programId': data.id, 'part':data.values[' PART#'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': data.values['NET PRICE'], 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
+					fileDataList.push(fileDataRow);
+				});
+				//console.log(fileDataList);
+				responseOnload.pricingDetailList=fileDataList;
+						
+ 				}
+         	function fnCallService(){
+				/*Service call to save the data.*/	
+			    $.ajax({
+					type: "POST",
+					url: "/SIM/pricing/v1/savePricingDetails",
+					dataType: 'json',
+					contentType: 'application/json',
+					data: JSON.stringify(responseOnload),
+					success: function (response) {
+			            if (response != null && response.data.success == true) {
+			            	responseOnload = response.data;
+			            	$('#myModal1').modal('toggle');
+         					$("#confirmMessage").html("Data saved successfully !!!");
+							$('#myModal4').modal('toggle');
+			            } else {
+			              	$('#myModal1').modal('toggle');
+         					$("#errorMessage").html("Issue while saving the data. Please correct data entered.!!");
+							$('#myModal5').modal('toggle');
+			            
+							//alert("Issue while saving the data. Please try again after sometime.!!");
+			            }
+					},
+					failure: function(response){
+					 	$('#myModal1').modal('toggle');
+         				$("#errorMessage").html("Issue while saving the data. Please try again after sometime.!!");
+						$('#myModal5').modal('toggle');
+						//alert("Issue while saving the data. Please try again after sometime.!!");
+					}
+			    });
+			}
+			function validateBeforeSubmit(modalId){
+				/**If valid, it will toggle the corresponding modal.
+				If there is some error, error modal will be toggled.*/
+				
+				 if($("#pricingRequest").valid()){
+					$(modalId).modal('toggle');
+				}
+				else{
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+				} 
+			}
+			</script>
+	<!--  Validation setup Begins -->
+    <script type="text/javascript">
+      $(document).ready(function () {
+			/* $.validator.addMethod("actualMarkerCheck", function (value, element) {
+				var isSame = false;
+                    $('#tier-schedule tbody').find('tr').each(function(i) {
+                    	 var tds = $(this).find('td'),
+                         marker = tds.eq(0).text();
+                    	 if(marker==value){
+                    	 	isSame = true;
+                    	 }
+                    });							
+			    return isSame;
+			}, 'Accrued Tier should match maker value available'); */
+      
+			$("#pricingRequest").validate({
+				rules: {
+					optionsRadiosSourcePathName: {
+						required: true
+					},
+					custByName_inputselect:{
+						required: true
+					},
+					/* customeID: {
+						required: true
+					},
+ */					termsCode_inputselect: {
+						required: true
+					},
+					optionsRadiosShippingProgram: {
+						required: true
+					},
+					Other_Ship_Reqs_inputselect:{
+						required: true
+					},
+					
+				},
+				messages: {
+					required: "This field is required",
+				   	/* amount: {
+					   	number: "Please enter only numeric values"
+				   	}, */
+				}
+			});
+			});
+          	/* var form = $("#wizard-validation-form");
+			onFinishing: {
+			    form.validate().settings.ignore = ":disabled";
+			    return form.valid();
+			}
+			onFinished: {
+			       alert("You've successfully submitted this program for approval. You'll be notified of its status soon."); 
+			       location.href = 'index.html#pending-approvals';
+			} */
+  </script>
+  <!--  Validation setup Ends -->
+			
 
 
       
@@ -483,23 +741,23 @@ function handleFile(e) {
                            </div>
                        </div>
                        </div>
-                        <form id="pricingRequest" role="form" class="cmxform">
+                        <form id="pricingRequest" name="pricingRequest" role="form" class="cmxform">
                             <div class="form-group">
                                     <div class="col-sm-12 inline-flex">
                                              <div class="radio-inline p-left0 m-bot15">
                                                 <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosSourcePathName" id="optionsRadiosGroup" value="Group" class="radio-inline required" checked="checked">
+                                                <input type="radio" name="optionsRadiosSourcePathName" id="optionsRadiosGroup" value="Group" class="radio-inline required" >
                                                 Group
                                                 </label>
                                             </div>
                                         <div class="radio-inline m-bot15">
                                                 <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosSourcePathName" id="optionsRadiosCustByBillTo" value="Customer By BillTo" class="radio-inline required" checked="">
+                                                <input type="radio" name="optionsRadiosSourcePathName" id="optionsRadiosCustByBillTo" value="BillTo" class="radio-inline required" checked="checked">
                                                 Customer By BillTo</label> 
                                         </div>
                                         <div class="radio-inline m-bot15">
                                                 <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosSourcePathName" id="optionsRadiosCustByName" value="Customer By Name" class="radio-inline required">
+                                                <input type="radio" name="optionsRadiosSourcePathName" id="optionsRadiosCustByName" value="Name" class="radio-inline required">
                                                 Customer By Name</label> 
                                         </div>
                                         <div class="radio-inline m-bot15">
@@ -513,19 +771,19 @@ function handleFile(e) {
                                   <div class="col-sm-5">
                                     <label class="control-label" for="inputSuccess">Customer/Group</label>
                                         <select class="form-control input-sm m-bot15" id="custByName_inputselect" name="custByName_inputselect">
-                                            <option disabled class="" value="">- Select One -</option>
-                                            <option id="custByName_inputselect1" value="MILLER TRUCKING LLC" name="custByName_inputselect1">MILLER TRUCKING LLC</option>
+                                           <!--  <option disabled class="" value="">- Select One -</option> -->
+                                          <!--   <option id="custByName_inputselect1" value="MILLER TRUCKING LLC" name="custByName_inputselect1">MILLER TRUCKING LLC</option>
                                             <option id="custByName_inputselect2" value="DEALER TIRE" name="custByName_inputselect2">DEALER TIRE LLC</option>
-                                            <option id="custByName_inputselect3" value="DISCOUNT TIRE LLC" name="custByName_inputselect3">DISCOUNT TIRE LLC</option>
+                                            <option id="custByName_inputselect3" value="DISCOUNT TIRE LLC" name="custByName_inputselect3">DISCOUNT TIRE LLC</option> -->
                                         </select>
                                     </div>
                                     <div class="col-sm-2">
                                      <label class="control-label">Cust ID</label>
-                                        <input type="text" class="form-control m-bot15" placeholder="28140">
+                                        <input type="text" class="form-control m-bot15" id="customeID" name="customeID" placeholder="customeID">
                                     </div>
                                     <div class="col-sm-5">
                                     <label class="control-label">Cust/Group</label>
-                                        <input type="text" class="form-control  m-bot15" placeholder="MILLER TRUCKING LLC">
+                                        <input type="text" class="form-control  m-bot15" id="customerGroup" name="customerGroup" placeholder="customerGroup">
                                     </div>    
                                 </div>
                           <div class="adv-table editable-table">
@@ -660,7 +918,7 @@ function handleFile(e) {
                       
                         <div class="col-sm-6">
                            <label class="control-label" for="inputSuccess">User Comments</label>
-                            <textarea class="form-control" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" data-toggle="tooltip" data-placement="top" rows="3" placeholder="Add description details of your customer" value="Dealer has three shops in his county"></textarea>
+                            <textarea class="form-control" id="user_comments" name="user_comments" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" data-toggle="tooltip" data-placement="top" rows="3" placeholder="Add description details of your customer" value="Dealer has three shops in his county"></textarea>
                         </div>
                         <div class="space15 clearfix"></div>
                             
@@ -672,8 +930,8 @@ function handleFile(e) {
                             <h5 class="p-left16">Program Terms</h5>
                                 <div class="col-lg-5 col-md-7 col-sm-5">
                                     <label class="control-label" for="inputSuccess">Terms Code</label>
-                                        <select class="form-control input-sm m-bot15" id="paid_basedon_inputselect" name="paid_basedon_inputselect">
-                                            <option disabled class="" value="">- Select -</option>
+                                        <select class="form-control input-sm m-bot15" id="termsCode_inputselect" name="termsCode_inputselect">
+                                           <!--  <option disabled class="" value="">- Select -</option>
                                             <option id="terms_code_inputselect" value="Standard NA - NT - 5%30/2%60, due 15/25">Standard NA - NT - 5%30/2%60, due 15/25</option>
                                             <option id="terms_code_inputselect1" value="Express N/A - NX - 5% 30 Days,  past due 31, due Calendar days">Express N/A - NX - 5% 30 Days,  past due 31, due Calendar days</option>
                                             <option id="terms_code_inputselect2" value="Consumer Mkt - (3N) - 2% 60 days, due 15/25">Consumer Mkt - (3N) - 2% 60 days, due 15/25 </option>
@@ -695,7 +953,7 @@ function handleFile(e) {
                                             <option>CX - NET 45 DAYS, due Calendar days</option>
                                             <option>Mf - NET 90 DAYS </option>
                                             <option>9T - 2% 90 DAYS</option>
-                                            <option>2w - 2% 90 DAYS</option>
+                                            <option>2w - 2% 90 DAYS</option> -->
                                         </select>
                                     </div>
                                 <div class="col-lg-3 col-md-5 col-sm-3">
@@ -733,22 +991,22 @@ function handleFile(e) {
                                         </div>
                                         <div class="radio-inline">
                                                 <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosShippingProgram" id="optionsRadiosTrailerLoad" value="No" class="radio-inline required">
+                                                <input type="radio" name="optionsRadiosShippingProgram" id="optionsRadiosTrailerLoad" value="Trailer Load" class="radio-inline required">
                                                 Trailer Load</label> 
                                         </div>
                                         <div class="radio-inline">
                                                 <label class="control-label" for="inputSuccess">
-                                                <input type="radio" name="optionsRadiosShippingProgram" id="optionsRadiosPerProgram" value="No" class="radio-inline required">
+                                                <input type="radio" name="optionsRadiosShippingProgram" id="optionsRadiosPerProgram" value="Per Program" class="radio-inline required">
                                                  Per Program</label> 
                                         </div>
                                     </div>
                                   <div class="col-lg-5 col-sm-12">
                                     <label class="control-label" for="inputSuccess">Other</label>
-                                        <select class="form-control input-sm m-bot15" id="payout_freq_inputselect2" name="payout_freq_inputselect">
-                                            <option disabled class="" value="">- Other Types of Shipping Programs -</option>
-                                            <option id="shipping_other1" value="Additional Per Tire:   $1.00 21,000 lbs, $2.00 30,000 lbs" name="payout_freq_annually">Additional Per Tire:   $1.00 21,000 lbs, $2.00 30,000 lbs</option>
+                                        <select class="form-control input-sm m-bot15" id="Other_Ship_Reqs_inputselect" name="Other_Ship_Reqs_inputselect">
+                                           <!--  <option disabled class="" value="">- Other Types of Shipping Programs -</option> -->
+                                         <!--    <option id="shipping_other1" value="Additional Per Tire:   $1.00 21,000 lbs, $2.00 30,000 lbs" name="payout_freq_annually">Additional Per Tire:   $1.00 21,000 lbs, $2.00 30,000 lbs</option>
                                             <option id="shipping_other2" value="Semi-Anually" name="shipping_other2">Additional Per Tire:   $1.00 20,000 lbs, $2.00 34,000 lbs</option>
-                                            <option id="shipping_other3" value="Additional Per Tire:   $1.00 20,000 lbs, $2.00 32,000 lbs" name="payout_freq_monthly">Additional Per Tire:   $1.00 20,000 lbs, $2.00 32,000 lbs</option>
+                                            <option id="shipping_other3" value="Additional Per Tire:   $1.00 20,000 lbs, $2.00 32,000 lbs" name="payout_freq_monthly">Additional Per Tire:   $1.00 20,000 lbs, $2.00 32,000 lbs</option> -->
                                         </select>
                                     </div>
                                 </div>
@@ -757,9 +1015,9 @@ function handleFile(e) {
                   <!---- START Submit for Approval -->
           <div class="clearfix space15"></div>
           <div class="clearfix">
-              <a class="btn btn-info finish" id="finish" data-toggle="modal" href="#myModal"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
+             <a class="btn btn-info finish" id="save-program" href="javascript: validateBeforeSubmit('#myModal1')"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
               <!-- Modal -->
-                              <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                   <div class="modal-dialog">
                                       <div class="modal-content">
                                           <div class="modal-header">
@@ -773,12 +1031,76 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
                                           </div>
                                           <div class="modal-footer">
                                               <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                                              <button class="btn btn-info" type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;Save As Draft</button>
+                                              	<a href="javascript: saveDraft()"><button class="btn btn-info" type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;Save As Draft</button></a>
                                               <a href="index.html#pending-approvals"><button class="btn btn-success" type="button"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>
                                           </div>
                                       </div>
                                   </div>
-                              </div>
+                              </div> -->
+                              <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-save-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Save Program Changes?</h4>
+                            </div>
+							<div class="modal-body">
+								<div class="space15">&nbsp;</div>
+								<div class="text-center">Are you sure you want to Save Changes? If you still want to save your changes, click the OK button. If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
+                                <div class="space15"></div>
+							</div>
+							<div class="modal-footer">
+								<button data-dismiss="modal" class="btn btn-default" id="program-save-modal-cancel"
+									type="button">Cancel</button>
+								<a href="javascript: saveDraft()"><button class="btn btn-info" id="program-save-modal-ok" type="button">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+									</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+					
+				<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-confirmation-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Confirmation</h4>
+                            </div>
+							<div class="modal-body">
+								<!-- <div class="space15">&nbsp;</div> -->
+								<div class="text-center"> <span id="confirmMessage"></span> </div>
+                                <!-- <div class="space15"></div> -->
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-info" type="button" id="program-confirmation-modal-ok" data-toggle="modal" href="#myModal4">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="modal fade" id="myModal5" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-confirmation-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Issue in Saving Data</h4>
+                            </div>
+							<div class="modal-body">
+								<!-- <div class="space15">&nbsp;</div> -->
+								<div class="text-center"> <span id="errorMessage"></span> </div>
+                                <!-- <div class="space15"></div> -->
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-info" type="button" id="program-confirmation-modal-ok" data-toggle="modal" href="#myModal5">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
                             </div>
                         </form>
                         </div>

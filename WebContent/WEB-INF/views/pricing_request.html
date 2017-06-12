@@ -282,7 +282,11 @@ function process_wb(wb) {
 				}
 			}
 
-				editableGrid = new EditableGrid(title);
+				editableGrid = new EditableGrid(title, {
+					modelChanged: function(rowId, colId, oldValue, newValue, row) {
+						data[rowId].values[columnNames[colId]] = newValue;
+					}
+				});
 				editableGrid.load({"metadata": metadata, "data": data});
 				editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
 				fileData = data;
@@ -475,6 +479,7 @@ function handleFile(e) {
 				responseOnload.cash=formData[8].value;
 				responseOnload.shippingReqs=formData[9].value;
 				responseOnload.otherShippingReqs=formData[10].value;
+				responseOnload.success=false;
 				var fileDataList = [];
 			
 				$.each(fileData, function(key, data) {
@@ -525,7 +530,7 @@ function handleFile(e) {
 				}
 				else{
 					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
-					$('#myModal5').modal('toggle');
+					$('#myModal6').modal('toggle');
 				} 
 			}
 			</script>
@@ -552,10 +557,10 @@ function handleFile(e) {
 					custByName_inputselect:{
 						required: true
 					},
-					/* customeID: {
+					 customeID: {
 						required: true
 					},
- */					termsCode_inputselect: {
+ 				termsCode_inputselect: {
 						required: true
 					},
 					optionsRadiosShippingProgram: {
@@ -617,7 +622,8 @@ function handleFile(e) {
 </script>
 <!-- Inline javascript to set the user name from model attribute End -->
 
-</head>
+      
+   </head>
    <body>
 
   <section id="container" class="">
@@ -699,7 +705,7 @@ function handleFile(e) {
                      <span>My Dashboard</span>
                      </a>
                   </li>
-                  <!-- <li>
+                  <li>
                      <a class="" href="program_details.html">
                      <i class="fa fa-tasks"></i>
                      <span>Create New Program</span>
@@ -722,7 +728,7 @@ function handleFile(e) {
                      <i class="fa fa-user"></i>
                      <span>Login Page</span>
                      </a>
-                  </li> -->
+                  </li>
                </ul>
                <!-- sidebar menu end-->
             </div>
@@ -1120,6 +1126,26 @@ If you want to save these changes for later, select 'Save As Draft'. If you want
 							</div>
 							<div class="modal-footer">
 								<button class="btn btn-info" type="button" id="program-confirmation-modal-ok" data-toggle="modal" href="#myModal5">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="myModal6" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                	<div class="modal-dialog">
+                    	<div class="modal-content">
+                        	<div class="modal-header">
+                            	<button id="program-confirmation-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title">Incorrect Data </h4>
+                            </div>
+							<div class="modal-body">
+								<!-- <div class="space15">&nbsp;</div> -->
+								<div class="text-center"> <span id="errorMessageModal"></span> </div>
+                                <!-- <div class="space15"></div> -->
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-info" type="button" id="program-confirmation-modal-ok" data-toggle="modal" href="#myModal6">
 										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
 								</button>
 							</div>

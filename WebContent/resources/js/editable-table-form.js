@@ -83,11 +83,23 @@ var EditableTable = function () {
                         "sNext": "Next"
                     }
                 },
+                "bAutoWidth": false , 
                 "aoColumnDefs": [{
                         'bSortable': true,
                         'aTargets': [0]
+                    },
+                    {
+                    	'sClass' : 'text-right',
+                    	'fnRender' : function(oObj){
+                    		var convertedAmount = oObj.aData[1];
+                    		if(convertedAmount != null && convertedAmount != 'undefined' ){
+                    			return convertedAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+                    		}
+                    		return convertedAmount;
+                    	},
+                    	'aTargets' : [1]                    	
                     }
-                ]
+                ],
             });
 
             jQuery('#tier-schedule_wrapper .dataTables_filter input').addClass("form-control medium"); // modify table search input

@@ -130,6 +130,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			programHeader.setNewProgram(false);
 		}
 		programHeader.setSuccess(true);
+		ProgramServiceHelper.populateWorkflowStatusData(programHeader, dalProgramDetail);
 		programHeader.setStatus(dalProgramDetail.getStatus().getType());
 		programEmailService.sendEmailData(programHeader, dalProgramDetail);
 	}

@@ -114,6 +114,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			programHeader.setId(returnEntity.getDalProgramHeader().getId());
 			programHeader.getProgramDetailList().get(0).setId(returnEntity.getId());
 			programHeader.setSuccess(true);
+			ProgramServiceHelper.populateWorkflowStatusData(programHeader, dalProgramDetail);
 			programHeader.setStatus(returnEntity.getStatus().getType());
 			programEmailService.sendEmailData(programHeader, dalProgramDetail);
 			if(returnEntity.getDalProgramHeader().getStatus() != null 

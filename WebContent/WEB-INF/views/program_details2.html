@@ -1451,10 +1451,17 @@
                	
                	fnPopulateDropdown('pricing_type_inputselect', response.data.programDetailList[0].dropdownList.pricingTypeList);
                	$('#pricing_type_inputselect').val(response.data.programDetailList[0].pricingType);
-               	
+              
                	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
-               	$('#glcode_dropdown').val(response.data.programDetailList[0].glcode);
-               	
+               	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
+              
+               	if(response.data.programDetailList[0].tbpCheck == '1'){
+               		$("#tbpCheck").prop('checked', true);
+               	}else
+               	{
+               	 $("#tbpCheck").prop('checked', false);
+               	}		
+               		
                	
                	
                	/*Program Paid Based on section*/
@@ -1561,8 +1568,6 @@
                     $tds.eq(17).text(0);
                     $tds.eq(18).text(0);
                     $tds.eq(19).text(0);
-                                            
-                    
                 });
          	}
          	

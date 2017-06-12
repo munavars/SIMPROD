@@ -8,7 +8,6 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +17,13 @@ import org.springframework.util.StringUtils;
 import com.ytc.common.model.PricingDetail;
 import com.ytc.common.model.PricingHeader;
 import com.ytc.dal.IDataAccessLayer;
-import com.ytc.dal.model.DalPartMaster;
+import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalPricingCustomerType;
 import com.ytc.dal.model.DalPricingDetail;
 import com.ytc.dal.model.DalPricingHeader;
 import com.ytc.dal.model.DalPricingOtherShipRequirements;
 import com.ytc.dal.model.DalPricingShipRequirements;
 import com.ytc.dal.model.DalPricingTermCodes;
-import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.service.IPricingUpdateService;
 
 /**
@@ -62,8 +60,9 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService{
 private void createPricingDetails(PricingHeader pricingHeader) {
 	DalPricingHeader dalPricingHeader = null;
 	if(pricingHeader != null ){
+		if(validateCustomerId(pricingHeader.getCustomerId()) && validatePartProdTread(pricingHeader.getPricingDetailList())){
 		dalPricingHeader = new DalPricingHeader();	
-		dalPricingHeader.setCustomerId(pricingHeader.getCustomerId());
+		dalPricingHeader.setCustomerId(Integer.valueOf(pricingHeader.getCustomerId()));
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("customerType", pricingHeader.getCustomerType());
 		List<DalPricingCustomerType> dalPricingCustomerTypeList =baseDao.getByType("DalPricingCustomerType.getCustomerType", parameters);
@@ -96,7 +95,7 @@ private void createPricingDetails(PricingHeader pricingHeader) {
 		
 		
 		
-		if(validatePartProdTread(pricingHeader.getPricingDetailList())){
+	
 		
 		/** Save pricing Detail section information*/
 		List<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader,dalPricingHeader);
@@ -216,5 +215,20 @@ private void createPricingDetails(PricingHeader pricingHeader) {
 	    return true;
 	    }
 		return false;
-	}	
+	}
+	private boolean validateCustomerId(String custId){
+		boolean validate = false;
+		List<String> dalCustomer = null;
+		Map<String, Object> queryParam = new HashMap<>();	
+				if(!StringUtils.isEmpty(custId)){
+					queryParam.put("customerNumber", custId);
+					dalCustomer= baseDao.getByType("DalCustomer.getCustomerId",queryParam);
+					if(!StringUtils.isEmpty(dalCustomer.get(0))){
+						validate = true;
+					}
+				}
+		return validate;
+		
+		
+	}
 }

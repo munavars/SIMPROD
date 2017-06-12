@@ -17,9 +17,6 @@ import com.ytc.common.model.PricingDetailsDropDown;
 import com.ytc.common.model.PricingHeader;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
-import com.ytc.dal.model.DalBaseItems;
-import com.ytc.dal.model.DalCustomer;
-import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.service.IPricingService;
 
 /**

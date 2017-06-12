@@ -302,4 +302,18 @@ public class BaseDao implements IDataAccessLayer {
 		List<T> resultList = query.getResultList();
 		return resultList;
 	}
+	
+	 @Override
+	    public <T> List<T> getByJPQL(Class<T> clazz, String jpql, Map<String, Object> queryParams) {
+	        Query query = entityManager.createQuery(jpql);
+	        if (queryParams == null || queryParams.size() == 0) {
+	            throw new RuntimeException("Update should have some condition");
+	        }
+	        for (Entry<String, Object> param : queryParams.entrySet()) {
+	            query.setParameter(param.getKey(), param.getValue());
+	        }
+	        @SuppressWarnings("unchecked")
+	        List<T> result = query.getResultList();
+	        return result;
+	    }
 }

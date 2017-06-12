@@ -472,10 +472,8 @@
 															<div
 																class="col-lg-4 col-md-4 col-sm-4 inline-flex m-top45">
 																<label class="control-label popovers" for="inputSuccess"
-																	data-original-title="Customer Details"
-																	data-content="Click on the grey button below to see more info about this customer. Click again to hide it."
-																	data-placement="top" data-trigger="hover">Is
-																	this 'Tiered'?</label>
+																	data-original-title="Customer Details">
+																	Is this 'Tiered'?</label>
 																<div class="radio-inline">
 																	<label class="control-label" for="inputSuccess">
 																		<input type="radio" name="optionsRadiosTier"
@@ -661,7 +659,7 @@
 																		<div class="table-responsive">
 																			<table
 																				class="table table-striped table-hover table-bordered"
-																				id="tier-schedule">
+																				id="tier-schedule" style="width: 100%;">
 																				<thead>
 																					<tr>
 																						<td colspan="5" class="zeroborders text-left"><label
@@ -1195,7 +1193,21 @@
 								return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
 							}
 						}
-					}
+					},
+					achieve_freq_inputselect:{
+						required :{
+							depends: function(element) {
+								return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
+							}
+						}
+					},
+					achieve_basedon_inputselect:{
+						required :{
+							depends: function(element) {
+								return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
+							}
+						}
+					},
 				},
 				messages: {
 					required: "This field is required",
@@ -1587,6 +1599,11 @@
 						$('#program-submit-modal-close').attr('disabled', false);	
 						$('#save-program').hide();
                		}
+               		else if(responseOnload1.newProgram == false && responseOnload1.status === 'REJECTED'){
+               			/**Buttons should be visible, but disabled.*/
+               			$('#save-program').show();
+               			$('#submit-program').show();
+               		}
                		else if(responseOnload1.newProgram == false){
                			showCreatorButtons();
                		}
@@ -1655,11 +1672,14 @@
 	                    ]);
 	                });
                 }
+                table.fnDraw();
          	}
          	
          	function fnPopulateProgramWorkflowStatus(workflowStatus){
          		var table = $("#workflow-status-table").DataTable();
          		if(workflowStatus != null){
+         			/* table.clear();
+         			table.draw(); */
          			$.each(workflowStatus, function(idx, item) {
          					var date = null;
          					if(item.approvalDate != null){
@@ -1669,6 +1689,7 @@
 	                    ]);
 	                });
          		}
+         		table.fnDraw();
          	}
          	
          	function fnPopulatePaidDetails(response){
@@ -1771,6 +1792,8 @@
 				if(responseOnload.newProgram == false){
 					$('#save-program').show();
                	}
+               	$('#edit-button').attr('disabled', true);
+				$('#edit-button').addClass("disabled");
 			}
 			function disableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
@@ -1828,6 +1851,9 @@
          		prepareDataForSubmit();
          		fnCallService(message, idBefore);
          		$('#myModal1').modal('toggle');
+         		if(!$("#pdf-button").is(":visible")){
+         			$("#pdf-button").show();
+         		}
          	}
          	
 			function submitForApproval(){
@@ -1838,6 +1864,9 @@
 				fnCallService(message, idBefore);
 				$('#myModal').modal('toggle');
 				disableFields();
+				if(!$("#pdf-button").is(":visible")){
+         			$("#pdf-button").show();
+         		}
 			}
 			
 			function validateBeforeSubmit(modalId){
@@ -1865,6 +1894,7 @@
 			            	responseOnload = response.data;
 			            	$("#programId").html(response.data.programDetailList[0].id);
 							$('#status').html(response.data.status);
+							fnPopulateProgramWorkflowStatus(response.data.programWorkflowStatusList);
 							/**Appending program id in the modal message.- Begin*/
 							var idAfter = responseOnload.programDetailList[0].id;
 							if(idBefore != idAfter){
@@ -1963,6 +1993,15 @@
 					$("#amountdiv").show();
 				}
     		} );
+    		
+    		$('#myModal7').on('shown.bs.modal', function () {
+			    $('#approveComments').focus();
+			});
+			
+			$('#myModal8').on('shown.bs.modal', function () {
+			    $('#rejectionComments').focus();
+			})
+			
 	</script>
        
 	<script type="text/javascript">

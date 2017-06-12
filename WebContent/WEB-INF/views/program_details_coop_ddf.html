@@ -215,7 +215,7 @@
                                     <li>Created Date: <span id="createdDate"></span></li>
                                     <li>Program Type: <span id="programTypeHeader"></span></li>
                                     <br>
-                                    <h5>Program Summary</h5>
+                                    <h5 id="programSummaryTitleId">Program Summary</h5>
                                  </ul>
                                 </div>
                                <div class="col-lg-4 col-md-5 col-sm-4">
@@ -993,6 +993,8 @@
 			$("#edit-button").hide();
 			$("#pdf-button").hide();
 			$("#approve-program").hide();
+			$("#editabletest").hide();
+			$("#programSummaryTitleId").hide();
 		}
 		else{
 			$("#edit-program").addClass("active");
@@ -1151,6 +1153,10 @@
          	
          	function fnPopulateProgramWorkflowStatus(workflowStatus){
          		var table = $("#workflow-status-table").DataTable();
+/*          		if(table != null){
+					table.clear().draw();
+         		} */
+         		
          		if(workflowStatus != null){
          			$.each(workflowStatus, function(idx, item) {
          					var date = null;
@@ -1179,6 +1185,11 @@
 						$('#program-submit-modal-ok').attr('disabled', false);
 						$('#program-submit-modal-close').attr('disabled', false);	
 						$('#save-program').hide();
+               		}
+               		else if(responseOnload1.newProgram == false && responseOnload1.status === 'REJECTED'){
+               			/**Buttons should be visible, but disabled.*/
+               			$('#save-program').show();
+               			$('#submit-program').show();
                		}
                		else if(responseOnload1.newProgram == false){
                			showCreatorButtons();
@@ -1350,6 +1361,8 @@
 				if(responseOnload.newProgram == false){
 					$('#save-program').show();
                	}
+               	$('#edit-button').attr('disabled', true);
+				$('#edit-button').addClass("disabled");
 			}
 			function disableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
@@ -1405,6 +1418,9 @@
          		prepareDataForSubmit();
          		fnCallService(message, idBefore);
          		$('#myModal1').modal('toggle');
+         		if(!$("#pdf-button").is(":visible")){
+         			$("#pdf-button").show();
+         		}
          	}
          	
 			function submitForApproval(){
@@ -1415,6 +1431,9 @@
 				fnCallService(message, idBefore);
 				$('#myModal').modal('toggle');
 				disableFields();
+				if(!$("#pdf-button").is(":visible")){
+         			$("#pdf-button").show();
+         		}
 			}
 						
 			function validateBeforeSubmit(modalId){
@@ -1442,6 +1461,7 @@
 			            	responseOnload = response.data;
 			            	$("#programId").html(response.data.programDetailList[0].id);
 							$('#status').html(response.data.status);
+							fnPopulateProgramWorkflowStatus(response.data.programWorkflowStatusList);
 							/**Appending program id in the modal message.- Begin*/
 							var idAfter = responseOnload.programDetailList[0].id;
 							if(idBefore != idAfter){
@@ -1480,6 +1500,14 @@
 	         	}
 			}
 
+    		$('#myModal6').on('shown.bs.modal', function () {
+			    $('#approveComments').focus();
+			});
+			
+			$('#myModal7').on('shown.bs.modal', function () {
+			    $('#rejectionComments').focus();
+			})
+
 	</script>
 	
 	<script type="text/javascript">
@@ -1488,7 +1516,7 @@
 				//alert(responseOnload.programDetailList[0].id);
 				var a = document.createElement('a');
 			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
-				a.download =  'cust.pdf';
+				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
 			    a.click(); 
 			});
 		});

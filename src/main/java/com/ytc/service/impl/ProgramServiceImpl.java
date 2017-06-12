@@ -27,7 +27,6 @@ import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramInputParam;
 import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.common.model.ProgramTierDetail;
-import com.ytc.common.model.ProgramWorkflowStatus;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
@@ -47,7 +46,6 @@ import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalTagItems;
-import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.helper.ProgramServiceWorkflowHelper;
 import com.ytc.service.IProgramService;
@@ -175,29 +173,8 @@ public class ProgramServiceImpl implements IProgramService {
 		populateCommentaryData(programHeader, dalProgramDetail);
 		
 		/**populate the workflow status*/
-		populateWorkflowStatusData(programHeader, dalProgramDetail);
+		ProgramServiceHelper.populateWorkflowStatusData(programHeader, dalProgramDetail);
 	}
-
-
-	private void populateWorkflowStatusData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
-		if(programHeader != null && dalProgramDetail != null){
-			if(dalProgramDetail.getDalWorkflowStatusList() != null && !dalProgramDetail.getDalWorkflowStatusList().isEmpty()){
-				for(DalWorkflowStatus dalWorkflowStatus : dalProgramDetail.getDalWorkflowStatusList()){
-					ProgramWorkflowStatus programWorkflowStatus = new ProgramWorkflowStatus();
-					
-					programWorkflowStatus.setApprovalDate(dalWorkflowStatus.getModifiedDate().getTime());
-					programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
-					programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
-					programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
-					if(programHeader.getProgramWorkflowStatusList() == null){
-						programHeader.setProgramWorkflowStatusList(new ArrayList<ProgramWorkflowStatus>());
-					}
-					programHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
-				}
-			}
-		}
-	}
-
 
 	private void populateCommentaryData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
 		if(programHeader != null && dalProgramDetail != null && dalProgramDetail.getDalUserComments() != null){

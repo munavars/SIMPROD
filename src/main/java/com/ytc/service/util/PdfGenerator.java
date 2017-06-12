@@ -4,7 +4,6 @@
 package com.ytc.service.util;
 
 import java.io.ByteArrayOutputStream;
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -111,7 +110,7 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 	         
-	         cell = new PdfPCell(new Paragraph("Accrued Amount: 0"));
+	         cell = new PdfPCell(new Paragraph("Accrued Amount: 0")); //This should be changed once Accrual Data information is available.
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -135,7 +134,7 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 	         
-	         cell = new PdfPCell(new Paragraph("Paid Amount: "));
+	         cell = new PdfPCell(new Paragraph("Paid Amount: 0")); //This should be changed once Accrual Data information is available.
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -162,7 +161,7 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 	         
-	         cell = new PdfPCell(new Paragraph("Balance: "));
+	         cell = new PdfPCell(new Paragraph("Balance: 0")); //This should be changed once Accrual Data information is available.
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);

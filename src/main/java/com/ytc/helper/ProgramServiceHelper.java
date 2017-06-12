@@ -2,7 +2,10 @@ package com.ytc.helper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,11 +14,15 @@ import java.util.Map;
 import java.util.Set;
 
 import com.ytc.common.model.ProgramAchieveOn;
+import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramPaidOn;
+import com.ytc.common.model.ProgramWorkflowStatus;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
+import com.ytc.dal.model.DalProgramDetail;
+import com.ytc.dal.model.DalWorkflowStatus;
 
 public class ProgramServiceHelper {
 	
@@ -301,5 +308,55 @@ public class ProgramServiceHelper {
 			name = dalEmployee.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalEmployee.getLAST_NAME();
 		}
 		return name;
+	}
+
+	/**
+	 * populateWorkflowStatusData method is used to get the latest workflow status details.
+	 * @param programHeader programHeader
+	 * @param dalProgramDetail dalProgramDetail
+	 */
+	public static void populateWorkflowStatusData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+		if(programHeader != null && dalProgramDetail != null){
+			List<DalWorkflowStatus> dalWorkflowStatusList = dalProgramDetail.getDalWorkflowStatusList();
+			if(dalWorkflowStatusList != null && !dalWorkflowStatusList.isEmpty()){
+				/**Sorting*/
+				Collections.sort(dalWorkflowStatusList, new Comparator<DalWorkflowStatus>() {
+
+					@Override
+					public int compare(DalWorkflowStatus one, DalWorkflowStatus two) {
+						int val = 0;
+						if(one.getId() == null){
+							if(two.getId() != null){
+								val = -1;
+							}
+							else{
+								val = 0;
+							}
+						}
+						else if(two.getId() == null){
+							val = 1;
+						}
+						else{
+							val = one.getId().compareTo(two.getId());
+						}
+						return val;
+					}
+					
+				});
+				
+				for(DalWorkflowStatus dalWorkflowStatus : dalWorkflowStatusList){
+					ProgramWorkflowStatus programWorkflowStatus = new ProgramWorkflowStatus();
+					
+					programWorkflowStatus.setApprovalDate(dalWorkflowStatus.getModifiedDate().getTime());
+					programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
+					programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
+					programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
+					if(programHeader.getProgramWorkflowStatusList() == null){
+						programHeader.setProgramWorkflowStatusList(new ArrayList<ProgramWorkflowStatus>());
+					}
+					programHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
+				}
+			}
+		}
 	}
 }

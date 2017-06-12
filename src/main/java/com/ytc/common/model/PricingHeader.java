@@ -20,7 +20,7 @@ public class PricingHeader extends Model{
 	
 	private String customerType;
 	private String customerGroup;
-	private Integer customerId;
+	private String customerId;
 	private String userComments;
 	private String termCode;
 	private String definition;
@@ -58,13 +58,13 @@ public class PricingHeader extends Model{
 	/**
 	 * @return the customerId
 	 */
-	public Integer getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
 	/**
 	 * @param customerId the customerId to set
 	 */
-	public void setCustomerId(Integer customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
 	/**

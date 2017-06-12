@@ -432,6 +432,8 @@ public class ProgramServiceImpl implements IProgramService {
 										null);
 		programDetail.setLongDesc(dalProgramDetail.getLongDesc());
 		programHeader.setStatus( ProgramServiceHelper.convertToString(dalProgramDetail.getStatus().getType()));
+		programDetail.setTbpcheck(dalProgramDetail.getTbpCheck());
+		programDetail.setGlCode(dalProgramDetail.getGlCode());
 		
 	}
 
@@ -454,6 +456,7 @@ public class ProgramServiceImpl implements IProgramService {
 		 * 5. Paid Type
 		 * 6. Pay to. Pay to is the customer Id.
 		 * 7. Paid Based On	
+		 * 8. GL Code
 		 * */
 		ProgramDetail programDetail = new ProgramDetail();
 		ProgramDetailsDropDown programDetailsDropDown = new ProgramDetailsDropDown();
@@ -501,15 +504,15 @@ public class ProgramServiceImpl implements IProgramService {
 		if(namedQueryValue != null){
 			List<DalTagItems> dalTagItemsList =  baseDao.getListFromNamedQuery(namedQueryValue);
 			if(dalTagItemsList != null){
-				for (DalTagItems dalTagItems : dalTagItemsList) {
-					if (dalTagItems.getTagLevel() != 0) {
-						DropDown dropDown = new DropDown();
-						dropDown.setKey(String.valueOf(dalTagItems.getId()));
-						dropDown.setValue(dalTagItems.getItem());
-						if (dropdownList == null) {
-							dropdownList = new ArrayList<DropDown>();
-						}
-						dropdownList.add(dropDown);
+				for(DalTagItems dalTagItems : dalTagItemsList){
+					if(dalTagItems.getTagLevel()!=0){
+					DropDown dropDown = new DropDown();
+					dropDown.setKey(String.valueOf(dalTagItems.getId()));
+					dropDown.setValue(dalTagItems.getItem());
+					if(dropdownList == null){
+						dropdownList = new ArrayList<DropDown>();
+					}
+					dropdownList.add(dropDown);
 					}
 				}
 			}
@@ -907,7 +910,7 @@ public class ProgramServiceImpl implements IProgramService {
 		PdfGenerator pdf=new PdfGenerator();
 		return pdf.generatePdf(baseDao, id);
 	}
-
+	
 
 	@Override
 	public List<NewCustomerDetail> getNewCustomerData(Integer employeeId) {
@@ -1052,7 +1055,7 @@ public class ProgramServiceImpl implements IProgramService {
 				for(DalGLCode dalGlcode : dalGLCodeList){
 					DropDown dropDown = new DropDown();
 					dropDown.setKey(String.valueOf(dalGlcode.getId()));
-					dropDown.setValue(dalGlcode.getGlBucket());
+					dropDown.setValue(dalGlcode.getGlNo());
 					if(dropdownList == null){
 						dropdownList = new ArrayList<DropDown>();
 					}
@@ -1063,5 +1066,4 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		return dropdownList;
 	}
-	
 }

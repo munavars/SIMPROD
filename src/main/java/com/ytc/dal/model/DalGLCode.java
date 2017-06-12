@@ -15,14 +15,14 @@ public class DalGLCode extends DalModel {
 private static final long serialVersionUID = 1L;
 	
 	@Column(name="GLNo")
-	private String glBucket;
+	private String glNo;
 
 
-	public String getGlBucket() {
-		return glBucket;
+	public String getGlNo() {
+		return glNo;
 	}
 
-	public void setGlBucket(String glBucket) {
-		this.glBucket = glBucket;
+	public void setglNo(String glNo) {
+		this.glNo = glNo;
 	}
 }

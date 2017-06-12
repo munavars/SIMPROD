@@ -388,9 +388,25 @@
 																		checked="checked">$
 																	</label>
 																</div>
+																<div class="radio-inline accrualtype inline-flex">
+																<label class="control-label"
+																			for="tbpcheck">TBP Check</label>&nbsp;&nbsp; 
+																			 <input
+																			type="checkbox" name="tbpCheck"
+																			id="tbpCheck"/>
 															</div>
+																
+															</div>
+															
+															<div class="col-lg-4 col-sm-4">
+																<label class="control-label"
+																			for="glcode_dropdown">GLNo</label>
+																			 <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15"/>
+															</div>
+															</div>
+																		 
+															 
 														</div>
-													</div>
 													<!-- ROW 3 ENDS -->
 													<!-- ROW 4 STARTS -->
 													<div class="row">
@@ -1099,7 +1115,16 @@
                	/*Program Paid Based on section*/
                	fnPopulateDropdown('paidBasedOn', response.data.programDetailList[0].programPaidOn.tagItemList);
                	fnPopulatePaidDetails(response);
-               
+               	
+               	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
+               	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
+                
+               	if(response.data.programDetailList[0].tbpCheck == '1'){
+               		$("#tbpCheck").prop('checked', true);
+               	}else
+               	{
+               	    $("#tbpCheck").prop('checked', false);
+               	}
                 /**Commentary/ Special instructions*/
                	$("#userComments").val(response.data.programDetailList[0].comments);
                
@@ -1233,6 +1258,8 @@
                 $tds.eq(10).text((responseOnload.programDetailList[0].programPaidOn.isTrueUp==true)?'Yes':'No');
                 $tds.eq(11).text($("#amount").val());
                 $tds.eq(12).text(responseOnload.programDetailList[0].amountType);
+                
+                
                 $('#tier-schedule tbody').find('tr').each(function(i) {
                 	 var tds = $(this).find('td'),
                      marker = tds.eq(0).text(),
@@ -1253,8 +1280,6 @@
                 $tds.eq(17).text(0);
                 $tds.eq(18).text(0);
                 $tds.eq(19).text(0);
-                                        
-                
             });
      	}
          	function fnPopulatePaidDetails(response){
@@ -1299,6 +1324,17 @@
 				responseOnload.programDetailList[0].paidBasedOn = $('#paid_basedon_inputselect').val();
 				responseOnload.programDetailList[0].payoutFrequency = $('#payout_freq_inputselect').val();
 				responseOnload.programDetailList[0].longDesc = $("#longDesc").val();
+				responseOnload.programDetailList[0].glCode = parseInt($('#glcode_dropdown').val());
+				responseOnload.programDetailList[0].tbpCheck = parseInt($('#tbpCheck').val());
+				if($('#tbpCheck').is(":checked")){
+					responseOnload.programDetailList[0].tbpCheck = '1';
+				}
+				else
+				{
+				    responseOnload.programDetailList[0].tbpCheck = '0';
+				}
+				
+					
 				
 				/**Save Commentary/Special Instructions */
 				responseOnload.programDetailList[0].comments = $("#userComments").val();
@@ -1380,7 +1416,7 @@
 				$('#myModal').modal('toggle');
 				disableFields();
 			}
-			
+						
 			function validateBeforeSubmit(modalId){
 				/**If valid, it will toggle the corresponding modal.
 				If there is some error, error modal will be toggled.*/

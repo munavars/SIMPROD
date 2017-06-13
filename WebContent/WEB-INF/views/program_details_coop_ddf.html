@@ -935,6 +935,7 @@
 		$(document).ready(function(){
             $('#workflow-status-table').dataTable({
             	"iDisplayLength": 50,
+            	"bDestroy": true,
             	"sPaginationType": "bootstrap",
             	"sDom": 't',
 				"aoColumns": [
@@ -1128,10 +1129,7 @@
          	
          	function fnPopulateProgramWorkflowStatus(workflowStatus){
          		var table = $("#workflow-status-table").DataTable();
-/*          		if(table != null){
-					table.clear().draw();
-         		} */
-         		
+         		table.fnClearTable();
          		if(workflowStatus != null){
          			$.each(workflowStatus, function(idx, item) {
          					var date = null;

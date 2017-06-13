@@ -1265,6 +1265,7 @@
 		$(document).ready(function(){
             $('#workflow-status-table').dataTable({
             	"iDisplayLength": 50,
+            	"bDestroy": true,
             	"sPaginationType": "bootstrap",
             	"sDom": 't',
 				"aoColumns": [
@@ -1273,7 +1274,7 @@
 					{ "sClass": "text-left" },
 					{ "sClass": "center" }
 				]
-            });
+	        });
 		});	
 	</script>
 	<!--Tooltips -->
@@ -1672,9 +1673,8 @@
          	
          	function fnPopulateProgramWorkflowStatus(workflowStatus){
          		var table = $("#workflow-status-table").DataTable();
+         		table.fnClearTable();
          		if(workflowStatus != null){
-         			/* table.clear();
-         			table.draw(); */
          			$.each(workflowStatus, function(idx, item) {
          					var date = null;
          					if(item.approvalDate != null){

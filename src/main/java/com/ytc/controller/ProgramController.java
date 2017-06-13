@@ -100,7 +100,7 @@ public class ProgramController extends BaseController {
 	@RequestMapping(value = "v1/getTagValueDropDown/{tagId}", method = RequestMethod.GET)
 	public @ResponseBody List<DropDown> getTagValueDetails(HttpServletRequest request, @PathVariable("tagId") Integer tagId) {
 		List<DropDown> dropdownList = null;
-		dropdownList = (List<DropDown>)(getService(request).getTagValueDropDown(tagId));
+		dropdownList = (List<DropDown>)(getService(request).getTagValueDropDown(tagId, serviceContext.getEmployee().getEMP_ID()));
 		return dropdownList;
 	}
 	

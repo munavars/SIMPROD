@@ -315,7 +315,7 @@ public class PdfGenerator {
 	         table.addCell(cell1);
 	         
 	         if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalpgm.getDalProgramType().getType())){
-	        	 cell1 = new PdfPCell(new Paragraph("Achieve Based On: "+dalpgm.getAchBasedMetric().getBaseItem()));
+	        	 cell1 = new PdfPCell(new Paragraph("Achieve Based On: "+ ((dalpgm.getAchBasedMetric() != null) ? dalpgm.getAchBasedMetric().getBaseItem() : ProgramConstant.BLANK)));
 		         cell1.setBorderColor(BaseColor.BLACK);
 		         cell1.setPaddingLeft(10);
 		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);

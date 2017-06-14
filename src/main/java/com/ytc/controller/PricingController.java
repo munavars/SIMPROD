@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.Employee;
+import com.ytc.common.model.NetPricing;
 import com.ytc.common.model.PricingHeader;
+import com.ytc.common.model.ProgramDetail;
+import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ModelResult;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.service.IPricingService;
@@ -27,14 +30,14 @@ import com.ytc.service.IPricingUpdateService;
 import com.ytc.service.ServiceContext;
 
 @Controller
-@RequestMapping(value = "/pricing")
+@RequestMapping(value = "/")
 public class PricingController extends BaseController {
 
 	@Autowired
 	private ServiceContext serviceContext;
 	
 
-	@RequestMapping(value = "/v1/getTagValueDropDown/{tagId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/pricing/v1/getTagValueDropDown/{tagId}", method = RequestMethod.GET)
 	public @ResponseBody List<DropDown> getTagValueDetails(HttpServletRequest request, @PathVariable("tagId") Integer tagId) {
 		List<DropDown> dropdownList = null;
 		dropdownList = (List<DropDown>)(getService(request).getTagValueDropDown(tagId));
@@ -47,7 +50,7 @@ public class PricingController extends BaseController {
 		return getServiceLocator().getPricingPersistService();
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/pricingRequest",method = RequestMethod.GET)
 	public String pricingForm(HttpServletRequest request, Model model) {
 		String returnModel = null;
 		List<Employee> employee = null;
@@ -62,7 +65,23 @@ public class PricingController extends BaseController {
 		return returnModel;
 		
 	}
-	@RequestMapping(value = "/v1/getPricingDetails",method = RequestMethod.GET)
+	
+	@RequestMapping(value = "/pricingOverview",method = RequestMethod.GET)
+	public String pricingOverview(HttpServletRequest request, Model model) {
+		String returnModel = null;
+		List<Employee> employee = null;
+		String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+		/*ModelResult<PricingHeader> returnData = null;
+		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());*/
+		model.addAttribute("loginUserNameValue", userName);
+		employee=new ArrayList<Employee>();
+		employee.add(serviceContext.getEmployee());
+		model.addAttribute("EmployeeInfo", employee);
+		returnModel ="pricing_overview";
+		return returnModel;
+		
+	}
+	@RequestMapping(value = "/pricing/v1/getPricingDetails",method = RequestMethod.GET)
 	public @ResponseBody ModelResult<PricingHeader> getPricingDetails(HttpServletRequest request) {
 		ModelResult<PricingHeader> returnData = null;
 		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());
@@ -70,9 +89,18 @@ public class PricingController extends BaseController {
 		
 	}
 	
+	@RequestMapping(value = "/pricing/v1/getCustomerPricingDetails/{bu}",method = RequestMethod.GET)
+	public @ResponseBody ListResult<NetPricing> getCustomerPricingDetails(HttpServletRequest request, @PathVariable("bu") String bu) {
+		ListResult<NetPricing> returnData = null;
+		returnData = new ListResult<NetPricing>(getService(request).getCustomerPricingDetails(serviceContext.getEmployee().getEMP_ID(),bu));
+		//returnData = new ListResult<NetPricing>(getService(request).getCustomerPricingDetails(98));
+		return returnData;
+		
+	}
 	
 	
-	@RequestMapping(value = "/v1/savePricingDetails", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/pricing/v1/savePricingDetails", method = RequestMethod.POST)
 	public @ResponseBody ModelResult<PricingHeader> savePricingDetails(HttpServletRequest request, @RequestBody PricingHeader pricingHeader) {
 		ModelResult<PricingHeader> returnData = null;
 		returnData =  new ModelResult<PricingHeader>(getPersistService().savePricingHeaderDetails(pricingHeader));

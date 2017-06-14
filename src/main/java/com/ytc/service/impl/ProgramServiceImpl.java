@@ -717,7 +717,7 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgram(String custId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
-		DecimalFormat df = new DecimalFormat("#.00"); 
+		DecimalFormat df = new DecimalFormat("0.00"); 
 		String sql=QueryConstant.PROGRAM_LIST;
 		Map<String, Object> queryParams = new HashMap<>();
 		if("0".equalsIgnoreCase(custId)){
@@ -1048,4 +1048,5 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		return dropdownList;
 	}
+	
 }

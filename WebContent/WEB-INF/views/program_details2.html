@@ -544,7 +544,7 @@
 																</br>
 																<div id="glcocde">
 																<label class="control-label"
-																			for="glcode_dropdown">GL Code</label>&nbsp;&nbsp;
+																			for="glcode_dropdown">GLNo</label>&nbsp;&nbsp;
 																			 <select  id="glcode_dropdown" name="glcode_dropdown"/>
 																</div> 
 																</div>
@@ -1867,9 +1867,9 @@
 				if(!$("#pdf-button").is(":visible")){
          			$("#pdf-button").show();
          		}
-			}
-			
-			function validateBeforeSubmit(modalId){
+         	}
+        
+        	function validateBeforeSubmit(modalId){
 				/**If valid, it will toggle the corresponding modal.
 				If there is some error, error modal will be toggled.*/
 				if($("#wizard-validation-form").valid()){
@@ -1890,7 +1890,7 @@
 					contentType: 'application/json',
 					data: JSON.stringify(responseOnload),
 					success: function (response) {
-			            if (response != null && response.data.success == true) {
+			            if (response != null && response.data.success == true && response.data.duplicate == false) {
 			            	responseOnload = response.data;
 			            	$("#programId").html(response.data.programDetailList[0].id);
 							$('#status').html(response.data.status);
@@ -1904,7 +1904,14 @@
 							$("#confirmMessage").html(message);
 							$('#myModal4').modal('toggle');
 							/**Appending program id in the modal message.- End*/
-			            } else {
+			            } 
+			            else if(response.data.duplicate == true)
+			            {
+			              var idAfter = response.data.id;
+			              $("#confirmMessage").html("Programme is alreday existing and id is <strong>"+ idAfter + "</strong>");
+						  $('#myModal4').modal('toggle');
+			            }
+			            else {
 							alert("Issue while saving the data. Please try again after sometime.!!");
 			            }
 					},

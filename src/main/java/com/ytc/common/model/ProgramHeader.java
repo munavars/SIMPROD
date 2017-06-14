@@ -46,6 +46,7 @@ public class ProgramHeader extends Model{
 	/** For email link*/
 	private String contextPath;
 	private String url;
+	private boolean isDuplicate;
 	/** For email link*/
 	
 	private ProgramButton programButton = new ProgramButton();
@@ -238,5 +239,11 @@ public class ProgramHeader extends Model{
 	}
 	public void setProgramWorkflowStatusList(List<ProgramWorkflowStatus> programWorkflowStatusList) {
 		this.programWorkflowStatusList = programWorkflowStatusList;
+	}
+	public boolean isDuplicate() {
+		return isDuplicate;
+	}
+	public void setDuplicate(boolean isDuplicate) {
+		this.isDuplicate = isDuplicate;
 	}
 }

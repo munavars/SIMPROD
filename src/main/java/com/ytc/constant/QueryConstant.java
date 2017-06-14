@@ -11,9 +11,9 @@ public class QueryConstant {
 	
 	public static final String PROGRAM_LIST_ALL="select * from PROGRAM_DETAIL where STATUS_ID in (:status)";
 	
-	public static final String CUSTOMER_LIST="select * from PROGRAM_HEADER where REQUEST_ID in (:requestId) and STATUS_ID in (1, 2)";
-	
-	public static final String TBP_CUSTOMER_LIST="select * from PROGRAM_HEADER where STATUS_ID=2";
+	public static final String CUSTOMER_LIST="select * from PROGRAM_DETAIL where PGM_HDR_ID in (select ID from PROGRAM_HEADER where REQUEST_ID in (:requestId) and STATUS_ID in (1, 2) ) and STATUS_ID in (1, 2) ";
+		
+	public static final String TBP_CUSTOMER_LIST="select * from PROGRAM_DETAIL where STATUS_ID in (1, 2)";
 	
 	public static final String EMPLOYEE_HIER_LIST= "SELECT BASE_EMP_ID FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = :loginId or LVL1_EMP_ID = :loginId or LVL2_EMP_ID = :loginId or LVL3_EMP_ID = :loginId or LVL4_EMP_ID = :loginId or LVL5_EMP_ID = :loginId";
 	

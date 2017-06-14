@@ -2,9 +2,10 @@ package com.ytc.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalProgramDetail;
-import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.ICustomerService;
@@ -73,17 +73,15 @@ public class CustomerService implements ICustomerService {
 			queryParams.put("requestId", userIdList);
 		}
 
-		List<DalProgramHeader> resultList=baseDao.getlist(DalProgramHeader.class, sql, queryParams);
-		for (Iterator<DalProgramHeader> iterator = resultList.iterator(); iterator.hasNext();) {
-			DalProgramHeader dalProgramHeader = (DalProgramHeader) iterator.next();
-			for (Iterator<DalProgramDetail> pgmiterator = dalProgramHeader.getDalProgramDetailList().iterator(); pgmiterator.hasNext();) {
-				DalProgramDetail dalProgramDetail = (DalProgramDetail) pgmiterator.next();
+		List<DalProgramDetail> resultList=baseDao.getlist(DalProgramDetail.class, sql, queryParams);
+		if(resultList != null){
+			for(DalProgramDetail dalProgramDetail : resultList){
 				ProgramDetail programDetail=new ProgramDetail();				
-				programDetail.setCustomerNumber(dalProgramHeader.getCustomer().getCustomerNumber());
-				programDetail.setCustomerName(dalProgramHeader.getCustomer().getCustomerName());
+				programDetail.setCustomerNumber(dalProgramDetail.getDalProgramHeader().getCustomer().getCustomerNumber());
+				programDetail.setCustomerName(dalProgramDetail.getDalProgramHeader().getCustomer().getCustomerName());
 				programDetail.setProgramName(dalProgramDetail.getProgramMaster().getProgram());
 				programDetail.setProgramId(dalProgramDetail.getId());
-				programDetail.setBu(dalProgramHeader.getCustomer().getBu());
+				programDetail.setBu(dalProgramDetail.getDalProgramHeader().getCustomer().getBu());
 				programDetail.setSubmitDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
 				programDetail.setZmAppStatus(null!=dalProgramDetail.getZmAppStatus()?dalProgramDetail.getZmAppStatus().getId().toString():"0");
 				programDetail.setZmAppDate(null!=dalProgramDetail.getZmAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getZmAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
@@ -104,7 +102,12 @@ public class CustomerService implements ICustomerService {
 		String statusHistory = null;
 		StringBuilder statusBuilder = null;
 		if(dalProgramDetail != null & dalProgramDetail.getDalWorkflowStatusList() != null){
+			Set<Integer> workflowIdSet = new HashSet<Integer>();
 			for(DalWorkflowStatus dalWorkflowStatus : dalProgramDetail.getDalWorkflowStatusList()){
+				boolean isUnique = workflowIdSet.add(dalWorkflowStatus.getId());
+				if(!isUnique){
+					continue;
+				}
 				if(statusBuilder == null){
 					statusBuilder = new StringBuilder();
 				}

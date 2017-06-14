@@ -25,4 +25,8 @@ public class QueryConstant {
 	public static final String NEW_CUSTOMER_QUERY = "SELECT * FROM CUSTOMER WHERE ID NOT IN (SELECT CUSTOMER_ID from PROGRAM_HEADER) ";
 	
 	public static final String NEW_CUSTOMER_ACCOUNT_MANAGER_CHECK = " AND ACCOUNT_MANAGER in (:userIdList)";
+	
+	public static final String PRICING_LIST_P = "select * from NETDOWN_P where [Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId))";
+	
+	public static final String PRICING_LIST_T = "select * from NETDOWN_T where [Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId))";
 }

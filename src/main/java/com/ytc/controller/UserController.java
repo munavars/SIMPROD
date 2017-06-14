@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tiredex.yoko.utils.LdapUtil;
 import com.ytc.common.model.Employee;
+import com.ytc.common.model.EmployeeHierarchy;
 import com.ytc.common.result.ListResult;
 import com.ytc.constant.ProgramConstant;
+import com.ytc.dal.model.DalEmployee;
 import com.ytc.service.IEmployeeService;
 import com.ytc.service.ServiceContext;
 
@@ -49,6 +51,14 @@ public class UserController extends BaseController {
 		List<String> aList = getHierarchyQueryResult(request, empId);
 		logger.info("UserController getHiearchyQueryResult: ["+aList+"]");
 		return aList;
+	}
+	
+	@RequestMapping(value = "/getEmployeeDetail/{empId}", method = RequestMethod.GET)
+	public @ResponseBody DalEmployee getEmployeeDetail(HttpServletRequest request, @PathVariable Integer empId) {
+		logger.info("UserController /getEmployeeDetail/{empId}"+empId);
+		
+		return (getService(request).getEmployeeDetail(empId));
+		//return aList;
 	}
 
 //	@RequestMapping(value = "/getCustomerNumber/{empId}", method = RequestMethod.GET)

@@ -87,6 +87,12 @@ public class EmployeeService implements IEmployeeService {
 		return employeeList;
 	}
 	
+	@Override
+	public DalEmployee getEmployeeDetail(Integer loginId) {
+		DalEmployee dalEmployee = baseDao.getEntityById(DalEmployee.class,loginId);
+		return dalEmployee;
+	}
+	
 
 //	SELECT * FROM [INTERFACE].[dbo].[W_YTC_EMPLOYEE_DH]
 //			where BASE_EMP_ID = 101 or LVL1_EMP_ID = 101 or LVL2_EMP_ID = 101 or LVL3_EMP_ID = 101 or LVL4_EMP_ID = 101 or LVL5_EMP_ID = 101 -- Andrew Martin Example

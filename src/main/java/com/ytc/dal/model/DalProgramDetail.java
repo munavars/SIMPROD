@@ -14,9 +14,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
 @Table(name = "PROGRAM_DETAIL")
+@NamedQueries({
+@NamedQuery(name="DalProgramDetail.checkDuplicateRecords", query = "select o from DalProgramDetail o where o.programStartDate=:PGM_START_DATE and o.programEndDate=:PGM_END_DATE and o.accrualAmount=:ACCRUAL_AMOUNT")
+})
 public class DalProgramDetail extends DalAuditableModel {
 
 	/**

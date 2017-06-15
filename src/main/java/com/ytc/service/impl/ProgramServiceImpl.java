@@ -33,7 +33,6 @@ import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployee;
-import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalGLCode;
 import com.ytc.dal.model.DalPaidType;
@@ -874,12 +873,14 @@ public class ProgramServiceImpl implements IProgramService {
 			queryParams.put("loginId", empId);
 			List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
 			queryParams = new HashMap<>();
-			if((userIdList.size()>1)||((userIdList.size()==1)&&(baseDao.getEntityById(DalEmployeeHierarchy.class, Integer.parseInt(userIdList.get(0))).getBaseTitle().equalsIgnoreCase("Account Manager")))){
+			//if((userIdList.size()>1)||((userIdList.size()==1)&&(baseDao.getEntityById(DalEmployeeHierarchy.class, Integer.parseInt(userIdList.get(0))).getBaseTitle().equalsIgnoreCase("Account Manager")))){
 				String sql=QueryConstant.CUSTOMER_LIST_MGR;
 				queryParams.put("userId", userIdList);
-				List<String> customerId=baseDao.getListFromNativeQuery(sql, queryParams);		
+				List<String> customerId=baseDao.getListFromNativeQuery(sql, queryParams);	
+				if(!customerId.isEmpty()){
 				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4,3");
-			}
+				}
+			//}
 			
 		}
 			

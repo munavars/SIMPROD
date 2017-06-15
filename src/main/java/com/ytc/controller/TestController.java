@@ -25,6 +25,7 @@ public class TestController  extends BaseController {
 		public String dashboard(HttpServletRequest request, Model model) {
 			//Need to call service implementation here
 			String userName = null;
+			String returnModel = null;
 			List<Employee> employee = null;
 			if(serviceContext != null && serviceContext.getEmployee() != null){
 				userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
@@ -32,14 +33,19 @@ public class TestController  extends BaseController {
 				employee=new ArrayList<Employee>();
 				employee.add(serviceContext.getEmployee());
 				model.addAttribute("EmployeeInfo", employee);
+				returnModel= "customer_details_dealertire_latest";
 			}
-			return "customer_details_dealertire_latest";
+			if(serviceContext == null || userName == null){
+				returnModel = "login";
+			}
+			return returnModel;
 		}
 		
 		@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
 		public String index(HttpServletRequest request, Model model) {
 			//Need to call service implementation here
 			String userName = null;
+			String returnModel = null;
 			List<Employee> employee = null;
 			if(serviceContext != null && serviceContext.getEmployee() != null){
 				userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
@@ -47,8 +53,12 @@ public class TestController  extends BaseController {
 				employee=new ArrayList<Employee>();
 				employee.add(serviceContext.getEmployee());
 				model.addAttribute("EmployeeInfo", employee);
+				returnModel= "index";
 			}
-			return "index";
+			if(serviceContext == null || userName == null){
+				returnModel = "login";
+			}
+			return returnModel;
 		}
 		
 	@RequestMapping(value = "/programddfcoop", method = RequestMethod.GET)

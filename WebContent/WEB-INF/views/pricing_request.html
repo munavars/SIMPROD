@@ -549,6 +549,10 @@ function handleFile(e) {
 			    return isSame;
 			}, 'Accrued Tier should match maker value available'); */
       
+			$('#xlf').click(function(){
+				 this.value = null;
+			 });
+			
 			$("#pricingRequest").validate({
 				rules: {
 					optionsRadiosSourcePathName: {

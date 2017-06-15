@@ -21,7 +21,6 @@ import com.ytc.common.model.DropDown;
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.NetPricing;
 import com.ytc.common.model.PricingHeader;
-import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.result.ListResult;
 import com.ytc.common.result.ModelResult;
 import com.ytc.constant.ProgramConstant;
@@ -54,14 +53,19 @@ public class PricingController extends BaseController {
 	public String pricingForm(HttpServletRequest request, Model model) {
 		String returnModel = null;
 		List<Employee> employee = null;
-		String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
-		/*ModelResult<PricingHeader> returnData = null;
-		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());*/
-		model.addAttribute("loginUserNameValue", userName);
-		employee=new ArrayList<Employee>();
-		employee.add(serviceContext.getEmployee());
-		model.addAttribute("EmployeeInfo", employee);
-		returnModel ="pricing_request";
+		if(serviceContext != null && serviceContext.getEmployee() != null){
+			String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			/*ModelResult<PricingHeader> returnData = null;
+			returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());*/
+			model.addAttribute("loginUserNameValue", userName);
+			employee=new ArrayList<Employee>();
+			employee.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employee);
+			returnModel ="pricing_request";
+		}else{
+			returnModel = "login";
+		}
+		
 		return returnModel;
 		
 	}
@@ -70,14 +74,19 @@ public class PricingController extends BaseController {
 	public String pricingOverview(HttpServletRequest request, Model model) {
 		String returnModel = null;
 		List<Employee> employee = null;
-		String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
-		/*ModelResult<PricingHeader> returnData = null;
-		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());*/
-		model.addAttribute("loginUserNameValue", userName);
-		employee=new ArrayList<Employee>();
-		employee.add(serviceContext.getEmployee());
-		model.addAttribute("EmployeeInfo", employee);
-		returnModel ="pricing_overview";
+		if(serviceContext != null && serviceContext.getEmployee() != null){
+			String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			/*ModelResult<PricingHeader> returnData = null;
+			returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());*/
+			model.addAttribute("loginUserNameValue", userName);
+			employee=new ArrayList<Employee>();
+			employee.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employee);
+			returnModel ="pricing_overview";
+		}else{
+			returnModel = "login";
+		}
+
 		return returnModel;
 		
 	}

@@ -9,20 +9,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.ytc.common.enums.TagItemValueMapEnum;
-import com.ytc.common.model.CustomerDetail;
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.NetPricing;
 import com.ytc.common.model.PricingDetailsDropDown;
 import com.ytc.common.model.PricingHeader;
-import com.ytc.common.model.ProgramDetail;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
-import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.service.IPricingService;
 
 /**
@@ -184,7 +180,7 @@ public class PricingServiceImpl implements IPricingService {
 		queryParams.put("empId",empId);
 		//List<DalNetPricingConsumer> resultList =baseDao.list(DalNetPricingConsumer.class, sql, queryParams);
 		List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
-		for (Iterator iterator = resultList.iterator(); iterator.hasNext();) {
+		for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
 			Object[]  obj =  (Object[]) iterator.next();
 			NetPricing netPricing=new NetPricing();
 			netPricing.setBillToNumber(null!=obj[0]?obj[0].toString():"");

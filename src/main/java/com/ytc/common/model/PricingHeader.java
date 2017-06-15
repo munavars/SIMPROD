@@ -31,6 +31,7 @@ public class PricingHeader extends Model{
 	private List<PricingDetail> pricingDetailList = new ArrayList<PricingDetail>();
 	private PricingDetailsDropDown dropdownList;
 	private boolean isSuccess;
+	private String validationMessage;
 	/**
 	 * @return the customerType
 	 */
@@ -187,5 +188,18 @@ public class PricingHeader extends Model{
 	public void setSuccess(boolean isSuccess) {
 		this.isSuccess = isSuccess;
 	}
+	/**
+	 * @return the validationMessage
+	 */
+	public String getValidationMessage() {
+		return validationMessage;
+	}
+	/**
+	 * @param validationMessage the validationMessage to set
+	 */
+	public void setValidationMessage(String validationMessage) {
+		this.validationMessage = validationMessage;
+	}
+	
 
 }

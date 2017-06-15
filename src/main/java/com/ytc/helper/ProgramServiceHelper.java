@@ -319,9 +319,17 @@ public class ProgramServiceHelper {
 		if(programHeader != null && dalProgramDetail != null){
 			List<DalWorkflowStatus> dalWorkflowStatusList = dalProgramDetail.getDalWorkflowStatusList();
 			if(dalWorkflowStatusList != null && !dalWorkflowStatusList.isEmpty()){
+				
+				if(programHeader.getProgramWorkflowStatusList() == null){
+					programHeader.setProgramWorkflowStatusList(new ArrayList<ProgramWorkflowStatus>());
+				}
+				else{
+					programHeader.getProgramWorkflowStatusList().clear();
+				}
+								
 				/**Sorting*/
 				Collections.sort(dalWorkflowStatusList, new Comparator<DalWorkflowStatus>() {
-
+		
 					@Override
 					public int compare(DalWorkflowStatus one, DalWorkflowStatus two) {
 						int val = 0;
@@ -343,17 +351,21 @@ public class ProgramServiceHelper {
 					}
 					
 				});
-				
+				Set<Integer> workflowIdSet = new HashSet<Integer>();
 				for(DalWorkflowStatus dalWorkflowStatus : dalWorkflowStatusList){
+					/**@ times, workflow status list from hibernate is having duplicate rows. 
+					 * Below condition is to added to handle the duplicate rows.*/
+					boolean isUnique = workflowIdSet.add(dalWorkflowStatus.getId());
+					if(!isUnique){
+						continue;
+					}
 					ProgramWorkflowStatus programWorkflowStatus = new ProgramWorkflowStatus();
 					
 					programWorkflowStatus.setApprovalDate(dalWorkflowStatus.getModifiedDate().getTime());
 					programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
 					programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
 					programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
-					if(programHeader.getProgramWorkflowStatusList() == null){
-						programHeader.setProgramWorkflowStatusList(new ArrayList<ProgramWorkflowStatus>());
-					}
+					
 					programHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
 				}
 			}

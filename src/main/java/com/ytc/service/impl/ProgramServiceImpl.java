@@ -680,7 +680,7 @@ public class ProgramServiceImpl implements IProgramService {
 	}
 
 	@Override
-	public List<DropDown> getTagValueDropDown(Integer tagId) {
+	public List<DropDown> getTagValueDropDown(Integer tagId, Integer employeeId) {
 		TagItemValueMapEnum tagItemValueMapEnum = null;
 		List<DropDown> dropdownList = null;
 		List<String> tagValueList = null;
@@ -688,10 +688,14 @@ public class ProgramServiceImpl implements IProgramService {
 		if(tagId != null){
 			tagItemValueMapEnum = TagItemValueMapEnum.tableDetail(tagId);
 			if(tagItemValueMapEnum != null){
-				/*query = String.format(QueryConstant.TAG_VALUE_LIST_BY_TAG_ID, tagItemValueMapEnum.getFetchColumnName(), tagItemValueMapEnum.getTableName()) 
-						+ String.format(QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE, tagItemValueMapEnum.getFetchColumnName());*/
-				query = String.format(QueryConstant.TAG_VALUE_LIST_BY_TAG_ID, tagItemValueMapEnum.getFetchColumnName(), tagItemValueMapEnum.getTableName()) 
-						+ QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE;
+				query = String.format(QueryConstant.TAG_VALUE_LIST_BY_TAG_ID, tagItemValueMapEnum.getFetchColumnName(), tagItemValueMapEnum.getTableName()); 
+				if(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId().equals(tagItemValueMapEnum.getTagId()) || 
+						TagItemValueMapEnum.BILL_TO_NUMBER.getTagId().equals(tagItemValueMapEnum.getTagId()) ){
+					query += String.format(QueryConstant.TAG_VALUE_CUSTOMER_WHERE_CLAUSE, employeeId);
+					
+				}
+				
+				query += QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE;
 				tagValueList = baseDao.getTagValue(query);
 				for(String value : tagValueList){
 					if(value != null){
@@ -713,7 +717,7 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgram(String custId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
-		DecimalFormat df = new DecimalFormat("#.00"); 
+		DecimalFormat df = new DecimalFormat("0.00"); 
 		String sql=QueryConstant.PROGRAM_LIST;
 		Map<String, Object> queryParams = new HashMap<>();
 		if("0".equalsIgnoreCase(custId)){
@@ -1044,4 +1048,5 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		return dropdownList;
 	}
+	
 }

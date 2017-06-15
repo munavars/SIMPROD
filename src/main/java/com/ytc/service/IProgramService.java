@@ -12,7 +12,7 @@ import com.ytc.common.model.ProgramTierDetail;
 
 public interface IProgramService {
 
-	List<DropDown> getTagValueDropDown(Integer tagId);
+	List<DropDown> getTagValueDropDown(Integer tagId, Integer employeeId);
 	
 	ProgramPaidOn getTagDetails(String tag);
 

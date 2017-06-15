@@ -507,7 +507,7 @@ function handleFile(e) {
 							$('#myModal4').modal('toggle');
 			            } else {
 			              	$('#myModal1').modal('toggle');
-         					$("#errorMessage").html("Issue while saving the data. Please correct data entered.!!");
+         					$("#errorMessage").html("Issue while saving the data. Please correct the following data.!!"+'<br><br>'+response.data.validationMessage);
 							$('#myModal5').modal('toggle');
 			            
 							//alert("Issue while saving the data. Please try again after sometime.!!");
@@ -611,6 +611,7 @@ function handleFile(e) {
 <!-- Inline javascript to set the user name from model attribute Begin -->
 <script type="text/javascript" th:inline="javascript">
 	$(document).ready(function() {
+				
 	   var modelAttributeValue = [[${loginUserNameValue}]];
 	   $("#loginUserName").html(modelAttributeValue);
 	   var emp = [[${EmployeeInfo}]];
@@ -618,6 +619,26 @@ function handleFile(e) {
 	   	{
 	   		closeSidebar();
 		}
+	   var url="/SIM/getEmployeeDetail/"+emp[0].MANAGER_ID;
+    	$.ajax({ 
+        	type: "GET",
+        	dataType: "json",
+       	url: url,
+       	async: false,
+        	success: function(response){
+        		console.log(response);
+        		
+        		 $("#requestedBy").html("Name: "+modelAttributeValue);
+				   $("#requestedTitle").html("Title: "+emp[0].TITLE_ID);
+				   $("#approvedBy").html("Name: "+response.first_NAME+" "+response.last_NAME);
+				   $("#approvedTitle").html("Title: "+response.title.title);
+				   
+        	},
+        	failure: function(response){
+        		alert("Wrongly done");
+        	}
+    	});
+	   
 	});
 </script>
 <!-- Inline javascript to set the user name from model attribute End -->
@@ -756,17 +777,17 @@ function handleFile(e) {
                                 <div class="col-lg-3 col-sm-4 p-left0">
                                    <ul class="list-unstyled w-list">
                                     <h5>Requested By:</h5>   
-                                    <li>Name: Tim Buerman</li>
-                                    <li>Title: District Sales Manager</li>
-                                    <li>Requested Date: 12/12/2016</li>
+                                    <li id="requestedBy">Name: Tim Buerman</li>
+                                    <li id="requestedTitle">Title: District Sales Manager</li>
+                                    <li id="requestedDate">Requested Date: 12/12/2016</li>
                                  </ul>
                                 </div>
                                <div class="col-lg-3 col-md-5 col-sm-4">
                                    <ul class="list-unstyled w-list">
                                    <h5>Approved By:</h5>   
-                                    <li>Name: Rick Hinds</li>
-                                    <li>Title: Zone Manager</li>
-                                    <li>Approved Date: 12/12/2016</li>
+                                    <li id="approvedBy">Name: Rick Hinds</li>
+                                    <li id="approvedTitle">Title: Zone Manager</li>
+                                    <li>Approved Date: </li>
                                  </ul>
                                 </div>
                            </div>

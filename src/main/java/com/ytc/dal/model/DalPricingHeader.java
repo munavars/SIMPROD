@@ -4,7 +4,6 @@
 package com.ytc.dal.model;
 
 
-import java.util.Calendar;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -20,6 +19,11 @@ import javax.persistence.Table;
 @Table(name = "PRICING_HEADER")
 public class DalPricingHeader extends DalAuditableModel{
 
+	
+	/**
+	 * Default serial version. 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private Integer customerId;
 	private DalPricingCustomerType customerType;

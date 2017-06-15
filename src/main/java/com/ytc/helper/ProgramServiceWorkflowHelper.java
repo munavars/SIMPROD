@@ -7,6 +7,8 @@ import com.ytc.common.comparator.WorkflowStatusComparatorByModifiedDate;
 import com.ytc.common.enums.ConsumerProgramStatusEnum;
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramHeader;
+import com.ytc.constant.ProgramConstant;
+import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalWorkflowStatus;
 
@@ -127,5 +129,28 @@ public class ProgramServiceWorkflowHelper {
 		programHeader.getProgramButton().setApprover(false);
 		programHeader.getProgramButton().setCreater(true);	
 	}
-
+	
+	public static Integer getEmployeeIdFromHierachy(DalEmployeeHierarchy dalEmployeeHierarchy, Integer hierarchyLevel){
+		Integer employeeId = null;
+		
+		if(dalEmployeeHierarchy != null){
+			if(ProgramConstant.EMP_HIERARCHY_1 == hierarchyLevel){
+				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl1EmpId());
+			}
+			else if(ProgramConstant.EMP_HIERARCHY_2 == hierarchyLevel){
+				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl2EmpId());
+			}
+			else if(ProgramConstant.EMP_HIERARCHY_3 == hierarchyLevel){
+				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl3EmpId());
+			}
+			else if(ProgramConstant.EMP_HIERARCHY_4 == hierarchyLevel){
+				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl4EmpId());
+			}
+			else if(ProgramConstant.EMP_HIERARCHY_5 == hierarchyLevel){
+				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl5EmpId());
+			}
+		}
+		
+		return employeeId;
+	}
 }

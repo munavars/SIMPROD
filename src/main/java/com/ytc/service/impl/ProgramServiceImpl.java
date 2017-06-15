@@ -691,7 +691,6 @@ public class ProgramServiceImpl implements IProgramService {
 				if(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId().equals(tagItemValueMapEnum.getTagId()) || 
 						TagItemValueMapEnum.BILL_TO_NUMBER.getTagId().equals(tagItemValueMapEnum.getTagId()) ){
 					query += String.format(QueryConstant.TAG_VALUE_CUSTOMER_WHERE_CLAUSE, employeeId);
-					
 				}
 				
 				query += QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE;

@@ -22,6 +22,7 @@ import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalStatus;
 import com.ytc.dal.model.DalWorkflowMatrix;
 import com.ytc.dal.model.DalWorkflowStatus;
+import com.ytc.helper.ProgramServiceWorkflowHelper;
 import com.ytc.service.IProgramWorkflowService;
 
 /**
@@ -186,7 +187,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 				userLevel++;
 				if(workflowMatrix.getHierarchyLevel() != null){
 					value = new Integer[2]; 
-					Integer currentUserEmployeeId = getEmployeeIdFromHierachy(dalEmployeeHierarchy, workflowMatrix.getHierarchyLevel());
+					Integer currentUserEmployeeId = ProgramServiceWorkflowHelper.getEmployeeIdFromHierachy(dalEmployeeHierarchy, workflowMatrix.getHierarchyLevel());
 					value[0] = currentUserEmployeeId;
 					value[1] = workflowMatrix.getId();
 					programWorkflowMatrixDetail.getApproverLevelList().put(userLevel, value);
@@ -243,30 +244,6 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 			}
 		}
 		return isMatching;
-	}
-
-	private Integer getEmployeeIdFromHierachy(DalEmployeeHierarchy dalEmployeeHierarchy, Integer hierarchyLevel){
-		Integer employeeId = null;
-		
-		if(dalEmployeeHierarchy != null){
-			if(ProgramConstant.EMP_HIERARCHY_1 == hierarchyLevel){
-				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl1EmpId());
-			}
-			else if(ProgramConstant.EMP_HIERARCHY_2 == hierarchyLevel){
-				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl2EmpId());
-			}
-			else if(ProgramConstant.EMP_HIERARCHY_3 == hierarchyLevel){
-				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl3EmpId());
-			}
-			else if(ProgramConstant.EMP_HIERARCHY_4 == hierarchyLevel){
-				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl4EmpId());
-			}
-			else if(ProgramConstant.EMP_HIERARCHY_5 == hierarchyLevel){
-				employeeId = Integer.valueOf(dalEmployeeHierarchy.getLvl5EmpId());
-			}
-		}
-		
-		return employeeId;
 	}
 
 	/**

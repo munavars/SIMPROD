@@ -8,16 +8,19 @@ import java.util.Calendar;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRICING_DETAIL")
 public class DalPricingDetail extends DalAuditableModel{
 
+	/**
+	 * Default serial version.
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String addChgDel;
 	private Calendar startDate;
 	private Calendar endDate;
@@ -179,8 +182,8 @@ public class DalPricingDetail extends DalAuditableModel{
 	 * @return the dalPricingHeader
 	 */
 	
-@ManyToOne(cascade=CascadeType.ALL)
-@JoinColumn(name = "PRICING_HDR_ID", referencedColumnName = "ID")
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name = "PRICING_HDR_ID", referencedColumnName = "ID")
 	public DalPricingHeader getDalPricingHeader() {
 		return dalPricingHeader;
 	}

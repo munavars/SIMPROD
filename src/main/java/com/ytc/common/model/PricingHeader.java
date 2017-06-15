@@ -18,6 +18,17 @@ public class PricingHeader extends Model{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**Header information - Begin*/
+	private String businessUnitDescription;
+	private String businessUnit;
+	private String requestedByName;
+	private String requestedByTitle;
+	private String requestedByDate;
+	private String approvedByName;
+	private String approvedByTitle;
+	private String approvedByDate;
+	/**Header information - End*/
+	
 	private String customerType;
 	private String customerGroup;
 	private String customerId;
@@ -200,6 +211,52 @@ public class PricingHeader extends Model{
 	public void setValidationMessage(String validationMessage) {
 		this.validationMessage = validationMessage;
 	}
-	
-
+	public String getBusinessUnitDescription() {
+		return businessUnitDescription;
+	}
+	public void setBusinessUnitDescription(String businessUnitDescription) {
+		this.businessUnitDescription = businessUnitDescription;
+	}
+	public String getBusinessUnit() {
+		return businessUnit;
+	}
+	public void setBusinessUnit(String businessUnit) {
+		this.businessUnit = businessUnit;
+	}
+	public String getRequestedByName() {
+		return requestedByName;
+	}
+	public void setRequestedByName(String requestedByName) {
+		this.requestedByName = requestedByName;
+	}
+	public String getRequestedByTitle() {
+		return requestedByTitle;
+	}
+	public void setRequestedByTitle(String requestedByTitle) {
+		this.requestedByTitle = requestedByTitle;
+	}
+	public String getRequestedByDate() {
+		return requestedByDate;
+	}
+	public void setRequestedByDate(String requestedByDate) {
+		this.requestedByDate = requestedByDate;
+	}
+	public String getApprovedByName() {
+		return approvedByName;
+	}
+	public void setApprovedByName(String approvedByName) {
+		this.approvedByName = approvedByName;
+	}
+	public String getApprovedByTitle() {
+		return approvedByTitle;
+	}
+	public void setApprovedByTitle(String approvedByTitle) {
+		this.approvedByTitle = approvedByTitle;
+	}
+	public String getApprovedByDate() {
+		return approvedByDate;
+	}
+	public void setApprovedByDate(String approvedByDate) {
+		this.approvedByDate = approvedByDate;
+	}
 }

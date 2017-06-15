@@ -355,6 +355,14 @@ function handleFile(e) {
 	            	async: false,
 	             	success: function(response){
 	             		responseOnload = response.data;
+	             		$('#businessUnitDescription').html(response.data.businessUnitDescription);
+	             		$('#requestedBy').html(response.data.requestedByName);
+	             		$('#requestedTitle').html(response.data.requestedByTitle);
+	             		$('#requestedDate').html(response.data.requestedByDate);
+	             		$('#approvedBy').html(response.data.approvedByName);
+	             		$('#approvedTitle').html(response.data.approvedByTitle);
+	             		$('#approvedDate').html(response.data.approvedByDate);
+	             		
 	             		
 					fnPopulateDropdown('termsCode_inputselect', response.data.dropdownList.termsCodeList);
               	$('#termsCode_inputselect').val(response.data.dropdownList.termsCodeList[0].key);
@@ -463,8 +471,17 @@ function handleFile(e) {
          		//responseOnload.status = "3";
          		prepareDataForSubmit();
          		fnCallService();
-         		
+         		$('#myModal1').modal('toggle');
          	}
+         	
+         	function submitForApproval(){
+         		//responseOnload.status = "3";
+         		prepareDataForSubmit();
+         		fnCallService();
+         		$('#myModal').modal('toggle');
+         		disableFields();
+         	}
+         	
          	var formData=[];
          	function prepareDataForSubmit(){
          		//responseOnload.url = window.location.href;
@@ -502,7 +519,6 @@ function handleFile(e) {
 					success: function (response) {
 			            if (response != null && response.data.success == true) {
 			            	responseOnload = response.data;
-			            	$('#myModal1').modal('toggle');
          					$("#confirmMessage").html("Data saved successfully !!!");
 							$('#myModal4').modal('toggle');
 			            } else {
@@ -533,6 +549,37 @@ function handleFile(e) {
 					$('#myModal6').modal('toggle');
 				} 
 			}
+			function disableFields(){
+				$('#pricing-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
+				$("#pricing-parent-div").find('a').addClass("disabled");
+				enabledButtonApplicableToAll();
+			}
+			
+			function enabledButtonApplicableToAll(){
+				$('#program-expand').attr('disabled', false);
+				$('#program-expand').removeClass("disabled");
+				$('#pdf-button').attr('disabled', false);
+				$('#cancel-program').attr('disabled', false);
+				$('#cancelLink').attr('disabled', false);
+				$('#cancelLink').removeClass("disabled");
+				$('#myModal').find('button').attr('disabled',false);
+				$('#myModal1').find('button').attr('disabled',false);
+				$('#myModal4').find('button').attr('disabled',false);
+				$('#myModal5').find('button').attr('disabled',false);
+				$('#myModal6').find('button').attr('disabled',false);
+				/* $('#myModal5').find('button').attr('disabled',false);
+				$('#myModal4').find('button').attr('disabled',false);
+				$('#myModal7').find('button, a, textarea').attr('disabled',false);
+				$('#myModal8').find('button, a, textarea').attr('disabled',false);
+				$('#myModal9').find('button, a, textarea').attr('disabled',false);
+				$('#myModal10').find('button, a, textarea').attr('disabled',false);
+				$('#header-button').removeAttr('hidden');
+				$('#footer-button').removeAttr('hidden');
+				$('#view-program-workflow').attr('disabled', false);
+				$('#view-program-workflow').removeClass("disabled");
+				$('#program-workflow-btn').attr('disabled', false); */
+			}
+			
 			</script>
 	<!--  Validation setup Begins -->
     <script type="text/javascript">
@@ -623,7 +670,7 @@ function handleFile(e) {
 	   	{
 	   		closeSidebar();
 		}
-	   var url="/SIM/getEmployeeDetail/"+emp[0].MANAGER_ID;
+/* 	   var url="/SIM/getEmployeeDetail/"+emp[0].MANAGER_ID;
     	$.ajax({ 
         	type: "GET",
         	dataType: "json",
@@ -641,7 +688,7 @@ function handleFile(e) {
         	failure: function(response){
         		alert("Wrongly done");
         	}
-    	});
+    	}); */
 	   
 	});
 </script>
@@ -763,7 +810,7 @@ function handleFile(e) {
         <section id="main-content">
           <section class="wrapper">
               <!-- page start-->
-              <div class="row">
+              <div id="pricing-parent-div" class="row">
                   <div class="col-lg-12">
                       <section class="panel">
                           <header class="panel-heading">
@@ -774,24 +821,25 @@ function handleFile(e) {
                              <div class="col-lg-12">
                                 <h5 data-original-title="Program Details" data-content="Click on the grey button below to see more info about this program. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Program Details</h5>
                                  <ul class="list-inline w-list">
-                                    <li>Business Unit: <strong><span class="yokohamared">Commercial</span></strong></li>
-                                    <li><button type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
+                                    <li>Business Unit: <strong><span class="yokohamared" id="businessUnitDescription"></span></strong></li>
+                                    <li><button id="program-expand" type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
                                  </ul>
                                <div id="demo" class="collapse out">
                                 <div class="col-lg-3 col-sm-4 p-left0">
-                                   <ul class="list-unstyled w-list">
-                                    <h5>Requested By:</h5>   
-                                    <li id="requestedBy">Name: Tim Buerman</li>
-                                    <li id="requestedTitle">Title: District Sales Manager</li>
-                                    <li id="requestedDate">Requested Date: 12/12/2016</li>
-                                 </ul>
-                                </div>
+									<ul class="list-unstyled w-list">
+										<h5>Requested By:</h5>
+										<li><strong>Name:</strong> <span id="requestedBy"></span></li>
+										<li><strong>Title:</strong> <span id="requestedTitle"></span></li>
+										<li><strong>Requested Date:</strong> <span
+											id="requestedDate"></span></li>
+									</ul>
+								</div>
                                <div class="col-lg-3 col-md-5 col-sm-4">
                                    <ul class="list-unstyled w-list">
                                    <h5>Approved By:</h5>   
-                                    <li id="approvedBy">Name: Rick Hinds</li>
-                                    <li id="approvedTitle">Title: Zone Manager</li>
-                                    <li>Approved Date: </li>
+                                   <li><strong>Name:</strong> <span id="approvedBy"></span></li>
+                                   <li><strong>Title:</strong> <span id="approvedTitle"></span></li>
+                                   <li><strong>Approved Date:</strong> <span id="approvedDate"></span></li>
                                  </ul>
                                 </div>
                            </div>
@@ -835,11 +883,11 @@ function handleFile(e) {
                                     </div>
                                     <div class="col-sm-2">
                                      <label class="control-label">Cust ID</label>
-                                        <input type="text" class="form-control m-bot15" id="customeID" name="customeID" placeholder="customeID">
+                                        <input type="text" class="form-control m-bot15" id="customeID" name="customeID" placeholder="Customer Id">
                                     </div>
                                     <div class="col-sm-5">
                                     <label class="control-label">Cust/Group</label>
-                                        <input type="text" class="form-control  m-bot15" id="customerGroup" name="customerGroup" placeholder="customerGroup">
+                                        <input type="text" class="form-control  m-bot15" id="customerGroup" name="customerGroup" placeholder="Customer Group">
                                     </div>    
                                 </div>
                           <div class="adv-table editable-table">
@@ -1070,40 +1118,59 @@ function handleFile(e) {
 
                   <!---- START Submit for Approval -->
           <div class="clearfix space15"></div>
-          <div class="clearfix">
-             <a class="btn btn-info finish" id="save-program" href="javascript: validateBeforeSubmit('#myModal1')"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
+          <div class="clearfix"> </div>
+          <div id="footer-button" class="modal-footer">
+				<a id="cancelLink" href="/SIM/pricingOverview">
+					<button id="cancel-program" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
+				</a> &nbsp; <a class="btn btn-success" id="submit-program" href="javascript: validateBeforeSubmit('#myModal')">
+					<i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval </a>&nbsp; 
+				<a class="btn btn-info finish" id="save-program" href="javascript: validateBeforeSubmit('#myModal1')"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
               <!-- Modal -->
-                              <!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                      <div class="modal-content">
-                                          <div class="modal-header">
-                                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                              <h4 class="modal-title">Save Program Changes?</h4>
-                                          </div>
-                                          <div class="modal-body">
-                                              <div class="space15">&nbsp;</div>
-If you want to save these changes for later, select 'Save As Draft'. If you want to submit these changes, select "Submit For Approval". If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes.
-                                              <div class="space15"></div>
-                                          </div>
-                                          <div class="modal-footer">
-                                              <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                                              	<a href="javascript: saveDraft()"><button class="btn btn-info" type="button"><i class="fa fa-save"></i>&nbsp;&nbsp;Save As Draft</button></a>
-                                              <a href="index.html#pending-approvals"><button class="btn btn-success" type="button"><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</button></a>
-                                          </div>
-                                      </div>
-                                  </div>
-                              </div> -->
-                              <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                	<div class="modal-dialog">
-                    	<div class="modal-content">
-                        	<div class="modal-header">
-                            	<button id="program-save-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title">Save Program Changes?</h4>
-                            </div>
+
+				<div class="modal fade" id="myModal" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button id="program-submit-modal-close" type="button"
+									class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h4 class="modal-title">Submit for Approval?</h4>
+							</div>
+							<div class="modal-body">
+								<div class="space15">&nbsp;</div>
+								<div class="text-center">Are you sure you want
+									to Submit for approval? If you still want to submit
+									for approval, click the OK button. If you don't want
+									to submit, click the "Cancel" button below and your
+									program will not be submitted.</div>
+								<div class="space15"></div>
+							</div>
+							<div class="modal-footer">
+								<button id="program-submit-modal-cancel"
+									data-dismiss="modal" class="btn btn-default"
+									type="button">Cancel</button>
+								<a href="javascript: submitForApproval()"><button
+										id="program-submit-modal-ok" class="btn btn-info"
+										type="button">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+									</button></a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+				            	<button id="program-save-modal-close" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				            	<h4 class="modal-title">Save Program Changes?</h4>
+				            </div>
 							<div class="modal-body">
 								<div class="space15">&nbsp;</div>
 								<div class="text-center">Are you sure you want to Save Changes? If you still want to save your changes, click the OK button. If you don't want to save your changes, click the "Cancel" button below and your program will not save these changes. </div>
-                                <div class="space15"></div>
+				                            <div class="space15"></div>
 							</div>
 							<div class="modal-footer">
 								<button data-dismiss="modal" class="btn btn-default" id="program-save-modal-cancel"

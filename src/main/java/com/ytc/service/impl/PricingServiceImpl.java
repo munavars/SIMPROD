@@ -4,6 +4,7 @@
 package com.ytc.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -12,22 +13,41 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
+import com.ytc.common.enums.BusinessUnitDescriptionEnum;
 import com.ytc.common.enums.TagItemValueMapEnum;
 import com.ytc.common.model.DropDown;
+import com.ytc.common.model.Employee;
 import com.ytc.common.model.NetPricing;
 import com.ytc.common.model.PricingDetailsDropDown;
 import com.ytc.common.model.PricingHeader;
+import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
+import com.ytc.dal.model.DalEmployee;
+import com.ytc.dal.model.DalEmployeeHierarchy;
+import com.ytc.dal.model.DalEmployeeTitle;
+import com.ytc.dal.model.DalWorkflowMatrix;
+import com.ytc.helper.ProgramServiceHelper;
+import com.ytc.helper.ProgramServiceWorkflowHelper;
 import com.ytc.service.IPricingService;
+import com.ytc.service.IProgramService;
+import com.ytc.service.ServiceContext;
 
 /**
- * @author ArunP
+ * Purpose: This class has the methods for fetching the pricing details.
+ * @author Cognizant.
  *
  */
 public class PricingServiceImpl implements IPricingService {
+	
 	@Autowired
 	private IDataAccessLayer baseDao;
+	
+	@Autowired
+	private IProgramService programService;
+	
+	@Autowired
+	private ServiceContext serviceContext;
 	
 	@Override
 	public List<DropDown> getTagValueDropDown(Integer tagId) {
@@ -61,15 +81,66 @@ public class PricingServiceImpl implements IPricingService {
 	public PricingHeader getPricingDetails() {
 		PricingHeader pricingHeader = new PricingHeader();
 		populateDropDownValues(pricingHeader);
+		
+		getHeaderDetails(pricingHeader);
+		
 		return pricingHeader;
+	}
+
+	private void getHeaderDetails(PricingHeader pricingHeader) {
+		/**Populating header information Begin*/
+		/**
+		 * 1. Get Business unit
+		 * 2. Get work flow matrix details.
+		 * 3. Identity approver information based on work flow matrix.
+		 * */
+		Employee employee = serviceContext.getEmployee();
+		if(employee != null){
+			String businessUnit = employee.getBUSINESS_UNIT();
+			if(businessUnit != null){
+				BusinessUnitDescriptionEnum businessUnitDescriptionEnum = BusinessUnitDescriptionEnum.getBUDescription(businessUnit);	
+				pricingHeader.setBusinessUnitDescription(businessUnitDescriptionEnum.getBusinessUnitDescription());
+				pricingHeader.setBusinessUnit(businessUnit);
+			}
+			pricingHeader.setRequestedByName(employee.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + employee.getLAST_NAME());
+			pricingHeader.setRequestedByTitle(baseDao.getById(DalEmployeeTitle.class, Integer.valueOf(employee.getTITLE_ID())).getTitle());
+			pricingHeader.setRequestedByDate(ProgramServiceHelper.convertDateToString(Calendar.getInstance().getTime(), ProgramConstant.DATE_FORMAT));
+			/**Work flow matrix.*/
+			Map<String, Object> inputParameter = new HashMap<String, Object>();
+			inputParameter.put("programType", ProgramConstant.PRICING_FORM_TYPE);
+			inputParameter.put("businessUnit", businessUnit);
+			List<DalWorkflowMatrix> dalWorkflowMatrixList = baseDao.getListFromNamedQueryWithParameter("DalWorkflowMatrix.getMatrixForBU", inputParameter);
+			Integer nextApprover = null;
+			if(dalWorkflowMatrixList != null && !dalWorkflowMatrixList.isEmpty()){
+				DalWorkflowMatrix dalWorkflowMatrix = dalWorkflowMatrixList.get(0);
+				if(dalWorkflowMatrix.getHierarchyLevel() != null){
+					//Get employee hierarchy
+					DalEmployeeHierarchy dalEmployeeHierarchy = baseDao.getEntityById(DalEmployeeHierarchy.class, employee.getEMP_ID());
+					nextApprover = ProgramServiceWorkflowHelper.getEmployeeIdFromHierachy(dalEmployeeHierarchy, dalWorkflowMatrix.getHierarchyLevel());
+				}
+				else if(dalWorkflowMatrix.getEmpId() != null){
+					nextApprover = dalWorkflowMatrix.getEmpId();
+				}
+				if(nextApprover != null){
+					DalEmployee  dalEmployee = baseDao.getById(DalEmployee.class, nextApprover);
+					if(dalEmployee != null){
+						pricingHeader.setApprovedByName(ProgramServiceHelper.getName(dalEmployee));
+						pricingHeader.setApprovedByTitle(dalEmployee.getTITLE().getTitle());
+					}
+				}
+			}
+		}
+		/**Populating header information End*/
 	}
 
 	private void populateDropDownValues(PricingHeader pricingHeader) {
 		PricingDetailsDropDown pricingDetailsDropDown = new PricingDetailsDropDown();
 		pricingDetailsDropDown.setGroupList(getGroupDropDownList("DalCustomer.getGroup"));
-		pricingDetailsDropDown.setCustBillToList(getDropDownList("DalShipToMaster.getBillToName"));
+		pricingDetailsDropDown.setCustBillToList(programService.getTagValueDropDown(TagItemValueMapEnum.BILL_TO_NUMBER.getTagId(), 
+																					serviceContext.getEmployee().getEMP_ID()));
 		pricingDetailsDropDown.setCustByNameList(getDropDownList("DalCustomer.getCustomerName"));
-		pricingDetailsDropDown.setCustShipToList(getDropDownList("DalShipToMaster.getShipToName"));
+		pricingDetailsDropDown.setCustShipToList(programService.getTagValueDropDown(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId(), 
+																					serviceContext.getEmployee().getEMP_ID()));
 		pricingDetailsDropDown.setTermsCodeList(getDropDownList("DalPricingTermCodes.getTermCodes"));
 		pricingDetailsDropDown.setOtherShipReqsList(getDropDownList("DalPricingOtherShipRequirements.getOtherReqs"));
 		pricingDetailsDropDown= getSelectedValueList(pricingDetailsDropDown);

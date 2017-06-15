@@ -18,11 +18,13 @@ import com.ytc.common.model.ProgramTierDetail;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBaseItems;
+import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetAchieved;
 import com.ytc.dal.model.DalProgramDetPaid;
 import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalProgramDetailTier;
+import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalStatus;
 import com.ytc.dal.model.DalUserComments;
@@ -54,21 +56,51 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	public ProgramHeader saveProgramDetails(ProgramHeader programHeader) {
 		
 		if(programHeader.getId() != null){
-		
+
+			
 			DalProgramDetail dalProgramDetail = baseDao.getById(DalProgramDetail.class, programHeader.getProgramDetailList().get(0).getId());
 			
 			if(dalProgramDetail != null && !programHeader.isNewProgram()){
-				/** If control is here, then user is editing the existing program details.*/
-				updateProgramDetails(programHeader, dalProgramDetail);
+				
+				int prgrmId=checkForTheDuplicateRecord(programHeader);
+				
+				if(prgrmId!=0)
+				{
+					programHeader.setSuccess(true); 
+					programHeader.setDuplicate(true); 
+					programHeader.setId(prgrmId); 
+			    }
+				else
+				{	
+					/** If control is here, then user is editing the existing program details.*/
+					updateProgramDetails(programHeader, dalProgramDetail);
+					programHeader.setDuplicate(false); 
+				}
+				
 			}
 			else{
 				/** Only Program detail id will be generated.*/
 				programCreateService.createProgramDetails(programHeader);
 			}
+		
 		}
 		else{
-			/** Both Program header and detail id will be generated.*/
-			programCreateService.createProgramDetails(programHeader);
+			
+			/**Checking for duplicate record based on Customer, Date Range, Amount, Include / Exclude Tags */
+			int prgrmId=checkForTheDuplicateRecord(programHeader);
+			
+			if(prgrmId!=0)
+			{
+				programHeader.setSuccess(true); 
+				programHeader.setDuplicate(true); 
+				programHeader.setId(prgrmId); 
+		    }
+			else
+			{	
+				/** Both Program header and detail id will be generated.*/
+				programCreateService.createProgramDetails(programHeader);
+				programHeader.setDuplicate(false); 
+			}
 		}		
 		
 		return programHeader;
@@ -575,5 +607,151 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 				newlyAddedAchieveOnList.add(dalProgramDetAchieved);
 			}
 		}
+	}
+	private int checkForTheDuplicateRecord(ProgramHeader programHeader) {
+		int prgrmId=0;
+		Map<String,Object> map=new HashMap<String,Object>();
+		Calendar cal = Calendar.getInstance();
+		Calendar cal1 = Calendar.getInstance();
+		DalProgramDetail dalProgramDet = new DalProgramDetail();
+		DalProgramHeader dalProgramHeader = new DalProgramHeader();	
+		cal.setTimeInMillis(programHeader.getProgramDetailList().get(0).getBeginDate().getTime());
+		dalProgramDet.setProgramStartDate(cal);
+		cal1.setTimeInMillis(programHeader.getProgramDetailList().get(0).getEndDate().getTime());
+		dalProgramDet.setProgramEndDate(cal1);
+		if(programHeader.getProgramDetailList().get(0).getAmount() != null){
+			dalProgramDet.setAccrualAmount(programHeader.getProgramDetailList().get(0).getAmount().doubleValue());	
+		}
+		dalProgramHeader.setCustomer(baseDao.getById(DalCustomer.class, programHeader.getCustomerId()));
+		String customerNo=dalProgramHeader.getCustomer().getCustomerNumber();
+		Map<String,List<String>> paidInputInclude=programHeader.getProgramDetailList().get(0).getProgramPaidOn().getIncludedMap();
+		Map<String,List<String>> paidInputExclude=programHeader.getProgramDetailList().get(0).getProgramPaidOn().getExcludedMap();
+		Map<String,List<String>> achieveInputInclude=programHeader.getProgramDetailList().get(0).getProgramAchieveOn().getIncludedMap();
+		Map<String,List<String>> achieveInputExclude=programHeader.getProgramDetailList().get(0).getProgramAchieveOn().getExcludedMap();
+		map.put("PGM_START_DATE", dalProgramDet.getProgramStartDate());
+		map.put("PGM_END_DATE", dalProgramDet.getProgramEndDate());
+		map.put("ACCRUAL_AMOUNT", dalProgramDet.getAccrualAmount());
+		List<DalProgramDetail> list=baseDao.getListFromNamedQueryWithParameter("DalProgramDetail.checkDuplicateRecords", map);
+		
+		if(!list.isEmpty())
+		{
+			for(DalProgramDetail dalList:list)
+			{
+				if(customerNo.equals(dalList.getDalProgramHeader().getCustomer().getCustomerNumber()))			
+				{
+					Set<DalProgramDetPaid> paidSet = dalList.getDalProgramDetPaidList();
+					Set<DalProgramDetAchieved> achiveSet = dalList.getDalProgramDetAchievedList();
+					Map<Integer,List<String>> paidDBIncludeMap=new HashMap<Integer,List<String>>();
+				    Map<Integer,List<String>> paidDBExcludeMap=new HashMap<Integer,List<String>>();
+				    Map<Integer,List<String>> achiveDBIncludeMap=new HashMap<Integer,List<String>>();
+				    Map<Integer,List<String>> achiveDBExcludeMap=new HashMap<Integer,List<String>>();
+				    for(DalProgramDetPaid paidSet1 : paidSet)
+					{    
+					    if("1".equals(paidSet1.getMethod()))
+					    {
+					    	if(paidDBIncludeMap.get(paidSet1.getTagId())==null)
+					    	{
+					    		List<String> tempList=new ArrayList<String>();
+					    		tempList.add(paidSet1.getDisplayValue());
+					    		paidDBIncludeMap.put(paidSet1.getTagId(),tempList);
+					    	}
+					    	else
+					    	{
+					    		List<String> tempList=paidDBIncludeMap.get(paidSet1.getTagId());
+					    		tempList.add(paidSet1.getDisplayValue());
+					    		paidDBIncludeMap.put(paidSet1.getTagId(),tempList);
+					    	}
+					    }
+						else
+						{
+					    	if(paidDBExcludeMap.get(paidSet1.getTagId())==null)
+					    	{
+					    		List<String> tempList=new ArrayList<String>();
+					    		tempList.add(paidSet1.getDisplayValue());
+					    		paidDBExcludeMap.put(paidSet1.getTagId(),tempList);
+					    	}
+					    	else
+					    	{
+					    		List<String> tempList=paidDBExcludeMap.get(paidSet1.getTagId());
+					    		tempList.add(paidSet1.getDisplayValue());
+					    		paidDBExcludeMap.put(paidSet1.getTagId(),tempList);
+					    	}
+					    }
+					}
+					for(DalProgramDetAchieved achiveSet1 : achiveSet)
+					{    
+					    if("1".equals(achiveSet1.getAchMethod()))
+					    {
+					    	if(achiveDBIncludeMap.get(achiveSet1.getAchTagId())==null)
+					    	{
+					    		List<String> tempList=new ArrayList<String>();
+					    		tempList.add(achiveSet1.getDisplayValue());
+					    		achiveDBIncludeMap.put(achiveSet1.getAchTagId(),tempList);
+					    	}
+					    	else
+					    	{
+					    		List<String> tempList=achiveDBIncludeMap.get(achiveSet1.getAchTagId());
+					    		tempList.add(achiveSet1.getDisplayValue());
+					    		achiveDBIncludeMap.put(achiveSet1.getAchTagId(),tempList);
+					    	}
+					    }
+						else
+						{
+							if(achiveDBExcludeMap.get(achiveSet1.getAchTagId())==null)
+					    	{
+					    		List<String> tempList=new ArrayList<String>();
+					    		tempList.add(achiveSet1.getDisplayValue());
+					    		achiveDBExcludeMap.put(achiveSet1.getAchTagId(),tempList);
+					    	}
+					    	else
+					    	{
+					    		List<String> tempList=achiveDBExcludeMap.get(achiveSet1.getAchTagId());
+					    		tempList.add(achiveSet1.getDisplayValue());
+					    		achiveDBExcludeMap.put(achiveSet1.getAchTagId(),tempList);
+					    	}
+						}
+					}
+					if(comapreMaps(paidDBIncludeMap,paidInputInclude) && comapreMaps(paidDBExcludeMap,paidInputExclude) && comapreMaps(achiveDBIncludeMap,achieveInputInclude) && comapreMaps(achiveDBExcludeMap,achieveInputExclude) )
+					{
+						prgrmId=dalList.getId();
+						return prgrmId;
+					}
+			    }
+     	     }
+		}
+		
+	     return prgrmId;
+	}
+	private boolean comapreMaps(Map<Integer,List<String>> includeDBMap,Map<String,List<String>> includeInputMap)
+	{
+		boolean flag=false;
+		if(includeInputMap==null)
+		includeInputMap=new HashMap<String,List<String>>();
+		if(includeInputMap.size()==0 && includeDBMap.size()==0)
+		{
+			return true;
+		}
+		if(includeDBMap.size()==includeInputMap.size())
+		{
+			for (final String key : includeInputMap.keySet())
+			{
+			    if (includeDBMap.containsKey(Integer.parseInt(key))) {
+			    	List<String> list1=includeDBMap.get(Integer.parseInt(key));
+			    	List<String> list2=includeInputMap.get(key);
+			    	if(list1.size()==list2.size())
+			    	{
+				    	list1.removeAll(list2);
+				    	if(list1.size()==0)
+					    flag=true;
+			    	}
+			        else
+			        {
+			        	return false;
+			        }
+			    }
+			}
+		}
+			
+		return flag;
 	}
 }

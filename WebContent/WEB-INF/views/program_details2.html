@@ -545,7 +545,8 @@
 																<div id="glcocde">
 																<label class="control-label"
 																			for="glcode_dropdown">GLNo</label>&nbsp;&nbsp;
-																			 <select  id="glcode_dropdown" name="glcode_dropdown"/>
+																			<!--  <select  id="glcode_dropdown" name="glcode_dropdown"/>  -->
+																			 <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled>
 																</div> 
 																</div>
 															</div>
@@ -1316,6 +1317,24 @@
 		   	{
 		   		closeSidebar();
 			}
+		   /* var tbpuser=['frank.cox@yokohamatire.com','francis.villegas@yokohamatire.com','cristina.stone@yokohamatire.com','Michelle.Coquillard@yokohamatire.com'];
+		   if(tbpuser.indexOf(emp[0].EMAIL)==-1){
+			   $("#tbpcheck").hide();   
+		   } */
+        	$.ajax({ 
+             	type: "GET",
+             	dataType: "json",
+            	url: '/SIM/isTbpUser',
+             	success: function(response){
+             		if(!response){
+             			$("#tbpcheck").hide();
+             		}
+             	},
+             	failure: function(response){
+             		alert("Wrongly done");
+             	}
+         	});
+		   
 		});
 		
 		
@@ -1465,7 +1484,7 @@
                	fnPopulateDropdown('pricing_type_inputselect', response.data.programDetailList[0].dropdownList.pricingTypeList);
                	$('#pricing_type_inputselect').val(response.data.programDetailList[0].pricingType);
               
-               	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
+               	//fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
                	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
               
                	if(response.data.programDetailList[0].tbpCheck == '1'){
@@ -1738,8 +1757,13 @@
 				responseOnload.programDetailList[0].paidBasedOn = $('#paid_basedon_inputselect').val();
 				responseOnload.programDetailList[0].pricingType= $('#pricing_type_inputselect').val();
 				responseOnload.programDetailList[0].payoutFrequency = $('#payout_freq_inputselect').val();
-				responseOnload.programDetailList[0].glCode = parseInt($('#glcode_dropdown').val());
-				responseOnload.programDetailList[0].tbpCheck = parseInt($('#tbpCheck').val());
+				if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
+					responseOnload.programDetailList[0].glCode = '0';	
+				}else{
+					responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+				}
+				
+				//responseOnload.programDetailList[0].tbpCheck = parseInt($('#tbpCheck').val());
 				if($('#tbpCheck').is(":checked")){
 					responseOnload.programDetailList[0].tbpCheck = '1';
 				}
@@ -2024,6 +2048,22 @@
 
 	<script type="text/javascript">
 			$(document).ready(function() {
+				
+				$('#program_name_inputselect').change(function(){
+					 $('#glcode_dropdown').val(''); 
+					if(responseOnload.businessUnit=='P'){
+						key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
+					}else{
+						key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
+					}
+					$.each(responseOnload.programDetailList[0].dropdownList.glCodeList, function (i, item) {
+					   if(key==item.key){
+						   $('#glcode_dropdown').val(item.value); 
+					   }
+					});
+					
+				});
+				
 				$('#copy-paid-info-btn').click(function () {
 					
 					var include1 = document.getElementById('include');

@@ -63,7 +63,7 @@ public class ProgramDetail extends Model{
 	private String programStatus;
 	
 	private Integer tbpCheck;
-	private Integer glCode;
+	private String glCode;
 	
 	/**Commentary/Special Instructions attribute to hold the user entered comments.*/
 	private String comments;
@@ -441,10 +441,10 @@ public class ProgramDetail extends Model{
 	public void setTbpcheck(Integer tbpCheck) {
 		this.tbpCheck = tbpCheck;
 	}
-	public Integer getGlCode() {
+	public String getGlCode() {
 		return glCode;
 	}
-	public void setGlCode(Integer glCode) {
+	public void setGlCode(String glCode) {
 		this.glCode = glCode;
 	}
 }

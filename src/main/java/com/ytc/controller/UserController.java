@@ -60,6 +60,13 @@ public class UserController extends BaseController {
 		return (getService(request).getEmployeeDetail(empId));
 		//return aList;
 	}
+	
+	
+	@RequestMapping(value = "/isTbpUser", method = RequestMethod.GET)
+	public @ResponseBody boolean isTbpUser(HttpServletRequest request) {
+				
+		return (getService(request).isTbpUser(Integer.parseInt(request.getSession().getAttribute("EMPLOYEE_INFO").toString())));
+	}
 
 //	@RequestMapping(value = "/getCustomerNumber/{empId}", method = RequestMethod.GET)
 //	public @ResponseBody List getCustomerNumber(HttpServletRequest request, @PathVariable Integer empId) {

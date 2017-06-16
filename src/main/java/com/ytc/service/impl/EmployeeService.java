@@ -1,7 +1,9 @@
 package com.ytc.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +20,7 @@ import com.ytc.common.model.Employee;
 import com.ytc.common.model.User;
 import com.ytc.common.result.ResultCode;
 import com.ytc.common.result.ResultException;
+import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalUser;
@@ -102,6 +105,19 @@ public class EmployeeService implements IEmployeeService {
 		Query query = entityManager.createNativeQuery(queryString);
 		List<String> results = query.getResultList();
 		return results;	                
+	}
+	
+	@Override
+	public boolean isTbpUser(Integer loginId) {
+		Map<String, Object> queryParams = new HashMap<>();
+		boolean tbpUser=false;
+		queryParams.put("empId",loginId);
+		String sql=QueryConstant.TBP_USERS;
+		List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
+		if(!resultList.isEmpty()){
+			tbpUser=true;
+		}
+		return tbpUser;
 	}
 }
 

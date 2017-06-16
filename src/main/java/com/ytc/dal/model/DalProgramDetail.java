@@ -73,7 +73,7 @@ public class DalProgramDetail extends DalAuditableModel {
     
     private DalUserComments dalUserComments;
 	private Integer tbpCheck;
-	private Integer glCode;
+	private String glCode;
     
     @Column(name = "LONG_DESC")
     public String getLongDesc() {
@@ -665,13 +665,13 @@ public class DalProgramDetail extends DalAuditableModel {
       * @return the glCode
       */
       @Column(name = "GL_CODE")
-      public Integer getGlCode() {
+      public String getGlCode() {
                       return glCode;
       }
       /**
       * @param getGlCode the getGlCode to set
       */
-      public void setGlCode(Integer glCode) {
+      public void setGlCode(String glCode) {
                       this.glCode = glCode;
       }
 }

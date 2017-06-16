@@ -401,7 +401,8 @@
 															<div class="col-lg-4 col-sm-4">
 																<label class="control-label"
 																			for="glcode_dropdown">GLNo</label>
-																			 <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15"/>
+																			 <!-- <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15"/> -->
+																			 <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control "  value="" disabled>
 															</div>
 															</div>
 																		 
@@ -974,6 +975,20 @@
 		   	{
 		   		closeSidebar();
 			}
+		   
+		   $.ajax({ 
+            	type: "GET",
+            	dataType: "json",
+           	url: '/SIM/isTbpUser',
+            	success: function(response){
+            		if(!response){
+            			$("#tbpcheck").hide();
+            		}
+            	},
+            	failure: function(response){
+            		alert("Wrongly done");
+            	}
+        	});
 		});
 	</script>
 	<!-- Inline javascript to set the user name from model attribute End -->
@@ -1119,7 +1134,7 @@
                	fnPopulateDropdown('paidBasedOn', response.data.programDetailList[0].programPaidOn.tagItemList);
                	fnPopulatePaidDetails(response);
                	
-               	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
+               	//fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
                	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
                 
                	if(response.data.programDetailList[0].tbpCheck == '1'){
@@ -1333,8 +1348,13 @@
 				responseOnload.programDetailList[0].paidBasedOn = $('#paid_basedon_inputselect').val();
 				responseOnload.programDetailList[0].payoutFrequency = $('#payout_freq_inputselect').val();
 				responseOnload.programDetailList[0].longDesc = $("#longDesc").val();
-				responseOnload.programDetailList[0].glCode = parseInt($('#glcode_dropdown').val());
-				responseOnload.programDetailList[0].tbpCheck = parseInt($('#tbpCheck').val());
+				//responseOnload.programDetailList[0].glCode = parseInt($('#glcode_dropdown').val());
+				if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
+					responseOnload.programDetailList[0].glCode = '0';	
+				}else{
+					responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+				}
+				//responseOnload.programDetailList[0].tbpCheck = parseInt($('#tbpCheck').val());
 				if($('#tbpCheck').is(":checked")){
 					responseOnload.programDetailList[0].tbpCheck = '1';
 				}
@@ -1510,6 +1530,22 @@
 	
 	<script type="text/javascript">
 		$(document).ready(function() {
+			
+			$('#program_name_inputselect').change(function(){
+				 $('#glcode_dropdown').val(''); 
+				if(responseOnload.businessUnit=='P'){
+					key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
+				}else{
+					key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
+				}
+				$.each(responseOnload.programDetailList[0].dropdownList.glCodeList, function (i, item) {
+				   if(key==item.key){
+					   $('#glcode_dropdown').val(item.value); 
+				   }
+				});
+				
+			});
+			
 			$('#pdf-button').click(function () {
 				//alert(responseOnload.programDetailList[0].id);
 				var a = document.createElement('a');

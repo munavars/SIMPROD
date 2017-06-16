@@ -22,4 +22,6 @@ public interface IEmployeeService {
 	User authenticateUIUser(String userId);
 
 	DalEmployee getEmployeeDetail(Integer loginId);
+
+	boolean isTbpUser(Integer loginId);
 }

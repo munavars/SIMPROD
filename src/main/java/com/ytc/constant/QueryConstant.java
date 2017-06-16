@@ -26,7 +26,11 @@ public class QueryConstant {
 	
 	public static final String NEW_CUSTOMER_ACCOUNT_MANAGER_CHECK = " AND ACCOUNT_MANAGER in (:userIdList)";
 	
-	public static final String PRICING_LIST_P = "select * from NETDOWN_P where [Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId)) and [Base Price] is not null and  [Base Price]>0";
+	//public static final String PRICING_LIST_P = "select * from NETDOWN_P where [Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId)) and [Base Price] is not null and  [Base Price]>0";
 	
-	public static final String PRICING_LIST_T = "select * from NETDOWN_T where [Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId)) and [Base Price] is not null and  [Base Price]>0";
+	public static final String PRICING_LIST_P = "select N.* from NETDOWN_P N, PART_MASTER P where N.[Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId))  and N.[Part No]=p.PART_NUMBER and N.[Base Price] is not null and  N.[Base Price]>0 and (P.STATUS='A' or P.STATUS='B')";
+	
+	public static final String PRICING_LIST_T = "select N.* from NETDOWN_T N, PART_MASTER P where N.[Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId))  and N.[Part No]=p.PART_NUMBER and N.[Base Price] is not null and  N.[Base Price]>0 and (P.STATUS='A' or P.STATUS='B')";
+	
+	public static final String TBP_USERS="SELECT EMP_ID FROM TBP_USER where EMP_ID in (:empId)";
 }

@@ -1036,7 +1036,8 @@ public class ProgramServiceImpl implements IProgramService {
 			if(dalGLCodeList != null){
 				for(DalGLCode dalGlcode : dalGLCodeList){
 					DropDown dropDown = new DropDown();
-					dropDown.setKey(String.valueOf(dalGlcode.getId()));
+					//dropDown.setKey(String.valueOf(dalGlcode.getId()));
+					dropDown.setKey(dalGlcode.getGlBucket());
 					dropDown.setValue(dalGlcode.getGlNo());
 					if(dropdownList == null){
 						dropdownList = new ArrayList<DropDown>();

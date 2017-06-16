@@ -7,22 +7,51 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "GL_BUCKET")
+@Table(name = "GL_CODE")
 @NamedQueries({
 	@NamedQuery(name="DalGLCode.getAllDetails", query = "select o from DalGLCode o")
 })
 public class DalGLCode extends DalModel {
 private static final long serialVersionUID = 1L;
 	
-	@Column(name="GLNo")
+	
 	private String glNo;
+	
+	private String glBucket;
 
-
+	/**
+	 * @return the glNo
+	 */
+	@Column(name="NEW_GLNo")
 	public String getGlNo() {
 		return glNo;
 	}
 
-	public void setglNo(String glNo) {
+	/**
+	 * @param glNo the glNo to set
+	 */
+	public void setGlNo(String glNo) {
 		this.glNo = glNo;
 	}
+
+	/**
+	 * @return the glBucket
+	 */
+
+	@Column(name="GLBucket")
+	public String getGlBucket() {
+		return glBucket;
+	}
+
+	/**
+	 * @param glBucket the glBucket to set
+	 */
+
+	public void setGlBucket(String glBucket) {
+		this.glBucket = glBucket;
+	}
+
+	
+	
+	
 }

@@ -986,8 +986,14 @@
 		
 		
 		var responseOnload;
-		getParams = new URLSearchParams(window.location.search);
-		var programId =getParams.get('pgmId'); 
+		//getParams = new URLSearchParams(window.location.search);
+		var queryDict = {};
+	        window.location.search.substr(1).split("&").forEach(
+	        function(item) {
+	        queryDict[item.split("=")[0]] = item.split("=")[1]
+         })
+		//var programId =getParams.get('pgmId'); 
+		var programId=queryDict["pgmId"];
 		if(programId == null){
 			$("#create-program").addClass("active");
 			$("#reject-program").hide();
@@ -1000,8 +1006,8 @@
 		else{
 			$("#edit-program").addClass("active");
 		}
-		var programType = getParams.get('programType');
-		var custId = getParams.get('custId'); 
+		var programType = queryDict["programType"];
+		var custId = queryDict["custId"]; 
 		var url="/SIM/program/v1/getProgramDetail/" + programId;
 		if(null==programId){
 			url="/SIM/program/v1/getProgramDetailCreate/"+ programType + "/" + custId;

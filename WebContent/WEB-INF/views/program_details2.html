@@ -339,11 +339,11 @@
 																	Dates:</label>
 																<div class="input-group input-medium"
 																	data-date-format="mm/dd/yy">
-																	<input type="text" class="form-control dpd1" id="from"
-																		name="from" placeholder="Begin Date"><span
+																	<input type="text" class="form-control dpd1" readonly="readonly" id="from"
+																		name="from" placeholder="Begin Date" style="background:white;"><span
 																		class="input-group-addon" for="to">To</span> <input
-																		type="text" class="form-control dpd2" id="to"
-																		name="to" placeholder="End Date">
+																		type="text" class="form-control dpd2" readonly="readonly" id="to"
+																		name="to" placeholder="End Date" style="background:white;">
 																</div>
 															</div>
 														</div>
@@ -1347,8 +1347,15 @@
                  $('#to').datepicker();
             });
        		var responseOnload;
-			getParams = new URLSearchParams(window.location.search);
-			var programId =getParams.get('pgmId'); 
+			//getParams = new URLSearchParams(window.location.search);
+			//var programId =getParams.get('pgmId'); 
+			//added fix for IE issue with URLSearchParams
+			 var queryDict = {};
+	      	 window.location.search.substr(1).split("&").forEach(
+	       	 function(item) {
+	         queryDict[item.split("=")[0]] = item.split("=")[1]
+	         })
+	        var programId =queryDict["pgmId"];
 			if(programId == null){
 				$("#create-program").addClass("active");
 				$("#reject-program").hide();
@@ -1361,8 +1368,8 @@
 			else{
 				$("#edit-program").addClass("active");
 			}
-			var programType = getParams.get('programType');
-			var custId = getParams.get('custId'); 
+			var programType = queryDict["programType"];//getParams.get('programType');
+			var custId = queryDict["custId"];//getParams.get('custId'); 
 			var url="/SIM/program/v1/getProgramDetail/" + programId;
 			if(null==programId){
 				url="/SIM/program/v1/getProgramDetailCreate/"+ programType + "/" + custId;
@@ -2064,6 +2071,20 @@
 					
 				});
 				
+
+				
+				
+				$(document).on('keyup', "#tier_amount", function () {
+					var value = $(this).val();
+					if(value != null && value != 'undefined' ){
+						 value = value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						    $(this).val(value);
+            		}
+				   
+				});
+				
+				
+				    
 				$('#copy-paid-info-btn').click(function () {
 					
 					var include1 = document.getElementById('include');

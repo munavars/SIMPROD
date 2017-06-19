@@ -327,11 +327,11 @@
 																<div class="input-group input-medium"
 																	data-date-format="mm/dd/yy">
 																	<input type="text" class="form-control dpd1 required"
-																		name="from" id="from" placeholder="Begin Date">
+																		name="from" id="from" placeholder="Begin Date" readonly="readonly" style="background:white;">
 																		<span class="input-group-addon">To</span> 
 																	<input type="text"
 																		class="form-control dpd2 required" name="to" id="to"
-																		placeholder="End Date">
+																		placeholder="End Date" readonly="readonly" style="background:white;">
 																</div>
 															</div>
 														</div>
@@ -1001,8 +1001,14 @@
 		
 		
 		var responseOnload;
-		getParams = new URLSearchParams(window.location.search);
-		var programId =getParams.get('pgmId'); 
+		//getParams = new URLSearchParams(window.location.search);
+		var queryDict = {};
+	        window.location.search.substr(1).split("&").forEach(
+	        function(item) {
+	        queryDict[item.split("=")[0]] = item.split("=")[1]
+         })
+		//var programId =getParams.get('pgmId'); 
+		var programId=queryDict["pgmId"];
 		if(programId == null){
 			$("#create-program").addClass("active");
 			$("#reject-program").hide();
@@ -1015,8 +1021,8 @@
 		else{
 			$("#edit-program").addClass("active");
 		}
-		var programType = getParams.get('programType');
-		var custId = getParams.get('custId'); 
+		var programType = queryDict["programType"];
+		var custId = queryDict["custId"]; 
 		var url="/SIM/program/v1/getProgramDetail/" + programId;
 		if(null==programId){
 			url="/SIM/program/v1/getProgramDetailCreate/"+ programType + "/" + custId;

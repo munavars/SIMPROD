@@ -47,6 +47,7 @@
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
         var checkin = $('.dpd1').datepicker({
+        	startDate: new Date(),
             onRender: function(date) {
                 return date.valueOf() < now.valueOf() ? 'disabled' : '';
             }
@@ -56,15 +57,28 @@
                     newDate.setDate(newDate.getDate() + 1);
                     checkout.setValue(newDate);
                 }
+               
                 checkin.hide();
+                if(new Date($('#to').val())<new Date($(this).val())){
+                	alert("Begin date cannot be greater than End date");
+                	$(this).val(''); 
+                	$('.dpd1')[0].focus();
+                }else{
                 $('.dpd2')[0].focus();
+                }
             }).data('datepicker');
         var checkout = $('.dpd2').datepicker({
+        	startDate: new Date(),
             onRender: function(date) {
                 return date.valueOf() <= checkin.viewDate.valueOf() ? 'disabled' : '';
             }
         }).on('changeDate', function(ev) {
                 checkout.hide();
+                if(new Date($('#from').val())>new Date($(this).val())){
+                	alert("End date cannot be less than Begin date");
+                	$(this).val('');
+                	 $('.dpd2')[0].focus();
+                }
             }).data('datepicker');
     });
 

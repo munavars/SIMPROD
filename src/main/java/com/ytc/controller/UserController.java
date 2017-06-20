@@ -110,6 +110,31 @@ public class UserController extends BaseController {
 		logger.info("UserController.presentHomePage");
 		return "customer_program";
 	}
+	
+	/**
+	 * This method is added for redirecting to Index page after proper login.
+	 * Example. In case of pricing form navigation, when cancel button is clicked, then index page has to be redirected.
+	 * This method is used for that functionality.
+	 * @return String.
+	 */
+	@RequestMapping(value = { "/indexRedirect" })
+	public String indexNavigationAfterLogin(HttpServletRequest request, Model model) {
+		logger.info("UserController.presentHomePage");
+		String returnModel = null;
+		if(serviceContext == null || serviceContext.getEmployee() == null){
+			returnModel = "login";
+		}
+		else{
+			List<Employee> employeeList = null;
+			String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			model.addAttribute("loginUserNameValue", userName);
+			employeeList = new ArrayList<Employee>();
+			employeeList.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employeeList);
+			returnModel = "index";
+		}
+		return returnModel;
+	}
 
 	@RequestMapping(value = "processLogin", method = { RequestMethod.GET, RequestMethod.POST })
 	// public String validateLoginPage() {

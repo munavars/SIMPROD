@@ -19,6 +19,7 @@ import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployeeHierarchy;
+import com.ytc.dal.model.DalPricingHeader;
 import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
@@ -56,6 +57,7 @@ public class CustomerService implements ICustomerService {
 		String sql = null;
 		Map<String, Object> queryParams = new HashMap<>();
 		String tbpQuery = QueryConstant.TBP_QUERY;
+		List<String> userIdList = null;
 		List<String> tbpList = baseDao.getListFromNativeQuery(tbpQuery, new HashMap<String, Object>());
 		if(tbpList.contains(loginId)){
 			sql = QueryConstant.TBP_CUSTOMER_LIST;
@@ -64,7 +66,7 @@ public class CustomerService implements ICustomerService {
 			String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
 			
 			queryParams.put("loginId", loginId);
-			List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+			userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
 			if(userIdList.isEmpty()){
 				return dashboardDetailList;
 			}
@@ -94,10 +96,47 @@ public class CustomerService implements ICustomerService {
 				dashboardDetailList.add(programDetail);
 			}
 		}
+		getPricingDetails(dashboardDetailList, tbpList, userIdList, loginId);
 		return dashboardDetailList;
 
 	}
 	
+	private void getPricingDetails(List<ProgramDetail> dashboardDetailList, List<String> tbpList,
+			List<String> userIdList, Integer loginId) {
+		String sql = null;
+		Map<String, Object> queryParams = new HashMap<>();
+		if(tbpList != null && tbpList.contains(loginId)){
+			sql = QueryConstant.TBP_CUSTOMER_PRICING_LIST;
+		}
+		else if(userIdList != null && !userIdList.isEmpty()){
+			sql=QueryConstant.PRICING_LIST;
+			queryParams = new HashMap<>();
+			queryParams.put("requestId", userIdList);
+		}
+		List<DalPricingHeader> resultList=baseDao.getlist(DalPricingHeader.class, sql, queryParams);
+		if(resultList != null && !resultList.isEmpty()){
+			if(dashboardDetailList == null){
+				dashboardDetailList = new ArrayList<ProgramDetail>();
+			}
+			for(DalPricingHeader dalPricingHeader : resultList){
+				ProgramDetail programDetail=new ProgramDetail();				
+				programDetail.setCustomerNumber(dalPricingHeader.getCustomer().getCustomerNumber());
+				programDetail.setCustomerName(dalPricingHeader.getCustomer().getCustomerName());
+				programDetail.setProgramName(ProgramConstant.PRICING_FORM_TYPE);
+				programDetail.setProgramId(dalPricingHeader.getId());
+				programDetail.setBu(dalPricingHeader.getCreatedBy().getBUSINESS_UNIT());
+				programDetail.setSubmitDate(ProgramServiceHelper.convertDateToString(dalPricingHeader.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
+				programDetail.setModifiedDate(null!=dalPricingHeader.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalPricingHeader.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT):"");
+				programDetail.setProgramStatus((dalPricingHeader.getDalStatus() != null) ? dalPricingHeader.getDalStatus().getId().toString() : "0" );
+				programDetail.setProgramType(dalPricingHeader.getDalProgramType().getType());
+				programDetail.setStatusHistory(ProgramConstant.STATUS_HISTORY_DATA_MESSAGE);
+				
+				dashboardDetailList.add(programDetail);
+			}
+		}
+	}
+
+
 	private String getProgramStatusHistory(DalProgramDetail dalProgramDetail) {
 		String statusHistory = null;
 		StringBuilder statusBuilder = null;

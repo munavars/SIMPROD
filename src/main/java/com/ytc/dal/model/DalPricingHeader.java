@@ -123,7 +123,6 @@ public class DalPricingHeader extends DalAuditableModel{
 	 * @return the dalPricingDetailList
 	 */
 	@OneToMany(mappedBy = "dalPricingHeader", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	
 	public List<DalPricingDetail> getDalPricingDetailList() {
 		return dalPricingDetailList;
 	}

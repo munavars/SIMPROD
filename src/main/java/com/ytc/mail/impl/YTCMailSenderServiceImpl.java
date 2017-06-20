@@ -13,6 +13,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 import com.ytc.common.model.EmailDetails;
+import com.ytc.constant.EmailConstant;
 
 public class YTCMailSenderServiceImpl{
 	
@@ -53,10 +54,18 @@ public class YTCMailSenderServiceImpl{
 				}
 				message.setRecipients(Message.RecipientType.CC, internetAddress);	
 			}
+			if(emailDetails.getSubject() != null){
+				String subject = emailDetails.getEnvironment() + EmailConstant.COLON + emailDetails.getSubject();
+				emailDetails.setSubject(subject);
+			}
 			message.setSubject(emailDetails.getSubject());
 			
 			Multipart multipart = new MimeMultipart("related");
 			MimeBodyPart body = new MimeBodyPart();
+			if(emailDetails.getText() != null){
+				String text = emailDetails.getText() + String.format(EmailConstant.HTML_ENVIRONMENT_BODY, emailDetails.getEnvironment());
+				emailDetails.setText(text);
+			}
 			body.setText(emailDetails.getText(),"UTF-8", "html");
 			multipart.addBodyPart(body);
 			message.setContent(multipart);

@@ -36,4 +36,6 @@ public class EmailConstant {
 	
 	public static final String L_AND = " and "; //Prefix L denotes Literal.
 	
+	public static final String HTML_ENVIRONMENT_BODY = "<br><br><br> <h5><i>This mail is generated in %s environment.</i></h5>";
+	public static final String COLON = " : ";
 }

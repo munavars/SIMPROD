@@ -15,6 +15,8 @@ public class EmailDetails {
 	private List<String> ccAddress;
 	
 	private StringBuilder toNames;
+	
+	private String environment;
 	public String getHost() {
 		return host;
 	}
@@ -74,5 +76,11 @@ public class EmailDetails {
 	}
 	public void setToNames(StringBuilder toNames) {
 		this.toNames = toNames;
+	}
+	public String getEnvironment() {
+		return environment;
+	}
+	public void setEnvironment(String environment) {
+		this.environment = environment;
 	}
 }

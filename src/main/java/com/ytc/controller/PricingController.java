@@ -90,10 +90,25 @@ public class PricingController extends BaseController {
 		return returnModel;
 		
 	}
+	
 	@RequestMapping(value = "/pricing/v1/getPricingDetails",method = RequestMethod.GET)
 	public @ResponseBody ModelResult<PricingHeader> getPricingDetails(HttpServletRequest request) {
 		ModelResult<PricingHeader> returnData = null;
 		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());
+		return returnData;
+		
+	}
+	
+	/**
+	 * Method to get the pricing detail based on the pricing id passed as input.
+	 * @param request request
+	 * @param pricingHeaderId pricingHeaderId
+	 * @return ProgramHeader i., program header model class.
+	 */
+	@RequestMapping(value = "/pricing/v1/getPricingDetail/{id}",method = RequestMethod.GET)
+	public @ResponseBody ModelResult<PricingHeader> getPricingDetail(HttpServletRequest request, @PathVariable("id") Integer pricingHeaderId) {
+		ModelResult<PricingHeader> returnData = null;
+		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetail(pricingHeaderId));
 		return returnData;
 		
 	}

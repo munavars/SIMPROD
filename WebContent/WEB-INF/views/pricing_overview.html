@@ -156,6 +156,9 @@ th{
 		  $('#cancelLink').click(function(){
 				 $('#cancelLink').attr('href','/SIM/customer?custId='+custId);
 			 });
+		  $('#pricing-form-link').click(function(){
+		  	$('#pricing-form-link').attr('href','/SIM/pricingRequest?custId='+custId);
+		  });
 		  
 	});
      
@@ -391,7 +394,10 @@ th{
 					</div>
 				
          	 </div>
-                  <center><a id="cancelLink" href="/SIM/processLogin"><button id="cancel-cust" data-dismiss="modal" class="btn btn-default" type="button" >Back</button></a>&nbsp;<a href="/SIM/pricingRequest" id="pricing-form-link"><button class="btn btn-default">Next</button></a></center><br>
+                  <center>
+                  	<a id="cancelLink" href="/SIM/processLogin"><button id="cancel-cust" data-dismiss="modal" class="btn btn-default" type="button" >Back</button></a>&nbsp;
+                  	<a href="/SIM/pricingRequest" id="pricing-form-link"><button class="btn btn-default">Next</button></a>
+                  </center><br>
               </section>
               <!-- page end-->
           </section>

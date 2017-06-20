@@ -20,4 +20,10 @@ public interface IPricingService {
 	public PricingHeader getPricingDetails();
 	public List<NetPricing> getCustomerPricingDetails(Integer empId, String bu);
 	
+	/**
+	 * Interface method. This method is used to get the pricing heade details based on the pricing header id passed as input.
+	 * @param pricingHeaderId pricingHeaderId
+	 * @return PricingHeader pricingHeader.
+	 */
+	PricingHeader getPricingDetail(Integer pricingHeaderId);
 }

@@ -129,206 +129,189 @@ a { text-decoration: none }
 <script src="resources/js/jszip.js"></script>
 <script src="resources/js/xlsx.js"></script>
 <script>
-var fileData ={};
-/*jshint browser:true */
-/*global XLSX */
-var X = XLSX;
-var XW = {
-	/* worker message */
-	msg: 'xlsx',
-	/* worker scripts */
-	rABS: './xlsxworker2.js',
-	norABS: './xlsxworker1.js',
-	noxfer: './xlsxworker.js'
-};
-
-var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
-if(!rABS) {
-	document.getElementsByName("userabs")[0].disabled = true;
-	document.getElementsByName("userabs")[0].checked = false;
-}
-
-var use_worker = typeof Worker !== 'undefined';
-if(!use_worker) {
-	document.getElementsByName("useworker")[0].disabled = true;
-	document.getElementsByName("useworker")[0].checked = false;
-}
-
-var transferable = use_worker;
-if(!transferable) {
-	document.getElementsByName("xferable")[0].disabled = true;
-	document.getElementsByName("xferable")[0].checked = false;
-}
-
-var wtf_mode = false;
-
-function to_csv(workbook) {
-	var result = [];
-	workbook.SheetNames.forEach(function(sheetName) {
-		var csv = X.utils.sheet_to_csv(workbook.Sheets[sheetName]);
-		if(csv.length > 0){
-			result.push(sheetName);
-			result.push("");
-			result.push(csv);
-		}
-	});
-	return result.join("\n");
-}
-
-
-function fixdata(data) {
-	var o = "", l = 0, w = 10240;
-	for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
-	o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(l*w)));
-	return o;
-}
-
-function to_json(workbook) {
-	var result = {};
-	workbook.SheetNames.forEach(function(sheetName) {
-		var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
-		if(roa.length > 0){
-			result[sheetName] = roa;
-		}
-	});
-	return result;
-}
-
-
-
-
-
-var global_wb;
-function process_wb(wb) {
-	global_wb = wb;
-	var output = "";
+	var fileData ={};
+	/*jshint browser:true */
+	/*global XLSX */
+	var X = XLSX;
+	var XW = {
+		/* worker message */
+		msg: 'xlsx',
+		/* worker scripts */
+		rABS: './xlsxworker2.js',
+		norABS: './xlsxworker1.js',
+		noxfer: './xlsxworker.js'
+	};
 	
-	output = to_csv(wb);
+	var rABS = typeof FileReader !== "undefined" && typeof FileReader.prototype !== "undefined" && typeof FileReader.prototype.readAsBinaryString !== "undefined";
+	if(!rABS) {
+		document.getElementsByName("userabs")[0].disabled = true;
+		document.getElementsByName("userabs")[0].checked = false;
+	}
 	
-	buildTable(output);
-
-
-}
-
-		function removeCommaBetweenDoubleQuote(aString) {
-			var result = aString
-			// find first occurance of "
-			var iStart = aString.indexOf('"');
-			var iEnd = iStart + 1;
-			if (iStart >= 0) {
-				// find ending quote "
-				iEnd = aString.indexOf('"', iEnd);
-				if (iEnd > 0) {
-					var value = aString.substring(iStart+1, iEnd);
-					// alert("Before value "+value);
-					var i = value.indexOf(',');
-					if (i > 0) {
-						//value.replace(',', '');
-						value = value.substring(0,i) + value.substring(i+1);
-					}
-					// alert("After value "+value);
-					result = aString.substring(0, iStart) + value + aString.substring(iEnd+1);
-				}
+	var use_worker = typeof Worker !== 'undefined';
+	if(!use_worker) {
+		document.getElementsByName("useworker")[0].disabled = true;
+		document.getElementsByName("useworker")[0].checked = false;
+	}
+	
+	var transferable = use_worker;
+	if(!transferable) {
+		document.getElementsByName("xferable")[0].disabled = true;
+		document.getElementsByName("xferable")[0].checked = false;
+	}
+	
+	var wtf_mode = false;
+	
+	function to_csv(workbook) {
+		var result = [];
+		workbook.SheetNames.forEach(function(sheetName) {
+			var csv = X.utils.sheet_to_csv(workbook.Sheets[sheetName]);
+			if(csv.length > 0){
+				result.push(sheetName);
+				result.push("");
+				result.push(csv);
 			}
-			return result;
+		});
+		return result.join("\n");
+	}
+	
+	function fixdata(data) {
+		var o = "", l = 0, w = 10240;
+		for(; l<data.byteLength/w; ++l) o+=String.fromCharCode.apply(null,new Uint8Array(data.slice(l*w,l*w+w)));
+		o+=String.fromCharCode.apply(null, new Uint8Array(data.slice(l*w)));
+		return o;
+	}
+	
+	function to_json(workbook) {
+		var result = {};
+		workbook.SheetNames.forEach(function(sheetName) {
+			var roa = X.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+			if(roa.length > 0){
+				result[sheetName] = roa;
+			}
+		});
+		return result;
+	}
+	
+	var global_wb;
+	function process_wb(wb) {
+		global_wb = wb;
+		
+		var output = "";
+		
+		output = to_csv(wb);
+		buildTable(output);
+	}
+	
+	function removeCommaBetweenDoubleQuote(aString) {
+		var result = aString
+		// find first occurance of "
+		var iStart = aString.indexOf('"');
+		var iEnd = iStart + 1;
+		if (iStart >= 0) {
+			// find ending quote "
+			iEnd = aString.indexOf('"', iEnd);
+			if (iEnd > 0) {
+				var value = aString.substring(iStart+1, iEnd);
+				// alert("Before value "+value);
+				var i = value.indexOf(',');
+				if (i > 0) {
+					//value.replace(',', '');
+					value = value.substring(0,i) + value.substring(i+1);
+				}
+				// alert("After value "+value);
+				result = aString.substring(0, iStart) + value + aString.substring(iEnd+1);
+			}
 		}
-
-
-			function buildTable(output) {
+		return result;
+	}
+	
+	function buildTable(output) {
+		var rows = output.split('\n');
+		var rowData = [];
+		var title = rows[0];
+		var data = [];
+		var columnNames = [];
+		
+		// this approach is interesting if you need to dynamically create data in Javascript 
+			var metadata = [];
 			
-			var rows = output.split('\n');
-			var rowData = [];
-			var title = rows[0];
-			var data = [];
-			var columnNames = [];
-			
-			// this approach is interesting if you need to dynamically create data in Javascript 
-				var metadata = [];
-				
-			// heading built successfully.  rows[0] = wd sheet name, rows[1] = blank space
-			for (var j = 0; j < rows.length; ++j) {
+		// heading built successfully.  rows[0] = wd sheet name, rows[1] = blank space
+		for (var j = 0; j < rows.length; ++j) {
+			if (rows[j].length > 0) {
+				// alert("Before "+rows[j]);
+				rows[j] = removeCommaBetweenDoubleQuote(rows[j]);
+				// alert("After "+rows[j]);
+				var oneRow = rows[j].split(",");
 				if (rows[j].length > 0) {
-					// alert("Before "+rows[j]);
-					rows[j] = removeCommaBetweenDoubleQuote(rows[j]);
-					// alert("After "+rows[j]);
-					var oneRow = rows[j].split(",");
-					if (rows[j].length > 0) {
-						if (j == 2 ) {
-							columnNames = oneRow;
-							for (var k = 0; k < columnNames.length; ++k) {
-								metadata.push({ name: columnNames[k], label: columnNames[k], datatype: "string", editable: true});
-								// alert("metadata: "+k+" "+columnNames[k]);
+					if (j == 2 ) {
+						columnNames = oneRow;
+						for (var k = 0; k < columnNames.length; ++k) {
+							metadata.push({ name: columnNames[k], label: columnNames[k], datatype: "string", editable: true});
+							// alert("metadata: "+k+" "+columnNames[k]);
+						}
+					} else {
+						if (j > 2) {
+						// data.push({ name: oneRow[i], label: oneRow[i], datatype: "string", editable: true});
+						
+							var display2 = {};
+							var rowValues = {};
+							// id: 1
+							var icount = j - 2;
+							display2["id"] = icount;
+							for (var i = 0; i < columnNames.length; ++i) {
+								rowValues[columnNames[i]] = oneRow[i];
 							}
-						} else {
-							if (j > 2) {
-							// data.push({ name: oneRow[i], label: oneRow[i], datatype: "string", editable: true});
-							
-								var display2 = {};
-								var rowValues = {};
-								// id: 1
-								var icount = j - 2;
-								display2["id"] = icount;
-								for (var i = 0; i < columnNames.length; ++i) {
-									rowValues[columnNames[i]] = oneRow[i];
-								}
-								display2["values"] = rowValues;
-
-								var myData = JSON.stringify(rowValues);
-								// alert(myData);
-								data.push({id: icount, values: rowValues});
-							}
+							display2["values"] = rowValues;
+		
+							var myData = JSON.stringify(rowValues);
+							// alert(myData);
+							data.push({id: icount, values: rowValues});
 						}
 					}
 				}
 			}
-
-				editableGrid = new EditableGrid(title, {
-					modelChanged: function(rowId, colId, oldValue, newValue, row) {
-						data[rowId].values[columnNames[colId]] = newValue;
-					}
-				});
-				editableGrid.load({"metadata": metadata, "data": data});
-				editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
-				fileData = data;
-			} 
-
-			
-			
-			
-
-function handleFile(e) {
-
-	rABS = false;
-	use_worker = false;
- 
-	var files = e.target.files;
-	var f = files[0];
-	{
-		var reader = new FileReader();
-		var name = f.name;
-		reader.onload = function(e) {
-			if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, use_worker);
-			var data = e.target.result;
-			if(use_worker) {
-				xw(data, process_wb);
-			} else {
-				var wb;
-				if(rABS) {
-					wb = X.read(data, {type: 'binary'});
-				} else {
-					var arr = fixdata(data);
-					wb = X.read(btoa(arr), {type: 'base64'});
-				}
-				process_wb(wb);
+		}
+		
+		editableGrid = new EditableGrid(title, {
+			modelChanged: function(rowId, colId, oldValue, newValue, row) {
+				data[rowId].values[columnNames[colId]] = newValue;
 			}
-		};
-		if(rABS) reader.readAsBinaryString(f);
-		else reader.readAsArrayBuffer(f);
+		});
+		editableGrid.load({"metadata": metadata, "data": data});
+		editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
+		fileData = data;
+	} 
+	
+	function handleFile(e) {
+		rABS = false;
+		use_worker = false;
+	 
+		var files = e.target.files;
+		var f = files[0];
+		{
+			var reader = new FileReader();
+			var name = f.name;
+			reader.onload = function(e) {
+				if(typeof console !== 'undefined') console.log("onload", new Date(), rABS, use_worker);
+				var data = e.target.result;
+				if(use_worker) {
+					xw(data, process_wb);
+				} else {
+					var wb;
+					if(rABS) {
+						wb = X.read(data, {type: 'binary'});
+					} else {
+						var arr = fixdata(data);
+						wb = X.read(btoa(arr), {type: 'base64'});
+					}
+					process_wb(wb);
+				}
+			};
+			if(rABS) reader.readAsBinaryString(f);
+			else reader.readAsArrayBuffer(f);
+		}
 	}
-}
-
-
-
 </script>
 <!-- 
 <script type="text/javascript">
@@ -343,139 +326,279 @@ function handleFile(e) {
 	})();
 </script>
  -->
- <script type="text/javascript">
- 	var responseOnload;
-			$(window).ready(function(){
-			
-				var url="/SIM/pricing/v1/getPricingDetails";
-	         	$.ajax({ 
-	             	type: "GET",
-	             	dataType: "json",
-	            	url: url,
-	            	async: false,
-	             	success: function(response){
-	             		responseOnload = response.data;
-	             		$('#businessUnitDescription').html(response.data.businessUnitDescription);
-	             		$('#requestedBy').html(response.data.requestedByName);
-	             		$('#requestedTitle').html(response.data.requestedByTitle);
-	             		$('#requestedDate').html(response.data.requestedByDate);
-	             		$('#approvedBy').html(response.data.approvedByName);
-	             		$('#approvedTitle').html(response.data.approvedByTitle);
-	             		$('#approvedDate').html(response.data.approvedByDate);
-	             		
-	             		
+<script type="text/javascript">
+	var responseOnload;
+	var custId;
+	$(window).ready(function(){
+			getParams = new URLSearchParams(window.location.search);
+			var pricingHeaderId = getParams.get('pricingId'); 
+			custId = getParams.get('custId');
+			pricingHeaderId = '74';
+			var url;
+			if(pricingHeaderId != null){
+				url = "/SIM/pricing/v1/getPricingDetail/" + pricingHeaderId; 
+			}
+			else {
+				url = "/SIM/pricing/v1/getPricingDetails/";
+			}
+			$('#cancelLink').attr('href','/SIM/pricingOverview?custId='+custId);
+			var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT'];
+        	$.ajax({ 
+				type: "GET",
+				dataType: "json",
+	           	url: url,
+	           	async: false,
+            	success: function(response){
+	         		responseOnload = response.data;
+	         		$('#businessUnitDescription').html(response.data.businessUnitDescription);
+	         		$('#requestedBy').html(response.data.requestedByName);
+	         		$('#requestedTitle').html(response.data.requestedByTitle);
+	         		$('#requestedDate').html(response.data.requestedByDate);
+	         		$('#status').html(response.data.status);
+	         		$('#approvedBy').html(response.data.approvedByName);
+	         		$('#approvedTitle').html(response.data.approvedByTitle);
+	         		$('#approvedDate').html(response.data.approvedByDate);
+	         		
 					fnPopulateDropdown('termsCode_inputselect', response.data.dropdownList.termsCodeList);
-              	$('#termsCode_inputselect').val(response.data.dropdownList.termsCodeList[0].key);
-              	if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.definitionList[0].key){
-            	$('#program_terms_definition').val(response.data.dropdownList.definitionList[0].value);
+			        $('#termsCode_inputselect').val(response.data.dropdownList.termsCodeList[0].key);
+			        if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.definitionList[0].key){
+			       		$('#program_terms_definition').val(response.data.dropdownList.definitionList[0].value);
+			       	}
+			        if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.dueDatesList[0].key){
+			       		$('#program_terms_duedates').val(response.data.dropdownList.dueDatesList[0].value);
+			       	}
+					if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.cashList[0].key){
+			       		$('#program_terms_cash').val(response.data.dropdownList.cashList[0].value);
+			       	}
+					fnPopulateDropdown('Other_Ship_Reqs_inputselect', response.data.dropdownList.otherShipReqsList);
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
+					if(pricingHeaderId != null){
+						$("#custByName_inputselect").val(responseOnload.customerGroup);
+						$("#customerGroup").val($("#custByName_inputselect").val());
+						$("#customerId").val(responseOnload.customerId);
+						$('#termsCode_inputselect').val(responseOnload.termCode);
+						$('#user_comments').val(responseOnload.userComments);
+						populateCustomerGroupDropDown(responseOnload.customerType);
+						if(responseOnload.customerType == 'Group'){
+							$("#optionsRadiosGroup").prop('checked', true);
+						}
+						else if(responseOnload.customerType == 'BillTo'){
+							$("#optionsRadiosCustByBillTo").prop('checked', true);
+						}
+						else if(responseOnload.customerType == 'Name'){
+							$("#optionsRadiosCustByName").prop('checked', true);
+						}
+						else if(responseOnload.customerType == 'ShipTo'){
+							$("#optionsRadiosShipTo").prop('checked', true);
+						}
+						
+						if(responseOnload.shippingReqs == '1000 LBS'){
+							$("#optionsRadios1000lbs").prop('checked', true);
+						}
+						else if(responseOnload.shippingReqs == '2000 LBS'){
+							$("#optionsRadios2000lbs").prop('checked', true);
+						}
+						else if(responseOnload.shippingReqs == 'Trailer Load'){
+							$("#optionsRadiosTrailerLoad").prop('checked', true);
+						}
+						else if(responseOnload.shippingReqs == 'Per Program'){
+							$("#optionsRadiosPerProgram").prop('checked', true);
+						}
+						$('#Other_Ship_Reqs_inputselect').val(responseOnload.otherShippingReqs);
+						
+						fnPopulateInvoiceDiscountTable(responseOnload);
+						disableFieldBasedOnCurrentStatusAndUser(responseOnload);
+						enabledButtonApplicableToAll();
+					}
+            	},
+            	failure: function(response){
+            		alert("Wrongly done");
             	}
-              	if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.dueDatesList[0].key){
-            	$('#program_terms_duedates').val(response.data.dropdownList.dueDatesList[0].value);
-            	}
-            		if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.cashList[0].key){
-            	$('#program_terms_cash').val(response.data.dropdownList.cashList[0].value);
-            	}
-               	fnPopulateDropdown('Other_Ship_Reqs_inputselect', response.data.dropdownList.otherShipReqsList);
-             	fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
-             	$("#customerGroup").val($("#custByName_inputselect").val());
-               	
-	             	},
-	             	failure: function(response){
-	             		alert("Wrongly done");
-	             	}
-	         	});
-	         	
-	         	var test,selectTerm;
-            $("input[name=optionsRadiosSourcePathName]").on( "click", function() {
-				 test = $(this).val();
-				 if(test == 'Group'){
-				
-				fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.groupList);
-				$("#customerGroup").val($("#custByName_inputselect").val());
+        	});
+        	
+        	function disableFieldBasedOnCurrentStatusAndUser(responseOnload1){
+/*         		if(responseOnload1.authorizedUser == 'Yes' && responseOnload1.programButton.userLevel == "1" && responseOnload1.programButton.creater == true){
+					$('#edit-button').attr('disabled', false);
+					$('#edit-button').removeClass("disabled");
+					$('#modal-edit-cancel').attr('disabled', false);
+					$('#modal-edit-ok').attr('disabled', false);
+					$('#modal-edit-close').attr('disabled', false);
+					hideApproverButtons();
+					if(responseOnload1.newProgram == false && responseOnload1.status != 'REJECTED'){
+	               		$('#submit-program').attr('disabled', false);
+						$('#submit-program').removeClass("disabled");
+						$('#program-submit-modal-cancel').attr('disabled', false);
+						$('#program-submit-modal-ok').attr('disabled', false);
+						$('#program-submit-modal-close').attr('disabled', false);	
+						$('#save-program').hide();
+               		}
+               		else if(responseOnload1.newProgram == false && responseOnload1.status === 'REJECTED'){
+               			$('#save-program').show();
+               			$('#submit-program').show();
+               		}
+               		else if(responseOnload1.newProgram == false){
+               			showCreatorButtons();
+               		}
+				}
+				else if(responseOnload1.programButton.approver == true){
+					hideCreatorButtons();
+					showApproverButtons();
+					$('#edit-button').hide();
+				}
+				else{
+					hideCreatorButtons();
+					hideApproverButtons();
+					$('#edit-button').hide();
+				} */
+        	}
+        	
+        	function fnPopulateInvoiceDiscountTable(responseOnLoadInput){
+        		if(responseOnLoadInput.pricingDetailList != null){
+	        		var metadata = [];
+	        		var data = [];
+					var title = "Sheet1";
+	        		for (var k = 0; k < invoiceDiscountHeader.length; ++k) {
+						metadata.push({ name: invoiceDiscountHeader[k], label: invoiceDiscountHeader[k], datatype: "string", editable: true});
+					}
+					
+					$.each(responseOnLoadInput.pricingDetailList, function(idx, item) {
+						var rowValues = {};
+						rowValues[invoiceDiscountHeader[0]] = item.addChangeDel;
+						var begindate = null;
+       					if(item.beginDate != null){
+       						begindate = $.datepicker.formatDate( "mm/dd/yy", new Date(item.beginDate));
+       					}
+						rowValues[invoiceDiscountHeader[1]] = begindate;
+						var enddate = null;
+						if(item.endDate != null){
+							enddate = $.datepicker.formatDate( "mm/dd/yy", new Date(item.endDate));
+						}
+						rowValues[invoiceDiscountHeader[2]] = enddate;
+						rowValues[invoiceDiscountHeader[3]] = item.prodLine;
+						rowValues[invoiceDiscountHeader[4]] = item.tread;
+						rowValues[invoiceDiscountHeader[5]] = item.part;
+						rowValues[invoiceDiscountHeader[6]] = item.netPrice;
+						rowValues[invoiceDiscountHeader[7]] = item.invoiceDisc;
+						rowValues[invoiceDiscountHeader[8]] = item.bonusUnits;
+						rowValues[invoiceDiscountHeader[9]] = item.commissionable;
+						rowValues[invoiceDiscountHeader[10]] = item.comments;
+						
+						data.push({id: idx, values: rowValues});
+	                });
+	                	                
+					editableGrid = new EditableGrid(title, {
+						modelChanged: function(rowId, colId, oldValue, newValue, row) {
+							data[rowId].values[columnNames[colId]] = newValue;
+						}
+					});
+					editableGrid.load({"metadata": metadata, "data": data});
+					editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
+					fileData = data;
+        		}
+        	}
+        	
+        	function populateCustomerGroupDropDown(type){
+				if(type == 'Group'){
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.groupList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
+				}
+				else if(type == 'BillTo'){
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
+				}
+				else if(type == 'Name'){
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custByNameList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
+				}	
+				else if(type == 'ShipTo'){
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custShipToList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
+				}
+        	}
+        	
+        	var test,selectTerm;
+        	
+			$("input[name=optionsRadiosSourcePathName]").on( "click", function() {
+				test = $(this).val();
+				if(test == 'Group'){
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.groupList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
 				}
 				else if(test == 'BillTo'){
-				
-				fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
-				$("#customerGroup").val($("#custByName_inputselect").val());
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
 				}
 				else if(test == 'Name'){
-					
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custByNameList);
 					$("#customerGroup").val($("#custByName_inputselect").val());
 				}	else if(test == 'ShipTo'){
-				fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custShipToList);
-				$("#customerGroup").val($("#custByName_inputselect").val());
-				
+					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custShipToList);
+					$("#customerGroup").val($("#custByName_inputselect").val());
 				}
-				
-				
-    		});
-    		$("select[name=custByName_inputselect]").on( "change", function() {
+  			});
+			$("select[name=custByName_inputselect]").on( "change", function() {
 				var test = $(this).val();
-			
 				$("#customerGroup").val(test);
-				});
-				$("select[name=termsCode_inputselect]").on( "change", function() {
-				 selectTerm = $(this).val();
+			});
+			$("select[name=termsCode_inputselect]").on( "change", function() {
+				selectTerm = $(this).val();
 				var checkDefn =responseOnload.dropdownList.definitionList;
 				var checkDueDates=responseOnload.dropdownList.dueDatesList;
 				var checkCash=responseOnload.dropdownList.cashList;
 				fnPopulateProgramTerms('program_terms_definition', checkDefn,selectTerm);
 				fnPopulateProgramTerms('program_terms_duedates', checkDueDates,selectTerm);
 				fnPopulateProgramTerms('program_terms_cash', checkCash,selectTerm);
-				program_terms_cash
 			});
-    		function resetFormForMandatoryCheck(elementId){
-         		if( $('#'+ elementId).valid()){
-				   $('#'+ elementId).validate().resetForm(); 
+			function resetFormForMandatoryCheck(elementId){
+			   	if( $('#'+ elementId).valid()){
+			 		$('#'+ elementId).validate().resetForm(); 
 				}
-         	}
-         	
-         	
-         	function fnPopulateDropdown(elementId, items){
-	         	if(items != null){
-	         		$('#'+ elementId).empty();
-	         		$.each(items, function (i, item) {
+       		}
+       		
+       		function fnPopulateDropdown(elementId, items){
+	        	if(items != null){
+	        		$('#'+ elementId).empty();
+	        		$.each(items, function (i, item) {
 					    $('#'+ elementId).append($('<option>', { 
 					        value: item.key,
 					        text : item.value 
 					    },'</option>' ));
-					    
+				    
 					});
-					//resetFormForMandatoryCheck(elementId);
-	         	}
+				//resetFormForMandatoryCheck(elementId);
+	        	}
 			}
-			function fnPopulateProgramTerms(elementId, items,item){
-			var check = item;
-	         	if(items != null){
-	         	console.log(items);
-	         		$('#'+ elementId).empty();
-	         		$.each(items, function (i, item) {
-					   /*  $('#'+ elementId).append($('<option>', { 
-					        value: item.key,
-					        text : item.value 
-					    },'</option>' )); */
-					    if(check == item.key){
-					    $('#'+ elementId).val(item.value); 
-					    }
-					});
-					//resetFormForMandatoryCheck(elementId);
-	         	}
-			}	
-			});
-		
-			</script>
-			<script type="text/javascript">
+	function fnPopulateProgramTerms(elementId, items,item){
+		var check = item;
+       	if(items != null){
+       	console.log(items);
+       		$('#'+ elementId).empty();
+       		$.each(items, function (i, item) {
+		   /*  $('#'+ elementId).append($('<option>', { 
+		        value: item.key,
+		        text : item.value 
+		    },'</option>' )); */
+		    if(check == item.key){
+		    $('#'+ elementId).val(item.value); 
+		    }
+		});
+		//resetFormForMandatoryCheck(elementId);
+       	}
+	}	
+	});
+</script>
+<script type="text/javascript">
 			var responseOnload = {};
 			function saveDraft(){
-         		//responseOnload.status = "3";
+         		responseOnload.status = "3";
          		prepareDataForSubmit();
          		fnCallService();
          		$('#myModal1').modal('toggle');
          	}
          	
          	function submitForApproval(){
-         		//responseOnload.status = "3";
+         		responseOnload.status = "2";
          		prepareDataForSubmit();
          		fnCallService();
          		$('#myModal').modal('toggle');
@@ -519,6 +642,7 @@ function handleFile(e) {
 					success: function (response) {
 			            if (response != null && response.data.success == true) {
 			            	responseOnload = response.data;
+			            	('#status').html(response.data.status);
          					$("#confirmMessage").html("Data saved successfully !!!");
 							$('#myModal4').modal('toggle');
 			            } else {
@@ -579,7 +703,6 @@ function handleFile(e) {
 				$('#view-program-workflow').removeClass("disabled");
 				$('#program-workflow-btn').attr('disabled', false); */
 			}
-			
 			</script>
 	<!--  Validation setup Begins -->
     <script type="text/javascript">
@@ -608,10 +731,10 @@ function handleFile(e) {
 					custByName_inputselect:{
 						required: true
 					},
-					 customeID: {
+					 customerId: {
 						required: true
 					},
- 				termsCode_inputselect: {
+ 					termsCode_inputselect: {
 						required: true
 					},
 					optionsRadiosShippingProgram: {
@@ -832,6 +955,7 @@ function handleFile(e) {
 										<li><strong>Title:</strong> <span id="requestedTitle"></span></li>
 										<li><strong>Requested Date:</strong> <span
 											id="requestedDate"></span></li>
+										<li><strong>Status:</strong> <span id="status"></span></li>
 									</ul>
 								</div>
                                <div class="col-lg-3 col-md-5 col-sm-4">
@@ -883,11 +1007,11 @@ function handleFile(e) {
                                     </div>
                                     <div class="col-sm-2">
                                      <label class="control-label">Cust ID</label>
-                                        <input type="text" class="form-control m-bot15" id="customeID" name="customeID" placeholder="Customer Id">
+                                        <input type="text" class="form-control m-bot15" id="customerId" name="customerId" placeholder="Customer Id">
                                     </div>
                                     <div class="col-sm-5">
                                     <label class="control-label">Cust/Group</label>
-                                        <input type="text" class="form-control  m-bot15" id="customerGroup" name="customerGroup" placeholder="Customer Group">
+                                        <input type="text" class="form-control  m-bot15" id="customerGroup" name="customerGroup" placeholder="Customer Group" readonly="readonly">
                                     </div>    
                                 </div>
                           <div class="adv-table editable-table">
@@ -902,12 +1026,6 @@ function handleFile(e) {
                               </div>
                           </div>
                           </div>
- 
- 
- 
-                              
-
-                              
                           
                           <div class="adv-table editable-table">
                           
@@ -923,9 +1041,9 @@ function handleFile(e) {
 		xlf.addEventListener('change', handleFile, false);
 	} 
  	
- 	</script>                     
+ 	</script>
 
-     <script>
+									<script>
         $(function () {
 
             $("#input").on("change", function () {
@@ -1005,26 +1123,22 @@ function handleFile(e) {
                 width: "100%"
             });
         }
-        
-
-
-
 </script>
-    
-<br/>   
-<br/>
 
-    
-    
-                         
-                      
-                      
-                      
-                        <div class="col-sm-6">
-                           <label class="control-label" for="inputSuccess">User Comments</label>
-                            <textarea class="form-control" id="user_comments" name="user_comments" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" data-toggle="tooltip" data-placement="top" rows="3" placeholder="Add description details of your customer" value="Dealer has three shops in his county"></textarea>
-                        </div>
-                        <div class="space15 clearfix"></div>
+									<br /> <br />
+
+									<div class="col-sm-6">
+										<label class="control-label" for="inputSuccess">User
+											Comments</label>
+										<textarea class="form-control" id="user_comments"
+											name="user_comments" rel="txtTooltip"
+											data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
+											title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+											data-toggle="hover" data-placement="top" rows="3"
+											placeholder="Add description details">
+										</textarea>
+									</div>
+									<div class="space15 clearfix"></div>
                             
                 <!-- END Invoice Discount Section -->
 
@@ -1035,42 +1149,19 @@ function handleFile(e) {
                                 <div class="col-lg-5 col-md-7 col-sm-5">
                                     <label class="control-label" for="inputSuccess">Terms Code</label>
                                         <select class="form-control input-sm m-bot15" id="termsCode_inputselect" name="termsCode_inputselect">
-                                           <!--  <option disabled class="" value="">- Select -</option>
-                                            <option id="terms_code_inputselect" value="Standard NA - NT - 5%30/2%60, due 15/25">Standard NA - NT - 5%30/2%60, due 15/25</option>
-                                            <option id="terms_code_inputselect1" value="Express N/A - NX - 5% 30 Days,  past due 31, due Calendar days">Express N/A - NX - 5% 30 Days,  past due 31, due Calendar days</option>
-                                            <option id="terms_code_inputselect2" value="Consumer Mkt - (3N) - 2% 60 days, due 15/25">Consumer Mkt - (3N) - 2% 60 days, due 15/25 </option>
-                                            <option selected id="terms_code_inputselect5" value="Truck Stop" name="3">Truck Stop</option>
-                                            <option selected id="terms_code_inputselect6" value="MW - NET 30 DAYS, due Calendar days" name="">MW - NET 30 DAYS, due Calendar days </option>
-                                            <option selected id="terms_code_inputselect7" value="NAD Units" name="2c - 2% 30 DAYS, due 15/25">2c - 2% 30 DAYS, due 15/25</option>
-                                            <option selected id="terms_code_inputselect8" value="AM - 2% 30 DAYS, due 15/30" name="">AM - 2% 30 DAYS, due 15/30</option>
-                                            <option selected id="terms_code_inputselectz" value="2f - 2% 60 DAYS, due 20" name="">2f - 2% 60 DAYS, due 20</option>
-                                            <option>D3 - 2% 90 DAYS, due 15/25</option>
-                                            <option>WV - 2% 90 DAYS, due 10/20/30</option>
-                                            <option>O4 - 5% 30 DAYS, due 15/25</option>
-                                            <option>CD - COD TERMS, due Calendar days</option>
-                                            <option>JG - NET 60 DAYS, due 10/20/30</option>
-                                            <option>I7 - NET 60 DAYS, due 15/25</option>
-                                            <option>n7 - NET 60 DAYS, due 20</option>
-                                            <option>I8 - NET 90 DAYS, due 15/25</option>
-                                            <option>W9 - NET 60  DAYS</option>
-                                            <option>n3 - NET 30 DAYS, due 15/25</option>
-                                            <option>CX - NET 45 DAYS, due Calendar days</option>
-                                            <option>Mf - NET 90 DAYS </option>
-                                            <option>9T - 2% 90 DAYS</option>
-                                            <option>2w - 2% 90 DAYS</option> -->
                                         </select>
                                     </div>
                                 <div class="col-lg-3 col-md-5 col-sm-3">
                                       <label for="businessUnit" class="control-label">Definition</label>
-                                      <input type="text" class="form-control" id="program_terms_definition" name="program_terms_definition" placeholder="">
+                                      <input type="text" class="form-control" id="program_terms_definition" name="program_terms_definition" readonly="readonly">
                                 </div>
                                 <div class="col-lg-2 col-md-6 col-sm-2">
                                       <label for="requestType">Due Dates</label>
-                                      <input type="text" class="form-control" id="program_terms_duedates" name="program_terms_duedates" placeholder="">
+                                      <input type="text" class="form-control" id="program_terms_duedates" name="program_terms_duedates" readonly="readonly">
                                 </div>
                                 <div class="col-lg-2 col-md-6 col-sm-2">
                                       <label for="requestType">Cash</label>
-                                      <input type="text" class="form-control" id="program_terms_cash" name="program_terms_cash" placeholder="">
+                                      <input type="text" class="form-control" id="program_terms_cash" name="program_terms_cash" readonly="readonly">
                                 </div>
                     </div>
                  <!-- END Program Terms -->
@@ -1107,10 +1198,6 @@ function handleFile(e) {
                                   <div class="col-lg-5 col-sm-12">
                                     <label class="control-label" for="inputSuccess">Other</label>
                                         <select class="form-control input-sm m-bot15" id="Other_Ship_Reqs_inputselect" name="Other_Ship_Reqs_inputselect">
-                                           <!--  <option disabled class="" value="">- Other Types of Shipping Programs -</option> -->
-                                         <!--    <option id="shipping_other1" value="Additional Per Tire:   $1.00 21,000 lbs, $2.00 30,000 lbs" name="payout_freq_annually">Additional Per Tire:   $1.00 21,000 lbs, $2.00 30,000 lbs</option>
-                                            <option id="shipping_other2" value="Semi-Anually" name="shipping_other2">Additional Per Tire:   $1.00 20,000 lbs, $2.00 34,000 lbs</option>
-                                            <option id="shipping_other3" value="Additional Per Tire:   $1.00 20,000 lbs, $2.00 32,000 lbs" name="payout_freq_monthly">Additional Per Tire:   $1.00 20,000 lbs, $2.00 32,000 lbs</option> -->
                                         </select>
                                     </div>
                                 </div>

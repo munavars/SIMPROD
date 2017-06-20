@@ -25,28 +25,30 @@ public class DalPricingHeader extends DalAuditableModel{
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Integer customerId;
+	private DalCustomer customer;
 	private DalPricingCustomerType customerType;
+	private Integer customerGroup;
 	private DalPricingTermCodes termCodes;
 	private DalPricingShipRequirements shippingReqs;
 	private DalPricingOtherShipRequirements otherShippingreqs;
 	private String userComments;
+	private DalStatus dalStatus;
+	private DalProgramType dalProgramType;
 	
 	private List<DalPricingDetail> dalPricingDetailList;
 	
 	/**
 	 * @return the customerId
 	 */
-	@Column(name = "CUSTOMER_ID")
-	public Integer getCustomerId() {
-		return customerId;
+	@OneToOne
+	@JoinColumn(name = "CUSTOMER_ID", referencedColumnName ="ID")
+	public DalCustomer getCustomer() {
+		return customer;
 	}
-	/**
-	 * @param customerId the customerId to set
-	 */
-	public void setCustomerId(Integer customerId) {
-		this.customerId = customerId;
+	public void setCustomer(DalCustomer customer) {
+		this.customer = customer;
 	}
+	
 	/**
 	 * @return the customerType
 	 */
@@ -55,6 +57,7 @@ public class DalPricingHeader extends DalAuditableModel{
 	public DalPricingCustomerType getCustomerType() {
 		return customerType;
 	}
+
 	/**
 	 * @param customerType the customerType to set
 	 */
@@ -106,7 +109,7 @@ public class DalPricingHeader extends DalAuditableModel{
 	/**
 	 * @return the userComments
 	 */
-	   @Column(name = "USER_COMMENTS")
+	@Column(name = "USER_COMMENTS")
 	public String getUserComments() {
 		return userComments;
 	}
@@ -130,4 +133,53 @@ public class DalPricingHeader extends DalAuditableModel{
 	public void setDalPricingDetailList(List<DalPricingDetail> dalPricingDetailList) {
 		this.dalPricingDetailList = dalPricingDetailList;
 	}
+	
+	@Override
+	public void setCreatedBy(DalEmployee createdBy) {
+		if(dalPricingDetailList != null && !dalPricingDetailList.isEmpty()){
+			for(DalPricingDetail dalPricingDetail : dalPricingDetailList){
+				dalPricingDetail.setCreatedBy(createdBy);
+			}
+		}
+		super.setCreatedBy(createdBy);
+	}
+	
+	@Override
+	public void setModifiedBy(DalEmployee modifiedBy) {
+		if(dalPricingDetailList != null && !dalPricingDetailList.isEmpty()){
+			for(DalPricingDetail dalPricingDetail : dalPricingDetailList){
+				dalPricingDetail.setModifiedBy(createdBy);
+			}
+		}
+		super.setModifiedBy(modifiedBy);
+	}
+	
+	@OneToOne
+	@JoinColumn(name = "STATUS", referencedColumnName ="ID")
+	public DalStatus getDalStatus() {
+		return dalStatus;
+	}
+	
+	public void setDalStatus(DalStatus dalStatus) {
+		this.dalStatus = dalStatus;
+	}
+	
+	@OneToOne
+	@JoinColumn(name = "PGM_TYPE_ID", referencedColumnName ="ID")
+	public DalProgramType getDalProgramType() {
+		return dalProgramType;
+	}
+	
+	public void setDalProgramType(DalProgramType dalProgramType) {
+		this.dalProgramType = dalProgramType;
+	}
+	
+	@Column(name = "CUSTOMER_GROUP")
+	public Integer getCustomerGroup() {
+		return customerGroup;
+	}
+	public void setCustomerGroup(Integer customerGroup) {
+		this.customerGroup = customerGroup;
+	}
 }
+

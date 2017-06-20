@@ -32,6 +32,7 @@ public class DalPricingDetail extends DalAuditableModel{
 	private String discType; 
 	private String isCommissionable;
 	private String isBonusableUnits;
+	private String comments;
 	private DalPricingHeader dalPricingHeader;
 	/**
 	 * @return the addChgDel
@@ -194,4 +195,11 @@ public class DalPricingDetail extends DalAuditableModel{
 		this.dalPricingHeader = dalPricingHeader;
 	}
 	
+	@Column(name = "COMMENTS")
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
 }

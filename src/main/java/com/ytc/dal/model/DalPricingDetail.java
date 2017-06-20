@@ -183,7 +183,7 @@ public class DalPricingDetail extends DalAuditableModel{
 	 * @return the dalPricingHeader
 	 */
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "PRICING_HDR_ID", referencedColumnName = "ID")
 	public DalPricingHeader getDalPricingHeader() {
 		return dalPricingHeader;

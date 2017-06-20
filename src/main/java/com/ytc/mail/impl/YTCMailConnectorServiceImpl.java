@@ -24,6 +24,7 @@ public class YTCMailConnectorServiceImpl implements IYTCMailConnectorService{
 		if(emailDetails != null && env != null){
 			emailDetails.setHost(env.getProperty("mail.smtp.host"));
 			emailDetails.setPort(env.getProperty("mail.smtp.port"));
+			emailDetails.setEnvironment(env.getProperty("mail.environment"));
 				
 			ytcMailSenderService.sendMail(emailDetails);
 		}

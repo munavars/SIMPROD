@@ -333,7 +333,7 @@ a { text-decoration: none }
 			getParams = new URLSearchParams(window.location.search);
 			var pricingHeaderId = getParams.get('pricingId'); 
 			custId = getParams.get('custId');
-			pricingHeaderId = '74';
+			//pricingHeaderId = '74';
 			var url;
 			if(pricingHeaderId != null){
 				url = "/SIM/pricing/v1/getPricingDetail/" + pricingHeaderId; 
@@ -341,7 +341,13 @@ a { text-decoration: none }
 			else {
 				url = "/SIM/pricing/v1/getPricingDetails/";
 			}
-			$('#cancelLink').attr('href','/SIM/pricingOverview?custId='+custId);
+			if(custId != null){
+				$('#cancelLink').attr('href','/SIM/pricingOverview?custId='+custId);
+			}
+			else{
+				$('#cancelLink').attr('href','/SIM/indexRedirect');
+			}
+			
 			var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT'];
         	$.ajax({ 
 				type: "GET",
@@ -374,12 +380,12 @@ a { text-decoration: none }
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
 					$("#customerGroup").val($("#custByName_inputselect").val());
 					if(pricingHeaderId != null){
+						populateCustomerGroupDropDown(responseOnload.customerType);
 						$("#custByName_inputselect").val(responseOnload.customerGroup);
 						$("#customerGroup").val($("#custByName_inputselect").val());
 						$("#customerId").val(responseOnload.customerId);
 						$('#termsCode_inputselect').val(responseOnload.termCode);
 						$('#user_comments').val(responseOnload.userComments);
-						populateCustomerGroupDropDown(responseOnload.customerType);
 						if(responseOnload.customerType == 'Group'){
 							$("#optionsRadiosGroup").prop('checked', true);
 						}
@@ -418,6 +424,9 @@ a { text-decoration: none }
         	});
         	
         	function disableFieldBasedOnCurrentStatusAndUser(responseOnload1){
+        		if(responseOnload1.status === 'PENDING'){
+        			disableFields();
+        		}
 /*         		if(responseOnload1.authorizedUser == 'Yes' && responseOnload1.programButton.userLevel == "1" && responseOnload1.programButton.creater == true){
 					$('#edit-button').attr('disabled', false);
 					$('#edit-button').removeClass("disabled");
@@ -630,7 +639,7 @@ a { text-decoration: none }
 				//console.log(fileDataList);
 				responseOnload.pricingDetailList=fileDataList;
 						
- 				}
+ 			}
          	function fnCallService(){
 				/*Service call to save the data.*/	
 			    $.ajax({
@@ -1135,8 +1144,7 @@ a { text-decoration: none }
 											data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
 											title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 											data-toggle="hover" data-placement="top" rows="3"
-											placeholder="Add description details">
-										</textarea>
+											placeholder="Add description details" value=""></textarea>
 									</div>
 									<div class="space15 clearfix"></div>
                             

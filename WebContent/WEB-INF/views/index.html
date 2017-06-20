@@ -284,11 +284,15 @@
                         else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
                         	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
                         }
+                        else if(type === 'display' && row.programType == 'Pricing Form'){
+                            data = '<a href="/SIM/pricingRequest?pricingId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        }
 						return data;
                     }
    				},
 	            { data: "programName" },
 	            { data: "bu" },
+	            { data: "programType" },
 	            { data: "submitDate" ,className:"center" },
 	            { data: "programStatus",className:"center",	              
 	            	render: function ( data, type, row, meta ) {
@@ -299,7 +303,7 @@
                     	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.modifiedDate+'</div></a>';	
                     	}else if(data=='4' || data == '0'){
                     	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.modifiedDate+'</div></a>';	
-                    	}else if(data=='5'){
+                    	}else if(data=='5' || data == '3'){
                     	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.modifiedDate+'</div></a>';	
                     	}
                     }
@@ -356,7 +360,7 @@
 	                    	data=	'<a class="status-icon status-icon--rejected" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-times"></i></a>';	
 	                    	}else if(data=='4'|| data == '0'){
 	                    	data='<a class="status-icon status-icon--approved" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-check"></i></a>';	
-	                    	}else if(data=='5'){
+	                    	}else if(data=='5' || data == '3'){
 	                        	data='<a class="status-icon status-icon--waiting" data-placement="top" rel="tooltip"  title='+ divToolTip +'><i class="fa fa-ellipsis-h"></i></a>';	
 	                    	}
 	                    }
@@ -365,11 +369,6 @@
 	                },className:"center" 	
 	            	
 	            	
-	            },
-	            {
-	            	data: "programType" ,
-	            	visible: false,
-                	searchable: false
 	            },
 	            {
 	            	data: "statusHistory",
@@ -536,6 +535,7 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Bus. Unit</th>
+                                <th>Program Type</th>
                                 <th>Submitted</th>
                                 <th>Status</th>
                                 <!-- <th>Zone Manager</th> -->

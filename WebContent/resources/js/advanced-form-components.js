@@ -47,9 +47,10 @@
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
         var checkin = $('.dpd1').datepicker({
-        	startDate: new Date(),
+        	//startDate: new Date(),
             onRender: function(date) {
                 return date.valueOf() < now.valueOf() ? 'disabled' : '';
+
             }
         }).on('changeDate', function(ev) {
                 if (ev.date.valueOf() > checkout.viewDate.valueOf()) {
@@ -59,25 +60,48 @@
                 }
                
                 checkin.hide();
-                if(new Date($('#to').val())<new Date($(this).val())){
-                	alert("Begin date cannot be greater than End date");
+                
+                if(new Date($(this).val())<now){
+                	//alert("Begin date cannot be less than Current date");
+                	$("#errorMessageModal").html("Begin date cannot be less than Current date");
+					$('#myModal5').modal('toggle');
                 	$(this).val(''); 
-                	$('.dpd1')[0].focus();
+                	//$('.dpd1')[0].focus();	
+                	return false;
+                }
+                
+                if(new Date($('#to').val())<new Date($(this).val())){
+                	//alert("Begin date cannot be greater than End date");
+                	$("#errorMessageModal").html("Begin date cannot be greater than End date");
+					$('#myModal5').modal('toggle');
+                	$(this).val(''); 
+                	//$('.dpd1')[0].focus();
                 }else{
                 $('.dpd2')[0].focus();
                 }
             }).data('datepicker');
         var checkout = $('.dpd2').datepicker({
-        	startDate: new Date(),
+        	//startDate: new Date(),
             onRender: function(date) {
                 return date.valueOf() <= checkin.viewDate.valueOf() ? 'disabled' : '';
             }
         }).on('changeDate', function(ev) {
                 checkout.hide();
+                if(new Date($(this).val())<now){
+                	//alert("End date cannot be less than Current date");
+                	$("#errorMessageModal").html("End date cannot be less than Current date");
+					$('#myModal5').modal('toggle');
+                	$(this).val(''); 
+                	//$('.dpd2')[0].focus();	
+                	return false;
+                }
+                
                 if(new Date($('#from').val())>new Date($(this).val())){
-                	alert("End date cannot be less than Begin date");
+                	//alert("End date cannot be less than Begin date");
+                	$("#errorMessageModal").html("End date cannot be less than Begin date");
+					$('#myModal5').modal('toggle');
                 	$(this).val('');
-                	 $('.dpd2')[0].focus();
+                	 //$('.dpd2')[0].focus();
                 }
             }).data('datepicker');
     });

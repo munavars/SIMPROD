@@ -37,6 +37,12 @@ var EditableTable = function () {
 
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
+                if((jqInputs[0].value.trim()=="")||(jqInputs[1].value.trim()=="")||(jqInputs[2].value.trim()=="")){
+                	//editRow(oTable, nRow);
+                	$("#errorMessageModal").html("Tier Section cannot have empty values");
+					$('#myModal5').modal('toggle');
+                	return false;
+                }
                 oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
                 oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
                 oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
@@ -55,6 +61,7 @@ var EditableTable = function () {
                 }
                 
                 oTable.fnDraw();
+                return true;
             }
 
             function cancelEditRow(oTable, nRow) {
@@ -154,7 +161,6 @@ var EditableTable = function () {
             $('#editable-sample a.edit,#tier-schedule a.edit').live('click', function (e) {
                 e.preventDefault();
                 var tierAmountType =  $('input:radio[name=optionsRadiosDenominationTier]:checked').val();
-
                 /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
                 if (nEditing !== null && nEditing != nRow) {
@@ -164,8 +170,10 @@ var EditableTable = function () {
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
-                    saveRow(oTable, nEditing);
+                    var valid=saveRow(oTable, nEditing);
+                    if(valid){
                     nEditing = null;
+                    }
 /*                    $("#informationMessageModal").html("Please click on 'Save Changes' button to permanently  update these changes in database !!!");
                     $('#myModal6').modal('toggle');*/
                 } else {

@@ -43,6 +43,7 @@ public class PricingHeader extends Model{
 	private PricingDetailsDropDown dropdownList;
 	private boolean isSuccess;
 	private String validationMessage;
+	private String status;
 	/**
 	 * @return the customerType
 	 */
@@ -258,5 +259,11 @@ public class PricingHeader extends Model{
 	}
 	public void setApprovedByDate(String approvedByDate) {
 		this.approvedByDate = approvedByDate;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
 	}
 }

@@ -18,6 +18,7 @@ import com.ytc.common.enums.TagItemValueMapEnum;
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.NetPricing;
+import com.ytc.common.model.PricingDetail;
 import com.ytc.common.model.PricingDetailsDropDown;
 import com.ytc.common.model.PricingHeader;
 import com.ytc.constant.ProgramConstant;
@@ -26,11 +27,12 @@ import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalEmployee;
 import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalEmployeeTitle;
+import com.ytc.dal.model.DalPricingDetail;
+import com.ytc.dal.model.DalPricingHeader;
 import com.ytc.dal.model.DalWorkflowMatrix;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.helper.ProgramServiceWorkflowHelper;
 import com.ytc.service.IPricingService;
-import com.ytc.service.IProgramService;
 import com.ytc.service.ServiceContext;
 
 /**
@@ -42,9 +44,6 @@ public class PricingServiceImpl implements IPricingService {
 	
 	@Autowired
 	private IDataAccessLayer baseDao;
-	
-	@Autowired
-	private IProgramService programService;
 	
 	@Autowired
 	private ServiceContext serviceContext;
@@ -87,6 +86,7 @@ public class PricingServiceImpl implements IPricingService {
 		return pricingHeader;
 	}
 
+	
 	private void getHeaderDetails(PricingHeader pricingHeader) {
 		/**Populating header information Begin*/
 		/**
@@ -135,11 +135,14 @@ public class PricingServiceImpl implements IPricingService {
 
 	private void populateDropDownValues(PricingHeader pricingHeader) {
 		PricingDetailsDropDown pricingDetailsDropDown = new PricingDetailsDropDown();
-		pricingDetailsDropDown.setGroupList(getGroupDropDownList("DalCustomer.getGroup"));
-		pricingDetailsDropDown.setCustBillToList(programService.getTagValueDropDown(TagItemValueMapEnum.BILL_TO_NUMBER.getTagId(), 
+		Map<String, Object> parameters = new HashMap<>();
+		parameters.put("groupFlag", "YES");
+		pricingDetailsDropDown.setGroupList(getGroupDropDownList("DalCustomer.getGroup", parameters));
+		pricingDetailsDropDown.setCustBillToList(getTagValueDropDown(TagItemValueMapEnum.BILL_TO_NUMBER.getTagId(), 
 																					serviceContext.getEmployee().getEMP_ID()));
-		pricingDetailsDropDown.setCustByNameList(getDropDownList("DalCustomer.getCustomerName"));
-		pricingDetailsDropDown.setCustShipToList(programService.getTagValueDropDown(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId(), 
+		parameters.clear();
+		pricingDetailsDropDown.setCustByNameList(getGroupDropDownList("DalCustomer.getCustomerName", parameters));
+		pricingDetailsDropDown.setCustShipToList(getTagValueDropDown(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId(), 
 																					serviceContext.getEmployee().getEMP_ID()));
 		pricingDetailsDropDown.setTermsCodeList(getDropDownList("DalPricingTermCodes.getTermCodes"));
 		pricingDetailsDropDown.setOtherShipReqsList(getDropDownList("DalPricingOtherShipRequirements.getOtherReqs"));
@@ -147,18 +150,56 @@ public class PricingServiceImpl implements IPricingService {
 		pricingHeader.setDropdownList(pricingDetailsDropDown);
 		
 	}
-	private List<DropDown> getGroupDropDownList(String namedQueryValue){
+	
+	private List<DropDown> getTagValueDropDown(Integer tagId, Integer employeeId) {
+		TagItemValueMapEnum tagItemValueMapEnum = null;
+		List<DropDown> dropdownList = null;
+		List<String> tagValueList = null;
+		String query = null;
+		if(tagId != null){
+			tagItemValueMapEnum = TagItemValueMapEnum.tableDetail(tagId);
+			if(tagItemValueMapEnum != null){
+				query = String.format(QueryConstant.TAG_VALUE_LIST_BY_TAG_ID, tagItemValueMapEnum.getFetchColumnName(), tagItemValueMapEnum.getTableName()); 
+				if(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId().equals(tagItemValueMapEnum.getTagId()) || 
+						TagItemValueMapEnum.BILL_TO_NUMBER.getTagId().equals(tagItemValueMapEnum.getTagId()) ){
+					query += String.format(QueryConstant.TAG_VALUE_CUSTOMER_WHERE_CLAUSE, employeeId);
+				}
+				
+				query += QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE;
+				tagValueList = baseDao.getTagValue(query);
+				for(String value : tagValueList){
+					if(value != null){
+						DropDown dropDown = new DropDown();
+						if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+							String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
+							dropDown.setKey(delimitedValue[0].trim());
+						}
+						else{
+							dropDown.setKey(value);
+						}
+						/*dropDown.setKey(value);*/
+						dropDown.setValue(value);
+						if(dropdownList == null){
+							dropdownList = new ArrayList<DropDown>();
+						}
+						dropdownList.add(dropDown);	
+					}
+				}
+			}
+		}
+		return dropdownList;
+	}
+	
+	private List<DropDown> getGroupDropDownList(String namedQueryValue, Map<String, Object> parameters){
 		List<DropDown> dropdownList = null;		
-		Map<String, Object> parameters = new HashMap<>();
-		parameters.put("groupFlag", "YES");
 		if(namedQueryValue != null){
-			List<String> dalGroupList =  baseDao.getListFromNamedQueryWithParameter(namedQueryValue, parameters);
+			List<Object[]> dalGroupList =  baseDao.getListFromNamedQueryWithParameter(namedQueryValue, parameters);
 			if(dalGroupList != null){
-				for(String dalGroup : dalGroupList){
+				for(Object[] dalGroup : dalGroupList){
 					DropDown dropDown = new DropDown();
 					if(!StringUtils.isEmpty(dalGroup)){
-					dropDown.setKey(dalGroup);
-					dropDown.setValue(dalGroup);
+					dropDown.setKey(String.valueOf(dalGroup[0]));
+					dropDown.setValue(String.valueOf(dalGroup[1]));
 				
 					if(dropdownList == null){
 						dropdownList = new ArrayList<DropDown>();
@@ -272,5 +313,93 @@ public class PricingServiceImpl implements IPricingService {
 		}
 		return pricingDetailList;
 	}
-	
+
+	@Override
+	public PricingHeader getPricingDetail(Integer pricingHeaderId) {
+		PricingHeader pricingHeader = new PricingHeader();
+		
+		populateDropDownValues(pricingHeader);
+		
+		/**Get the pricing information*/
+		DalPricingHeader dalPricingHeader = baseDao.getById(DalPricingHeader.class, pricingHeaderId);
+		if(dalPricingHeader != null){
+			pricingHeader.setId(dalPricingHeader.getId());
+			getPricingDetailsData(pricingHeader, dalPricingHeader, serviceContext.getEmployee());	
+		}
+		
+		return pricingHeader;
+	}
+
+	private void getPricingDetailsData(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader,
+			Employee employee) {
+		if(pricingHeader != null && dalPricingHeader != null && employee != null){
+			/**Pricing Header information*/
+			populateHeaderData(pricingHeader, dalPricingHeader, employee);
+			
+			/**Populate PRICING_HEADER table information*/
+			populatePricingHeaderData(pricingHeader, dalPricingHeader);
+			
+			/**Populate PRICING_DETAIL table information*/
+			populatePricingDetailData(pricingHeader, dalPricingHeader);
+		}
+		
+	}
+
+	private void populatePricingDetailData(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader) {
+		if(pricingHeader != null && dalPricingHeader != null){
+			if(pricingHeader.getPricingDetailList() != null){
+				pricingHeader.getPricingDetailList().clear();
+			}
+			else{
+				pricingHeader.setPricingDetailList(new ArrayList<PricingDetail>());
+			}
+			if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
+				for(DalPricingDetail dalPricingDetail : dalPricingHeader.getDalPricingDetailList() ){
+					PricingDetail pricingDetail = new PricingDetail();
+					pricingDetail.setAddChangeDel(dalPricingDetail.getAddChgDel());
+					pricingDetail.setBeginDate(dalPricingDetail.getStartDate().getTime());
+					pricingDetail.setEndDate(dalPricingDetail.getEndDate().getTime());
+					pricingDetail.setProdLine(dalPricingDetail.getProdLine());
+					pricingDetail.setTread(dalPricingDetail.getProdTread());
+					pricingDetail.setPart(dalPricingDetail.getPartNumber());
+					pricingDetail.setNetPrice(String.valueOf(dalPricingDetail.getNetPrice()));
+					pricingDetail.setInvoiceDisc(String.valueOf( dalPricingDetail.getInvoiceDisc()));
+					pricingDetail.setBonusUnits(dalPricingDetail.getIsBonusableUnits());
+					pricingDetail.setCommissionable(dalPricingDetail.getIsCommissionable());
+					pricingDetail.setComments(dalPricingDetail.getComments());
+					/*pricingDetail.setProgramId(programId);*/
+					pricingDetail.setId(dalPricingDetail.getId());
+					
+					pricingHeader.getPricingDetailList().add(pricingDetail);
+				}
+			}
+		}
+	}
+
+	private void populatePricingHeaderData(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader) {
+		if(pricingHeader != null && dalPricingHeader != null){
+			pricingHeader.setCustomerType(dalPricingHeader.getCustomerType().getCustomerType());
+			pricingHeader.setCustomerId(dalPricingHeader.getCustomer().getCustomerNumber());
+			pricingHeader.setCustomerGroup(String.valueOf(dalPricingHeader.getCustomerGroup()));
+			pricingHeader.setUserComments(dalPricingHeader.getUserComments());
+			pricingHeader.setTermCode(dalPricingHeader.getTermCodes().getCode());
+			pricingHeader.setShippingReqs(dalPricingHeader.getShippingReqs().getShipRqs());
+			pricingHeader.setOtherShippingReqs(dalPricingHeader.getOtherShippingreqs().getOtherReqs());
+		}
+	}
+
+	private void populateHeaderData(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader, Employee employee) {
+		if(pricingHeader != null && dalPricingHeader != null){
+			pricingHeader.setBusinessUnit(dalPricingHeader.getCreatedBy().getBUSINESS_UNIT());
+			pricingHeader.setBusinessUnitDescription(BusinessUnitDescriptionEnum.getBUDescription(dalPricingHeader.getCreatedBy().getBUSINESS_UNIT()).getBusinessUnitDescription());
+			pricingHeader.setRequestedByName(ProgramServiceHelper.getName(dalPricingHeader.getCreatedBy()));
+			pricingHeader.setRequestedByTitle(dalPricingHeader.getCreatedBy().getTITLE().getTitle());
+			pricingHeader.setRequestedByDate(ProgramServiceHelper.convertDateToString(dalPricingHeader.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
+			/*Read work flow status table and populate the Approved By user details.*/
+			
+			if(dalPricingHeader.getDalStatus() != null){
+				pricingHeader.setStatus(dalPricingHeader.getDalStatus().getType());	
+			}
+		}
+	}
 }

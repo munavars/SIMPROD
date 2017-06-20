@@ -19,13 +19,17 @@ import org.springframework.util.StringUtils;
 
 import com.ytc.common.model.PricingDetail;
 import com.ytc.common.model.PricingHeader;
+import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
+import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalPricingCustomerType;
 import com.ytc.dal.model.DalPricingDetail;
 import com.ytc.dal.model.DalPricingHeader;
 import com.ytc.dal.model.DalPricingOtherShipRequirements;
 import com.ytc.dal.model.DalPricingShipRequirements;
 import com.ytc.dal.model.DalPricingTermCodes;
+import com.ytc.dal.model.DalProgramType;
+import com.ytc.dal.model.DalStatus;
 import com.ytc.service.IPricingUpdateService;
 
 /**
@@ -48,11 +52,18 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		 * 
 		 * DalPricingDetail dalPricingDetail =
 		 * baseDao.getById(DalPricingDetail.class,
-		 * pricingHeader.getPricingDetailList().get(0).getId()); }
+		 * pricingHeader.getPricingDetailList().get(0).getId()); 
+		 * }
 		 */
 		try {
 			if (pricingHeader != null) {
-				createPricingDetails(pricingHeader);
+				if(pricingHeader.getId() == null){
+					createPricingDetails(pricingHeader);	
+				}
+				else{
+					updatePricingDetails(pricingHeader);
+				}
+				
 			}
 		} catch (Exception e) {
 			LOGGER.info("Error in saving Pricing Header Details" + e);
@@ -62,13 +73,149 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 	}
 
 	@Transactional
+	private void updatePricingDetails(PricingHeader pricingHeader) {
+		DalPricingHeader dalPricingHeader = null;
+		if(pricingHeader != null && pricingHeader.getId() != null){
+			dalPricingHeader = baseDao.getById(DalPricingHeader.class, pricingHeader.getId());
+			if(dalPricingHeader != null){
+				updatePricingHeaderData(dalPricingHeader, pricingHeader);
+			}
+		}
+	}
+
+	private void updatePricingHeaderData(DalPricingHeader dalPricingHeader, PricingHeader pricingHeader) {
+		if (pricingHeader != null && dalPricingHeader != null) {
+
+			if (validateCustomerId(pricingHeader) && validatePartProdTread(pricingHeader)) {
+				
+				checkAndUpdatePricingHeaderData(dalPricingHeader, pricingHeader);
+				
+				/**Set Pricing request status*/
+				if(pricingHeader.getStatus() != null){
+					dalPricingHeader.setDalStatus(baseDao.getById(DalStatus.class, Integer.valueOf(pricingHeader.getStatus())));
+				}
+				
+				
+				dalPricingHeader.setUserComments(
+						StringUtils.isEmpty(pricingHeader.getUserComments()) ? "" : pricingHeader.getUserComments());
+
+				/** Delete the detail information and re save it. This logic has to be revisited.*/
+				
+				if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
+					for(DalPricingDetail dalPricingDetail : dalPricingHeader.getDalPricingDetailList()){
+						baseDao.delete(DalPricingDetail.class, dalPricingDetail.getId());
+					}
+				}
+				/** Save pricing Detail section information */
+				List<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
+																						dalPricingHeader);
+
+				if (!dalPricingDetailsList.isEmpty()) {
+					dalPricingHeader.setDalPricingDetailList(dalPricingDetailsList);
+				}
+
+				baseDao.update(dalPricingHeader);
+				
+				/**Reset status value*/
+				pricingHeader.setStatus(dalPricingHeader.getDalStatus().getType());
+
+				pricingHeader.setSuccess(true);
+			}
+		}
+	}
+
+	private void checkAndUpdatePricingHeaderData(DalPricingHeader dalPricingHeader, PricingHeader pricingHeader) {
+		
+		if(pricingHeader.getCustomerGroup() != null){
+			if(pricingHeader.getCustomerGroup().contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+				String delimitedValue[] = pricingHeader.getCustomerGroup().split(ProgramConstant.TAG_VALUE_DELIMITER);
+				dalPricingHeader.setCustomerGroup(Integer.valueOf(delimitedValue[0].trim()));
+			}
+			else{
+				dalPricingHeader.setCustomerGroup(Integer.valueOf(pricingHeader.getCustomerGroup()));
+			}	
+		}
+		
+		
+		if(!dalPricingHeader.getCustomer().getCustomerNumber().equals(pricingHeader.getCustomerId())){
+			Map<String, Object> inputParameters = new HashMap<String, Object>();
+			inputParameters.put("customerNumber", pricingHeader.getCustomerId());
+			
+			List<DalCustomer> dalCustomerList =  baseDao.getListFromNamedQueryWithParameter("DalCustomer.getCustomerFromCustomerNumber", inputParameters);
+			DalCustomer dalCustomer = null;
+			if(dalCustomerList != null && !dalCustomerList.isEmpty()){
+				dalCustomer = dalCustomerList.get(0);
+			}
+			dalPricingHeader.setCustomer(dalCustomer); //baseDao.getById(DalCustomer.class, Integer.valueOf(pricingHeader.getCustomerId()))	
+		}
+		
+		
+		Map<String, Object> parameters = new HashMap<String, Object>();
+		
+		if(!dalPricingHeader.getCustomerType().getCustomerType().equals(pricingHeader.getCustomerType())){
+			parameters.put("customerType", pricingHeader.getCustomerType());
+			List<DalPricingCustomerType> dalPricingCustomerTypeList = baseDao.getByType("DalPricingCustomerType.getCustomerType", parameters);
+			for (DalPricingCustomerType dalPricingCustomerType : dalPricingCustomerTypeList) {
+				dalPricingHeader.setCustomerType(dalPricingCustomerType);
+				parameters.remove("customerType", pricingHeader.getCustomerType());
+			}	
+		}
+		
+		if(!dalPricingHeader.getTermCodes().getCode().equals(pricingHeader.getCustomerType())){
+			parameters.put("code", pricingHeader.getTermCode());
+			List<DalPricingTermCodes> dalPricingTermCodesList = baseDao.getByType("DalPricingTermCodes.getCode",
+					parameters);
+			for (DalPricingTermCodes dalPricingTermCodes : dalPricingTermCodesList) {
+				dalPricingHeader.setTermCodes(dalPricingTermCodes);
+				parameters.remove("code", pricingHeader.getTermCode());
+			}	
+		}
+		
+		if(!dalPricingHeader.getShippingReqs().getShipRqs().equals(pricingHeader.getShippingReqs())){
+			parameters.put("shipRqs", pricingHeader.getShippingReqs());
+			List<DalPricingShipRequirements> dalPricingShipRequirementsList = baseDao.getByType("DalPricingShipRequirements.getShipRqs", parameters);
+			for (DalPricingShipRequirements dalPricingShipRequirements : dalPricingShipRequirementsList) {
+				dalPricingHeader.setShippingReqs(dalPricingShipRequirements);
+				parameters.remove("shipRqs", pricingHeader.getShippingReqs());
+			}	
+		}
+		
+		if(!dalPricingHeader.getOtherShippingreqs().getOtherReqs().equals(pricingHeader.getOtherShippingReqs())){
+			parameters.put("otherReqs", pricingHeader.getOtherShippingReqs());
+			List<DalPricingOtherShipRequirements> dalPricingOtherShipRequirementsList = baseDao.getByType("DalPricingOtherShipRequirements.getOtherReq", parameters);
+			for (DalPricingOtherShipRequirements dalPricingOtherShipRequirements : dalPricingOtherShipRequirementsList) {
+				dalPricingHeader.setOtherShippingreqs(dalPricingOtherShipRequirements);
+				parameters.remove("otherReqs", pricingHeader.getOtherShippingReqs());
+			}	
+		}
+	}
+
+	@Transactional
 	private void createPricingDetails(PricingHeader pricingHeader) {
 		DalPricingHeader dalPricingHeader = null;
 		if (pricingHeader != null) {
 
 			if (validateCustomerId(pricingHeader) && validatePartProdTread(pricingHeader)) {
 				dalPricingHeader = new DalPricingHeader();
-				dalPricingHeader.setCustomerId(Integer.valueOf(pricingHeader.getCustomerId()));
+				Map<String, Object> inputParameters = new HashMap<String, Object>();
+				inputParameters.put("customerNumber", pricingHeader.getCustomerId());
+				
+				List<DalCustomer> dalCustomerList =  baseDao.getListFromNamedQueryWithParameter("DalCustomer.getCustomerFromCustomerNumber", inputParameters);
+				DalCustomer dalCustomer = null;
+				if(dalCustomerList != null && !dalCustomerList.isEmpty()){
+					dalCustomer = dalCustomerList.get(0);
+				}
+				dalPricingHeader.setCustomer(dalCustomer); //baseDao.getById(DalCustomer.class, Integer.valueOf(pricingHeader.getCustomerId()))
+				if(pricingHeader.getCustomerGroup() != null){
+					if(pricingHeader.getCustomerGroup().contains(ProgramConstant.TAG_VALUE_DELIMITER)){
+						String delimitedValue[] = pricingHeader.getCustomerGroup().split(ProgramConstant.TAG_VALUE_DELIMITER);
+						dalPricingHeader.setCustomerGroup(Integer.valueOf(delimitedValue[0].trim()));
+					}
+					else{
+						dalPricingHeader.setCustomerGroup(Integer.valueOf(pricingHeader.getCustomerGroup()));
+					}	
+				}
+				/*dalPricingHeader.setCustomerGroup(Integer.valueOf(pricingHeader.getCustomerGroup()));*/
 				Map<String, Object> parameters = new HashMap<String, Object>();
 				
 				parameters.put("customerType", pricingHeader.getCustomerType());
@@ -100,6 +247,22 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 					parameters.remove("otherReqs", pricingHeader.getOtherShippingReqs());
 				}
 				
+				/**Set Pricing request status*/
+				if(pricingHeader.getStatus() != null){
+					dalPricingHeader.setDalStatus(baseDao.getById(DalStatus.class, Integer.valueOf(pricingHeader.getStatus())));
+				}
+				/**Set pricing type in program type*/
+				List<DalProgramType> dalProgramTypeList = baseDao.getListFromNamedQuery("DalProgramType.getAllDetails");
+				if(dalProgramTypeList != null && !dalProgramTypeList.isEmpty()){
+					for(DalProgramType dalProgram : dalProgramTypeList){
+						if(ProgramConstant.PRICING_FORM_TYPE.equalsIgnoreCase(dalProgram.getType())){
+							dalPricingHeader.setDalProgramType(dalProgram);
+							break;
+						}
+					}
+					
+				}
+				
 				dalPricingHeader.setUserComments(
 						StringUtils.isEmpty(pricingHeader.getUserComments()) ? "" : pricingHeader.getUserComments());
 
@@ -109,11 +272,12 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 
 				if (!dalPricingDetailsList.isEmpty()) {
 					dalPricingHeader.setDalPricingDetailList(dalPricingDetailsList);
-
 				}
 
 				baseDao.create(dalPricingHeader);
 
+				/**Reset status value*/
+				pricingHeader.setStatus(dalPricingHeader.getDalStatus().getType());
 				pricingHeader.setSuccess(true);
 			}
 		}
@@ -148,6 +312,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 				dalPricingDetail.setPartNumber(pricingDetail.getPart());
 				dalPricingDetail.setProdLine(pricingDetail.getProdLine());
 				dalPricingDetail.setProdTread(pricingDetail.getTread());
+				dalPricingDetail.setComments(pricingDetail.getComments());
 				dalPricingDetail.setDalPricingHeader(dalPricingHeader);
 			}
 

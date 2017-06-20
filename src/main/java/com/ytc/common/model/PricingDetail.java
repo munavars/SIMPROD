@@ -3,10 +3,7 @@
  */
 package com.ytc.common.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author ArunP
@@ -29,7 +26,7 @@ public class PricingDetail extends Model{
 	private String invoiceDisc;
 	private String bonusUnits;
 	private String commissionable;
-	private String Comments;
+	private String comments;
 	private Integer programId;
 	/**
 	 * @return the addChangeDel
@@ -155,13 +152,13 @@ public class PricingDetail extends Model{
 	 * @return the comments
 	 */
 	public String getComments() {
-		return Comments;
+		return comments;
 	}
 	/**
 	 * @param comments the comments to set
 	 */
 	public void setComments(String comments) {
-		Comments = comments;
+		this.comments = comments;
 	}
 	/**
 	 * @return the programId

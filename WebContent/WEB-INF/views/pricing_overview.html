@@ -71,7 +71,8 @@ th{
     	   // window.location.href = uri + base64(format(template, ctx))
 		    var a = document.createElement('a');
 		    a.href = uri + base64(format(template, ctx));
-			a.download =  $("#custname").text()+'.xls';
+			//a.download =  $("#custname").text()+'.xls';
+			a.download =  'PricingDetail.xls';
 		    a.click(); 
     	  }
     	})()
@@ -97,7 +98,7 @@ th{
     
 	$(document).ready(function () { 
 
-		$('#editabletest th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
+		$('#pricingdetail th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
 		//alert(window.location.search.substr(1)); 	
 		getParams = new URLSearchParams(window.location.search);
 		var custId=getParams.get('custId'); 
@@ -118,7 +119,7 @@ th{
 			});
 		
 		function loadPricingTable(){
-			   var table=$("#editabletest").DataTable( {
+			   var table=$("#pricingdetail").DataTable( {
 					 oLanguage: {
 						 "sEmptyTable": "No data available for this customer"
 						 },
@@ -316,8 +317,8 @@ th{
                                 </div>
                           </div>
                           <div class="table-responsive">
-                               <!--  <div class="btn-group pull-right">
-                                 <div class="btn-group">
+                                 <div class="btn-group pull-right">
+                                <!--  <div class="btn-group">
                                   <div class="">
                                                 <select class="form-control input-sm m-bot15 required" id="program_type_select" name="Program Type_inputselect">
                                                    <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
@@ -335,15 +336,15 @@ th{
                               <div class="btn-group m-left8">
                                   <a href="/SIM/pricing" id="pricing-form-link"><button class="btn btn-default"><i class="fa fa-plus"></i> Pricing Form</button></a>
                               </div>
-                              Pricing form link End
+                              Pricing form link End -->
                                  <div class="btn-group m-left8">
-                                  <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('editabletest', 'Program Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                                  <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('pricingdetail', 'Pricing Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
                               </div>   
-                            </div> -->
+                            </div> 
 
                               
                           <h4 class="tableHeader">Net Prices</h4>
-                          <table class="table table-striped table-hover table-bordered" id="editabletest">
+                          <table class="table table-striped table-hover table-bordered" id="pricingdetail">
                              <thead>
 
                               <tr class="rowvis" style="background-color: #cacbce;">

@@ -441,10 +441,10 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetailsDropDown.setPayoutFrequenceList(getFrequencyDropDownList("DalFrequency.getAllDetailsWithSort"));
 		programDetailsDropDown.setPricingTypeList(getPricingTypeDropDownList("DalPricingType.getAllDetails"));
 		programDetailsDropDown.setPaidTypeList(getPaidTypeDropDownList("DalPaidType.getAllDetails"));
-		programDetailsDropDown.setPaidBasedOnList(getBaseItemsDropDownList("DalBaseItems.getAllDetails"));
+		programDetailsDropDown.setPaidBasedOnList(getBaseItemsDropDownList("DalBaseItems.getAllDetails",programDetail));
 		programDetailsDropDown.setBtlList(getBTLDropDownList());
 		programDetailsDropDown.setPayToList(getPayToDropDownList(customerId));
-		programDetailsDropDown.setGlCodeList(getGLCodeDropDownList("DalGLCode.getAllDetails"));
+		programDetailsDropDown.setGlCodeList(getGLCodeDropDownList("DalGLCode.getAllDetails",programDetail));
 		programDetail.setBeginDate(new Date());
 		programDetail.setEndDate(new Date());
 		programDetail.setDropdownList(programDetailsDropDown);
@@ -655,10 +655,11 @@ public class ProgramServiceImpl implements IProgramService {
 		return dropdownList;
 	}
 	
-	private List<DropDown> getBaseItemsDropDownList(String namedQueryValue){
+	private List<DropDown> getBaseItemsDropDownList(String namedQueryValue,ProgramDetail programDetail){
 		List<DropDown> dropdownList = null;
 		if(namedQueryValue != null){
 			List<DalBaseItems> dalBaseItemsList =  baseDao.getListFromNamedQuery(namedQueryValue);
+			programDetail.setBaseItemList(dalBaseItemsList);
 			if(dalBaseItemsList != null){
 				for(DalBaseItems dalBaseItems : dalBaseItemsList){
 					if(!"0".equalsIgnoreCase(dalBaseItems.getBaseItem())){
@@ -1029,15 +1030,16 @@ public class ProgramServiceImpl implements IProgramService {
 		return tagValueList;
 	}
 	
-	private List<DropDown> getGLCodeDropDownList(String namedQueryValue){
+	private List<DropDown> getGLCodeDropDownList(String namedQueryValue,ProgramDetail programDetail){
 		List<DropDown> dropdownList = null;
 		if(namedQueryValue != null){
 			List<DalGLCode> dalGLCodeList =  baseDao.getListFromNamedQuery(namedQueryValue);
+			programDetail.setGlCodeList(dalGLCodeList);
 			if(dalGLCodeList != null){
 				for(DalGLCode dalGlcode : dalGLCodeList){
 					DropDown dropDown = new DropDown();
-					//dropDown.setKey(String.valueOf(dalGlcode.getId()));
-					dropDown.setKey(dalGlcode.getGlBucket());
+					dropDown.setKey(String.valueOf(dalGlcode.getId()));
+					//dropDown.setKey(dalGlcode.getGlBucket());
 					dropDown.setValue(dalGlcode.getGlNo());
 					if(dropdownList == null){
 						dropdownList = new ArrayList<DropDown>();

@@ -18,9 +18,9 @@ var EditableTable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" class="form-control small" value="' + aData[0] + '">';
-                jqTds[1].innerHTML = '<input type="text" id="tier_amount" name="tier_amount" class="form-control small" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" class="form-control small" value="' + aData[2] + '">';
+                jqTds[0].innerHTML = '<input type="text" style="width:100%" class="form-control small" value="' + aData[0] + '">';
+                jqTds[1].innerHTML = '<input type="text" style="width:100%" id="tier_amount" name="tier_amount" class="form-control small" value="' + aData[1] + '">';
+                jqTds[2].innerHTML = '<input type="text" style="width:100%" class="form-control small" value="' + aData[2] + '">';
                 if($(aData[3]).attr('id') == null){
                 	jqTds[3].innerHTML = '<a class="edit" href="">Save</a>';
                 }

@@ -53,22 +53,22 @@
 
             }
         }).on('changeDate', function(ev) {
-                if (ev.date.valueOf() > checkout.viewDate.valueOf()) {
+                /*if (ev.date.valueOf() > checkout.viewDate.valueOf()) {
                     var newDate = new Date(ev.date)
                     newDate.setDate(newDate.getDate() + 1);
                     checkout.setValue(newDate);
-                }
+                }*/
                
                 checkin.hide();
                 
-                if(new Date($(this).val())<now){
+               /* if(new Date($(this).val())<now){
                 	//alert("Begin date cannot be less than Current date");
                 	$("#errorMessageModal").html("Begin date cannot be less than Current date");
 					$('#myModal5').modal('toggle');
                 	$(this).val(''); 
                 	//$('.dpd1')[0].focus();	
                 	return false;
-                }
+                }*/
                 
                 if(new Date($('#to').val())<new Date($(this).val())){
                 	//alert("Begin date cannot be greater than End date");
@@ -87,14 +87,14 @@
             }
         }).on('changeDate', function(ev) {
                 checkout.hide();
-                if(new Date($(this).val())<now){
+               /* if(new Date($(this).val())<now){
                 	//alert("End date cannot be less than Current date");
                 	$("#errorMessageModal").html("End date cannot be less than Current date");
 					$('#myModal5').modal('toggle');
                 	$(this).val(''); 
                 	//$('.dpd2')[0].focus();	
                 	return false;
-                }
+                }*/
                 
                 if(new Date($('#from').val())>new Date($(this).val())){
                 	//alert("End date cannot be less than Begin date");

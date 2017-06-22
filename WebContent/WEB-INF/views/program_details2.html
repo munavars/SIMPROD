@@ -512,7 +512,7 @@
 																<div id="amountdiv">
 																	<label class="control-label" for="amount">Amount</label>&nbsp;&nbsp;
 																	<input id="amount" name="amount" type="text"
-																		class="form-control radio-inline m-bot15" style="width: 80px;"
+																		class="form-control radio-inline m-bot15" style="width: 120px;"
 																		value="">
 																	<div class="radio-inline">
 																		<label class="control-label"
@@ -1151,6 +1151,12 @@
                     });							
 			    return isSame;
 			}, 'Accrued Tier should match maker value available');
+			$.validator.addMethod("amountValidation", function (value, element) {
+				var isNumber = false;
+				if (!isNaN(value))
+    		    isNumber=true;							
+			    return isNumber;
+			}, 'Please enter valid amount');
       
 			$("#wizard-validation-form").validate({
 				rules: {
@@ -1174,7 +1180,7 @@
 					},
 					amount: {
 						required: true,
-						number: true
+						amountValidation: false
 					},
 					optionsRadiosDenomination: {
 						required: true
@@ -1944,7 +1950,7 @@
 			            else if(response.data.duplicate == true)
 			            {
 			              var idAfter = response.data.id;
-			              $("#confirmMessage").html("Programme is alreday existing and id is <strong>"+ idAfter + "</strong>");
+			              $("#confirmMessage").html("Program alreday exist and the previous programme id is <strong>"+ idAfter + "</strong>");
 						  $('#myModal4').modal('toggle');
 			            }
 			            else {
@@ -2137,6 +2143,14 @@
 				   
 				});
 				
+				 $(document).on('keyup', "#amount", function () {
+					var value = $(this).val();
+					if(value != null && value != 'undefined' ){
+						 value = value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						    $(this).val(value);
+            		}
+				   
+				});  
 				
 				    
 				$('#copy-paid-info-btn').click(function () {

@@ -534,7 +534,7 @@
 																	</div>
 																</div>
 																 </br>
-																<div id="tbpcheck">
+																<div id="tbpchk">
 																<label class="control-label"
 																			for="tbpcheck">TBP Special Handling</label>&nbsp;&nbsp;
 																			 <input
@@ -545,8 +545,8 @@
 																<div id="glcocde">
 																<label class="control-label"
 																			for="glcode_dropdown">GLNo</label>&nbsp;&nbsp;
-																			<!--  <select  id="glcode_dropdown" name="glcode_dropdown"/>  -->
-																			 <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled>
+																			  <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/>  
+																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled> -->
 																</div> 
 																</div>
 															</div>
@@ -1188,6 +1188,9 @@
 					paid_basedon_inputselect: {
 						required: true
 					},
+					glcode_dropdown:{
+						required: true
+					},
 					actual_marker: {
 						actualMarkerCheck:{
 							depends: function(element) {
@@ -1327,7 +1330,9 @@
             	url: '/SIM/isTbpUser',
              	success: function(response){
              		if(!response){
-             			$("#tbpcheck").hide();
+             			$("#tbpchk").hide();
+             		}else{
+             			$('#glcode_dropdown').attr('disabled', false);
              		}
              	},
              	failure: function(response){
@@ -1491,7 +1496,7 @@
                	fnPopulateDropdown('pricing_type_inputselect', response.data.programDetailList[0].dropdownList.pricingTypeList);
                	$('#pricing_type_inputselect').val(response.data.programDetailList[0].pricingType);
               
-               	//fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
+               	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
                	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
               
                	if(response.data.programDetailList[0].tbpCheck == '1'){
@@ -2057,21 +2062,70 @@
 			$(document).ready(function() {
 				
 				$('#program_name_inputselect').change(function(){
-					 $('#glcode_dropdown').val(''); 
-					if(responseOnload.businessUnit=='P'){
+					/* $('#glcode_dropdown').val(''); 
+ 					if(responseOnload.businessUnit=='P'){
 						key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
 					}else{
 						key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
 					}
-					$.each(responseOnload.programDetailList[0].dropdownList.glCodeList, function (i, item) {
-					   if(key==item.key){
-						   $('#glcode_dropdown').val(item.value); 
+					$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
+					   if(key==item.glBucket){
+						   $('#glcode_dropdown').val(item.id); 
 					   }
-					});
+					}); */
+					if($('#optionsRadiosTierYes').is(':checked')){
+						id=$('#achieve_basedon_inputselect option:selected').val();	
+					}else{
+						id=$('#paid_basedon_inputselect option:selected').val();
+					}
+					populateGlcode(id);
 					
 				});
 				
+				function populateGlcode(id){
+						pgmType='';
+						$('#glcode_dropdown').val('');
+						if(responseOnload.businessUnit=='P'){
+							key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
+						}else{
+							key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
+						}
+						//id=$('#paid_basedon_inputselect option:selected').val();
+						$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
+							   if(id==item.id){
+								   if(item.base==1){
+									   pgmType='VBS';
+								   }else{
+									   pgmType='MKP';
+								   }
+							   }
+							});
+						
+						$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
+						   if((key==item.glBucket)&&(item.pcs==pgmType)){
+							   $('#glcode_dropdown').val(item.id); 
+						   }
+						});
+				}
+				
+				$('#paid_basedon_inputselect').change(function(){
+					if(!$('#optionsRadiosTierYes').is(':checked')){
+					
+					id=$('#paid_basedon_inputselect option:selected').val();
+					
+					populateGlcode(id);
+					}
+				});
+				
 
+				$('#achieve_basedon_inputselect').change(function(){
+					if($('#optionsRadiosTierYes').is(':checked')){
+					
+					id=$('#achieve_basedon_inputselect option:selected').val();
+					
+					populateGlcode(id);
+					}
+				});
 				
 				
 				$(document).on('keyup', "#tier_amount", function () {

@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import com.ytc.dal.model.DalBaseItems;
+import com.ytc.dal.model.DalGLCode;
+
 public class ProgramDetail extends Model{
 
 	/**
@@ -64,6 +67,8 @@ public class ProgramDetail extends Model{
 	
 	private Integer tbpCheck;
 	private String glCode;
+	private List<DalGLCode> glCodeList;
+	private List<DalBaseItems> baseItemList;
 	
 	/**Commentary/Special Instructions attribute to hold the user entered comments.*/
 	private String comments;
@@ -447,4 +452,24 @@ public class ProgramDetail extends Model{
 	public void setGlCode(String glCode) {
 		this.glCode = glCode;
 	}
+	public List<DalGLCode> getGlCodeList() {
+		return glCodeList;
+	}
+	public void setGlCodeList(List<DalGLCode> glCodeList) {
+		this.glCodeList = glCodeList;
+	}
+	/**
+	 * @return the baseItemList
+	 */
+	public List<DalBaseItems> getBaseItemList() {
+		return baseItemList;
+	}
+	/**
+	 * @param baseItemList the baseItemList to set
+	 */
+	public void setBaseItemList(List<DalBaseItems> baseItemList) {
+		this.baseItemList = baseItemList;
+	}
+	
+	
 }

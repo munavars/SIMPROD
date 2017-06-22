@@ -311,7 +311,7 @@
 																Name</label> <select
 																class="form-control input-sm m-bot15 required"
 																id="program_name_inputselect"
-																name="program_name_inputselect">
+																name="program_name_inputselect"> 
 															</select>
 														</div>
 														<div class="col-lg-4 col-sm-4">
@@ -388,7 +388,7 @@
 																		checked="checked">$
 																	</label>
 																</div>
-																<div class="radio-inline accrualtype inline-flex">
+																<div class="radio-inline accrualtype inline-flex" id="tbpchk">
 																<label class="control-label"
 																			for="tbpcheck">TBP Special Handling</label>&nbsp;&nbsp; 
 																			 <input
@@ -401,8 +401,8 @@
 															<div class="col-lg-4 col-sm-4">
 																<label class="control-label"
 																			for="glcode_dropdown">GLNo</label>
-																			 <!-- <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15"/> -->
-																			 <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control "  value="" disabled>
+																			 <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/> 
+																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control "  value="" disabled> -->
 															</div>
 															</div>
 																		 
@@ -864,6 +864,9 @@
 						required: true,
 						number: true
 					},
+					glcode_dropdown:{
+						required: true
+					},
 					optionsRadiosDenomination: {
 						required: true
 					}
@@ -982,8 +985,10 @@
            	url: '/SIM/isTbpUser',
             	success: function(response){
             		if(!response){
-            			$("#tbpcheck").hide();
-            		}
+            			$("#tbpchk").hide();
+            		}else{
+             			$('#glcode_dropdown').attr('disabled', false);
+             		}
             	},
             	failure: function(response){
             		alert("Wrongly done");
@@ -1140,7 +1145,7 @@
                	fnPopulateDropdown('paidBasedOn', response.data.programDetailList[0].programPaidOn.tagItemList);
                	fnPopulatePaidDetails(response);
                	
-               	//fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
+               	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
                	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
                 
                	if(response.data.programDetailList[0].tbpCheck == '1'){
@@ -1539,16 +1544,21 @@
 			
 			$('#program_name_inputselect').change(function(){
 				 $('#glcode_dropdown').val(''); 
+				 if($('#programTypeHeader').html()=='COOP'){
+					 pgmType='COP';
+				 }else{
+					 pgmType='DDF';
+				 }
 				if(responseOnload.businessUnit=='P'){
 					key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
 				}else{
 					key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
 				}
-				$.each(responseOnload.programDetailList[0].dropdownList.glCodeList, function (i, item) {
-				   if(key==item.key){
-					   $('#glcode_dropdown').val(item.value); 
-				   }
-				});
+				$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
+					   if((key==item.glBucket)&&(item.pcs==pgmType)){
+						   $('#glcode_dropdown').val(item.id); 
+					   }
+					});
 				
 			});
 			

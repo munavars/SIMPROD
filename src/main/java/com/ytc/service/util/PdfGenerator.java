@@ -282,7 +282,7 @@ public class PdfGenerator {
 	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         table.addCell(cell1);
 	         
-	         cell1 = new PdfPCell(new Paragraph("Pay To: "+dalpgm.getPayTo()));
+	         cell1 = new PdfPCell(new Paragraph("Pay To: "+dalpgm.getDalProgramHeader().getCustomer().getCustomerNumber()));
 	         cell1.setBorderColor(BaseColor.BLACK);
 	         cell1.setPaddingLeft(10);
 	         //cell7.setHorizontalAlignment(Element.ALIGN_CENTER);

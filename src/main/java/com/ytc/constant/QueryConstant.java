@@ -5,6 +5,8 @@ public class QueryConstant {
 	
 	public static final String TAG_VALUE_CUSTOMER_WHERE_CLAUSE = " WHERE billToNumber IN (SELECT customerNumber from DalCustomer where accountManager = %s)";
 	
+	public static final String TAG_VALUE_CUSTOMER_PRICING_WHERE_CLAUSE = " WHERE billToNumber IN (%s)";
+	
 	public static final String TAG_VALUE_LIST_ORDER_BY_CLAUSE = " ORDER BY DIS_VALUE ASC";	
 
 	public static final String PROGRAM_LIST="select * from PROGRAM_DETAIL where PGM_HDR_ID in(select ID from PROGRAM_HEADER where CUSTOMER_ID in (:custId))and STATUS_ID in (:status) and PGM_END_DATE>(DATEADD(YEAR, -2,SYSDATETIME()))";

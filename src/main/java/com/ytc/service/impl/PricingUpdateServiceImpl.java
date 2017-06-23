@@ -30,7 +30,10 @@ import com.ytc.dal.model.DalPricingShipRequirements;
 import com.ytc.dal.model.DalPricingTermCodes;
 import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalStatus;
+import com.ytc.helper.PricingWorkflowServiceHelper;
 import com.ytc.service.IPricingUpdateService;
+import com.ytc.service.IPricingWorkflowService;
+import com.ytc.service.ServiceContext;
 
 /**
  * Purpose : Business logic related pricing form.
@@ -40,6 +43,12 @@ import com.ytc.service.IPricingUpdateService;
 public class PricingUpdateServiceImpl implements IPricingUpdateService {
 	@Autowired
 	private IDataAccessLayer baseDao;
+	
+	@Autowired
+	private IPricingWorkflowService pricingWorkflowService;
+	
+	@Autowired
+	private ServiceContext serviceContext;
 	
 	private static Logger LOGGER = Logger.getLogger(PricingUpdateServiceImpl.class.getName());
 
@@ -71,6 +80,21 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 
 		return pricingHeader;
 	}
+	
+
+	private void getProgramTypeDetails(DalPricingHeader dalPricingHeader) {
+		if(dalPricingHeader != null){
+			List<DalProgramType> dalProgramTypeList = baseDao.getListFromNamedQuery("DalProgramType.getAllDetails");
+			if(dalProgramTypeList != null){
+				for(DalProgramType dalProgramType : dalProgramTypeList){
+					if(ProgramConstant.PRICING_FORM_TYPE.equalsIgnoreCase(dalProgramType.getType()) ){
+						dalPricingHeader.setDalProgramType(dalProgramType);
+						break;
+					}
+				}
+			}
+		}
+	}
 
 	@Transactional
 	private void updatePricingDetails(PricingHeader pricingHeader) {
@@ -87,37 +111,44 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		if (pricingHeader != null && dalPricingHeader != null) {
 
 			if (validateCustomerId(pricingHeader) && validatePartProdTread(pricingHeader)) {
-				
-				checkAndUpdatePricingHeaderData(dalPricingHeader, pricingHeader);
-				
+								
 				/**Set Pricing request status*/
 				if(pricingHeader.getStatus() != null){
 					dalPricingHeader.setDalStatus(baseDao.getById(DalStatus.class, Integer.valueOf(pricingHeader.getStatus())));
 				}
 				
-				
-				dalPricingHeader.setUserComments(
-						StringUtils.isEmpty(pricingHeader.getUserComments()) ? "" : pricingHeader.getUserComments());
+				if(!pricingHeader.getProgramButton().isApprover()){
+					
+					checkAndUpdatePricingHeaderData(dalPricingHeader, pricingHeader);
+					
+					dalPricingHeader.setUserComments(
+							StringUtils.isEmpty(pricingHeader.getUserComments()) ? "" : pricingHeader.getUserComments());
 
-				/** Delete the detail information and re save it. This logic has to be revisited.*/
-				
-				if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
-					for(DalPricingDetail dalPricingDetail : dalPricingHeader.getDalPricingDetailList()){
-						baseDao.delete(DalPricingDetail.class, dalPricingDetail.getId());
+					/** Delete the detail information and re save it. This logic has to be revisited.*/
+					
+					if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
+						for(DalPricingDetail dalPricingDetail : dalPricingHeader.getDalPricingDetailList()){
+							baseDao.delete(DalPricingDetail.class, dalPricingDetail.getId());
+						}
 					}
-				}
-				/** Save pricing Detail section information */
-				List<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
-																						dalPricingHeader);
+					/** Save pricing Detail section information */
+					List<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
+																							dalPricingHeader);
 
-				if (!dalPricingDetailsList.isEmpty()) {
-					dalPricingHeader.setDalPricingDetailList(dalPricingDetailsList);
-				}
+					if (!dalPricingDetailsList.isEmpty()) {
+						dalPricingHeader.setDalPricingDetailList(dalPricingDetailsList);
+					}
+				}				
 
+				pricingWorkflowService.updateWorkflowDetails(dalPricingHeader, pricingHeader, serviceContext.getEmployee());
+				
 				baseDao.update(dalPricingHeader);
 				
 				/**Reset status value*/
 				pricingHeader.setStatus(dalPricingHeader.getDalStatus().getType());
+				
+				/**Reset Program workflow*/
+				PricingWorkflowServiceHelper.populateWorkflowStatusData(pricingHeader, dalPricingHeader);
 
 				pricingHeader.setSuccess(true);
 			}
@@ -197,6 +228,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 
 			if (validateCustomerId(pricingHeader) && validatePartProdTread(pricingHeader)) {
 				dalPricingHeader = new DalPricingHeader();
+				getProgramTypeDetails(dalPricingHeader);
 				Map<String, Object> inputParameters = new HashMap<String, Object>();
 				inputParameters.put("customerNumber", pricingHeader.getCustomerId());
 				
@@ -274,10 +306,17 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 					dalPricingHeader.setDalPricingDetailList(dalPricingDetailsList);
 				}
 
-				baseDao.create(dalPricingHeader);
-
+				pricingWorkflowService.updateWorkflowDetails(dalPricingHeader, pricingHeader, serviceContext.getEmployee());
+				
+				baseDao.create(dalPricingHeader);			
+				
 				/**Reset status value*/
+				pricingHeader.setId(dalPricingHeader.getId());
 				pricingHeader.setStatus(dalPricingHeader.getDalStatus().getType());
+				
+				/**Reset Program workflow*/
+				PricingWorkflowServiceHelper.populateWorkflowStatusData(pricingHeader, dalPricingHeader);
+				
 				pricingHeader.setSuccess(true);
 			}
 		}

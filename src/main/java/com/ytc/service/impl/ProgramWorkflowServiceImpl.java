@@ -132,6 +132,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 					dalWorkflowStatus.setApprover(baseDao.getById(DalEmployee.class, nextApprover[0]));
 					dalWorkflowStatus.setWfStatusDate(Calendar.getInstance());
 					dalWorkflowStatus.setWfMatrixId(nextApprover[1]);
+					dalWorkflowStatus.setDalProgramType(dalProgramDetail.getDalProgramType());
 					dalWorkflowStatus.setDalProgramDetailWf(dalProgramDetail);
 					if(dalProgramDetail.getDalWorkflowStatusList() == null){
 						dalProgramDetail.setDalWorkflowStatusList(new ArrayList<DalWorkflowStatus>());

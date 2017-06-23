@@ -17,7 +17,7 @@ public interface IPricingService {
 
 	
 	public List<DropDown> getTagValueDropDown(Integer tagId);
-	public PricingHeader getPricingDetails();
+	public PricingHeader getPricingDetails(Integer customerId);
 	public List<NetPricing> getCustomerPricingDetails(Integer empId, String bu);
 	
 	/**

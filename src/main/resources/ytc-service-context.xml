@@ -61,5 +61,6 @@
 	<bean id="programWorkflowService" class="com.ytc.service.impl.ProgramWorkflowServiceImpl">
 	</bean>
 	
-	
+	<bean id="pricingWorkflowService" class="com.ytc.service.impl.PricingWorkflowServiceImpl">
+	</bean>
 </beans>

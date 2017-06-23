@@ -37,6 +37,8 @@ public class DalPricingHeader extends DalAuditableModel{
 	
 	private List<DalPricingDetail> dalPricingDetailList;
 	
+	private List<DalWorkflowStatus> dalWorkflowStatusForPricingList;
+	
 	/**
 	 * @return the customerId
 	 */
@@ -150,6 +152,23 @@ public class DalPricingHeader extends DalAuditableModel{
 				dalPricingDetail.setModifiedBy(createdBy);
 			}
 		}
+		if(dalWorkflowStatusForPricingList != null && !dalWorkflowStatusForPricingList.isEmpty()){
+			for(DalWorkflowStatus dalWorkflowStatus : dalWorkflowStatusForPricingList){
+				if(dalWorkflowStatus.getId() == null){
+					/**Updating created by here is because, for already existing program detail,
+					 * approver will add comments, in such case, createdBy setter will not get called.
+					 * only modified by setter will be called, since the person will be same in 
+					 * all the three fields, populating all these from here is the correct approach.*/
+					if(dalWorkflowStatus.getCreatedBy() == null){
+						dalWorkflowStatus.setCreatedBy(modifiedBy);	
+					}
+					if(dalWorkflowStatus.getApprover() == null){
+						dalWorkflowStatus.setApprover(modifiedBy);	
+					}
+					dalWorkflowStatus.setModifiedBy(modifiedBy);
+				}
+			}
+		}
 		super.setModifiedBy(modifiedBy);
 	}
 	
@@ -179,6 +198,15 @@ public class DalPricingHeader extends DalAuditableModel{
 	}
 	public void setCustomerGroup(Integer customerGroup) {
 		this.customerGroup = customerGroup;
+	}
+	
+	@OneToMany(mappedBy = "dalPricingHeaderWf", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	public List<DalWorkflowStatus> getDalWorkflowStatusForPricingList() {
+		return dalWorkflowStatusForPricingList;
+	}
+	
+	public void setDalWorkflowStatusForPricingList(List<DalWorkflowStatus> dalWorkflowStatusForPricingList) {
+		this.dalWorkflowStatusForPricingList = dalWorkflowStatusForPricingList;
 	}
 }
 

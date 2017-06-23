@@ -11,11 +11,11 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 
 @Entity
 @Table(name = "PROGRAM_DETAIL")
@@ -629,7 +629,7 @@ public class DalProgramDetail extends DalAuditableModel {
 		}
 		super.setModifiedBy(modifiedBy);
 	}
-	
+
 	@OneToMany(mappedBy = "dalProgramDetailWf", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public List<DalWorkflowStatus> getDalWorkflowStatusList() {
 		return dalWorkflowStatusList;

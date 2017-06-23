@@ -100,6 +100,20 @@
        });
    }
 	
+	  function openSidebar() {
+          $('#main-content').css({
+              'margin-left': '210px'
+          });
+          $('#sidebar > ul').show();
+          $('#sidebar').css({
+              'margin-left': '0'
+          });
+          $("#container").removeClass("sidebar-closed");
+          $('#sidebar-toggle-box').css({
+              'display': 'block'
+          });
+      }	
+	
    $(document).ready(function () { 
 	   $('#customeroverview th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');	
 	   /* getParams = new URLSearchParams(window.location.search);
@@ -393,10 +407,10 @@
 
   <body>
 
-  <section id="container" class="">
+  <section id="container" class="sidebar-closed">
        <!--header start-->
       <header class="header dark-bg">
-          <div class="sidebar-toggle-box" id="sidebar-toggle-box">
+          <div class="sidebar-toggle-box" id="sidebar-toggle-box" style="display:none">
               <i class="fa fa-bars"></i>
           </div>
           <!--logo start-->
@@ -465,7 +479,7 @@
       
 <!--sidebar start-->
       <aside>
-          <div id="sidebar"  class="nav-collapse ">
+          <div id="sidebar"  class="nav-collapse " >
               <!-- sidebar menu start-->
               <ul class="sidebar-menu" id="nav-accordion">
                   <li>
@@ -1295,9 +1309,9 @@
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
 		   //console.log(JSON.stringify(modelAttributeValue));
-		   if(2==emp[0].ROLE_ID)
+		   if(2!=emp[0].ROLE_ID)
 		   	{
-		   		closeSidebar();
+			   openSidebar();
 			}
 		});
 	</script>

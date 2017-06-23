@@ -51,10 +51,10 @@
       </script>
    </head>
    <body onload="prdValue();include();exclude();achPrdValue();achInclude();achExclude();">
-      <section id="container" class="">
+      <section id="container" class="sidebar-closed">
          <!--header start-->
          <header class="header dark-bg">
-            <div class="sidebar-toggle-box" id="sidebar-toggle-box">
+            <div class="sidebar-toggle-box" id="sidebar-toggle-box" style="display:none">
                <i class="fa fa-bars"></i>
             </div>
             <!--logo start-->
@@ -124,7 +124,7 @@
          <!--header end-->
          <!--sidebar start-->
          <aside>
-            <div id="sidebar"  class="nav-collapse ">
+            <div id="sidebar"  class="nav-collapse " >
                <!-- sidebar menu start-->
                <ul class="sidebar-menu" id="nav-accordion">
                   <li>
@@ -1261,6 +1261,19 @@
   		           'display': 'none'
   		       });
   		}
+        function openSidebar() {
+             $('#main-content').css({
+                 'margin-left': '210px'
+             });
+             $('#sidebar > ul').show();
+             $('#sidebar').css({
+                 'margin-left': '0'
+             });
+             $("#container").removeClass("sidebar-closed");
+             $('#sidebar-toggle-box').css({
+                 'display': 'block'
+             });
+         }
       </script>
       <!--this page  script only-->
       <script src="resources/js/advanced-form-components.js"></script>
@@ -1322,9 +1335,9 @@
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
-		   if(2==emp[0].ROLE_ID)
+		   if(2!=emp[0].ROLE_ID)
 		   	{
-		   		closeSidebar();
+		   		openSidebar();
 			}
 		   /* var tbpuser=['frank.cox@yokohamatire.com','francis.villegas@yokohamatire.com','cristina.stone@yokohamatire.com','Michelle.Coquillard@yokohamatire.com'];
 		   if(tbpuser.indexOf(emp[0].EMAIL)==-1){

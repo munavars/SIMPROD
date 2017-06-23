@@ -48,10 +48,10 @@
       </script>
    </head>
    <body onload="prdValue();include();exclude();">
-      <section id="container" class="">
+      <section id="container" class="sidebar-closed">
          <!--header start-->
          <header class="header dark-bg">
-            <div class="sidebar-toggle-box" id="sidebar-toggle-box">
+            <div class="sidebar-toggle-box" id="sidebar-toggle-box" style="display:none">
                <i class="fa fa-bars"></i>
             </div>
             <!--logo start-->
@@ -914,6 +914,20 @@
  		           'display': 'none'
  		       });
  		}
+         
+         function openSidebar() {
+             $('#main-content').css({
+                 'margin-left': '210px'
+             });
+             $('#sidebar > ul').show();
+             $('#sidebar').css({
+                 'margin-left': '0'
+             });
+             $("#container").removeClass("sidebar-closed");
+             $('#sidebar-toggle-box').css({
+                 'display': 'block'
+             });
+         }
       </script>
       <!--this page  script only-->
       <script src="resources/js/advanced-form-components.js"></script>
@@ -974,9 +988,9 @@
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
-		   if(2==emp[0].ROLE_ID)
+		   if(2!=emp[0].ROLE_ID)
 		   	{
-		   		closeSidebar();
+		   		openSidebar();
 			}
 		   
 		   $.ajax({ 

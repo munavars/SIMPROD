@@ -61,6 +61,10 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			DalProgramDetail dalProgramDetail = baseDao.getById(DalProgramDetail.class, programHeader.getProgramDetailList().get(0).getId());
 			
 			if(dalProgramDetail != null && !programHeader.isNewProgram()){
+				/** If control is here, then user is editing the existing program details.*/
+				updateProgramDetails(programHeader, dalProgramDetail);
+			}
+			else{
 				
 				int prgrmId=checkForTheDuplicateRecord(programHeader);
 				
@@ -72,15 +76,10 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			    }
 				else
 				{	
-					/** If control is here, then user is editing the existing program details.*/
-					updateProgramDetails(programHeader, dalProgramDetail);
+					/** Only Program detail id will be generated.*/
+					programCreateService.createProgramDetails(programHeader);
 					programHeader.setDuplicate(false); 
 				}
-				
-			}
-			else{
-				/** Only Program detail id will be generated.*/
-				programCreateService.createProgramDetails(programHeader);
 			}
 		
 		}

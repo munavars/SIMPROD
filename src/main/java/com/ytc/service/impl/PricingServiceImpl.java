@@ -6,14 +6,17 @@ package com.ytc.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import com.ytc.common.enums.BusinessUnitDescriptionEnum;
+import com.ytc.common.enums.ConsumerProgramStatusEnum;
 import com.ytc.common.enums.TagItemValueMapEnum;
 import com.ytc.common.model.DropDown;
 import com.ytc.common.model.Employee;
@@ -24,14 +27,12 @@ import com.ytc.common.model.PricingHeader;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
-import com.ytc.dal.model.DalEmployee;
-import com.ytc.dal.model.DalEmployeeHierarchy;
+import com.ytc.dal.model.DalCustomer;
 import com.ytc.dal.model.DalEmployeeTitle;
 import com.ytc.dal.model.DalPricingDetail;
 import com.ytc.dal.model.DalPricingHeader;
-import com.ytc.dal.model.DalWorkflowMatrix;
+import com.ytc.helper.PricingWorkflowServiceHelper;
 import com.ytc.helper.ProgramServiceHelper;
-import com.ytc.helper.ProgramServiceWorkflowHelper;
 import com.ytc.service.IPricingService;
 import com.ytc.service.ServiceContext;
 
@@ -77,17 +78,24 @@ public class PricingServiceImpl implements IPricingService {
 	}
 
 	@Override
-	public PricingHeader getPricingDetails() {
+	public PricingHeader getPricingDetails(Integer customerId) {
 		PricingHeader pricingHeader = new PricingHeader();
-		populateDropDownValues(pricingHeader);
 		
-		getHeaderDetails(pricingHeader);
+		if(customerId != null){
+			
+			DalCustomer dalCustomer = baseDao.getById(DalCustomer.class, customerId);
+			populateDropDownValues(pricingHeader, dalCustomer);
+			
+			getHeaderDetails(pricingHeader, dalCustomer);
+			/**Button Behavior*/
+			PricingWorkflowServiceHelper.setNewProgramButtonProperties(pricingHeader);	
+		}
 		
 		return pricingHeader;
 	}
 
 	
-	private void getHeaderDetails(PricingHeader pricingHeader) {
+	private void getHeaderDetails(PricingHeader pricingHeader, DalCustomer dalCustomer) {
 		/**Populating header information Begin*/
 		/**
 		 * 1. Get Business unit
@@ -96,7 +104,7 @@ public class PricingServiceImpl implements IPricingService {
 		 * */
 		Employee employee = serviceContext.getEmployee();
 		if(employee != null){
-			String businessUnit = employee.getBUSINESS_UNIT();
+			String businessUnit = dalCustomer.getBu();
 			if(businessUnit != null){
 				BusinessUnitDescriptionEnum businessUnitDescriptionEnum = BusinessUnitDescriptionEnum.getBUDescription(businessUnit);	
 				pricingHeader.setBusinessUnitDescription(businessUnitDescriptionEnum.getBusinessUnitDescription());
@@ -105,8 +113,11 @@ public class PricingServiceImpl implements IPricingService {
 			pricingHeader.setRequestedByName(employee.getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + employee.getLAST_NAME());
 			pricingHeader.setRequestedByTitle(baseDao.getById(DalEmployeeTitle.class, Integer.valueOf(employee.getTITLE_ID())).getTitle());
 			pricingHeader.setRequestedByDate(ProgramServiceHelper.convertDateToString(Calendar.getInstance().getTime(), ProgramConstant.DATE_FORMAT));
+			pricingHeader.setCustomerId(dalCustomer.getCustomerNumber());
+			pricingHeader.setCustomerGroup(dalCustomer.getCustomerName());
+			pricingHeader.setStatus(ConsumerProgramStatusEnum.INPROGRESS.getProgramStatus());
 			/**Work flow matrix.*/
-			Map<String, Object> inputParameter = new HashMap<String, Object>();
+			/*Map<String, Object> inputParameter = new HashMap<String, Object>();
 			inputParameter.put("programType", ProgramConstant.PRICING_FORM_TYPE);
 			inputParameter.put("businessUnit", businessUnit);
 			List<DalWorkflowMatrix> dalWorkflowMatrixList = baseDao.getListFromNamedQueryWithParameter("DalWorkflowMatrix.getMatrixForBU", inputParameter);
@@ -128,22 +139,25 @@ public class PricingServiceImpl implements IPricingService {
 						pricingHeader.setApprovedByTitle(dalEmployee.getTITLE().getTitle());
 					}
 				}
-			}
+			}*/
 		}
 		/**Populating header information End*/
 	}
 
-	private void populateDropDownValues(PricingHeader pricingHeader) {
+	private void populateDropDownValues(PricingHeader pricingHeader, DalCustomer dalCustomer) {
 		PricingDetailsDropDown pricingDetailsDropDown = new PricingDetailsDropDown();
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("groupFlag", "YES");
+		parameters.put("customerId", dalCustomer.getId());
+		Integer customerNumber = Integer.valueOf(dalCustomer.getCustomerNumber());
 		pricingDetailsDropDown.setGroupList(getGroupDropDownList("DalCustomer.getGroup", parameters));
 		pricingDetailsDropDown.setCustBillToList(getTagValueDropDown(TagItemValueMapEnum.BILL_TO_NUMBER.getTagId(), 
-																					serviceContext.getEmployee().getEMP_ID()));
+																	 customerNumber));
 		parameters.clear();
+		parameters.put("customerId", dalCustomer.getId());
 		pricingDetailsDropDown.setCustByNameList(getGroupDropDownList("DalCustomer.getCustomerName", parameters));
 		pricingDetailsDropDown.setCustShipToList(getTagValueDropDown(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId(), 
-																					serviceContext.getEmployee().getEMP_ID()));
+																	 customerNumber));
 		pricingDetailsDropDown.setTermsCodeList(getDropDownList("DalPricingTermCodes.getTermCodes"));
 		pricingDetailsDropDown.setOtherShipReqsList(getDropDownList("DalPricingOtherShipRequirements.getOtherReqs"));
 		pricingDetailsDropDown= getSelectedValueList(pricingDetailsDropDown);
@@ -151,7 +165,7 @@ public class PricingServiceImpl implements IPricingService {
 		
 	}
 	
-	private List<DropDown> getTagValueDropDown(Integer tagId, Integer employeeId) {
+	private List<DropDown> getTagValueDropDown(Integer tagId, Integer customerNumber) {
 		TagItemValueMapEnum tagItemValueMapEnum = null;
 		List<DropDown> dropdownList = null;
 		List<String> tagValueList = null;
@@ -162,7 +176,7 @@ public class PricingServiceImpl implements IPricingService {
 				query = String.format(QueryConstant.TAG_VALUE_LIST_BY_TAG_ID, tagItemValueMapEnum.getFetchColumnName(), tagItemValueMapEnum.getTableName()); 
 				if(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId().equals(tagItemValueMapEnum.getTagId()) || 
 						TagItemValueMapEnum.BILL_TO_NUMBER.getTagId().equals(tagItemValueMapEnum.getTagId()) ){
-					query += String.format(QueryConstant.TAG_VALUE_CUSTOMER_WHERE_CLAUSE, employeeId);
+					query += String.format(QueryConstant.TAG_VALUE_CUSTOMER_PRICING_WHERE_CLAUSE, customerNumber);
 				}
 				
 				query += QueryConstant.TAG_VALUE_LIST_ORDER_BY_CLAUSE;
@@ -317,15 +331,23 @@ public class PricingServiceImpl implements IPricingService {
 	@Override
 	public PricingHeader getPricingDetail(Integer pricingHeaderId) {
 		PricingHeader pricingHeader = new PricingHeader();
-		
-		populateDropDownValues(pricingHeader);
-		
-		/**Get the pricing information*/
-		DalPricingHeader dalPricingHeader = baseDao.getById(DalPricingHeader.class, pricingHeaderId);
+		DalPricingHeader dalPricingHeader = null;
+		if(pricingHeaderId != null){
+			/**Get the pricing information*/
+			dalPricingHeader = baseDao.getById(DalPricingHeader.class, pricingHeaderId);
+			
+			populateDropDownValues(pricingHeader, dalPricingHeader.getCustomer());
+		}
+
 		if(dalPricingHeader != null){
 			pricingHeader.setId(dalPricingHeader.getId());
 			getPricingDetailsData(pricingHeader, dalPricingHeader, serviceContext.getEmployee());	
 		}
+		/**Button Behavior*/
+		PricingWorkflowServiceHelper.setProgramButtonProperties(serviceContext.getEmployee(), pricingHeader, dalPricingHeader);
+		
+		/**Work flow history*/
+		PricingWorkflowServiceHelper.populateWorkflowStatusData(pricingHeader, dalPricingHeader);
 		
 		return pricingHeader;
 	}
@@ -341,6 +363,9 @@ public class PricingServiceImpl implements IPricingService {
 			
 			/**Populate PRICING_DETAIL table information*/
 			populatePricingDetailData(pricingHeader, dalPricingHeader);
+			
+			/**Populate workflow details.*/
+			PricingWorkflowServiceHelper.populateWorkflowStatusData(pricingHeader, dalPricingHeader);
 		}
 		
 	}
@@ -353,9 +378,15 @@ public class PricingServiceImpl implements IPricingService {
 			else{
 				pricingHeader.setPricingDetailList(new ArrayList<PricingDetail>());
 			}
+			Set<Integer> uniqueIds = null;
 			if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
+				uniqueIds = new HashSet<Integer>();
 				for(DalPricingDetail dalPricingDetail : dalPricingHeader.getDalPricingDetailList() ){
 					PricingDetail pricingDetail = new PricingDetail();
+					boolean isDuplicate = uniqueIds.add(dalPricingDetail.getId());
+					if(!isDuplicate){
+						continue;
+					}
 					pricingDetail.setAddChangeDel(dalPricingDetail.getAddChgDel());
 					pricingDetail.setBeginDate(dalPricingDetail.getStartDate().getTime());
 					pricingDetail.setEndDate(dalPricingDetail.getEndDate().getTime());

@@ -21,6 +21,10 @@ public class DalWorkflowStatus extends DalAuditableModel{
 	
 	private DalProgramDetail dalProgramDetailWf;
 	
+	private DalPricingHeader dalPricingHeaderWf;
+	
+	private DalProgramType dalProgramType;
+	
 	private Calendar wfStatusDate;
 	
 	private DalStatus approvalStatus;
@@ -32,15 +36,25 @@ public class DalWorkflowStatus extends DalAuditableModel{
 	private DalEmployee approver;
 	
 	private Integer wfMatrixId;
-
+	
 	@ManyToOne
-	@JoinColumn(name= "PGM_DETAIL_ID", referencedColumnName = "ID")
+	@JoinColumn(name = "PGM_DETAIL_ID", referencedColumnName = "ID")
 	public DalProgramDetail getDalProgramDetailWf() {
 		return dalProgramDetailWf;
 	}
 
 	public void setDalProgramDetailWf(DalProgramDetail dalProgramDetailWf) {
 		this.dalProgramDetailWf = dalProgramDetailWf;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "PRICING_HDR_ID", referencedColumnName = "ID")
+	public DalPricingHeader getDalPricingHeaderWf() {
+		return dalPricingHeaderWf;
+	}
+
+	public void setDalPricingHeaderWf(DalPricingHeader dalPricingHeaderWf) {
+		this.dalPricingHeaderWf = dalPricingHeaderWf;
 	}
 
 	@Column(name = "WF_STATUS_DATE")
@@ -97,5 +111,15 @@ public class DalWorkflowStatus extends DalAuditableModel{
 
 	public void setWfMatrixId(Integer wfMatrixId) {
 		this.wfMatrixId = wfMatrixId;
+	}
+
+	@OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "PGM_TYPE_ID", referencedColumnName = "ID")
+	public DalProgramType getDalProgramType() {
+		return dalProgramType;
+	}
+
+	public void setDalProgramType(DalProgramType dalProgramType) {
+		this.dalProgramType = dalProgramType;
 	}	
 }

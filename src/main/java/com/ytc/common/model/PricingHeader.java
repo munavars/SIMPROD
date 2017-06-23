@@ -44,6 +44,12 @@ public class PricingHeader extends Model{
 	private boolean isSuccess;
 	private String validationMessage;
 	private String status;
+	
+	private ProgramButton programButton = new ProgramButton();
+	private boolean isNewProgram;
+	private List<ProgramWorkflowStatus> programWorkflowStatusList;
+	private String approverComments;
+	private String url;
 	/**
 	 * @return the customerType
 	 */
@@ -265,5 +271,35 @@ public class PricingHeader extends Model{
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public ProgramButton getProgramButton() {
+		return programButton;
+	}
+	public void setProgramButton(ProgramButton programButton) {
+		this.programButton = programButton;
+	}
+	public boolean isNewProgram() {
+		return isNewProgram;
+	}
+	public void setNewProgram(boolean isNewProgram) {
+		this.isNewProgram = isNewProgram;
+	}
+	public List<ProgramWorkflowStatus> getProgramWorkflowStatusList() {
+		return programWorkflowStatusList;
+	}
+	public void setProgramWorkflowStatusList(List<ProgramWorkflowStatus> programWorkflowStatusList) {
+		this.programWorkflowStatusList = programWorkflowStatusList;
+	}
+	public String getApproverComments() {
+		return approverComments;
+	}
+	public void setApproverComments(String approverComments) {
+		this.approverComments = approverComments;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
 	}
 }

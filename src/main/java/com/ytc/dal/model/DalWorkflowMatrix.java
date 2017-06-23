@@ -2,8 +2,10 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -30,6 +32,8 @@ public class DalWorkflowMatrix extends DalModel {
     private String dollerLimit;
     
     private String comments;
+    
+    private DalWorkflowExceptionMatrix dalWorkflowExceptionMatrix;
 
     @Column(name="SUBJECT_AREA")
 	public String getSubjectArea() {
@@ -83,5 +87,14 @@ public class DalWorkflowMatrix extends DalModel {
 
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+
+	@OneToOne(mappedBy = "dalWorkflowMatrix", fetch =FetchType.EAGER)
+	public DalWorkflowExceptionMatrix getDalWorkflowExceptionMatrix() {
+		return dalWorkflowExceptionMatrix;
+	}
+
+	public void setDalWorkflowExceptionMatrix(DalWorkflowExceptionMatrix dalWorkflowExceptionMatrix) {
+		this.dalWorkflowExceptionMatrix = dalWorkflowExceptionMatrix;
 	}
 }

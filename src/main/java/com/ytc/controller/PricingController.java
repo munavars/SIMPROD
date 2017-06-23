@@ -91,10 +91,10 @@ public class PricingController extends BaseController {
 		
 	}
 	
-	@RequestMapping(value = "/pricing/v1/getPricingDetails",method = RequestMethod.GET)
-	public @ResponseBody ModelResult<PricingHeader> getPricingDetails(HttpServletRequest request) {
+	@RequestMapping(value = "/pricing/v1/getPricingDetails/{customerId}",method = RequestMethod.GET)
+	public @ResponseBody ModelResult<PricingHeader> getPricingDetails(HttpServletRequest request, @PathVariable("customerId") Integer customerId) {
 		ModelResult<PricingHeader> returnData = null;
-		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails());
+		returnData = new ModelResult<PricingHeader>(getService(request).getPricingDetails(customerId));
 		return returnData;
 		
 	}

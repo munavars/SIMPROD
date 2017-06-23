@@ -524,8 +524,8 @@
           <!-- BUTTON START -->
            <div id="footer-button" class="modal-footer" hidden="true">
             
-		      <a id="cancelLink" href="/SIM/customer?custId=">
-		      <button id="cancel-program" data-dismiss="modal" class="btn btn-default" type="button">Cancel</button></a>	&nbsp;
+		      
+		      <button id="cancel-program" data-dismiss="modal" class="btn btn-default" type="button" onclick="cancellink('#myModal11')">Cancel</button>	&nbsp;
               <a class="btn btn-success" id="submit-program" href="javascript: validateBeforeSubmit('#myModal')" ><i class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For Approval</a>&nbsp;	  
               <a class="btn btn-info finish" id="save-program"  href="javascript: validateBeforeSubmit('#myModal1')"><i class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a>
               <a class="btn btn-info" id="reject-program" data-toggle="modal" href="#myModal7"><i class="fa fa-times-circle"></i>&nbsp;&nbsp;Reject </a> &nbsp;
@@ -716,6 +716,37 @@
 						</div>
 					</div>
 				</div>
+				<div class="modal fade" id="myModal11" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-save-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Cancel Program Changes?</h4>
+																	</div>
+																	<div class="modal-body">
+																		<div class="space15">&nbsp;</div>
+																		<div class="text-center">Are you sure you want
+																			to cancel Changes? If you still want to cancel your
+																			changes, click the OK button. If you don't want to
+																			cancel your changes, click the "Cancel" button below
+																			and your program will not cancel these changes.</div>
+																		<div class="space15"></div>
+																	</div>
+																	<div class="modal-footer">
+																		<button data-dismiss="modal" class="btn btn-default"
+																			id="program-save-modal-cancel" type="button">Cancel</button>
+																		<a href="javascript: forwardToCustomerPage()"><button
+																				class="btn btn-info" id="program-save-modal-ok"
+																				type="button">
+																				<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																			</button></a>
+																	</div>
+																</div>
+															</div>
+														</div>
 																<div class="modal fade" id="myModal9" tabindex="-1"
 																	role="dialog" aria-labelledby="myModalLabel"
 																	aria-hidden="true">
@@ -1069,8 +1100,8 @@
 				includePaid = response.data.programDetailList[0].programPaidOn.includedMap;
 				excludePaid = response.data.programDetailList[0].programPaidOn.excludedMap;
             		
-				var a = document.getElementById('cancelLink'); //for now. this has to be revisited.
-				a.href = "/SIM/customer?custId=" + response.data.customerId;
+				/* var a = document.getElementById('cancelLink'); //for now. this has to be revisited.
+				a.href = "/SIM/customer?custId=" + response.data.customerId; */
             		
             	/*Program Header Section*/
 				$("#customerId").html(response.data.customerId);
@@ -1559,6 +1590,13 @@
             		}
 				   
 				}); 
+			function cancellink(modalId){
+					$('#myModal11').modal('toggle');
+			}
+			function forwardToCustomerPage()
+			{
+			  window.location.href="/SIM/customer?custId=" + responseOnload.customerId; 
+			}	
 
 	</script>
 	

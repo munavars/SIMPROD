@@ -1150,7 +1150,7 @@
                     	 }
                     });							
 			    return isSame;
-			}, 'Accrued Tier should match maker value available');
+			}, 'Accrued Tier should match tier value available');
 			$.validator.addMethod("amountValidation", function (value, element) {
 				var isNumber = false;
 				if (!isNaN(value))
@@ -1776,7 +1776,7 @@
 
          	function prepareDataForSubmit(){
          		responseOnload.url = window.location.href;
-				responseOnload.programDetailList[0].amount = ($("#amount").val().replace(/,/g, ""));
+				responseOnload.programDetailList[0].amount = $("#amount").val().replace(/,/g, "");
 				responseOnload.programDetailList[0].amountType = $('input:radio[name=optionsRadiosDenomination]:checked').val();
  				responseOnload.programDetailList[0].beginDate = $.datepicker.parseDate( "mm/dd/yy", $('#from').val());
 				responseOnload.programDetailList[0].endDate = $.datepicker.parseDate( "mm/dd/yy", $('#to').val());  

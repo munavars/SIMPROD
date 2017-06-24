@@ -1051,6 +1051,7 @@
 		
 		
 		var responseOnload;
+		var _isDirty = false; 
 		//getParams = new URLSearchParams(window.location.search);
 		var queryDict = {};
 	        window.location.search.substr(1).split("&").forEach(
@@ -1086,6 +1087,7 @@
              	success: function(response){
              		responseOnload = response.data;
 					fnPopulateProgramDetails(response);
+					_isDirty = false;
              	},
              	failure: function(response){
              		alert("Wrongly done");
@@ -1457,6 +1459,7 @@
 				$('#myModal6').find('button, a, textarea').attr('disabled',false);
 				$('#myModal7').find('button, a, textarea').attr('disabled',false);
 				$('#myModal9').find('button, a, textarea').attr('disabled',false);
+				$('#myModal11').find('button, a, textarea').attr('disabled',false);
 				$('#header-button').removeAttr('hidden');
 				$('#footer-button').removeAttr('hidden');
 				$('#view-program-workflow').attr('disabled', false);
@@ -1545,6 +1548,7 @@
 							$("#confirmMessage").html(message);
 							$('#myModal4').modal('toggle');
 							/**Appending program id in the modal message.- End*/
+							_isDirty = false;
 			            } else {
 							alert("Issue while saving the data. Please try again after sometime.!!");
 			            }
@@ -1591,7 +1595,12 @@
 				   
 				}); 
 			function cancellink(modalId){
+				if(_isDirty){
 					$('#myModal11').modal('toggle');
+				}
+				else{
+					forwardToCustomerPage();
+				}
 			}
 			function forwardToCustomerPage()
 			{
@@ -1630,6 +1639,10 @@
 				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
 			    a.click(); 
 			});
+		});
+		
+		$(':input').change(function(){
+			_isDirty = true;
 		});
 	</script>
 

@@ -1185,8 +1185,9 @@
 			}, 'Accrued Tier should match tier value available');
 			$.validator.addMethod("amountValidation", function (value, element) {
 				var isNumber = false;
-				if (!isNaN(value))
-    		    isNumber=true;							
+				if (!isNaN(value)){
+					isNumber=true;
+				}
 			    return isNumber;
 			}, 'Please enter valid amount');
       
@@ -1212,7 +1213,7 @@
 					},
 					amount: {
 						required: true,
-						amountValidation: false
+						number: true
 					},
 					optionsRadiosDenomination: {
 						required: true
@@ -1403,6 +1404,7 @@
                  $('#to').datepicker();
             });
        		var responseOnload;
+       		var _isDirty = false; 
 			//getParams = new URLSearchParams(window.location.search);
 			//var programId =getParams.get('pgmId'); 
 			//added fix for IE issue with URLSearchParams
@@ -1440,6 +1442,8 @@
 	             		responseOnload = response.data;
 	             		
 						fnPopulateProgramDetails(response);
+						
+						_isDirty = false;
 	             	},
 	             	failure: function(response){
 	             		alert("Wrongly done");
@@ -1900,6 +1904,7 @@
 				$('#myModal8').find('button, a, textarea').attr('disabled',false);
 				$('#myModal9').find('button, a, textarea').attr('disabled',false);
 				$('#myModal10').find('button, a, textarea').attr('disabled',false);
+				$('#myModal11').find('button, a, textarea').attr('disabled',false);
 				$('#header-button').removeAttr('hidden');
 				$('#footer-button').removeAttr('hidden');
 				$('#view-program-workflow').attr('disabled', false);
@@ -1916,7 +1921,7 @@
 				responseOnload.status = "2";
 				responseOnload.url = window.location.href;
 				responseOnload.userComments = $("#approveComments").val();
-				fnCallService(message, idBefore);
+				fnCallService(message, idBefore, 'approve');
 				$('#myModal7').modal('toggle');
 				disableFields();
 			}
@@ -1927,7 +1932,7 @@
 				responseOnload.status = "1";
 				responseOnload.url = window.location.href;
 				responseOnload.userComments = $("#rejectionComments").val();
-				fnCallService(message, idBefore);
+				fnCallService(message, idBefore, 'reject');
 				$('#myModal8').modal('toggle');
 				disableFields();
 			}
@@ -1936,7 +1941,7 @@
          		var idBefore = responseOnload.programDetailList[0].id;
          		responseOnload.status = "3";
          		prepareDataForSubmit();
-         		fnCallService(message, idBefore);
+         		fnCallService(message, idBefore, 'save');
          		$('#myModal1').modal('toggle');
          		if(!$("#pdf-button").is(":visible")){
          			$("#pdf-button").show();
@@ -1948,9 +1953,9 @@
          		var idBefore = responseOnload.programDetailList[0].id;
 	 			responseOnload.status = "2";
 				prepareDataForSubmit();
-				fnCallService(message, idBefore);
+				fnCallService(message, idBefore, 'submit');
 				$('#myModal').modal('toggle');
-				disableFields();
+				
 				if(!$("#pdf-button").is(":visible")){
          			$("#pdf-button").show();
          		}
@@ -1968,13 +1973,19 @@
 				}
 			}
 			function cancellink(modalId){
+				if(_isDirty){
 					$('#myModal11').modal('toggle');
+				}
+				else{
+					forwardToCustomerPage();
+				}
+					
 			}
 			function forwardToCustomerPage()
 			{
 			  window.location.href="/SIM/customer?custId=" + responseOnload.customerId; 
 			}
-			function fnCallService(message, idBefore){
+			function fnCallService(message, idBefore, action){
 				/*Service call to save the data.*/				
 			    $.ajax({
 					type: "POST",
@@ -1996,12 +2007,16 @@
 							}
 							$("#confirmMessage").html(message);
 							$('#myModal4').modal('toggle');
+							if(action === 'submit'){
+								disableFields();
+							}
 							/**Appending program id in the modal message.- End*/
+							_isDirty = false;
 			            } 
 			            else if(response.data.duplicate == true)
 			            {
 			              var idAfter = response.data.id;
-			              $("#confirmMessage").html("Program alreday exist and the previous programme id is <strong>"+ idAfter + "</strong>");
+			              $("#confirmMessage").html("Program already exist and the previous program id is <strong>"+ idAfter + "</strong>");
 						  $('#myModal4').modal('toggle');
 			            }
 			            else {
@@ -2229,6 +2244,10 @@
 						copyPaidDetails('N');
 					}
 				});
+			});
+			
+			$(':input').change(function(){
+				_isDirty = true;
 			});
 	</script>
 

@@ -81,7 +81,7 @@ public class ProgramServiceWorkflowHelper {
 		
 		if(employee.getEMP_ID() != null){
 			
-			if(dalProgramDetail.getDalWorkflowStatusList() != null){
+			if(dalProgramDetail.getDalWorkflowStatusList() != null && !dalProgramDetail.getDalWorkflowStatusList().isEmpty()){
 				List<DalWorkflowStatus> dalWorkflowStatusList =  dalProgramDetail.getDalWorkflowStatusList(); 
 				Collections.sort(dalWorkflowStatusList, new WorkflowStatusComparatorByModifiedDate());
 				int size = dalWorkflowStatusList.size();

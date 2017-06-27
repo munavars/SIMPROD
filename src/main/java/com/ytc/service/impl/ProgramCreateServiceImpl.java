@@ -3,6 +3,7 @@ package com.ytc.service.impl;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -216,6 +217,11 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			for(Map.Entry<String, List<String>> includeMap : userAddedMap.entrySet()){
 				List<String> userIncluded = includeMap.getValue();
 				if(userIncluded != null && !userIncluded.isEmpty()){
+					/*code to remove duplicates start*/
+					Set<String> userIncludedWithoutDuplicates = new LinkedHashSet<String>(userIncluded);
+					userIncluded.clear();
+					userIncluded.addAll(userIncludedWithoutDuplicates);
+					/*code to remove duplicates end*/
 					for(String value : userIncluded){
 						DalProgramDetAchieved dalProgramDetAchieved = new DalProgramDetAchieved();
 						dalProgramDetAchieved.setAchMethod(method);
@@ -267,6 +273,11 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			for(Map.Entry<String, List<String>> includeMap : userAddedMap.entrySet()){
 				List<String> userIncluded = includeMap.getValue();
 				if(userIncluded != null && !userIncluded.isEmpty()){
+					/*code to remove duplicates start*/
+					Set<String> userIncludedWithoutDuplicates = new LinkedHashSet<String>(userIncluded);
+					userIncluded.clear();
+					userIncluded.addAll(userIncludedWithoutDuplicates);
+					/*code to remove duplicates end*/
 					for(String value : userIncluded){
 						DalProgramDetPaid dalProgramDetPaid = new DalProgramDetPaid();
 						dalProgramDetPaid.setMethod(method);

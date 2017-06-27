@@ -18,7 +18,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PRICING_HEADER")
 public class DalPricingHeader extends DalAuditableModel{
-
 	
 	/**
 	 * Default serial version. 

@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
@@ -31,6 +32,7 @@ import com.ytc.dal.model.DalPricingTermCodes;
 import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalStatus;
 import com.ytc.helper.PricingWorkflowServiceHelper;
+import com.ytc.service.IPricingEmailService;
 import com.ytc.service.IPricingUpdateService;
 import com.ytc.service.IPricingWorkflowService;
 import com.ytc.service.ServiceContext;
@@ -50,9 +52,13 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 	@Autowired
 	private ServiceContext serviceContext;
 	
+	@Autowired
+	private IPricingEmailService pricingEmailService;
+	
 	private static Logger LOGGER = Logger.getLogger(PricingUpdateServiceImpl.class.getName());
 
 	@Override
+	@Transactional(propagation = Propagation.REQUIRED)
 	public PricingHeader savePricingHeaderDetails(PricingHeader pricingHeader) {
 
 		/*
@@ -75,6 +81,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 				
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOGGER.info("Error in saving Pricing Header Details" + e);
 		}
 
@@ -96,7 +103,6 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		}
 	}
 
-	@Transactional
 	private void updatePricingDetails(PricingHeader pricingHeader) {
 		DalPricingHeader dalPricingHeader = null;
 		if(pricingHeader != null && pricingHeader.getId() != null){
@@ -126,23 +132,25 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 
 					/** Delete the detail information and re save it. This logic has to be revisited.*/
 					
-					if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
+					/*if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
 						for(DalPricingDetail dalPricingDetail : dalPricingHeader.getDalPricingDetailList()){
 							baseDao.delete(DalPricingDetail.class, dalPricingDetail.getId());
 						}
 					}
-					/** Save pricing Detail section information */
+					*//** Save pricing Detail section information *//*
 					List<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
 																							dalPricingHeader);
 
 					if (!dalPricingDetailsList.isEmpty()) {
 						dalPricingHeader.setDalPricingDetailList(dalPricingDetailsList);
-					}
+					}*/
 				}				
 
 				pricingWorkflowService.updateWorkflowDetails(dalPricingHeader, pricingHeader, serviceContext.getEmployee());
 				
 				baseDao.update(dalPricingHeader);
+				
+				pricingEmailService.sendEmailData(pricingHeader, dalPricingHeader);
 				
 				/**Reset status value*/
 				pricingHeader.setStatus(dalPricingHeader.getDalStatus().getType());
@@ -221,7 +229,6 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		}
 	}
 
-	@Transactional
 	private void createPricingDetails(PricingHeader pricingHeader) {
 		DalPricingHeader dalPricingHeader = null;
 		if (pricingHeader != null) {
@@ -308,13 +315,18 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 
 				pricingWorkflowService.updateWorkflowDetails(dalPricingHeader, pricingHeader, serviceContext.getEmployee());
 				
-				baseDao.create(dalPricingHeader);			
+				DalPricingHeader dalPricingHeaderReturned = baseDao.create(dalPricingHeader);
+				
+				if(dalPricingHeaderReturned != null){
+					pricingHeader.setId(dalPricingHeaderReturned.getId());
+					pricingEmailService.sendEmailData(pricingHeader, dalPricingHeader);
+				}
 				
 				/**Reset status value*/
 				pricingHeader.setId(dalPricingHeader.getId());
 				pricingHeader.setStatus(dalPricingHeader.getDalStatus().getType());
 				
-				/**Reset Program workflow*/
+				/**Reset Program work flow*/
 				PricingWorkflowServiceHelper.populateWorkflowStatusData(pricingHeader, dalPricingHeader);
 				
 				pricingHeader.setSuccess(true);

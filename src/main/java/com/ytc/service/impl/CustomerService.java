@@ -129,7 +129,7 @@ public class CustomerService implements ICustomerService {
 				programDetail.setModifiedDate(null!=dalPricingHeader.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalPricingHeader.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT):"");
 				programDetail.setProgramStatus((dalPricingHeader.getDalStatus() != null) ? dalPricingHeader.getDalStatus().getId().toString() : "0" );
 				programDetail.setProgramType(dalPricingHeader.getDalProgramType().getType());
-				programDetail.setStatusHistory(ProgramConstant.STATUS_HISTORY_DATA_MESSAGE);
+				programDetail.setStatusHistory(getPricingStatusHistory(dalPricingHeader));
 				
 				dashboardDetailList.add(programDetail);
 			}
@@ -143,6 +143,35 @@ public class CustomerService implements ICustomerService {
 		if(dalProgramDetail != null & dalProgramDetail.getDalWorkflowStatusList() != null){
 			Set<Integer> workflowIdSet = new HashSet<Integer>();
 			for(DalWorkflowStatus dalWorkflowStatus : dalProgramDetail.getDalWorkflowStatusList()){
+				boolean isUnique = workflowIdSet.add(dalWorkflowStatus.getId());
+				if(!isUnique){
+					continue;
+				}
+				if(statusBuilder == null){
+					statusBuilder = new StringBuilder();
+				}
+				else{
+					//Add break;
+					statusBuilder.append(ProgramConstant.BREAK_NEW_LINE_CODE);
+				}
+				statusBuilder.append(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
+				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
+				statusBuilder.append(dalWorkflowStatus.getApprover().getTITLE().getTitle());
+				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
+				statusBuilder.append(dalWorkflowStatus.getApprovalStatus().getType());
+			}
+			
+			statusHistory = (statusBuilder != null) ? statusBuilder.toString() : ProgramConstant.STATUS_HISTORY_DATA_MESSAGE;
+		}
+		return statusHistory;
+	}
+	
+	private String getPricingStatusHistory(DalPricingHeader dalPricingHeader) {
+		String statusHistory = null;
+		StringBuilder statusBuilder = null;
+		if(dalPricingHeader != null & dalPricingHeader.getDalWorkflowStatusForPricingList() != null){
+			Set<Integer> workflowIdSet = new HashSet<Integer>();
+			for(DalWorkflowStatus dalWorkflowStatus : dalPricingHeader.getDalWorkflowStatusForPricingList()){
 				boolean isUnique = workflowIdSet.add(dalWorkflowStatus.getId());
 				if(!isUnique){
 					continue;

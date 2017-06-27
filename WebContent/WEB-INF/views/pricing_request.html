@@ -643,7 +643,7 @@ a { text-decoration: none }
                           </div>
                           </div>
                           
-                          <div class="adv-table editable-table">
+                          <div class="adv-table editable-table p-left16">
                           
 							<input type="file" name="xlfile" id="xlf" />
 							<br />
@@ -822,10 +822,9 @@ a { text-decoration: none }
           <div class="clearfix space15"></div>
           <div class="clearfix"> </div>
 									<div id="footer-button" class="modal-footer">
-										<a id="cancelLink" href="/SIM/pricingOverview">
-											<button id="cancel-program" data-dismiss="modal"
-												class="btn btn-default" type="button">Cancel</button>
-										</a> &nbsp; <a class="btn btn-success" id="submit-pricing"
+										<button id="cancel-program" data-dismiss="modal"
+												class="btn btn-default" type="button" onclick="cancelClick('#myModal11')">Cancel</button>
+										&nbsp; <a class="btn btn-success" id="submit-pricing"
 											href="javascript: validateBeforeSubmit('#myModal')"> <i
 											class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
 											Approval
@@ -1102,6 +1101,37 @@ a { text-decoration: none }
 												</div>
 											</div>
 										</div>
+										<div class="modal fade" id="myModal11" tabindex="-1"
+											role="dialog" aria-labelledby="myModalLabel"
+											aria-hidden="true">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button id="program-save-modal-close" type="button"
+															class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														<h4 class="modal-title">Cancel Program Changes?</h4>
+													</div>
+													<div class="modal-body">
+														<div class="space15">&nbsp;</div>
+														<div class="text-center">Are you sure you want
+															to cancel Changes? If you still want to cancel your
+															changes, click the OK button. If you don't want to
+															cancel your changes, click the "Cancel" button below
+															and your program will not cancel these changes.</div>
+														<div class="space15"></div>
+													</div>
+													<div class="modal-footer">
+														<button data-dismiss="modal" class="btn btn-default"
+															id="program-save-modal-cancel" type="button">Cancel</button>
+														<a href="javascript: returnToPreviousPage()"><button
+																class="btn btn-info" id="program-save-modal-ok"
+																type="button">
+																<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+															</button></a>
+													</div>
+												</div>
+											</div>
+										</div>
 									</div>
 								</form>
                         </div>
@@ -1163,6 +1193,7 @@ a { text-decoration: none }
 	<script type="text/javascript">
 	var responseOnload;
 	var custId;
+	var _isDirty = false;
 	$(window).ready(function(){
 			getParams = new URLSearchParams(window.location.search);
 			var pricingHeaderId = getParams.get('pricingId'); 
@@ -1185,12 +1216,12 @@ a { text-decoration: none }
 			else if(custId != null){
 				url = "/SIM/pricing/v1/getPricingDetails/" + custId;
 			}
-			if(custId != null){
+			/* if(custId != null){
 				$('#cancelLink').attr('href','/SIM/pricingOverview?custId='+custId);
 			}
 			else{
 				$('#cancelLink').attr('href','/SIM/indexRedirect');
-			}
+			} */
 			
 			var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT'];
         	$.ajax({ 
@@ -1224,10 +1255,15 @@ a { text-decoration: none }
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
 					$("#customerId").val(responseOnload.customerId);
 					$("#customerGroup").val(responseOnload.customerGroup);
+					
+					if(responseOnload.dropdownList.groupList == null){
+						$("input[type=radio][value='Group']").attr("disabled",true);
+					}
+										
 					if(pricingHeaderId != null){
 						populateCustomerGroupDropDown(responseOnload.customerType);
 						$("#custByName_inputselect").val(responseOnload.customerGroup);
-						$("#customerGroup").val($("#custByName_inputselect").val());
+						$("#customerGroup").val(responseOnload.customerGroupValue);
 						$("#customerId").val(responseOnload.customerId);
 						$('#termsCode_inputselect').val(responseOnload.termCode);
 						$('#user_comments').val(responseOnload.userComments);
@@ -1262,13 +1298,17 @@ a { text-decoration: none }
 						disableFields();
 						disableFieldBasedOnCurrentStatusAndUser(responseOnload);
 						enabledButtonApplicableToAll();
+						if(responseOnload.dropdownList.groupList == null){
+							$("input[type=radio][value='Group']").attr("disabled",true);
+						}
 					}
+					_isDirty = false;
             	},
             	failure: function(response){
             		alert("Wrongly done");
             	}
         	});
-        	
+
         	function disableFieldBasedOnCurrentStatusAndUser(responseOnload1){
          		if(responseOnload1.programButton.userLevel == "1" && responseOnload1.programButton.creater == true){
 					$('#edit-button').attr('disabled', false);
@@ -1329,11 +1369,15 @@ a { text-decoration: none }
         	
         	function fnPopulateInvoiceDiscountTable(responseOnLoadInput){
         		if(responseOnLoadInput.pricingDetailList != null){
+        			var editableCheck = true;
+        			if(responseOnLoadInput.status === 'PENDING' || responseOnLoadInput.status === 'APPROVED' || responseOnLoadInput.status === 'ACTIVE'){
+						editableCheck = false;
+        			} 
 	        		var metadata = [];
 	        		var data = [];
 					var title = "Sheet1";
 	        		for (var k = 0; k < invoiceDiscountHeader.length; ++k) {
-						metadata.push({ name: invoiceDiscountHeader[k], label: invoiceDiscountHeader[k], datatype: "string", editable: true});
+						metadata.push({ name: invoiceDiscountHeader[k], label: invoiceDiscountHeader[k], datatype: "string", editable: editableCheck});
 					}
 					
 					$.each(responseOnLoadInput.pricingDetailList, function(idx, item) {
@@ -1397,25 +1441,25 @@ a { text-decoration: none }
 				test = $(this).val();
 				if(test == 'Group'){
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.groupList);
-					$("#customerGroup").val($("#custByName_inputselect").val());
+					/* $("#customerGroup").val($("#custByName_inputselect").val()); */
 				}
 				else if(test == 'BillTo'){
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
-					$("#customerGroup").val($("#custByName_inputselect").val());
+					/* $("#customerGroup").val($("#custByName_inputselect").val()); */
 				}
 				else if(test == 'Name'){
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custByNameList);
-					$("#customerGroup").val($("#custByName_inputselect").val());
+					/* $("#customerGroup").val($("#custByName_inputselect").val()); */
 				}	else if(test == 'ShipTo'){
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custShipToList);
-					$("#customerGroup").val($("#custByName_inputselect").val());
+					/* $("#customerGroup").val($("#custByName_inputselect").val()); */
 				}
   			});
   			
-			$("select[name=custByName_inputselect]").on( "change", function() {
+			/* $("select[name=custByName_inputselect]").on( "change", function() {
 				var test = $(this).val();
 				$("#customerGroup").val(test);
-			});
+			}); */
 			
 			$("select[name=termsCode_inputselect]").on( "change", function() {
 				selectTerm = $(this).val();
@@ -1498,6 +1542,7 @@ a { text-decoration: none }
 				var message = "Data saved successfully !!!";
          		var idBefore = responseOnload.id;
          		responseOnload.status = "3";
+         		responseOnload.url = window.location.href;
          		prepareDataForSubmit();
          		fnCallService(message, idBefore);
          		$('#myModal1').modal('toggle');
@@ -1507,6 +1552,7 @@ a { text-decoration: none }
          		var message = "Data submitted for approval successfully !!!";
          		var idBefore = responseOnload.id;
          		responseOnload.status = "2";
+         		responseOnload.url = window.location.href;
          		prepareDataForSubmit();
          		fnCallService(message, idBefore);
          		$('#myModal').modal('toggle');
@@ -1561,6 +1607,8 @@ a { text-decoration: none }
 							/**Appending program id in the modal message.- End*/
          					$("#confirmMessage").html(message);
 							$('#myModal4').modal('toggle');
+							
+							_isDirty = false;
 			            } else {
 			              	$('#myModal1').modal('toggle');
          					$("#errorMessage").html("Issue while saving the data. Please correct the following data.!!"+'<br><br>'+response.data.validationMessage);
@@ -1568,6 +1616,7 @@ a { text-decoration: none }
 			            
 							//alert("Issue while saving the data. Please try again after sometime.!!");
 			            }
+			            
 					},
 					failure: function(response){
 					 	$('#myModal1').modal('toggle');
@@ -1622,6 +1671,7 @@ a { text-decoration: none }
 				$('#myModal7').find('button, a, textarea').attr('disabled',false);
 				$('#myModal8').find('button, a, textarea').attr('disabled',false);
 				$('#myModal9').find('button, a, textarea').attr('disabled',false);
+				$('#myModal11').find('button, a, textarea').attr('disabled',false);
 				$('#header-button').removeAttr('hidden');
 				$('#pricing-workflow-btn').attr('disabled', false); 
 				
@@ -1640,6 +1690,10 @@ a { text-decoration: none }
 				$('#view-program-workflow').removeClass("disabled");
 				$('#program-workflow-btn').attr('disabled', false); */
 			}
+			
+			$(':input').change(function(){
+				_isDirty = true;
+			});
 	</script>
 	<!--  Validation setup Begins -->
     <script type="text/javascript">
@@ -1701,6 +1755,37 @@ a { text-decoration: none }
 			} */
   </script>
   <!--  Validation setup Ends -->
+
+	<script type="text/javascript">
+	       				
+			function cancelClick(modalId){
+				if(_isDirty){
+					$(modalId).modal('toggle');
+				}
+				else{
+					returnToPreviousPage();
+				}
+					
+			}
+			
+			function returnToPreviousPage(){
+				if(custId != null){
+				 	window.location.href='/SIM/pricingOverview?custId='+custId; 
+				}
+				else{
+					window.location.href='/SIM/indexRedirect';
+				}
+			}  
+			
+			    		
+    		$('#myModal7').on('shown.bs.modal', function () {
+			    $('#approveComments').focus();
+			});
+			
+			$('#myModal8').on('shown.bs.modal', function () {
+			    $('#rejectionComments').focus();
+			})      	
+	</script>
 
   </body>
 </html>

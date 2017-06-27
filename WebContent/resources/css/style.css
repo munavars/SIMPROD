@@ -3220,6 +3220,10 @@ th.emptyth, .emptyth,  .table-bordered>thead>tr>th.emptyth {
     padding-left: 0 !important;
 }
 
+.p-left16 {
+	padding-left: 16px !important;
+}
+
 .p-right10 {
     padding-right: 10px !important;
 }

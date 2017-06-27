@@ -63,4 +63,7 @@
 	
 	<bean id="pricingWorkflowService" class="com.ytc.service.impl.PricingWorkflowServiceImpl">
 	</bean>
+	
+	<bean id="pricingEmailService" class="com.ytc.service.impl.PricingEmailServiceImpl">
+	</bean>
 </beans>

@@ -570,7 +570,7 @@ public class PdfGenerator {
 		         parameters.put("programDetailId", dalpgm.getId());
 					List<DalProgramDetailTier> dalProgramTierList = baseDao.getListFromNamedQueryWithParameter("DalProgramDetailTier.getAllTierForProgramId", 
 																	parameters);
-					DecimalFormat format = new DecimalFormat("#,###.#");
+					DecimalFormat format = new DecimalFormat("#,###.00");
 					for (Iterator iterator = dalProgramTierList.iterator(); iterator.hasNext();) {
 						DalProgramDetailTier dalProgramDetailTier = (DalProgramDetailTier) iterator.next();
 						cell = new PdfPCell(new Paragraph(dalProgramDetailTier.getLevel().toString()));
@@ -580,7 +580,7 @@ public class PdfGenerator {
 				         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				         programScheduleTable.addCell(cell);
 				         
-				         cell = new PdfPCell(new Paragraph(format.format(dalProgramDetailTier.getAmount())));
+				         cell = new PdfPCell(new Paragraph(dalProgramDetailTier.getAmount()==0?"0":format.format(dalProgramDetailTier.getAmount())));
 				         cell.setBorderColor(BaseColor.BLACK);
 				         cell.setPaddingLeft(10);
 				         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);

@@ -224,7 +224,7 @@ public class ProgramServiceImpl implements IProgramService {
 					if(amountTypeTier == null){
 						amountTypeTier = dalProgramDetailTier.getTierType();
 					}
-					detail.setAmount(new BigDecimal(dalProgramDetailTier.getAmount()));
+					detail.setAmount(new BigDecimal(dalProgramDetailTier.getAmount()).setScale(2,BigDecimal.ROUND_DOWN));
 					detail.setBeginRange(dalProgramDetailTier.getBeginRange());
 					programTierDetailSet.add(detail);
 				}

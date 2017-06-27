@@ -1383,8 +1383,10 @@
              	success: function(response){
              		if(!response){
              			$("#tbpchk").hide();
+             			tbp=false;
              		}else{
              			$('#glcode_dropdown').attr('disabled', false);
+             			tbp=true;
              		}
              	},
              	failure: function(response){
@@ -1885,6 +1887,9 @@
                	}
                	$('#edit-button').attr('disabled', true);
 				$('#edit-button').addClass("disabled");
+				if(!tbp){
+				$('#glcode_dropdown').attr('disabled', true);
+				}
 			}
 			function disableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
@@ -2051,7 +2056,7 @@
                     programDetailTier.programDetailId = responseOnload.programDetailList[0].id;
                     programDetailTier.level = parseInt(marker);
                     //programDetailTier.amount = parseInt(amount);
-                    programDetailTier.amount = parseInt(amount.replace(/,/g, ""));
+                    programDetailTier.amount = parseFloat(amount.replace(/,/g, ""));
                     programDetailTier.tierType = tiertype;
                     programDetailTier.beginRange = parseInt(range.replace(regex, ''));
                    

@@ -278,6 +278,8 @@
                                 <th>Credit Amount</th>
                                 <th>Payables</th>								
                                 <th>GL Balance</th>
+                                <th>Created Date</th>
+                                <th>Modified Date</th>
                               </tr></thead>
                               <tbody>
                               <tr>
@@ -297,6 +299,8 @@
                               <td>0</td>
                               <td>0</td>
                               <td>0</td>
+                              <td></td>
+                              <td></td>
                               <td></td>
                               <td></td>
                               <td></td>
@@ -1669,6 +1673,8 @@
                     $tds.eq(17).text(0);
                     $tds.eq(18).text(0);
                     $tds.eq(19).text(0);
+                    $tds.eq(20).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].createdDate)));
+                    $tds.eq(21).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].modifiedDate)));
                 });
          	}
          	
@@ -1755,7 +1761,13 @@
                 var table = $("#tier-schedule").DataTable();
                 if(tierData != null){
 	                $.each(tierData, function(idx, item) {
-							table.fnAddData([item.level, item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),item.beginRange,
+	                	if(item.amount.toString().indexOf(".")==-1){
+	                		tieramount=item.amount.toString()+".00";
+	                		tieramount=tieramount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                	}else{
+	                		tieramount=item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                	}
+							table.fnAddData([item.level, tieramount,item.beginRange,
 											'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
 											'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
 	                    ]);
@@ -2004,6 +2016,9 @@
 			            	$("#programId").html(response.data.programDetailList[0].id);
 							$('#status').html(response.data.status);
 							fnPopulateProgramWorkflowStatus(response.data.programWorkflowStatusList);
+							fnPopulateProgramDetailTable();
+							$("#editabletest").show();
+							$("#programSummaryTitleId").show();
 							/**Appending program id in the modal message.- Begin*/
 							var idAfter = responseOnload.programDetailList[0].id;
 							if(idBefore != idAfter){

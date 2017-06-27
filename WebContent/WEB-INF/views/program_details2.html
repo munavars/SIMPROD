@@ -1761,7 +1761,7 @@
                 var table = $("#tier-schedule").DataTable();
                 if(tierData != null){
 	                $.each(tierData, function(idx, item) {
-	                	if(item.amount.toString().indexOf(".")==-1){
+	                	if((item.amount.toString().indexOf(".")==-1)&&("0"!=item.amount.toString())){
 	                		tieramount=item.amount.toString()+".00";
 	                		tieramount=tieramount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	                	}else{

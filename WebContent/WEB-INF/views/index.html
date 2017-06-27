@@ -52,21 +52,53 @@
    <script type="text/javascript">
    
    //Export to Excel 
-   var tableToExcel = (function() {
-   	  var uri = 'data:application/vnd.ms-excel;base64,'
+   function tableToExcel(tableId, fileName) {
+   	var ua = window.navigator.userAgent;
+    var msie = ua.indexOf("MSIE");
+    if (navigator.userAgent.indexOf('Trident')>0 || navigator.userAgent.indexOf('Edge')>0)
+    {
+    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+    var textRange; var j=0;
+    tab = document.getElementById(tableId); // id of table
+
+    for(j = 0 ; j < tab.rows.length ; j++) 
+    {     
+        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        //tab_text=tab_text+"</tr>";
+    }
+
+    tab_text=tab_text+"</table>";
+    tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+
+  
+     var txt = document.getElementById('txtArea1').contentWindow;
+        txt.document.open("txt/html","replace");
+        txt.document.write(tab_text);
+        txt.document.close();
+        txt.focus(); 
+        sa=txt.document.execCommand("SaveAs",true,fileName+'.xls');
+    }
+     else
+    {
+     var uri = 'data:application/vnd.ms-excel;base64,'
    	    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
    	    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
    	    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-   	  return function(table, name) {
-   	    if (!table.nodeType) table = document.getElementById(table)
-   	    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+   	  //return function(table, name) {
+   	    if (!tableId.nodeType) table = document.getElementById(tableId)
+   	    var ctx = {worksheet: fileName || 'Worksheet', table: table.innerHTML}
    	   // window.location.href = uri + base64(format(template, ctx))
-		    var a = document.createElement('a');
-		    a.href = uri + base64(format(template, ctx));
-			a.download =  'dashboard'+'.xls';
-		    a.click(); 
-   	  }
-   	})()
+		var a = document.createElement('a');
+		a.href = uri + base64(format(template, ctx));
+		a.download =  'dashboard'+'.xls';
+		document.body.appendChild(a);
+		a.click();
+		document.body.appendChild(a);    
+    } }
+   	 
+	
    
 /*    $(window).ready(function(){
     		
@@ -530,8 +562,9 @@
 <!-- START 'Pending Approvals' table -->
                           <div class="btn-group pull-right">
                             <div class="btn-group">
-                            <a href="#"><button class="btn btn-default" onclick="tableToExcel('pending_approvals', 'Pending Approval Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                            <a href="#"><button class="btn btn-default" onclick="tableToExcel('pending_approvals','Pending Approval Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
                             </div>   
+                            <iframe id="txtArea1" style="display:none"></iframe>
                         </div>
                          <h3 class="tableHeader">Pending Approvals</h3>
                           <div class="adv-table table-responsive">
@@ -737,7 +770,7 @@
 <!-- START 'Pending Approvals' table -->
                           <div class="btn-group pull-right">
                             <div class="btn-group">
-                            <a href="#"><button class="btn btn-default" onclick="tableToExcel('customeroverview', 'Customers Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                            <a href="#"><button class="btn btn-default" onclick="tableToExcel('customeroverview','Customers Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
                             </div>   
                         </div>
                          <h3 class="tableHeader">Customers</h3>
@@ -1229,7 +1262,7 @@
 								<div class="btn-group pull-right">
 									<div class="btn-group">
 										<a href="#"><button class="btn btn-default"
-												onclick="tableToExcel('newcustomeroverview', 'Customers Table')">
+												onclick="tableToExcel('newcustomeroverview','Customers Table')">
 												<i class="fa fa-arrow-down"></i> Export To Excel
 											</button></a>
 									</div>

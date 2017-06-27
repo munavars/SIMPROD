@@ -127,6 +127,9 @@ public class PricingController extends BaseController {
 	@RequestMapping(value = "/pricing/v1/savePricingDetails", method = RequestMethod.POST)
 	public @ResponseBody ModelResult<PricingHeader> savePricingDetails(HttpServletRequest request, @RequestBody PricingHeader pricingHeader) {
 		ModelResult<PricingHeader> returnData = null;
+		if(pricingHeader != null && request != null){
+			pricingHeader.setContextPath(request.getContextPath());
+		}
 		returnData =  new ModelResult<PricingHeader>(getPersistService().savePricingHeaderDetails(pricingHeader));
 		return returnData;
 	}

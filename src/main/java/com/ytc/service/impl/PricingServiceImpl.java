@@ -412,6 +412,7 @@ public class PricingServiceImpl implements IPricingService {
 			pricingHeader.setCustomerType(dalPricingHeader.getCustomerType().getCustomerType());
 			pricingHeader.setCustomerId(dalPricingHeader.getCustomer().getCustomerNumber());
 			pricingHeader.setCustomerGroup(String.valueOf(dalPricingHeader.getCustomerGroup()));
+			pricingHeader.setCustomerGroupValue(dalPricingHeader.getCustomer().getCustomerName());
 			pricingHeader.setUserComments(dalPricingHeader.getUserComments());
 			pricingHeader.setTermCode(dalPricingHeader.getTermCodes().getCode());
 			pricingHeader.setShippingReqs(dalPricingHeader.getShippingReqs().getShipRqs());

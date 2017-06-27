@@ -32,6 +32,7 @@ public class PricingHeader extends Model{
 	private String customerType;
 	private String customerGroup;
 	private String customerId;
+	private String customerGroupValue;
 	private String userComments;
 	private String termCode;
 	private String definition;
@@ -49,7 +50,10 @@ public class PricingHeader extends Model{
 	private boolean isNewProgram;
 	private List<ProgramWorkflowStatus> programWorkflowStatusList;
 	private String approverComments;
+	/** For email link*/
 	private String url;
+	private String contextPath;
+	/** For email link*/
 	/**
 	 * @return the customerType
 	 */
@@ -301,5 +305,17 @@ public class PricingHeader extends Model{
 	}
 	public void setUrl(String url) {
 		this.url = url;
+	}
+	public String getContextPath() {
+		return contextPath;
+	}
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
+	}
+	public String getCustomerGroupValue() {
+		return customerGroupValue;
+	}
+	public void setCustomerGroupValue(String customerGroupValue) {
+		this.customerGroupValue = customerGroupValue;
 	}
 }

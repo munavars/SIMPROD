@@ -762,7 +762,7 @@ public class ProgramServiceImpl implements IProgramService {
 			if(dalProgramDetail.getIsTiered() != null){
 				programDetail.setIsTiered(ProgramConstant.ZERO.equalsIgnoreCase(dalProgramDetail.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES);
 			}
-			programDetail.setAccrualAmount(df.format(dalProgramDetail.getAccrualAmount()));
+			programDetail.setAccrualAmount(dalProgramDetail.getAccrualAmount()==0?"0":df.format(dalProgramDetail.getAccrualAmount()));
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
 			if(dalProgramDetail.getTrueUp() != null){
 				programDetail.setTrueUp("Y".equalsIgnoreCase(dalProgramDetail.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO);

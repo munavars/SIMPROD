@@ -112,4 +112,26 @@ public class TestController  extends BaseController {
 		
 	}
 	
+	@RequestMapping(value = "/ccm", method = RequestMethod.GET)
+	public String ccm(HttpServletRequest request, Model model) {
+		String userName =  null;
+		String returnModel = null;
+		List<Employee> employee = null;
+		if(serviceContext != null && serviceContext.getEmployee() != null){
+			userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			returnModel = "ccm";
+			model.addAttribute("loginUserNameValue", userName);
+			employee=new ArrayList<Employee>();
+			employee.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employee);
+		}
+		
+		if(serviceContext == null || userName == null){
+			returnModel = "login";
+		}
+		
+		return returnModel;
+		
+	}
+	
 }

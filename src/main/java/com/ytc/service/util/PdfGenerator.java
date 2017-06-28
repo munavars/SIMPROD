@@ -394,8 +394,8 @@ public class PdfGenerator {
 	  
 	         document.add(table);
 	         
-	         if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalpgm.getDalProgramType().getType())){
-	        	 
+	         if(!dalpgm.getDalProgramDetPaidList().isEmpty()){
+	         
 	         document.add(new Paragraph("PAID BASED ON",f1));
 	         PdfPTable paidBaseTable = new PdfPTable(3); // 3 columns.
 	         paidBaseTable.setWidthPercentage(100); //Width 100%
@@ -463,8 +463,11 @@ public class PdfGenerator {
 	       
 	         
 	         document.add(paidBaseTable);
+	         }
 	         
+	         if((ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalpgm.getDalProgramType().getType()))&&(!dalpgm.getDalProgramDetAchievedList().isEmpty())&&(!ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered()))){        	 
 	         
+	                  
 		         document.add(new Paragraph("ACHIEVED BASED ON",f1));
 		         PdfPTable achievedBaseTable = new PdfPTable(3); // 3 columns.
 		         achievedBaseTable.setWidthPercentage(100); //Width 100%

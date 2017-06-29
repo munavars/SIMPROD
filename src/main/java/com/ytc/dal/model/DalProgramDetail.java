@@ -20,7 +20,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "PROGRAM_DETAIL")
 @NamedQueries({
-@NamedQuery(name="DalProgramDetail.checkDuplicateRecords", query = "select o from DalProgramDetail o where o.programStartDate=:PGM_START_DATE and o.programEndDate=:PGM_END_DATE and o.accrualAmount=:ACCRUAL_AMOUNT")
+@NamedQuery(name="DalProgramDetail.checkDuplicateRecords", query = "select o from DalProgramDetail o where o.programStartDate=:PGM_START_DATE and o.programEndDate=:PGM_END_DATE and o.accrualAmount=:ACCRUAL_AMOUNT and o.dalProgramType.id=:PGM_TYPE_ID")
 })
 public class DalProgramDetail extends DalAuditableModel {
 

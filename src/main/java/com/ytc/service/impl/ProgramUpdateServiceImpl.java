@@ -630,6 +630,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		map.put("PGM_START_DATE", dalProgramDet.getProgramStartDate());
 		map.put("PGM_END_DATE", dalProgramDet.getProgramEndDate());
 		map.put("ACCRUAL_AMOUNT", dalProgramDet.getAccrualAmount());
+		map.put("PGM_TYPE_ID", programHeader.getProgramDetailList().get(0).getProgramTypeId());
 		List<DalProgramDetail> list=baseDao.getListFromNamedQueryWithParameter("DalProgramDetail.checkDuplicateRecords", map);
 		
 		if(!list.isEmpty())

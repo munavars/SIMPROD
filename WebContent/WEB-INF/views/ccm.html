@@ -13,6 +13,7 @@
 
       <!--external css-->
       <link href="resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+      <link rel="stylesheet" href="resources/assets/data-tables/DT_bootstrap.css" />
       <!--Date Picker--> 
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datepicker/css/datepicker.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
@@ -41,6 +42,9 @@
 			}
 		.dataTables_wrapper .dataTables_filter {
 		    width: 50%;
+		}
+		.right{
+		text-align:right;
 		}
 </style>
       <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltips and media queries -->
@@ -271,10 +275,12 @@
 
                               <tr class="rowvis" style="background-color: #cacbce;">
                                 <th>Business Unit</th>
-                                <th>Mgr</th>
+								<th>Account Manager</th>
+								<th>Zone Manager</th>
                                 <th>Frequency</th>
                                 <th>Program Id</th>
                                 <th>Program Name</th>
+                                <th>Description</th>
                                 <th>Paid Based On</th>								
                                 <th>Guarantee</th>
                                 <th>Amount</th>
@@ -283,6 +289,8 @@
                                 <th>Earned</th>	
                                 <th>Credit Earned</th>	
                                 <th>Reviewed</th>
+                                <th>Comments</th>
+                                <th>Credit Based On</th>
                                 <th>Bill- To No</th>	
                                 <th>Bill - To Name</th>								
                                 <th>Units</th>
@@ -300,126 +308,125 @@
 								<th>Begin Date</th>	
 								<th>End Date</th>
 								<th>GL</th>
-								<th>Frequency</th>
-								<th>Zone Manager</th>
-								<th>Account Manager</th>
-								<th>Payment Method</th>
-								<th>Comments</th>
+								<th>Payment Method</th>								
                           		
                               </tr>
                                </thead>
                               <tr>
                               <td>P</td>
-                              <td>Lastname </td>
+                              <td>McMaster</td>
+                              <td>ZM1</td>
                               <td>Monthly</td>
                               <td>3505</td>
                               <td>Competitive Support</td>
+                              <td><span data-toggle="tooltip" title="Sample Bubble Text">Description</span></td>
                               <td id="paidbase1">All Units Sold + NAD Units</td>
                               <td>TRUE</td>
-                              <td id="amt1">18</td>
+                              <td id="amt1" class="right">18</td>
                               <td id="amttype1">$</td>
-                              <td>6246</td>
-                              <td> <input type="text" id="earned1" name="earned1" value="" onkeyup="calculateCreditEarned(this)"> </td>
-                              <td> <input type="text" id="creditearned1" name="creditearned1" value=""> </td>
-                              <td> <input type="checkbox" name="review" value=""> </td>
+                              <td class="right">$6246</td>
+                              <td> <input type="text" id="earned1" name="earned1" class="right" value="" onkeyup="calculateCreditEarned(this)" style="width:80px"> </td>
+                              <td> $<input type="text" id="creditearned1"  class="right" name="creditearned1" value="" style="width:80px"> </td>
+                              <td style="text-align:center"> <input type="checkbox" name="review" value="" > </td>
+                              <td> <input type="text" id="comments1" value=""> </td>
+                              <td id="creditbasedon1"></td>
                               <td>15321</td>
                               <td>EARL W COLVARD INC</td>
                               <td id="units1">170</td>
                               <td id="bonusableunits1">180</td>
                               <td id="nadunits1">177</td>
-                              <td></td>
-                              <td></td>
-                              <td id="invsales1">63671.38</td>
-                              <td id="bonusablesales1">65206.3</td>
-                              <td id="nadsales1"> 66,670.93 </td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
+                              <td>347</td>
+                              <td>357</td>
+                              <td id="invsales1" class="right">$63671.38</td>
+                              <td id="bonusablesales1" class="right">$65206.3</td>
+                              <td id="nadsales1" class="right">$66,670.93 </td>
+                              <td class="right">$0</td>
+                              <td class="right">$0</td>
+                              <td class="right">$0</td>
                               <td>15321</td>
                               <td>1/1/2017</td>
                               <td>12/31/2017</td>
                               <td>20817-0-0-20170</td>
-                              <td>Monthly</td>
-                              <td></td>
-                              <td>McMaster</td>
                               <td>Credit Memo</td>
-                              <td></td>
+                              
                               </tr>
                               
                               <tr>
                               <td>P</td>
-                              <td>Lastname </td>
+                              <td>Hinds</td>
+                              <td>ZM2</td>
                               <td>Monthly</td>
                               <td>3305</td>
                               <td>Quarterly Bonus</td>
+                              <td><span data-toggle="tooltip" title="Sample Bubble Text">Description</span></td>
                               <td id="paidbase2">All Units Sold</td>
                               <td>TRUE</td>
-                              <td id="amt2">5</td>
+                              <td id="amt2" class="right">5</td>
                               <td id="amttype2">$</td>
-                              <td>275</td>
-                              <td> <input type="text" id="earned2" name="earned2" value="" onkeyup="calculateCreditEarned(this)"> </td>
-                              <td> <input type="text" id="creditearned2" name="creditearned2" value=""> </td>
-                              <td><input type="checkbox" name="review" value=""> </td>
+                              <td class="right">$275</td>
+                              <td> <input type="text" id="earned2" name="earned2" class="right" value="" onkeyup="calculateCreditEarned(this)" style="width:80px"> </td>
+                              <td> $<input type="text" id="creditearned2" class="right" name="creditearned2" value="" style="width:80px"> </td>
+                              <td style="text-align:center"><input type="checkbox" name="review" value="" > </td>
+                              <td><input type="text" id="comments2" value=""></td>
+                              <td id="creditbasedon2"></td>
                               <td>16779</td>
                               <td>J & E TIRE CENTER INC</td>
                               <td id="units2">55</td>
                               <td id="bonusableunits2">63</td>
                               <td id="nadunits2">83</td>
-                              <td></td>
-                              <td></td>
-                              <td id="invsales2">16739.5</td>
-                              <td id="bonusablesales2">18847.5</td>
-                              <td id="nadsales2">29907.8 </td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
+                              <td>138</td>
+                              <td>146</td>
+                              <td id="invsales2" class="right">$16739.5</td>
+                              <td id="bonusablesales2" class="right">$18847.5</td>
+                              <td id="nadsales2" class="right">$29907.8 </td>
+                              <td class="right">$0</td>
+                              <td class="right">$0</td>
+                              <td class="right">$0</td>
                               <td>15321</td>
                               <td>1/1/2017</td>
                               <td>12/31/2017</td>
                               <td>20817-0-0-20170</td>
-                              <td>Monthly</td>
-                              <td></td>
-                              <td>Hinds</td>
                               <td>Check</td>
-                              <td>Pay credit with a check</td>
+                              
                               </tr>
                               
                               <tr>
                               <td>P</td>
-                              <td>Conroy </td>
+                              <td>Conroy</td>
+                              <td>ZM3</td>
                               <td>Monthly</td>
                               <td>3743</td>
                               <td>Marketing Support - TBS</td>
+                              <td><span data-toggle="tooltip" title="Sample Bubble Text">Description</span></td>
                               <td id="paidbase3">All Invoice Sales</td>
                               <td>TRUE</td>
-                              <td id="amt3">4</td>
+                              <td id="amt3" class="right">4</td>
                               <td id="amttype3">%</td>
-                              <td>508.44</td>
-                              <td> <input type="text" id="earned3" name="earned3" value="" onkeyup="calculateCreditEarned(this)"> </td>
-                              <td> <input type="text" id="creditearned3" name="creditearned3" value=""> </td>
-                              <td><input type="checkbox" name="review" value=""> </td>
+                              <td class="right">$508.44</td>
+                              <td> <input type="text" id="earned3" class="right" name="earned3" value="" onkeyup="calculateCreditEarned(this)" style="width:80px"> </td>
+                              <td> $<input type="text" id="creditearned3" class="right" name="creditearned3" value="" style="width:80px"> </td>
+                              <td style="text-align:center"><input type="checkbox" name="review" value="" > </td>
+                              <td><input type="text" id="comments3" value=""></td>
+                              <td id="creditbasedon3"></td>
                               <td>15321</td>
                               <td>EARL W COLVARD INC</td>
                               <td id="units3">35</td>
                               <td id="bonusableunits3">35</td>
-                              <td id="nadunits3">-</td>
+                              <td id="nadunits3">0</td>
                               <td>35</td>
                               <td>35</td>
-                              <td id="invsales3">12711</td>
-                              <td id="bonusablesales3">12711</td>
-                              <td id="nadsales3"> $- </td>
-                              <td>12711</td>
-                              <td>12711</td>
-                              <td>$-</td>
+                              <td id="invsales3" class="right">$12711</td>
+                              <td id="bonusablesales3" class="right">$12711</td>
+                              <td id="nadsales3" class="right">$0</td>
+                              <td class="right">$12711</td>
+                              <td class="right">$12711</td>
+                              <td class="right">$0</td>
                               <td></td>
                               <td>1/1/2017</td>
                               <td>12/31/2017</td>
                               <td>20817-0-0-20170</td>
-                              <td>Monthly</td>
                               <td></td>
-                              <td></td>
-                              <td></td>
-                              <td></td>
+
                               </tr>
                              
                               <tbody>
@@ -556,6 +563,9 @@
       <script>
          jQuery(document).ready(function() {
              EditableTable.init();
+/*              $('#ccmtable').on('draw.dt', function () {
+ 	             $('[data-toggle="tooltip"]').tooltip();
+ 	         }); */
          });
       </script>
 
@@ -593,20 +603,23 @@
 			bonusableUnits=parseInt($('#bonusableunits'+id).html());
 			nadUnits=parseInt($('#nadunits'+id).html());
 			
-			invSales=parseFloat($('#invsales'+id).html());
-			bonusableSales=parseFloat($('#bonusablesales'+id).html());
-			nadSales=parseFloat($('#nadsales'+id).html());
+			invSales=parseFloat($('#invsales'+id).html().substring(1));
+			bonusableSales=parseFloat($('#bonusablesales'+id).html().substring(1));
+			nadSales=parseFloat($('#nadsales'+id).html().substring(1));
 			
 			if(paidBased=="All Invoice Sales"){
 				creditEarned=invSales*amount;
+				$('#creditbasedon'+id).html(invSales);
 			}
 			
 			if(paidBased=="All Units Sold"){
 				creditEarned=units*amount;
+				$('#creditbasedon'+id).html(units);
 			}
 			
 			if(paidBased=="All Units Sold + NAD Units"){
 				creditEarned=(units+nadUnits)*amount;
+				$('#creditbasedon'+id).html(units+nadUnits);
 			}
 			
 			if(amountType=="%"){
@@ -667,46 +680,8 @@
             		//Data Table
      		       $('#ccmtable').dataTable( {
      		         "aLengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]]
-     		       } );
-     		       
-     		       
-     		      /* $('#earned3').keyup(function(){
-  					var id=($(this).attr('id')).substring(6);
-  					var creditEarned='';
-  					paidBased=$('#paidbase'+id).html();
-  					//amount=$('#amt'+id).html();
-  					amount=$(this).val();
-  					units=$('#units'+id).html();
-  					bonusableUnits=$('#bonusableunits'+id).html();
-  					nadUnits=$('#nadunits'+id).html();
-  					
-  					invSales=$('#invsales'+id).html();
-  					bonusableSales=$('#bonusablesales'+id).html();
-  					nadSales=$('#nadsales'+id).html();
-  					if(paidBased=="All Invoice Sales"){
-  						creditEarned=invSales*amount/100;
-  						//alert(creditEarned);
-  						$('#creditearned'+id).val(creditEarned);
-  						
-  					}
-  					
-  					if(paidBased=="All Units Sold"){
-  						creditEarned=invSales*amount/100;
-  						//alert(creditEarned);
-  						$('#creditearned'+id).val(creditEarned);
-  						
-  					}
-  					
-  					if(paidBased=="All Units Sold + NAD Units"){
-  						creditEarned=invSales*amount/100;
-  						//alert(creditEarned);
-  						$('#creditearned'+id).val(creditEarned);
-  						
-  					}
-  					
-  					}); */
-     		      
-     		      
+     		       } );    		       
+               		      
      		      
      		       
      		     });

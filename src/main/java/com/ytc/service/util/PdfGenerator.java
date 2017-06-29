@@ -23,6 +23,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
+import com.ytc.dal.model.DalGLCode;
 import com.ytc.dal.model.DalPaidType;
 import com.ytc.dal.model.DalPricingType;
 import com.ytc.dal.model.DalProgramDetAchieved;
@@ -352,8 +353,13 @@ public class PdfGenerator {
 		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         table.addCell(cell1);
 	         }
-	         
-	         cell1 = new PdfPCell(new Paragraph(""));
+	         int glcode=0;
+	         if((null!=dalpgm.getGlCode())&&(!"".equalsIgnoreCase(dalpgm.getGlCode()))&&(!"0".equalsIgnoreCase(dalpgm.getGlCode()))){
+	        	 glcode=Integer.parseInt(dalpgm.getGlCode());
+	        	 cell1 = new PdfPCell(new Paragraph("GL No: "+ baseDao.getById(DalGLCode.class,glcode).getGlNo()));
+	         }else{
+	        	 cell1 = new PdfPCell(new Paragraph("GL No: "));
+	         }
 	         cell1.setBorderColor(BaseColor.BLACK);
 	         cell1.setPaddingLeft(10);
 	         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -380,7 +386,12 @@ public class PdfGenerator {
 	         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         table.addCell(cell1);
 	         
-	         cell1 = new PdfPCell(new Paragraph(""));
+	         if((null!=dalpgm.getTbpCheck())){
+	        	 cell1 = new PdfPCell(new Paragraph("TBP Special Handling: "+(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getTbpCheck().toString())?ProgramConstant.NO:ProgramConstant.YES)));
+	         }else{
+	        	 cell1 = new PdfPCell(new Paragraph("TBP Special Handling: ")); 
+	         }
+	         
 	         cell1.setBorderColor(BaseColor.BLACK);
 	         cell1.setPaddingLeft(10);
 	         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -428,7 +439,7 @@ public class PdfGenerator {
 	         paidBaseTable.addCell(cell);
 	         
 	         List<DalProgramDetPaid> dalProgramDetPaidList = dalpgm.getDalProgramDetPaidList().stream().sorted((e1, e2) -> e1.getTagId().compareTo(e2.getTagId())).collect(Collectors.toList());
-	         for (Iterator iterator = dalProgramDetPaidList.iterator(); iterator.hasNext();) {
+	         for (Iterator<DalProgramDetPaid> iterator = dalProgramDetPaidList.iterator(); iterator.hasNext();) {
 	        	 DalProgramDetPaid type = (DalProgramDetPaid) iterator.next();
 	        	 cell = new PdfPCell(new Paragraph(baseDao.getEntityById(DalTagItems.class, type.getTagId()).getItem()));
 		         cell.setBorderColor(BaseColor.BLACK);
@@ -499,7 +510,7 @@ public class PdfGenerator {
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         achievedBaseTable.addCell(cell);
 		         List<DalProgramDetAchieved> dalProgramDetAchieved = dalpgm.getDalProgramDetAchievedList().stream().sorted((e1, e2) -> e1.getAchTagId().compareTo(e2.getAchTagId())).collect(Collectors.toList());
-		         for (Iterator iterator = dalProgramDetAchieved.iterator(); iterator.hasNext();) {
+		         for (Iterator<DalProgramDetAchieved> iterator = dalProgramDetAchieved.iterator(); iterator.hasNext();) {
 		        	 DalProgramDetAchieved type = (DalProgramDetAchieved) iterator.next();
 		        	 cell = new PdfPCell(new Paragraph(baseDao.getEntityById(DalTagItems.class, type.getAchTagId()).getItem()));
 			         cell.setBorderColor(BaseColor.BLACK);
@@ -574,7 +585,7 @@ public class PdfGenerator {
 					List<DalProgramDetailTier> dalProgramTierList = baseDao.getListFromNamedQueryWithParameter("DalProgramDetailTier.getAllTierForProgramId", 
 																	parameters);
 					DecimalFormat format = new DecimalFormat("#,###.00");
-					for (Iterator iterator = dalProgramTierList.iterator(); iterator.hasNext();) {
+					for (Iterator<DalProgramDetailTier> iterator = dalProgramTierList.iterator(); iterator.hasNext();) {
 						DalProgramDetailTier dalProgramDetailTier = (DalProgramDetailTier) iterator.next();
 						cell = new PdfPCell(new Paragraph(dalProgramDetailTier.getLevel().toString()));
 				         cell.setBorderColor(BaseColor.BLACK);

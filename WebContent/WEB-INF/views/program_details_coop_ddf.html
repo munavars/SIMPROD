@@ -26,6 +26,7 @@
       <link href="resources/css/slidebars.css" rel="stylesheet">
        <!--Form Wizard-->
       <link rel="stylesheet" type="text/css" href="resources/css/jquery.steps.css" />
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
       <!-- Custom styles for this template -->
       <link href="resources/css/style.css" rel="stylesheet">
       <link href="resources/css/style-responsive.css" rel="stylesheet" />
@@ -419,6 +420,12 @@
 															<label class="control-label " for="longDesc">Program
 																Description</label>
 															<textarea id="longDesc" name="longDesc"
+																rel="txtTooltip"
+																data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
+																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+																data-toggle="tooltip" data-trigger="hover"
+																data-placement="top" rows="3"
+																placeholder="Add program description description details"
 																class="form-control m-bot15"></textarea>
 														</div>
 													</div>
@@ -768,7 +775,7 @@
 																						class="table table-striped table-hover table-bordered"
 																						id="workflow-status-table">
 																						<thead>
-																							<tr>
+																							<tr class="rowvis" style="background-color: #cacbce;">
 																								<th class="text-center">Approver Name</th>
 																								<th class="text-center">Approver Role</th>
 																								<th class="text-center">Action</th>
@@ -1003,8 +1010,12 @@
      <script type="text/javascript">
 		$(document).ready(function(){
             $('#workflow-status-table').dataTable({
+				"oLanguage": {
+					"sEmptyTable": "No data available in table"
+				},
             	"iDisplayLength": 50,
             	"bDestroy": true,
+            	"bSort": false,
             	"sPaginationType": "bootstrap",
             	"sDom": 't',
 				"aoColumns": [
@@ -1076,6 +1087,7 @@
 			$("#programSummaryTitleId").hide();
 		}
 		else{
+			$("#cancel-program").html("Back");
 			$("#edit-program").addClass("active");
 		}
 		var programType = queryDict["programType"];
@@ -1221,14 +1233,22 @@
                		
                		hideShowButtonsOnLoad(response.data);
                	}
-               	
-               	if($('#userComments').is(':disabled')){
-               		$('#userComments').removeAttr('placeholder');
-               	}
+
+				removePlaceHolderPropForTextArea();               	
 
                	fnPopulateProgramDetailTable();
                	
                	enabledButtonApplicableToAll();
+         	}
+         	
+         	function removePlaceHolderPropForTextArea(){
+         	    if($('#userComments').is(':disabled')){
+               		$('#userComments').removeAttr('placeholder');
+               	}
+               	
+               	if($('#longDesc').is(':disabled')){
+               		$('#longDesc').removeAttr('placeholder');
+               	}
          	}
          	
          	function fnPopulateProgramWorkflowStatus(workflowStatus){
@@ -1449,13 +1469,15 @@
 				$('#edit-button').addClass("disabled");
 				if(!tbp){
 					$('#glcode_dropdown').attr('disabled', true);
-					}
+				}
+				$("#cancel-program").html("Cancel");
 			}
 			function disableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
 				 //.btn.disabled
 				$("#program-parent-div").find('a').addClass("disabled");
 				enabledButtonApplicableToAll();
+				$("#cancel-program").html("Back");
 			}
 			
 			function enabledButtonApplicableToAll(){
@@ -1522,6 +1544,7 @@
 				if(!$("#pdf-button").is(":visible")){
          			$("#pdf-button").show();
          		}
+         		removePlaceHolderPropForTextArea();
 			}
 						
 			function validateBeforeSubmit(modalId){
@@ -1549,6 +1572,9 @@
 			            	responseOnload = response.data;
 			            	$("#programId").html(response.data.programDetailList[0].id);
 							$('#status').html(response.data.status);
+							if(idBefore == null){
+								populateAfterSave();
+							}
 							fnPopulateProgramWorkflowStatus(response.data.programWorkflowStatusList);
 							fnPopulateProgramDetailTable();
 							$("#editabletest").show();
@@ -1578,6 +1604,12 @@
 						alert("Issue while saving the data. Please try again after sometime.!!");
 					}
 			    });
+			}
+			
+			function populateAfterSave(){
+               	$('#accrualAmount').html('0');
+               	$('#paidAmount').html('0');
+               	$('#balance').html('0');              	
 			}
 
          	function resetFormForMandatoryCheck(elementId){

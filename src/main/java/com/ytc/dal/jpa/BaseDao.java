@@ -135,6 +135,8 @@ public class BaseDao implements IDataAccessLayer {
 			DalEmployee dbUser = getReference(DalEmployee.class, userId);
 			DalAuditableModel itemToUpdate = (DalAuditableModel) item;
 			itemToUpdate.setModifiedBy(dbUser);
+			Calendar modifiedDate = Calendar.getInstance();
+			itemToUpdate.setModifiedDate(modifiedDate);
 			entityManager.detach(existingItem);
 		}
 		return item;

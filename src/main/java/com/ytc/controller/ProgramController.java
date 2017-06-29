@@ -52,7 +52,13 @@ public class ProgramController extends BaseController {
 		inputParam.setProgramDetailId(programId);
 		inputParam.setEmployee(employee);
 		inputParam.setExistingDetail(true);
-		returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(inputParam));
+		try{
+			returnData = new ModelResult<ProgramHeader>(getService(request).getProgramDetails(inputParam));	
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
 		
 		return returnData;
 	}

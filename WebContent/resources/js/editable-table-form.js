@@ -61,6 +61,12 @@ var EditableTable = function () {
                 }
                 
                 oTable.fnDraw();
+                
+                if(!$("#actual_marker").valid()){
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+				}
+                
                 return true;
             }
 
@@ -97,6 +103,7 @@ var EditableTable = function () {
                     },
                     {
                     	'sClass' : 'text-right',
+                    	'bSortable': false,
                     	'fnRender' : function(oObj){
                     		var convertedAmount = oObj.aData[1];
                     		if(convertedAmount != null && convertedAmount != 'undefined' ){
@@ -105,7 +112,19 @@ var EditableTable = function () {
                     		return convertedAmount;
                     	},
                     	'aTargets' : [1]                    	
-                    }
+                    },
+                    {
+                        'bSortable': false,
+                        'aTargets': [2]
+                    },
+                    {
+                        'bSortable': false,
+                        'aTargets': [3]
+                    },
+                    {
+                        'bSortable': false,
+                        'aTargets': [4]
+                    },
                 ],
             });
 

@@ -161,6 +161,14 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			programHeader.setNewProgram(false);
 		}
 		programHeader.setSuccess(true);
+		
+		if(dalProgramDetail.getCreatedDate() != null){
+			programHeader.getProgramDetailList().get(0).setCreatedDate( ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));			
+		}
+		
+		if(dalProgramDetail.getModifiedDate() != null){
+			programHeader.getProgramDetailList().get(0).setModifiedDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT) );
+		}
 		ProgramServiceHelper.populateWorkflowStatusData(programHeader, dalProgramDetail);
 		programHeader.setStatus(dalProgramDetail.getStatus().getType());
 		programEmailService.sendEmailData(programHeader, dalProgramDetail);

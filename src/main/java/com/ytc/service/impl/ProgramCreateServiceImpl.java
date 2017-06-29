@@ -116,6 +116,15 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			programHeader.getProgramDetailList().get(0).setId(returnEntity.getId());
 			programHeader.setSuccess(true);
 			ProgramServiceHelper.populateWorkflowStatusData(programHeader, dalProgramDetail);
+			
+			if(dalProgramDetail.getCreatedDate() != null){
+				programHeader.getProgramDetailList().get(0).setCreatedDate( ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));			
+			}
+			
+			if(dalProgramDetail.getModifiedDate() != null){
+				programHeader.getProgramDetailList().get(0).setModifiedDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT) );
+			}
+			
 			programHeader.setStatus(returnEntity.getStatus().getType());
 			programEmailService.sendEmailData(programHeader, dalProgramDetail);
 			if(returnEntity.getDalProgramHeader().getStatus() != null 

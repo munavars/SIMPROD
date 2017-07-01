@@ -2154,12 +2154,18 @@
 					$("#achieve-based-on").show();
 					$("#program-tier").show();
 					$("#amountdiv").hide();
+					id=$('#achieve_basedon_inputselect option:selected').val();
+					
 				}
 				else{
 					$("#achieve-based-on").hide();
 					$("#program-tier").hide();
 					$("#amountdiv").show();
+					id=$('#paid_basedon_inputselect option:selected').val();
 				}
+
+				populateGlcode(id);
+				
     		} );
     		
     		$('#myModal7').on('shown.bs.modal', function () {
@@ -2184,6 +2190,33 @@
 	</script>
 
 	<script type="text/javascript">
+	function populateGlcode(id){
+			pgmType='';
+			$('#glcode_dropdown').val('');
+			if(responseOnload.businessUnit=='P'){
+				key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
+			}else{
+				key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
+			}
+			//id=$('#paid_basedon_inputselect option:selected').val();
+			$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
+				   if(id==item.id){
+					   if(item.base==1){
+						   pgmType='VBS';
+					   }else{
+						   pgmType='MKP';
+					   }
+				   }
+				});
+			
+			$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
+			   if((key==item.glBucket)&&(item.pcs==pgmType)){
+				   $('#glcode_dropdown').val(item.id); 
+			   }
+			});
+	}
+	
+	
 			$(document).ready(function() {
 				
 				$('#program_name_inputselect').change(function(){
@@ -2207,31 +2240,7 @@
 					
 				});
 				
-				function populateGlcode(id){
-						pgmType='';
-						$('#glcode_dropdown').val('');
-						if(responseOnload.businessUnit=='P'){
-							key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
-						}else{
-							key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
-						}
-						//id=$('#paid_basedon_inputselect option:selected').val();
-						$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
-							   if(id==item.id){
-								   if(item.base==1){
-									   pgmType='VBS';
-								   }else{
-									   pgmType='MKP';
-								   }
-							   }
-							});
-						
-						$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
-						   if((key==item.glBucket)&&(item.pcs==pgmType)){
-							   $('#glcode_dropdown').val(item.id); 
-						   }
-						});
-				}
+				
 				
 				$('#paid_basedon_inputselect').change(function(){
 					if(!$('#optionsRadiosTierYes').is(':checked')){

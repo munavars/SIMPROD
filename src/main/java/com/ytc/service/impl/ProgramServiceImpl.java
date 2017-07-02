@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.NoResultException;
 
@@ -1052,6 +1053,8 @@ public class ProgramServiceImpl implements IProgramService {
 					}
 					dropdownList.add(dropDown);
 				}
+				dropdownList = dropdownList.stream().sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue())).collect(Collectors.toList());	
+				
 			}
 			
 		}

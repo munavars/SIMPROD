@@ -1244,7 +1244,8 @@
                	
                	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
                	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
-                
+               	populateGlCode();
+               	
                	if(response.data.programDetailList[0].tbpCheck == '1'){
                		$("#tbpCheck").prop('checked', true);
                	}else
@@ -1733,27 +1734,39 @@
 	</script>
 	
 	<script type="text/javascript">
-		$(document).ready(function() {
-			
-			$('#program_name_inputselect').change(function(){
-				 $('#glcode_dropdown').val(''); 
-				 if($('#programTypeHeader').html()=='COOP'){
-					 pgmType='COP';
-				 }else{
-					 pgmType='DDF';
-				 }
-				if(responseOnload.businessUnit=='P'){
-					key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
-				}else{
-					key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
-				}
-				$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
-					   if((key==item.glBucket)&&(item.pcs==pgmType)){
-						   $('#glcode_dropdown').val(item.id); 
-					   }
-					});
-				
+
+	function populateGlCode(){
+		 $('#glcode_dropdown').val(''); 
+		 if($('#programTypeHeader').html()=='COOP'){
+			 pgmType='COP';
+		 }else if($('#programTypeHeader').html()=='DDF'){
+			 pgmType='DDF';
+		 }else{
+			 pgmType='MKP';
+		 }
+		/* if(responseOnload.businessUnit=='P'){
+			key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
+		}else{
+			key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
+		} */
+		 if(responseOnload.businessUnit=='P'){
+				key='Consumer';
+			}else if(responseOnload.businessUnit=='T'){
+				key='Commercial';
+			}else{
+				key='OTR';
+			}
+		
+		$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
+			   if((key==item.bu)&&(item.pcs==pgmType)){
+				   $('#glcode_dropdown').val(item.id); 
+			   }
 			});
+		
+	}
+	
+		$(document).ready(function() {		
+			
 			
 			$('#pdf-button').click(function () {
 				//alert(responseOnload.programDetailList[0].id);

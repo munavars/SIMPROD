@@ -20,6 +20,8 @@ private static final long serialVersionUID = 1L;
 	private String glBucket;
 	
 	private String pcs;
+	
+	private String bu;
 
 	/**
 	 * @return the glNo
@@ -66,6 +68,21 @@ private static final long serialVersionUID = 1L;
 	 */
 	public void setPcs(String pcs) {
 		this.pcs = pcs;
+	}
+
+	/**
+	 * @return the bu
+	 */
+	@Column(name="BU")
+	public String getBu() {
+		return bu;
+	}
+
+	/**
+	 * @param bu the bu to set
+	 */
+	public void setBu(String bu) {
+		this.bu = bu;
 	}
 
 	

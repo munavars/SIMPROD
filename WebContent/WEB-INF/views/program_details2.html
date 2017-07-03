@@ -2019,6 +2019,9 @@
 				$('#view-program-workflow').attr('disabled', false);
 				$('#view-program-workflow').removeClass("disabled");
 				$('#program-workflow-btn').attr('disabled', false);
+				if(tbp){
+					$('#glcode_dropdown').attr('disabled', false);
+				}
 			}
 			
 			function approveProgram(){

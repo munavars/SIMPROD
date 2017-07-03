@@ -2267,9 +2267,14 @@
 			pgmType='';
 			$('#glcode_dropdown').val('');
 			if(responseOnload.businessUnit=='P'){
-				key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
+				//key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
+				key='Consumer';
+			}else if(responseOnload.businessUnit=='T'){
+				//key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
+				key='Commercial';
 			}else{
-				key=($('#program_name_inputselect option:selected').text())+' - '+'Commercial';
+				//key=($('#program_name_inputselect option:selected').text())+' - '+'OTR';
+				key='OTR';
 			}
 			//id=$('#paid_basedon_inputselect option:selected').val();
 			$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
@@ -2283,7 +2288,7 @@
 				});
 			
 			$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
-			   if((key==item.glBucket)&&(item.pcs==pgmType)){
+			   if((key==item.bu)&&(item.pcs==pgmType)){
 				   $('#glcode_dropdown').val(item.id); 
 			   }
 			});
@@ -2292,7 +2297,7 @@
 	
 			$(document).ready(function() {
 				
-				$('#program_name_inputselect').change(function(){
+			/* 	$('#program_name_inputselect').change(function(){
 					/* $('#glcode_dropdown').val(''); 
  					if(responseOnload.businessUnit=='P'){
 						key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
@@ -2304,7 +2309,7 @@
 						   $('#glcode_dropdown').val(item.id); 
 					   }
 					}); */
-					if($('#optionsRadiosTierYes').is(':checked')){
+					/*if($('#optionsRadiosTierYes').is(':checked')){
 						id=$('#achieve_basedon_inputselect option:selected').val();	
 					}else{
 						id=$('#paid_basedon_inputselect option:selected').val();
@@ -2312,7 +2317,7 @@
 					populateGlcode(id);
 					
 				});
-				
+				 */
 				
 				
 				$('#paid_basedon_inputselect').change(function(){

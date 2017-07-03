@@ -351,6 +351,7 @@ public class ProgramServiceHelper {
 					}
 					
 				});
+				
 				Set<Integer> workflowIdSet = new HashSet<Integer>();
 				for(DalWorkflowStatus dalWorkflowStatus : dalWorkflowStatusList){
 					/**@ times, workflow status list from hibernate is having duplicate rows. 
@@ -371,4 +372,38 @@ public class ProgramServiceHelper {
 			}
 		}
 	}
+	
+	/**
+	 * populateWorkflowStatusData method is used to get the latest workflow status details.
+	 * @param programHeader programHeader
+	 * @param dalProgramDetail dalProgramDetail
+	 */
+	public static void populateWorkflowStatusDataAfterUpdate(ProgramHeader programHeader, List<DalWorkflowStatus> dalWorkflowStatusList) {
+		if(programHeader != null && dalWorkflowStatusList != null && !dalWorkflowStatusList.isEmpty()){
+			Set<Integer> workflowIdSet = new HashSet<Integer>();
+			if(programHeader.getProgramWorkflowStatusList() == null){
+				programHeader.setProgramWorkflowStatusList(new ArrayList<ProgramWorkflowStatus>());
+			}
+			else{
+				programHeader.getProgramWorkflowStatusList().clear();
+			}
+			for(DalWorkflowStatus dalWorkflowStatus : dalWorkflowStatusList){
+				/**@ times, workflow status list from hibernate is having duplicate rows. 
+				 * Below condition is to added to handle the duplicate rows.*/
+				boolean isUnique = workflowIdSet.add(dalWorkflowStatus.getId());
+				if(!isUnique){
+					continue;
+				}
+				ProgramWorkflowStatus programWorkflowStatus = new ProgramWorkflowStatus();
+				
+				programWorkflowStatus.setApprovalDate(dalWorkflowStatus.getModifiedDate().getTime());
+				programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
+				programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
+				programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
+				
+				programHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
+			}
+		}
+	}
+	
 }

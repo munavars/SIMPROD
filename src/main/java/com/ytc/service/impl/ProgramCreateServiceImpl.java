@@ -79,6 +79,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			if(programHeader.getStatus() != null){
 				dalProgramHeader.setStatus(baseDao.getById(DalStatus.class, ProgramServiceHelper.convertToInteger(programHeader.getStatus())));	
 			}
+			dalProgramHeader.setRequestDate(Calendar.getInstance());	
 		}
 		DalProgramDetail dalProgramDetail =  createProgramDetailsData(programHeader);
 		dalProgramDetail.setDalProgramHeader(dalProgramHeader);
@@ -86,8 +87,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		setApproverLevelStatus(dalProgramDetail, programHeader, serviceContext.getEmployee());
 		if(dalProgramHeader != null && dalProgramHeader.getDalProgramDetailList() != null){
 			dalProgramHeader.getDalProgramDetailList().add(dalProgramDetail);
-			dalProgramHeader.setCreatedBy(dalProgramDetail.getCreatedBy());
-			dalProgramHeader.setModifiedBy(dalProgramDetail.getModifiedBy());
+			
+			/*dalProgramHeader.setCreatedBy(dalProgramDetail.getCreatedBy());
+			dalProgramHeader.setModifiedBy(dalProgramDetail.getModifiedBy());*/
 		}
 		dalProgramDetail.setDalProgramHeader(dalProgramHeader);
 		
@@ -136,6 +138,8 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			else{
 				programHeader.setNewProgram(false);
 			}
+			programHeader.setRequestedDate( (dalProgramHeader.getRequestDate() != null ) ? dalProgramHeader.getRequestDate().getTime() : null);
+			programHeader.setCreatedDate(dalProgramDetail.getCreatedDate().getTime());
 		}
 		
 		return programHeader;

@@ -1615,7 +1615,13 @@
 							var idAfter = responseOnload.programDetailList[0].id;
 							if(idBefore != idAfter){
 								var newMessage = "New program id generated : <strong>"+ idAfter + "</strong><br> <br>"+ message;
-								message = newMessage; 
+								message = newMessage;
+								if(responseOnload.requestedDate != null){
+				               		$('#requestedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.requestedDate)));
+				               	}
+				               	if(responseOnload.createdDate != null){
+				               		$('#createdDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.createdDate)));
+				               	} 
 							}
 							$("#confirmMessage").html(message);
 							$('#myModal4').modal('toggle');

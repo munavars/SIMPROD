@@ -135,8 +135,33 @@ public class UserController extends BaseController {
 		}
 		return returnModel;
 	}
+	
+	@RequestMapping(value = "processLogin", method = { RequestMethod.GET } )
+	public String navigateToLoginPageOrDashboard(HttpServletRequest request, Model model) {
+		String userName = null;
+		String returnModel = null;
+		if(request != null){
+			String theUserid = request.getParameter("userid");
+			if(theUserid != null && !theUserid.isEmpty()){
+				return "login";
+			}
+		}
+		if(serviceContext != null && serviceContext.getEmployee() != null){
+			userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			model.addAttribute("loginUserNameValue", userName);
+			List<Employee> employee=new ArrayList<Employee>();
+			employee.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employee);
+			returnModel = "index";
+		}
+		if(serviceContext == null || userName == null){
+			returnModel = "login";
+		}
+		
+		return returnModel;
+	}
 
-	@RequestMapping(value = "processLogin", method = { RequestMethod.GET, RequestMethod.POST })
+	@RequestMapping(value = "processLogin", method = { RequestMethod.POST } )
 	// public String validateLoginPage() {
 	public String validateLoginPage(HttpServletRequest request, Model model) {
 

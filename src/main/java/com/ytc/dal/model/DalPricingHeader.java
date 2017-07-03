@@ -148,7 +148,7 @@ public class DalPricingHeader extends DalAuditableModel{
 	public void setModifiedBy(DalEmployee modifiedBy) {
 		if(dalPricingDetailList != null && !dalPricingDetailList.isEmpty()){
 			for(DalPricingDetail dalPricingDetail : dalPricingDetailList){
-				dalPricingDetail.setModifiedBy(createdBy);
+				dalPricingDetail.setModifiedBy(modifiedBy);
 			}
 		}
 		if(dalWorkflowStatusForPricingList != null && !dalWorkflowStatusForPricingList.isEmpty()){
@@ -164,8 +164,8 @@ public class DalPricingHeader extends DalAuditableModel{
 					if(dalWorkflowStatus.getApprover() == null){
 						dalWorkflowStatus.setApprover(modifiedBy);	
 					}
-					dalWorkflowStatus.setModifiedBy(modifiedBy);
 				}
+				dalWorkflowStatus.setModifiedBy(modifiedBy);
 			}
 		}
 		super.setModifiedBy(modifiedBy);

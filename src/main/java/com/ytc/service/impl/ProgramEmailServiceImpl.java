@@ -193,8 +193,8 @@ public class ProgramEmailServiceImpl implements IProgramEmailService {
 		
 		if(dalProgramDetail != null && programHeader != null){
 			List<DalWorkflowStatus> dalWorkflowStatusList = dalProgramDetail.getDalWorkflowStatusList();
-			Collections.sort(dalWorkflowStatusList, new WorkflowStatusComparatorByModifiedDate());
 			if(dalWorkflowStatusList != null){
+				Collections.sort(dalWorkflowStatusList, new WorkflowStatusComparatorByModifiedDate());
 				if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
 					/**To and CC list are possible.*/
 					toEmailIdList.add(dalProgramDetail.getCreatedBy().getEMAIL());

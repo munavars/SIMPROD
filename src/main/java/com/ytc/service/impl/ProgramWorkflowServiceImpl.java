@@ -98,7 +98,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 		
 		ProgramWorkflowMatrixDetail programWorkflowMatrixDetail = null;
 				
-		programWorkflowMatrixDetail = getWorkflowMatrixManipualtedData(dalProgramDetail, employee, dalStatusList);
+		programWorkflowMatrixDetail = getWorkflowMatrixManipualtedData(dalProgramDetail, employee, dalStatusList, programHeader);
 		
 		if(programWorkflowMatrixDetail != null){
 			
@@ -145,7 +145,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 	}
 
 	private ProgramWorkflowMatrixDetail getWorkflowMatrixManipualtedData(DalProgramDetail dalProgramDetail, Employee employee,
-																		List<DalStatus> dalStatusList) {
+																		List<DalStatus> dalStatusList, ProgramHeader programHeader) {
 		
 		ProgramWorkflowMatrixDetail programWorkflowMatrixDetail = null;
 		Map<String, Object> inputParameters = new HashMap<String, Object>();
@@ -205,6 +205,13 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 						currentUserLevel = userLevel;
 					}
 				}
+			}
+			/**
+			 * Below condition is added for defect id - YR-196.
+			 * Same person can be a approver.
+			 */
+			if(programHeader.getProgramButton().isCreater()){
+				currentUserLevel = 0;
 			}
 			programWorkflowMatrixDetail.setCurrentUserLevel(currentUserLevel);
 			programWorkflowMatrixDetail.setTotalLevel(userLevel);

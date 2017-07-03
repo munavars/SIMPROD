@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.persistence.NoResultException;
 
@@ -224,7 +225,7 @@ public class ProgramServiceImpl implements IProgramService {
 					if(amountTypeTier == null){
 						amountTypeTier = dalProgramDetailTier.getTierType();
 					}
-					detail.setAmount(new BigDecimal(dalProgramDetailTier.getAmount()).setScale(2,BigDecimal.ROUND_DOWN));
+					detail.setAmount(new BigDecimal(dalProgramDetailTier.getAmount()));
 					detail.setBeginRange(dalProgramDetailTier.getBeginRange());
 					programTierDetailSet.add(detail);
 				}
@@ -411,7 +412,13 @@ public class ProgramServiceImpl implements IProgramService {
 		programHeader.setStatus( ProgramServiceHelper.convertToString(dalProgramDetail.getStatus().getType()));
 		programDetail.setTbpcheck(dalProgramDetail.getTbpCheck());
 		programDetail.setGlCode(dalProgramDetail.getGlCode());
+		if(dalProgramDetail.getCreatedDate() != null){
+			programDetail.setCreatedDate( ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));			
+		}
 		
+		if(dalProgramDetail.getModifiedDate() != null){
+			programDetail.setModifiedDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT) );
+		}
 	}
 
 	/**
@@ -1046,6 +1053,8 @@ public class ProgramServiceImpl implements IProgramService {
 					}
 					dropdownList.add(dropDown);
 				}
+				dropdownList = dropdownList.stream().sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue())).collect(Collectors.toList());	
+				
 			}
 			
 		}

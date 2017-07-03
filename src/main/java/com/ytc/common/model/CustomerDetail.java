@@ -93,7 +93,7 @@ public class CustomerDetail extends Model {
 	 */
 	public String getBu() {
 		
-		return ("P".equalsIgnoreCase(bu)?"Consumer":"Customer");
+		return ("P".equalsIgnoreCase(bu)?"CONSUMER":"COMMERCIAL");
 		//return bu;
 	}
 

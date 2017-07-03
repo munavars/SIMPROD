@@ -7,11 +7,17 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "WORKFLOW_STATUS")
+@NamedQueries({
+	@NamedQuery(name="DalWorkflowStatus.getProgramWorkflowDetails", query = "select o from DalWorkflowStatus o "
+																+ "where o.dalProgramDetailWf.id = :programDetailId order by id")
+})
 public class DalWorkflowStatus extends DalAuditableModel{
 
 	/**

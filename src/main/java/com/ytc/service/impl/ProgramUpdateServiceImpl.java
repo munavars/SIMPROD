@@ -28,6 +28,7 @@ import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
 import com.ytc.dal.model.DalStatus;
 import com.ytc.dal.model.DalUserComments;
+import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramEmailService;
@@ -161,9 +162,25 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			programHeader.setNewProgram(false);
 		}
 		programHeader.setSuccess(true);
-		ProgramServiceHelper.populateWorkflowStatusData(programHeader, dalProgramDetail);
+		
+		if(dalProgramDetail.getCreatedDate() != null){
+			programHeader.getProgramDetailList().get(0).setCreatedDate( ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));			
+		}
+		
+		if(dalProgramDetail.getModifiedDate() != null){
+			programHeader.getProgramDetailList().get(0).setModifiedDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT) );
+		}
+		getUpdatedWorkflowDetails(programHeader, dalProgramDetail);
 		programHeader.setStatus(dalProgramDetail.getStatus().getType());
 		programEmailService.sendEmailData(programHeader, dalProgramDetail);
+	}
+
+	private void getUpdatedWorkflowDetails(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+		//DalWorkflowStatus.getProgramWorkflowDetails
+		Map<String, Object> inputParam = new HashMap<String,Object>();
+		inputParam.put("programDetailId", dalProgramDetail.getId());
+		List<DalWorkflowStatus> dalWorkflowStatusList = baseDao.getListFromNamedQueryWithParameter("DalWorkflowStatus.getProgramWorkflowDetails", inputParam);
+		ProgramServiceHelper.populateWorkflowStatusDataAfterUpdate(programHeader, dalWorkflowStatusList);
 	}
 	
 	private void saveUserComments(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {

@@ -4,6 +4,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.ytc.service.ICcmService;
 import com.ytc.service.ICustomerService;
 import com.ytc.service.IEmployeeService;
 import com.ytc.service.IPaidBasedOnService;
@@ -33,6 +34,8 @@ public class ServiceLocator implements IServiceLocator, ApplicationContextAware
     private IProgramService programService;
     
     private IPricingService pricingService;
+    
+    private ICcmService ccmService;
         
     private IProgramUpdateService programPersistService;
     
@@ -92,6 +95,15 @@ public class ServiceLocator implements IServiceLocator, ApplicationContextAware
         }
         return pricingService;
 	}
+	
+	@Override
+	public ICcmService getCcmService() {
+        if (ccmService == null) {
+        	ccmService = (ICcmService) appContext.getBean("ccmService");
+        }
+        return ccmService;
+	}
+	
 	@Override
 	public IProgramUpdateService getProgramPersistService() {
         if (programPersistService == null) {

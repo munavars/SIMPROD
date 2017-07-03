@@ -66,4 +66,7 @@
 	
 	<bean id="pricingEmailService" class="com.ytc.service.impl.PricingEmailServiceImpl">
 	</bean>
+	
+	<bean id="ccmService" class="com.ytc.service.impl.CcmServiceImpl">
+	</bean>
 </beans>

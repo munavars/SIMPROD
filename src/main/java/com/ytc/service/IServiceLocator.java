@@ -11,4 +11,5 @@ public interface IServiceLocator {
 	IPricingService getPricingService();
 	IProgramUpdateService getProgramPersistService();
 	IPricingUpdateService getPricingPersistService();
+	ICcmService getCcmService();
 }

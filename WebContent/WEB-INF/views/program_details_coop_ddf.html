@@ -425,7 +425,7 @@
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
 																data-placement="top" rows="3"
-																placeholder="Add program description description details"
+																placeholder="Add program description details"
 																class="form-control m-bot15"></textarea>
 														</div>
 													</div>
@@ -879,6 +879,29 @@
     <script type="text/javascript">
 
       $(document).ready(function () {
+      		$.validator.addMethod("amountValidation", function (value, element) {
+				var isNumber = true;
+				var regex = /^[0-9.,]+$/;
+				if( !regex.test(value) ) {
+				  isNumber = false;
+				}
+			    return isNumber;
+			}, 'Please enter valid amount');
+			
+			$.validator.addMethod("percentageValidation", function (value, element) {
+				var isPercentage = true;
+				var regex = /^[0-9.]+$/;
+				if( !regex.test(value)) {
+				  isPercentage = false;
+				}
+				else{
+					if(value > 100){
+						isPercentage = false;	
+					}
+				}
+			    return isPercentage;
+			}, 'Please enter valid percentage');
+			
       		$("#wizard-validation-form").validate({
 				rules: {
 					program_name_inputselect: {
@@ -904,7 +927,16 @@
 					},
 					amount: {
 						required: true,
-						number: false
+						amountValidation:{
+							depends: function(element) {
+								return ($('#optionsRadiosDollarSign').is(':checked'));
+							}
+						},
+						percentageValidation:{
+							depends: function(element) {
+								return ($('#optionsRadiosPercentage').is(':checked'));
+							}
+						}
 					},
 					glcode_dropdown:{
 						required: true
@@ -1164,13 +1196,13 @@
                	
                	/*Program Detail Section*/
                	$("#detailProgramId").val(response.data.programDetailList[0].id);
-               	$("#amount").val(response.data.programDetailList[0].amount);
                	if(response.data.programDetailList[0].amountType == "%"){
                		$("#optionsRadiosPercentage").prop('checked', true);
                	}
                	else{
                		$("#optionsRadiosDollarSign").prop('checked', true);
-               	}  
+               	}
+               	$("#amount").val(convertAmountFormat(response.data.programDetailList[0].amount));  
                	
                	$('#from').datepicker({ 
    					dateFormat: 'mm/dd/yy'
@@ -1424,7 +1456,7 @@
 
          	function prepareDataForSubmit(){
          		responseOnload.url = window.location.href;
-				responseOnload.programDetailList[0].amount = $("#amount").val().replace(/,/g, "");
+				responseOnload.programDetailList[0].amount = removeCommaFromAmount($("#amount").val());
 				responseOnload.programDetailList[0].amountType = $('input:radio[name=optionsRadiosDenomination]:checked').val();
  				responseOnload.programDetailList[0].beginDate = $.datepicker.parseDate( "mm/dd/yy", $('#from').val());
 				responseOnload.programDetailList[0].endDate = $.datepicker.parseDate( "mm/dd/yy", $('#to').val());  
@@ -1639,14 +1671,14 @@
 			    $('#rejectionComments').focus();
 			})
 			
-			 $(document).on('keyup', "#amount", function () {
+			/*  $(document).on('keyup', "#amount", function () {
 					var value = $(this).val();
 					if(value != null && value != 'undefined' ){
 						 value = value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 						    $(this).val(value);
             		}
 				   
-				}); 
+				});  */
 			function cancellink(modalId){
 				if(_isDirty){
 					$('#myModal11').modal('toggle');
@@ -1659,6 +1691,38 @@
 			{
 			  window.location.href="/SIM/customer?custId=" + responseOnload.customerId; 
 			}	
+
+			$("#amount").blur(function(){
+				if($('input:radio[name=optionsRadiosDenomination]:checked').val() == '$'){
+					$("#amount").val(convertAmountFormat($("#amount").val()));
+				}
+			});
+			
+			function convertAmountFormat(amount){
+				if(amount != null && amount != 0){
+					/*Remove comma's if already present*/
+					amount =  amount.toString().replace(/\,/g,'');
+					if(!isNaN(amount)){
+						amount = parseFloat(amount).toFixed(2);
+						var withCommas = Number(amount).toLocaleString('en',
+																{ minimumFractionDigits: 2 });
+																
+						return withCommas;
+					}
+				}
+				
+				return amount;
+			}
+			
+			function removeCommaFromAmount(amount){
+				if(amount != null){
+					return  amount.toString().replace(/\,/g,'');
+				}
+			}
+			$('input[type=radio][name=optionsRadiosDenomination]').change(function() {
+				$("#amount").val("");
+				$("#amount").valid();
+			});
 
 	</script>
 	

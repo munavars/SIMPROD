@@ -275,6 +275,7 @@ public class PdfGenerator {
 		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         table.addCell(cell1);	 
 	         }
+
 	         DecimalFormat format1 = new DecimalFormat("#,###.00");
 	         if(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered())){
 	        	 if(dalpgm.getAccrualAmount()==0)	{
@@ -284,8 +285,18 @@ public class PdfGenerator {
 	        	 }
 
 	         }else{
-	        	 cell1 = new PdfPCell(new Paragraph("Amount: "));	 
+	        	 if(!ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalpgm.getDalProgramType().getType())){
+		        	 if(dalpgm.getAccrualAmount()==0)	{
+		        		 cell1 = new PdfPCell(new Paragraph("Amount: 0"+dalpgm.getAccrualType()));
+		        	 }else{
+		    	         cell1 = new PdfPCell(new Paragraph("Amount: "+ format1.format(dalpgm.getAccrualAmount())+dalpgm.getAccrualType()));
+		        	 }
+	        	 }
+	        	 else{
+	        		 cell1 = new PdfPCell(new Paragraph("Amount: "));	 
+	        	 }
 	         }
+
 	         cell1.setBorderColor(BaseColor.BLACK);
 	         cell1.setPaddingLeft(10);
 	         //cell6.setHorizontalAlignment(Element.ALIGN_CENTER);

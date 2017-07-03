@@ -364,7 +364,7 @@
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
 																data-placement="top" rows="3"
-																placeholder="Add program description description details"
+																placeholder="Add program description details"
 																class="form-control m-bot15"></textarea>
 														</div>
 													</div>
@@ -1196,12 +1196,50 @@
 			    return isSame;
 			}, 'Accrued Tier should match tier value available');
 			$.validator.addMethod("amountValidation", function (value, element) {
-				var isNumber = false;
-				if (!isNaN(value)){
-					isNumber=true;
+				var isNumber = true;
+				var regex = /^[0-9.,]+$/;
+				if( !regex.test(value) ) {
+				  isNumber = false;
 				}
 			    return isNumber;
 			}, 'Please enter valid amount');
+			
+			$.validator.addMethod("percentageValidation", function (value, element) {
+				var isPercentage = true;
+				var regex = /^[0-9.]+$/;
+				if( !regex.test(value)) {
+				  isPercentage = false;
+				}
+				else{
+					if(value > 100){
+						isPercentage = false;	
+					}
+				}
+			    return isPercentage;
+			}, 'Please enter valid percentage');
+			
+			$.validator.addMethod("amountValidationTier", function (value, element) {
+				var isNumber = true;
+				var regex = /^[0-9.,]+$/;
+				if( !regex.test(value) ) {
+				  isNumber = false;
+				}
+			    return isNumber;
+			}, 'Please enter valid amount');
+			
+			$.validator.addMethod("percentageValidationTier", function (value, element) {
+				var isPercentage = true;
+				var regex = /^[0-9.]+$/;
+				if( !regex.test(value)) {
+				  isPercentage = false;
+				}
+				else{
+					if(value > 100){
+						isPercentage = false;	
+					}
+				}
+			    return isPercentage;
+			}, 'Please enter valid percentage');
       
 			$("#wizard-validation-form").validate({
 				rules: {
@@ -1225,7 +1263,16 @@
 					},
 					amount: {
 						required: true,
-						number: true
+						amountValidation:{
+							depends: function(element) {
+								return ($('#optionsRadiosDollarSign').is(':checked'));
+							}
+						},
+						percentageValidation:{
+							depends: function(element) {
+								return ($('#optionsRadiosPercentage').is(':checked'));
+							}
+						}
 					},
 					optionsRadiosDenomination: {
 						required: true
@@ -1260,6 +1307,19 @@
 						required :{
 							depends: function(element) {
 								return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
+							}
+						}
+					},
+					tier_amount: {
+						required: true,
+						amountValidationTier:{
+							depends: function(element) {
+								return ($('#optionsRadiosDollarSignTier1').is(':checked'));
+							}
+						},
+						percentageValidationTier:{
+							depends: function(element) {
+								return ($('#optionsRadiosPercentageTier1').is(':checked'));
 							}
 						}
 					},
@@ -1522,12 +1582,14 @@
                	
                	/*Program Detail Section*/
                	$("#detailProgramId").val(response.data.programDetailList[0].id);
-               	$("#amount").val(response.data.programDetailList[0].amount);
+               	
                	if(response.data.programDetailList[0].amountType == "%"){
                		$("#optionsRadiosPercentage").prop('checked', true);
+               		$("#amount").val(response.data.programDetailList[0].amount);
                	}
                	else{
                		$("#optionsRadiosDollarSign").prop('checked', true);
+               		$("#amount").val( convertAmountFormat(response.data.programDetailList[0].amount));
                	}  
                	
                	$('#from').datepicker({ 
@@ -1783,16 +1845,22 @@
                 var table = $("#tier-schedule").DataTable();
                 if(tierData != null){
 	                $.each(tierData, function(idx, item) {
-	                	if((item.amount.toString().indexOf(".")==-1)&&("0"!=item.amount.toString())){
+	                	/* if((item.amount.toString().indexOf(".")==-1)&&("0"!=item.amount.toString())){
 	                		tieramount=item.amount.toString()+".00";
 	                		tieramount=tieramount.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	                	}else{
 	                		tieramount=item.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	                	} */
+	                	if($('input:radio[name=optionsRadiosDenominationTier]:checked').val() == '$'){
+	                		tieramount = convertAmountFormat(item.amount.toString());
 	                	}
-							table.fnAddData([item.level, tieramount,item.beginRange,
-											'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
-											'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
-	                    ]);
+	                	else{
+	                		tieramount = item.amount;
+	                	}
+						table.fnAddData([item.level, convertAmountFormat(tieramount),item.beginRange,
+										'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
+										'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
+                    	]);
 	                });
                 }
                 table.fnDraw();
@@ -1848,7 +1916,7 @@
 
          	function prepareDataForSubmit(){
          		responseOnload.url = window.location.href;
-				responseOnload.programDetailList[0].amount = $("#amount").val().replace(/,/g, "");
+				responseOnload.programDetailList[0].amount = removeCommaFromAmount($("#amount").val());
 				responseOnload.programDetailList[0].amountType = $('input:radio[name=optionsRadiosDenomination]:checked').val();
  				responseOnload.programDetailList[0].beginDate = $.datepicker.parseDate( "mm/dd/yy", $('#from').val());
 				responseOnload.programDetailList[0].endDate = $.datepicker.parseDate( "mm/dd/yy", $('#to').val());  
@@ -2023,8 +2091,7 @@
 				}
 					
 			}
-			function forwardToCustomerPage()
-			{
+			function forwardToCustomerPage(){
 			  window.location.href="/SIM/customer?custId=" + responseOnload.customerId; 
 			}
 			function fnCallService(message, idBefore, action){
@@ -2104,7 +2171,7 @@
                     programDetailTier.programDetailId = responseOnload.programDetailList[0].id;
                     programDetailTier.level = parseInt(marker);
                     //programDetailTier.amount = parseInt(amount);
-                    programDetailTier.amount = parseFloat(amount.replace(/,/g, ""));
+                    programDetailTier.amount = parseFloat(removeCommaFromAmount(amount));
                     programDetailTier.tierType = tiertype;
                     programDetailTier.beginRange = parseInt(range.replace(regex, ''));
                    
@@ -2262,23 +2329,27 @@
 				});
 				
 				
-				$(document).on('keyup', "#tier_amount", function () {
+				$(document).on('blur', "#tier_amount", function () {
 					var value = $(this).val();
-					if(value != null && value != 'undefined' ){
-						 value = value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-						    $(this).val(value);
+					if(value != null && value != 'undefined' && $('input:radio[name=optionsRadiosDenominationTier]:checked').val() == '$' ){
+						 /* value = value.toString().replace(/,/g, ""); */
+						  value = convertAmountFormat(value); 
+						 /* value = parseFloat(amount).toFixed(2); */
+						 /* value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						 value = parseFloat(value).toFixed(2); */ 
+						 $(this).val(value);
             		}
 				   
-				});
+				}); 
 				
-				 $(document).on('keyup', "#amount", function () {
+				/*  $(document).on('keyup', "#amount", function () {
 					var value = $(this).val();
 					if(value != null && value != 'undefined' ){
 						 value = value.toString().replace(/,/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 						    $(this).val(value);
             		}
 				   
-				});  
+				});   */
 				
 				    
 				$('#copy-paid-info-btn').click(function () {
@@ -2310,6 +2381,38 @@
 			
 			$(':input').change(function(){
 				_isDirty = true;
+			});
+			
+			$("#amount").blur(function(){
+				if($('input:radio[name=optionsRadiosDenomination]:checked').val() == '$'){
+					$("#amount").val(convertAmountFormat($("#amount").val()));
+				}
+			});
+			
+			function convertAmountFormat(amount){
+				if(amount != null && amount != 0){
+					/*Remove comma's if already present*/
+					amount = amount.toString().replace(/,/g, "");
+					if(!isNaN(amount)){
+						amount = parseFloat(amount).toFixed(2);
+						var withCommas = Number(amount).toLocaleString('en',
+																{ minimumFractionDigits: 2 });
+																
+						return withCommas;
+					}
+				}
+				
+				return amount;
+			}
+			
+			function removeCommaFromAmount(amount){
+				if(amount != null){
+					return amount.toString().replace(/\,/g,'');
+				}
+			}
+			$('input[type=radio][name=optionsRadiosDenomination]').change(function() {
+				$("#amount").val("");
+				$("#amount").valid();
 			});
 	</script>
 

@@ -1455,7 +1455,7 @@
         	$.ajax({ 
              	type: "GET",
              	dataType: "json",
-            	url: '/SIM/isTbpUser',
+            	url: '/SIM/isTbpUser?buster='+new Date().getTime(),
              	success: function(response){
              		if(!response){
              			$("#tbpchk").hide();

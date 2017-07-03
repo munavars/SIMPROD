@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "GL_CODE")
 @NamedQueries({
-	@NamedQuery(name="DalGLCode.getAllDetails", query = "select o from DalGLCode o")
+	@NamedQuery(name="DalGLCode.getAllDetails", query = "select o from DalGLCode o order by o.glNo")
 })
 public class DalGLCode extends DalModel {
 private static final long serialVersionUID = 1L;

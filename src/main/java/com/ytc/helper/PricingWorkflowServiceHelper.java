@@ -86,7 +86,7 @@ public class PricingWorkflowServiceHelper {
 		
 		if(employee.getEMP_ID() != null){
 			
-			if(dalProgramHeader.getDalWorkflowStatusForPricingList() != null){
+			if(dalProgramHeader.getDalWorkflowStatusForPricingList() != null && !dalProgramHeader.getDalWorkflowStatusForPricingList().isEmpty()){
 				List<DalWorkflowStatus> dalWorkflowStatusList =  dalProgramHeader.getDalWorkflowStatusForPricingList(); 
 				Collections.sort(dalWorkflowStatusList, new WorkflowStatusComparatorByModifiedDate());
 				int size = dalWorkflowStatusList.size();

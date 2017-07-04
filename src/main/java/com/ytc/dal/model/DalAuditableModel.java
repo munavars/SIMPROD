@@ -5,8 +5,8 @@ import java.util.Calendar;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToOne;
 
 
 @MappedSuperclass
@@ -43,7 +43,7 @@ public abstract class DalAuditableModel extends DalModel {
         this.createdDate = m.createdDate;
     }
 
-    @ManyToOne(targetEntity = com.ytc.dal.model.DalEmployee.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = com.ytc.dal.model.DalEmployee.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "CREATED_BY", updatable = false, insertable = true)
     public DalEmployee getCreatedBy() {
         return createdBy;
@@ -62,7 +62,7 @@ public abstract class DalAuditableModel extends DalModel {
         this.createdDate = createdDate;
     }
 
-    @ManyToOne(targetEntity = com.ytc.dal.model.DalEmployee.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = com.ytc.dal.model.DalEmployee.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "MODIFIED_BY")
     public DalEmployee getModifiedBy() {
         return modifiedBy;

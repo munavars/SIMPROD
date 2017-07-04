@@ -103,7 +103,7 @@ public class PricingWorkflowServiceImpl implements IPricingWorkflowService {
 
 		ProgramWorkflowMatrixDetail programWorkflowMatrixDetail = null;
 
-		programWorkflowMatrixDetail = getWorkflowMatrixManipulatedData(dalPricingHeader, employee, dalStatusList);
+		programWorkflowMatrixDetail = getWorkflowMatrixManipulatedData(dalPricingHeader, employee, dalStatusList, pricingHeader);
 
 		if (programWorkflowMatrixDetail != null) {
 
@@ -152,7 +152,7 @@ public class PricingWorkflowServiceImpl implements IPricingWorkflowService {
 	}
 
 	private ProgramWorkflowMatrixDetail getWorkflowMatrixManipulatedData(DalPricingHeader dalPricingHeader,
-			Employee employee, List<DalStatus> dalStatusList) {
+			Employee employee, List<DalStatus> dalStatusList, PricingHeader pricingHeader) {
 
 		ProgramWorkflowMatrixDetail programWorkflowMatrixDetail = null;
 		Map<String, Object> inputParameters = new HashMap<String, Object>();
@@ -201,6 +201,13 @@ public class PricingWorkflowServiceImpl implements IPricingWorkflowService {
 						currentUserLevel = userLevel;
 					}
 				}
+			}
+			/**
+			 * Below condition is added for defect id - YR-196.
+			 * Same person can be a approver.
+			 */
+			if(pricingHeader.getProgramButton().isCreater()){
+				currentUserLevel = 0;
 			}
 			programWorkflowMatrixDetail.setCurrentUserLevel(currentUserLevel);
 			programWorkflowMatrixDetail.setTotalLevel(userLevel);

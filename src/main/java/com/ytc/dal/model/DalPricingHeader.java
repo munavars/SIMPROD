@@ -5,6 +5,7 @@ package com.ytc.dal.model;
 
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -34,7 +35,7 @@ public class DalPricingHeader extends DalAuditableModel{
 	private DalStatus dalStatus;
 	private DalProgramType dalProgramType;
 	
-	private List<DalPricingDetail> dalPricingDetailList;
+	private Set<DalPricingDetail> dalPricingDetailList;
 	
 	private List<DalWorkflowStatus> dalWorkflowStatusForPricingList;
 	
@@ -123,14 +124,14 @@ public class DalPricingHeader extends DalAuditableModel{
 	/**
 	 * @return the dalPricingDetailList
 	 */
-	@OneToMany(mappedBy = "dalPricingHeader", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	public List<DalPricingDetail> getDalPricingDetailList() {
+	@OneToMany(mappedBy = "dalPricingHeader", cascade=CascadeType.ALL, fetch=FetchType.EAGER, orphanRemoval = true)
+	public Set<DalPricingDetail> getDalPricingDetailList() {
 		return dalPricingDetailList;
 	}
 	/**
 	 * @param dalPricingDetailList the dalPricingDetailList to set
 	 */
-	public void setDalPricingDetailList(List<DalPricingDetail> dalPricingDetailList) {
+	public void setDalPricingDetailList(Set<DalPricingDetail> dalPricingDetailList) {
 		this.dalPricingDetailList = dalPricingDetailList;
 	}
 	

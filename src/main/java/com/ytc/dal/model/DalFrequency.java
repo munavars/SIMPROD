@@ -2,7 +2,6 @@ package com.ytc.dal.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -13,6 +12,10 @@ import javax.persistence.Table;
 	@NamedQuery(name="DalFrequency.getAllDetailsWithSort", query = "select o from DalFrequency o order by o.sortSequence")
 })
 public class DalFrequency extends DalModel {
+	/**
+	 * Default serial version id.
+	 */
+	private static final long serialVersionUID = 1L;
 	private String frequency;
 	private Integer sortSequence;
 

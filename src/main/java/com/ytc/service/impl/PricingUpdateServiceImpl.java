@@ -31,6 +31,7 @@ import com.ytc.dal.model.DalPricingShipRequirements;
 import com.ytc.dal.model.DalPricingTermCodes;
 import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalStatus;
+import com.ytc.helper.PricingServiceHelper;
 import com.ytc.helper.PricingWorkflowServiceHelper;
 import com.ytc.service.IPricingEmailService;
 import com.ytc.service.IPricingUpdateService;
@@ -115,7 +116,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 
 	private void updatePricingHeaderData(DalPricingHeader dalPricingHeader, PricingHeader pricingHeader) {
 		if (pricingHeader != null && dalPricingHeader != null) {
-
+			List<DalPricingDetail> deletedDalPricingDetailList = null;
 			if (validateCustomerId(pricingHeader) && validatePartProdTread(pricingHeader)) {
 								
 				/**Set Pricing request status*/
@@ -130,25 +131,27 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 					dalPricingHeader.setUserComments(
 							StringUtils.isEmpty(pricingHeader.getUserComments()) ? "" : pricingHeader.getUserComments());
 
-					/** Delete the detail information and re save it. This logic has to be revisited.*/
-					
-					/*if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
-						for(DalPricingDetail dalPricingDetail : dalPricingHeader.getDalPricingDetailList()){
-							baseDao.delete(DalPricingDetail.class, dalPricingDetail.getId());
+					/** Save pricing Detail section information */
+					if(pricingHeader.getProgramButton().isCreater()){
+						/***
+						 * Only if the logged in user is creater, there is a chance that, below information will be modified.
+						 */
+						deletedDalPricingDetailList = updatePricingDetailsData(pricingHeader, dalPricingHeader);
+						
+						if(deletedDalPricingDetailList != null && !deletedDalPricingDetailList.isEmpty()){
+							
+							for(DalPricingDetail dalPricingDetail : deletedDalPricingDetailList){
+								dalPricingHeader.getDalPricingDetailList().remove(dalPricingDetail);
+							}
 						}
 					}
-					*//** Save pricing Detail section information *//*
-					List<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
-																							dalPricingHeader);
-
-					if (!dalPricingDetailsList.isEmpty()) {
-						dalPricingHeader.setDalPricingDetailList(dalPricingDetailsList);
-					}*/
 				}				
 
 				pricingWorkflowService.updateWorkflowDetails(dalPricingHeader, pricingHeader, serviceContext.getEmployee());
 				
-				baseDao.update(dalPricingHeader);
+				DalPricingHeader updatedHeader = baseDao.update(dalPricingHeader);
+
+				updatePricingDetailsDataForNewRecord(pricingHeader, updatedHeader);
 				
 				pricingEmailService.sendEmailData(pricingHeader, dalPricingHeader);
 				
@@ -162,6 +165,61 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 			}
 		}
 	}
+
+	private void updatePricingDetailsDataForNewRecord(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader) {
+		/**
+		 * When delete and insert happens in same call along with Pricing header, below excpetion is thrown. So for now, create is done separately.
+		 * Exception message faced - 'org.hibernate.AssertionFailure: possible non-threadsafe access to session'
+		 * */
+		if(pricingHeader.getProgramButton().isCreater() &&  pricingHeader != null && dalPricingHeader != null){
+			List<DalPricingDetail> addedDalPricingDetailList = PricingServiceHelper.updatedNewlyAddedRow(pricingHeader, dalPricingHeader);
+			if(addedDalPricingDetailList != null && !addedDalPricingDetailList.isEmpty()){
+				for(DalPricingDetail dalPricingDetail : addedDalPricingDetailList){
+					baseDao.create(dalPricingDetail);	
+				}
+				
+				populatePricingDetailData(pricingHeader, addedDalPricingDetailList);
+			}
+		}		
+	}	
+
+
+	private List<DalPricingDetail> updatePricingDetailsData(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader) {
+		List<DalPricingDetail> deletedDalPricingDetailList = null;
+		if(pricingHeader.getProgramButton().isCreater() &&  pricingHeader != null && dalPricingHeader != null){
+			Set<Integer> idPresentCurrently = PricingServiceHelper.getUpdatedIds(pricingHeader);
+			
+			/*Map<String, Object> inputParam = new HashMap<String, Object>();
+			inputParam.put("pricingHeaderId", dalPricingHeader.getId());
+			List<DalPricingDetail> dalPricingDetailList = baseDao.getListFromNamedQueryWithParameter("DalPricingDetail.getAllRecordsForPricingHeaderId", inputParam);*/
+			if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
+				for(Iterator<DalPricingDetail> iterator = dalPricingHeader.getDalPricingDetailList().iterator(); iterator.hasNext(); ){
+					DalPricingDetail dalPricingDetail = iterator.next();
+					if(idPresentCurrently.contains(dalPricingDetail.getId())){
+						/**
+						 * In UI, INVOICE demand table is read only and user cannot edit the existing.
+						 * So if the ID column already has any value, then there will not be any modification.
+						 * */
+						continue;
+					}
+					else{
+						if(deletedDalPricingDetailList == null){
+							deletedDalPricingDetailList = new ArrayList<DalPricingDetail>();
+						}
+						deletedDalPricingDetailList.add(dalPricingDetail);
+					}
+				}
+			}
+			/*if(deletedDalPricingDetailList != null && !deletedDalPricingDetailList.isEmpty()){
+				for(DalPricingDetail dalPricingDetail : deletedDalPricingDetailList){
+					baseDao.delete(DalPricingDetail.class, dalPricingDetail.getId());	
+				}
+			}*/
+			
+		}
+		return deletedDalPricingDetailList;
+	}
+
 
 	private void checkAndUpdatePricingHeaderData(DalPricingHeader dalPricingHeader, PricingHeader pricingHeader) {
 		
@@ -306,7 +364,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 						StringUtils.isEmpty(pricingHeader.getUserComments()) ? "" : pricingHeader.getUserComments());
 
 				/** Save pricing Detail section information */
-				List<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
+				Set<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
 																						dalPricingHeader);
 
 				if (!dalPricingDetailsList.isEmpty()) {
@@ -334,10 +392,10 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		}
 	}
 
-	private List<DalPricingDetail> createPricingDetailsData(PricingHeader pricingHeader,
+	private Set<DalPricingDetail> createPricingDetailsData(PricingHeader pricingHeader,
 			DalPricingHeader dalPricingHeader) {
 
-		List<DalPricingDetail> dalPricingDetailsList = new ArrayList<DalPricingDetail>();
+		Set<DalPricingDetail> dalPricingDetailsList = new HashSet<DalPricingDetail>();
 		DalPricingDetail dalPricingDetail = null;
 
 		for (PricingDetail pricingDetail : pricingHeader.getPricingDetailList()) {
@@ -352,7 +410,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 				cal1.setTimeInMillis(pricingDetail.getEndDate().getTime());
 				dalPricingDetail.setEndDate(cal1);
 				if (!StringUtils.isEmpty(pricingDetail.getInvoiceDisc())) {
-					dalPricingDetail.setInvoiceDisc(Double.valueOf(trimPercentage(pricingDetail.getInvoiceDisc())));
+					dalPricingDetail.setInvoiceDisc(Double.valueOf(PricingServiceHelper.trimPercentage(pricingDetail.getInvoiceDisc())));
 				}
 				if (!StringUtils.isEmpty(pricingDetail.getNetPrice())) {
 					dalPricingDetail.setNetPrice(Double.valueOf(pricingDetail.getNetPrice()));
@@ -373,17 +431,6 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		return dalPricingDetailsList;
 	}
 
-	public String trimPercentage(String str) {
-		if (!StringUtils.isEmpty(str)) {
-			if (str.charAt(str.length() - 1) == '%') {
-				str = str.replace(str.substring(str.length() - 1), "");
-				return str;
-			} else {
-				return str;
-			}
-		}
-		return str;
-	}
 
 	/*private boolean validatePartProdTreadOld(List<PricingDetail> pricingDetailsList) {
 		boolean isValidated = false;
@@ -535,5 +582,42 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		}
 		return validate;
 
+	}
+	
+	private void populatePricingDetailData(PricingHeader pricingHeader, List<DalPricingDetail> addedDalPricingDetailList) {
+		if(pricingHeader != null && addedDalPricingDetailList != null){
+			if(pricingHeader.getPricingDetailList() != null){
+				pricingHeader.getPricingDetailList().clear();
+			}
+			else{
+				pricingHeader.setPricingDetailList(new ArrayList<PricingDetail>());
+			}
+			Set<Integer> uniqueIds = null;
+			if(!addedDalPricingDetailList.isEmpty()){
+				uniqueIds = new HashSet<Integer>();
+				for(DalPricingDetail dalPricingDetail : addedDalPricingDetailList){
+					PricingDetail pricingDetail = new PricingDetail();
+					boolean isDuplicate = uniqueIds.add(dalPricingDetail.getId());
+					if(!isDuplicate){
+						continue;
+					}
+					pricingDetail.setAddChangeDel(dalPricingDetail.getAddChgDel());
+					pricingDetail.setBeginDate(dalPricingDetail.getStartDate().getTime());
+					pricingDetail.setEndDate(dalPricingDetail.getEndDate().getTime());
+					pricingDetail.setProdLine(dalPricingDetail.getProdLine());
+					pricingDetail.setTread(dalPricingDetail.getProdTread());
+					pricingDetail.setPart(dalPricingDetail.getPartNumber());
+					pricingDetail.setNetPrice(String.valueOf(dalPricingDetail.getNetPrice()));
+					pricingDetail.setInvoiceDisc(String.valueOf( dalPricingDetail.getInvoiceDisc()));
+					pricingDetail.setBonusUnits(dalPricingDetail.getIsBonusableUnits());
+					pricingDetail.setCommissionable(dalPricingDetail.getIsCommissionable());
+					pricingDetail.setComments(dalPricingDetail.getComments());
+					/*pricingDetail.setProgramId(programId);*/
+					pricingDetail.setId(dalPricingDetail.getId());
+					
+					pricingHeader.getPricingDetailList().add(pricingDetail);
+				}
+			}
+		}
 	}
 }

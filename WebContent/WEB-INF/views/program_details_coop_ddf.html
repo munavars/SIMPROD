@@ -1072,6 +1072,7 @@
 			}
 		   
 		   $.ajax({ 
+		   		cache: false,
             	type: "GET",
             	dataType: "json",
            	url: '/SIM/isTbpUser',
@@ -1131,6 +1132,7 @@
 		
 		$(window).ready(function(){
          	$.ajax({ 
+         		cache: false,
              	type: "GET",
              	dataType: "json",
             	url: url,

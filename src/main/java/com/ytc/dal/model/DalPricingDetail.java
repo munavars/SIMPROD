@@ -5,15 +5,19 @@ package com.ytc.dal.model;
 
 import java.util.Calendar;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "PRICING_DETAIL")
+@NamedQueries({
+	@NamedQuery(name="DalPricingDetail.getAllRecordsForPricingHeaderId", query = "select o from DalPricingDetail o where o.dalPricingHeader.id = :pricingHeaderId order by o.id")
+})
 public class DalPricingDetail extends DalAuditableModel{
 
 	/**

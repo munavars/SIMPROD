@@ -133,6 +133,7 @@ a { text-decoration: none }
 <script src="resources/js/xlsx.js"></script>
 <script>
 	var fileData ={};
+	var dataUploaded = false;
 	/*jshint browser:true */
 	/*global XLSX */
 	var X = XLSX;
@@ -238,7 +239,6 @@ a { text-decoration: none }
 		
 		// this approach is interesting if you need to dynamically create data in Javascript 
 			var metadata = [];
-			
 		// heading built successfully.  rows[0] = wd sheet name, rows[1] = blank space
 		for (var j = 0; j < rows.length; ++j) {
 			if (rows[j].length > 0) {
@@ -250,9 +250,10 @@ a { text-decoration: none }
 					if (j == 2 ) {
 						columnNames = oneRow;
 						for (var k = 0; k < columnNames.length; ++k) {
-							metadata.push({ name: columnNames[k], label: columnNames[k], datatype: "string", editable: true});
+							metadata.push({ name: columnNames[k], label: columnNames[k], datatype: "string", editable: false});
 							// alert("metadata: "+k+" "+columnNames[k]);
 						}
+						metadata.push({ name: 'ID', label: 'ID', datatype: "string", editable: false, hidden: true});
 					} else {
 						if (j > 2) {
 						// data.push({ name: oneRow[i], label: oneRow[i], datatype: "string", editable: true});
@@ -284,6 +285,7 @@ a { text-decoration: none }
 		editableGrid.load({"metadata": metadata, "data": data});
 		editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
 		fileData = data;
+		dataUploaded = true;
 	} 
 	
 	function handleFile(e) {
@@ -1369,17 +1371,17 @@ a { text-decoration: none }
         	
         	function fnPopulateInvoiceDiscountTable(responseOnLoadInput){
         		if(responseOnLoadInput.pricingDetailList != null){
-        			var editableCheck = true;
+        			/* var editableCheck = true;
         			if(responseOnLoadInput.status === 'PENDING' || responseOnLoadInput.status === 'APPROVED' || responseOnLoadInput.status === 'ACTIVE'){
 						editableCheck = false;
-        			} 
+        			}  */
 	        		var metadata = [];
 	        		var data = [];
 					var title = "Sheet1";
 	        		for (var k = 0; k < invoiceDiscountHeader.length; ++k) {
-						metadata.push({ name: invoiceDiscountHeader[k], label: invoiceDiscountHeader[k], datatype: "string", editable: editableCheck});
+						metadata.push({ name: invoiceDiscountHeader[k], label: invoiceDiscountHeader[k], datatype: "string", editable: false});
 					}
-					
+					metadata.push({ name: 'ID', label: 'ID', datatype: "string", editable: false, hidden: true});
 					$.each(responseOnLoadInput.pricingDetailList, function(idx, item) {
 						var rowValues = {};
 						rowValues[invoiceDiscountHeader[0]] = item.addChangeDel;
@@ -1401,6 +1403,7 @@ a { text-decoration: none }
 						rowValues[invoiceDiscountHeader[8]] = item.bonusUnits;
 						rowValues[invoiceDiscountHeader[9]] = item.commissionable;
 						rowValues[invoiceDiscountHeader[10]] = item.comments;
+						rowValues['ID'] = item.id;
 						
 						data.push({id: idx, values: rowValues});
 	                });
@@ -1413,6 +1416,7 @@ a { text-decoration: none }
 					editableGrid.load({"metadata": metadata, "data": data});
 					editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
 					fileData = data;
+					dataUploaded = false;
         		}
         	}
         	
@@ -1578,7 +1582,7 @@ a { text-decoration: none }
 			
 				$.each(fileData, function(key, data) {
 					console.log( $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']));
-					var fileDataRow = {'id': data.id, 'programId': data.id, 'part':data.values[' PART#'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': data.values['NET PRICE'], 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
+					var fileDataRow = {'id': data.values['ID'], 'programId': data.id, 'part':data.values[' PART#'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': data.values['NET PRICE'], 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
 					fileDataList.push(fileDataRow);
 				});
 				//console.log(fileDataList);
@@ -1607,7 +1611,10 @@ a { text-decoration: none }
 							/**Appending program id in the modal message.- End*/
          					$("#confirmMessage").html(message);
 							$('#myModal4').modal('toggle');
-							
+							if(dataUploaded){
+								dataUploaded = false;
+								//fnPopulateInvoiceDiscountTable(responseOnload);
+							}
 							_isDirty = false;
 			            } else {
 			              	$('#myModal1').modal('toggle');
@@ -1629,7 +1636,7 @@ a { text-decoration: none }
 			function validateBeforeSubmit(modalId){
 				/**If valid, it will toggle the corresponding modal.
 				If there is some error, error modal will be toggled.*/
-				if(($('#xlf').val()=="")||($('#xlf').val()==null)){
+				if( ( fileData === null || fileData.length <= 0) && ( ($('#xlf').val()=="")||($('#xlf').val()==null) )){
 					$("#errorMessageModal").html("Please upload the Pricing Request file !!!");
 					$('#myModal6').modal('toggle');	
 					return;

@@ -17,6 +17,8 @@ public class EmailDetails {
 	private StringBuilder toNames;
 	
 	private String environment;
+	private byte[] attachment;
+	
 	public String getHost() {
 		return host;
 	}
@@ -83,4 +85,11 @@ public class EmailDetails {
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
+	public byte[] getAttachment() {
+		return attachment;
+	}
+	public void setAttachment(byte[] attachment) {
+		this.attachment = attachment;
+	}
+	
 }

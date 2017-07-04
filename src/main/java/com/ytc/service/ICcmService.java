@@ -7,4 +7,6 @@ import com.ytc.common.model.DropDown;
 public interface ICcmService {
 
 	List<DropDown> getFrequencyDropDownList(String namedQueryValue);
+
+	boolean createMemoData(Integer id);
 }

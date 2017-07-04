@@ -199,24 +199,24 @@
 													<div class="row">
 														<div class="col-lg-4 col-sm-4" style="width:25%">
 															<label class="control-label"
-																for="program_name_inputselect">Frequency</label> <select
+																for="payout_freq_inputselect">Frequency</label> <select
 																class="form-control input-sm m-bot15"
-																id="program_name_inputselect"
-																name="program_name_inputselect">
+																id="payout_freq_inputselect"
+																name="payout_freq_inputselect">
 																<option value="">- Select -</option> 
-																 <option value="Monthly">Monthly</option> 
+<!-- 																 <option value="Monthly">Monthly</option> 
 																  <option value="Quarterly">Quarterly</option> 
 																  <option value="Semi-Annually">Semi-Annually</option> 
 																  <option value="Annually">Annually</option> 
-																  <option value="On Request">On Request</option> 
+																  <option value="On Request">On Request</option>  -->
 															</select>
 														</div>
 														<div class="col-lg-4 col-sm-4" style="width:25%">
 															<label class="control-label"
-																for="payout_freq_inputselect">Business Unit</label> <select
+																for="buss_inputselect">Business Unit</label> <select
 																class="form-control input-sm m-bot15"
-																id="payout_freq_inputselect"
-																name="payout_freq_inputselect">
+																id="buss_inputselect"
+																name="buss_inputselect">
 																 <option  class="" value="">- Select -</option> 
 																  <option value="Consumer">Consumer</option> 
 																  <option value="Commercial">Commercial</option> 
@@ -291,6 +291,7 @@
                                 <th>Reviewed</th>
                                 <th>Comments</th>
                                 <th>Credit Based On</th>
+                                <th>Generate Credit Memo Data</th>
                                 <th>Bill- To No</th>	
                                 <th>Bill - To Name</th>								
                                 <th>Units</th>
@@ -330,6 +331,7 @@
                               <td style="text-align:center"> <input type="checkbox" name="review" value="" > </td>
                               <td> <input type="text" id="comments1" value=""> </td>
                               <td id="creditbasedon1"></td>
+                              <td style="text-align:center"> <input type="checkbox" name="creditmemo" value="" > </td>
                               <td>15321</td>
                               <td>EARL W COLVARD INC</td>
                               <td id="units1">170</td>
@@ -369,6 +371,7 @@
                               <td style="text-align:center"><input type="checkbox" name="review" value="" > </td>
                               <td><input type="text" id="comments2" value=""></td>
                               <td id="creditbasedon2"></td>
+                              <td style="text-align:center"> <input type="checkbox" name="creditmemo" value="" > </td>
                               <td>16779</td>
                               <td>J & E TIRE CENTER INC</td>
                               <td id="units2">55</td>
@@ -408,6 +411,7 @@
                               <td style="text-align:center"><input type="checkbox" name="review" value="" > </td>
                               <td><input type="text" id="comments3" value=""></td>
                               <td id="creditbasedon3"></td>
+                              <td style="text-align:center"> <input type="checkbox" name="creditmemo" value="" > </td>
                               <td>15321</td>
                               <td>EARL W COLVARD INC</td>
                               <td id="units3">35</td>
@@ -434,6 +438,9 @@
                               </tbody>
                           </table>
                       </div>
+                      <div class="col-lg-4 col-sm-4" style="width:25%"><br>
+                                 						 	<a href="#" id="create_memo"><button class="btn btn-default"> Create Memo Data</button></a>
+                              							</div>
 													<div  class="row"><br><br><br><br><br><br></div>
 													
 												<!-- END ROW 3 & Program Details section-->
@@ -582,8 +589,33 @@
 		   	{
 		   		openSidebar();
 			}
+		   
+		   
+		   $.ajax({ 
+            	type: "GET",
+            	dataType: "json",
+           		url: '/SIM/ccm/v1/getFrequencyDropDown',
+            	success: function(response){
+            	fnPopulateDropdown('payout_freq_inputselect', response);	
+            	},
+            	failure: function(response){
+            		alert("Wrongly done");
+            	}
+        	});
+		   
+		   
 		}); 
 		
+		 function fnPopulateDropdown(elementId, items){
+	         	if(items != null){
+	         		$.each(items, function (i, item) {
+					    $('#'+ elementId).append($('<option>', { 
+					        value: item.key,
+					        text : item.value 
+					    }));
+					});
+	         	}
+			}
 		
 	</script>
 	<!-- Inline javascript to set the user name from model attribute End -->

@@ -1452,10 +1452,11 @@
 		   if(tbpuser.indexOf(emp[0].EMAIL)==-1){
 			   $("#tbpcheck").hide();   
 		   } */
-        	$.ajax({ 
+        	$.ajax({
+        	    cache: false, 
              	type: "GET",
              	dataType: "json",
-            	url: '/SIM/isTbpUser?buster='+new Date().getTime(),
+            	url: '/SIM/isTbpUser',
              	success: function(response){
              		if(!response){
              			$("#tbpchk").hide();
@@ -1513,7 +1514,8 @@
 			}
 			
 			$(window).ready(function(){
-	         	$.ajax({ 
+	         	$.ajax({
+	         	    cache: false,  
 	             	type: "GET",
 	             	dataType: "json",
 	            	url: url,
@@ -2100,7 +2102,7 @@
 			function fnCallService(message, idBefore, action){
 				/*Service call to save the data.*/				
 			    $.ajax({
-					type: "POST",
+			    	type: "POST",
 					url: "/SIM/program/v1/saveProgramDetails",
 					dataType: 'json',
 					contentType: 'application/json',

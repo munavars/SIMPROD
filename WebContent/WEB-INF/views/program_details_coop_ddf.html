@@ -1542,7 +1542,7 @@
 				responseOnload.status = "2";
 				responseOnload.userComments = $("#approveComments").val();
 				responseOnload.url = window.location.href;
-				fnCallService(message, idBefore);
+				fnCallService(message, idBefore, 'approve');
 				$('#myModal6').modal('toggle');
 				disableFields();
 			}
@@ -1553,7 +1553,7 @@
 				responseOnload.status = "1";
 				responseOnload.url = window.location.href;
 				responseOnload.userComments = $("#rejectionComments").val();
-				fnCallService(message, idBefore);
+				fnCallService(message, idBefore, 'reject');
 				$('#myModal7').modal('toggle');
 				disableFields();
 			}
@@ -1562,7 +1562,7 @@
          		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "3";
          		prepareDataForSubmit();
-         		fnCallService(message, idBefore);
+         		fnCallService(message, idBefore, 'save');
          		$('#myModal1').modal('toggle');
          		if(!$("#pdf-button").is(":visible")){
          			$("#pdf-button").show();
@@ -1574,9 +1574,8 @@
          		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "2";
 				prepareDataForSubmit();
-				fnCallService(message, idBefore);
+				fnCallService(message, idBefore, 'submit');
 				$('#myModal').modal('toggle');
-				disableFields();
 				if(!$("#pdf-button").is(":visible")){
          			$("#pdf-button").show();
          		}
@@ -1595,7 +1594,7 @@
 				}
 			}
 			
-			function fnCallService(message, idBefore){
+			function fnCallService(message, idBefore, action){
 				/*Service call to save the data.*/				
 			    $.ajax({
 					type: "POST",
@@ -1629,6 +1628,9 @@
 							}
 							$("#confirmMessage").html(message);
 							$('#myModal4').modal('toggle');
+							if(action === 'submit'){
+								disableFields();
+							}
 							/**Appending program id in the modal message.- End*/
 							_isDirty = false;
 			            }

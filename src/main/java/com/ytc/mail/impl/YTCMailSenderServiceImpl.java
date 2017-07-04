@@ -2,6 +2,8 @@ package com.ytc.mail.impl;
 
 import java.util.Properties;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -11,6 +13,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 import com.ytc.common.model.EmailDetails;
 import com.ytc.constant.EmailConstant;
@@ -60,7 +63,8 @@ public class YTCMailSenderServiceImpl{
 			}
 			message.setSubject(emailDetails.getSubject());
 			
-			Multipart multipart = new MimeMultipart("related");
+			//Multipart multipart = new MimeMultipart("related");
+			Multipart multipart = new MimeMultipart();
 			MimeBodyPart body = new MimeBodyPart();
 			if(emailDetails.getText() != null){
 				String text = emailDetails.getText() + String.format(EmailConstant.HTML_ENVIRONMENT_BODY, emailDetails.getEnvironment());
@@ -68,6 +72,15 @@ public class YTCMailSenderServiceImpl{
 			}
 			body.setText(emailDetails.getText(),"UTF-8", "html");
 			multipart.addBodyPart(body);
+			if((null!=emailDetails.getAttachment())&&(emailDetails.getAttachment().length>0)){
+				MimeBodyPart messageBodyPart2 = new MimeBodyPart();  
+							  
+				    String filename = "CreditMemo.xlsx";//change accordingly  
+				    DataSource ds = new ByteArrayDataSource(emailDetails.getAttachment(), "application/excel");
+				    messageBodyPart2.setDataHandler(new DataHandler(ds));  
+				    messageBodyPart2.setFileName(filename); 
+				    multipart.addBodyPart(messageBodyPart2);
+				}
 			message.setContent(multipart);
 			
 			Transport.send(message);

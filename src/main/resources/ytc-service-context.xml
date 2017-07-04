@@ -69,4 +69,7 @@
 	
 	<bean id="ccmService" class="com.ytc.service.impl.CcmServiceImpl">
 	</bean>
+	
+	<bean id="ccmEmailService" class="com.ytc.service.impl.CcmEmailServiceImpl">
+	</bean>
 </beans>

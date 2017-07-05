@@ -281,12 +281,13 @@
     		<version>3.16</version>
 		</dependency>
 		
-		<dependency>
+	<!-- 	<dependency>
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-collections4</artifactId>
     		<version>4.0</version>
 		</dependency>
-	</dependencies>
+	 -->
+	 </dependencies>
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>

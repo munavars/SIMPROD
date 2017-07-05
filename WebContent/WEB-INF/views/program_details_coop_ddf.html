@@ -1544,6 +1544,11 @@
 				responseOnload.status = "2";
 				responseOnload.userComments = $("#approveComments").val();
 				responseOnload.url = window.location.href;
+				if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
+					responseOnload.programDetailList[0].glCode = '0';	
+				}else{
+					responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+				}
 				fnCallService(message, idBefore, 'approve');
 				$('#myModal6').modal('toggle');
 				disableFields();

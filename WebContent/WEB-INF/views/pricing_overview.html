@@ -60,7 +60,7 @@ th{
     <script type="text/javascript">
     var bu='test';
     //Export to Excel 
-    var tableToExcel = (function() {
+    /* var tableToExcel = (function() {
     	  var uri = 'data:application/vnd.ms-excel;base64,'
     	    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
     	    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
@@ -75,9 +75,41 @@ th{
 			a.download =  'PricingDetail.xls';
 		    a.click(); 
     	  }
-    	})()
+    	})() */
   
-
+function tableToExcel(tableId, fileName) {
+	    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+	    var textRange; var j=0;
+	    tab = document.getElementById(tableId); // id of table
+	
+	    for(j = 0 ; j < tab.rows.length ; j++) 
+	    {     
+ 	    	var part=tab.rows[j].cells[5].innerHTML;
+	    	var row=tab.rows[j].innerHTML.replace(part,'#'+part);
+	    	tab_text=tab_text+row+"</tr>"; 
+	        //tab_text=tab_text+"</tr>";
+	    }
+	
+	    tab_text=tab_text+"</table>";
+	    tab_text= tab_text.replace(/<a[^>]*>|<\/a>/g, "");//remove if u want links in your table
+	    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+	    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+	    if (navigator.userAgent.indexOf('Trident')>0 || navigator.userAgent.indexOf('Edge')>0)
+	    {
+	    	var blobObject = new Blob([tab_text]); 
+	    	window.navigator.msSaveOrOpenBlob(blobObject, fileName+'.xls');
+	    }else
+	    {
+	        var a = document.createElement('a');
+	        var data_type = 'data:application/vnd.ms-excel';
+		    a.href = data_type + ', ' + encodeURIComponent(tab_text);
+			a.download =  fileName+'.xls';
+			document.body.appendChild(a);
+			a.click();
+			document.body.appendChild(a);   
+		}
+	    	
+    }
    
     
     function closeSidebar(){

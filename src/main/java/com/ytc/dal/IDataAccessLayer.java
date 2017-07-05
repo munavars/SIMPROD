@@ -51,4 +51,5 @@ public interface IDataAccessLayer {
 	public <T> List<T>  validate(String qlString);
 
 	<T> List<T> getByJPQL(Class<T> clazz, String jpql, Map<String, Object> queryParams);
+	
 }

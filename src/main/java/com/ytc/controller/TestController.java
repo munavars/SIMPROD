@@ -8,11 +8,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ytc.common.model.Employee;
+import com.ytc.common.result.ListResult;
 import com.ytc.constant.ProgramConstant;
+import com.ytc.service.ISalesDataService;
 import com.ytc.service.ServiceContext;
 @Controller
 @RequestMapping("/")
@@ -20,47 +24,47 @@ public class TestController  extends BaseController {
 
 	@Autowired
 	private ServiceContext serviceContext;
-	
-		@RequestMapping(value = "/customer", method = RequestMethod.GET)
-		public String dashboard(HttpServletRequest request, Model model) {
-			//Need to call service implementation here
-			String userName = null;
-			String returnModel = null;
-			List<Employee> employee = null;
-			if(serviceContext != null && serviceContext.getEmployee() != null){
-				userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
-				model.addAttribute("loginUserNameValue", userName);
-				employee=new ArrayList<Employee>();
-				employee.add(serviceContext.getEmployee());
-				model.addAttribute("EmployeeInfo", employee);
-				returnModel= "customer_details_dealertire_latest";
-			}
-			if(serviceContext == null || userName == null){
-				returnModel = "login";
-			}
-			return returnModel;
+
+	@RequestMapping(value = "/customer", method = RequestMethod.GET)
+	public String dashboard(HttpServletRequest request, Model model) {
+		//Need to call service implementation here
+		String userName = null;
+		String returnModel = null;
+		List<Employee> employee = null;
+		if(serviceContext != null && serviceContext.getEmployee() != null){
+			userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			model.addAttribute("loginUserNameValue", userName);
+			employee=new ArrayList<Employee>();
+			employee.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employee);
+			returnModel= "customer_details_dealertire_latest";
 		}
-		
-		@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
-		public String index(HttpServletRequest request, Model model) {
-			//Need to call service implementation here
-			String userName = null;
-			String returnModel = null;
-			List<Employee> employee = null;
-			if(serviceContext != null && serviceContext.getEmployee() != null){
-				userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
-				model.addAttribute("loginUserNameValue", userName);
-				employee=new ArrayList<Employee>();
-				employee.add(serviceContext.getEmployee());
-				model.addAttribute("EmployeeInfo", employee);
-				returnModel= "index";
-			}
-			if(serviceContext == null || userName == null){
-				returnModel = "login";
-			}
-			return returnModel;
+		if(serviceContext == null || userName == null){
+			returnModel = "login";
 		}
-		
+		return returnModel;
+	}
+
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public String index(HttpServletRequest request, Model model) {
+		//Need to call service implementation here
+		String userName = null;
+		String returnModel = null;
+		List<Employee> employee = null;
+		if(serviceContext != null && serviceContext.getEmployee() != null){
+			userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			model.addAttribute("loginUserNameValue", userName);
+			employee=new ArrayList<Employee>();
+			employee.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employee);
+			returnModel= "index";
+		}
+		if(serviceContext == null || userName == null){
+			returnModel = "login";
+		}
+		return returnModel;
+	}
+
 	@RequestMapping(value = "/programddfcoop", method = RequestMethod.GET)
 	public String gotoProgramDetailDDF(HttpServletRequest request, Model model) {
 		String userName = null;
@@ -74,14 +78,14 @@ public class TestController  extends BaseController {
 			employee.add(serviceContext.getEmployee());
 			model.addAttribute("EmployeeInfo", employee);
 		}
-		
+
 		if(serviceContext == null || userName == null){
 			returnModel = "login";
 		}
-		
+
 		return returnModel;
 	}
-	
+
 
 	@RequestMapping(value = { "/", "/programDetail" })
 	public String gotoProgramDetail(HttpServletRequest request, Model model) {
@@ -96,22 +100,22 @@ public class TestController  extends BaseController {
 			employee.add(serviceContext.getEmployee());
 			model.addAttribute("EmployeeInfo", employee);
 		}
-		
+
 		if(serviceContext == null || userName == null){
 			returnModel = "login";
 		}
-		
+
 		return returnModel;
 	}
-	
+
 	@RequestMapping(value = "/pricing", method = RequestMethod.GET)
 	public String pricingForm(HttpServletRequest request, Model model) {
 		String returnModel = null;
 		returnModel ="pricing_request";
 		return returnModel;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/ccm", method = RequestMethod.GET)
 	public String ccm(HttpServletRequest request, Model model) {
 		String userName =  null;
@@ -125,15 +129,15 @@ public class TestController  extends BaseController {
 			employee.add(serviceContext.getEmployee());
 			model.addAttribute("EmployeeInfo", employee);
 		}
-		
+
 		if(serviceContext == null || userName == null){
 			returnModel = "login";
 		}
-		
+
 		return returnModel;
-		
+
 	}
-	
+
 	@RequestMapping(value = "/accrual", method = RequestMethod.GET)
 	public String calculateAccrual(HttpServletRequest request, Model model) {
 		String userName =  null;
@@ -147,13 +151,26 @@ public class TestController  extends BaseController {
 			employee.add(serviceContext.getEmployee());
 			model.addAttribute("EmployeeInfo", employee);
 		}
-		
+
 		if(serviceContext == null || userName == null){
 			returnModel = "login";
 		}
-		
+
 		return returnModel;
-		
+
 	}
-	
+
+
+	@RequestMapping(value = "/getSalesData/{id}", method = RequestMethod.GET)
+	public @ResponseBody ListResult<String> getSalesData(HttpServletRequest request, @PathVariable Integer id) {
+		return new ListResult<String>(getService(request).getBaseData(id));
+	}
+
+
+	private ISalesDataService getService(HttpServletRequest request) {
+		return getServiceLocator(request).getSalesDataService();
+
+	}
+
 }
+

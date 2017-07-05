@@ -11,6 +11,7 @@ import com.ytc.service.IPaidBasedOnService;
 import com.ytc.service.IPricingService;
 import com.ytc.service.IPricingUpdateService;
 import com.ytc.service.IProgramUpdateService;
+import com.ytc.service.ISalesDataService;
 import com.ytc.service.IProgramService;
 import com.ytc.service.ISecurityService;
 import com.ytc.service.IServiceLocator;
@@ -40,6 +41,8 @@ public class ServiceLocator implements IServiceLocator, ApplicationContextAware
     private IProgramUpdateService programPersistService;
     
     private IPricingUpdateService pricingPersistService;
+    
+    private ISalesDataService salesDataService;
     
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -118,5 +121,13 @@ public class ServiceLocator implements IServiceLocator, ApplicationContextAware
         	pricingPersistService = (IPricingUpdateService) appContext.getBean("pricingUpdateService");
         }
         return pricingPersistService;
+	}
+	
+	@Override
+	public ISalesDataService getSalesDataService() {
+        if (salesDataService == null) {
+        	salesDataService = (ISalesDataService) appContext.getBean("salesDataService");
+        }
+        return salesDataService;
 	}
 }

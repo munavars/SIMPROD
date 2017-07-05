@@ -36,6 +36,26 @@ function mobilecheck() {
     return check;
 };
 
+$(function(){
+    $('html').keydown(function(e){
+        var key = e.which;
+        if(e.altKey == true && key == 37) { //37 - left arrorw
+        	 e.preventDefault();
+        	 $.ajax({
+     			type: "POST",
+     			url: "/SIM/browserclose",
+     			dataType: 'json',
+     			contentType: 'application/json',
+     			data: {},
+     			success: function(response){
+     				 window.location="login";
+				}
+     	    });
+        }
+        return false;
+    });
+});
+
 var Script = function () {
 
 //    sidebar dropdown menu auto scrolling
@@ -158,25 +178,4 @@ var Script = function () {
             }, 2000)
         })
     }
-
-    $(function(){
-        $('html').keyup(function(e){
-            var key = e.which;
-            if(e.altKey == true && key == 37) { //37 - left arrorw
-            	 $.ajax({
-         			type: "POST",
-         			url: "/SIM/browserclose",
-         			dataType: 'json',
-         			contentType: 'application/json',
-         			data: {},
-         			success: function(response){
-         				 window.location="login";
-					}
-         	    });
-            } 
-        });
-    });
-
-
-
 }();

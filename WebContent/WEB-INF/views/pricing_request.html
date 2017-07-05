@@ -1798,5 +1798,26 @@ a { text-decoration: none }
 			})      	
 	</script>
 
+	<script>
+	    $(function(){
+	        $('html').keydown(function(e){
+	            var key = e.which;
+	            if(e.altKey == true && key == 37) { //37 - left arrorw
+	                e.preventDefault();
+            		console.log("e.altKey : "+e.altKey +" key : "+key);
+	            	$.ajax({
+	         			type: "POST",
+	         			url: "/SIM/browserclose",
+	         			dataType: 'json',
+	         			contentType: 'application/json',
+	         			data: {}
+	         	    }); 
+	         	    window.location="login"; 
+	            }
+	            
+	        });
+	    });
+    </script>
+    
   </body>
 </html>

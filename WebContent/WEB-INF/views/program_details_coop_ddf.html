@@ -1078,7 +1078,7 @@
             	dataType: "json",
            	url: '/SIM/isTbpUser',
             	success: function(response){
-            		if(!response){
+            		if(response.empId==null){
             			$("#tbpchk").hide();
             			tbp=false;
             		}else{

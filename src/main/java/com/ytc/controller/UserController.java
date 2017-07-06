@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tiredex.yoko.utils.LdapUtil;
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.EmployeeHierarchy;
+import com.ytc.common.model.TbpUser;
 import com.ytc.common.result.ListResult;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.model.DalEmployee;
@@ -63,7 +64,7 @@ public class UserController extends BaseController {
 	
 	
 	@RequestMapping(value = "/isTbpUser", method = RequestMethod.GET)
-	public @ResponseBody boolean isTbpUser(HttpServletRequest request) {
+	public @ResponseBody TbpUser isTbpUser(HttpServletRequest request) {
 				
 		return (getService(request).isTbpUser(Integer.parseInt(request.getSession().getAttribute("EMPLOYEE_INFO").toString())));
 	}

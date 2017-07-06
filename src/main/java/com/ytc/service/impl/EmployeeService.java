@@ -2,6 +2,7 @@ package com.ytc.service.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,17 +13,20 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import org.apache.commons.lang3.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ytc.common.model.Employee;
+import com.ytc.common.model.TbpUser;
 import com.ytc.common.model.User;
 import com.ytc.common.result.ResultCode;
 import com.ytc.common.result.ResultException;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalEmployee;
+import com.ytc.dal.model.DalTbpUser;
 import com.ytc.dal.model.DalUser;
 import com.ytc.service.IEmployeeService;
 
@@ -108,14 +112,16 @@ public class EmployeeService implements IEmployeeService {
 	}
 	
 	@Override
-	public boolean isTbpUser(Integer loginId) {
+	public TbpUser isTbpUser(Integer loginId) {
 		Map<String, Object> queryParams = new HashMap<>();
-		boolean tbpUser=false;
 		queryParams.put("empId",loginId);
+		TbpUser tbpUser=new TbpUser();
 		String sql=QueryConstant.TBP_USERS;
-		List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
-		if(!resultList.isEmpty()){
-			tbpUser=true;
+		List<DalTbpUser> resultList =baseDao.list(DalTbpUser.class, sql, queryParams);
+		ModelMapper modelMapper = new ModelMapper();
+		for (Iterator<DalTbpUser> iterator = resultList.iterator(); iterator.hasNext();) {
+			DalTbpUser dalTbpUser = (DalTbpUser) iterator.next();
+			tbpUser = modelMapper.map(dalTbpUser, TbpUser.class);			
 		}
 		return tbpUser;
 	}

@@ -31,6 +31,7 @@ import com.ytc.dal.model.DalPricingShipRequirements;
 import com.ytc.dal.model.DalPricingTermCodes;
 import com.ytc.dal.model.DalProgramType;
 import com.ytc.dal.model.DalStatus;
+import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.PricingServiceHelper;
 import com.ytc.helper.PricingWorkflowServiceHelper;
 import com.ytc.service.IPricingEmailService;
@@ -159,11 +160,20 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 				pricingHeader.setStatus(dalPricingHeader.getDalStatus().getType());
 				
 				/**Reset Program workflow*/
-				PricingWorkflowServiceHelper.populateWorkflowStatusData(pricingHeader, dalPricingHeader);
-
+				getUpdatedWorkflowDetails(pricingHeader, dalPricingHeader);
+				
 				pricingHeader.setSuccess(true);
 			}
 		}
+	}
+	
+	private void getUpdatedWorkflowDetails(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader) {
+		//DalWorkflowStatus.getProgramWorkflowDetails
+		Map<String, Object> inputParam = new HashMap<String,Object>();
+		inputParam.put("pricingHeaderId", dalPricingHeader.getId());
+		List<DalWorkflowStatus> dalWorkflowStatusList = baseDao.getListFromNamedQueryWithParameter("DalWorkflowStatus.getPricingWorkflowDetails", inputParam);
+
+		PricingWorkflowServiceHelper.populateWorkflowStatusDataAfterUpdate(pricingHeader, dalWorkflowStatusList);
 	}
 
 	private void updatePricingDetailsDataForNewRecord(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader) {

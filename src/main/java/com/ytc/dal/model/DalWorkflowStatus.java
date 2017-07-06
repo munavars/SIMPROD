@@ -16,7 +16,9 @@ import javax.persistence.Table;
 @Table(name = "WORKFLOW_STATUS")
 @NamedQueries({
 	@NamedQuery(name="DalWorkflowStatus.getProgramWorkflowDetails", query = "select o from DalWorkflowStatus o "
-																+ "where o.dalProgramDetailWf.id = :programDetailId order by id")
+																+ "where o.dalProgramDetailWf.id = :programDetailId order by id"),
+	@NamedQuery(name="DalWorkflowStatus.getPricingWorkflowDetails", query = "select o from DalWorkflowStatus o "
+																		+ "where o.dalPricingHeaderWf.id = :pricingHeaderId order by id")
 })
 public class DalWorkflowStatus extends DalAuditableModel{
 

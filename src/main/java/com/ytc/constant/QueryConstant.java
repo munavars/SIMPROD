@@ -5,7 +5,7 @@ public class QueryConstant {
 	
 	public static final String TAG_VALUE_CUSTOMER_WHERE_CLAUSE = " WHERE billToNumber IN (SELECT customerNumber from DalCustomer where accountManager = %s)";
 	
-	public static final String TAG_VALUE_CUSTOMER_PRICING_WHERE_CLAUSE = " WHERE billToNumber IN (%s)";
+	public static final String TAG_VALUE_CUSTOMER_PRICING_WHERE_CLAUSE = " WHERE billToNumber IN ('%s')";
 	
 	public static final String TAG_VALUE_LIST_ORDER_BY_CLAUSE = " ORDER BY DIS_VALUE ASC";	
 

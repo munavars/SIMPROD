@@ -149,7 +149,7 @@ public class PricingServiceImpl implements IPricingService {
 		Map<String, Object> parameters = new HashMap<>();
 		parameters.put("groupFlag", "YES");
 		parameters.put("customerId", dalCustomer.getId());
-		Integer customerNumber = Integer.valueOf(dalCustomer.getCustomerNumber());
+		String customerNumber = dalCustomer.getCustomerNumber();
 		pricingDetailsDropDown.setGroupList(getGroupDropDownList("DalCustomer.getGroup", parameters));
 		pricingDetailsDropDown.setCustBillToList(getTagValueDropDown(TagItemValueMapEnum.BILL_TO_NUMBER.getTagId(), 
 																	 customerNumber));
@@ -165,7 +165,7 @@ public class PricingServiceImpl implements IPricingService {
 		
 	}
 	
-	private List<DropDown> getTagValueDropDown(Integer tagId, Integer customerNumber) {
+	private List<DropDown> getTagValueDropDown(Integer tagId, String customerNumber) {
 		TagItemValueMapEnum tagItemValueMapEnum = null;
 		List<DropDown> dropdownList = null;
 		List<String> tagValueList = null;
@@ -331,23 +331,30 @@ public class PricingServiceImpl implements IPricingService {
 	@Override
 	public PricingHeader getPricingDetail(Integer pricingHeaderId) {
 		PricingHeader pricingHeader = new PricingHeader();
-		DalPricingHeader dalPricingHeader = null;
-		if(pricingHeaderId != null){
-			/**Get the pricing information*/
-			dalPricingHeader = baseDao.getById(DalPricingHeader.class, pricingHeaderId);
+		try{
+			DalPricingHeader dalPricingHeader = null;
+			if(pricingHeaderId != null){
+				/**Get the pricing information*/
+				dalPricingHeader = baseDao.getById(DalPricingHeader.class, pricingHeaderId);
+				
+				populateDropDownValues(pricingHeader, dalPricingHeader.getCustomer());
+			}
+
+			if(dalPricingHeader != null){
+				pricingHeader.setId(dalPricingHeader.getId());
+				getPricingDetailsData(pricingHeader, dalPricingHeader, serviceContext.getEmployee());	
+			}
+			/**Button Behavior*/
+			PricingWorkflowServiceHelper.setProgramButtonProperties(serviceContext.getEmployee(), pricingHeader, dalPricingHeader);
 			
-			populateDropDownValues(pricingHeader, dalPricingHeader.getCustomer());
+			/**Work flow history*/
+			PricingWorkflowServiceHelper.populateWorkflowStatusData(pricingHeader, dalPricingHeader);
+		}
+		catch(Exception e){
+			e.printStackTrace();
 		}
 
-		if(dalPricingHeader != null){
-			pricingHeader.setId(dalPricingHeader.getId());
-			getPricingDetailsData(pricingHeader, dalPricingHeader, serviceContext.getEmployee());	
-		}
-		/**Button Behavior*/
-		PricingWorkflowServiceHelper.setProgramButtonProperties(serviceContext.getEmployee(), pricingHeader, dalPricingHeader);
-		
-		/**Work flow history*/
-		PricingWorkflowServiceHelper.populateWorkflowStatusData(pricingHeader, dalPricingHeader);
+
 		
 		return pricingHeader;
 	}
@@ -422,8 +429,9 @@ public class PricingServiceImpl implements IPricingService {
 
 	private void populateHeaderData(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader, Employee employee) {
 		if(pricingHeader != null && dalPricingHeader != null){
-			pricingHeader.setBusinessUnit(dalPricingHeader.getCreatedBy().getBUSINESS_UNIT());
-			pricingHeader.setBusinessUnitDescription(BusinessUnitDescriptionEnum.getBUDescription(dalPricingHeader.getCreatedBy().getBUSINESS_UNIT()).getBusinessUnitDescription());
+			pricingHeader.setBusinessUnit(dalPricingHeader.getCustomer().getBu());
+			BusinessUnitDescriptionEnum businessUnitDescriptionEnum = BusinessUnitDescriptionEnum.getBUDescription(dalPricingHeader.getCustomer().getBu());
+			pricingHeader.setBusinessUnitDescription( (businessUnitDescriptionEnum != null) ? businessUnitDescriptionEnum.getBusinessUnitDescription() : dalPricingHeader.getCreatedBy().getBUSINESS_UNIT());
 			pricingHeader.setRequestedByName(ProgramServiceHelper.getName(dalPricingHeader.getCreatedBy()));
 			pricingHeader.setRequestedByTitle(dalPricingHeader.getCreatedBy().getTITLE().getTitle());
 			pricingHeader.setRequestedByDate(ProgramServiceHelper.convertDateToString(dalPricingHeader.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));

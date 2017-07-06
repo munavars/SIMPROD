@@ -85,7 +85,7 @@ function tableToExcel(tableId, fileName) {
 	    for(j = 0 ; j < tab.rows.length ; j++) 
 	    {     
  	    	var part=tab.rows[j].cells[5].innerHTML;
-	    	var row=tab.rows[j].innerHTML.replace(part,'#'+part);
+	    	var row=tab.rows[j].innerHTML.replace(part,part+",");
 	    	tab_text=tab_text+row+"</tr>"; 
 	        //tab_text=tab_text+"</tr>";
 	    }

@@ -18,84 +18,63 @@ var EditableTable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = aData[0];
+                jqTds[0].innerHTML = '<input type="text" style="width:100%" class="form-control small" value="' + aData[0] + '">';
                 jqTds[1].innerHTML = '<input type="text" style="width:100%" id="tier_amount" name="tier_amount" class="form-control small" value="' + aData[1] + '">';
-                jqTds[2].innerHTML =  aData[2];
-                jqTds[3].innerHTML = '<input type="text" style="width:100%" id="end_range" name = "end_range" class="form-control small" value="' + aData[3] + '">';
+                jqTds[2].innerHTML = '<input type="text" style="width:100%" class="form-control small" value="' + aData[2] + '">';
+                if($(aData[3]).attr('id') == null){
+                	jqTds[3].innerHTML = '<a class="edit" href="">Save</a>';
+                }
+                else{
+                	jqTds[3].innerHTML = '<a id='+ $(aData[3]).attr('id') +' class="edit" href="">Save</a>';	
+                }
                 if($(aData[4]).attr('id') == null){
-                    jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
+                	jqTds[4].innerHTML = '<a class="cancel" href="">Cancel</a>';
                 }
                 else{
-                    jqTds[4].innerHTML = '<a id='+ $(aData[4]).attr('id') +' class="edit" href="">Save</a>';  
-                }
-                if($(aData[5]).attr('id') == null){
-                    jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
-                }
-                else{
-                    jqTds[5].innerHTML = '<a id='+ $(aData[5]).attr('id') +' class="cancel" href="">Cancel</a>';      
+                	jqTds[4].innerHTML = '<a id='+ $(aData[4]).attr('id') +' class="cancel" href="">Cancel</a>';	
                 }
             }
 
-            function validateRange(nRow){
-             var jqTds = $('>td', nRow);
-             var jqInputs = $('input', nRow);
-             var beginRange = jqTds[2].innerText;
-             var endRange = jqInputs[1].value.trim();
-             if(parseInt(beginRange) > parseInt(endRange)){
-                    /* $('jqTds[3]', nRow).addClass('error');*/
-                     return false;
-             }
-             return true;
-            }
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                if((jqInputs[0].value.trim()=="")||(jqInputs[1].value.trim()=="")){
-                    //editRow(oTable, nRow);
-                    $("#errorMessageModal").html("Tier Section cannot have empty values");
-                                  $('#myModal5').modal('toggle');
-                    return false;
+                if((jqInputs[0].value.trim()=="")||(jqInputs[1].value.trim()=="")||(jqInputs[2].value.trim()=="")){
+                	//editRow(oTable, nRow);
+                	$("#errorMessageModal").html("Tier Section cannot have empty values");
+					$('#myModal5').modal('toggle');
+                	return false;
                 }
-                if(!validateRange(nRow)){
-                    
-                    oTable.fnUpdate('<input type="text" style="width:100%" class="form-control small error" value="' + jqInputs[1].value + '">', nRow, 3, false);
-                    $("#errorMessageModal").html("Invalid value for end range.");
-                                  $('#myModal5').modal('toggle');
-                    return false;
-                }
-                /*oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);*/
-                oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
-                /*oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);*/
-                oTable.fnUpdate(jqInputs[1].value, nRow, 3, false);
+                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 var jqAnchor = $('a', nRow);
                 if($(jqAnchor[0]).attr('id') == null){
-                    oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
+                	oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 3, false);
                 }
                 else{
-                    oTable.fnUpdate('<a id='+ $(jqAnchor[0]).attr('id') +' class="edit" href="">Edit</a>', nRow, 4, false);    
+                	oTable.fnUpdate('<a id='+ $(jqAnchor[0]).attr('id') +' class="edit" href="">Edit</a>', nRow, 3, false);	
                 }
                 if($(jqAnchor[1]).attr('id') == null){
-                    oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
+                	oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 4, false);
                 }
                 else{
-                    oTable.fnUpdate('<a id='+ $(jqAnchor[1]).attr('id') +' class="delete" href="">Delete</a>', nRow, 5, false);  
+                	oTable.fnUpdate('<a id='+ $(jqAnchor[1]).attr('id') +' class="delete" href="">Delete</a>', nRow, 4, false);	
                 }
                 
                 oTable.fnDraw();
                 
                 if(!$("#actual_marker").valid()){
-                                  $("#errorMessageModal").html("Please rectify the highlighted errors !!!");
-                                  $('#myModal5').modal('toggle');
-                           }
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+				}
                 
                 return true;
             }
 
             function cancelEditRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                /*oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);*/
-                oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
-                /*oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);*/
-                oTable.fnUpdate(jqInputs[1].value, nRow, 3, false);
+                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
+                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
                 //oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
                 oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
                 oTable.fnDraw();
@@ -120,24 +99,22 @@ var EditableTable = function () {
                 "bAutoWidth": false , 
                 "aoColumnDefs": [{
                         'bSortable': true,
-                        'sClass' : 'read_only',
                         'aTargets': [0]
                     },
                     {
-                          'sClass' : 'text-right',
-                          'bSortable': false,
-                          'fnRender' : function(oObj){
-                                 var convertedAmount = oObj.aData[1];
-                                 if(convertedAmount != null && convertedAmount != 'undefined' ){
-                                        return convertedAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
-                                 }
-                                 return convertedAmount;
-                          },
-                          'aTargets' : [1]                       
+                    	'sClass' : 'text-right',
+                    	'bSortable': false,
+                    	'fnRender' : function(oObj){
+                    		var convertedAmount = oObj.aData[1];
+                    		if(convertedAmount != null && convertedAmount != 'undefined' ){
+                    			return convertedAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+                    		}
+                    		return convertedAmount;
+                    	},
+                    	'aTargets' : [1]                    	
                     },
                     {
-                          'sClass' : 'read_only',
-                          'bSortable': false,
+                        'bSortable': false,
                         'aTargets': [2]
                     },
                     {
@@ -147,10 +124,6 @@ var EditableTable = function () {
                     {
                         'bSortable': false,
                         'aTargets': [4]
-                    },
-                    {
-                        'bSortable': false,
-                        'aTargets': [5]
                     },
                 ],
             });
@@ -162,21 +135,8 @@ var EditableTable = function () {
 
             $('#tier-schedule_new').click(function (e) {
                 e.preventDefault();
-                var maxTierId = 1;
-                var maxRange = 0;
-                $('#tier-schedule tbody').find('tr').each(function(i) {
-                     var tds = $(this).find('td'),
-                     tierId = tds.eq(0).text();
-                 range = tds.eq(3).text();
-                     if(range > maxRange){
-                            maxRange = parseInt(range) + 1;
-                     }
-                     if(tierId >= maxTierId){
-                            maxTierId = parseInt(tierId) + 1;
-                     }
-               });
                
-               var aiNew = oTable.fnAddData([maxTierId, '', maxRange, '',
+               var aiNew = oTable.fnAddData(['', '', '',
                         '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
                 ]);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
@@ -201,8 +161,8 @@ var EditableTable = function () {
                 type: "GET",
                 dataType: 'json',
                 success: function(data) {
-               }
-              });
+                }
+             	 });
                 //alert("Deleted! Do not forget to do some ajax to sync with backend :)");
             });
 
@@ -241,16 +201,15 @@ var EditableTable = function () {
                     nEditing = nRow;
                 }
                 
-             if(tierAmountType == '%'){
-                    $("#optionsRadiosPercentageTier1").prop('checked', true);
-            }
-            else{
-                    $("#optionsRadiosDollarSignTier1").prop('checked', true);
-            }
+            	if(tierAmountType == '%'){
+            		$("#optionsRadiosPercentageTier1").prop('checked', true);
+            	}
+            	else{
+            		$("#optionsRadiosDollarSignTier1").prop('checked', true);
+            	}
             });
         }
 
     };
 
 }();
-

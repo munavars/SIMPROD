@@ -709,7 +709,7 @@
 																					<tr>
 																						<th class="text-center">Tier</th>
 																						<th class="text-center">Amount</th>
-																						<th class="text-center">Beginning Range</th>
+																						<th class="text-center">End Range</th>
 																						<th class="text-center">Edit</th>
 																						<th class="text-center">Delete</th>
 																					</tr>
@@ -1461,7 +1461,7 @@
              	dataType: "json",
             	url: '/SIM/isTbpUser',
              	success: function(response){
-             		if(!response){
+             		if(response.empId==null){
              			$("#tbpchk").hide();
              			tbp=false;
              		}else{
@@ -2038,6 +2038,11 @@
 				responseOnload.status = "2";
 				responseOnload.url = window.location.href;
 				responseOnload.userComments = $("#approveComments").val();
+				if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
+					responseOnload.programDetailList[0].glCode = '0';	
+				}else{
+					responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+				}
 				fnCallService(message, idBefore, 'approve');
 				$('#myModal7').modal('toggle');
 				disableFields();

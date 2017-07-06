@@ -490,8 +490,8 @@ th{
                                                 <select class="form-control input-sm m-bot15 required" id="program_type_select" name="Program Type_inputselect">
                                                    <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
                                                    <option id="program_type_vbs" value="Calculated Program">Calculated Program</option>
-                                                   <option id="program_type_ddf" value="DDF">DDF</option>
-                                                    <option id="program_type_coop" value="COOP">COOP</option>
+                                                  <!--  <option id="program_type_ddf" value="DDF">DDF</option>
+                                                    <option id="program_type_coop" value="COOP">COOP</option> -->
                                                     <option id="program_type_fixed" value="Fixed $">Fixed $</option>
                                                 </select>
                                           </div>
@@ -860,6 +860,31 @@ th{
 		   if(2!=emp[0].ROLE_ID)
 		   	{
 			   openSidebar();
+			   $('#program_type_select').append($('<option id="program_type_ddf" value="DDF">DDF</option>'));
+			   $('#program_type_select').append($('<option id="program_type_coop" value="COOP">COOP</option>'));
+			
+		   	}else {
+		   
+		   
+			   $.ajax({ 
+	            	type: "GET",
+	            	dataType: "json",
+	           	url: '/SIM/isTbpUser',
+	            	success: function(response){
+	            		if(response.empId!=null){
+	            			
+	            			 if(response.ddf=='Yes'){
+	            				 $('#program_type_select').append($('<option id="program_type_ddf" value="DDF">DDF</option>'));
+	            			}
+	            			if(response.coop=='Yes'){
+	            				$('#program_type_select').append($('<option id="program_type_coop" value="COOP">COOP</option>'));
+	            			}
+	            		}
+	            	},
+	            	failure: function(response){
+	            		alert("Wrongly done");
+	            	}
+	        	});
 			}
 		});
 	</script>

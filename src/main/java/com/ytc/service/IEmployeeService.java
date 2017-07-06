@@ -7,6 +7,7 @@ package com.ytc.service;
 import java.util.List;
 
 import com.ytc.common.model.Employee;
+import com.ytc.common.model.TbpUser;
 import com.ytc.common.model.User;
 import com.ytc.dal.model.DalEmployee;
 
@@ -23,5 +24,5 @@ public interface IEmployeeService {
 
 	DalEmployee getEmployeeDetail(Integer loginId);
 
-	boolean isTbpUser(Integer loginId);
+	TbpUser isTbpUser(Integer loginId);
 }

@@ -339,6 +339,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		//dalProgramDet.setLongDesc(programDetail.getProgramPaidOn().getProgramDescription());
 		dalProgramDet.setTbpCheck(programDetail.getTbpCheck());
 		dalProgramDet.setGlCode(programDetail.getGlCode());
+		dalProgramDet.setEstimatedAccrual(programDetail.getEstimatedAccrual());
 		dalProgramDet.setLongDesc(programDetail.getLongDesc());
 		dalProgramDet.setProgramMaster(baseDao.getById(DalProgramMaster.class, Integer.valueOf(programDetail.getProgramName())));
 		

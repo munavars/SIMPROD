@@ -24,6 +24,8 @@ private String ddf;
 
 private String coop;
 
+private String fixedDollar;
+
 /**
  * @return the empId
  */
@@ -97,6 +99,21 @@ public String getCoop() {
  */
 public void setCoop(String coop) {
 	this.coop = coop;
+}
+
+/**
+ * @return the fixedDollar
+ */
+@Column(name="FIXED_DOLLAR")
+public String getFixedDollar() {
+	return fixedDollar;
+}
+
+/**
+ * @param fixedDollar the fixedDollar to set
+ */
+public void setFixedDollar(String fixedDollar) {
+	this.fixedDollar = fixedDollar;
 }
 	
 	

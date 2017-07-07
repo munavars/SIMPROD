@@ -491,8 +491,8 @@ th{
                                                    <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
                                                    <option id="program_type_vbs" value="Calculated Program">Calculated Program</option>
                                                   <!--  <option id="program_type_ddf" value="DDF">DDF</option>
-                                                    <option id="program_type_coop" value="COOP">COOP</option> -->
-                                                    <option id="program_type_fixed" value="Fixed $">Fixed $</option>
+                                                    <option id="program_type_coop" value="COOP">COOP</option> 
+                                                    <option id="program_type_fixed" value="Fixed $">Fixed $</option>-->
                                                 </select>
                                           </div>
                               </div>
@@ -857,11 +857,12 @@ th{
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
-		   if(2!=emp[0].ROLE_ID)
+		   if(1==emp[0].ROLE_ID)
 		   	{
 			   openSidebar();
 			   $('#program_type_select').append($('<option id="program_type_ddf" value="DDF">DDF</option>'));
 			   $('#program_type_select').append($('<option id="program_type_coop" value="COOP">COOP</option>'));
+			   $('#program_type_select').append($('<option id="program_type_fixed" value="Fixed $">Fixed $</option>'));
 			
 		   	}else {
 		   
@@ -878,6 +879,9 @@ th{
 	            			}
 	            			if(response.coop=='Yes'){
 	            				$('#program_type_select').append($('<option id="program_type_coop" value="COOP">COOP</option>'));
+	            			}
+	            			if(response.fixedDollar=='Yes'){
+	            				$('#program_type_select').append($('<option id="program_type_fixed" value="Fixed $">Fixed $</option>'));
 	            			}
 	            		}
 	            	},

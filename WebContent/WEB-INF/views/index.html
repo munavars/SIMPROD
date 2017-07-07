@@ -56,7 +56,21 @@
 	    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
 	    var textRange; var j=0;
 	    tab = document.getElementById(tableId); // id of table
-	
+	    
+		if(tableId=="pending_approvals"){
+			
+		    fileName="Pending Approvals_"+$("#loginUserName").html()+"_"+new Date().toLocaleString();
+		    
+		}else if(tableId=="customeroverview"){
+			
+			fileName="CustomerProgramList_"+$("#loginUserName").html()+"_"+new Date().toLocaleString();
+			
+		}else if(tableId=="newcustomeroverview"){
+			
+			fileName="CustomerListWithNoProgram_"+$("#loginUserName").html()+"_"+new Date().toLocaleString();
+			
+		}
+
 	    for(j = 0 ; j < tab.rows.length ; j++) 
 	    {     
 	        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
@@ -1358,7 +1372,7 @@
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
 		   //console.log(JSON.stringify(modelAttributeValue));
-		   if(2!=emp[0].ROLE_ID)
+		   if(1==emp[0].ROLE_ID)
 		   	{
 			   openSidebar();
 			}

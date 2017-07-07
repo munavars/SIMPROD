@@ -500,6 +500,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			dalProgramDet.setStatus(dalProgramDet.getDalProgramHeader().getStatus());
 			dalProgramDet.setTbpCheck(programDetail.getTbpCheck());
 			dalProgramDet.setGlCode(programDetail.getGlCode());
+			dalProgramDet.setEstimatedAccrual(programDetail.getEstimatedAccrual());
 			//setApproverLevelStatus(dalProgramDet, programHeader);
 		}
 

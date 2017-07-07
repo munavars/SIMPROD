@@ -486,6 +486,14 @@
 															</div>
 															<div
 																class="col-lg-4 col-md-4 col-sm-4 inline-flex m-top45">
+																<div id="estimatedaccrual">
+																	<label class="control-label" for="estm_accrual">Estimated Accrual ($)</label>&nbsp;&nbsp;
+																	<input id="estm_accrual" name="estm_accrual" type="text"
+																		class="form-control radio-inline m-bot15" style="width: 120px;"
+																		value="">
+																	
+																</div>
+																
 																<label class="control-label" for="inputSuccess"
 																	data-original-title="Customer Details">
 																	Is this 'Tiered'?</label>
@@ -1207,6 +1215,18 @@
 			    return isNumber;
 			}, 'Please enter valid amount');
 			
+			$.validator.addMethod("estimatedAccuralValidation", function (value, element) {
+				var isNumber = true;
+				var regex = /^[0-9.,]+$/;
+				if(value==0){
+					isNumber=false;
+				}
+				if( !regex.test(value) ) {
+				  isNumber = false;
+				}
+			    return isNumber;
+			}, 'Please enter valid Accrual Estimation');
+			
 			$.validator.addMethod("percentageValidation", function (value, element) {
 				var isPercentage = true;
 				var regex = /^[0-9.]+$/;
@@ -1276,6 +1296,10 @@
 								return ($('#optionsRadiosPercentage').is(':checked'));
 							}
 						}
+					},
+					estm_accrual: {
+						required: true,
+						estimatedAccuralValidation:true
 					},
 					optionsRadiosDenomination: {
 						required: true
@@ -1447,7 +1471,7 @@
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
-		   if(2!=emp[0].ROLE_ID)
+		   if(1==emp[0].ROLE_ID)
 		   	{
 		   		openSidebar();
 			}
@@ -1595,7 +1619,8 @@
                	else{
                		$("#optionsRadiosDollarSign").prop('checked', true);
                		$("#amount").val( convertAmountFormat(response.data.programDetailList[0].amount));
-               	}  
+               	} 
+               	$("#estm_accrual").val((response.data.programDetailList[0].estimatedAccrual));
                	
                	$('#from').datepicker({ 
    					dateFormat: 'mm/dd/yy'
@@ -1922,6 +1947,7 @@
          	function prepareDataForSubmit(){
          		responseOnload.url = window.location.href;
 				responseOnload.programDetailList[0].amount = removeCommaFromAmount($("#amount").val());
+				responseOnload.programDetailList[0].estimatedAccrual = removeCommaFromAmount($("#estm_accrual").val());				
 				responseOnload.programDetailList[0].amountType = $('input:radio[name=optionsRadiosDenomination]:checked').val();
  				responseOnload.programDetailList[0].beginDate = $.datepicker.parseDate( "mm/dd/yy", $('#from').val());
 				responseOnload.programDetailList[0].endDate = $.datepicker.parseDate( "mm/dd/yy", $('#to').val());  
@@ -2293,9 +2319,12 @@
 			$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
 				   if(id==item.id){
 					   if(item.base==1){
-						   pgmType='VBS';
+						   pgmType='VBS';						   
+						   $("#optionsRadiosDollarSign, #optionsRadiosDollarSignTier1").prop("checked", true);
+						   
 					   }else{
 						   pgmType='MKP';
+						   $("#optionsRadiosPercentage, #optionsRadiosPercentageTier1").prop("checked", true);
 					   }
 				   }
 				});

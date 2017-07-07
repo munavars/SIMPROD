@@ -74,6 +74,7 @@ public class DalProgramDetail extends DalAuditableModel {
     private DalUserComments dalUserComments;
 	private Integer tbpCheck;
 	private String glCode;
+	private Integer estimatedAccrual;
     
     @Column(name = "LONG_DESC")
     public String getLongDesc() {
@@ -674,4 +675,19 @@ public class DalProgramDetail extends DalAuditableModel {
       public void setGlCode(String glCode) {
                       this.glCode = glCode;
       }
+	/**
+	 * @return the estimatedAccrual
+	 */
+    @Column(name = "EST_ACCRUAL")
+	public Integer getEstimatedAccrual() {
+		return estimatedAccrual;
+	}
+	/**
+	 * @param estimatedAccrual the estimatedAccrual to set
+	 */
+	public void setEstimatedAccrual(Integer estimatedAccrual) {
+		this.estimatedAccrual = estimatedAccrual;
+	}
+      
+      
 }

@@ -69,6 +69,7 @@ public class ProgramDetail extends Model{
 	private String glCode;
 	private List<DalGLCode> glCodeList;
 	private List<DalBaseItems> baseItemList;
+	private Integer estimatedAccrual;
 	
 	/**Commentary/Special Instructions attribute to hold the user entered comments.*/
 	private String comments;
@@ -469,6 +470,18 @@ public class ProgramDetail extends Model{
 	 */
 	public void setBaseItemList(List<DalBaseItems> baseItemList) {
 		this.baseItemList = baseItemList;
+	}
+	/**
+	 * @return the estimatedAccrual
+	 */
+	public Integer getEstimatedAccrual() {
+		return estimatedAccrual;
+	}
+	/**
+	 * @param estimatedAccrual the estimatedAccrual to set
+	 */
+	public void setEstimatedAccrual(Integer estimatedAccrual) {
+		this.estimatedAccrual = estimatedAccrual;
 	}
 	
 	

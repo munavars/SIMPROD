@@ -412,6 +412,7 @@ public class ProgramServiceImpl implements IProgramService {
 		programHeader.setStatus( ProgramServiceHelper.convertToString(dalProgramDetail.getStatus().getType()));
 		programDetail.setTbpcheck(dalProgramDetail.getTbpCheck());
 		programDetail.setGlCode(dalProgramDetail.getGlCode());
+		programDetail.setEstimatedAccrual(dalProgramDetail.getEstimatedAccrual());
 		if(dalProgramDetail.getCreatedDate() != null){
 			programDetail.setCreatedDate( ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));			
 		}

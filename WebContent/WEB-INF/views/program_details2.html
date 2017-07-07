@@ -2322,10 +2322,11 @@
 					   if(item.base==1){
 						   pgmType='VBS';						   
 						   $("#optionsRadiosDollarSign, #optionsRadiosDollarSignTier1").prop("checked", true);
-						   
+						   $("#amount").val("");
 					   }else{
 						   pgmType='MKP';
 						   $("#optionsRadiosPercentage, #optionsRadiosPercentageTier1").prop("checked", true);
+						   $("#amount").val("");
 					   }
 				   }
 				});

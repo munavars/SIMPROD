@@ -1809,9 +1809,10 @@
 					   if(id==item.id){
 						   if(item.base==1){
 							   $("#optionsRadiosDollarSign").prop("checked", true);
-							   
+							   $("#amount").val("");
 						   }else{
 							   $("#optionsRadiosPercentage").prop("checked", true);
+							   $("#amount").val("");
 						   }
 					   }
 					});

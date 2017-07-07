@@ -15,94 +15,67 @@
 	
 	<!--external css-->
 	<link href="resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-	<!--Date Picker--> 
 	<link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datepicker/css/datepicker.css" />
 	<link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
-	<link rel="stylesheet" type="text/css" href="resources/assets/jquery-multi-select/css/multi-select.css" />
 	<link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-timepicker/compiled/timepicker.css" />
-	<link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-colorpicker/css/colorpicker.css" />
 	<link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datetimepicker/css/datetimepicker.css" />
+	<link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-fileupload/bootstrap-fileupload.css" />
+	<link rel="stylesheet" href="resources/assets/data-tables/DT_bootstrap.css" />
+	
 	<!--bootstrap switcher-->
 	<link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-switch/static/stylesheets/bootstrap-switch.css" />
 	<!--select 2-->
 	<link rel="stylesheet" type="text/css" href="resources/assets/select2/css/select2.min.css"/>
-	<!--right slidebar-->
-	<link href="resources/css/slidebars.css" rel="stylesheet">
-	 <!--Form Wizard-->
-	<link rel="stylesheet" type="text/css" href="resources/css/jquery.steps.css" />
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
 	
 	<!-- Custom styles for this template -->
 	<link href="resources/css/style.css" rel="stylesheet">
-	<link href="resources/css/style-responsive.css" rel="stylesheet" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<link href="resources/css/style-responsive.css" rel="stylesheet" />	
 
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
-    <!--[if lt IE 9]>
-      <script src="resources/js/html5shiv.js"></script>
-      <script src="resources/js/respond.min.js"></script>
-    <![endif]-->
-    
-<!--    <script src="resources/js/prodTreadParts.js"></script> -->
-
-      <script type="text/javascript">
-         function sync()
-         {
-           var n1 = document.getElementById('include');
-           var n2 = document.getElementById('input4');
-           n2.value = n1.value;
-         }
-         //Export to Excel 
-         var tableToExcel = (function() {
-         	  var uri = 'data:application/vnd.ms-excel;base64,'
-         	    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-         	    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-         	    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-         	  return function(table, name) {
-         	    if (!table.nodeType) table = document.getElementById(table)
-         	    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-         	   // window.location.href = uri + base64(format(template, ctx))
-      		    var a = document.createElement('a');
-      		    a.href = uri + base64(format(template, ctx));
-      			a.download =  'pricing'+'.xls';
-      		    a.click(); 
-         	  }
-         	})()
-      </script>
+    <script type="text/javascript">
+       function sync()
+       {
+         var n1 = document.getElementById('include');
+         var n2 = document.getElementById('input4');
+         n2.value = n1.value;
+       }
+       //Export to Excel 
+       var tableToExcel = (function() {
+       	  var uri = 'data:application/vnd.ms-excel;base64,'
+       	    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+       	    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
+       	    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
+       	  return function(table, name) {
+       	    if (!table.nodeType) table = document.getElementById(table)
+       	    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+       	   // window.location.href = uri + base64(format(template, ctx))
+    		    var a = document.createElement('a');
+    		    a.href = uri + base64(format(template, ctx));
+    			a.download =  'pricing'+'.xls';
+    		    a.click(); 
+       	  }
+       	})()
+    </script>
       
-
 	<!-- js placed at the end of the document so the pages load faster -->
-	<script src="resources/js/jquery.js"></script>
+	<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.11.1/jquery-ui.min.js"></script>
 	<script src="resources/js/jquery-ui-1.9.2.custom.min.js"></script>
-	<script src="resources/js/jquery-migrate-1.2.1.min.js"></script>
-	<script class="include" type="text/javascript" src="resources/js/jquery.dcjqaccordion.2.7.js"></script>
-	<script src="resources/js/jquery.scrollTo.min.js"></script>
-	<script src="resources/js/jquery.nicescroll.js" type="text/javascript"></script>
-	<script src="resources/js/respond.min.js" ></script>
-	<script src="resources/js/jquery.stepy.js"></script>
-	<!--right slidebar-->
+	
+	<!-- Ignite UI Required Combined JavaScript Files -->
+	<!--Form Validation-->
+	<script src="resources/js/bootstrap-validator.min.js" type="text/javascript"></script>
+	
+	<!--Form Wizard-->
+	<script src="resources/js/jquery.validate.min.js" type="text/javascript"></script>
 	<script src="resources/js/slidebars.min.js"></script>
 	<script type="text/javascript" src="resources/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
 	<script type="text/javascript" src="resources/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 	<script type="text/javascript" src="resources/assets/bootstrap-daterangepicker/moment.min.js"></script>
 	<script type="text/javascript" src="resources/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
-	<script type="text/javascript" src="resources/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
-	<script type="text/javascript" src="resources/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
-	<script type="text/javascript" src="resources/assets/jquery-multi-select/js/jquery.multi-select.js"></script>
-	<script type="text/javascript" src="resources/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
+	    
 	<script type="text/javascript" src="resources/assets/data-tables/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="resources/assets/data-tables/DT_bootstrap.js"></script>
-	<!--select2-->
-	<script type="text/javascript" src="resources/assets/select2/js/select2.min.js"></script>
-	<!--Form Validation-->
-	<script src="resources/js/bootstrap-validator.min.js" type="text/javascript"></script>
-	<!--Form Wizard-->
-	<!--script src="js/jquery.steps.min.js" type="text/javascript"></script-->
-	<script src="resources/js/jquery.validate.min.js" type="text/javascript"></script>
-	<!--common script for all pages-->
-	<script src="resources/js/common-scripts.js"></script>
-
 <style>
 #drop{
 	border:2px dashed #bbb;
@@ -840,7 +813,7 @@ a { text-decoration: none }
           <div class="clearfix space15"></div>
           <div class="clearfix"> </div>
 									<div id="footer-button" class="modal-footer">
-										<button id="cancel-program" data-dismiss="modal"
+										<button id="cancel-pricing" data-dismiss="modal"
 												class="btn btn-default" type="button" onclick="cancelClick('#myModal11')">Cancel</button>
 										&nbsp; <a class="btn btn-success" id="submit-pricing"
 											href="javascript: validateBeforeSubmit('#myModal')"> <i
@@ -1254,6 +1227,7 @@ a { text-decoration: none }
 				$("#approve-pricing").hide();
 			}
 			else{
+				$("#cancel-pricing").html("Back");
 				$("#edit-pricing").addClass("active");
 			}
 			
@@ -1615,7 +1589,10 @@ a { text-decoration: none }
          		var idBefore = responseOnload.id;
          		responseOnload.status = "2";
          		responseOnload.url = window.location.href;
-         		prepareDataForSubmit();
+         		if(idBefore === null || _isDirty){
+         			prepareDataForSubmit();
+         		}
+         		
          		fnCallService(message, idBefore);
          		$('#myModal').modal('toggle');
          		disableFields();
@@ -1712,6 +1689,7 @@ a { text-decoration: none }
 				$('#pricing-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
 				$("#pricing-parent-div").find('a').addClass("disabled");
 				enabledButtonApplicableToAll();
+				$("#cancel-pricing").html("Back");
 			}
 			
 			function enableFields(){
@@ -1723,13 +1701,14 @@ a { text-decoration: none }
                	}
                	$('#edit-button').attr('disabled', true);
 				$('#edit-button').addClass("disabled");
+				$("#cancel-pricing").html("Cancel");
 			}
 			
 			function enabledButtonApplicableToAll(){
 				$('#pricing-expand').attr('disabled', false);
 				$('#pricing-expand').removeClass("disabled");
 				/* $('#pdf-button').attr('disabled', false); */
-				$('#cancel-program').attr('disabled', false);
+				$('#cancel-pricing').attr('disabled', false);
 				$('#cancelLink').attr('disabled', false);
 				$('#cancelLink').removeClass("disabled");
 				$('#myModalEdit').find('button').attr('disabled',false);
@@ -1857,7 +1836,7 @@ a { text-decoration: none }
 			})      	
 	</script>
 
-	<!-- <script>
+	<script>
 	    $(function(){
 	        $('html').keydown(function(e){
 	            var key = e.which;
@@ -1876,6 +1855,6 @@ a { text-decoration: none }
 	            
 	        });
 	    });
-    </script> -->
+    </script>
   </body>
 </html>

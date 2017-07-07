@@ -1217,7 +1217,7 @@
 			
 			$.validator.addMethod("estimatedAccuralValidation", function (value, element) {
 				var isNumber = true;
-				var regex = /^[0-9.,]+$/;
+				var regex = /^[0-9,]+$/;
 				if(value==0){
 					isNumber=false;
 				}
@@ -2258,6 +2258,7 @@
 				if(closeModal == 'Y'){
 					$('#myModal10').modal('toggle');
 				}
+				$("#achieve_basedon_inputselect").trigger('change');
 			}
              
             $("input[name=optionsRadiosTier]").on( "change", function() {

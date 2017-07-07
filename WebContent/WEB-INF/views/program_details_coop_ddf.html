@@ -1250,7 +1250,9 @@
                	
                	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
                	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
+               	if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
                	populateGlCode();
+               	}
                	
                	if(response.data.programDetailList[0].tbpCheck == '1'){
                		$("#tbpCheck").prop('checked', true);
@@ -1753,13 +1755,13 @@
 
 	function populateGlCode(){
 		 $('#glcode_dropdown').val(''); 
-		 if($('#programTypeHeader').html()=='COOP'){
+		/*  if($('#programTypeHeader').html()=='COOP'){
 			 pgmType='COP';
 		 }else if($('#programTypeHeader').html()=='DDF'){
 			 pgmType='DDF';
 		 }else{
 			 pgmType='MKP';
-		 }
+		 } */
 		/* if(responseOnload.businessUnit=='P'){
 			key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
 		}else{
@@ -1767,11 +1769,18 @@
 		} */
 		 if(responseOnload.businessUnit=='P'){
 				key='Consumer';
+				pgmType='COP';
 			}else if(responseOnload.businessUnit=='T'){
 				key='Commercial';
+				pgmType='DDF';
 			}else{
 				key='OTR';
+				pgmType='DDF';
 			}
+		
+		 if($('#programTypeHeader').html()=='Fixed $'){
+			 pgmType='MKP';
+		 }
 		
 		$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
 			   if((key==item.bu)&&(item.pcs==pgmType)){
@@ -1791,6 +1800,23 @@
 				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
 			    a.click(); 
 			});
+			
+			$('#paid_basedon_inputselect').change(function(){
+				
+				id=$('#paid_basedon_inputselect option:selected').val();
+				
+				$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
+					   if(id==item.id){
+						   if(item.base==1){
+							   $("#optionsRadiosDollarSign").prop("checked", true);
+							   
+						   }else{
+							   $("#optionsRadiosPercentage").prop("checked", true);
+						   }
+					   }
+					});
+			});
+			
 		});
 		
 		$(':input').change(function(){

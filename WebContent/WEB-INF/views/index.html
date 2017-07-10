@@ -73,10 +73,16 @@
 
 	    for(j = 0 ; j < tab.rows.length ; j++) 
 	    {     
-	        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-	        //tab_text=tab_text+"</tr>";
+	        var table_cells = tab.rows[j].getElementsByTagName('td');  
+	        for (var i = 0; i < table_cells.length; i++) { 
+   			var cell = table_cells[i];
+	   		if(i==12)
+	   		{
+	   		 cell.setAttribute("style", "mso-number-format:0\.00;");
+	   		}
+	   		}
+	   		tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
 	    }
-	
 	    tab_text=tab_text+"</table>";
 	    tab_text= tab_text.replace(/<a[^>]*>|<\/a>/g, "");//remove if u want links in your table
 	    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table

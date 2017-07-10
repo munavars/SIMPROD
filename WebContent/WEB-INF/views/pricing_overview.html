@@ -84,16 +84,15 @@ function tableToExcel(tableId, fileName) {
 	
 	    for(j = 0 ; j < tab.rows.length ; j++) 
 	    {   
-	        var table_cells = tab.rows[j].getElementsByTagName('td');
-	        if(table_cells.length>5)
-	        {     
- 	    	var part=tab.rows[j].cells[5].innerHTML;
-	    	var row=tab.rows[j].innerHTML.replace(part,part+",");
-	    	tab_text=tab_text+row+"</tr>"; 
-	    	}
-	    	else{
-	    	  tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-	    	} 
+	        var table_cells = tab.rows[j].getElementsByTagName('td');  
+	        for (var i = 0; i < table_cells.length; i++) { 
+   			var cell = table_cells[i];
+   			if(i==5)
+	   		{
+	   		 cell.setAttribute("style", 'MSO-NUMBER-FORMAT:\\@');
+	   		}
+	   		}
+	   	    tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
 	    }
 		       
 	    tab_text=tab_text+"</table>";
@@ -399,7 +398,7 @@ function tableToExcel(tableId, fileName) {
                               </div>
                               Pricing form link End -->
                                  <div class="btn-group m-left8">
-                                  <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('pricingdetail', 'Pricing Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                                  <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('pricingdetail', 'Pricing Details Data')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
                               </div>   
                             </div> 
 

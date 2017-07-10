@@ -6,7 +6,10 @@
     <meta name="description" content="">
     <meta name="author" content="Yokohama">
     <meta name="keyword" content="">
-
+	<meta http-equiv='cache-control' content='no-cache'>
+	<meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
+    
     <title>Pricing Form</title>
 
 	<!-- Bootstrap core CSS -->
@@ -38,22 +41,36 @@
          var n2 = document.getElementById('input4');
          n2.value = n1.value;
        }
-       //Export to Excel 
-       var tableToExcel = (function() {
-       	  var uri = 'data:application/vnd.ms-excel;base64,'
-       	    , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
-       	    , base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) }
-       	    , format = function(s, c) { return s.replace(/{(\w+)}/g, function(m, p) { return c[p]; }) }
-       	  return function(table, name) {
-       	    if (!table.nodeType) table = document.getElementById(table)
-       	    var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
-       	   // window.location.href = uri + base64(format(template, ctx))
-    		    var a = document.createElement('a');
-    		    a.href = uri + base64(format(template, ctx));
-    			a.download =  'pricing'+'.xls';
-    		    a.click(); 
-       	  }
-       	})()
+        //Export to Excel 
+   function tableToExcel(tableId, fileName) {
+	    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+	    var textRange; var j=0;
+	    tab = document.getElementById(tableId); // id of table
+	    fileName=fileName+$("#loginUserName").html()+"_"+new Date().toLocaleString();
+		
+	    for(j = 0 ; j < tab.rows.length ; j++) 
+	    {     
+	        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+	    }
+	    tab_text=tab_text+"</table>";
+	    tab_text= tab_text.replace(/<a[^>]*>|<\/a>/g, "");//remove if u want links in your table
+	    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+	    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+	    if (navigator.userAgent.indexOf('Trident')>0 || navigator.userAgent.indexOf('Edge')>0)
+	    {
+	    	var blobObject = new Blob([tab_text]); 
+	    	window.navigator.msSaveOrOpenBlob(blobObject, fileName+'.xls');
+	    }else
+	    {
+	        var a = document.createElement('a');
+	        var data_type = 'data:application/vnd.ms-excel';
+		    a.href = data_type + ', ' + encodeURIComponent(tab_text);
+			a.download =  fileName+'.xls';
+			document.body.appendChild(a);
+			a.click();
+			document.body.appendChild(a);   
+		}
+    }
     </script>
       
 	<!-- js placed at the end of the document so the pages load faster -->
@@ -623,7 +640,7 @@ a { text-decoration: none }
                           <div class="clearfix">
                               <div class="btn-group pull-right">
                                 <div class="btn-group">
-                                    <a id="invoice-export-link" href="#"><button id="invoice-export-btn" class="btn btn-default" onclick="tableToExcel('testgrid', 'Pricing Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                                    <a id="invoice-export-link" href="#"><button id="invoice-export-btn" class="btn btn-default" onclick="tableToExcel('testgrid', 'Pricing Details_')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
                                 </div>
                               </div>
                               <div class="btn-group pull-left">
@@ -1215,10 +1232,18 @@ a { text-decoration: none }
 	var custId;
 	var _isDirty = false;
 	$(window).ready(function(){
-			getParams = new URLSearchParams(window.location.search);
-			var pricingHeaderId = getParams.get('pricingId'); 
-			custId = getParams.get('custId');
+			//getParams = new URLSearchParams(window.location.search);
+			//var pricingHeaderId = getParams.get('pricingId'); 
+			//custId = getParams.get('custId');
 			//pricingHeaderId = '74';
+			var queryDict = {};
+	        window.location.search.substr(1).split("&").forEach(
+	        function(item) {
+	        queryDict[item.split("=")[0]] = item.split("=")[1]
+            })
+		    var custId=queryDict["custId"];
+		    var pricingHeaderId=queryDict["pricingId"];
+		    
 			var url;
 			
 			if(pricingHeaderId == null){
@@ -1247,6 +1272,7 @@ a { text-decoration: none }
 			var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT'];
         	$.ajax({ 
 				type: "GET",
+				cache: false,
 				dataType: "json",
 	           	url: url,
 	           	async: false,

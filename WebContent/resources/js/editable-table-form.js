@@ -20,7 +20,7 @@ var EditableTable = function () {
                 var jqTds = $('>td', nRow);
                 jqTds[0].innerHTML = '<input type="text" style="width:100%" class="form-control small" value="' + aData[0] + '">';
                 jqTds[1].innerHTML = '<input type="text" style="width:100%" id="tier_amount" name="tier_amount" class="form-control small" value="' + aData[1] + '">';
-                jqTds[2].innerHTML = '<input type="text" style="width:100%" class="form-control small" value="' + aData[2] + '">';
+                jqTds[2].innerHTML = '<input type="text" style="width:100%" id="tier_range" name="tier_range" class="form-control small" value="' + aData[2] + '">';
                 if($(aData[3]).attr('id') == null){
                 	jqTds[3].innerHTML = '<a class="edit" href="">Save</a>';
                 }
@@ -114,7 +114,8 @@ var EditableTable = function () {
                     	'aTargets' : [1]                    	
                     },
                     {
-                        'bSortable': false,
+                    	'sClass' : 'text-right',
+                    	'bSortable': false,
                         'aTargets': [2]
                     },
                     {

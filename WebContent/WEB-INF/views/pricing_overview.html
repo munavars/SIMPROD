@@ -83,13 +83,19 @@ function tableToExcel(tableId, fileName) {
 	    tab = document.getElementById(tableId); // id of table
 	
 	    for(j = 0 ; j < tab.rows.length ; j++) 
-	    {     
+	    {   
+	        var table_cells = tab.rows[j].getElementsByTagName('td');
+	        if(table_cells.length>5)
+	        {     
  	    	var part=tab.rows[j].cells[5].innerHTML;
 	    	var row=tab.rows[j].innerHTML.replace(part,part+",");
 	    	tab_text=tab_text+row+"</tr>"; 
-	        //tab_text=tab_text+"</tr>";
+	    	}
+	    	else{
+	    	  tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+	    	} 
 	    }
-	
+		       
 	    tab_text=tab_text+"</table>";
 	    tab_text= tab_text.replace(/<a[^>]*>|<\/a>/g, "");//remove if u want links in your table
 	    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
@@ -146,8 +152,17 @@ function tableToExcel(tableId, fileName) {
 
 		$('#pricingdetail th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
 		//alert(window.location.search.substr(1)); 	
-		getParams = new URLSearchParams(window.location.search);
-		var custId=getParams.get('custId'); 
+		//getParams = new URLSearchParams(window.location.search);
+		//var custId=getParams.get('custId'); 
+		
+		var queryDict = {};
+	        window.location.search.substr(1).split("&").forEach(
+	        function(item) {
+	        queryDict[item.split("=")[0]] = item.split("=")[1]
+         })
+		//var programId =getParams.get('pgmId'); 
+		var custId=queryDict["custId"];
+		
 		//loading the customer details
 		$.ajax({ 
 			   type: "GET",

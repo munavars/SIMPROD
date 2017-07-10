@@ -18,7 +18,7 @@ var EditableTable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" style="width:100%" class="form-control small" value="' + aData[0] + '">';
+                jqTds[0].innerHTML = '<input type="text" style="width:100%" id="tier_id" name="tier_id" class="form-control small" value="' + aData[0] + '">';
                 jqTds[1].innerHTML = '<input type="text" style="width:100%" id="tier_amount" name="tier_amount" class="form-control small" value="' + aData[1] + '">';
                 jqTds[2].innerHTML = '<input type="text" style="width:100%" id="tier_range" name="tier_range" class="form-control small" value="' + aData[2] + '">';
                 if($(aData[3]).attr('id') == null){
@@ -136,15 +136,38 @@ var EditableTable = function () {
 
             $('#tier-schedule_new').click(function (e) {
                 e.preventDefault();
-               
-               var aiNew = oTable.fnAddData(['', '', '',
-                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
-                ]);
-                var nRow = oTable.fnGetNodes(aiNew[0]);
-                editRow(oTable, nRow);
                 
-                nEditing = nRow; 
-               
+                var noRecord = true;               
+                $('#tier-schedule tbody').find('tr').each(function(i) {
+                	var tds = $(this).find('td'),
+                	 marker = tds.eq(0).text();
+                	if(marker != 'No data available in table' && nEditing != null){
+                		noRecord = false;
+                	}
+                });	
+
+				if(noRecord || ( $("#tier_id").valid() && $("#tier_amount").valid() && $("#tier_range").valid() ) ){
+					if(nEditing != null){
+						var valid = saveRow(oTable, nEditing);
+						if(valid){
+							nEditing = null;
+						}
+					}
+					var aiNew = oTable.fnAddData(['', '', '',
+                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
+	                ]);
+	                var nRow = oTable.fnGetNodes(aiNew[0]);
+	                editRow(oTable, nRow);
+	                
+	                nEditing = nRow; 
+				}
+				else{
+					$("#tier_id").valid();
+					$("#tier_amount").valid();
+					$("#tier_range").valid();
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+				}
             });
 
             $('#editable-sample a.delete,#tier-schedule a.delete').live('click', function (e) {

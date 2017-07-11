@@ -888,7 +888,11 @@
 	         	}
 			}
 		
-	
+		 function removeCommaFromAmount(amount){
+				if(amount != null){
+					return amount.toString().replace(/\,/g,'');
+				}
+			}
 	
 	function calculateCreditEarned(event){
     	 var id=(event.id).substring(6);
@@ -905,18 +909,13 @@
 			unitsplusNad=parseInt($('#units_nad'+id).html());
 			bonUnitsplusNad=parseInt($('#bonusableunit_nad'+id).html());	
 			
-			invSales=parseFloat($('#invsales'+id).html().substring(1));
-			bonusableSales=parseFloat($('#bonusablesales'+id).html().substring(1));
-			nadSales=parseFloat($('#nadsales'+id).html().substring(1));
-			salesplusNad=parseFloat($('#invsales_nadsales'+id).html().substring(1));
-			bonSalessplusNad=parseFloat($('#bonusable_nadsales'+id).html().substring(1));
+			invSales=parseFloat(removeCommaFromAmount($('#invsales'+id).html().substring(1)));
+			bonusableSales=parseFloat(removeCommaFromAmount($('#bonusablesales'+id).html().substring(1)));
+			nadSales=parseFloat(removeCommaFromAmount($('#nadsales'+id).html().substring(1)));
+			salesplusNad=parseFloat(removeCommaFromAmount($('#invsales_nadsales'+id).html().substring(1)));
+			bonSalessplusNad=parseFloat(removeCommaFromAmount($('#bonusable_nadsales'+id).html().substring(1)));
 			
-			//alert(paidBased+":"+amount+":"+amountType);
-			//alert(units+":"+bonusableUnits+":"+nadUnits);
-			//alert(invSales+":"+bonusableSales+":"+nadSales);
-			
-			
-			
+						
 			if(paidBased==3){
 				creditEarned=units*amount;
 				$('#creditbasedon'+id).html(units);
@@ -924,22 +923,22 @@
 			
 			if(paidBased==1){
 				creditEarned=nadUnits*amount;
-				$('#creditbasedon'+id).html(units);
+				$('#creditbasedon'+id).html(nadUnits);
 			}
 			
 			if(paidBased==2){
 				creditEarned=bonusableUnits*amount;
-				$('#creditbasedon'+id).html(units);
+				$('#creditbasedon'+id).html(bonusableUnits);
 			}
 			
 			if(paidBased==4){
 				creditEarned=(unitsplusNad)*amount;
-				$('#creditbasedon'+id).html(units+nadUnits);
+				$('#creditbasedon'+id).html(unitsplusNad);
 			}
 			
 			if(paidBased==5){
 				creditEarned=(bonUnitsplusNad)*amount;
-				$('#creditbasedon'+id).html(units+nadUnits);
+				$('#creditbasedon'+id).html(bonUnitsplusNad);
 			}
 			
 			if(paidBased==8){
@@ -949,19 +948,19 @@
 			
 			if(paidBased==6){
 				creditEarned=nadSales*amount;
-				$('#creditbasedon'+id).html(invSales);
+				$('#creditbasedon'+id).html(nadSales);
 			}
 			if(paidBased==7){
 				creditEarned=bonusableSales*amount;
-				$('#creditbasedon'+id).html(invSales);
+				$('#creditbasedon'+id).html(bonusableSales);
 			}
 			if(paidBased==9){
 				creditEarned=(salesplusNad)*amount;
-				$('#creditbasedon'+id).html(invSales);
+				$('#creditbasedon'+id).html(salesplusNad);
 			}
 			if(paidBased==10){
 				creditEarned=(bonSalessplusNad)*amount;
-				$('#creditbasedon'+id).html(invSales);
+				$('#creditbasedon'+id).html(bonSalessplusNad);
 			}
 			
 			if(amountType=="%"){

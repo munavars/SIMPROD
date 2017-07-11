@@ -6,7 +6,9 @@
     <meta name="description" content="">
     <meta name="author" content="Yokohama Tire">
     <meta name="keyword" content="">
-
+	<meta http-equiv='cache-control' content='no-cache'>
+	<meta http-equiv='expires' content='0'>
+    <meta http-equiv='pragma' content='no-cache'>
     <title>Ympact Customer Details</title>
 
     <!-- Bootstrap core CSS -->
@@ -84,8 +86,15 @@ th{
 	
 	    for(j = 0 ; j < tab.rows.length ; j++) 
 	    {     
-	        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-	        //tab_text=tab_text+"</tr>";
+	        var table_cells = tab.rows[j].getElementsByTagName('td');  
+	        for (var i = 0; i < table_cells.length; i++) { 
+   			var cell = table_cells[i];
+	   		if(i==11 || i==16 || i==17 || i==18 || i==19 )
+	   		{
+	   		 cell.setAttribute("style", "mso-number-format:0\.00;");
+	   		}
+	   		}
+	   		tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
 	    }
 	
 	    tab_text=tab_text+"</table>";
@@ -874,13 +883,13 @@ th{
 	            	success: function(response){
 	            		if(response.empId!=null){
 	            			
-	            			 if(response.ddf=='Yes'){
+	            			 if(response.ddf.toLowerCase()=='yes'){
 	            				 $('#program_type_select').append($('<option id="program_type_ddf" value="DDF">DDF</option>'));
 	            			}
-	            			if(response.coop=='Yes'){
+	            			if(response.coop.toLowerCase()=='yes'){
 	            				$('#program_type_select').append($('<option id="program_type_coop" value="COOP">COOP</option>'));
 	            			}
-	            			if(response.fixedDollar=='Yes'){
+	            			if(response.fixedDollar.toLowerCase()=='yes'){
 	            				$('#program_type_select').append($('<option id="program_type_fixed" value="Fixed $">Fixed $</option>'));
 	            			}
 	            		}

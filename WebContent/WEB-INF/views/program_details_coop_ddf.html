@@ -1808,11 +1808,17 @@
 				$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
 					   if(id==item.id){
 						   if(item.base==1){
+							   if(!$('#optionsRadiosDollarSign').is(':checked')){
+								   $("#amount").val(""); 
+							   }
 							   $("#optionsRadiosDollarSign").prop("checked", true);
-							   $("#amount").val("");
+							   $("#amount").valid();
 						   }else{
+							   if(!$('#optionsRadiosPercentage').is(':checked')){
+								   $("#amount").val(""); 
+							   }
 							   $("#optionsRadiosPercentage").prop("checked", true);
-							   $("#amount").val("");
+							   $("#amount").valid();
 						   }
 					   }
 					});

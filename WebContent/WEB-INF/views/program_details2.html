@@ -2326,13 +2326,20 @@
 			$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
 				   if(id==item.id){
 					   if(item.base==1){
-						   pgmType='VBS';						   
+						   pgmType='VBS';		
+						   if(!$('#optionsRadiosDollarSign').is(':checked')){
+							   $("#amount").val(""); 
+						   }
 						   $("#optionsRadiosDollarSign, #optionsRadiosDollarSignTier1").prop("checked", true);
-						   $("#amount").val("");
+						  
+						   $("#amount").valid();
 					   }else{
 						   pgmType='MKP';
+						   if(!$('#optionsRadiosPercentage').is(':checked')){
+							   $("#amount").val(""); 
+						   }
 						   $("#optionsRadiosPercentage, #optionsRadiosPercentageTier1").prop("checked", true);
-						   $("#amount").val("");
+						   $("#amount").valid();
 					   }
 				   }
 				});

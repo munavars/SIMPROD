@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ytc.common.model.CcmDetails;
 import com.ytc.common.model.DropDown;
-
+import com.ytc.common.result.ListResult;
 import com.ytc.service.ICcmService;
 import com.ytc.service.ServiceContext;
 
@@ -41,6 +42,14 @@ public class CCMController extends BaseController {
 	@RequestMapping(value = "/ccm/v1/createMemoData/{programId}", method = RequestMethod.GET)
 	public @ResponseBody boolean createMemoData(HttpServletRequest request, @PathVariable("programId") Integer programId) {
 		getService(request).createMemoData(programId);
-		return false;
+		return true;
+	}
+	
+	@RequestMapping(value = "/ccm/v1/getCcmDetails/{frequency}/{bu}/{begindate}/{endDate}", method = RequestMethod.GET)
+	public @ResponseBody ListResult<CcmDetails> getCCMDetails(HttpServletRequest request, @PathVariable("frequency") String frequency, @PathVariable("bu") String bu, @PathVariable("begindate") String beginDate, @PathVariable("endDate") String endDate) {
+		 
+		List<CcmDetails> result=getService(request).getCCMDetails(frequency, bu, beginDate, endDate);
+		return new ListResult<CcmDetails>(result);
+		
 	}
 }

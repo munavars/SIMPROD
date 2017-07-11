@@ -23,7 +23,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 
 			<property name="jpaVendorAdapter">
 				<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-					<property name="databasePlatform" value="org.hibernate.dialect.SQLServer2012Dialect" />
+					<!-- <property name="databasePlatform" value="org.hibernate.dialect.SQLServer2012Dialect" /> -->
+					<property name="databasePlatform" value="com.ytc.connection.SQLServer2012DialectWithNvarchar" />					
 					<property name="showSql" value="true" />
 					<property name="generateDdl" value="false" />
 				</bean>

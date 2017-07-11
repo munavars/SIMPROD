@@ -1,0 +1,493 @@
+package com.ytc.common.model;
+
+public class CcmDetails extends Model {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private String bu;
+	private String accountManager;
+	private String zoneManager;
+	private String frequency;
+	private String programId;
+	private String programName;
+	private String description;
+	private String paidBasedOn;
+	private String guarantee;
+	private String amount;
+	private String amountType;
+	private String creditAccured;
+	private Double earned;
+	private double creditEarned;
+	private String review;
+	private String comments;
+	private String creditBasedOn;
+	private String creditMemo;
+	private String billToNo;
+	private String billToName;
+	private Integer units;
+	private Integer bonusableUnits;
+	private Integer nadUnits;
+	private Integer unitsNad;
+	private Integer bonusableNad;
+	private String invSales;
+	private String bonusableSales;
+	private String nadSales;
+	private String invSalesNad;
+	private String bonusableSalesNad;
+	private String warranty;
+	private String payTo;
+	private String beginDate;
+	private String endDate;
+	private String glCode;
+	private String paymentMethod;
+	private String baseId;
+	/**
+	 * @return the bu
+	 */
+	public String getBu() {
+		return bu;
+	}
+	/**
+	 * @param bu the bu to set
+	 */
+	public void setBu(String bu) {
+		this.bu = bu;
+	}
+	/**
+	 * @return the accountManager
+	 */
+	public String getAccountManager() {
+		return accountManager;
+	}
+	/**
+	 * @param accountManager the accountManager to set
+	 */
+	public void setAccountManager(String accountManager) {
+		this.accountManager = accountManager;
+	}
+	/**
+	 * @return the zoneManager
+	 */
+	public String getZoneManager() {
+		return zoneManager;
+	}
+	/**
+	 * @param zoneManager the zoneManager to set
+	 */
+	public void setZoneManager(String zoneManager) {
+		this.zoneManager = zoneManager;
+	}
+	/**
+	 * @return the frequency
+	 */
+	public String getFrequency() {
+		return frequency;
+	}
+	/**
+	 * @param frequency the frequency to set
+	 */
+	public void setFrequency(String frequency) {
+		this.frequency = frequency;
+	}
+	/**
+	 * @return the programId
+	 */
+	public String getProgramId() {
+		return programId;
+	}
+	/**
+	 * @param programId the programId to set
+	 */
+	public void setProgramId(String programId) {
+		this.programId = programId;
+	}
+	/**
+	 * @return the programName
+	 */
+	public String getProgramName() {
+		return programName;
+	}
+	/**
+	 * @param programName the programName to set
+	 */
+	public void setProgramName(String programName) {
+		this.programName = programName;
+	}
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	/**
+	 * @return the paidBasedOn
+	 */
+	public String getPaidBasedOn() {
+		return paidBasedOn;
+	}
+	/**
+	 * @param paidBasedOn the paidBasedOn to set
+	 */
+	public void setPaidBasedOn(String paidBasedOn) {
+		this.paidBasedOn = paidBasedOn;
+	}
+	/**
+	 * @return the guarantee
+	 */
+	public String getGuarantee() {
+		return guarantee;
+	}
+	/**
+	 * @param guarantee the guarantee to set
+	 */
+	public void setGuarantee(String guarantee) {
+		this.guarantee = guarantee;
+	}
+	/**
+	 * @return the amount
+	 */
+	public String getAmount() {
+		return amount;
+	}
+	/**
+	 * @param amount the amount to set
+	 */
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	/**
+	 * @return the amountType
+	 */
+	public String getAmountType() {
+		return amountType;
+	}
+	/**
+	 * @param amountType the amountType to set
+	 */
+	public void setAmountType(String amountType) {
+		this.amountType = amountType;
+	}
+	/**
+	 * @return the creditAccured
+	 */
+	public String getCreditAccured() {
+		return creditAccured;
+	}
+	/**
+	 * @param creditAccured the creditAccured to set
+	 */
+	public void setCreditAccured(String creditAccured) {
+		this.creditAccured = creditAccured;
+	}
+	/**
+	 * @return the earned
+	 */
+	public Double getEarned() {
+		return earned;
+	}
+	/**
+	 * @param earned the earned to set
+	 */
+	public void setEarned(Double earned) {
+		this.earned = earned;
+	}
+	/**
+	 * @return the creditEarned
+	 */
+	public double getCreditEarned() {
+		return creditEarned;
+	}
+	/**
+	 * @param creditEarned the creditEarned to set
+	 */
+	public void setCreditEarned(double creditEarned) {
+		this.creditEarned = creditEarned;
+	}
+	/**
+	 * @return the review
+	 */
+	public String getReview() {
+		return review;
+	}
+	/**
+	 * @param review the review to set
+	 */
+	public void setReview(String review) {
+		this.review = review;
+	}
+	/**
+	 * @return the comments
+	 */
+	public String getComments() {
+		return comments;
+	}
+	/**
+	 * @param comments the comments to set
+	 */
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+	/**
+	 * @return the creditBasedOn
+	 */
+	public String getCreditBasedOn() {
+		return creditBasedOn;
+	}
+	/**
+	 * @param creditBasedOn the creditBasedOn to set
+	 */
+	public void setCreditBasedOn(String creditBasedOn) {
+		this.creditBasedOn = creditBasedOn;
+	}
+	/**
+	 * @return the creditMemo
+	 */
+	public String getCreditMemo() {
+		return creditMemo;
+	}
+	/**
+	 * @param creditMemo the creditMemo to set
+	 */
+	public void setCreditMemo(String creditMemo) {
+		this.creditMemo = creditMemo;
+	}
+	/**
+	 * @return the billToNo
+	 */
+	public String getBillToNo() {
+		return billToNo;
+	}
+	/**
+	 * @param billToNo the billToNo to set
+	 */
+	public void setBillToNo(String billToNo) {
+		this.billToNo = billToNo;
+	}
+	/**
+	 * @return the billToName
+	 */
+	public String getBillToName() {
+		return billToName;
+	}
+	/**
+	 * @param billToName the billToName to set
+	 */
+	public void setBillToName(String billToName) {
+		this.billToName = billToName;
+	}
+	/**
+	 * @return the units
+	 */
+	public Integer getUnits() {
+		return units;
+	}
+	/**
+	 * @param units the units to set
+	 */
+	public void setUnits(Integer units) {
+		this.units = units;
+	}
+	/**
+	 * @return the bonusableUnits
+	 */
+	public Integer getBonusableUnits() {
+		return bonusableUnits;
+	}
+	/**
+	 * @param bonusableUnits the bonusableUnits to set
+	 */
+	public void setBonusableUnits(Integer bonusableUnits) {
+		this.bonusableUnits = bonusableUnits;
+	}
+	/**
+	 * @return the nadUnits
+	 */
+	public Integer getNadUnits() {
+		return nadUnits;
+	}
+	/**
+	 * @param nadUnits the nadUnits to set
+	 */
+	public void setNadUnits(Integer nadUnits) {
+		this.nadUnits = nadUnits;
+	}
+	/**
+	 * @return the unitsNad
+	 */
+	public Integer getUnitsNad() {
+		return unitsNad;
+	}
+	/**
+	 * @param unitsNad the unitsNad to set
+	 */
+	public void setUnitsNad(Integer unitsNad) {
+		this.unitsNad = unitsNad;
+	}
+	/**
+	 * @return the bonusableNad
+	 */
+	public Integer getBonusableNad() {
+		return bonusableNad;
+	}
+	/**
+	 * @param bonusableNad the bonusableNad to set
+	 */
+	public void setBonusableNad(Integer bonusableNad) {
+		this.bonusableNad = bonusableNad;
+	}
+	/**
+	 * @return the invSales
+	 */
+	public String getInvSales() {
+		return invSales;
+	}
+	/**
+	 * @param invSales the invSales to set
+	 */
+	public void setInvSales(String invSales) {
+		this.invSales = invSales;
+	}
+	/**
+	 * @return the bonusableSales
+	 */
+	public String getBonusableSales() {
+		return bonusableSales;
+	}
+	/**
+	 * @param bonusableSales the bonusableSales to set
+	 */
+	public void setBonusableSales(String bonusableSales) {
+		this.bonusableSales = bonusableSales;
+	}
+	/**
+	 * @return the nadSales
+	 */
+	public String getNadSales() {
+		return nadSales;
+	}
+	/**
+	 * @param nadSales the nadSales to set
+	 */
+	public void setNadSales(String nadSales) {
+		this.nadSales = nadSales;
+	}
+	/**
+	 * @return the invSalesNad
+	 */
+	public String getInvSalesNad() {
+		return invSalesNad;
+	}
+	/**
+	 * @param invSalesNad the invSalesNad to set
+	 */
+	public void setInvSalesNad(String invSalesNad) {
+		this.invSalesNad = invSalesNad;
+	}
+	/**
+	 * @return the bonusableSalesNad
+	 */
+	public String getBonusableSalesNad() {
+		return bonusableSalesNad;
+	}
+	/**
+	 * @param bonusableSalesNad the bonusableSalesNad to set
+	 */
+	public void setBonusableSalesNad(String bonusableSalesNad) {
+		this.bonusableSalesNad = bonusableSalesNad;
+	}
+	/**
+	 * @return the warranty
+	 */
+	public String getWarranty() {
+		return warranty;
+	}
+	/**
+	 * @param warranty the warranty to set
+	 */
+	public void setWarranty(String warranty) {
+		this.warranty = warranty;
+	}
+	/**
+	 * @return the payTo
+	 */
+	public String getPayTo() {
+		return payTo;
+	}
+	/**
+	 * @param payTo the payTo to set
+	 */
+	public void setPayTo(String payTo) {
+		this.payTo = payTo;
+	}
+	/**
+	 * @return the beginDate
+	 */
+	public String getBeginDate() {
+		return beginDate;
+	}
+	/**
+	 * @param beginDate the beginDate to set
+	 */
+	public void setBeginDate(String beginDate) {
+		this.beginDate = beginDate;
+	}
+	/**
+	 * @return the endDate
+	 */
+	public String getEndDate() {
+		return endDate;
+	}
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
+	}
+	/**
+	 * @return the glCode
+	 */
+	public String getGlCode() {
+		return glCode;
+	}
+	/**
+	 * @param glCode the glCode to set
+	 */
+	public void setGlCode(String glCode) {
+		this.glCode = glCode;
+	}
+	/**
+	 * @return the paymentMethod
+	 */
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+	/**
+	 * @param paymentMethod the paymentMethod to set
+	 */
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+	/**
+	 * @return the baseId
+	 */
+	public String getBaseId() {
+		return baseId;
+	}
+	/**
+	 * @param baseId the baseId to set
+	 */
+	public void setBaseId(String baseId) {
+		this.baseId = baseId;
+	}
+	
+	
+}

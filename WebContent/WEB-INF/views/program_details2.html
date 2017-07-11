@@ -354,6 +354,8 @@
 																		type="text" class="form-control dpd2" readonly="readonly" id="to"
 																		name="to" placeholder="End Date" style="background:white;">
 																</div>
+																<label for=from generated="true" class="error"></label>
+																<label for="to" generated="true" class="error" style="padding-left:220px;"></label>
 															</div>
 														</div>
 													</div>
@@ -1276,6 +1278,9 @@
 						required: true
 					},
 					to: {
+						required: true
+					},
+					longDesc: {
 						required: true
 					},
 					btl_inputselect: {
@@ -2300,10 +2305,23 @@
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('#pdf-button').click(function () {
+			//for IE added new block
+			if (navigator.userAgent.indexOf('Trident')>0)
+	    	{
+	    	    var a = document.createElement('a');
+			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
+				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
+			    window.open(a,'_blank');  
+	    	}
+	    	else
+	    	{
 				var a = document.createElement('a');
 			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
 				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
-			    a.click(); 
+			    document.body.appendChild(a);
+				a.click();
+				document.body.appendChild(a);  
+			}	
 			});
 		});
 	</script>
@@ -2326,7 +2344,7 @@
 			$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
 				   if(id==item.id){
 					   if(item.base==1){
-						   pgmType='VBS';		
+						   pgmType='VBS';						   
 						   if(!$('#optionsRadiosDollarSign').is(':checked')){
 							   $("#amount").val(""); 
 						   }

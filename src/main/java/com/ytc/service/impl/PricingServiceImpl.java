@@ -298,33 +298,45 @@ public class PricingServiceImpl implements IPricingService {
 		Map<String, Object> queryParams = new HashMap<>();
 		//String sql="select * from NETDOWN_P where [Bill-To No] in (select PAY_TO from CUSTOMER where ACCOUNT_MANAGER in (:empId))";
 		String sql="";
-		if("Consumer".equalsIgnoreCase(bu)){
-			sql=QueryConstant.PRICING_LIST_P;
-		}else{
-			sql=QueryConstant.PRICING_LIST_T;
+		List<String> userIdList = null;
+		if(empId != null){
+			String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
+			
+			queryParams.put("loginId", empId);
+			userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+			if(userIdList.isEmpty()){
+				return pricingDetailList;
+			}
+			queryParams.clear();
+			if("Consumer".equalsIgnoreCase(bu)){
+				sql=QueryConstant.PRICING_LIST_P;
+			}else{
+				sql=QueryConstant.PRICING_LIST_T;
+			}
+			queryParams.put("empId",userIdList);
+			//List<DalNetPricingConsumer> resultList =baseDao.list(DalNetPricingConsumer.class, sql, queryParams);
+			List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
+			for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
+				Object[]  obj =  (Object[]) iterator.next();
+				NetPricing netPricing=new NetPricing();
+				netPricing.setBillToNumber(null!=obj[0]?obj[0].toString():"");
+				netPricing.setBillToName(null!=obj[1]?obj[1].toString():"");
+				netPricing.setSalesChannel(null!=obj[3]?obj[3].toString():"");
+				netPricing.setProdLn(null!=obj[5]?obj[5].toString():"");
+				netPricing.setTread(null!=obj[6]?obj[6].toString():"");
+				netPricing.setPartNo(null!=obj[7]?obj[7].toString():"");
+				netPricing.setPartDesc(null!=obj[8]?obj[8].toString():"");
+				netPricing.setBasePrice(null!=obj[9]?obj[9].toString():"");
+				netPricing.setQuarterlyDisc(null!=obj[10]?obj[10].toString():"");
+				netPricing.setSpecialDisc(null!=obj[11]?obj[11].toString():"");
+				netPricing.setExceptionDisc(null!=obj[12]?obj[12].toString():"");
+				netPricing.setNetPrice(null!=obj[13]?Double.parseDouble(obj[13].toString()):0);
+				netPricing.setQuantityDisc(null!=obj[14]?obj[14].toString():"");
+				netPricing.setVolBonus(null!=obj[19]?obj[19].toString():"");
+				pricingDetailList.add(netPricing);
+			}
 		}
-		queryParams.put("empId",empId);
-		//List<DalNetPricingConsumer> resultList =baseDao.list(DalNetPricingConsumer.class, sql, queryParams);
-		List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
-		for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
-			Object[]  obj =  (Object[]) iterator.next();
-			NetPricing netPricing=new NetPricing();
-			netPricing.setBillToNumber(null!=obj[0]?obj[0].toString():"");
-			netPricing.setBillToName(null!=obj[1]?obj[1].toString():"");
-			netPricing.setSalesChannel(null!=obj[3]?obj[3].toString():"");
-			netPricing.setProdLn(null!=obj[5]?obj[5].toString():"");
-			netPricing.setTread(null!=obj[6]?obj[6].toString():"");
-			netPricing.setPartNo(null!=obj[7]?obj[7].toString():"");
-			netPricing.setPartDesc(null!=obj[8]?obj[8].toString():"");
-			netPricing.setBasePrice(null!=obj[9]?obj[9].toString():"");
-			netPricing.setQuarterlyDisc(null!=obj[10]?obj[10].toString():"");
-			netPricing.setSpecialDisc(null!=obj[11]?obj[11].toString():"");
-			netPricing.setExceptionDisc(null!=obj[12]?obj[12].toString():"");
-			netPricing.setNetPrice(null!=obj[13]?Double.parseDouble(obj[13].toString()):0);
-			netPricing.setQuantityDisc(null!=obj[14]?obj[14].toString():"");
-			netPricing.setVolBonus(null!=obj[19]?obj[19].toString():"");
-			pricingDetailList.add(netPricing);
-		}
+		
 		return pricingDetailList;
 	}
 

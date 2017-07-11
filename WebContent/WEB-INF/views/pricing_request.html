@@ -640,7 +640,7 @@ a { text-decoration: none }
                           <div class="clearfix">
                               <div class="btn-group pull-right">
                                 <div class="btn-group">
-                                    <a id="invoice-export-link" href="#"><button id="invoice-export-btn" class="btn btn-default" onclick="tableToExcel('testgrid', 'Pricing Details_')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
+                                    <button type="button" id="invoice-export-btn" class="btn btn-default" onclick="tableToExcel('testgrid', 'Pricing Details_')"><i class="fa fa-arrow-down"></i> Export To Excel</button>
                                 </div>
                               </div>
                               <div class="btn-group pull-left">
@@ -1753,8 +1753,8 @@ a { text-decoration: none }
 				$('#view-program-workflow').attr('disabled', false);
 				$('#view-program-workflow').removeClass("disabled");
 				
-				$('#invoice-export-link').attr('disabled', false);
-				$('#invoice-export-link').removeClass("disabled");
+				/* $('#invoice-export-link').attr('disabled', false);
+				$('#invoice-export-link').removeClass("disabled"); */
 				$('#invoice-export-btn').attr('disabled', false); 
 				/* $('#myModal5').find('button').attr('disabled',false);
 				$('#myModal4').find('button').attr('disabled',false);

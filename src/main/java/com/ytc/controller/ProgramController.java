@@ -171,7 +171,7 @@ public class ProgramController extends BaseController {
 	}
 	
 	@Produces({ "application/pdf" })
-	@RequestMapping(value = "v1/downloadPDF/{id}",  method = RequestMethod.GET, produces = "application/pdf")
+	@RequestMapping(value = "v1/downloadPDF/{id}",  method = RequestMethod.POST, produces = "application/pdf")
 	public @ResponseBody  byte[] downloadPDF(HttpServletRequest request,@PathVariable String id) {
 		
 		return getService(request).downloadPDF(id);

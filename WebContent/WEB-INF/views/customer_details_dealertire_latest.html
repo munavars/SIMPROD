@@ -91,7 +91,8 @@ th{
    			var cell = table_cells[i];
 	   		if(i==11 || i==16 || i==17 || i==18 || i==19 )
 	   		{
-	   		 cell.setAttribute("style", "mso-number-format:0\.00;");
+	   		 if(cell.innerHTML!='0')
+	   		 {cell.setAttribute("style", "mso-number-format:0\.00;");}
 	   		}
 	   		}
 	   		tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
@@ -180,6 +181,7 @@ th{
 		//loading the customer details
 
 		$.ajax({ 
+			   cache: false,	
 			   type: "GET",
 			   dataType: "json",
 			   url: '/SIM/v1/customer/getDetail/'+custId,
@@ -207,6 +209,7 @@ th{
 		        //url: '/SIM/program/'+custId+'/0',
 		        url: '/SIM/program/'+custId+'/'+$('#program_status').val(),
 		        dataSrc: "data",
+		        cache: false,
 		        type: "GET",
 		    },
 		  
@@ -879,6 +882,7 @@ th{
 			   $.ajax({ 
 	            	type: "GET",
 	            	dataType: "json",
+	            	 cache: false,
 	           	url: '/SIM/isTbpUser',
 	            	success: function(response){
 	            		if(response.empId!=null){

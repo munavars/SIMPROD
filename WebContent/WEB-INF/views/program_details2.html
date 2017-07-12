@@ -355,7 +355,8 @@
 																		name="to" placeholder="End Date" style="background:white;">
 																</div>
 																<label for=from generated="true" class="error"></label>
-																<label for="to" generated="true" class="error" style="padding-left:220px;"></label>
+																<label for="to" generated="true" class="error" style="float:right"></label> 
+																
 															</div>
 														</div>
 													</div>
@@ -1832,6 +1833,9 @@
 				else if(responseOnload1.programButton.approver == true){
 					hideCreatorButtons();
 					showApproverButtons();
+					if(tbp){
+						$('#glcode_dropdown').attr('disabled', false);
+					}
 					$('#edit-button').hide();
 				}
 				else{
@@ -1839,6 +1843,7 @@
 					hideCreatorButtons();
 					hideApproverButtons();
 					$('#edit-button').hide();
+					$('#glcode_dropdown').attr('disabled', true);
 				}
          	}
          	
@@ -2061,9 +2066,7 @@
 				$('#view-program-workflow').attr('disabled', false);
 				$('#view-program-workflow').removeClass("disabled");
 				$('#program-workflow-btn').attr('disabled', false);
-				if(tbp){
-					$('#glcode_dropdown').attr('disabled', false);
-				}
+				
 			}
 			
 			function approveProgram(){

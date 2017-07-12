@@ -922,6 +922,9 @@
 					to: {
 						required: true
 					},
+					longDesc: {
+						required: true
+					},
 					payto_inputselect: {
 						required: true
 					},
@@ -1797,13 +1800,49 @@
 		$(document).ready(function() {		
 			
 			
+			$(document).ready(function() {
 			$('#pdf-button').click(function () {
-				//alert(responseOnload.programDetailList[0].id);
-				var a = document.createElement('a');
-			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
-				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
-			    a.click(); 
+			//for IE added new block
+			 if (navigator.userAgent.indexOf('Trident')>0 || navigator.userAgent.indexOf('Edge')>0)
+	    	{
+	    	  var request = new XMLHttpRequest();
+			  request.open("POST", '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id, true); 
+			  request.responseType = "blob";
+			  request.onload = function (e) {
+			  if (this.status === 200) {
+	           // `blob` response
+	          console.log(this.response);
+	          //var blobObject = new Blob([(this.response]); 
+           	 window.navigator.msSaveOrOpenBlob(this.response, 'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf'); 
+				    };
+				};
+			request.send();
+	    	}
+	    	else
+	    	{
+				var request = new XMLHttpRequest();
+				request.open("POST", '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id, true); 
+				request.responseType = "blob";
+				request.onload = function (e) {
+			    if (this.status === 200) {
+		        // `blob` response
+		        console.log(this.response);
+		        // create `objectURL` of `this.response` : `.pdf` as `Blob`
+		        var file = window.URL.createObjectURL(this.response);
+		        var a = document.createElement("a");
+		        a.href = file;
+		        a.download = this.response.name || 'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
+		        document.body.appendChild(a);
+		        a.click();
+		        window.onfocus = function () {                     
+		          document.body.removeChild(a)
+		        }
+				    };
+				};
+				request.send();
+		  }	
 			});
+		});
 			
 			$('#paid_basedon_inputselect').change(function(){
 				

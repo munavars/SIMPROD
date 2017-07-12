@@ -78,7 +78,8 @@
    			var cell = table_cells[i];
 	   		if(i==12 || i==17 || i==18 || i==19 || i==20 )
 	   		{
-	   		 cell.setAttribute("style", "mso-number-format:0\.00;");
+	   		 if(cell.innerHTML!='0')
+	   		 {cell.setAttribute("style", "mso-number-format:0\.00;");}
 	   		}
 	   		}
 	   		tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";

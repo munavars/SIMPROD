@@ -1,5 +1,6 @@
 package com.ytc.helper;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashSet;
@@ -89,5 +90,14 @@ public class PricingServiceHelper {
 			}
 		}
 		return str;
+	}
+	
+	public static String changeAmountToUIFormat(String inputAmount){
+		String formattedAmount = null;
+		DecimalFormat amountFormatter = new DecimalFormat("#,###.00");
+		if(inputAmount != null && !inputAmount.toString().equals("0")){
+			formattedAmount = amountFormatter.format(Double.valueOf(inputAmount));
+		}
+		return formattedAmount;
 	}
 }

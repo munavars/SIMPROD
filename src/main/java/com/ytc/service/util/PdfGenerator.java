@@ -564,7 +564,7 @@ public class PdfGenerator {
 				}
 		         
 		         document.add(achievedBaseTable);
-		        
+	         }
 		         if(!ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered())){
 		        	 
 		        
@@ -632,7 +632,7 @@ public class PdfGenerator {
 					
 		         
 		         document.add(programScheduleTable);
-		         }
+		         
 	         }
 
 	         document.close();

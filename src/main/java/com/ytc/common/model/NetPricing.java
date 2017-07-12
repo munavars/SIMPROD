@@ -3,6 +3,11 @@ package com.ytc.common.model;
 public class NetPricing extends Model{
 
 	
+	/**
+	 * Default serial version.
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String billToNumber;
 	private String billToName;
 	private String customerType;
@@ -16,7 +21,7 @@ public class NetPricing extends Model{
 	private String quarterlyDisc;
 	private String specialDisc;
 	private String exceptionDisc;
-	private double netPrice;
+	private String netPrice;
 	private String quantityDisc;
 	private String cashDiscPercent;
 	private String anticDiscPercent;
@@ -173,13 +178,13 @@ public class NetPricing extends Model{
 	/**
 	 * @return the netPrice
 	 */
-	public double getNetPrice() {
+	public String getNetPrice() {
 		return netPrice;
 	}
 	/**
 	 * @param netPrice the netPrice to set
 	 */
-	public void setNetPrice(double netPrice) {
+	public void setNetPrice(String netPrice) {
 		this.netPrice = netPrice;
 	}
 	

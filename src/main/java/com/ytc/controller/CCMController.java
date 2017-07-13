@@ -3,6 +3,7 @@
  */
 package com.ytc.controller;
 
+import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,13 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ytc.common.model.AccuralCcmData;
 import com.ytc.common.model.CcmDetails;
 import com.ytc.common.model.DropDown;
 import com.ytc.common.result.ListResult;
+import com.ytc.constant.ProgramConstant;
 import com.ytc.service.ICcmService;
 import com.ytc.service.ServiceContext;
 
@@ -38,6 +42,12 @@ public class CCMController extends BaseController {
 	private ICcmService getService(HttpServletRequest request) {
 		return getServiceLocator(request).getCcmService();
 	}
+	@RequestMapping(value = "/ccm/v1/getPeriodDropDown", method = RequestMethod.GET)
+	public @ResponseBody List<DropDown> getPeriodValueDetails(HttpServletRequest request) {
+		List<DropDown> dropdownList = null;
+		dropdownList = (List<DropDown>)(getService(request).getPeriodDropDownList());
+		return dropdownList;
+	}
 
 	@RequestMapping(value = "/ccm/v1/createMemoData/{programId}", method = RequestMethod.GET)
 	public @ResponseBody boolean createMemoData(HttpServletRequest request, @PathVariable("programId") Integer programId) {
@@ -45,11 +55,34 @@ public class CCMController extends BaseController {
 		return true;
 	}
 	
-	@RequestMapping(value = "/ccm/v1/getCcmDetails/{frequency}/{bu}/{begindate}/{endDate}", method = RequestMethod.GET)
-	public @ResponseBody ListResult<CcmDetails> getCCMDetails(HttpServletRequest request, @PathVariable("frequency") String frequency, @PathVariable("bu") String bu, @PathVariable("begindate") String beginDate, @PathVariable("endDate") String endDate) {
+	@RequestMapping(value = "/ccm/v1/getCcmDetails/{frequency}/{bu}/{period}", method = RequestMethod.GET)
+	public @ResponseBody ListResult<CcmDetails> getCCMDetails(HttpServletRequest request, @PathVariable("frequency") String frequency, @PathVariable("bu") String bu, @PathVariable("period") Integer period) {
 		 
-		List<CcmDetails> result=getService(request).getCCMDetails(frequency, bu, beginDate, endDate);
+		List<CcmDetails> result=getService(request).getCCMDetails(frequency, bu, period);
 		return new ListResult<CcmDetails>(result);
+		
+	}
+	
+	/*@RequestMapping(value = "/ccm/v1/saveCCMDetails/{id}/{adjustedAmount}/{adjustedCredit}", method = RequestMethod.GET)
+	public @ResponseBody int saveCCMDetails(HttpServletRequest request, @PathVariable("id") Integer id, @PathVariable("adjustedAmount") double adjustedAmount, @PathVariable("adjustedCredit") double adjustedCredit) {
+		//String userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+		int result=getService(request).saveCCMDetails(id, adjustedAmount, adjustedCredit,"Test");
+		return result;
+		
+	}*/
+	
+	@RequestMapping(value = "/ccm/v1/saveCCMDetails", method = RequestMethod.POST)
+	public @ResponseBody int saveCCMDetails(HttpServletRequest request, @RequestBody List<AccuralCcmData> accuralCcmDataList) {
+		int count=0;
+		String userName="";
+		if(serviceContext != null){
+			userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+		}
+		for (Iterator<AccuralCcmData> iterator = accuralCcmDataList.iterator(); iterator.hasNext();) {
+			AccuralCcmData accuralCcmData = (AccuralCcmData) iterator.next();
+			count=getService(request).saveCCMDetails(accuralCcmData.getId(), accuralCcmData.getAdjustedAmount(), accuralCcmData.getAdjustedCredit(),userName);
+		}
+		return count;
 		
 	}
 }

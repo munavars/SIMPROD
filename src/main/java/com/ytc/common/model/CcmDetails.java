@@ -7,6 +7,7 @@ public class CcmDetails extends Model {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	private String ccmId;
 	private String bu;
 	private String accountManager;
 	private String zoneManager;
@@ -19,12 +20,17 @@ public class CcmDetails extends Model {
 	private String amount;
 	private String amountType;
 	private String creditAccured;
-	private Double earned;
+	private double earned;
 	private double creditEarned;
+	private String variance; 
 	private String review;
+	private String submitForApproval;
 	private String comments;
 	private String creditBasedOn;
 	private String creditMemo;
+	private String programStatus;
+	private String docNo;
+	private String docDate;
 	private String billToNo;
 	private String billToName;
 	private Integer units;
@@ -44,6 +50,21 @@ public class CcmDetails extends Model {
 	private String glCode;
 	private String paymentMethod;
 	private String baseId;
+	
+	
+	
+	/**
+	 * @return the ccmId
+	 */
+	public String getCcmId() {
+		return ccmId;
+	}
+	/**
+	 * @param ccmId the ccmId to set
+	 */
+	public void setCcmId(String ccmId) {
+		this.ccmId = ccmId;
+	}
 	/**
 	 * @return the bu
 	 */
@@ -191,13 +212,13 @@ public class CcmDetails extends Model {
 	/**
 	 * @return the earned
 	 */
-	public Double getEarned() {
+	public double getEarned() {
 		return earned;
 	}
 	/**
 	 * @param earned the earned to set
 	 */
-	public void setEarned(Double earned) {
+	public void setEarned(double earned) {
 		this.earned = earned;
 	}
 	/**
@@ -259,6 +280,44 @@ public class CcmDetails extends Model {
 	 */
 	public void setCreditMemo(String creditMemo) {
 		this.creditMemo = creditMemo;
+	}
+	
+	
+	/**
+	 * @return the programStatus
+	 */
+	public String getProgramStatus() {
+		return programStatus;
+	}
+	/**
+	 * @param programStatus the programStatus to set
+	 */
+	public void setProgramStatus(String programStatus) {
+		this.programStatus = programStatus;
+	}
+	/**
+	 * @return the docNo
+	 */
+	public String getDocNo() {
+		return docNo;
+	}
+	/**
+	 * @param docNo the docNo to set
+	 */
+	public void setDocNo(String docNo) {
+		this.docNo = docNo;
+	}
+	/**
+	 * @return the docDate
+	 */
+	public String getDocDate() {
+		return docDate;
+	}
+	/**
+	 * @param docDate the docDate to set
+	 */
+	public void setDocDate(String docDate) {
+		this.docDate = docDate;
 	}
 	/**
 	 * @return the billToNo
@@ -487,6 +546,30 @@ public class CcmDetails extends Model {
 	 */
 	public void setBaseId(String baseId) {
 		this.baseId = baseId;
+	}
+	/**
+	 * @return the variance
+	 */
+	public String getVariance() {
+		return variance;
+	}
+	/**
+	 * @param variance the variance to set
+	 */
+	public void setVariance(String variance) {
+		this.variance = variance;
+	}
+	/**
+	 * @return the submitForApproval
+	 */
+	public String getSubmitForApproval() {
+		return submitForApproval;
+	}
+	/**
+	 * @param submitForApproval the submitForApproval to set
+	 */
+	public void setSubmitForApproval(String submitForApproval) {
+		this.submitForApproval = submitForApproval;
 	}
 	
 	

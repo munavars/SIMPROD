@@ -11,5 +11,9 @@ public interface ICcmService {
 
 	boolean createMemoData(Integer id);
 	
-	List<CcmDetails> getCCMDetails(String frequency, String bu, String beginDate, String endDate);
+	List<CcmDetails> getCCMDetails(String frequency, String bu, Integer period);
+
+	List<DropDown> getPeriodDropDownList();
+
+	int saveCCMDetails(Integer id, double adjustedAmount, double adjustedCredit, String string);
 }

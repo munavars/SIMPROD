@@ -18,54 +18,95 @@ var EditableTable = function () {
             function editRow(oTable, nRow) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
-                jqTds[0].innerHTML = '<input type="text" style="width:100%" id="tier_id" name="tier_id" class="form-control small" value="' + aData[0] + '">';
+                jqTds[0].innerHTML = aData[0];
                 jqTds[1].innerHTML = '<input type="text" style="width:100%" id="tier_amount" name="tier_amount" class="form-control small" value="' + aData[1] + '">';
                 jqTds[2].innerHTML = '<input type="text" style="width:100%" id="tier_range" name="tier_range" class="form-control small" value="' + aData[2] + '">';
-                if($(aData[3]).attr('id') == null){
-                	jqTds[3].innerHTML = '<a class="edit" href="">Save</a>';
-                }
-                else{
-                	jqTds[3].innerHTML = '<a id='+ $(aData[3]).attr('id') +' class="edit" href="">Save</a>';	
-                }
+                jqTds[3].innerHTML = aData[3];
                 if($(aData[4]).attr('id') == null){
-                	jqTds[4].innerHTML = '<a class="cancel" href="">Cancel</a>';
+                	jqTds[4].innerHTML = '<a class="edit" href="">Save</a>';
                 }
                 else{
-                	jqTds[4].innerHTML = '<a id='+ $(aData[4]).attr('id') +' class="cancel" href="">Cancel</a>';	
+                	jqTds[4].innerHTML = '<a id='+ $(aData[4]).attr('id') +' class="edit" href="">Save</a>';	
+                }
+                if($(aData[5]).attr('id') == null){
+                	jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
+                }
+                else{
+                	jqTds[5].innerHTML = '<a id='+ $(aData[5]).attr('id') +' class="cancel" href="">Cancel</a>';	
                 }
             }
 
+            function validateRange(nRow){
+           	 var jqTds = $('>td', nRow);
+           	 var jqInputs = $('input', nRow);
+           	 var beginRange = removeCommaFromAmount(jqInputs[1].value.trim());
+           	 var endRange = removeCommaFromAmount(jqTds[3].innerText);
+           	 if(parseInt(beginRange) > parseInt(endRange)){
+           		 return false;
+           	 }
+           	 var tierId = parseInt(jqTds[0].innerText);
+             if(tierId > 1){
+             	var aData = oTable.fnGetData(parseInt(tierId)-2);
+             	var beginRangePre = parseInt(removeCommaFromAmount(aData[2]));
+             	if( beginRangePre > parseInt(beginRange)){
+             		return false;
+             	}
+             }
+           	 return true;
+           }
+            
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                if((jqInputs[0].value.trim()=="")||(jqInputs[1].value.trim()=="")||(jqInputs[2].value.trim()=="")){
+                if((jqInputs[0].value.trim()=="")||(jqInputs[1].value.trim()=="")){
                 	//editRow(oTable, nRow);
+					$("#tier_amount").valid();
+					$("#tier_range").valid();
                 	$("#errorMessageModal").html("Tier Section cannot have empty values");
 					$('#myModal5').modal('toggle');
                 	return false;
                 }
-                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
+                if(!validateRange(nRow)){
+                	
+                	oTable.fnUpdate('<input type="text" style="width:100%" class="form-control small error" value="' + jqInputs[1].value + '">', nRow, 2, false);
+                	$("#errorMessageModal").html("Invalid value for begin range.");
+					$('#myModal5').modal('toggle');
+                	return false;
+                }
+                
+                var aData = oTable.fnGetData(nRow);
+                var tierId = parseInt(aData[0]);
+                
+                /*oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);*/
+                oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
+                oTable.fnUpdate(jqInputs[1].value, nRow, 2, false);
+
+                
                 var jqAnchor = $('a', nRow);
                 if($(jqAnchor[0]).attr('id') == null){
-                	oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 3, false);
+                	oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
                 }
                 else{
-                	oTable.fnUpdate('<a id='+ $(jqAnchor[0]).attr('id') +' class="edit" href="">Edit</a>', nRow, 3, false);	
+                	oTable.fnUpdate('<a id='+ $(jqAnchor[0]).attr('id') +' class="edit" href="">Edit</a>', nRow, 4, false);	
                 }
                 if($(jqAnchor[1]).attr('id') == null){
-                	oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 4, false);
+                	oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
                 }
                 else{
-                	oTable.fnUpdate('<a id='+ $(jqAnchor[1]).attr('id') +' class="delete" href="">Delete</a>', nRow, 4, false);	
+                	oTable.fnUpdate('<a id='+ $(jqAnchor[1]).attr('id') +' class="delete" href="">Delete</a>', nRow, 5, false);	
+                }
+                
+                if(tierId > 1){
+                	var nRowTemp = oTable.fnGetNodes(parseInt(tierId)-2);
+                	var endRange = parseInt(removeCommaFromAmount(aData[2])) - 1;
+                	oTable.fnUpdate(convertNumberFormat(endRange), nRowTemp, 3, false);
                 }
                 
                 oTable.fnDraw();
                 
-                if(!$("#actual_marker").valid()){
+                /*if(!$("#actual_marker").valid()){
 					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
 					$('#myModal5').modal('toggle');
-				}
+				}*/
                 
                 return true;
             }
@@ -99,6 +140,7 @@ var EditableTable = function () {
                 "bAutoWidth": false , 
                 "aoColumnDefs": [{
                         'bSortable': true,
+                        'sClass' : 'read_only',
                         'aTargets': [0]
                     },
                     {
@@ -119,12 +161,17 @@ var EditableTable = function () {
                         'aTargets': [2]
                     },
                     {
-                        'bSortable': false,
+                    	'sClass' : 'text-right read_only',
+                    	'bSortable': false,
                         'aTargets': [3]
                     },
                     {
                         'bSortable': false,
                         'aTargets': [4]
+                    },
+                    {
+                        'bSortable': false,
+                        'aTargets': [5]
                     },
                 ],
             });
@@ -137,37 +184,56 @@ var EditableTable = function () {
             $('#tier-schedule_new').click(function (e) {
                 e.preventDefault();
                 
-                var noRecord = true;               
-                $('#tier-schedule tbody').find('tr').each(function(i) {
-                	var tds = $(this).find('td'),
-                	 marker = tds.eq(0).text();
-                	if(marker != 'No data available in table' && nEditing != null){
-                		noRecord = false;
-                	}
-                });	
-
-				if(noRecord || ( $("#tier_id").valid() && $("#tier_amount").valid() && $("#tier_range").valid() ) ){
-					if(nEditing != null){
-						var valid = saveRow(oTable, nEditing);
-						if(valid){
-							nEditing = null;
-						}
+                
+                var maxTierId = 1;
+                var maxRange = convertNumberFormat(99999999);
+                
+                var noRecord = true;
+                
+				var valid = true;
+				if(nEditing != null){
+					valid = saveRow(oTable, nEditing);
+					if(valid){
+						nEditing = null;
 					}
-					var aiNew = oTable.fnAddData(['', '', '',
-                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
-	                ]);
-	                var nRow = oTable.fnGetNodes(aiNew[0]);
-	                editRow(oTable, nRow);
-	                
-	                nEditing = nRow; 
 				}
-				else{
-					$("#tier_id").valid();
-					$("#tier_amount").valid();
-					$("#tier_range").valid();
-					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
-					$('#myModal5').modal('toggle');
+				
+				if(valid){
+	                $('#tier-schedule tbody').find('tr').each(function(i) {
+	                	var tds = $(this).find('td'),
+	                	tierId = tds.eq(0).text();
+	                	range = tds.eq(2).text();
+	                	
+	                	if(tierId != 'No data available in table' && nEditing != null){
+	                		noRecord = false;
+	                	}
+	                   	if(tierId >= maxTierId){
+	                   		maxTierId = parseInt(tierId) + 1;
+	                   	}
+	                });	
+
+					if(noRecord || ( $("#tier_amount").valid() && $("#tier_range").valid() ) ){
+						var aiNew = oTable.fnAddData([maxTierId, '', '', maxRange,
+	                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
+		                ]);
+		                var nRow = oTable.fnGetNodes(aiNew[0]);
+		                editRow(oTable, nRow);
+		                
+		                if(maxTierId > 1){
+		                	var nRowTemp = oTable.fnGetNodes(parseInt(maxTierId)-2);
+		                	oTable.fnUpdate('', nRowTemp, 3, false);
+		                }
+		                
+		                nEditing = nRow;						
+					}
+					else{
+						$("#tier_amount").valid();
+						$("#tier_range").valid();
+						$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+						$('#myModal5').modal('toggle');
+					}					
 				}
+
             });
 
             $('#editable-sample a.delete,#tier-schedule a.delete').live('click', function (e) {

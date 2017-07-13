@@ -724,7 +724,8 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgram(String custId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
-		DecimalFormat df = new DecimalFormat("0.00"); 
+		DecimalFormat df = new DecimalFormat("#,###.00");
+		DecimalFormat cf = new DecimalFormat("#,###");
 		String sql=QueryConstant.PROGRAM_LIST;
 		Map<String, Object> queryParams = new HashMap<>();
 		if("0".equalsIgnoreCase(custId)){
@@ -770,17 +771,28 @@ public class ProgramServiceImpl implements IProgramService {
 			if(dalProgramDetail.getIsTiered() != null){
 				programDetail.setIsTiered(ProgramConstant.ZERO.equalsIgnoreCase(dalProgramDetail.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES);
 			}
-			programDetail.setAccrualAmount(dalProgramDetail.getAccrualAmount()==0?"0":df.format(dalProgramDetail.getAccrualAmount()));
+			
+			String accuralAmount=ProgramConstant.ZERO;
+			if(dalProgramDetail.getAccrualAmount()!=0 ){
+				if("$".equalsIgnoreCase(dalProgramDetail.getAccrualType())){
+					accuralAmount=applyStyle(dalProgramDetail.getAccrualType()+df.format(dalProgramDetail.getAccrualAmount()));
+				}else{
+					accuralAmount=(df.format(dalProgramDetail.getAccrualAmount())+dalProgramDetail.getAccrualType());
+				}
+			 }	
+			programDetail.setAccrualAmount(accuralAmount);
+			
+			
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
 			if(dalProgramDetail.getTrueUp() != null){
 				programDetail.setTrueUp("Y".equalsIgnoreCase(dalProgramDetail.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO);
 			}
 			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getActualMarker()));
-			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?Integer.toString(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
+			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?cf.format(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
 			String tierRate=ProgramConstant.ZERO;
 			if(null!=dalProgramDetail.getPgmDetailTier()){
 				if("$".equalsIgnoreCase(dalProgramDetail.getPgmDetailTier().getTierType())){
-					tierRate=(dalProgramDetail.getPgmDetailTier().getTierType()+df.format(dalProgramDetail.getPgmDetailTier().getAmount()));
+					tierRate=applyStyle(dalProgramDetail.getPgmDetailTier().getTierType()+df.format(dalProgramDetail.getPgmDetailTier().getAmount()));
 				}else{
 					tierRate=(df.format(dalProgramDetail.getPgmDetailTier().getAmount())+dalProgramDetail.getPgmDetailTier().getTierType());
 				}
@@ -802,6 +814,12 @@ public class ProgramServiceImpl implements IProgramService {
 		return programDetailList;
 	}
 	
+	private String applyStyle(String number) {
+		
+		return "<i>"+number+"</i>";
+	}
+
+
 	/* (non-Javadoc)
 	 * @see com.ytc.service.IProgramService#addProgramTier(java.lang.String)
 	 */

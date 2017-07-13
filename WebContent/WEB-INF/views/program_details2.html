@@ -2317,22 +2317,41 @@
 		$(document).ready(function() {
 			$('#pdf-button').click(function () {
 			//for IE added new block
-			if (navigator.userAgent.indexOf('Trident')>0)
+			 if (navigator.userAgent.indexOf('Trident')>0 || navigator.userAgent.indexOf('Edge')>0)
 	    	{
-	    	    var a = document.createElement('a');
-			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
-				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
-			    window.open(a,'_blank');  
+	    	  var request = new XMLHttpRequest();
+			  request.open("POST", '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id, true); 
+			  request.responseType = "blob";
+			  request.onload = function (e) {
+			  if (this.status === 200) {
+	           // `blob` response
+	          console.log(this.response);
+	          //var blobObject = new Blob([(this.response]); 
+           	 window.navigator.msSaveOrOpenBlob(this.response, 'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf'); 
+				    };
+				};
+			request.send();
 	    	}
 	    	else
 	    	{
-				var a = document.createElement('a');
-			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
-				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
-			    document.body.appendChild(a);
-				a.click();
-				document.body.appendChild(a);  
-			}	
+				var request = new XMLHttpRequest();
+				request.open("POST", '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id, true); 
+				request.responseType = "blob";
+				request.onload = function (e) {
+			    if (this.status === 200) {
+		        // `blob` response
+		        console.log(this.response);
+		        // create `objectURL` of `this.response` : `.pdf` as `Blob`
+		        var file = window.URL.createObjectURL(this.response);
+		        var a = document.createElement("a");
+		        a.href = file;
+		        a.download = this.response.name || 'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
+		        document.body.appendChild(a);
+		        a.click();
+		           }
+				}
+				request.send();
+		  }	
 			});
 		});
 	</script>
@@ -2508,7 +2527,7 @@
 					$("#amount").val(convertPercentageFormat($("#amount").val()));
 				}
 			});
-
+			
 			function convertPercentageFormat(amount){
 				if(amount != null && amount != 0 && amount.toString().includes(".")){
 					/*Remove comma's if already present*/

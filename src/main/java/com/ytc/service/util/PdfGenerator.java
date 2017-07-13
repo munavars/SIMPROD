@@ -565,7 +565,7 @@ public class PdfGenerator {
 		         
 		         document.add(achievedBaseTable);
 	         }
-		         if(!ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered())){
+		         if(ProgramConstant.ONE.equalsIgnoreCase(dalpgm.getIsTiered())){
 		        	 
 		        
 		         document.add(new Paragraph("PROGRAM SCHEDULE",f1));

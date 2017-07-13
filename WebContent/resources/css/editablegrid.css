@@ -21,3 +21,14 @@ td.boolean {
 th.boolean {
 	text-align: center;
 }
+
+th.[net price] {
+	text-align: right;
+}
+
+.editablegrid-NET.PRICE, .editablegrid-INVOICE.DSC{
+	text-align: right;
+}
+.editablegrid-BEG.DATE, .editablegrid-END.DATE{
+	text-align: center;
+}

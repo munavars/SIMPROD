@@ -689,7 +689,7 @@
 																				id="tier-schedule" style="width: 100%;">
 																				<thead>
 																					<tr>
-																						<td colspan="5" class="zeroborders text-left"><label
+																						<td colspan="6" class="zeroborders text-left"><label
 																							class="control-label" for="inputSuccess">Amount
 																								Type</label>&nbsp;&nbsp;
 																							<div class="radio-inline inline-flex">
@@ -711,7 +711,7 @@
 																							</div></td>
 																					</tr>
 																					<tr>
-																						<td colspan="5" class="zeroborderstlr text-left"><label
+																						<td colspan="6" class="zeroborderstlr text-left"><label
 																							class="control-label" for="inputSuccess">Accrued
 																								Tier</label>&nbsp;&nbsp; <input id="actual_marker"
 																							name="actual_marker" type="text" size="3"
@@ -1627,7 +1627,7 @@
                	
                	if(response.data.programDetailList[0].amountType == "%"){
                		$("#optionsRadiosPercentage").prop('checked', true);
-               		$("#amount").val(response.data.programDetailList[0].amount);
+               		$("#amount").val( convertPercentageFormat(response.data.programDetailList[0].amount));
                	}
                	else{
                		$("#optionsRadiosDollarSign").prop('checked', true);
@@ -1904,14 +1904,14 @@
 	                		tieramount = convertAmountFormat(item.amount.toString());
 	                	}
 	                	else{
-	                		tieramount = item.amount;
+	                		tieramount = convertPercentageFormat(item.amount.toString());
 	                	}
 	                	if(idx > 0){
 	                		endRangePrevious = parseInt(item.beginRange) - 1;
 	                		var nRowTemp = table.fnGetNodes(idx-1);
 			               	table.fnUpdate(convertNumberFormat(endRangePrevious), nRowTemp, 3, false);
 	                	}
-						table.fnAddData([item.level, convertAmountFormat(tieramount),convertNumberFormat(item.beginRange), convertNumberFormat(maxRange),
+						table.fnAddData([item.level, tieramount,convertNumberFormat(item.beginRange), convertNumberFormat(maxRange),
 										'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
 										'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
                     	]);
@@ -2436,6 +2436,14 @@
 						 value = parseFloat(value).toFixed(2); */ 
 						 $(this).val(value);
             		}
+            		else if(value != null && value != 'undefined' && $('input:radio[name=optionsRadiosDenominationTier]:checked').val() == '%' ){
+						 /* value = value.toString().replace(/,/g, ""); */
+						  value = convertPercentageFormat(value); 
+						 /* value = parseFloat(amount).toFixed(2); */
+						 /* value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+						 value = parseFloat(value).toFixed(2); */ 
+						 $(this).val(value);
+            		}
 				   
 				}); 
 				
@@ -2496,8 +2504,27 @@
 				if($('input:radio[name=optionsRadiosDenomination]:checked').val() == '$'){
 					$("#amount").val(convertAmountFormat($("#amount").val()));
 				}
+				else if($('input:radio[name=optionsRadiosDenomination]:checked').val() == '%'){
+					$("#amount").val(convertPercentageFormat($("#amount").val()));
+				}
 			});
-			
+
+			function convertPercentageFormat(amount){
+				if(amount != null && amount != 0 && amount.toString().includes(".")){
+					/*Remove comma's if already present*/
+					amount = amount.toString().replace(/,/g, "");
+					if(!isNaN(amount)){
+						amount = parseFloat(amount).toFixed(2);
+						var withCommas = Number(amount).toLocaleString('en',
+																{ minimumFractionDigits: 2 });
+																
+						return withCommas;
+					}
+				}
+				
+				return amount;
+			}
+						
 			function convertAmountFormat(amount){
 				if(amount != null && amount != 0){
 					/*Remove comma's if already present*/

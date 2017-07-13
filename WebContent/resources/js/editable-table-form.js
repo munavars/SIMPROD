@@ -48,7 +48,7 @@ var EditableTable = function () {
              if(tierId > 1){
              	var aData = oTable.fnGetData(parseInt(tierId)-2);
              	var beginRangePre = parseInt(removeCommaFromAmount(aData[2]));
-             	if( beginRangePre > parseInt(beginRange)){
+             	if( beginRangePre >= parseInt(beginRange)){
              		return false;
              	}
              }
@@ -148,8 +148,11 @@ var EditableTable = function () {
                     	'bSortable': false,
                     	'fnRender' : function(oObj){
                     		var convertedAmount = oObj.aData[1];
-                    		if(convertedAmount != null && convertedAmount != 'undefined' ){
-                    			return convertedAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");	
+                    		if(convertedAmount != null && convertedAmount != 'undefined' && $('input:radio[name=optionsRadiosDenominationTier]:checked').val() == '$' ){
+                    			return convertAmountFormat(convertedAmount.toString());	
+                    		}
+                    		else if(convertedAmount != null && convertedAmount != 'undefined' && $('input:radio[name=optionsRadiosDenominationTier]:checked').val() == '%'){
+                    			return convertPercentageFormat(convertedAmount.toString());
                     		}
                     		return convertedAmount;
                     	},

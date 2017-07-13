@@ -1209,11 +1209,12 @@
                	$("#detailProgramId").val(response.data.programDetailList[0].id);
                	if(response.data.programDetailList[0].amountType == "%"){
                		$("#optionsRadiosPercentage").prop('checked', true);
+               		$("#amount").val(convertPercentageFormat(response.data.programDetailList[0].amount));
                	}
                	else{
                		$("#optionsRadiosDollarSign").prop('checked', true);
+               		$("#amount").val(convertAmountFormat(response.data.programDetailList[0].amount));
                	}
-               	$("#amount").val(convertAmountFormat(response.data.programDetailList[0].amount));  
                	
                	$('#from').datepicker({ 
    					dateFormat: 'mm/dd/yy'
@@ -1728,7 +1729,26 @@
 				if($('input:radio[name=optionsRadiosDenomination]:checked').val() == '$'){
 					$("#amount").val(convertAmountFormat($("#amount").val()));
 				}
+				else if($('input:radio[name=optionsRadiosDenomination]:checked').val() == '%'){
+					$("#amount").val(convertPercentageFormat($("#amount").val()));
+				}
 			});
+			
+			function convertPercentageFormat(amount){
+				if(amount != null && amount != 0 && amount.toString().includes(".")){
+					/*Remove comma's if already present*/
+					amount = amount.toString().replace(/,/g, "");
+					if(!isNaN(amount)){
+						amount = parseFloat(amount).toFixed(2);
+						var withCommas = Number(amount).toLocaleString('en',
+																{ minimumFractionDigits: 2 });
+																
+						return withCommas;
+					}
+				}
+				
+				return amount;
+			}
 			
 			function convertAmountFormat(amount){
 				if(amount != null && amount != 0){

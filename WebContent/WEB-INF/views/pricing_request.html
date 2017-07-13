@@ -268,7 +268,20 @@ a { text-decoration: none }
 							var icount = j - 2;
 							display2["id"] = icount;
 							for (var i = 0; i < columnNames.length; ++i) {
-								rowValues[columnNames[i]] = oneRow[i];
+								if(columnNames[i] == "NET PRICE"){
+									rowValues[columnNames[i]] = convertAmountFormat(oneRow[i]);
+								}
+								else if (columnNames[i] == "BEG DATE" || columnNames[i] == "END DATE"){
+									if(oneRow[i] != null){
+										rowValues[columnNames[i]] =	$.datepicker.formatDate( "mm/dd/yy", new Date(oneRow[i]));
+									}
+									else{
+										rowValues[columnNames[i]] = oneRow[i];
+									}
+								}
+								else{
+									rowValues[columnNames[i]] = oneRow[i];
+								}
 							}
 							display2["values"] = rowValues;
 		
@@ -291,6 +304,13 @@ a { text-decoration: none }
 		fileData = data;
 		dataUploaded = true;
 	} 
+	
+	EditableGrid.prototype.addCellValidator = function(columnIndexOrName, cellValidator)
+	{
+		var columnIndex = this.getColumnIndex(2);
+		if (columnIndex < 0) alert("[addCellValidator] Invalid column: " + columnIndexOrName);
+		else this.columns[columnIndex].cellValidators.push(cellValidator);
+	};
 	
 	function handleFile(e) {
 		rABS = false;
@@ -1454,8 +1474,8 @@ a { text-decoration: none }
 						rowValues[invoiceDiscountHeader[3]] = item.prodLine;
 						rowValues[invoiceDiscountHeader[4]] = item.tread;
 						rowValues[invoiceDiscountHeader[5]] = item.part;
-						rowValues[invoiceDiscountHeader[6]] = item.netPrice;
-						rowValues[invoiceDiscountHeader[7]] = item.invoiceDisc;
+						rowValues[invoiceDiscountHeader[6]] = convertAmountFormat(parseInt(item.netPrice));
+						rowValues[invoiceDiscountHeader[7]] = convertAmountFormat(parseInt(item.invoiceDisc)) + '%';
 						rowValues[invoiceDiscountHeader[8]] = item.bonusUnits;
 						rowValues[invoiceDiscountHeader[9]] = item.commissionable;
 						rowValues[invoiceDiscountHeader[10]] = item.comments;
@@ -1644,7 +1664,7 @@ a { text-decoration: none }
 			
 				$.each(fileData, function(key, data) {
 					console.log( $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']));
-					var fileDataRow = {'id': data.values['ID'], 'programId': data.id, 'part':data.values[' PART#'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': data.values['NET PRICE'], 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
+					var fileDataRow = {'id': data.values['ID'], 'programId': data.id, 'part':data.values[' PART#'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': removeCommaFromAmount(data.values['NET PRICE']), 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
 					fileDataList.push(fileDataRow);
 				});
 				//console.log(fileDataList);
@@ -1862,7 +1882,29 @@ a { text-decoration: none }
 			
 			$('#myModal8').on('shown.bs.modal', function () {
 			    $('#rejectionComments').focus();
-			})      	
+			})
+			
+			function convertAmountFormat(amount){
+				if(amount != null && amount != 0){
+					/*Remove comma's if already present*/
+					amount = amount.toString().replace(/,/g, "");
+					if(!isNaN(amount)){
+						amount = parseFloat(amount).toFixed(2);
+						var withCommas = Number(amount).toLocaleString('en',
+																{ minimumFractionDigits: 2 });
+																
+						return withCommas;
+					}
+				}
+				
+				return amount;
+			}   
+			
+			function removeCommaFromAmount(amount){
+				if(amount != null){
+					return amount.toString().replace(/\,/g,'');
+				}
+			}   	
 	</script>
 
 	<script>

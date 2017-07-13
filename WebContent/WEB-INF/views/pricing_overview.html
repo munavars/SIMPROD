@@ -89,7 +89,7 @@ function tableToExcel(tableId, fileName) {
    			var cell = table_cells[i];
    			if(i==5)
 	   		{
-	   		 cell.setAttribute("style", 'MSO-NUMBER-FORMAT:\\@');
+	   		 cell.setAttribute("style", 'mso-number-format:"\@"');
 	   		}
 	   		}
 	   	    tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";

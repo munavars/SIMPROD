@@ -169,7 +169,7 @@
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                    	  if(data=='Reviewed'){
-	                          	data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onclick="pupulateReviewList(this)" checked >';
+	                          	data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onclick="pupulateReviewList(this)" checked disabled>';
 	                    	  }else{
 	                    		data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onclick="pupulateReviewList(this)">';  
 	                    	  }

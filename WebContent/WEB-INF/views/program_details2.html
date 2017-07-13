@@ -720,6 +720,7 @@
 																					<tr>
 																						<th class="text-center">Tier</th>
 																						<th class="text-center">Amount</th>
+																						<th class="text-center">Begin Range</th>
 																						<th class="text-center">End Range</th>
 																						<th class="text-center">Edit</th>
 																						<th class="text-center">Delete</th>
@@ -1890,6 +1891,8 @@
          	function fnPopulateProgramTier(tierData){                
                 var table = $("#tier-schedule").DataTable();
                 if(tierData != null){
+                	var endRangePrevious = null;
+                	var maxRange = convertNumberFormat(99999999);
 	                $.each(tierData, function(idx, item) {
 	                	/* if((item.amount.toString().indexOf(".")==-1)&&("0"!=item.amount.toString())){
 	                		tieramount=item.amount.toString()+".00";
@@ -1903,7 +1906,12 @@
 	                	else{
 	                		tieramount = item.amount;
 	                	}
-						table.fnAddData([item.level, convertAmountFormat(tieramount),convertNumberFormat(item.beginRange),
+	                	if(idx > 0){
+	                		endRangePrevious = parseInt(item.beginRange) - 1;
+	                		var nRowTemp = table.fnGetNodes(idx-1);
+			               	table.fnUpdate(convertNumberFormat(endRangePrevious), nRowTemp, 3, false);
+	                	}
+						table.fnAddData([item.level, convertAmountFormat(tieramount),convertNumberFormat(item.beginRange), convertNumberFormat(maxRange),
 										'<a  id=' + item.id + ' class="edit" href="javascript:;">Edit</a>', 
 										'<a  id=' + item.id + ' class="delete" href="javascript:;">Delete</a>'
                     	]);
@@ -2309,44 +2317,22 @@
 		$(document).ready(function() {
 			$('#pdf-button').click(function () {
 			//for IE added new block
-			 if (navigator.userAgent.indexOf('Trident')>0 || navigator.userAgent.indexOf('Edge')>0)
+			if (navigator.userAgent.indexOf('Trident')>0)
 	    	{
-	    	  var request = new XMLHttpRequest();
-			  request.open("POST", '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id, true); 
-			  request.responseType = "blob";
-			  request.onload = function (e) {
-			  if (this.status === 200) {
-	           // `blob` response
-	          console.log(this.response);
-	          //var blobObject = new Blob([(this.response]); 
-           	 window.navigator.msSaveOrOpenBlob(this.response, 'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf'); 
-				    };
-				};
-			request.send();
+	    	    var a = document.createElement('a');
+			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
+				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
+			    window.open(a,'_blank');  
 	    	}
 	    	else
 	    	{
-				var request = new XMLHttpRequest();
-				request.open("POST", '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id, true); 
-				request.responseType = "blob";
-				request.onload = function (e) {
-			    if (this.status === 200) {
-		        // `blob` response
-		        console.log(this.response);
-		        // create `objectURL` of `this.response` : `.pdf` as `Blob`
-		        var file = window.URL.createObjectURL(this.response);
-		        var a = document.createElement("a");
-		        a.href = file;
-		        a.download = this.response.name || 'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
-		        document.body.appendChild(a);
-		        a.click();
-		        window.onfocus = function () {                     
-		          document.body.removeChild(a)
-		        }
-				    };
-				};
-				request.send();
-		  }	
+				var a = document.createElement('a');
+			    a.href = '/SIM/program/v1/downloadPDF/'+responseOnload.programDetailList[0].id;
+				a.download =  'ProgramDetails_'+responseOnload.programDetailList[0].id+'.pdf';
+			    document.body.appendChild(a);
+				a.click();
+				document.body.appendChild(a);  
+			}	
 			});
 		});
 	</script>

@@ -56,12 +56,15 @@
 		text-align:right;
 		}
 </style>
-
     
        <script type="text/javascript">
        
        $(document).ready(function () { 
-    	       	   
+     	   
+    	   $(".js-example-basic-single").select2();
+
+           $(".js-example-basic-multiple").select2();
+           
     	   
     	$('#ccmtable th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
     	   
@@ -73,15 +76,15 @@
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
 			
 		    ajax: {
-		        url: '/SIM/ccm/v1/getCcmDetails/monthy/T/1000-01-01/1000-01-01',
+		        url: '/SIM/ccm/v1/getCcmDetails/Monthly/Consumer/20170601',
 		        dataSrc: "data",
 		        type: "GET",
 		    },
 		  
 		    columnDefs: [
 
-	              { className: "center", "targets": [14,17] },
-	              { className: "right", "targets": [9,11,12,13,25,26,27,28,29,30] },
+	              { className: "center", "targets": [14,15,18] },
+	              { className: "right", "targets": [9,10,11,12,13,29,30,31,32,33,34] },
 	              {
 	                  targets:6,
 	                  render: function ( data, type, row, meta ) {
@@ -113,11 +116,21 @@
 	                      return data;
 	                  } 
 	              },
-	              {
+	             /*  {
 	                  targets:10,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<div id="amttype'+meta.row+'">' + data+'</div>';
+	                      }
+
+	                      return data;
+	                  } 
+	              }, */
+	              {
+	                  targets:10,
+	                  render: function ( data, type, row, meta ) {
+	                      if(type === 'display'){
+	                    	  data = '<div id="creditaccrued'+meta.row+'">$ ' +data+'</div>';
 	                      }
 
 	                      return data;
@@ -127,27 +140,26 @@
 	                  targets:11,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '<div>$ ' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:12,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<input type="text" id="earned'+meta.row+'" name="earned" class="right" value="" onkeyup="calculateCreditEarned(this)" style="width:80px">';
+	                          data = '<input type="text" id="earned'+meta.row+'" name="earned" class="right" value="" onkeyup="calculateCreditEarned(this)" style="width:100px">';
 	                      }
 
 	                      return data;
 	                  } 
 	              },   
 	              {
+	                  targets:12,
+	                  render: function ( data, type, row, meta ) {
+	                      if(type === 'display'){
+	                          data = '$ <input type="text" id="creditearned'+meta.row+'"  class="right" name="creditearned" value="" style="width:100px">';
+	                      }
+	                      return data;
+	                  } 
+	              },
+	              {
 	                  targets:13,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '$ <input type="text" id="creditearned'+meta.row+'"  class="right" name="creditearned" value="" style="width:80px">';
+	                    	  data = '<div id="variance'+meta.row+'">' + data+'</div>';
 	                      }
 	                      return data;
 	                  } 
@@ -156,7 +168,11 @@
 	                  targets:14,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '<input type="checkbox" name="review" value="" >';
+	                    	  if(data=='Reviewed'){
+	                          	data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onclick="pupulateReviewList(this)" checked >';
+	                    	  }else{
+	                    		data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onclick="pupulateReviewList(this)">';  
+	                    	  }
 	                      }
 
 	                      return data;
@@ -166,7 +182,7 @@
 	                  targets:15,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '<input type="text" id="comments" value="">';
+	                          data = '<input type="checkbox" id="submitForApproval'+meta.row+'" value="" >';
 	                      }
 
 	                      return data;
@@ -174,6 +190,16 @@
 	              },
 	              {
 	                  targets:16,
+	                  render: function ( data, type, row, meta ) {
+	                      if(type === 'display'){
+	                          data = '<input type="text" id="comments'+meta.row+'" value="">';
+	                      }
+
+	                      return data;
+	                  } 
+	              },
+	              {
+	                  targets:17,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="creditbasedon'+meta.row+'">' + data+'</div>';
@@ -183,10 +209,10 @@
 	                  } 
 	              },
 	              {
-	                  targets:17,
+	                  targets:18,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '<input type="checkbox" name="creditmemo" value="" >';
+	                          data = '<input type="checkbox" id="creditmemo'+meta.row+'" value="" >';
 	                      }
 
 	                      return data;
@@ -195,8 +221,8 @@
 	              {
 	                  targets:20,
 	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="units'+meta.row+'">' + data+'</div>';
+	                      if(type === 'display'){
+	                          data = '<input type="text" id="docNum'+meta.row+'" value="">';
 	                      }
 
 	                      return data;
@@ -205,28 +231,8 @@
 	              {
 	                  targets:21,
 	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="bonusableunits'+meta.row+'">' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:22,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="nadunits'+meta.row+'">' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:23,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="units_nad'+meta.row+'">' + data+'</div>';
+	                      if(type === 'display'){
+	                          data = '<input type="text" id="docDate'+meta.row+'" value="">';
 	                      }
 
 	                      return data;
@@ -236,7 +242,7 @@
 	                  targets:24,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
-	                		  data = '<div id="bonusableunit_nad'+meta.row+'">' + data+'</div>';
+	                		  data = '<div id="units'+meta.row+'">' + data+'</div>';
 	                      }
 
 	                      return data;
@@ -246,7 +252,7 @@
 	                  targets:25,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
-	                		  data = '<div id="invsales'+meta.row+'">$ ' +data+'</div>';
+	                		  data = '<div id="bonusableunits'+meta.row+'">' + data+'</div>';
 	                      }
 
 	                      return data;
@@ -256,7 +262,7 @@
 	                  targets:26,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
-	                		  data = '<div id="bonusablesales'+meta.row+'">$ ' +data+'</div>';
+	                		  data = '<div id="nadunits'+meta.row+'">' + data+'</div>';
 	                      }
 
 	                      return data;
@@ -266,7 +272,7 @@
 	                  targets:27,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
-	                		  data = '<div id="nadsales'+meta.row+'">$ ' +data+'</div>';
+	                		  data = '<div id="units_nad'+meta.row+'">' + data+'</div>';
 	                      }
 
 	                      return data;
@@ -276,7 +282,7 @@
 	                  targets:28,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
-	                		  data = '<div id="invsales_nadsales'+meta.row+'">$ ' +data+'</div>';
+	                		  data = '<div id="bonusableunit_nad'+meta.row+'">' + data+'</div>';
 	                      }
 
 	                      return data;
@@ -286,12 +292,57 @@
 	                  targets:29,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
+	                		  data = '<div id="invsales'+meta.row+'">$ ' +data+'</div>';
+	                      }
+
+	                      return data;
+	                  } 
+	              },
+	              {
+	                  targets:30,
+	                  render: function ( data, type, row, meta ) {
+	                	  if(type === 'display'){
+	                		  data = '<div id="bonusablesales'+meta.row+'">$ ' +data+'</div>';
+	                      }
+
+	                      return data;
+	                  } 
+	              },
+	              {
+	                  targets:31,
+	                  render: function ( data, type, row, meta ) {
+	                	  if(type === 'display'){
+	                		  data = '<div id="nadsales'+meta.row+'">$ ' +data+'</div>';
+	                      }
+
+	                      return data;
+	                  } 
+	              },
+	              {
+	                  targets:32,
+	                  render: function ( data, type, row, meta ) {
+	                	  if(type === 'display'){
+	                		  data = '<div id="invsales_nadsales'+meta.row+'">$ ' +data+'</div>';
+	                      }
+
+	                      return data;
+	                  } 
+	              },
+	              {
+	                  targets:33,
+	                  render: function ( data, type, row, meta ) {
+	                	  if(type === 'display'){
 	                		  data = '<div id="bonusable_nadsales'+meta.row+'">$ ' +data+'</div>';
 	                      }
 
 	                      return data;
 	                  } 
-	              }
+	              },
+	              {
+	                    targets: 40,
+	                    visible: false,
+	                	searchable: false
+	                }
 	              
 	       ],
 		    
@@ -307,14 +358,18 @@
 	            { data: "paidBasedOn"},
 	            { data: "guarantee" },
 	            { data: "amount" },
-	            { data: "amountType"},
 	            { data: "creditAccured"},
 	            { data: "earned"},
 	            { data: "creditEarned"},
+	            { data: "variance"},
 	            { data: "review"},
+	            { data: "submitForApproval"},
 	            { data: "comments" , },
 	            { data: "creditBasedOn" },
 	            { data: "creditMemo" },
+	            { data: "programStatus" },
+	            { data: "docNo" },
+	            { data: "docDate" },
 	            { data: "billToNo"},
 	            { data: "billToName" },
 	            { data: "units" },				            
@@ -332,7 +387,8 @@
 	            { data: "beginDate" },
 	            { data: "endDate"},
 	            { data: "glCode"},
-	            { data: "paymentMethod" }
+	            { data: "paymentMethod" },
+	            { data: "ccmId"}
       ]
 		});
     	
@@ -506,23 +562,23 @@
 																id="buss_inputselect"
 																name="buss_inputselect">
 																<!--  <option  class="" value="">- Select -</option>  -->
-																  <option value="P">Consumer</option> 
-																  <option value="T">Commercial</option> 
+																  <option value="Consumer">Consumer</option> 
+																  <option value="Commercial">Commercial</option> 
 																  <option value="OTR">OTR</option> 
 															</select>
 														</div>
 														<div class="form-group">
 															<div class="col-lg-4 col-sm-4" style="width:25%">
-																<label class="control-label" for="from">Begin/End
-																	Dates:</label>
-																<div class="input-group input-medium"
-																	data-date-format="mm/dd/yy">
-																	<input type="text" class="form-control" id="from"
-																		name="from" placeholder="Begin Date"><span
-																		class="input-group-addon" for="to">To</span> <input
-																		type="text" class="form-control" id="to"
-																		name="to" placeholder="End Date">
-																</div>
+																<label class="control-label"
+																for="period_inputselect">Period</label> <select
+																class="form-control input-sm m-bot15"
+																id="period_inputselect"
+																name="period_inputselect">
+																<!--  <option  class="" value="">- Select -</option>  
+																  <option value="P">Consumer</option> 
+																  <option value="T">Commercial</option> 
+																  <option value="OTR">OTR</option> -->
+															</select>
 															</div>
 														</div>
 														
@@ -532,7 +588,26 @@
                               							
 													</div><br><br>
 													
-													                          <div class="table-responsive">
+						<div class="table-responsive">
+                                 
+                                  <div class="adv-table editable-table">
+                            <div class="clearfix">
+                                    <div class="col-lg-6 col-sm-6" style="float:right">
+                                       <form action="#" class="cmxform">
+                                              <div class="form-group clearfix">
+                                                    <label class="control-label font-weight-bold" for="inputSuccess"><h5>Status: <button data-original-title="To View Programs by Status:" data-content="Insert your cursor inside the grey box with 'Active' selected and choose the types of statuses you want to view." data-placement="right" data-trigger="hover" class="btn btn-info btn-xs popovers"><strong>?</strong></button></h5></label>
+
+                                                  <select class="js-example-basic-multiple" multiple="multiple" id="program_status">
+                                                    <option selected value="0">Not Reviewed</option>
+                                                      <option value="1">Reviewed</option>
+                                                      <option value="3">Submitted</option>
+                                                  </select>
+                                              </div>
+                                          </form>
+                                      </div>
+                                </div>
+                          </div>
+                          
                                  <div class="btn-group pull-right">
                                 <!--  <div class="btn-group">
                                   <div class="">
@@ -572,14 +647,19 @@
                                 <th>Paid Based On</th>								
                                 <th>Guarantee</th>
                                 <th>Amount</th>
-                                <th>% or $</th>
+                                <!-- <th>% or $</th> -->
                                 <th>Credit Accrued</th>	
-                                <th>Earned</th>	
-                                <th>Credit Earned</th>	
+                                <th>Earned Adjustment</th>	
+                                <th>Credit Adjustment</th>	
+                                <th>Variance</th>	
                                 <th>Reviewed</th>
+                                <th>Submit For Approval</th>
                                 <th>Comments</th>
                                 <th>Credit Based On</th>
                                 <th>Generate Credit Memo Data</th>
+                                <th>Program Status</th>
+                                <th>Doc No</th>
+                                <th>Doc Date</th>
                                 <th>Bill- To No</th>	
                                 <th>Bill - To Name</th>								
                                 <th>Units</th>
@@ -597,8 +677,7 @@
 								<th>Begin Date</th>	
 								<th>End Date</th>
 								<th>GL</th>
-								<th>Payment Method</th>								
-                          		
+								<th>Payment Method</th>			
                               </tr>
                                </thead>
                              <!--  <tr>
@@ -727,9 +806,11 @@
                           </table>
                       </div>
                       <div class="col-lg-4 col-sm-4" style="width:100%"><br>
-                                 						 	<a href="#" id="create_memo" style="float:right"><button class="btn btn-default"> Create Memo Data</button></a>
+                                 						 	<a href="#" id="ccm_unlock" style="float:right"><button class="btn btn-default">Unlock</button></a>
                                  						 	<span></span>
-                                 						 	<a href="#" id="create_submit" style="float:right;margin-right:10px"><button class="btn btn-default"> Submit</button></a>
+                                 						 	<a href="#" id="ccm_save" onclick="saveReviewedList();" style="float:right;margin-right:10px"><button class="btn btn-default"> Save Changes</button></a>
+                                 						 	<span></span>
+                                 						 	<a href="#" id="ccm_submit" style="float:right;margin-right:10px"><button class="btn btn-default"> Submit</button></a>
                               							</div>
 													<div  class="row"><br><br><br><br><br><br></div>
 													
@@ -809,6 +890,8 @@
       <script type="text/javascript" src="resources/assets/data-tables/DT_bootstrap.js"></script>
     <!--common script for all pages-->
     <script src="resources/js/common-scripts.js"></script>
+      <!--select2-->
+  <script type="text/javascript" src="resources/assets/select2/js/select2.min.js"></script>
 
       <script type="text/javascript">
 
@@ -847,6 +930,8 @@
        
     <!-- Inline javascript to set the user name from model attribute Begin -->
 	<script type="text/javascript" th:inline="javascript">
+		
+	var reviewList=[];
 	
 		 $(document).ready(function() {
 		   var modelAttributeValue = [[${loginUserNameValue}]];
@@ -869,11 +954,23 @@
             		alert("Wrongly done");
             	}
         	});
+		   
+		   $.ajax({ 
+           	type: "GET",
+           	dataType: "json",
+          		url: '/SIM/ccm/v1/getPeriodDropDown',
+           	success: function(response){
+           	fnPopulateDropdown('period_inputselect', response);	
+           	},
+           	failure: function(response){
+           		alert("Wrongly done");
+           	}
+       	});
 		
-		   $('#from').datepicker();
+/* 		   $('#from').datepicker();
            $('#to').datepicker();
            $('#from').datepicker('update', new Date());
-           $('#to').datepicker('update', new Date());
+           $('#to').datepicker('update', new Date()); */
            
 		}); 
 		
@@ -897,12 +994,15 @@
 	function calculateCreditEarned(event){
     	 var id=(event.id).substring(6);
 			creditEarned='';
-			paidBased=$('#paidbase'+id).data('id');
+			paidBased=$('#paidbase'+id).data('id');			
 			amount=event.value;
 			if(amount!=""){
 			amount=parseFloat(event.value);
 			}
-			amountType=$('#amttype'+id).html();
+			amountType="%";
+			if($('#amt'+id).html().startsWith("$")){
+				amountType="$";
+			}
 			units=parseInt($('#units'+id).html());
 			bonusableUnits=parseInt($('#bonusableunits'+id).html());
 			nadUnits=parseInt($('#nadunits'+id).html());
@@ -966,7 +1066,11 @@
 			if(amountType=="%"){
 				creditEarned=creditEarned/100;
 			}
+			creditEarned=parseFloat(creditEarned).toFixed(2);
 			$('#creditearned'+id).val(creditEarned);
+			creditaccrued=parseFloat(removeCommaFromAmount($('#creditaccrued'+id).html().substring(1)));			
+			variance=creditaccrued-creditEarned;
+			$('#variance'+id).html('$ '+variance);
       }
           
 	
@@ -974,11 +1078,50 @@
 		
 		var freq=$('#payout_freq_inputselect').val();
 		var bus=$('#buss_inputselect').val();
-		var from=$('#from').val().replace(/\//g, "-");
-		var to=$('#to').val().replace(/\//g, "-");
-		//'/SIM/ccm/v1/getCcmDetails/monthy/T/test/test'
-		 var url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+from+'/'+to;
+		var period=$('#period_inputselect').val();
+/* 		var from=$('#from').val().replace(/\//g, "-");
+		var to=$('#to').val().replace(/\//g, "-"); */
+		 var url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+period;
+		 alert(url);
 	  	 table.ajax.url(url).load();
+	}
+	
+	function pupulateReviewList(event){
+		var id=(event.id).substring(6);
+		//var ccmId=$('#review'+id).data('id');
+		if(reviewList.indexOf(id)==-1)
+		{
+			reviewList.push(id);
+		}else{
+			reviewList.splice(reviewList.indexOf(id),1)
+		}
+	}
+	
+	function saveReviewedList(){
+		console.log(reviewList);
+		var accuralCcmDataList=[];
+		for(var i=0;i<reviewList.length;i++){
+		var id=	reviewList[i];
+		var accuralCcmData = new Object();
+		accuralCcmData.id=$('#review'+id).data('id')
+		accuralCcmData.adjustedAmount=$('#earned'+id).val();
+		accuralCcmData.adjustedCredit=$('#creditearned'+id).val();
+		accuralCcmData.reviewFlag='Reviewed';
+		accuralCcmDataList.push(accuralCcmData);
+		}
+		console.log(JSON.stringify(accuralCcmDataList));
+		 $.ajax({ 
+	           	type: "POST",
+	           	dataType: "json",
+	          		url: '/SIM/ccm/v1/saveCCMDetails',
+	          		contentType: 'application/json',
+					data: JSON.stringify(accuralCcmDataList),
+	           	success: function(response){
+	           alert("Success");
+	           	},
+	           	failure: function(response){
+	           		alert("Wrongly done");
+	           	}});
 	}
 	
 	   //Export to Excel 

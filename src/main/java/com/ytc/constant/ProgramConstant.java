@@ -12,6 +12,7 @@ public class ProgramConstant {
 	public static final String Y = "Y";
 	public static final String N = "N";
 	public static final String ZERO="0";
+	public static final String ONE="1";
 	
 	public static final String TAG_VALUE_DELIMITER = "-";
 	public static final String NAME_DELIMITER = " ";

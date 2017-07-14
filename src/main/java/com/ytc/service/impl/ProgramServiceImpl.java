@@ -724,7 +724,6 @@ public class ProgramServiceImpl implements IProgramService {
 	@Override
 	public List<ProgramDetail> getProgram(String custId, String status) {
 		List<ProgramDetail> programDetailList= new ArrayList<ProgramDetail>();
-		DecimalFormat df = new DecimalFormat("#,###.00");
 		DecimalFormat cf = new DecimalFormat("#,###");
 		String sql=QueryConstant.PROGRAM_LIST;
 		Map<String, Object> queryParams = new HashMap<>();
@@ -772,15 +771,15 @@ public class ProgramServiceImpl implements IProgramService {
 				programDetail.setIsTiered(ProgramConstant.ZERO.equalsIgnoreCase(dalProgramDetail.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES);
 			}
 			
-			String accuralAmount=ProgramConstant.ZERO;
+			/*String accuralAmount=ProgramConstant.ZERO;
 			if(dalProgramDetail.getAccrualAmount()!=0 ){
 				if("$".equalsIgnoreCase(dalProgramDetail.getAccrualType())){
 					accuralAmount=applyStyle(dalProgramDetail.getAccrualType()+df.format(dalProgramDetail.getAccrualAmount()));
 				}else{
 					accuralAmount=(df.format(dalProgramDetail.getAccrualAmount())+dalProgramDetail.getAccrualType());
 				}
-			 }	
-			programDetail.setAccrualAmount(accuralAmount);
+			 }*/	
+			programDetail.setAccrualAmount(frameTheAmount(dalProgramDetail.getAccrualAmount(),dalProgramDetail.getAccrualType()));
 			
 			
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
@@ -791,11 +790,7 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?cf.format(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
 			String tierRate=ProgramConstant.ZERO;
 			if(null!=dalProgramDetail.getPgmDetailTier()){
-				if("$".equalsIgnoreCase(dalProgramDetail.getPgmDetailTier().getTierType())){
-					tierRate=applyStyle(dalProgramDetail.getPgmDetailTier().getTierType()+df.format(dalProgramDetail.getPgmDetailTier().getAmount()));
-				}else{
-					tierRate=(df.format(dalProgramDetail.getPgmDetailTier().getAmount())+dalProgramDetail.getPgmDetailTier().getTierType());
-				}
+				tierRate=frameTheAmount(dalProgramDetail.getPgmDetailTier().getAmount(),dalProgramDetail.getPgmDetailTier().getTierType());
 			}
 			programDetail.setTierRate(tierRate);
 			programDetail.setAccruedAmount("0");//null!=dalProgramDetail.getAccuralData()?df.format(dalProgramDetail.getAccuralData().getTotalAccuredAmount()):ProgramConstant.ZERO);
@@ -814,9 +809,27 @@ public class ProgramServiceImpl implements IProgramService {
 		return programDetailList;
 	}
 	
-	private String applyStyle(String number) {
-		
-		return "<i>"+number+"</i>";
+	private String frameTheAmount(double amount, String type) {
+		DecimalFormat df = new DecimalFormat("#,###.00");
+		DecimalFormat dfless1 = new DecimalFormat("0.00");
+		String outAmount="0";
+		if(amount!=0 ){
+			if(amount<1)
+			{
+				outAmount=dfless1.format(amount);
+			}
+			else
+			{
+				outAmount=df.format(amount);
+			}
+			if("$".equalsIgnoreCase(type)){
+				outAmount="<i>"+type+outAmount+"</i>";
+			}else{
+				outAmount=outAmount+type;
+			}
+			return outAmount;
+		 }else
+			 return outAmount;
 	}
 
 

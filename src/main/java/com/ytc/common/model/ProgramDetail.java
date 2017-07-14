@@ -73,6 +73,7 @@ public class ProgramDetail extends Model{
 	
 	/**Commentary/Special Instructions attribute to hold the user entered comments.*/
 	private String comments;
+	private String actionReqByName;
 	
 	public ProgramPaidOn getProgramPaidOn() {
 		return programPaidOn;
@@ -482,6 +483,12 @@ public class ProgramDetail extends Model{
 	 */
 	public void setEstimatedAccrual(Integer estimatedAccrual) {
 		this.estimatedAccrual = estimatedAccrual;
+	}
+	public String getActionReqByName() {
+		return actionReqByName;
+	}
+	public void setActionReqByName(String actionReqByName) {
+		this.actionReqByName = actionReqByName;
 	}
 	
 	

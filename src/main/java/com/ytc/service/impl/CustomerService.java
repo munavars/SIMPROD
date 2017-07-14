@@ -93,6 +93,7 @@ public class CustomerService implements ICustomerService {
 				programDetail.setProgramStatus((dalProgramDetail.getStatus() != null) ? dalProgramDetail.getStatus().getId().toString() : "0" );
 				programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
 				programDetail.setStatusHistory(getProgramStatusHistory(dalProgramDetail));
+				programDetail.setActionReqByName(getActionRequiredByName(dalProgramDetail));
 				dashboardDetailList.add(programDetail);
 			}
 		}
@@ -101,6 +102,23 @@ public class CustomerService implements ICustomerService {
 
 	}
 	
+	private String getActionRequiredByName(DalProgramDetail dalProgramDetail) {
+		String actionReqByName = "";
+		if(dalProgramDetail != null & dalProgramDetail.getDalWorkflowStatusList() != null){
+			Set<Integer> workflowIdSet = new HashSet<Integer>();
+			for(DalWorkflowStatus dalWorkflowStatus : dalProgramDetail.getDalWorkflowStatusList()){
+				boolean isUnique = workflowIdSet.add(dalWorkflowStatus.getId());
+				if(!isUnique){
+					continue;
+				}
+				actionReqByName=ProgramServiceHelper.getName(dalWorkflowStatus.getApprover());
+			}
+			
+		}
+		return actionReqByName;
+	}
+
+
 	private void getPricingDetails(List<ProgramDetail> dashboardDetailList, List<String> tbpList,
 			List<String> userIdList, Integer loginId) {
 		String sql = null;
@@ -130,7 +148,6 @@ public class CustomerService implements ICustomerService {
 				programDetail.setProgramStatus((dalPricingHeader.getDalStatus() != null) ? dalPricingHeader.getDalStatus().getId().toString() : "0" );
 				programDetail.setProgramType(dalPricingHeader.getDalProgramType().getType());
 				programDetail.setStatusHistory(getPricingStatusHistory(dalPricingHeader));
-				
 				dashboardDetailList.add(programDetail);
 			}
 		}
@@ -160,7 +177,6 @@ public class CustomerService implements ICustomerService {
 				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
 				statusBuilder.append(dalWorkflowStatus.getApprovalStatus().getType());
 			}
-			
 			statusHistory = (statusBuilder != null) ? statusBuilder.toString() : ProgramConstant.STATUS_HISTORY_DATA_MESSAGE;
 		}
 		return statusHistory;

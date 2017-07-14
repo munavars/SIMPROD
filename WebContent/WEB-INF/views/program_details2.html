@@ -2481,7 +2481,7 @@
 				
 				$(document).on('blur',"#tier_range" , function () {
 					var value = $(this).val();
-					if(value != null && value != 'undefined' && $('input:radio[name=optionsRadiosDenominationTier]:checked').val() == '$' ){
+					if(value != null && value != 'undefined' ){
 						 /* value = value.toString().replace(/,/g, ""); */
 						  value = convertNumberFormat(value); 
 						 /* value = parseFloat(amount).toFixed(2); */

@@ -66,4 +66,6 @@ public class ProgramConstant {
 	public static final List<String> CONSUMER_EXCLUDE_TAG_VALUE_LIST =Arrays.asList("A", "P");
 	public static final List<Integer> OTR_TAG_ID_LIST = Arrays.asList(5);
 	public static final List<String> OTR_TAG_VALUE_LIST =Arrays.asList("ORL", "ORM", "ORS", "ORX", "OTL", "OTM", "OTR", "OTS", "OTX");
+	
+	public static final Integer MAX_END_RANGE = 99999999;
 }

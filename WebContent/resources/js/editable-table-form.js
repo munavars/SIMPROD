@@ -54,9 +54,32 @@ var EditableTable = function () {
              }
            	 return true;
            }
+
+            function saveAllRow(){
+            	var table1 = $("#tier-schedule").DataTable();
+            	var isAllRecordValid = true;
+            	$('#tier-schedule tbody').find('tr').each(function(i) {
+                    var tds = $(this).find('td'),
+                    tierId = tds.eq(0).text();
+                    var recordValid = true;
+                    if(tierId != 'No data available in table'){
+                    	var nRow = table1.fnGetNodes(i);
+                    	recordValid = saveRow(table1, nRow);
+                    	if(!recordValid){
+                    		isAllRecordValid = false;
+                    	}
+                    }
+                });
+            	return isAllRecordValid;
+            }
             
             function saveRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
+                if(jqInputs.length == 0){
+                	/**There is no record to edit.
+                	 * Returning true, so that nEditable value to null.*/
+                	return true;
+                }
                 if((jqInputs[0].value.trim()=="")||(jqInputs[1].value.trim()=="")){
                 	//editRow(oTable, nRow);
 					$("#tier_amount").valid();

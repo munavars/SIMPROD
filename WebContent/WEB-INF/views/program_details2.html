@@ -2145,7 +2145,7 @@
         	function validateBeforeSubmit(modalId){
 				/**If valid, it will toggle the corresponding modal.
 				If there is some error, error modal will be toggled.*/
-				if($("#wizard-validation-form").valid()){
+				if($("#wizard-validation-form").valid() && saveAllRow()){
 					$(modalId).modal('toggle');
 				}
 				else{
@@ -2594,6 +2594,102 @@
 				$("#amount").val("");
 				$("#amount").valid();
 			});
+			
+			function saveAllRow(){
+            	var table1 = $("#tier-schedule").DataTable();
+            	var isAllRecordValid = true;
+            	$('#tier-schedule tbody').find('tr').each(function(i) {
+                    var tds = $(this).find('td'),
+                    tierId = tds.eq(0).text();
+                    var recordValid = true;
+                    if(tierId != 'No data available in table'){
+                    	var nRow = table1.fnGetNodes(i);
+                    	recordValid = saveRow1(table1, nRow);
+                    	if(!recordValid){
+                    		isAllRecordValid = false;
+                    	}
+                    }
+                });
+            	return isAllRecordValid;
+            }
+            
+            function validateRange(nRow, oTable){
+           	 var jqTds = $('>td',  nRow);
+           	 var jqInputs = $('input',  nRow.childNodes);
+           	 var beginRange = removeCommaFromAmount(jqInputs[1].value.trim());
+           	 var endRange = removeCommaFromAmount(jqTds[3].innerText);
+           	 if(parseInt(beginRange) > parseInt(endRange)){
+           		 return false;
+           	 }
+           	 var tierId = parseInt(jqTds[0].innerText);
+             if(tierId > 1){
+             	var aData = oTable.fnGetData(parseInt(tierId)-2);
+             	var beginRangePre = parseInt(removeCommaFromAmount(aData[2]));
+             	if( beginRangePre >= parseInt(beginRange)){
+             		return false;
+             	}
+             }
+           	 return true;
+           }
+            
+            function saveRow1(oTable, nRow) {
+                var jqInputs = $('input',  nRow.childNodes);
+                if(jqInputs.length > 0){
+	                if((jqInputs[0].value.trim()=="")||(jqInputs[1].value.trim()=="")){
+	                	//editRow(oTable, nRow);
+						/* $("#tier_amount").valid();
+						$("#tier_range").valid(); */
+	                	/* $("#errorMessageModal").html("Tier Section cannot have empty values");
+						$('#myModal5').modal('toggle'); */
+	                	return false;
+	                }
+	                if(!validateRange(nRow, oTable)){
+	                	
+	                	oTable.fnUpdate('<input type="text" style="width:100%" class="form-control small error" value="' + jqInputs[1].value + '">', nRow, 2, false);
+	                	/* $("#errorMessageModal").html("Invalid value for begin range.");
+						$('#myModal5').modal('toggle'); */
+	                	return false;
+	                }
+	                
+	                var aData = oTable.fnGetData(nRow);
+	                var tierId = parseInt(aData[0]);
+	                
+	                /*oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);*/
+	                oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
+	                oTable.fnUpdate(jqInputs[1].value, nRow, 2, false);
+	
+	                
+	                var jqAnchor = $('a', nRow);
+	                if($(jqAnchor[0]).attr('id') == null){
+	                	oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
+	                }
+	                else{
+	                	oTable.fnUpdate('<a id='+ $(jqAnchor[0]).attr('id') +' class="edit" href="">Edit</a>', nRow, 4, false);	
+	                }
+	                if($(jqAnchor[1]).attr('id') == null){
+	                	oTable.fnUpdate('<a class="delete" href="">Delete</a>', nRow, 5, false);
+	                }
+	                else{
+	                	oTable.fnUpdate('<a id='+ $(jqAnchor[1]).attr('id') +' class="delete" href="">Delete</a>', nRow, 5, false);	
+	                }
+	                
+	                if(tierId > 1){
+	                	var nRowTemp = oTable.fnGetNodes(parseInt(tierId)-2);
+	                	var endRange = parseInt(removeCommaFromAmount(aData[2])) - 1;
+	                	oTable.fnUpdate(convertNumberFormat(endRange), nRowTemp, 3, false);
+	                }
+	                
+	                oTable.fnDraw();                
+                }
+
+                /*if(!$("#actual_marker").valid()){
+					$("#errorMessageModal").html("Please rectify the highlighted errors !!!");
+					$('#myModal5').modal('toggle');
+				}*/
+                
+                return true;
+            }
+			
 	</script>
 
 	<!-- END JAVASCRIPTS -->

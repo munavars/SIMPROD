@@ -2,6 +2,8 @@ package com.ytc.service.impl;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -15,6 +17,7 @@ import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalCcmAccrualData;
+import com.ytc.dal.model.DalCcmAudit;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.ICcmEmailService;
@@ -36,7 +39,7 @@ class CcmServiceImpl implements ICcmService{
 				for(DalFrequency dalFrequency : dalFrequencyList){
 					if(!"0".equalsIgnoreCase(dalFrequency.getFrequency())){
 					DropDown dropDown = new DropDown();
-					dropDown.setKey(String.valueOf(dalFrequency.getId()));
+					dropDown.setKey(dalFrequency.getFrequency());
 					dropDown.setValue(dalFrequency.getFrequency());
 					if(dropdownList == null){
 						dropdownList = new ArrayList<DropDown>();
@@ -59,10 +62,10 @@ class CcmServiceImpl implements ICcmService{
 			List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
 			if(resultList != null){
 				for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
-					Integer obj = (Integer) iterator.next();
+					Object[] obj = (Object[]) iterator.next();
 					DropDown dropDown = new DropDown();
-					dropDown.setKey(obj.toString());
-					dropDown.setValue(obj.toString());
+					dropDown.setKey(obj[1].toString());
+					dropDown.setValue(obj[0].toString());
 					if(dropdownList == null){
 						dropdownList = new ArrayList<DropDown>();
 					}
@@ -81,14 +84,16 @@ class CcmServiceImpl implements ICcmService{
 		return true;
 	}
 	
-	public List<CcmDetails> getCCMDetails(String frequency, String bu, Integer period){	
+	public List<CcmDetails> getCCMDetails(String frequency, String bu, Integer period, String status){	
 		List<CcmDetails> ccmList = new ArrayList<CcmDetails>();
 		DecimalFormat format = new DecimalFormat("#,##0.00");
 		String sql=QueryConstant.CCM_REPORT_NEW;
-		Map<String, Object> queryParams = new HashMap<>();		
+		Map<String, Object> queryParams = new HashMap<>();	
+		List<String> selectedStatus=Arrays.asList(status.split(","));
 		queryParams.put("bu", bu);
 		queryParams.put("frequency", frequency);
 		queryParams.put("period", period);
+		queryParams.put("status", selectedStatus);
 		List<DalCcmAccrualData> resultList =baseDao.list(DalCcmAccrualData.class, sql, queryParams);
 		//List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
 		
@@ -114,8 +119,8 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setAmount(amount);
 			ccmDetails.setAmountType(dalCcmAccrualData.getAmountType());
 			ccmDetails.setCreditAccured(format.format(dalCcmAccrualData.getCreditAccured()));
-			ccmDetails.setEarned(0.0);
-			ccmDetails.setCreditEarned(0.0);
+			ccmDetails.setEarned(format.format(dalCcmAccrualData.getEarned()));
+			ccmDetails.setCreditEarned(format.format(dalCcmAccrualData.getCreditEarned()));
 			ccmDetails.setVariance("");
 			ccmDetails.setReview(dalCcmAccrualData.getProgramStatus());
 			ccmDetails.setSubmitForApproval("");
@@ -200,15 +205,60 @@ class CcmServiceImpl implements ICcmService{
 	
 	
 	public int saveCCMDetails(Integer id, double adjustedAmount, double adjustedCredit, String user){	
-		
-		String sql="UPDATE ACCRUAL_DATA_PGM_DTL_CORP_WITH_ADJUSTMENTS SET ADJUSTED_AMOUNT=:adjustedAmount, ADJUSTED_CREDIT=:adjustedCredit, STATUS_FLAG='Reviewed', ADJUSTED_USER=:user, ADJUSTED_SYSDATE=SYSDATETIME() WHERE ID=:id";	
+		DalCcmAudit dalCcmAudit=new DalCcmAudit();
+		dalCcmAudit.setCcmId(id);
+		dalCcmAudit.setAdjustedAmount(adjustedAmount);
+		dalCcmAudit.setAdjustedCredit(adjustedCredit);
+		dalCcmAudit.setAdjustedUser(user);
+		dalCcmAudit.setStatusFlag("Reviewed");
+		dalCcmAudit.setComments("Review Comments");
+		dalCcmAudit.setAdjustedDate(Calendar.getInstance());
+		String sql=QueryConstant.CCM_UPDATE;	
 		Map<String, Object> queryParams = new HashMap<>();	
 		queryParams.put("id", id);
 		queryParams.put("adjustedAmount", adjustedAmount);
 		queryParams.put("adjustedCredit", adjustedCredit);
 		queryParams.put("user", user);
 		int count=baseDao.updateNative(sql, queryParams);
+		baseDao.create(dalCcmAudit);
 		return count;
+	}
+	
+	public int submitCcmForApproval(List<Integer> approvalList){	
+		
+		String hql=QueryConstant.CCM_LIST;
+		String sql=QueryConstant.CCM_UPDATE_STATUS;	
+		Map<String, Object> queryParams = new HashMap<>();	
+		queryParams.put("id", approvalList);		
+		List<DalCcmAccrualData> ccmList=baseDao.list(DalCcmAccrualData.class, hql, queryParams);
+		for (Iterator<DalCcmAccrualData> iterator = ccmList.iterator(); iterator.hasNext();) {
+			DalCcmAccrualData dalCcmAccrualData = (DalCcmAccrualData) iterator.next();
+			
+			//Sending Email
+			ccmEmailService.sendEmailData(dalCcmAccrualData);
+			
+			//Update status in DB
+			queryParams = new HashMap<>();	
+			queryParams.put("id", dalCcmAccrualData.getId());
+			queryParams.put("status", "Submitted");
+			baseDao.updateNative(sql, queryParams);
+			
+		}
+		
+		return 0;
+	}
+	
+public int updateCcmStatus(Integer id){	
+		
+		String sql=QueryConstant.CCM_UPDATE_STATUS;	
+		Map<String, Object> queryParams = new HashMap<>();			
+			//Update status in DB
+			queryParams.put("id", id);
+			queryParams.put("status", "Not Reviewed");
+			baseDao.updateNative(sql, queryParams);		
+		
+		
+		return 0;
 	}
 	
 }

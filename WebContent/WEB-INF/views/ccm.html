@@ -72,19 +72,19 @@
 			 oLanguage: {
 				 "sEmptyTable": "No data available for this customer"
 				 },
-				 
+			processing: true,	 
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
 			
 		    ajax: {
-		        url: '/SIM/ccm/v1/getCcmDetails/Monthly/Consumer/20170601',
+		        url: '/SIM/ccm/v1/getCcmDetails/Monthly/Consumer/20170601/Not Reviewed',
 		        dataSrc: "data",
 		        type: "GET",
 		    },
 		  
 		    columnDefs: [
 
-	              { className: "center", "targets": [14,15,18] },
-	              { className: "right", "targets": [9,10,11,12,13,29,30,31,32,33,34] },
+	              { className: "center", "targets": [14,15,17] },
+	              { className: "right", "targets": [9,10,11,12,13,28,29,30,31,32,33] },
 	              {
 	                  targets:6,
 	                  render: function ( data, type, row, meta ) {
@@ -116,16 +116,7 @@
 	                      return data;
 	                  } 
 	              },
-	             /*  {
-	                  targets:10,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<div id="amttype'+meta.row+'">' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              }, */
+	             
 	              {
 	                  targets:10,
 	                  render: function ( data, type, row, meta ) {
@@ -140,7 +131,7 @@
 	                  targets:11,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '<input type="text" id="earned'+meta.row+'" name="earned" class="right" value="" onkeyup="calculateCreditEarned(this)" style="width:100px">';
+	                          data = '<input type="text" id="earned'+meta.row+'" name="earned" class="right" value="'+data+'" onkeyup="calculateCreditEarned(this)" style="width:100px">';
 	                      }
 
 	                      return data;
@@ -150,7 +141,7 @@
 	                  targets:12,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '$ <input type="text" id="creditearned'+meta.row+'"  class="right" name="creditearned" value="" style="width:100px">';
+	                          data = '$ <input type="text" id="creditearned'+meta.row+'"  class="right" name="creditearned" value="'+data+'" style="width:100px">';
 	                      }
 	                      return data;
 	                  } 
@@ -166,12 +157,13 @@
 	              },
 	              {
 	                  targets:14,
+	                  orderable: false,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                    	  if(data=='Reviewed'){
-	                          	data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onclick="pupulateReviewList(this)" checked disabled>';
+	                    	  if((data=='Reviewed')||(data=='Submitted')){
+	                          	data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateReviewList(this)" checked disabled> <a href=# id="unlock'+meta.row+'" onclick="unlock(this);">Unlock</a>';
 	                    	  }else{
-	                    		data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onclick="pupulateReviewList(this)">';  
+	                    		data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateReviewList(this)">';  
 	                    	  }
 	                      }
 
@@ -180,26 +172,23 @@
 	              },
 	              {
 	                  targets:15,
+	                  orderable: false,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '<input type="checkbox" id="submitForApproval'+meta.row+'" value="" >';
+	                          
+	                          if((row.programStatus=='Submitted')){
+	                        	  	  data = '<input type="checkbox" id="submitForApproval'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateSubmitList(this)" checked disabled>';
+		                    	  }else{
+		                    		  data = '<input type="checkbox" id="submitForApproval'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateSubmitList(this)">'; 
+		                    	  }
 	                      }
 
 	                      return data;
 	                  } 
 	              },
+	             
 	              {
 	                  targets:16,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<input type="text" id="comments'+meta.row+'" value="">';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:17,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="creditbasedon'+meta.row+'">' + data+'</div>';
@@ -209,7 +198,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:18,
+	                  targets:17,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<input type="checkbox" id="creditmemo'+meta.row+'" value="" >';
@@ -219,7 +208,7 @@
 	                  }
 	              },
 	              {
-	                  targets:20,
+	                  targets:19,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<input type="text" id="docNum'+meta.row+'" value="">';
@@ -229,7 +218,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:21,
+	                  targets:20,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<input type="text" id="docDate'+meta.row+'" value="">';
@@ -239,7 +228,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:24,
+	                  targets:23,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="units'+meta.row+'">' + data+'</div>';
@@ -249,7 +238,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:25,
+	                  targets:24,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="bonusableunits'+meta.row+'">' + data+'</div>';
@@ -259,7 +248,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:26,
+	                  targets:25,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="nadunits'+meta.row+'">' + data+'</div>';
@@ -269,7 +258,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:27,
+	                  targets:26,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="units_nad'+meta.row+'">' + data+'</div>';
@@ -279,7 +268,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:28,
+	                  targets:27,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="bonusableunit_nad'+meta.row+'">' + data+'</div>';
@@ -289,7 +278,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:29,
+	                  targets:28,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="invsales'+meta.row+'">$ ' +data+'</div>';
@@ -299,7 +288,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:30,
+	                  targets:29,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="bonusablesales'+meta.row+'">$ ' +data+'</div>';
@@ -309,7 +298,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:31,
+	                  targets:30,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="nadsales'+meta.row+'">$ ' +data+'</div>';
@@ -319,7 +308,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:32,
+	                  targets:31,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="invsales_nadsales'+meta.row+'">$ ' +data+'</div>';
@@ -329,10 +318,20 @@
 	                  } 
 	              },
 	              {
-	                  targets:33,
+	                  targets:32,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="bonusable_nadsales'+meta.row+'">$ ' +data+'</div>';
+	                      }
+
+	                      return data;
+	                  } 
+	              },
+	              {
+	                  targets:39,
+	                  render: function ( data, type, row, meta ) {
+	                      if(type === 'display'){
+	                          data = '<input type="text" id="comments'+meta.row+'" value="">';
 	                      }
 
 	                      return data;
@@ -363,8 +362,7 @@
 	            { data: "creditEarned"},
 	            { data: "variance"},
 	            { data: "review"},
-	            { data: "submitForApproval"},
-	            { data: "comments" , },
+	            { data: "submitForApproval"},	            
 	            { data: "creditBasedOn" },
 	            { data: "creditMemo" },
 	            { data: "programStatus" },
@@ -388,6 +386,7 @@
 	            { data: "endDate"},
 	            { data: "glCode"},
 	            { data: "paymentMethod" },
+	            { data: "comments"},
 	            { data: "ccmId"}
       ]
 		});
@@ -598,9 +597,9 @@
                                                     <label class="control-label font-weight-bold" for="inputSuccess"><h5>Status: <button data-original-title="To View Programs by Status:" data-content="Insert your cursor inside the grey box with 'Active' selected and choose the types of statuses you want to view." data-placement="right" data-trigger="hover" class="btn btn-info btn-xs popovers"><strong>?</strong></button></h5></label>
 
                                                   <select class="js-example-basic-multiple" multiple="multiple" id="program_status">
-                                                    <option selected value="0">Not Reviewed</option>
-                                                      <option value="1">Reviewed</option>
-                                                      <option value="3">Submitted</option>
+                                                    <option selected value="Not Reviewed">Not Reviewed</option>
+                                                      <option value="Reviewed">Reviewed</option>
+                                                      <option value="Submitted">Submitted</option>
                                                   </select>
                                               </div>
                                           </form>
@@ -652,9 +651,8 @@
                                 <th>Earned Adjustment</th>	
                                 <th>Credit Adjustment</th>	
                                 <th>Variance</th>	
-                                <th>Reviewed</th>
-                                <th>Submit For Approval</th>
-                                <th>Comments</th>
+                                <th><input type="checkbox" id="allreview" value="">&nbsp;&nbsp;&nbsp;Reviewed</th>
+                                <th><input type="checkbox" id="allsubmit" value="">&nbsp;&nbsp;&nbsp;Submit For Approval</th>                               
                                 <th>Credit Based On</th>
                                 <th>Generate Credit Memo Data</th>
                                 <th>Program Status</th>
@@ -677,7 +675,8 @@
 								<th>Begin Date</th>	
 								<th>End Date</th>
 								<th>GL</th>
-								<th>Payment Method</th>			
+								<th>Payment Method</th>	
+								 <th>Comments</th>		
                               </tr>
                                </thead>
                              <!--  <tr>
@@ -810,7 +809,7 @@
                                  						 	<span></span>
                                  						 	<a href="#" id="ccm_save" onclick="saveReviewedList();" style="float:right;margin-right:10px"><button class="btn btn-default"> Save Changes</button></a>
                                  						 	<span></span>
-                                 						 	<a href="#" id="ccm_submit" style="float:right;margin-right:10px"><button class="btn btn-default"> Submit</button></a>
+                                 						 	<a href="#" id="ccm_submit" onclick="submitForApproval();" style="float:right;margin-right:10px"><button class="btn btn-default"> Submit For Approval</button></a>
                               							</div>
 													<div  class="row"><br><br><br><br><br><br></div>
 													
@@ -829,7 +828,35 @@
 											
 											<!-- END ROW 8 -->
 
-													<!---- START Submit -->
+													<div class="modal fade" id="myModal1" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-confirmation-modal-close"
+																			type="button" class="close" data-dismiss="modal"
+																			aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Confirmation</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="confirmMessage"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-confirmation-modal-ok"
+																			data-toggle="modal" href="#myModal1">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+
 
 
 
@@ -932,6 +959,7 @@
 	<script type="text/javascript" th:inline="javascript">
 		
 	var reviewList=[];
+	var submitList=[];
 	
 		 $(document).ready(function() {
 		   var modelAttributeValue = [[${loginUserNameValue}]];
@@ -967,10 +995,39 @@
            	}
        	});
 		
-/* 		   $('#from').datepicker();
-           $('#to').datepicker();
-           $('#from').datepicker('update', new Date());
-           $('#to').datepicker('update', new Date()); */
+		   $('#program_status').on('change',function() {
+				var freq=$('#payout_freq_inputselect').val();
+				var bus=$('#buss_inputselect').val();
+				var period=$('#period_inputselect').val();
+				var url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+period+'/'+$(this).val();
+				reviewList=[];
+		  		submitList=[];  
+				if($(this).val()){
+			  	  	  table.ajax.url(url).load();
+			  		 
+			  	  }else {
+					  //$("#errorMessageModal").html("Status cannot be Empty. Kindly choose");
+					  //$('#myModal1').modal('toggle');
+			  		  //alert("Status cannot be Empty. Kindly choose");
+			  		  url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+period+'/xxx';
+			  		  table.ajax.url(url).load();
+			  	  }
+			  	  
+			  	});
+		   
+		   $('#allreview').on('change',function() {
+
+			   $('[id^="review"]').prop('checked', this.checked);
+			   $('[id^="review"]').trigger('change');  
+			   console.log(reviewList);  	
+		   });
+		   
+		   $('#allsubmit').on('change',function() {
+
+			   $('[id^="submitForApproval"]').prop('checked', this.checked);
+			   $('[id^="submitForApproval"]').trigger('change');  
+			   console.log(submitList);  	
+		   });
            
 		}); 
 		
@@ -979,7 +1036,7 @@
 	         		$.each(items, function (i, item) {
 					    $('#'+ elementId).append($('<option>', { 
 					        value: item.value,
-					        text : item.value 
+					        text : item.key 
 					    }));
 					});
 	         	}
@@ -1079,14 +1136,13 @@
 		var freq=$('#payout_freq_inputselect').val();
 		var bus=$('#buss_inputselect').val();
 		var period=$('#period_inputselect').val();
-/* 		var from=$('#from').val().replace(/\//g, "-");
-		var to=$('#to').val().replace(/\//g, "-"); */
-		 var url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+period;
-		 alert(url);
-	  	 table.ajax.url(url).load();
+		var url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+period+'/'+$('#program_status').val();
+	  	table.ajax.url(url).load();
+	  	reviewList=[];
+ 		submitList=[];
 	}
 	
-	function pupulateReviewList(event){
+	function populateReviewList(event){
 		var id=(event.id).substring(6);
 		//var ccmId=$('#review'+id).data('id');
 		if(reviewList.indexOf(id)==-1)
@@ -1097,13 +1153,31 @@
 		}
 	}
 	
+	function populateSubmitList(event){
+		var id=(event.id).substring(17);
+		if((!$('#review'+id).is(':checked'))&&($('#submitForApproval'+id).is(':checked'))){
+			message="Data cannot be submitted before reviewing";
+            $("#confirmMessage").html(message);
+			$('#myModal1').modal('toggle');
+			$('#submitForApproval'+id).prop('checked', false);
+			return;	
+		}
+		var ccmId=$('#submitForApproval'+id).data('id')
+		if(submitList.indexOf(ccmId)==-1)
+		{
+			submitList.push(ccmId);
+		}else{
+			submitList.splice(submitList.indexOf(ccmId),1)
+		}
+	}
+	
 	function saveReviewedList(){
 		console.log(reviewList);
 		var accuralCcmDataList=[];
 		for(var i=0;i<reviewList.length;i++){
 		var id=	reviewList[i];
 		var accuralCcmData = new Object();
-		accuralCcmData.id=$('#review'+id).data('id')
+		accuralCcmData.id=$('#review'+id).data('id');
 		accuralCcmData.adjustedAmount=$('#earned'+id).val();
 		accuralCcmData.adjustedCredit=$('#creditearned'+id).val();
 		accuralCcmData.reviewFlag='Reviewed';
@@ -1117,11 +1191,57 @@
 	          		contentType: 'application/json',
 					data: JSON.stringify(accuralCcmDataList),
 	           	success: function(response){
-	           alert("Success");
+	            //alert("Saved");
+	            message="Data Saved Successfully";
+	            $("#confirmMessage").html(message);
+				$('#myModal1').modal('toggle');
 	           	},
 	           	failure: function(response){
 	           		alert("Wrongly done");
 	           	}});
+		 reviewList=[];
+  		 submitList=[];
+	}
+	
+	function submitForApproval(){
+		console.log(submitList);
+		 $.ajax({ 
+	           	type: "POST",
+	           	dataType: "json",
+	          		url: '/SIM/ccm/v1/submitCCMDetails',
+	          		contentType: 'application/json',
+					data: JSON.stringify(submitList),
+	           	success: function(response){
+	            //alert("Submitted for Approval");
+	           	 message="Submitted for Approval Successfully";
+	             $("#confirmMessage").html(message);
+	 			$('#myModal1').modal('toggle');
+	           	},
+	           	failure: function(response){
+	           		alert("Wrongly done");
+	           	}});
+		 reviewList=[];
+  		 submitList=[];
+	}
+	
+	function unlock(event){
+		var id=(event.id).substring(6);
+		$('#review'+id).prop('checked', false);
+		$('#review'+id).prop('disabled', false);
+		$.ajax({ 
+           	type: "POST",
+           	dataType: "json",
+          		url: '/SIM/ccm/v1/updateCCMStatus',
+          		contentType: 'application/json',
+				data: JSON.stringify($('#review'+id).data('id')),
+           	success: function(response){
+            message="Review Unlocked Successfully";
+            $("#confirmMessage").html(message);
+			$('#myModal1').modal('toggle');
+           	},
+           	failure: function(response){
+           		alert("Wrongly done");
+           	}});
 	}
 	
 	   //Export to Excel 

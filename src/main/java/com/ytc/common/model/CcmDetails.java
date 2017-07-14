@@ -20,8 +20,8 @@ public class CcmDetails extends Model {
 	private String amount;
 	private String amountType;
 	private String creditAccured;
-	private double earned;
-	private double creditEarned;
+	private String earned;
+	private String creditEarned;
 	private String variance; 
 	private String review;
 	private String submitForApproval;
@@ -212,25 +212,25 @@ public class CcmDetails extends Model {
 	/**
 	 * @return the earned
 	 */
-	public double getEarned() {
+	public String getEarned() {
 		return earned;
 	}
 	/**
 	 * @param earned the earned to set
 	 */
-	public void setEarned(double earned) {
+	public void setEarned(String earned) {
 		this.earned = earned;
 	}
 	/**
 	 * @return the creditEarned
 	 */
-	public double getCreditEarned() {
+	public String getCreditEarned() {
 		return creditEarned;
 	}
 	/**
 	 * @param creditEarned the creditEarned to set
 	 */
-	public void setCreditEarned(double creditEarned) {
+	public void setCreditEarned(String creditEarned) {
 		this.creditEarned = creditEarned;
 	}
 	/**

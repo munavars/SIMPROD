@@ -55,10 +55,10 @@ public class CCMController extends BaseController {
 		return true;
 	}
 	
-	@RequestMapping(value = "/ccm/v1/getCcmDetails/{frequency}/{bu}/{period}", method = RequestMethod.GET)
-	public @ResponseBody ListResult<CcmDetails> getCCMDetails(HttpServletRequest request, @PathVariable("frequency") String frequency, @PathVariable("bu") String bu, @PathVariable("period") Integer period) {
+	@RequestMapping(value = "/ccm/v1/getCcmDetails/{frequency}/{bu}/{period}/{status}", method = RequestMethod.GET)
+	public @ResponseBody ListResult<CcmDetails> getCCMDetails(HttpServletRequest request, @PathVariable("frequency") String frequency, @PathVariable("bu") String bu, @PathVariable("period") Integer period, @PathVariable("status") String status) {
 		 
-		List<CcmDetails> result=getService(request).getCCMDetails(frequency, bu, period);
+		List<CcmDetails> result=getService(request).getCCMDetails(frequency, bu, period, status);
 		return new ListResult<CcmDetails>(result);
 		
 	}
@@ -82,6 +82,26 @@ public class CCMController extends BaseController {
 			AccuralCcmData accuralCcmData = (AccuralCcmData) iterator.next();
 			count=getService(request).saveCCMDetails(accuralCcmData.getId(), accuralCcmData.getAdjustedAmount(), accuralCcmData.getAdjustedCredit(),userName);
 		}
+		return count;
+		
+	}
+	
+	@RequestMapping(value = "/ccm/v1/submitCCMDetails", method = RequestMethod.POST)
+	public @ResponseBody int submitCcmForApproval(HttpServletRequest request, @RequestBody List<Integer> approvalList) {
+		int count=0;	
+
+			count=getService(request).submitCcmForApproval(approvalList);
+		
+		return count;
+		
+	}
+	
+	@RequestMapping(value = "/ccm/v1/updateCCMStatus", method = RequestMethod.POST)
+	public @ResponseBody int updateCcmStatus(HttpServletRequest request, @RequestBody Integer id) {
+		int count=0;	
+
+			count=getService(request).updateCcmStatus(id);
+		
 		return count;
 		
 	}

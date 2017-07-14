@@ -11,9 +11,13 @@ public interface ICcmService {
 
 	boolean createMemoData(Integer id);
 	
-	List<CcmDetails> getCCMDetails(String frequency, String bu, Integer period);
+	List<CcmDetails> getCCMDetails(String frequency, String bu, Integer period, String status);
 
 	List<DropDown> getPeriodDropDownList();
 
 	int saveCCMDetails(Integer id, double adjustedAmount, double adjustedCredit, String string);
+
+	int submitCcmForApproval(List<Integer> approvalList);
+
+	int updateCcmStatus(Integer id);
 }

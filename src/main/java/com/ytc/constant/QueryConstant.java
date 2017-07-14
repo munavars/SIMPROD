@@ -89,7 +89,14 @@ public class QueryConstant {
 			" GROUP BY CUST.BU, HIER.LVL1_EMP_NAME, HIER.LVL3_EMP_NAME, FREQ.FREQUENCY, PGM_DTL.ID, PGM_MAST.PROGRAM, PGM_DTL.SHORT_DESC, ACCRUAL.PAID_BASED_ON, PGM_DTL.IS_TIERED, ACCRUAL.ACCRUAL_AMOUNT, ACCRUAL.ACCRUAL_TYPE, SHIP_TO.CORP_NUMBER, SHIP_TO.CORP_NAME, PGM_DTL.PAY_TO, PGM_DTL.PGM_START_DATE, PGM_DTL.PGM_END_DATE, PGM_DTL.GL_CODE, PAYMENT_TYPE.TYPE, BI.ID\n"+
 			"ORDER BY CUST.BU, HIER.LVL3_EMP_NAME, HIER.LVL1_EMP_NAME, FREQ.FREQUENCY, PGM_DTL.ID";
 
-	public static final String CCM_REPORT_NEW="SELECT o FROM DalCcmAccrualData o WHERE o.bu in (:bu) AND o.frequency in(:frequency) AND o.periodId in (:period)";
+	public static final String CCM_REPORT_NEW="SELECT o FROM DalCcmAccrualData o WHERE o.bu in (:bu) AND o.frequency in(:frequency) AND o.periodId in (:period) AND o.programStatus in (:status)";
 	
-	public static final String CCM_PERIOD="select distinct(PERIOD_ID) FROM ACCRUAL_DATA_PGM_DTL_CORP_WITH_ADJUSTMENTS";
+	public static final String CCM_PERIOD="SELECT ID, MONTH_NAME FROM PERIOD_MASTER";
+	
+	public static final String CCM_UPDATE="UPDATE ACCRUAL_DATA_PGM_DTL_CORP_WITH_ADJUSTMENTS SET ADJUSTED_AMOUNT=:adjustedAmount, ADJUSTED_CREDIT=:adjustedCredit, STATUS_FLAG='Reviewed', ADJUSTED_USER=:user, ADJUSTED_SYSDATE=SYSDATETIME() WHERE ID=:id";
+
+	public static final String CCM_LIST="SELECT o FROM DalCcmAccrualData o WHERE o.id in (:id)";
+	
+	public static final String CCM_UPDATE_STATUS="UPDATE ACCRUAL_DATA_PGM_DTL_CORP_WITH_ADJUSTMENTS SET STATUS_FLAG=:status WHERE ID=:id";
+	
 }

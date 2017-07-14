@@ -29,6 +29,8 @@ private Integer periodId;
 private Calendar accrualStartDate;
 private Calendar accrualEndDate;
 private String bu;
+private String customerNumber;
+private String customerName;
 private String accountManager;
 private String zoneManager;
 private String frequency;
@@ -62,7 +64,7 @@ private Calendar endDate;
 private String glCode;
 private String paymentMethod;
 private Integer baseItemId;
-
+private String adjustedUser;
 
 /**
  * @return the createdDate
@@ -583,6 +585,45 @@ public Integer getBaseItemId() {
  */
 public void setBaseItemId(Integer baseItemId) {
 	this.baseItemId = baseItemId;
+}
+/**
+ * @return the customerNumber
+ */
+@Column(name = "CUSTOMER_NUMBER")
+public String getCustomerNumber() {
+	return customerNumber;
+}
+/**
+ * @param customerNumber the customerNumber to set
+ */
+public void setCustomerNumber(String customerNumber) {
+	this.customerNumber = customerNumber;
+}
+/**
+ * @return the customerName
+ */
+@Column(name = "CUSTOMER_NAME")
+public String getCustomerName() {
+	return customerName;
+}
+/**
+ * @param customerName the customerName to set
+ */
+public void setCustomerName(String customerName) {
+	this.customerName = customerName;
+}
+/**
+ * @return the adjustedUser
+ */
+@Column(name = "ADJUSTED_USER")
+public String getAdjustedUser() {
+	return adjustedUser;
+}
+/**
+ * @param adjustedUser the adjustedUser to set
+ */
+public void setAdjustedUser(String adjustedUser) {
+	this.adjustedUser = adjustedUser;
 }
 	
 

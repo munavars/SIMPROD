@@ -8,6 +8,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -569,13 +570,14 @@ public class PdfGenerator {
 		        	 
 		        
 		         document.add(new Paragraph("PROGRAM SCHEDULE",f1));
-		         PdfPTable programScheduleTable = new PdfPTable(3); // 3 columns.
+		         PdfPTable programScheduleTable = new PdfPTable(4); // 4 columns.
 		         programScheduleTable.setWidthPercentage(100); //Width 100%
 		         programScheduleTable.setSpacingBefore(10f); //Space before table
 		         programScheduleTable.setSpacingAfter(10f); //Space after table
 		  
 		         //Set Column widths
-		         programScheduleTable.setWidths(columnWidths);
+		         float[] columnWidthsTable = {1f, 1f, 1f, 1f};
+		         programScheduleTable.setWidths(columnWidthsTable);
 		  
 		         cell = new PdfPCell(new Paragraph("MARKER"));
 		         cell.setBorderColor(BaseColor.BLACK);
@@ -592,12 +594,19 @@ public class PdfGenerator {
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         programScheduleTable.addCell(cell);
 		         
-		         cell = new PdfPCell(new Paragraph("BEGINNING RANGE"));
+		         cell = new PdfPCell(new Paragraph("BEGIN RANGE"));
 		         cell.setBorderColor(BaseColor.BLACK);
 		         cell.setPaddingLeft(10);
 		         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         programScheduleTable.addCell(cell);     
+		         
+		         cell = new PdfPCell(new Paragraph("END RANGE"));
+		         cell.setBorderColor(BaseColor.BLACK);
+		         cell.setPaddingLeft(10);
+		         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		         programScheduleTable.addCell(cell);    
 		         
 		         
 		         Map<String, Object> parameters = new HashMap<String, Object>();
@@ -605,6 +614,7 @@ public class PdfGenerator {
 					List<DalProgramDetailTier> dalProgramTierList = baseDao.getListFromNamedQueryWithParameter("DalProgramDetailTier.getAllTierForProgramId", 
 																	parameters);
 					DecimalFormat format = new DecimalFormat("#,###.00");
+					Map<Integer, String> endRangeDetails = getEndRangeDetails(dalProgramTierList);
 					for (Iterator<DalProgramDetailTier> iterator = dalProgramTierList.iterator(); iterator.hasNext();) {
 						DalProgramDetailTier dalProgramDetailTier = (DalProgramDetailTier) iterator.next();
 						cell = new PdfPCell(new Paragraph(dalProgramDetailTier.getLevel().toString()));
@@ -621,7 +631,21 @@ public class PdfGenerator {
 				         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				         programScheduleTable.addCell(cell);
 				         
-				         cell = new PdfPCell(new Paragraph(dalProgramDetailTier.getBeginRange().toString()));
+				         DecimalFormat formatRange = new DecimalFormat("#,###");
+				         cell = new PdfPCell(new Paragraph(formatRange.format(dalProgramDetailTier.getBeginRange())));
+				         cell.setBorderColor(BaseColor.BLACK);
+				         cell.setPaddingLeft(10);
+				         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				         programScheduleTable.addCell(cell);
+					
+				         
+				         String endRange = null;
+				         if(endRangeDetails != null && endRangeDetails.get(dalProgramDetailTier.getLevel()) != null){
+				        	 endRange = endRangeDetails.get(dalProgramDetailTier.getLevel());
+				         }
+				         
+				         cell = new PdfPCell(new Paragraph(endRange));
 				         cell.setBorderColor(BaseColor.BLACK);
 				         cell.setPaddingLeft(10);
 				         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -645,6 +669,25 @@ public class PdfGenerator {
 	         return stream.toByteArray();
 
 	}
-		
 
+	private Map<Integer, String> getEndRangeDetails(List<DalProgramDetailTier> dalProgramTierList) {
+		Map<Integer, String> endRangeDetailsMap = null;
+		DecimalFormat format = new DecimalFormat("#,###");
+		if(dalProgramTierList != null){
+			Integer previousBeginRange = null;
+			endRangeDetailsMap = new HashMap<Integer, String>();
+			for (ListIterator<DalProgramDetailTier> iterator = dalProgramTierList.listIterator(dalProgramTierList.size()); iterator.hasPrevious();) {
+				DalProgramDetailTier dalProgramDetailTier = (DalProgramDetailTier) iterator.previous();
+				if(previousBeginRange == null){
+					endRangeDetailsMap.put(dalProgramDetailTier.getLevel(),  format.format(ProgramConstant.MAX_END_RANGE));
+				}
+				else{
+					endRangeDetailsMap.put(dalProgramDetailTier.getLevel(), format.format(previousBeginRange - 1));
+				}
+				previousBeginRange = dalProgramDetailTier.getBeginRange();
+			}
+		}
+		return endRangeDetailsMap;
+	}
+		
 }

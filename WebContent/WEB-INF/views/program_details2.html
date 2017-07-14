@@ -526,14 +526,17 @@
 																	</label>
 																</div>
 																<br> <label
-																	class="control-label" for="optionsRadiosTrueUp">Is
+																	class="control-label popovers" for="optionsRadiosTrueUp" 
+																	data-content="Please choose program is true-up or not."
+																	title="&nbsp;&nbsp;Hot Tip"
+																	data-placement="top" data-toggle="tooltip" data-trigger="hover">Is
 																	this 'True-up'?</label>
 																<div class="radio-inline">
 																	<label class="control-label" for="optionsRadiosTrueUpYes">
 																		<input type="radio" name="optionsRadiosTrueUp"
 																		id="optionsRadiosTrueUpYes" value="Yes"
 																		class="radio-inline required m-bot15"
-																		checked="checked">
+																		checked="checked" rel="txtTooltip">
 																		Yes
 																	</label>
 																</div>
@@ -1277,7 +1280,7 @@
 				}
 			    return isPercentage;
 			}, 'Please enter valid percentage');
-      
+         
 			$("#wizard-validation-form").validate({
 				rules: {
 					program_name_inputselect: {

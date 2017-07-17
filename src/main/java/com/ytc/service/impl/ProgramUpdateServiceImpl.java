@@ -494,8 +494,11 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			if(programDetail.getProgramAchieveOn().getAchieveFrequency()!= null){
 				dalProgramDet.setAchBasedFreq(baseDao.getById(DalFrequency.class, Integer.valueOf(programDetail.getProgramAchieveOn().getAchieveFrequency())));				
 			}
-			if(programDetail.getActualMarker() != null){
+			/*if(programDetail.getActualMarker() != null){
 				dalProgramDet.setActualMarker(programDetail.getActualMarker());	
+			}*/
+			if(programDetail.getSchdTierMarker() != null){
+				dalProgramDet.setSchdTierMarker(programDetail.getSchdTierMarker());	
 			}
 			dalProgramDet.setStatus(dalProgramDet.getDalProgramHeader().getStatus());
 			dalProgramDet.setTbpCheck(programDetail.getTbpCheck());

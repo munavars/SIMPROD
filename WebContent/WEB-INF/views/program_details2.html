@@ -558,7 +558,7 @@
 																			for="optionsRadiosDenomination"> <input
 																			type="radio" name="optionsRadiosDenomination"
 																			id="optionsRadiosPercentage" value="%"
-																			class="radio-inline required m-bot15"
+																			class="radio-inline required m-bot15" disabled="disabled"
 																			> %
 																		</label>
 																	</div>
@@ -568,7 +568,7 @@
 																			type="radio" name="optionsRadiosDenomination"
 																			id="optionsRadiosDollarSign" value="$"
 																			class="radio-inline required m-bot15"
-																			checked="checked"> $
+																			checked="checked" disabled="disabled"> $
 																		</label>
 																	</div>
 																</div>
@@ -710,7 +710,7 @@
 																									<input type="radio"
 																									name="optionsRadiosDenominationTier"
 																									id="optionsRadiosPercentageTier1" value="%"
-																									class="radio-inline denomination ">%
+																									class="radio-inline denomination" >%
 																								</label>
 																							</div>
 																							<div class="radio-inline inline-flex">
@@ -1280,7 +1280,20 @@
 				}
 			    return isPercentage;
 			}, 'Please enter valid percentage');
-         
+			$.validator.addMethod("paidBasedOnValidation", function (value, element) {
+				var isIncluded = false;
+				if(getTagPropertyValue(1, includePaid)!=null && getTagPropertyValue(7, includePaid)!=null){
+					isIncluded = true;
+				}
+			    return isIncluded;
+			}, 'Please include at least one customer and one part master attributes');
+            $.validator.addMethod("achBasedOnValidation", function (value, element) {
+				var isIncluded = false;
+				if(getTagPropertyValue(1, includeAchieve)!=null && getTagPropertyValue(7, includeAchieve)!=null){
+					isIncluded = true;
+				}
+			    return isIncluded;
+			}, 'Please include at least one customer and one part master attributes');
 			$("#wizard-validation-form").validate({
 				rules: {
 					program_name_inputselect: {
@@ -1375,7 +1388,19 @@
 					},
 					tier_range: {
 						required: true
+					},
+					include: {
+					//required: true,
+					paidBasedOnValidation: true
+					},
+					achInclude:{
+					achBasedOnValidation:
+					{
+					  depends: function(element) {
+						return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
+					  }
 					}
+				  }	
 				},
 				messages: {
 					required: "This field is required",
@@ -1739,7 +1764,8 @@
                	else{
                		$("#optionsRadiosDollarSignTier1").prop('checked', true);
                	}
-               	$('#actual_marker').val(response.data.programDetailList[0].actualMarker);
+               	//$('#actual_marker').val(response.data.programDetailList[0].actualMarker);
+               	$('#actual_marker').val(response.data.programDetailList[0].schdTierMarker);
                	fnPopulateProgramTier(response.data.programDetailList[0].programTierDetailList);
                	
                	/**Commentary/ Special instructions*/
@@ -1799,8 +1825,8 @@
                          amount = tds.eq(1).text(),
                          range = tds.eq(2).text();
                     	 
-                    	 if(marker==responseOnload.programDetailList[0].actualMarker){
-                    		 $tds.eq(13).text(responseOnload.programDetailList[0].actualMarker);
+                    	 if(marker==responseOnload.programDetailList[0].schdTierMarker){
+                    		 $tds.eq(13).text(responseOnload.programDetailList[0].schdTierMarker);
                              $tds.eq(14).text(range);
                              $tds.eq(15).text(amount+responseOnload.programDetailList[0].amountTypeTier); 
                              if('$'==responseOnload.programDetailList[0].amountTypeTier){
@@ -2042,7 +2068,9 @@
 				else{
 					responseOnload.programDetailList[0].amountTypeTier = '$';
 				}
-				responseOnload.programDetailList[0].actualMarker = parseInt($('#actual_marker').val());
+				//due to new column addition in pgm_detail table
+				//responseOnload.programDetailList[0].actualMarker = parseInt($('#actual_marker').val());
+				responseOnload.programDetailList[0].schdTierMarker = parseInt($('#actual_marker').val());
 				
 				/**Save Commentary/Special Instructions */
 				responseOnload.programDetailList[0].comments = $("#userComments").val();
@@ -2446,6 +2474,7 @@
 					populateGlcode(id);
 					}
 				});
+				
 				
 
 				$('#achieve_basedon_inputselect').change(function(){

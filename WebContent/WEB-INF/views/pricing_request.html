@@ -240,7 +240,7 @@ a { text-decoration: none }
 		var title = rows[0];
 		var data = [];
 		var columnNames = [];
-		
+		var isValid = true;
 		// this approach is interesting if you need to dynamically create data in Javascript 
 			var metadata = [];
 		// heading built successfully.  rows[0] = wd sheet name, rows[1] = blank space
@@ -280,6 +280,10 @@ a { text-decoration: none }
 									}
 								}
 								else{
+									 if ((oneRow[i] == null || oneRow[i] == '') && (columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || columnNames[i] == " PART#") ){
+									 	isValid = false;
+									 }
+
 									rowValues[columnNames[i]] = oneRow[i];
 								}
 							}
@@ -294,15 +298,22 @@ a { text-decoration: none }
 			}
 		}
 		
-		editableGrid = new EditableGrid(title, {
-			modelChanged: function(rowId, colId, oldValue, newValue, row) {
-				data[rowId].values[columnNames[colId]] = newValue;
-			}
-		});
-		editableGrid.load({"metadata": metadata, "data": data});
-		editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
-		fileData = data;
-		dataUploaded = true;
+		if(isValid){
+			editableGrid = new EditableGrid(title, {
+				modelChanged: function(rowId, colId, oldValue, newValue, row) {
+					data[rowId].values[columnNames[colId]] = newValue;
+				}
+			});
+			editableGrid.load({"metadata": metadata, "data": data});
+			editableGrid.renderGrid("tablecontent", "testgrid","testgrid");
+			fileData = data;
+			dataUploaded = true;
+		}
+		else{
+			$("#errorMessageModal").html("Prod Line, Thread and Part Number columns cannot have null values.");
+			$('#myModal6').modal('toggle');
+		}
+
 	} 
 	
 	EditableGrid.prototype.addCellValidator = function(columnIndexOrName, cellValidator)
@@ -550,7 +561,7 @@ a { text-decoration: none }
                           <div class="panel-body">
                               <div class="clearfix">
                              <div class="col-lg-12">
-                                <h5 data-original-title="Program Details" data-content="Click on the grey button below to see more info about this program. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Program Details</h5>
+                                <h5 data-original-title="Program Details" data-content="Click on the grey button below to see more info about this Program/Pricing. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Program Details</h5>
                                 
                                 <div id="header-button" class="modal-footer" hidden="true">
 	                                <!-- EDIT BUTTON START -->
@@ -1906,6 +1917,30 @@ a { text-decoration: none }
 				}
 			}   	
 	</script>
+
+    <script>
+        $(function(){
+		
+		 $('.popovers').popover();
+
+         // Enabling Popover Example 1 - HTML (content and title from html tags of element)
+         $("[data-toggle=popover]").popover();
+
+         // Enabling Popover Example 2 - JS (hidden content and title capturing)
+         $(".form-control").popover({
+             html : true, 
+             content: function() {
+               return $('.js-tooltip').html();
+             },
+             title: function() {
+               return $('.js-tooltip').html();
+             }
+         });
+
+
+     });
+        
+    </script>
 
 	<script>
 	    $(function(){

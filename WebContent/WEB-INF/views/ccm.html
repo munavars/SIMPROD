@@ -49,8 +49,11 @@
 		th{
 				text-align: center;
 			}
-		.dataTables_wrapper .dataTables_filter {
+ 		.dataTables_wrapper .dataTables_filter {
 		    width: 50%;
+		} 
+		.dataTables_filter label input{
+		 width: 50%;
 		}
 		.right{
 		text-align:right;
@@ -70,7 +73,7 @@
     	   
     	table=$("#ccmtable").DataTable( {
 			 oLanguage: {
-				 "sEmptyTable": "No data available for this customer"
+				 "sEmptyTable": "No data available for this selection"
 				 },
 			processing: true,	 
 			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
@@ -83,10 +86,25 @@
 		  
 		    columnDefs: [
 
-	              { className: "center", "targets": [14,15,17] },
-	              { className: "right", "targets": [9,10,11,12,13,28,29,30,31,32,33] },
+	              { className: "center", "targets": [15,16,18] },
+	              { className: "right", "targets": [10,11,12,13,14,29,30,31,32,33,34] },
 	              {
-	                  targets:6,
+	                  targets:0,
+	                  orderable: false,
+	                  render: function ( data, type, row, meta ) {
+	                      if(type === 'display'){
+	                    	  if((row.programStatus=='Reviewed')){
+	                         	data='<a href=# id="unlock'+meta.row+'" onclick="unlock(this);"><button class="btn btn-default">Unlock</button></a>';
+	                     	 }else{
+	                     		data='<a href=# id="unlock'+meta.row+'"><button disabled class="btn btn-default">Unlock</button></a> '; 
+	                     	 }
+	                      }
+
+	                      return data;
+	                  }
+	              },
+	              {
+	                  targets:7,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<span data-toggle="tooltip" title="' + data + '">' + data + '</span>';
@@ -97,7 +115,7 @@
 	                  }
 	              },
 	              {
-	                  targets:7,
+	                  targets:8,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<div data-id="'+row.baseId+'" id="paidbase'+meta.row+'">' + data+'</div>';
@@ -107,7 +125,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:9,
+	                  targets:10,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<div id="amt'+meta.row+'">' + data+'</div>';
@@ -118,7 +136,7 @@
 	              },
 	             
 	              {
-	                  targets:10,
+	                  targets:11,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                    	  data = '<div id="creditaccrued'+meta.row+'">$ ' +data+'</div>';
@@ -128,26 +146,26 @@
 	                  } 
 	              },
 	              {
-	                  targets:11,
+	                  targets:12,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '<input type="text" id="earned'+meta.row+'" name="earned" class="right" value="'+data+'" onkeyup="calculateCreditEarned(this)" style="width:100px">';
+	                          data = '<input type="text" id="earned'+meta.row+'" name="earned" class="right" value="'+data+'" onkeypress="return isNumber(event);" onkeyup="calculateCreditEarned(this)" style="width:100px">';
 	                      }
 
 	                      return data;
 	                  } 
 	              },   
 	              {
-	                  targets:12,
+	                  targets:13,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                          data = '$ <input type="text" id="creditearned'+meta.row+'"  class="right" name="creditearned" value="'+data+'" style="width:100px">';
+	                          data = '$ <input type="text" id="creditearned'+meta.row+'"  class="right" name="creditearned" value="'+data+'" onkeypress="return isNumber(event);" style="width:100px">';
 	                      }
 	                      return data;
 	                  } 
 	              },
 	              {
-	                  targets:13,
+	                  targets:14,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                    	  data = '<div id="variance'+meta.row+'">' + data+'</div>';
@@ -156,12 +174,12 @@
 	                  } 
 	              },
 	              {
-	                  targets:14,
+	                  targets:15,
 	                  orderable: false,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                    	  if((data=='Reviewed')||(data=='Submitted')){
-	                          	data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateReviewList(this)" checked disabled> <a href=# id="unlock'+meta.row+'" onclick="unlock(this);">Unlock</a>';
+	                          	data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateReviewList(this)" checked disabled>';
 	                    	  }else{
 	                    		data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateReviewList(this)">';  
 	                    	  }
@@ -171,7 +189,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:15,
+	                  targets:16,
 	                  orderable: false,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
@@ -188,7 +206,7 @@
 	              },
 	             
 	              {
-	                  targets:16,
+	                  targets:17,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="creditbasedon'+meta.row+'">' + data+'</div>';
@@ -198,7 +216,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:17,
+	                  targets:18,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<input type="checkbox" id="creditmemo'+meta.row+'" value="" >';
@@ -208,7 +226,7 @@
 	                  }
 	              },
 	              {
-	                  targets:19,
+	                  targets:20,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<input type="text" id="docNum'+meta.row+'" value="">';
@@ -218,7 +236,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:20,
+	                  targets:21,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<input type="text" id="docDate'+meta.row+'" value="">';
@@ -228,7 +246,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:23,
+	                  targets:24,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="units'+meta.row+'">' + data+'</div>';
@@ -238,7 +256,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:24,
+	                  targets:25,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="bonusableunits'+meta.row+'">' + data+'</div>';
@@ -248,7 +266,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:25,
+	                  targets:26,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="nadunits'+meta.row+'">' + data+'</div>';
@@ -258,7 +276,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:26,
+	                  targets:27,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="units_nad'+meta.row+'">' + data+'</div>';
@@ -268,7 +286,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:27,
+	                  targets:28,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="bonusableunit_nad'+meta.row+'">' + data+'</div>';
@@ -278,7 +296,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:28,
+	                  targets:29,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="invsales'+meta.row+'">$ ' +data+'</div>';
@@ -288,7 +306,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:29,
+	                  targets:30,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="bonusablesales'+meta.row+'">$ ' +data+'</div>';
@@ -298,7 +316,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:30,
+	                  targets:31,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="nadsales'+meta.row+'">$ ' +data+'</div>';
@@ -308,7 +326,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:31,
+	                  targets:32,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="invsales_nadsales'+meta.row+'">$ ' +data+'</div>';
@@ -318,7 +336,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:32,
+	                  targets:33,
 	                  render: function ( data, type, row, meta ) {
 	                	  if(type === 'display'){
 	                		  data = '<div id="bonusable_nadsales'+meta.row+'">$ ' +data+'</div>';
@@ -328,7 +346,7 @@
 	                  } 
 	              },
 	              {
-	                  targets:39,
+	                  targets:40,
 	                  render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                          data = '<input type="text" id="comments'+meta.row+'" value="">';
@@ -338,15 +356,15 @@
 	                  } 
 	              },
 	              {
-	                    targets: 40,
+	                    targets: 41,
 	                    visible: false,
 	                	searchable: false
 	                }
 	              
 	       ],
 		    
-		    columns: [
-				   
+		    columns: [	
+				{ data: "edit"}, 
 		    	{ data: "bu" },
 	            { data: "accountManager" },
 	            { data: "zoneManager" },
@@ -591,7 +609,7 @@
                                  
                                   <div class="adv-table editable-table">
                             <div class="clearfix">
-                                    <div class="col-lg-6 col-sm-6" style="float:right">
+                                    <div class="col-lg-6 col-sm-6" style="float:right;width:30%;">
                                        <form action="#" class="cmxform">
                                               <div class="form-group clearfix">
                                                     <label class="control-label font-weight-bold" for="inputSuccess"><h5>Status: <button data-original-title="To View Programs by Status:" data-content="Insert your cursor inside the grey box with 'Active' selected and choose the types of statuses you want to view." data-placement="right" data-trigger="hover" class="btn btn-info btn-xs popovers"><strong>?</strong></button></h5></label>
@@ -636,6 +654,7 @@
                              <thead>
 
                               <tr class="rowvis" style="background-color: #cacbce;">
+                                <th>Edit</th>
                                 <th>Business Unit</th>
 								<th>Account Manager</th>
 								<th>Zone Manager</th>
@@ -676,7 +695,7 @@
 								<th>End Date</th>
 								<th>GL</th>
 								<th>Payment Method</th>	
-								 <th>Comments</th>		
+								 <th>Comments</th>	
                               </tr>
                                </thead>
                              <!--  <tr>
@@ -804,19 +823,28 @@
                               </tbody>
                           </table>
                       </div>
-                      <div class="col-lg-4 col-sm-4" style="width:100%"><br>
+<!--                       <div class="col-lg-4 col-sm-4" style="width:100%"><br>
                                  						 	<a href="#" id="ccm_unlock" style="float:right"><button class="btn btn-default">Unlock</button></a>
                                  						 	<span></span>
                                  						 	<a href="#" id="ccm_save" onclick="saveReviewedList();" style="float:right;margin-right:10px"><button class="btn btn-default"> Save Changes</button></a>
                                  						 	<span></span>
                                  						 	<a href="#" id="ccm_submit" onclick="submitForApproval();" style="float:right;margin-right:10px"><button class="btn btn-default"> Submit For Approval</button></a>
-                              							</div>
-													<div  class="row"><br><br><br><br><br><br></div>
+                              							</div> -->
+													<div  class="row"><br></div>
 													
 												<!-- END ROW 3 & Program Details section-->
 
 												
-
+													<div id="footer-button" class="modal-footer">
+														<a class="btn btn-success" id="ccm_submit"
+															href="javascript: submitForApproval()"><i
+															class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
+															Approval
+														</a>&nbsp; 
+														<a class="btn btn-info finish" id="ccm_save"
+															href="javascript: saveReviewedList()"><i
+															class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a> &nbsp;
+														&nbsp;</div>
 												
 											</div> <!-- Div End - Program Detail-->
 
@@ -1017,15 +1045,50 @@
 		   
 		   $('#allreview').on('change',function() {
 
-			   $('[id^="review"]').prop('checked', this.checked);
-			   $('[id^="review"]').trigger('change');  
+/* 			   $('[id^="review"]').prop('checked', this.checked);
+			   $('[id^="review"]').trigger('change');  */ 
+			   var check=this.checked;
+			   
+			   $('[id^="review"]').each(function(index,data){
+				   if(!$(this).is(':disabled')){
+					   if(!this.checked==check){
+						  $(this).prop('checked', check);  
+						  $(this).trigger('change');
+					   }
+				   }
+			   });
+			   			   
 			   console.log(reviewList);  	
 		   });
 		   
 		   $('#allsubmit').on('change',function() {
 
-			   $('[id^="submitForApproval"]').prop('checked', this.checked);
-			   $('[id^="submitForApproval"]').trigger('change');  
+/* 			   $('[id^="submitForApproval"]').prop('checked', this.checked);
+			   $('[id^="submitForApproval"]').trigger('change'); */ 
+			   var check=this.checked;
+			   var ret=false;
+			   $('[id^="review"]').each(function(index,data){
+				   if(!this.checked){
+					   message="Kindly review all the options before selecting for approval submission";
+			            $("#confirmMessage").html(message);
+						$('#myModal1').modal('toggle');
+						ret=true;
+						$('#allsubmit').prop('checked', false);
+						return false;	   
+				   }
+			   });
+			 if(ret){
+				 return;
+			 }
+			   
+			   $('[id^="submitForApproval"]').each(function(index,data){
+				   if(!$(this).is(':disabled')){					   
+					   if(!this.checked==check){
+						  $(this).prop('checked', check);  
+						  $(this).trigger('change');
+					   }
+				   }
+			   });
 			   console.log(submitList);  	
 		   });
            
@@ -1047,7 +1110,19 @@
 					return amount.toString().replace(/\,/g,'');
 				}
 			}
+		 
+				 
+		 function isNumber(evt)
+	       {
+			 var charCode = (evt.which) ? evt.which : evt.keyCode;
+	          if (charCode != 46 && charCode > 31 
+	            && (charCode < 48 || charCode > 57)){
+	        	  return false;
+	          }
+	          return true;
+	       }
 	
+				 
 	function calculateCreditEarned(event){
     	 var id=(event.id).substring(6);
 			creditEarned='';
@@ -1155,7 +1230,7 @@
 	
 	function populateSubmitList(event){
 		var id=(event.id).substring(17);
-		if((!$('#review'+id).is(':checked'))&&($('#submitForApproval'+id).is(':checked'))){
+		if((!$('#review'+id).is(':disabled'))&&($('#submitForApproval'+id).is(':checked'))){
 			message="Data cannot be submitted before reviewing";
             $("#confirmMessage").html(message);
 			$('#myModal1').modal('toggle');
@@ -1173,6 +1248,20 @@
 	
 	function saveReviewedList(){
 		console.log(reviewList);
+		var valid=false;
+		 $('[id^="review"]').each(function(index,data){
+			   if((this.checked)&&(!$(this).is(':disabled'))){				  
+					valid=true;
+					return false;	   
+			   }
+		   });
+		 
+		 if(!valid){
+			 message="Kindly select atleast one item to save";
+	            $("#confirmMessage").html(message);
+				$('#myModal1').modal('toggle');
+				return;
+		 }
 		var accuralCcmDataList=[];
 		for(var i=0;i<reviewList.length;i++){
 		var id=	reviewList[i];
@@ -1181,6 +1270,15 @@
 		accuralCcmData.adjustedAmount=$('#earned'+id).val();
 		accuralCcmData.adjustedCredit=$('#creditearned'+id).val();
 		accuralCcmData.reviewFlag='Reviewed';
+		var comments=$('#comments'+id).val();
+		if((comments=="")||(comments==null)){
+            message="Kindly enter comments for this operation";
+            $("#confirmMessage").html(message);
+			$('#myModal1').modal('toggle');
+			$('#comments'+id).focus();
+			$('#comments'+id).css("border-color", "#B94A48");
+			return;     
+		}
 		accuralCcmDataList.push(accuralCcmData);
 		}
 		console.log(JSON.stringify(accuralCcmDataList));
@@ -1192,6 +1290,7 @@
 					data: JSON.stringify(accuralCcmDataList),
 	           	success: function(response){
 	            //alert("Saved");
+	            runReport();
 	            message="Data Saved Successfully";
 	            $("#confirmMessage").html(message);
 				$('#myModal1').modal('toggle');
@@ -1199,12 +1298,40 @@
 	           	failure: function(response){
 	           		alert("Wrongly done");
 	           	}});
+			
 		 reviewList=[];
   		 submitList=[];
 	}
 	
 	function submitForApproval(){
 		console.log(submitList);
+		var valid=false;
+		var comment=true;		
+		 $('[id^="submitForApproval"]').each(function(index,data){
+			   if((this.checked)&&(!$(this).is(':disabled'))){				  
+					valid=true;
+					var comments=$('#comments'+this.id.substring(17)).val();
+					if((comments=="")||(comments==null)){			           
+						comment=false;
+						return false;     
+					}					
+					
+			   }
+		   });
+		 
+		 if(!valid){
+			 message="Kindly select atleast one item to submit for approval";
+	            $("#confirmMessage").html(message);
+				$('#myModal1').modal('toggle');
+				return;
+		 }
+		 if(!comment){
+			 message="Kindly enter comments for this operation";
+	            $("#confirmMessage").html(message);
+				$('#myModal1').modal('toggle');
+				return;
+		 }
+		
 		 $.ajax({ 
 	           	type: "POST",
 	           	dataType: "json",
@@ -1213,6 +1340,7 @@
 					data: JSON.stringify(submitList),
 	           	success: function(response){
 	            //alert("Submitted for Approval");
+	             runReport();
 	           	 message="Submitted for Approval Successfully";
 	             $("#confirmMessage").html(message);
 	 			$('#myModal1').modal('toggle');
@@ -1220,6 +1348,8 @@
 	           	failure: function(response){
 	           		alert("Wrongly done");
 	           	}});
+		 
+			
 		 reviewList=[];
   		 submitList=[];
 	}
@@ -1235,6 +1365,7 @@
           		contentType: 'application/json',
 				data: JSON.stringify($('#review'+id).data('id')),
            	success: function(response){
+           		runReport();
             message="Review Unlocked Successfully";
             $("#confirmMessage").html(message);
 			$('#myModal1').modal('toggle');
@@ -1242,6 +1373,7 @@
            	failure: function(response){
            		alert("Wrongly done");
            	}});
+		
 	}
 	
 	   //Export to Excel 

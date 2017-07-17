@@ -188,6 +188,9 @@ th{
 			});
 		
 		
+		var opt = $('#program_status option:selected').map(function(i,v) {
+			return this.value;
+		}).get();
 		//Loading the program details table using datatable 	
 				 
 		 var table=$("#editabletest").DataTable( {
@@ -199,7 +202,7 @@ th{
 			
 		    ajax: {
 		        //url: '/SIM/program/'+custId+'/0',
-		        url: '/SIM/program/'+custId+'/'+$('#program_status').val(),
+		        url: '/SIM/program/'+custId+'/'+opt,
 		        dataSrc: "data",
 		        cache: false,
 		        type: "GET",
@@ -277,7 +280,21 @@ th{
 		 
 		 $('#program_status').on('change',function() {
 			 
-		  	  var url='/SIM/program/'+custId+'/'+$(this).val();
+			 var opt = $('#program_status option:selected').map(function(i,v) {
+			 		$('#program_status option[value="'+ this.value +'"]').prop('disabled', true);
+				    return this.value;
+				}).get(); // result is array
+			 
+			 var program_status_options = ["0","1","2","3","4"];
+			 $.each(program_status_options, function(idx, item) {
+			 	if(opt != null && opt.toString().indexOf(item) == -1){
+			 		 $('#program_status option[value="'+item+'"]').removeAttr('disabled');
+			 	}
+			 });
+			 
+			 $(".js-example-basic-multiple").select2();
+			 
+		  	  var url='/SIM/program/'+custId+'/'+opt;
 		  	  if($(this).val()){
 		  	  	  table.ajax.url(url).load();
 		  	  }else {
@@ -474,12 +491,12 @@ th{
                                               <div class="form-group clearfix">
                                                     <label class="control-label font-weight-bold" for="inputSuccess"><h5>On Demand Program List: <button data-original-title="To View Programs by Status:" data-content="Insert your cursor inside the grey box with 'Active' selected and choose the types of statuses you want to view." data-placement="right" data-trigger="hover" class="btn btn-info btn-xs popovers"><strong>?</strong></button></h5></label>
 
-                                                  <select class="js-example-basic-multiple" multiple="multiple" id="program_status">
-                                                    <option selected value="0">Active</option>
+                                                  <select class="js-example-basic-multiple" multiple="multiple" id="program_status" name="program_status">
+                                                    <option selected value="0" disabled="disabled">Active</option>
                                                       <option value="1">Inactive</option>
-                                                      <option selected value="3">InProgress</option>
+                                                      <option selected value="3" disabled="disabled">InProgress</option>
                                                       <option value="2">Pending Approval</option>
-                                                      <option selected value="4">Approved</option>
+                                                      <option selected value="4" disabled="disabled">Approved</option>
                                                   </select>
                                               </div>
                                           </form>

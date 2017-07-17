@@ -823,7 +823,7 @@ public class ProgramServiceImpl implements IProgramService {
 				outAmount=df.format(amount);
 			}
 			if("$".equalsIgnoreCase(type)){
-				outAmount="<i>"+type+outAmount+"</i>";
+				outAmount="<b>"+type+outAmount+"</b>";
 			}else{
 				outAmount=outAmount+type;
 			}

@@ -150,6 +150,7 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setPaymentMethod(dalCcmAccrualData.getPaymentMethod());
 			ccmDetails.setProgramStatus(dalCcmAccrualData.getProgramStatus());
 			ccmDetails.setBaseId(dalCcmAccrualData.getBaseItemId().toString());
+			ccmDetails.setEdit("");
 			ccmList.add(ccmDetails);
 		}
 /*		for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {

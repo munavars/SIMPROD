@@ -59,12 +59,15 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 	public void sendEmailData(DalCcmAccrualData dalCcmAccrualData) {
 		
 			EmailDetails emailDetails = new EmailDetails();
-			List<String> toEmailIdList = new ArrayList<String>();			
+			List<String> toEmailIdList = new ArrayList<String>();
+			List<String> ccEmailIdList = new ArrayList<String>();
 			//toEmailIdList.add(env.getProperty("mail.ccm.to"));
 			//toEmailIdList.add("ArunThomas.Purushothaman@yokohamatire.com");
-			toEmailIdList.add("Munavar.SheikAmeer@yokohamatire.com");
+			toEmailIdList.add(env.getProperty("mail.ccm.review.to"));
+			ccEmailIdList.add(env.getProperty("mail.ccm.review.cc"));
 			emailDetails.setFromAddress(env.getProperty("mail.ccm.from"));
 			emailDetails.setToAddress(toEmailIdList);
+			emailDetails.setCcAddress(ccEmailIdList);
 			emailDetails.setSubject("CCM Approval");
 			//emailDetails.setText("Sample Content. To be replaced with actual body");
 			String accStartDate=ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getAccrualStartDate().getTime(), ProgramConstant.DATE_FORMAT);

@@ -50,7 +50,7 @@ public class CcmDetails extends Model {
 	private String glCode;
 	private String paymentMethod;
 	private String baseId;
-	
+	private String edit;
 	
 	
 	/**
@@ -570,6 +570,18 @@ public class CcmDetails extends Model {
 	 */
 	public void setSubmitForApproval(String submitForApproval) {
 		this.submitForApproval = submitForApproval;
+	}
+	/**
+	 * @return the edit
+	 */
+	public String getEdit() {
+		return edit;
+	}
+	/**
+	 * @param edit the edit to set
+	 */
+	public void setEdit(String edit) {
+		this.edit = edit;
 	}
 	
 	

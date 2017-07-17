@@ -29,7 +29,13 @@ var EditableTable = function () {
                 	jqTds[4].innerHTML = '<a id='+ $(aData[4]).attr('id') +' class="edit" href="">Save</a>';	
                 }
                 if($(aData[5]).attr('id') == null){
-                	jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';
+                	if(aData[5].includes('data-mode')){
+                		jqTds[5].innerHTML = aData[5];
+                		/*'<a class="cancel" data-mode="new" href="">Cancel</a>'*/
+                	}
+                	else{
+                		jqTds[5].innerHTML = '<a class="cancel" href="">Cancel</a>';	
+                	}
                 }
                 else{
                 	jqTds[5].innerHTML = '<a id='+ $(aData[5]).attr('id') +' class="cancel" href="">Cancel</a>';	
@@ -118,12 +124,29 @@ var EditableTable = function () {
 
             function cancelEditRow(oTable, nRow) {
                 var jqInputs = $('input', nRow);
-                oTable.fnUpdate(jqInputs[0].value, nRow, 0, false);
-                oTable.fnUpdate(jqInputs[1].value, nRow, 1, false);
-                oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);
-                //oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
-                oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
-                oTable.fnDraw();
+                /**Check if either amount or begin range is entered or not. If Any one of the value is entered,
+                 * then throw error message.
+                 * 
+                 * If no values is added by user. Delete that row.*/
+                if((jqInputs[0].value.trim()=="") && (jqInputs[1].value.trim()=="")){
+                	oTable.fnDeleteRow(nRow);
+                }
+                else if ((jqInputs[0].value.trim()=="")||(jqInputs[1].value.trim()=="")) {
+					$("#tier_amount").valid();
+					$("#tier_range").valid();
+                	$("#errorMessageModal").html("Tier Section cannot have empty values");
+					$('#myModal5').modal('toggle');
+                	return false;
+                }
+                else{
+                	oTable.fnUpdate(jqInputs[0].value, nRow, 1, false);
+                    oTable.fnUpdate(jqInputs[1].value, nRow, 2, false);
+                    /*oTable.fnUpdate(jqInputs[2].value, nRow, 2, false);*/
+                    //oTable.fnUpdate(jqInputs[3].value, nRow, 3, false);
+                    oTable.fnUpdate('<a class="edit" href="">Edit</a>', nRow, 4, false);
+                    oTable.fnDraw();	
+                }
+                
             }
 
             var oTable = $('#editable-sample,#tier-schedule').dataTable({
@@ -269,6 +292,9 @@ var EditableTable = function () {
                 if ($(this).attr("data-mode") == "new") {
                     var nRow = $(this).parents('tr')[0];
                     oTable.fnDeleteRow(nRow);
+                    if(nRow == nEditing){
+                    	nEditing = null;
+                    }
                 } else {
                     restoreRow(oTable, nEditing);
                     nEditing = null;
@@ -282,14 +308,17 @@ var EditableTable = function () {
                 var nRow = $(this).parents('tr')[0];
                 if (nEditing !== null && nEditing != nRow) {
                     /* Currently editing - but not this row - restore the old before continuing to edit mode */
-                    restoreRow(oTable, nEditing);
-                    editRow(oTable, nRow);
-                    nEditing = nRow;
+                	var valid=saveRow(oTable, nEditing);
+                    /*restoreRow(oTable, nEditing);*/
+                	if(valid){
+                        editRow(oTable, nRow);
+                        nEditing = nRow;	
+                	}
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
                     var valid=saveRow(oTable, nEditing);
                     if(valid){
-                    nEditing = null;
+                    	nEditing = null;
                     }
 /*                    $("#informationMessageModal").html("Please click on 'Save Changes' button to permanently  update these changes in database !!!");
                     $('#myModal6').modal('toggle');*/

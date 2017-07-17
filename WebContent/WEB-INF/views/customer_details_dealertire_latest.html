@@ -86,15 +86,7 @@ th{
 	
 	    for(j = 0 ; j < tab.rows.length ; j++) 
 	    {     
-	        var table_cells = tab.rows[j].getElementsByTagName('td');  
-	        for (var i = 0; i < table_cells.length; i++) { 
-   			var cell = table_cells[i];
-	   		if(i==11 || i==16 || i==17 || i==18 || i==19 )
-	   		{
-	   		 if(cell.innerHTML!='0')
-	   		 {cell.setAttribute("style", "mso-number-format:0\.00;");}
-	   		}
-	   		}
+	       
 	   		tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
 	    }
 	
@@ -215,7 +207,7 @@ th{
 		  
 		    columnDefs: [
 
-                { className: "dt-right", "targets": [11,15,16,17,18,19] },
+                { className: "dt-right", "targets": [11,13,14,15,16,17,18] },
                 {
                     targets:0,
                     render: function ( data, type, row, meta ) {
@@ -247,7 +239,7 @@ th{
                     }
                 },   
                 {
-                    targets: 20,
+                    targets: 19,
                     visible: false,
                 	searchable: false
                 }
@@ -266,7 +258,6 @@ th{
 	            { data: "achievedBasedOn" },
 	            { data: "trueUp" },
 	            { data: "accrualAmount" },
-	            { data: "accrualType" },
 	            { data: "currentTier" },
 	            { data: "beginRange" },
 	            { data: "tierRate" },
@@ -538,8 +529,7 @@ th{
                                 <th>Achieve Based On</th>
                                 <th>True Up</th>								
                                 <th>Accrual Amount</th>
-                                <th>Accrual Type</th>
-								<th>Current Tier</th>
+                                <th>Current Tier</th>
 								<th>Begin Range</th>
 								<th>Tier Rate</th>								
                                 <th>Accrued Amount</th>

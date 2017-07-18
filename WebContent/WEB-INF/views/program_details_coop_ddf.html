@@ -388,7 +388,7 @@
 																	<label for="optionsRadiosDenomination"> <input type="radio"
 																		selected name="optionsRadiosDenomination"
 																		id="optionsRadiosPercentage" value="%"
-																		class="radio-inline denomination required">%
+																		class="radio-inline denomination required" disabled="disabled">%
 																	</label>
 																</div>
 																<div class="radio-inline accrualtype inline-flex">
@@ -396,7 +396,7 @@
 																		<input type="radio" name="optionsRadiosDenomination"
 																		id="optionsRadiosDollarSign" value="$"
 																		class="radio-inline denomination required"
-																		checked="checked">$
+																		checked="checked" disabled="disabled">$
 																	</label>
 																</div>
 																<div class="radio-inline accrualtype inline-flex" id="tbpchk" style="float:right">
@@ -907,7 +907,13 @@
 				}
 			    return isPercentage;
 			}, 'Please enter valid percentage');
-			
+			$.validator.addMethod("paidBasedOnValidation", function (value, element) {
+				var isIncluded = false;
+				if(getTagPropertyValue(1, includePaid)!=null && getTagPropertyValue(7, includePaid)!=null){
+					isIncluded = true;
+				}
+			    return isIncluded;
+			}, 'Please include at least one customer and one part master attributes');
       		$("#wizard-validation-form").validate({
 				rules: {
 					program_name_inputselect: {
@@ -952,6 +958,9 @@
 					},
 					optionsRadiosDenomination: {
 						required: true
+					},
+					include: {
+					paidBasedOnValidation: true
 					}
 				},
 				messages: {

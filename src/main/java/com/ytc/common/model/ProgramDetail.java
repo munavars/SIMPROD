@@ -57,7 +57,8 @@ public class ProgramDetail extends Model{
 	private ProgramAchieveOn programAchieveOn;
 	private List<ProgramTierDetail> programTierDetailList = null;
 	private String amountTypeTier;
-	private Integer actualMarker;
+	//private Integer actualMarker;
+	private Integer schdTierMarker;
 	private Integer programTypeId;
 	private String programType;
 	private String createdDate;
@@ -270,12 +271,18 @@ public class ProgramDetail extends Model{
 		this.amountTypeTier = amountTypeTier;
 	}
 	
-	public Integer getActualMarker() {
+	/*public Integer getActualMarker() {
 		return actualMarker;
 	}
 	
 	public void setActualMarker(Integer actualMarker) {
 		this.actualMarker = actualMarker;
+	}*/
+	public Integer getSchdTierMarker() {
+		return schdTierMarker;
+	}
+	public void setSchdTierMarker(Integer schdTierMarker) {
+		this.schdTierMarker = schdTierMarker;
 	}
 	/**
 	 * @return the customerName
@@ -490,6 +497,4 @@ public class ProgramDetail extends Model{
 	public void setActionReqByName(String actionReqByName) {
 		this.actionReqByName = actionReqByName;
 	}
-	
-	
 }

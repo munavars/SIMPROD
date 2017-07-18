@@ -44,7 +44,8 @@ public class DalProgramDetail extends DalAuditableModel {
 	private String BTL;
 	private int budgetMarker;
 	private int forecastMarker;
-	private int actualMarker;
+	//private int actualMarker;
+	private Integer schdTierMarker;
 	private String trueUp;
 	
 	private DalEmployee zmAppById;
@@ -241,19 +242,26 @@ public class DalProgramDetail extends DalAuditableModel {
     public void setForecastMarker(int forecastMarker) {
                     this.forecastMarker = forecastMarker;
     }
-    /**
+    @Column(name = "SCHD_TIER_MARKER")
+    public Integer getSchdTierMarker() {
+		return schdTierMarker;
+	}
+	public void setSchdTierMarker(Integer schdTierMarker) {
+		this.schdTierMarker = schdTierMarker;
+	}
+	/* *//**
     * @return the actualMarker
-    */
+    *//*
     @Column(name = "ACTUAL_MARKER")
     public int getActualMarker() {
-                    return actualMarker;
+                    return schdTierMarker;
     }
-    /**
+    *//**
     * @param actualMarker the actualMarker to set
-    */
+    *//*
     public void setActualMarker(int actualMarker) {
-                    this.actualMarker = actualMarker;
-    }
+                    this.schdTierMarker = actualMarker;
+    }*/
     /**
     * @return the trueUp
     */
@@ -453,7 +461,8 @@ public class DalProgramDetail extends DalAuditableModel {
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumns({
 		@JoinColumn(name = "ID", referencedColumnName = "PGM_DETAIL_ID", insertable=false, updatable=false),
-		@JoinColumn(name = "ACTUAL_MARKER", referencedColumnName = "LEVEL",  insertable=false, updatable=false)})
+		@JoinColumn(name = "SCHD_TIER_MARKER", referencedColumnName = "LEVEL",  insertable=false, updatable=false)})
+		//@JoinColumn(name = "ACTUAL_MARKER", referencedColumnName = "LEVEL",  insertable=false, updatable=false)})
 	public DalProgramDetailTier getPgmDetailTier() {
 		return pgmDetailTier;
 	}

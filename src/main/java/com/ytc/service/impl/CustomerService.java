@@ -1,3 +1,4 @@
+
 package com.ytc.service.impl;
 
 import java.util.ArrayList;
@@ -148,6 +149,7 @@ public class CustomerService implements ICustomerService {
 				programDetail.setProgramStatus((dalPricingHeader.getDalStatus() != null) ? dalPricingHeader.getDalStatus().getId().toString() : "0" );
 				programDetail.setProgramType(dalPricingHeader.getDalProgramType().getType());
 				programDetail.setStatusHistory(getPricingStatusHistory(dalPricingHeader));
+				programDetail.setActionReqByName(getActionRequiredByName(dalPricingHeader));
 				dashboardDetailList.add(programDetail);
 			}
 		}
@@ -182,6 +184,16 @@ public class CustomerService implements ICustomerService {
 		return statusHistory;
 	}
 	
+	private String getActionRequiredByName(DalPricingHeader dalPricingHeader) {
+		String actionReqdByName = "";
+		if(dalPricingHeader != null & dalPricingHeader.getDalWorkflowStatusForPricingList() != null){
+			for(DalWorkflowStatus dalWorkflowStatus : dalPricingHeader.getDalWorkflowStatusForPricingList()){
+				actionReqdByName=ProgramServiceHelper.getName(dalWorkflowStatus.getApprover());	
+			}
+		}	
+		return actionReqdByName;
+	}
+
 	private String getPricingStatusHistory(DalPricingHeader dalPricingHeader) {
 		String statusHistory = null;
 		StringBuilder statusBuilder = null;
@@ -210,8 +222,6 @@ public class CustomerService implements ICustomerService {
 		}
 		return statusHistory;
 	}
-
-
 	@Override
 	public Customer getDetail(Integer customerId) {
 		DalCustomer dalCustomer = baseDao.getById(DalCustomer.class, customerId);

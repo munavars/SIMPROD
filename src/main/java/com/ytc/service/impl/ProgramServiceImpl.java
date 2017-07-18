@@ -231,7 +231,8 @@ public class ProgramServiceImpl implements IProgramService {
 				}
 				programHeader.getProgramDetailList().get(0).setProgramTierDetailList(programTierDetailSet);
 				programHeader.getProgramDetailList().get(0).setAmountTypeTier(amountTypeTier);
-				programHeader.getProgramDetailList().get(0).setActualMarker(dalProgramDetail.getActualMarker());
+				//programHeader.getProgramDetailList().get(0).setActualMarker(dalProgramDetail.getActualMarker());
+				programHeader.getProgramDetailList().get(0).setSchdTierMarker(dalProgramDetail.getSchdTierMarker());
 			}
 		}
 	}
@@ -786,7 +787,8 @@ public class ProgramServiceImpl implements IProgramService {
 			if(dalProgramDetail.getTrueUp() != null){
 				programDetail.setTrueUp("Y".equalsIgnoreCase(dalProgramDetail.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO);
 			}
-			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getActualMarker()));
+			//programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getActualMarker()));
+			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getSchdTierMarker()==null?0:dalProgramDetail.getSchdTierMarker()));
 			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?cf.format(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
 			String tierRate=ProgramConstant.ZERO;
 			if(null!=dalProgramDetail.getPgmDetailTier()){

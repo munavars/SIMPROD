@@ -322,12 +322,15 @@ th{
 				else if(type=='DDF' || type=='COOP' || type=='Fixed $'){ 
 					$('#create_new_pgm').attr('href','/SIM/programddfcoop?programType='+type+'&custId='+custId);
  				} 
+ 				else if(type=='Pricing'){
+ 					$('#create_new_pgm').attr('href','/SIM/pricingOverview?custId='+custId);
+ 				}
 			}
 		 });
 		 
-		 $('#pricing-form-link').click(function(){
+		 /* $('#pricing-form-link').click(function(){
 			 $('#pricing-form-link').attr('href','/SIM/pricingOverview?custId='+custId);
-		 });
+		 }); */
 		 //tool tip on hover
 		 $('#editabletest').on('draw.dt', function () {
              $('[data-toggle="tooltip"]').tooltip();
@@ -510,6 +513,7 @@ th{
                                                 <select class="form-control input-sm m-bot15 required" id="program_type_select" name="Program Type_inputselect">
                                                    <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
                                                    <option id="program_type_vbs" value="Calculated Program">Calculated Program</option>
+                                                   <option id="program_type_pricing" value="Pricing">Pricing Form</option>
                                                   <!--  <option id="program_type_ddf" value="DDF">DDF</option>
                                                     <option id="program_type_coop" value="COOP">COOP</option> 
                                                     <option id="program_type_fixed" value="Fixed $">Fixed $</option>-->
@@ -520,9 +524,9 @@ th{
                                   <a href="/SIM/programDetail?custId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
                               </div>
                               <!-- Pricing form link Start-->
-                              <div class="btn-group m-left8">
+                              <!-- <div class="btn-group m-left8">
                                   <a href="/SIM/pricingOverview" id="pricing-form-link"><button class="btn btn-default"><i class="fa fa-plus"></i> Pricing Form</button></a>
-                              </div>
+                              </div> -->
                               <!-- Pricing form link End-->
                                  <div class="btn-group m-left8">
                                   <a href="#"><button class="btn btn-default" id="btnExport" onclick="tableToExcel('editabletest', 'Program Details Table')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>

@@ -80,13 +80,13 @@ public class CCMController extends BaseController {
 		}
 		for (Iterator<AccuralCcmData> iterator = accuralCcmDataList.iterator(); iterator.hasNext();) {
 			AccuralCcmData accuralCcmData = (AccuralCcmData) iterator.next();
-			count=getService(request).saveCCMDetails(accuralCcmData.getId(), accuralCcmData.getAdjustedAmount(), accuralCcmData.getAdjustedCredit(),userName);
+			count=getService(request).saveCCMDetails(accuralCcmData,userName);
 		}
 		return count;
 		
 	}
 	
-	@RequestMapping(value = "/ccm/v1/submitCCMDetails", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/ccm/v1/submitCCMDetails", method = RequestMethod.POST)
 	public @ResponseBody int submitCcmForApproval(HttpServletRequest request, @RequestBody List<Integer> approvalList) {
 		int count=0;	
 
@@ -94,7 +94,7 @@ public class CCMController extends BaseController {
 		
 		return count;
 		
-	}
+	}*/
 	
 	@RequestMapping(value = "/ccm/v1/updateCCMStatus", method = RequestMethod.POST)
 	public @ResponseBody int updateCcmStatus(HttpServletRequest request, @RequestBody Integer id) {

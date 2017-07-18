@@ -52,7 +52,27 @@
 		
 	    for(j = 0 ; j < tab.rows.length ; j++) 
 	    {     
-	        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+	       var table_cells = tab.rows[j].getElementsByTagName('td'); 
+	        
+	        for (var i = 0; i < table_cells.length; i++) { 
+   			var cell = table_cells[i];
+   			alert(cell.childNodes[0]);
+   			if(i==5)
+	   		{
+	   		 cell.setAttribute("style", 'mso-number-format:"\@"');
+	   		}
+	   		}
+	   		var text="";
+	   		if(j==0)
+	   		{
+	   		 text=tab.rows[j].innerHTML.replace('<th class="editablegrid-ID" data-title="ID" style="display: none;"><a style="cursor: pointer;">ID</a></th>',"");
+	   		}
+	   		else
+	   		{
+	   		  text=tab.rows[j].innerHTML.replace('<td class="editablegrid-ID" data-title="ID" style="display: none;"></td>',"");
+	   		}
+	   		
+	   		tab_text=tab_text+text+"</tr>";
 	    }
 	    tab_text=tab_text+"</table>";
 	    tab_text= tab_text.replace(/<a[^>]*>|<\/a>/g, "");//remove if u want links in your table

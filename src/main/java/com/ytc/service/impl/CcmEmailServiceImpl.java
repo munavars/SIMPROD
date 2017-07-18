@@ -56,7 +56,7 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 	/**
 	 * This method is used to prepare the email data and calls the appropriate method to send the details. 
 	 */
-	public void sendEmailData(DalCcmAccrualData dalCcmAccrualData) {
+	public void sendEmailData(DalCcmAccrualData dalCcmAccrualData, String comments) {
 		
 			EmailDetails emailDetails = new EmailDetails();
 			List<String> toEmailIdList = new ArrayList<String>();
@@ -150,12 +150,26 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 					"\t\t</table>\n"+
 					"\n"+
 					"\n"+
+					
+					"\t\t<table style=\'width: 400px\'>\n"+
+					"\t\t\t<tr style=\'height: 36px\' >\n"+
+					"\t\t\t\t<td colspan=\'2\' align=\'center\' style=\'background-color: #C0C0C0; font-size: medium ; font-weight: bold\'> DESCRIPTION</td>\n"+
+					"\t\t\t</tr>\n"+
+					"\t\t\t<tr style=\'height: 96px\' >\n"+
+					"\t\t\t\t<td> Program Name </td>"+
+					"\t\t\t\t<td> "+dalCcmAccrualData.getProgramName()+" </td>\n"+
+					"\t\t\t</tr> \n"+
+					"\t\t\t<tr style=\'height: 96px\' >\n"+
+					"\t\t\t\t<td colspan=\'2\' style=\' vertical-align:top \' > "+dalCcmAccrualData.getDescription()+" </td>\n"+
+					"\t\t\t</tr> \n"+
+					"\t\t</table> \n"+
+					
 					"\t\t<table style=\'width: 400px\'>\n"+
 					"\t\t\t<tr style=\'height: 36px\' >\n"+
 					"\t\t\t\t<td colspan=\'2\' align=\'center\' style=\'background-color: #C0C0C0; font-size: medium ; font-weight: bold\'> COMMENTS</td>\n"+
 					"\t\t\t</tr>\n"+
 					"\t\t\t<tr style=\'height: 96px\' >\n"+
-					"\t\t\t\t<td colspan=\'2\' style=\' vertical-align:top \' > Comments </td>\n"+
+					"\t\t\t\t<td colspan=\'2\' style=\' vertical-align:top \' > "+comments+" </td>\n"+
 					"\t\t\t</tr> \n"+
 					"\t\t\t<tr>\n"+
 					"\t\t\t\t<td style=\'width: 115px\'> Report ID:</td>\n"+
@@ -167,16 +181,7 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 					"\t\t\t</tr>\n"+
 					"\t\t</table> \n"+
 					
-					"\t\t<table style=\'width: 400px\'>\n"+
-					"\t\t\t<tr style=\'height: 36px\' >\n"+
-					"\t\t\t\t<td colspan=\'2\' align=\'center\' style=\'background-color: #C0C0C0; font-size: medium ; font-weight: bold\'> DESCRIPTION</td>\n"+
-					"\t\t\t</tr>\n"+
-					"\t\t\t<tr style=\'height: 96px\' >\n"+
-					"\t\t\t\t<td style=\' vertical-align:top \' > Program Name </td>"+
-					"\t\t\t\t<td> "+dalCcmAccrualData.getProgramName()+" </td>\n"+
-					"\t\t\t</tr> \n"+
-					"\t\t</table> \n"+
-					
+										
 					"\t\t<table style=\'width: 400px\'> \n"+
 					"\t\t\t<tr style=\'height: 28px\' >\n"+
 					"\t\t\t\t<td colspan=\'3\' align=\'center\' style=\'background-color: #C0C0C0; font-weight: bold\' >ROUTING</td>\n"+

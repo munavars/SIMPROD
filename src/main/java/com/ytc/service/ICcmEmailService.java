@@ -6,7 +6,7 @@ public interface ICcmEmailService {
 	
 	void sendEmailData(byte[] excelByte);
 
-	void sendEmailData(DalCcmAccrualData dalCcmAccrualData);
+	void sendEmailData(DalCcmAccrualData dalCcmAccrualData, String comments);
 
 	
 }

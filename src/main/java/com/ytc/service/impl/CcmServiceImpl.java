@@ -239,12 +239,12 @@ class CcmServiceImpl implements ICcmService{
 		
 		baseDao.create(dalCcmAudit);
 		
-		submitCcmForApproval(accuralCcmData.getId());
+		submitCcmForApproval(accuralCcmData.getId(),accuralCcmData.getComments());
 		
 		return count;
 	}
 	
-	public int submitCcmForApproval(Integer approvalList){	
+	public int submitCcmForApproval(Integer approvalList, String comments){	
 		
 		String hql=QueryConstant.CCM_LIST;
 		Map<String, Object> queryParams = new HashMap<>();	
@@ -254,7 +254,7 @@ class CcmServiceImpl implements ICcmService{
 			DalCcmAccrualData dalCcmAccrualData = (DalCcmAccrualData) iterator.next();
 			
 			//Sending Email
-			ccmEmailService.sendEmailData(dalCcmAccrualData);
+			ccmEmailService.sendEmailData(dalCcmAccrualData,comments);
 
 			}
 		

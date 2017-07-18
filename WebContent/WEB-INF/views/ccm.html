@@ -10,7 +10,7 @@
       <!-- Bootstrap core CSS -->
          <link href="resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
-    
+       
           <!--Date Picker--> 
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datepicker/css/datepicker.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
@@ -84,14 +84,11 @@
 		        type: "GET",
 		    },
 		  
-		    columnDefs: [
-
-	              { className: "center", "targets": [15,16,18] },
-	              { className: "right", "targets": [10,11,12,13,14,29,30,31,32,33,34] },
-	              {
-	                  targets:0,
-	                  orderable: false,
-	                  render: function ( data, type, row, meta ) {
+	    
+		    columns: [	
+				{ data: "edit",
+					orderable: false,
+	                render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                    	  if((row.programStatus=='Reviewed')){
 	                         	data='<a href=# id="unlock'+meta.row+'" onclick="unlock(this);"><button class="btn btn-default">Unlock</button></a>';
@@ -101,82 +98,77 @@
 	                      }
 
 	                      return data;
-	                  }
-	              },
-	              {
-	                  targets:7,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<span data-toggle="tooltip" title="' + data + '">' + data + '</span>';
-	                          //data = '<span data-toggle="tooltip" title="' + row.longDesc + '">' + data + '</span>';
-	                      }
+	             }}, 
+		    	{ data: "bu" },
+	            { data: "accountManager" },
+	            { data: "zoneManager" },
+	            { data: "frequency"},
+	            { data: "programId"},
+	            { data: "programName" },
+	            { data: "description",  
+	            	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '<span data-toggle="tooltip" title="' + data + '">' + data + '</span>';
+                    }
 
-	                      return data;
-	                  }
-	              },
-	              {
-	                  targets:8,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<div data-id="'+row.baseId+'" id="paidbase'+meta.row+'">' + data+'</div>';
-	                      }
+                    return data;
+                } },				            
+	            { data: "paidBasedOn",
+                	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '<div data-id="'+row.baseId+'" id="paidbase'+meta.row+'">' + data+'</div>';
+                    }
 
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:10,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<div id="amt'+meta.row+'">' + data+'</div>';
-	                      }
+                    return data;
+                } },
+	            { data: "guarantee" },
+	            { data: "amount", 
+	            	className:"right",
+	            	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '<div id="amt'+meta.row+'">' + data+'</div>';
+                    }
 
-	                      return data;
-	                  } 
-	              },
-	             
-	              {
-	                  targets:11,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                    	  data = '<div id="creditaccrued'+meta.row+'">$ ' +data+'</div>';
-	                      }
+                    return data;
+                }},
+	            { data: "creditAccured",
+                	className:"right",
+                	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                  	  data = '<div id="creditaccrued'+meta.row+'">$ ' +data+'</div>';
+                    }
 
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:12,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<input type="text" id="earned'+meta.row+'" name="earned" class="right" value="'+data+'" onkeypress="return isNumber(event);" onkeyup="calculateCreditEarned(this)" style="width:100px">';
-	                      }
+                    return data;
+                }},
+	            { data: "earned", 
+                	className:"right",
+                	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '<input type="text" id="earned'+meta.row+'" name="earned" class="right" value="'+data+'" onkeypress="return isNumber(event);" onkeyup="calculateCreditEarned(this)" style="width:100px">';
+                    }
 
-	                      return data;
-	                  } 
-	              },   
-	              {
-	                  targets:13,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '$ <input type="text" id="creditearned'+meta.row+'"  class="right" name="creditearned" value="'+data+'" onkeypress="return isNumber(event);" style="width:100px">';
-	                      }
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:14,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                    	  data = '<div id="variance'+meta.row+'">' + data+'</div>';
-	                      }
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:15,
-	                  orderable: false,
-	                  render: function ( data, type, row, meta ) {
+                    return data;
+                }},
+	            { data: "creditEarned", 
+                	className:"right",
+                	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '$ <input type="text" id="creditearned'+meta.row+'"  class="right" name="creditearned" value="'+data+'" onkeypress="return isNumber(event);" style="width:100px">';
+                    }
+                    return data;
+                } },
+	            { data: "variance", 
+                	className:"right",
+                	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                  	  data = '<div id="variance'+meta.row+'">' + data+'</div>';
+                    }
+                    return data;
+                }},
+	           /*  { data: "review", 
+                	orderable: false,
+                	className:"center",
+	                render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                    	  if((data=='Reviewed')||(data=='Submitted')){
 	                          	data = '<input type="checkbox" id="review'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateReviewList(this)" checked disabled>';
@@ -186,231 +178,168 @@
 	                      }
 
 	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:16,
-	                  orderable: false,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          
-	                          if((row.programStatus=='Submitted')){
-	                        	  	  data = '<input type="checkbox" id="submitForApproval'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateSubmitList(this)" checked disabled>';
-		                    	  }else{
-		                    		  data = '<input type="checkbox" id="submitForApproval'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateSubmitList(this)">'; 
-		                    	  }
-	                      }
+	                  }}, */
+	            { data: "submitForApproval", 
+	            	orderable: false,
+	            	className:"center",
+	            	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        
+                        if((row.programStatus=='Submitted')){
+                      	  	  data = '<input type="checkbox" id="submitForApproval'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateSubmitList(this)" checked disabled>';
+	                    	  }else{
+	                    		  data = '<input type="checkbox" id="submitForApproval'+meta.row+'" value="" data-id='+row.ccmId+' onchange="populateSubmitList(this)">'; 
+	                    	  }
+                    }
 
-	                      return data;
-	                  } 
-	              },
-	             
-	              {
-	                  targets:17,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="creditbasedon'+meta.row+'">' + data+'</div>';
-	                      }
+                    return data;
+                }},	            
+	            { data: "creditBasedOn",
+                	render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="creditbasedon'+meta.row+'">' + data+'</div>';
+                  }
 
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:18,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<input type="checkbox" id="creditmemo'+meta.row+'" value="" >';
-	                      }
+                  return data;
+              } },
+	            { data: "creditMemo", 
+            	  className:"center",
+            	  render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '<input type="checkbox" id="creditmemo'+meta.row+'" value="" >';
+                    }
 
-	                      return data;
-	                  }
-	              },
-	              {
-	                  targets:20,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<input type="text" id="docNum'+meta.row+'" value="">';
-	                      }
+                    return data;
+                }},
+                { data: "comments",
+	            	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '<input data-toggle="tooltip" title="'+data+'" type="text" id="comments'+meta.row+'" value="">';
+                    }
 
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:21,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<input type="text" id="docDate'+meta.row+'" value="">';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:24,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="units'+meta.row+'">' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:25,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="bonusableunits'+meta.row+'">' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:26,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="nadunits'+meta.row+'">' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:27,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="units_nad'+meta.row+'">' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:28,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="bonusableunit_nad'+meta.row+'">' + data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:29,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="invsales'+meta.row+'">$ ' +data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:30,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="bonusablesales'+meta.row+'">$ ' +data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:31,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="nadsales'+meta.row+'">$ ' +data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:32,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="invsales_nadsales'+meta.row+'">$ ' +data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:33,
-	                  render: function ( data, type, row, meta ) {
-	                	  if(type === 'display'){
-	                		  data = '<div id="bonusable_nadsales'+meta.row+'">$ ' +data+'</div>';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                  targets:40,
-	                  render: function ( data, type, row, meta ) {
-	                      if(type === 'display'){
-	                          data = '<input type="text" id="comments'+meta.row+'" value="">';
-	                      }
-
-	                      return data;
-	                  } 
-	              },
-	              {
-	                    targets: 41,
-	                    visible: false,
-	                	searchable: false
-	                }
-	              
-	       ],
-		    
-		    columns: [	
-				{ data: "edit"}, 
-		    	{ data: "bu" },
-	            { data: "accountManager" },
-	            { data: "zoneManager" },
-	            { data: "frequency"},
-	            { data: "programId"},
-	            { data: "programName" },
-	            { data: "description" },				            
-	            { data: "paidBasedOn"},
-	            { data: "guarantee" },
-	            { data: "amount" },
-	            { data: "creditAccured"},
-	            { data: "earned"},
-	            { data: "creditEarned"},
-	            { data: "variance"},
-	            { data: "review"},
-	            { data: "submitForApproval"},	            
-	            { data: "creditBasedOn" },
-	            { data: "creditMemo" },
+                    return data;
+                } },
 	            { data: "programStatus" },
-	            { data: "docNo" },
-	            { data: "docDate" },
+	            { data: "docNo",
+	            	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '<input type="text" id="docNum'+meta.row+'" value="">';
+                    }
+
+                    return data;
+                } },
+	            { data: "docDate",
+                	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                        data = '<input type="text" id="docDate'+meta.row+'" value="">';
+                    }
+
+                    return data;
+                }  },
 	            { data: "billToNo"},
 	            { data: "billToName" },
-	            { data: "units" },				            
-	            { data: "bonusableUnits"},
-	            { data: "nadUnits" },
-	            { data: "unitsNad" },
-	            { data: "bonusableNad"},
-	            { data: "invSales"},
-	            { data: "bonusableSales" },
-	            { data: "nadSales"},
-	            { data: "invSalesNad" },
-	            { data: "bonusableSalesNad" },				            
-	            { data: "warranty"},
+	            { data: "units",
+	            	render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="units'+meta.row+'">' + data+'</div>';
+                  }
+
+                  return data;
+              } },				            
+	            { data: "bonusableUnits", 
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="bonusableunits'+meta.row+'">' + data+'</div>';
+                  }
+
+                  return data;
+              }},
+	            { data: "nadUnits",
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="nadunits'+meta.row+'">' + data+'</div>';
+                  }
+
+                  return data;
+              }  },
+	            { data: "unitsNad", 
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="units_nad'+meta.row+'">' + data+'</div>';
+                  }
+
+                  return data;
+              }},
+	            { data: "bonusableNad", 
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="bonusableunit_nad'+meta.row+'">' + data+'</div>';
+                  }
+
+                  return data;
+              }},
+	            { data: "invSales", 
+            	  className:"right",
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="invsales'+meta.row+'">$ ' +data+'</div>';
+                  }
+
+                  return data;
+              }},
+	            { data: "bonusableSales",
+            	  className:"right",
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="bonusablesales'+meta.row+'">$ ' +data+'</div>';
+                  }
+
+                  return data;
+              }  },
+	            { data: "nadSales",
+            	  className:"right",
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="nadsales'+meta.row+'">$ ' +data+'</div>';
+                  }
+
+                  return data;
+              } },
+	            { data: "invSalesNad",  
+            	  className:"right",
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="invsales_nadsales'+meta.row+'">$ ' +data+'</div>';
+                  }
+
+                  return data;
+              } },
+	            { data: "bonusableSalesNad", 
+            	  className:"right",
+            	  render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="bonusable_nadsales'+meta.row+'">$ ' +data+'</div>';
+                  }
+
+                  return data;
+              } },				            
+	            { data: "warranty",className:"right"},
 	            { data: "payTo" },
 	            { data: "beginDate" },
 	            { data: "endDate"},
 	            { data: "glCode"},
 	            { data: "paymentMethod" },
-	            { data: "comments"},
-	            { data: "ccmId"}
+	           
+	            { data: "ccmId",
+                	visible: false,
+                	searchable: false
+                	}
       ]
 		});
     	
     	 $('#ccmtable').on('draw.dt', function () {
              $('[data-toggle="tooltip"]').tooltip();
+             
          });  
     	 
        });
@@ -596,7 +525,8 @@
 																  <option value="T">Commercial</option> 
 																  <option value="OTR">OTR</option> -->
 															</select>
-															</div>
+															</div>															
+															
 														</div>
 														
 														<div class="col-lg-4 col-sm-4" style="width:25%">
@@ -616,7 +546,7 @@
 
                                                   <select class="js-example-basic-multiple" multiple="multiple" id="program_status">
                                                     <option selected value="Not Reviewed">Not Reviewed</option>
-                                                      <option value="Reviewed">Reviewed</option>
+                                                      <!-- <option value="Reviewed">Reviewed</option> -->
                                                       <option value="Submitted">Submitted</option>
                                                   </select>
                                               </div>
@@ -670,10 +600,11 @@
                                 <th>Earned Adjustment</th>	
                                 <th>Credit Adjustment</th>	
                                 <th>Variance</th>	
-                                <th><input type="checkbox" id="allreview" value="">&nbsp;&nbsp;&nbsp;Reviewed</th>
+                               <!--  <th><input type="checkbox" id="allreview" value="">&nbsp;&nbsp;&nbsp;Reviewed</th> -->
                                 <th><input type="checkbox" id="allsubmit" value="">&nbsp;&nbsp;&nbsp;Submit For Approval</th>                               
                                 <th>Credit Based On</th>
                                 <th>Generate Credit Memo Data</th>
+                                <th>Comments</th>
                                 <th>Program Status</th>
                                 <th>Doc No</th>
                                 <th>Doc Date</th>
@@ -695,128 +626,9 @@
 								<th>End Date</th>
 								<th>GL</th>
 								<th>Payment Method</th>	
-								 <th>Comments</th>	
+									
                               </tr>
                                </thead>
-                             <!--  <tr>
-                              <td>P</td>
-                              <td>McMaster</td>
-                              <td>ZM1</td>
-                              <td>Monthly</td>
-                              <td>3505</td>
-                              <td>Competitive Support</td>
-                              <td><span data-toggle="tooltip" title="Sample Bubble Text">Description</span></td>
-                              <td id="paidbase1">All Units Sold + NAD Units</td>
-                              <td>TRUE</td>
-                              <td id="amt1" class="right">18</td>
-                              <td id="amttype1">$</td>
-                              <td class="right">$6246</td>
-                              <td> <input type="text" id="earned1" name="earned1" class="right" value="" onkeyup="calculateCreditEarned(this)" style="width:80px"> </td>
-                              <td> $<input type="text" id="creditearned1"  class="right" name="creditearned1" value="" style="width:80px"> </td>
-                              <td style="text-align:center"> <input type="checkbox" name="review" value="" > </td>
-                              <td> <input type="text" id="comments1" value=""> </td>
-                              <td id="creditbasedon1"></td>
-                              <td style="text-align:center"> <input type="checkbox" name="creditmemo" value="" > </td>
-                              <td>15321</td>
-                              <td>EARL W COLVARD INC</td>
-                              <td id="units1">170</td>
-                              <td id="bonusableunits1">180</td>
-                              <td id="nadunits1">177</td>
-                              <td>347</td>
-                              <td>357</td>
-                              <td id="invsales1" class="right">$63671.38</td>
-                              <td id="bonusablesales1" class="right">$65206.3</td>
-                              <td id="nadsales1" class="right">$66,670.93 </td>
-                              <td class="right">$0</td>
-                              <td class="right">$0</td>
-                              <td class="right">$0</td>
-                              <td>15321</td>
-                              <td>1/1/2017</td>
-                              <td>12/31/2017</td>
-                              <td>20817-0-0-20170</td>
-                              <td>Credit Memo</td>
-                              
-                              </tr>
-                              
-                              <tr>
-                              <td>P</td>
-                              <td>Hinds</td>
-                              <td>ZM2</td>
-                              <td>Monthly</td>
-                              <td>3305</td>
-                              <td>Quarterly Bonus</td>
-                              <td><span data-toggle="tooltip" title="Sample Bubble Text">Description</span></td>
-                              <td id="paidbase2">All Units Sold</td>
-                              <td>TRUE</td>
-                              <td id="amt2" class="right">5</td>
-                              <td id="amttype2">$</td>
-                              <td class="right">$275</td>
-                              <td> <input type="text" id="earned2" name="earned2" class="right" value="" onkeyup="calculateCreditEarned(this)" style="width:80px"> </td>
-                              <td> $<input type="text" id="creditearned2" class="right" name="creditearned2" value="" style="width:80px"> </td>
-                              <td style="text-align:center"><input type="checkbox" name="review" value="" > </td>
-                              <td><input type="text" id="comments2" value=""></td>
-                              <td id="creditbasedon2"></td>
-                              <td style="text-align:center"> <input type="checkbox" name="creditmemo" value="" > </td>
-                              <td>16779</td>
-                              <td>J & E TIRE CENTER INC</td>
-                              <td id="units2">55</td>
-                              <td id="bonusableunits2">63</td>
-                              <td id="nadunits2">83</td>
-                              <td>138</td>
-                              <td>146</td>
-                              <td id="invsales2" class="right">$16739.5</td>
-                              <td id="bonusablesales2" class="right">$18847.5</td>
-                              <td id="nadsales2" class="right">$29907.8 </td>
-                              <td class="right">$0</td>
-                              <td class="right">$0</td>
-                              <td class="right">$0</td>
-                              <td>15321</td>
-                              <td>1/1/2017</td>
-                              <td>12/31/2017</td>
-                              <td>20817-0-0-20170</td>
-                              <td>Check</td>
-                              
-                              </tr>
-                              
-                              <tr>
-                              <td>P</td>
-                              <td>Conroy</td>
-                              <td>ZM3</td>
-                              <td>Monthly</td>
-                              <td>3743</td>
-                              <td>Marketing Support - TBS</td>
-                              <td><span data-toggle="tooltip" title="Sample Bubble Text">Description</span></td>
-                              <td id="paidbase3">All Invoice Sales</td>
-                              <td>TRUE</td>
-                              <td id="amt3" class="right">4</td>
-                              <td id="amttype3">%</td>
-                              <td class="right">$508.44</td>
-                              <td> <input type="text" id="earned3" class="right" name="earned3" value="" onkeyup="calculateCreditEarned(this)" style="width:80px"> </td>
-                              <td> $<input type="text" id="creditearned3" class="right" name="creditearned3" value="" style="width:80px"> </td>
-                              <td style="text-align:center"><input type="checkbox" name="review" value="" > </td>
-                              <td><input type="text" id="comments3" value=""></td>
-                              <td id="creditbasedon3"></td>
-                              <td style="text-align:center"> <input type="checkbox" name="creditmemo" value="" > </td>
-                              <td>15321</td>
-                              <td>EARL W COLVARD INC</td>
-                              <td id="units3">35</td>
-                              <td id="bonusableunits3">35</td>
-                              <td id="nadunits3">0</td>
-                              <td>35</td>
-                              <td>35</td>
-                              <td id="invsales3" class="right">$12711</td>
-                              <td id="bonusablesales3" class="right">$12711</td>
-                              <td id="nadsales3" class="right">$0</td>
-                              <td class="right">$12711</td>
-                              <td class="right">$12711</td>
-                              <td class="right">$0</td>
-                              <td></td>
-                              <td>1/1/2017</td>
-                              <td>12/31/2017</td>
-                              <td>20817-0-0-20170</td>
-                              <td></td>
-
-                              </tr> -->
                              
                               <tbody>
                                                        
@@ -841,12 +653,12 @@
 															class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
 															Approval
 														</a>&nbsp; 
-														<a class="btn btn-info finish" id="ccm_save"
+														<!-- <a class="btn btn-info finish" id="ccm_save"
 															href="javascript: saveReviewedList()"><i
-															class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a> &nbsp;
+															class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a> --> &nbsp;
 														&nbsp;</div>
 												
-											</div> <!-- Div End - Program Detail-->
+											</div> 
 
 											<!-- END ROW 4 -->
 
@@ -930,7 +742,8 @@
     <script src="resources/js/advanced-form-components.js"></script>
     <script type="text/javascript" src="resources/assets/jquery-multi-select/js/jquery.multi-select.js"></script>
     <script src="resources/js/respond.min.js" ></script>
-
+ 
+	
   <!--right slidebar-->
   <script src="resources/js/slidebars.min.js"></script>
       <script type="text/javascript" src="resources/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
@@ -1034,9 +847,6 @@
 			  	  	  table.ajax.url(url).load();
 			  		 
 			  	  }else {
-					  //$("#errorMessageModal").html("Status cannot be Empty. Kindly choose");
-					  //$('#myModal1').modal('toggle');
-			  		  //alert("Status cannot be Empty. Kindly choose");
 			  		  url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+period+'/xxx';
 			  		  table.ajax.url(url).load();
 			  	  }
@@ -1095,7 +905,8 @@
 		}); 
 		
 		 function fnPopulateDropdown(elementId, items){
-	         	if(items != null){
+			 
+			 if(items != null){
 	         		$.each(items, function (i, item) {
 					    $('#'+ elementId).append($('<option>', { 
 					        value: item.value,
@@ -1103,6 +914,22 @@
 					    }));
 					});
 	         	}
+			 //code to select the default value in period dropdown
+	         	if(elementId=='period_inputselect'){
+					var currentDate=new Date();
+	      			var currentMonth=currentDate.getMonth().toString();
+	      			var currentYear=currentDate.getFullYear();
+	      			if(currentMonth.length==1){
+	      				if(currentMonth==0){
+	      					currentMonth=12;
+	      					currentYear=currentYear-1;
+	      				}
+	      				currentMonth='0'+currentMonth;
+	      			}
+	      			period=currentYear+''+currentMonth+'01';
+	      			$('#period_inputselect').val(period);
+	      		}
+	         	
 			}
 		
 		 function removeCommaFromAmount(amount){
@@ -1121,6 +948,7 @@
 	          }
 	          return true;
 	       }
+		 
 	
 				 
 	function calculateCreditEarned(event){
@@ -1230,14 +1058,22 @@
 	
 	function populateSubmitList(event){
 		var id=(event.id).substring(17);
-		if((!$('#review'+id).is(':disabled'))&&($('#submitForApproval'+id).is(':checked'))){
+		/* if((!$('#review'+id).is(':disabled'))&&($('#submitForApproval'+id).is(':checked'))){
 			message="Data cannot be submitted before reviewing";
             $("#confirmMessage").html(message);
 			$('#myModal1').modal('toggle');
 			$('#submitForApproval'+id).prop('checked', false);
 			return;	
+		} */
+		var ccmId=$('#submitForApproval'+id).data('id');
+		
+		if(reviewList.indexOf(id)==-1)
+		{
+			reviewList.push(id);
+		}else{
+			reviewList.splice(reviewList.indexOf(id),1)
 		}
-		var ccmId=$('#submitForApproval'+id).data('id')
+		
 		if(submitList.indexOf(ccmId)==-1)
 		{
 			submitList.push(ccmId);
@@ -1267,8 +1103,8 @@
 		var id=	reviewList[i];
 		var accuralCcmData = new Object();
 		accuralCcmData.id=$('#review'+id).data('id');
-		accuralCcmData.adjustedAmount=$('#earned'+id).val();
-		accuralCcmData.adjustedCredit=$('#creditearned'+id).val();
+		accuralCcmData.adjustedAmount=removeCommaFromAmount($('#earned'+id).val());
+		accuralCcmData.adjustedCredit=removeCommaFromAmount($('#creditearned'+id).val());
 		accuralCcmData.reviewFlag='Reviewed';
 		var comments=$('#comments'+id).val();
 		if((comments=="")||(comments==null)){
@@ -1289,7 +1125,6 @@
 	          		contentType: 'application/json',
 					data: JSON.stringify(accuralCcmDataList),
 	           	success: function(response){
-	            //alert("Saved");
 	            runReport();
 	            message="Data Saved Successfully";
 	            $("#confirmMessage").html(message);
@@ -1310,6 +1145,7 @@
 		 $('[id^="submitForApproval"]').each(function(index,data){
 			   if((this.checked)&&(!$(this).is(':disabled'))){				  
 					valid=true;
+					id1=this.id.substring(17);
 					var comments=$('#comments'+this.id.substring(17)).val();
 					if((comments=="")||(comments==null)){			           
 						comment=false;
@@ -1323,33 +1159,49 @@
 			 message="Kindly select atleast one item to submit for approval";
 	            $("#confirmMessage").html(message);
 				$('#myModal1').modal('toggle');
+				
 				return;
 		 }
 		 if(!comment){
 			 message="Kindly enter comments for this operation";
 	            $("#confirmMessage").html(message);
 				$('#myModal1').modal('toggle');
+				$('#comments'+id1).focus();
 				return;
 		 }
-		
-		 $.ajax({ 
-	           	type: "POST",
-	           	dataType: "json",
-	          		url: '/SIM/ccm/v1/submitCCMDetails',
-	          		contentType: 'application/json',
-					data: JSON.stringify(submitList),
-	           	success: function(response){
-	            //alert("Submitted for Approval");
-	             runReport();
-	           	 message="Submitted for Approval Successfully";
-	             $("#confirmMessage").html(message);
-	 			$('#myModal1').modal('toggle');
-	           	},
-	           	failure: function(response){
-	           		alert("Wrongly done");
-	           	}});
 		 
-			
+		 
+		 var accuralCcmDataList=[];
+			for(var i=0;i<reviewList.length;i++){
+				var id=	reviewList[i];
+				var accuralCcmData = new Object();
+				accuralCcmData.id=$('#submitForApproval'+id).data('id');
+				accuralCcmData.adjustedAmount=removeCommaFromAmount($('#earned'+id).val());
+				accuralCcmData.adjustedCredit=removeCommaFromAmount($('#creditearned'+id).val());
+				accuralCcmData.reviewFlag='Submitted';
+				accuralCcmData.comments=$('#comments'+id).val();
+				accuralCcmDataList.push(accuralCcmData);
+			}
+		 
+		 
+		
+		     console.log(JSON.stringify(accuralCcmDataList));
+	   		 $.ajax({ 
+	   	           	type: "POST",
+	   	           	dataType: "json",
+	   	          		url: '/SIM/ccm/v1/saveCCMDetails',
+	   	          		contentType: 'application/json',
+	   					data: JSON.stringify(accuralCcmDataList),
+	   	           	success: function(response){
+	   	            runReport();
+	   	            message="Data Saved Successfully";
+	   	            $("#confirmMessage").html(message);
+	   				$('#myModal1').modal('toggle');
+	   	           	},
+	   	           	failure: function(response){
+	   	           		alert("Wrongly done");
+	   	           	}});
+
 		 reviewList=[];
   		 submitList=[];
 	}
@@ -1424,7 +1276,7 @@
 	    } }
 	    
             	
-  
+	   
 			
 	</script>
        

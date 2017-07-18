@@ -13,6 +13,7 @@ public class AccuralCcmData {
 	private double adjustedAmount;
 	private double adjustedCredit;
 	private String reviewFlag;
+	private String comments;
 	/**
 	 * @return the id
 	 */
@@ -60,6 +61,18 @@ public class AccuralCcmData {
 	 */
 	public void setReviewFlag(String reviewFlag) {
 		this.reviewFlag = reviewFlag;
+	}
+	/**
+	 * @return the comments
+	 */
+	public String getComments() {
+		return comments;
+	}
+	/**
+	 * @param comments the comments to set
+	 */
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 	
 	

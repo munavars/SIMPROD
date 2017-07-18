@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ytc.common.model.AccuralCcmData;
 import com.ytc.common.model.CcmDetails;
 import com.ytc.common.model.DropDown;
 import com.ytc.constant.ProgramConstant;
@@ -124,8 +125,18 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setVariance("");
 			ccmDetails.setReview(dalCcmAccrualData.getProgramStatus());
 			ccmDetails.setSubmitForApproval("");
-			ccmDetails.setComments("");
-			ccmDetails.setCreditBasedOn("");
+			sql=QueryConstant.CCM_COMMENTS;
+			queryParams = new HashMap<>();
+			queryParams.put("id", dalCcmAccrualData.getId());
+			String comments="";
+			List<Object> commentList =baseDao.getListFromNativeQuery(sql, queryParams);	
+			for (Object object : commentList) {
+				comments=comments+object.toString()+"\n";
+			}
+			if(commentList.isEmpty()){
+				comments="Comments Not Available";
+			}
+			ccmDetails.setComments(comments);			
 			ccmDetails.setCreditMemo("");
 			ccmDetails.setProgramStatus("");
 			ccmDetails.setDocNo("");
@@ -151,6 +162,7 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setProgramStatus(dalCcmAccrualData.getProgramStatus());
 			ccmDetails.setBaseId(dalCcmAccrualData.getBaseItemId().toString());
 			ccmDetails.setEdit("");
+			ccmDetails.setCreditBasedOn(populateCreditBasedOn(ccmDetails));
 			ccmList.add(ccmDetails);
 		}
 /*		for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
@@ -205,30 +217,36 @@ class CcmServiceImpl implements ICcmService{
 	}
 	
 	
-	public int saveCCMDetails(Integer id, double adjustedAmount, double adjustedCredit, String user){	
+	public int saveCCMDetails(AccuralCcmData accuralCcmData, String user){	
+		
 		DalCcmAudit dalCcmAudit=new DalCcmAudit();
-		dalCcmAudit.setCcmId(id);
-		dalCcmAudit.setAdjustedAmount(adjustedAmount);
-		dalCcmAudit.setAdjustedCredit(adjustedCredit);
+		dalCcmAudit.setCcmId(accuralCcmData.getId());
+		dalCcmAudit.setAdjustedAmount(accuralCcmData.getAdjustedAmount());
+		dalCcmAudit.setAdjustedCredit(accuralCcmData.getAdjustedCredit());
 		dalCcmAudit.setAdjustedUser(user);
-		dalCcmAudit.setStatusFlag("Reviewed");
-		dalCcmAudit.setComments("Review Comments");
+		dalCcmAudit.setStatusFlag(accuralCcmData.getReviewFlag());
+		dalCcmAudit.setComments(accuralCcmData.getComments());
 		dalCcmAudit.setAdjustedDate(Calendar.getInstance());
+		
 		String sql=QueryConstant.CCM_UPDATE;	
 		Map<String, Object> queryParams = new HashMap<>();	
-		queryParams.put("id", id);
-		queryParams.put("adjustedAmount", adjustedAmount);
-		queryParams.put("adjustedCredit", adjustedCredit);
+		queryParams.put("id", accuralCcmData.getId());
+		queryParams.put("adjustedAmount", accuralCcmData.getAdjustedAmount());
+		queryParams.put("adjustedCredit", accuralCcmData.getAdjustedCredit());
 		queryParams.put("user", user);
+		
 		int count=baseDao.updateNative(sql, queryParams);
+		
 		baseDao.create(dalCcmAudit);
+		
+		submitCcmForApproval(accuralCcmData.getId());
+		
 		return count;
 	}
 	
-	public int submitCcmForApproval(List<Integer> approvalList){	
+	public int submitCcmForApproval(Integer approvalList){	
 		
 		String hql=QueryConstant.CCM_LIST;
-		String sql=QueryConstant.CCM_UPDATE_STATUS;	
 		Map<String, Object> queryParams = new HashMap<>();	
 		queryParams.put("id", approvalList);		
 		List<DalCcmAccrualData> ccmList=baseDao.list(DalCcmAccrualData.class, hql, queryParams);
@@ -237,14 +255,8 @@ class CcmServiceImpl implements ICcmService{
 			
 			//Sending Email
 			ccmEmailService.sendEmailData(dalCcmAccrualData);
-			
-			//Update status in DB
-			queryParams = new HashMap<>();	
-			queryParams.put("id", dalCcmAccrualData.getId());
-			queryParams.put("status", "Submitted");
-			baseDao.updateNative(sql, queryParams);
-			
-		}
+
+			}
 		
 		return 0;
 	}
@@ -261,5 +273,49 @@ public int updateCcmStatus(Integer id){
 		
 		return 0;
 	}
+
+public String populateCreditBasedOn(CcmDetails ccmDetails){
+	
+	String creditBasedOn="";
+	int paidBased=Integer.parseInt(ccmDetails.getBaseId());
+	if(paidBased==3){
+		creditBasedOn=(null!=ccmDetails.getUnits()?ccmDetails.getUnits().toString():"");
+	}
+	
+	if(paidBased==1){
+		creditBasedOn=(null!=ccmDetails.getNadUnits()?ccmDetails.getNadUnits().toString():"");
+	}
+	
+	if(paidBased==2){
+		creditBasedOn=(null!=ccmDetails.getBonusableUnits()?ccmDetails.getBonusableUnits().toString():"");
+	}
+	
+	if(paidBased==4){
+		creditBasedOn=(null!=ccmDetails.getUnitsNad()?ccmDetails.getUnitsNad().toString():"");
+	}
+	
+	if(paidBased==5){
+		creditBasedOn=(null!=ccmDetails.getBonusableNad()?ccmDetails.getBonusableNad().toString():"");
+	}
+	
+	if(paidBased==8){
+		creditBasedOn=ccmDetails.getInvSales();
+	}
+	
+	if(paidBased==6){
+		creditBasedOn=ccmDetails.getNadSales();
+	}
+	if(paidBased==7){
+		creditBasedOn=ccmDetails.getBonusableSales();
+	}
+	if(paidBased==9){
+		creditBasedOn=ccmDetails.getInvSalesNad();
+	}
+	if(paidBased==10){
+		creditBasedOn=ccmDetails.getBonusableSalesNad();
+	}
+	return creditBasedOn;
+	
+}
 	
 }

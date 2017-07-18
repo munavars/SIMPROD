@@ -2,6 +2,7 @@ package com.ytc.service;
 
 import java.util.List;
 
+import com.ytc.common.model.AccuralCcmData;
 import com.ytc.common.model.CcmDetails;
 import com.ytc.common.model.DropDown;
 
@@ -15,9 +16,9 @@ public interface ICcmService {
 
 	List<DropDown> getPeriodDropDownList();
 
-	int saveCCMDetails(Integer id, double adjustedAmount, double adjustedCredit, String string);
+	int saveCCMDetails(AccuralCcmData accuralCcmData, String string);
 
-	int submitCcmForApproval(List<Integer> approvalList);
+	//int submitCcmForApproval(List<Integer> approvalList);
 
 	int updateCcmStatus(Integer id);
 }

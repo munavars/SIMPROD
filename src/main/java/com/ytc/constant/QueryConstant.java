@@ -99,4 +99,6 @@ public class QueryConstant {
 	
 	public static final String CCM_UPDATE_STATUS="UPDATE ACCRUAL_DATA_PGM_DTL_CORP_WITH_ADJUSTMENTS SET STATUS_FLAG=:status WHERE ID=:id";
 	
+	public static final String CCM_COMMENTS="SELECT COMMENTS FROM CCM_AUDIT_TABLE where CCM_ID in (:id) ORDER BY ADJUSTED_SYSDATE DESC";
+	
 }

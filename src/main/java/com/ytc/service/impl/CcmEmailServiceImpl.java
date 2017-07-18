@@ -166,6 +166,17 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 					"\t\t\t\t<td> ReportDate </td>\n"+
 					"\t\t\t</tr>\n"+
 					"\t\t</table> \n"+
+					
+					"\t\t<table style=\'width: 400px\'>\n"+
+					"\t\t\t<tr style=\'height: 36px\' >\n"+
+					"\t\t\t\t<td colspan=\'2\' align=\'center\' style=\'background-color: #C0C0C0; font-size: medium ; font-weight: bold\'> DESCRIPTION</td>\n"+
+					"\t\t\t</tr>\n"+
+					"\t\t\t<tr style=\'height: 96px\' >\n"+
+					"\t\t\t\t<td style=\' vertical-align:top \' > Program Name </td>"+
+					"\t\t\t\t<td> "+dalCcmAccrualData.getProgramName()+" </td>\n"+
+					"\t\t\t</tr> \n"+
+					"\t\t</table> \n"+
+					
 					"\t\t<table style=\'width: 400px\'> \n"+
 					"\t\t\t<tr style=\'height: 28px\' >\n"+
 					"\t\t\t\t<td colspan=\'3\' align=\'center\' style=\'background-color: #C0C0C0; font-weight: bold\' >ROUTING</td>\n"+

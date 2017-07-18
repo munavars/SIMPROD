@@ -90,7 +90,7 @@
 					orderable: false,
 	                render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
-	                    	  if((row.programStatus=='Reviewed')){
+	                    	  if((row.programStatus=='Submitted')){
 	                         	data='<a href=# id="unlock'+meta.row+'" onclick="unlock(this);"><button class="btn btn-default">Unlock</button></a>';
 	                     	 }else{
 	                     		data='<a href=# id="unlock'+meta.row+'"><button disabled class="btn btn-default">Unlock</button></a> '; 
@@ -1208,14 +1208,14 @@
 	
 	function unlock(event){
 		var id=(event.id).substring(6);
-		$('#review'+id).prop('checked', false);
-		$('#review'+id).prop('disabled', false);
+		$('#submitForApproval'+id).prop('checked', false);
+		$('#submitForApproval'+id).prop('disabled', false);
 		$.ajax({ 
            	type: "POST",
            	dataType: "json",
           		url: '/SIM/ccm/v1/updateCCMStatus',
           		contentType: 'application/json',
-				data: JSON.stringify($('#review'+id).data('id')),
+				data: JSON.stringify($('#submitForApproval'+id).data('id')),
            	success: function(response){
            		runReport();
             message="Review Unlocked Successfully";

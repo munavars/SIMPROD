@@ -29,7 +29,7 @@ var EditableTable = function () {
                 	jqTds[4].innerHTML = '<a id='+ $(aData[4]).attr('id') +' class="edit" href="">Save</a>';	
                 }
                 if($(aData[5]).attr('id') == null){
-                	if(aData[5].includes('data-mode')){
+                	if(aData[5].toString().indexOf('data-mode') > -1){
                 		jqTds[5].innerHTML = aData[5];
                 		/*'<a class="cancel" data-mode="new" href="">Cancel</a>'*/
                 	}

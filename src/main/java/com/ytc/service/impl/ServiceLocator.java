@@ -4,15 +4,15 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
+import com.ytc.service.IAccrualDataService;
 import com.ytc.service.ICcmService;
 import com.ytc.service.ICustomerService;
 import com.ytc.service.IEmployeeService;
 import com.ytc.service.IPaidBasedOnService;
 import com.ytc.service.IPricingService;
 import com.ytc.service.IPricingUpdateService;
-import com.ytc.service.IProgramUpdateService;
-import com.ytc.service.ISalesDataService;
 import com.ytc.service.IProgramService;
+import com.ytc.service.IProgramUpdateService;
 import com.ytc.service.ISecurityService;
 import com.ytc.service.IServiceLocator;
 
@@ -42,7 +42,7 @@ public class ServiceLocator implements IServiceLocator, ApplicationContextAware
     
     private IPricingUpdateService pricingPersistService;
     
-    private ISalesDataService salesDataService;
+    private IAccrualDataService accrualDataService;
     
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
@@ -123,11 +123,12 @@ public class ServiceLocator implements IServiceLocator, ApplicationContextAware
         return pricingPersistService;
 	}
 	
+	
 	@Override
-	public ISalesDataService getSalesDataService() {
-        if (salesDataService == null) {
-        	salesDataService = (ISalesDataService) appContext.getBean("salesDataService");
-        }
-        return salesDataService;
+	public IAccrualDataService getAccrualDataService() {
+		 if (accrualDataService == null) {
+			 accrualDataService = (IAccrualDataService) appContext.getBean("accrualDataService");
+	        }
+	        return accrualDataService;
 	}
 }

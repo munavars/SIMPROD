@@ -72,15 +72,28 @@ public class CCMController extends BaseController {
 	}*/
 	
 	@RequestMapping(value = "/ccm/v1/saveCCMDetails", method = RequestMethod.POST)
-	public @ResponseBody int saveCCMDetails(HttpServletRequest request, @RequestBody List<AccuralCcmData> accuralCcmDataList) {
-		int count=0;
+	public @ResponseBody String saveCCMDetails(HttpServletRequest request, @RequestBody List<AccuralCcmData> accuralCcmDataList) {
+		String status="";
 		String userName="";
 		if(serviceContext != null){
 			userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
 		}
 		for (Iterator<AccuralCcmData> iterator = accuralCcmDataList.iterator(); iterator.hasNext();) {
 			AccuralCcmData accuralCcmData = (AccuralCcmData) iterator.next();
-			count=getService(request).saveCCMDetails(accuralCcmData,userName);
+			status=getService(request).saveCCMDetails(accuralCcmData,userName);
+		}
+		return status;
+		
+	}
+	
+
+	@RequestMapping(value = "/ccm/v1/updateCCMDetails", method = RequestMethod.POST)
+	public @ResponseBody int updateCCMDetails(HttpServletRequest request, @RequestBody List<AccuralCcmData> accuralCcmDataList) {
+		int count=0;
+
+		for (Iterator<AccuralCcmData> iterator = accuralCcmDataList.iterator(); iterator.hasNext();) {
+			AccuralCcmData accuralCcmData = (AccuralCcmData) iterator.next();
+			count=getService(request).updateCCMDetails(accuralCcmData);
 		}
 		return count;
 		

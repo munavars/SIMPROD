@@ -20,6 +20,7 @@ import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalCcmAccrualData;
 import com.ytc.dal.model.DalCcmAudit;
 import com.ytc.dal.model.DalFrequency;
+import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.ICcmEmailService;
 import com.ytc.service.ICcmService;
@@ -217,8 +218,9 @@ class CcmServiceImpl implements ICcmService{
 	}
 	
 	
-	public int saveCCMDetails(AccuralCcmData accuralCcmData, String user){	
-		
+	public String saveCCMDetails(AccuralCcmData accuralCcmData, String user){	
+		String status="fail";
+		try{
 		DalCcmAudit dalCcmAudit=new DalCcmAudit();
 		dalCcmAudit.setCcmId(accuralCcmData.getId());
 		dalCcmAudit.setAdjustedAmount(accuralCcmData.getAdjustedAmount());
@@ -235,13 +237,18 @@ class CcmServiceImpl implements ICcmService{
 		queryParams.put("adjustedCredit", accuralCcmData.getAdjustedCredit());
 		queryParams.put("user", user);
 		
-		int count=baseDao.updateNative(sql, queryParams);
+		baseDao.updateNative(sql, queryParams);
 		
 		baseDao.create(dalCcmAudit);
 		
 		submitCcmForApproval(accuralCcmData.getId(),accuralCcmData.getComments());
 		
-		return count;
+		status="success";
+		
+		}catch (Exception e){
+			System.out.println("Exception occured in saveCCMDetails"+e.getCause());
+		}
+		return status;
 	}
 	
 	public int submitCcmForApproval(Integer approvalList, String comments){	
@@ -252,24 +259,37 @@ class CcmServiceImpl implements ICcmService{
 		List<DalCcmAccrualData> ccmList=baseDao.list(DalCcmAccrualData.class, hql, queryParams);
 		for (Iterator<DalCcmAccrualData> iterator = ccmList.iterator(); iterator.hasNext();) {
 			DalCcmAccrualData dalCcmAccrualData = (DalCcmAccrualData) iterator.next();
-			
+			DalProgramDetail dalpgm=baseDao.getById(DalProgramDetail.class, dalCcmAccrualData.getProgramId());
 			//Sending Email
-			ccmEmailService.sendEmailData(dalCcmAccrualData,comments);
+			ccmEmailService.sendEmailData(dalCcmAccrualData,comments,dalpgm,baseDao);
 
 			}
 		
 		return 0;
 	}
 	
-public int updateCcmStatus(Integer id){	
+	public int updateCcmStatus(Integer id){	
+			
+			String sql=QueryConstant.CCM_UPDATE_STATUS;	
+			Map<String, Object> queryParams = new HashMap<>();			
+				//Update status in DB
+				queryParams.put("id", id);
+				queryParams.put("status", "Not Reviewed");
+				baseDao.updateNative(sql, queryParams);		
+			
+			
+			return 0;
+		}
+
+
+	public int updateCCMDetails(AccuralCcmData accuralCcmData){	
 		
-		String sql=QueryConstant.CCM_UPDATE_STATUS;	
+		String sql=QueryConstant.CCM_UPDATE_DOC;	
 		Map<String, Object> queryParams = new HashMap<>();			
-			//Update status in DB
-			queryParams.put("id", id);
-			queryParams.put("status", "Not Reviewed");
-			baseDao.updateNative(sql, queryParams);		
-		
+			queryParams.put("id", accuralCcmData.getId());
+			queryParams.put("docNo", accuralCcmData.getDocNumber());
+			queryParams.put("docDate", accuralCcmData.getDocDate());		
+			baseDao.updateNative(sql, queryParams);				
 		
 		return 0;
 	}

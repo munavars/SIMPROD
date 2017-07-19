@@ -357,7 +357,7 @@ public class PdfGenerator {
 		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
 		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         table.addCell(cell1);
-		         if(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered()) && dalpgm.getSchdTierMarker() == 0){
+		         if(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered()) && (dalpgm.getSchdTierMarker() != null && dalpgm.getSchdTierMarker() == 0) ){
 		        	 cell1 = new PdfPCell(new Paragraph(""));
 		         }else{
 		        	 

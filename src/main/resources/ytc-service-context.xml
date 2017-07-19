@@ -73,7 +73,12 @@
 	
 	<bean id="ccmEmailService" class="com.ytc.service.impl.CcmEmailServiceImpl">
 	</bean>
+	<!-- <bean id="ytcJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+		<property name="queryTimeout" value="300"/>
+		<property name="fetchSize" value="100" />
+	</bean> -->
 
-	<bean id="salesDataService" class="com.ytc.service.impl.SalesDataService">
-	</bean>	
+	<bean id="accrualDataService" class="com.ytc.service.impl.AccrualCalcServiceImpl">
+	 </bean>
 </beans>

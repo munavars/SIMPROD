@@ -3,6 +3,8 @@
  */
 package com.ytc.common.model;
 
+import java.util.Date;
+
 /**
  * @author Cognizant
  *
@@ -14,6 +16,9 @@ public class AccuralCcmData {
 	private double adjustedCredit;
 	private String reviewFlag;
 	private String comments;
+	private String docNumber;
+	private Date docDate;
+	
 	/**
 	 * @return the id
 	 */
@@ -73,6 +78,30 @@ public class AccuralCcmData {
 	 */
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+	/**
+	 * @return the docNumber
+	 */
+	public String getDocNumber() {
+		return docNumber;
+	}
+	/**
+	 * @param docNumber the docNumber to set
+	 */
+	public void setDocNumber(String docNumber) {
+		this.docNumber = docNumber;
+	}
+	/**
+	 * @return the docDate
+	 */
+	public Date getDocDate() {
+		return docDate;
+	}
+	/**
+	 * @param docDate the docDate to set
+	 */
+	public void setDocDate(Date docDate) {
+		this.docDate = docDate;
 	}
 	
 	

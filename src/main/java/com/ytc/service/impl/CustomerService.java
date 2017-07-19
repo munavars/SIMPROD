@@ -86,10 +86,10 @@ public class CustomerService implements ICustomerService {
 				programDetail.setProgramId(dalProgramDetail.getId());
 				programDetail.setBu(dalProgramDetail.getDalProgramHeader().getCustomer().getBu());
 				programDetail.setSubmitDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
-				programDetail.setZmAppStatus(null!=dalProgramDetail.getZmAppStatus()?dalProgramDetail.getZmAppStatus().getId().toString():"0");
+				/*programDetail.setZmAppStatus(null!=dalProgramDetail.getZmAppStatus()?dalProgramDetail.getZmAppStatus().getId().toString():"0");
 				programDetail.setZmAppDate(null!=dalProgramDetail.getZmAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getZmAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
 				programDetail.setTbpAppStatus(null!=dalProgramDetail.getTbAppStatus()?dalProgramDetail.getTbAppStatus().getId().toString():"0");
-				programDetail.setTbpAppDate(null!=dalProgramDetail.getTbpAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getTbpAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
+				programDetail.setTbpAppDate(null!=dalProgramDetail.getTbpAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getTbpAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");*/
 				programDetail.setModifiedDate(null!=dalProgramDetail.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT):"");
 				programDetail.setProgramStatus((dalProgramDetail.getStatus() != null) ? dalProgramDetail.getStatus().getId().toString() : "0" );
 				programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());

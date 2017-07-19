@@ -257,10 +257,10 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		
 		programHeader.setCreatedDate(dalProgramDetail.getCreatedDate().getTime());
-		if(dalProgramDetail.getZmAppById() != null){
+		/*if(dalProgramDetail.getZmAppById() != null){
 			programHeader.setZoneManagerApprovedBy(dalProgramDetail.getZmAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getZmAppById().getLAST_NAME());
 			programHeader.setZoneManagerApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getZmAppDate()));	
-		}
+		}*/
 		/*if(dalProgramDetail.getDirAppById() != null){
 			programHeader.setDirectorApprovedBy(dalProgramDetail.getDirAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getDirAppById().getLAST_NAME());
 			programHeader.setDirectorApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getDirAppDate()));	
@@ -269,10 +269,10 @@ public class ProgramServiceImpl implements IProgramService {
 			programHeader.setExecutiveApprovedBy(dalProgramDetail.getExecAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getExecAppById().getLAST_NAME());
 			programHeader.setExecutiveApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getExecAppDate()));	
 		}*/
-		if(dalProgramDetail.getTbpAppById() != null){
+		/*if(dalProgramDetail.getTbpAppById() != null){
 			programHeader.setTbpApprovedBy(dalProgramDetail.getTbpAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getTbpAppById().getLAST_NAME());
 			programHeader.setTbpApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getTbpAppDate()));	
-		}
+		}*/
 		
 		if(dalProgramDetail.getAccuralData() != null){
 			/**Commenting the below lines due to recent changes in ACCRUAL_DATA table.*/

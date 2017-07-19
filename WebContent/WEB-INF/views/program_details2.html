@@ -235,14 +235,14 @@
                                 </div>
                                <div class="col-lg-4 col-md-5 col-sm-4">
                                    <ul class="list-unstyled w-list">
-                                    <li><strong>Zone Manager Approved By:</strong> <span id="zoneManagerApprovedBy"></span> </li>
-                                    <li><strong>Zone Manager Approved Date:</strong> <span id="zoneManagerApprovedDate"> </span></li>
+                                   <!--  <li><strong>Zone Manager Approved By:</strong> <span id="zoneManagerApprovedBy"></span> </li>
+                                    <li><strong>Zone Manager Approved Date:</strong> <span id="zoneManagerApprovedDate"> </span></li> -->
                                    <!--  <li>Director Approved By: <span id="directorApprovedBy"></li>
                                     <li>Director Approved Date: <span id="directorApprovedDate"></li>
                                     <li>Executive Approved By: <span id="executiveApprovedBy"</li>
                                     <li>Executive Approved Date: <span id="executiveApprovedDate"</li> -->
-                                    <li><strong>TBP Approved By:</strong> <span id="tbpApprovedBy"></span> </li>
-                                    <li><strong>TBP Approved Date:</strong> <span id="tbpApprovedDate"></span> </li>
+                                    <!-- <li><strong>TBP Approved By:</strong> <span id="tbpApprovedBy"></span> </li>
+                                    <li><strong>TBP Approved Date:</strong> <span id="tbpApprovedDate"></span> </li> -->
                                     <li><strong>Status:</strong> <span id="status"></span> &nbsp; 
                                     
                                    		<a id="view-program-workflow" data-toggle="modal" href="#myModal9">
@@ -1639,10 +1639,10 @@
                	$('#status').html(response.data.status);
                	$('#programTypeHeader').html(response.data.programDetailList[0].programType);
                	
-               	$('#zoneManagerApprovedBy').html(response.data.zoneManagerApprovedBy);
+               /* 	$('#zoneManagerApprovedBy').html(response.data.zoneManagerApprovedBy);
                	if(response.data.zoneManagerApprovedDate != null){
                		$('#zoneManagerApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.zoneManagerApprovedDate)));
-               	}
+               	} */
                	/* $('#directorApprovedBy').html(response.data.directorApprovedBy);
                	if(response.data.directorApprovedDate != null){
                		$('#directorApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.directorApprovedDate)));
@@ -1651,10 +1651,10 @@
                	if(response.data.executiveApprovedDate != null){
                		$('#executiveApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.executiveApprovedDate)));
                	} */
-               	$('#tbpApprovedBy').html(response.data.tbpApprovedBy);
+               	/* $('#tbpApprovedBy').html(response.data.tbpApprovedBy);
                	if(response.data.tbpApprovedDate != null){
                		$('#tbpApprovedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(response.data.tbpApprovedDate)));
-               	}
+               	} */
                	
                	$('#accrualAmount').html(response.data.accrualAmount);
                	$('#paidAmount').html(response.data.paidAmount);

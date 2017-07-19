@@ -48,7 +48,7 @@ public class DalProgramDetail extends DalAuditableModel {
 	private Integer schdTierMarker;
 	private String trueUp;
 	
-	private DalEmployee zmAppById;
+	/*private DalEmployee zmAppById;
 	private Calendar zmAppDate;
 	private DalStatus zmAppStatus;
 	private DalEmployee tbpAppById;
@@ -57,7 +57,7 @@ public class DalProgramDetail extends DalAuditableModel {
 	private DalEmployee dirAppById;
 	private Calendar dirAppDate;
 	private DalEmployee execAppById;
-	private Calendar execAppDate;
+	private Calendar execAppDate*/;
 
 	private DalProgramMaster programMaster;
 	private DalProgramHeader dalProgramHeader;
@@ -275,114 +275,6 @@ public class DalProgramDetail extends DalAuditableModel {
     public void setTrueUp(String trueUp) {
                     this.trueUp = trueUp;
     }
-    /**
-    * @return the zmAppById
-    */
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="ZM_APP_BY_ID", referencedColumnName = "ID")
-    public DalEmployee getZmAppById() {
-                    return zmAppById;
-    }
-    /**
-    * @param zmAppById the zmAppById to set
-    */
-    public void setZmAppById(DalEmployee zmAppById) {
-                    this.zmAppById = zmAppById;
-    }
-    /**
-    * @return the zmAppDate
-    */
-    @Column(name = "ZM_APP_DATE")
-    public Calendar getZmAppDate() {
-                    return zmAppDate;
-    }
-    /**
-    * @param zmAppDate the zmAppDate to set
-    */
-    public void setZmAppDate(Calendar zmAppDate) {
-                    this.zmAppDate = zmAppDate;
-    }
-    /**
-    * @return the dirAppById
-    */
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="DIR_APP_BY_ID", referencedColumnName = "ID")
-    public DalEmployee getDirAppById() {
-    	return dirAppById;
-    }
-    /**
-    * @param dirAppById the dirAppById to set
-    */
-    public void setDirAppById(DalEmployee dirAppById) {
-                    this.dirAppById = dirAppById;
-    }
-    /**
-    * @return the dirAppDate
-    */
-    @Column(name = "DIR_APP_DATE")
-    public Calendar getDirAppDate() {
-                    return dirAppDate;
-    }
-    /**
-    * @param dirAppDate the dirAppDate to set
-    */
-    public void setDirAppDate(Calendar dirAppDate) {
-                    this.dirAppDate = dirAppDate;
-    }
-   /**
-    * @return the execAppById
-    */
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="EXEC_APP_BY_ID", referencedColumnName = "ID")
-    public DalEmployee getExecAppById() {
-                    return execAppById;
-    }
-    /**
-    * @param execAppById the execAppById to set
-    */
-    public void setExecAppById(DalEmployee execAppById) {
-                    this.execAppById = execAppById;
-    }
-    /**
-    * @return the execAppDate
-    */
-    @Column(name = "EXEC_APP_DATE")
-    public Calendar getExecAppDate() {
-                    return execAppDate;
-    }
-    /**
-    * @param execAppDate the execAppDate to set
-    */
-    public void setExecAppDate(Calendar execAppDate) {
-                    this.execAppDate = execAppDate;
-    }
-    /**
-    * @return the tbpAppById
-    */
-    @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="TBP_APP_BY_ID", referencedColumnName = "ID")
-    public DalEmployee getTbpAppById() {
-    	return tbpAppById;
-    }
-    /**
-    * @param tbpAppById the tbpAppById to set
-    */
-    public void setTbpAppById(DalEmployee tbpAppById) {
-                    this.tbpAppById = tbpAppById;
-    }
-    /**
-    * @return the tbpAppDate
-    */
-    @Column(name = "TBP_APP_DATE")
-    public Calendar getTbpAppDate() {
-                    return tbpAppDate;
-    }
-    /**
-    * @param tbpAppDate the tbpAppDate to set
-    */
-    public void setTbpAppDate(Calendar tbpAppDate) {
-                    this.tbpAppDate = tbpAppDate;
-    }
 
     /**
     * @return the paidFrequency
@@ -502,34 +394,6 @@ public class DalProgramDetail extends DalAuditableModel {
 	}
 	public void setPaidType(Integer paidType) {
 		this.paidType = paidType;
-	}
-	/**
-	 * @return the zmAppStatus
-	 */
-	@OneToOne
-	@JoinColumn(name = "ZM_APP_STATUS_ID", referencedColumnName = "ID")
-	public DalStatus getZmAppStatus() {
-		return zmAppStatus;
-	}
-	/**
-	 * @param zmAppStatus the zmAppStatus to set
-	 */
-	public void setZmAppStatus(DalStatus zmAppStatus) {
-		this.zmAppStatus = zmAppStatus;
-	}
-	/**
-	 * @return the tbAppStatus
-	 */
-	@OneToOne
-	@JoinColumn(name = "TBP_APP_STATUS_ID", referencedColumnName = "ID")
-	public DalStatus getTbAppStatus() {
-		return tbAppStatus;
-	}
-	/**
-	 * @param tbAppStatus the tbAppStatus to set
-	 */
-	public void setTbAppStatus(DalStatus tbAppStatus) {
-		this.tbAppStatus = tbAppStatus;
 	}
 
 /*	

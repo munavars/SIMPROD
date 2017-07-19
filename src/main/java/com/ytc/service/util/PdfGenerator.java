@@ -100,12 +100,16 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 
-	         if(dalpgm.getZmAppById()!=null){
+	         /*if(dalpgm.getZmAppById()!=null){
 	         
 	         cell = new PdfPCell(new Paragraph("Zone Manager Approved By: "+dalpgm.getZmAppById().getFIRST_NAME()+" "+dalpgm.getZmAppById().getLAST_NAME()));
 	         }else{
 	        	 cell = new PdfPCell(new Paragraph("Zone Manager Approved By: "));
-	         }
+	         }*/
+	         
+	         
+	         cell = new PdfPCell(new Paragraph("Status: "+dalpgm.getStatus().getType()));
+	         
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -125,11 +129,15 @@ public class PdfGenerator {
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
-	         if(dalpgm.getZmAppDate()!=null){
+	         /*if(dalpgm.getZmAppDate()!=null){
 	         cell = new PdfPCell(new Paragraph("Zone Manager Approved Date: "+ProgramServiceHelper.convertDateToString(dalpgm.getZmAppDate().getTime(), ProgramConstant.DATE_FORMAT)));
 	         }else{
 	        	 cell = new PdfPCell(new Paragraph("Zone Manager Approved Date: "));
-	         }
+	         }*/
+	         
+	         cell = new PdfPCell(new Paragraph(" "));
+	         
+	         
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -152,11 +160,15 @@ public class PdfGenerator {
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
-	         if(dalpgm.getTbpAppById()!=null){
+	         /*if(dalpgm.getTbpAppById()!=null){
 	         cell = new PdfPCell(new Paragraph("TBP Approved By: "+dalpgm.getTbpAppById().getFIRST_NAME()+" "+dalpgm.getTbpAppById().getLAST_NAME()));
 	         }else{
 	        	 cell = new PdfPCell(new Paragraph("TBP Approved By: "));
-	         }
+	         }*/
+	         
+	         cell = new PdfPCell(new Paragraph(" "));
+	         
+	         
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -177,11 +189,15 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 	         
-	         if(dalpgm.getTbpAppDate()!=null){
+	         /*if(dalpgm.getTbpAppDate()!=null){
 	         cell = new PdfPCell(new Paragraph("TBP Approved Date: "+ProgramServiceHelper.convertDateToString(dalpgm.getTbpAppDate().getTime(), ProgramConstant.DATE_FORMAT)));
 	         }else{
 	        	 cell = new PdfPCell(new Paragraph("TBP Approved Date: "));
-	         }
+	         }*/
+	         
+	         cell = new PdfPCell(new Paragraph(" "));
+	         
+	         
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -202,7 +218,8 @@ public class PdfGenerator {
 	         cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 	         custTable.addCell(cell);
 	         
-	         cell = new PdfPCell(new Paragraph("Status: "+dalpgm.getStatus().getType()));
+	         cell = new PdfPCell(new Paragraph(" "));
+	         
 	         cell.setBorderColor(BaseColor.BLACK);
 	         cell.setPaddingLeft(10);
 	         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -357,7 +374,7 @@ public class PdfGenerator {
 		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
 		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         table.addCell(cell1);
-		         if(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered()) && dalpgm.getSchdTierMarker() == 0){
+		         if(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered()) && (dalpgm.getSchdTierMarker() != null && dalpgm.getSchdTierMarker() == 0) ){
 		        	 cell1 = new PdfPCell(new Paragraph(""));
 		         }else{
 		        	 

@@ -49,25 +49,30 @@
 	    var textRange; var j=0;
 	    tab = document.getElementById(tableId); // id of table
 	    fileName=fileName+$("#loginUserName").html()+"_"+new Date().toLocaleString();
-		
+		var headerTxt=headerTxt=tab.rows[j].getElementsByTagName('th')[11].outerHTML;
 	    for(j = 0 ; j < tab.rows.length ; j++) 
-	    {     
+	    {  
 	       var table_cells = tab.rows[j].getElementsByTagName('td'); 
-	        
+	       var cellTxt="";
 	        for (var i = 0; i < table_cells.length; i++) { 
+	        var cell = table_cells[i];
    			if(i==5)
 	   		{
 	   		 cell.setAttribute("style", 'mso-number-format:"\@"');
+	   		}
+	   		if(i==11)
+	   		{
+	   		  cellTxt=cell.outerHTML;
 	   		}
 	   		}
 	   		var text="";
 	   		if(j==0)
 	   		{
-	   		 text=tab.rows[j].innerHTML.replace('<th class="editablegrid-ID" data-title="ID" style="display: none;"><a style="cursor: pointer;">ID</a></th>',"");
+	   		 text=tab.rows[j].innerHTML.replace(headerTxt,"");
 	   		}
 	   		else
 	   		{
-	   		  text=tab.rows[j].innerHTML.replace('<td class="editablegrid-ID" data-title="ID" style="display: none;"></td>',"");
+	   		  text=tab.rows[j].innerHTML.replace(cellTxt,"");
 	   		}
 	   		
 	   		tab_text=tab_text+text+"</tr>";

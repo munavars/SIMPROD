@@ -1,6 +1,10 @@
 package com.ytc.service.impl;
 
+import java.text.DateFormatSymbols;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -68,11 +72,14 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 			EmailDetails emailDetails = new EmailDetails();
 			List<String> toEmailIdList = new ArrayList<String>();
 			List<String> ccEmailIdList = new ArrayList<String>();
+			DecimalFormat format = new DecimalFormat("#,##0.00");
 			String paidInclude="";
 			String paidExclude="";
 			String achInclude="";
 			String achExclude="";
-			 List<DalProgramDetPaid> dalProgramDetPaidList = dalProgramDetail.getDalProgramDetPaidList().stream().sorted((e1, e2) -> e1.getTagId().compareTo(e2.getTagId())).collect(Collectors.toList());
+			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
+			String reportDate=sdf.format(new Date());
+			List<DalProgramDetPaid> dalProgramDetPaidList = dalProgramDetail.getDalProgramDetPaidList().stream().sorted((e1, e2) -> e1.getTagId().compareTo(e2.getTagId())).collect(Collectors.toList());
 			for (Iterator<DalProgramDetPaid> iterator = dalProgramDetPaidList.iterator(); iterator.hasNext();) {
 				DalProgramDetPaid dalProgramDetPaid = (DalProgramDetPaid) iterator.next();
 				 if("1".equalsIgnoreCase(dalProgramDetPaid.getMethod())){
@@ -193,7 +200,7 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 					"\t\t\t\t<td colspan=\'2\' align=\'center\' style=\'background-color: #C0C0C0; font-size: medium ; font-weight: bold\'> DESCRIPTION</td>\n"+
 					"\t\t\t</tr>\n"+
 					"\t\t\t\t<td> Accounting Period </td>"+
-					"\t\t\t\t<td> "+dalCcmAccrualData.getPeriodId()+" </td>\n"+
+					"\t\t\t\t<td> "+Integer.toString(dalCcmAccrualData.getPeriodId()).substring(0, 4)+"-"+new DateFormatSymbols().getMonths()[Integer.parseInt(Integer.toString(dalCcmAccrualData.getPeriodId()).substring(4, 6))-1]+ " </td>\n"+
 					"\t\t\t</tr> \n"+
 					"\t\t\t<tr>\n"+
 					"\t\t\t\t<td> Program Name </td>"+
@@ -201,7 +208,11 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 					"\t\t\t</tr> \n"+
 					"\t\t\t<tr>\n"+
 					"\t\t\t\t<td> Program Description </td>"+
-					"\t\t\t\t<td> "+dalCcmAccrualData.getDescription()+" </td>\n"+
+					"\t\t\t\t<td> "+(null!=dalCcmAccrualData.getDescription()?dalCcmAccrualData.getDescription():"")+" </td>\n"+
+					"\t\t\t</tr> \n"+
+					"\t\t\t<tr>\n"+
+					"\t\t\t\t<td> Amount</td>"+
+					"\t\t\t\t<td> "+(("$".equals(dalCcmAccrualData.getAmountType()))?("$"+format.format(dalCcmAccrualData.getAmount())):(format.format(dalCcmAccrualData.getAmount())+"%"))+" </td>\n"+
 					"\t\t\t</tr> \n"+
 					"\t\t\t<tr>\n"+
 					"\t\t\t\t<td colspan=\'2\' style=\' vertical-align:top \' > </td>\n"+
@@ -261,11 +272,11 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 					"\t\t\t</tr> \n"+
 					"\t\t\t<tr>\n"+
 					"\t\t\t\t<td style=\'width: 115px\'> Report ID:</td>\n"+
-					"\t\t\t\t<td> Report Id </td>\n"+
+					"\t\t\t\t<td> "+dalCcmAccrualData.getId()+" </td>\n"+
 					"\t\t\t</tr>\n"+
 					"\t\t\t<tr>\n"+
 					"\t\t\t\t<td >Report Date:</td>\n"+
-					"\t\t\t\t<td> ReportDate </td>\n"+
+					"\t\t\t\t<td> "+reportDate+" </td>\n"+
 					"\t\t\t</tr>\n"+
 					"\t\t</table> \n"+
 					

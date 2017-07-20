@@ -33,11 +33,11 @@ public class CcmDetails extends Model {
 	private String docDate;
 	private String billToNo;
 	private String billToName;
-	private Integer units;
-	private Integer bonusableUnits;
-	private Integer nadUnits;
-	private Integer unitsNad;
-	private Integer bonusableNad;
+	private String units;
+	private String bonusableUnits;
+	private String nadUnits;
+	private String unitsNad;
+	private String bonusableNad;
 	private String invSales;
 	private String bonusableSales;
 	private String nadSales;
@@ -346,61 +346,61 @@ public class CcmDetails extends Model {
 	/**
 	 * @return the units
 	 */
-	public Integer getUnits() {
+	public String getUnits() {
 		return units;
 	}
 	/**
 	 * @param units the units to set
 	 */
-	public void setUnits(Integer units) {
+	public void setUnits(String units) {
 		this.units = units;
 	}
 	/**
 	 * @return the bonusableUnits
 	 */
-	public Integer getBonusableUnits() {
+	public String getBonusableUnits() {
 		return bonusableUnits;
 	}
 	/**
 	 * @param bonusableUnits the bonusableUnits to set
 	 */
-	public void setBonusableUnits(Integer bonusableUnits) {
+	public void setBonusableUnits(String bonusableUnits) {
 		this.bonusableUnits = bonusableUnits;
 	}
 	/**
 	 * @return the nadUnits
 	 */
-	public Integer getNadUnits() {
+	public String getNadUnits() {
 		return nadUnits;
 	}
 	/**
 	 * @param nadUnits the nadUnits to set
 	 */
-	public void setNadUnits(Integer nadUnits) {
+	public void setNadUnits(String nadUnits) {
 		this.nadUnits = nadUnits;
 	}
 	/**
 	 * @return the unitsNad
 	 */
-	public Integer getUnitsNad() {
+	public String getUnitsNad() {
 		return unitsNad;
 	}
 	/**
 	 * @param unitsNad the unitsNad to set
 	 */
-	public void setUnitsNad(Integer unitsNad) {
+	public void setUnitsNad(String unitsNad) {
 		this.unitsNad = unitsNad;
 	}
 	/**
 	 * @return the bonusableNad
 	 */
-	public Integer getBonusableNad() {
+	public String getBonusableNad() {
 		return bonusableNad;
 	}
 	/**
 	 * @param bonusableNad the bonusableNad to set
 	 */
-	public void setBonusableNad(Integer bonusableNad) {
+	public void setBonusableNad(String bonusableNad) {
 		this.bonusableNad = bonusableNad;
 	}
 	/**

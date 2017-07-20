@@ -89,6 +89,7 @@ class CcmServiceImpl implements ICcmService{
 	public List<CcmDetails> getCCMDetails(String frequency, String bu, Integer period, String status){	
 		List<CcmDetails> ccmList = new ArrayList<CcmDetails>();
 		DecimalFormat format = new DecimalFormat("#,##0.00");
+		DecimalFormat unitFormat = new DecimalFormat("#,##0");
 		String sql=QueryConstant.CCM_REPORT_NEW;
 		Map<String, Object> queryParams = new HashMap<>();	
 		List<String> selectedStatus=Arrays.asList(status.split(","));
@@ -109,7 +110,7 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setFrequency(dalCcmAccrualData.getFrequency());
 			ccmDetails.setProgramId(dalCcmAccrualData.getProgramId().toString());
 			ccmDetails.setProgramName(dalCcmAccrualData.getProgramName());
-			ccmDetails.setDescription(dalCcmAccrualData.getDescription());
+			ccmDetails.setDescription(null!=dalCcmAccrualData.getDescription()?dalCcmAccrualData.getDescription():"");
 			ccmDetails.setPaidBasedOn(dalCcmAccrualData.getPaidBasedOn());
 			ccmDetails.setGuarantee(dalCcmAccrualData.getGuarantee());
 			String amount="";
@@ -144,11 +145,11 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setDocDate("");
 			ccmDetails.setBillToNo(dalCcmAccrualData.getBillToNo());
 			ccmDetails.setBillToName(dalCcmAccrualData.getBillToName());
-			ccmDetails.setUnits(dalCcmAccrualData.getUnits());
-			ccmDetails.setBonusableUnits(dalCcmAccrualData.getBonusableUnits());
-			ccmDetails.setNadUnits(dalCcmAccrualData.getNadUnits());
-			ccmDetails.setUnitsNad(dalCcmAccrualData.getUnitsplusNad());
-			ccmDetails.setBonusableNad(dalCcmAccrualData.getBonusableUnitsplusNad());
+			ccmDetails.setUnits(unitFormat.format(dalCcmAccrualData.getUnits()));
+			ccmDetails.setBonusableUnits(unitFormat.format(dalCcmAccrualData.getBonusableUnits()));
+			ccmDetails.setNadUnits(unitFormat.format(dalCcmAccrualData.getNadUnits()));
+			ccmDetails.setUnitsNad(unitFormat.format(dalCcmAccrualData.getUnitsplusNad()));
+			ccmDetails.setBonusableNad(unitFormat.format(dalCcmAccrualData.getBonusableUnitsplusNad()));
 			ccmDetails.setInvSales(format.format(dalCcmAccrualData.getInvSales()));
 			ccmDetails.setBonusableSales(format.format(dalCcmAccrualData.getBonusableSales()));
 			ccmDetails.setNadSales(format.format(dalCcmAccrualData.getNadSales()));

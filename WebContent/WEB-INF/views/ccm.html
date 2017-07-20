@@ -122,6 +122,7 @@
                     return data;
                 } },
                 { data: "creditBasedOn",
+                	className:"right",
                 	render: function ( data, type, row, meta ) {
               	  if(type === 'display'){
             		  data = '<div id="creditbasedon'+meta.row+'">' + data+'</div>';
@@ -249,6 +250,7 @@
 	            { data: "billToNo"},
 	            { data: "billToName" },
 	            { data: "units",
+	            	className:"right",
 	            	render: function ( data, type, row, meta ) {
               	  if(type === 'display'){
             		  data = '<div id="units'+meta.row+'">' + data+'</div>';
@@ -257,6 +259,7 @@
                   return data;
               } },				            
 	            { data: "bonusableUnits", 
+            	  className:"right",
             	  render: function ( data, type, row, meta ) {
               	  if(type === 'display'){
             		  data = '<div id="bonusableunits'+meta.row+'">' + data+'</div>';
@@ -265,6 +268,7 @@
                   return data;
               }},
 	            { data: "nadUnits",
+            	  className:"right",
             	  render: function ( data, type, row, meta ) {
               	  if(type === 'display'){
             		  data = '<div id="nadunits'+meta.row+'">' + data+'</div>';
@@ -273,6 +277,7 @@
                   return data;
               }  },
 	            { data: "unitsNad", 
+            	  className:"right",
             	  render: function ( data, type, row, meta ) {
               	  if(type === 'display'){
             		  data = '<div id="units_nad'+meta.row+'">' + data+'</div>';
@@ -281,6 +286,7 @@
                   return data;
               }},
 	            { data: "bonusableNad", 
+            	  className:"right",
             	  render: function ( data, type, row, meta ) {
               	  if(type === 'display'){
             		  data = '<div id="bonusableunit_nad'+meta.row+'">' + data+'</div>';
@@ -665,7 +671,7 @@
 
 												
 													<div id="footer-button" class="modal-footer">
-														<a class="btn btn-success" id="ccm_submit"
+														<a class="btn btn-success" style="text-decoration:none" id="ccm_submit"
 															href="javascript: submitForApproval()"><i
 															class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
 															Approval

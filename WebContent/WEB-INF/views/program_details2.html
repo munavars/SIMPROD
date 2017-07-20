@@ -191,7 +191,7 @@
                         <div class="panel-body">
                           <div class="clearfix">
                              <div class="col-lg-12">
-                                <h5 data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Customer Details</h5>
+                                <h5 data-original-title="Customer Details">Customer Details</h5>
                                 
                                 <div id="header-button" class="modal-footer" hidden="true">
 	                                <button id="pdf-button" class="btn" disabled="disabled">Generate PDF</button> <!-- <div class="space15">&nbsp;</div> -->
@@ -224,7 +224,8 @@
                                  	<li><strong>Customer Name: <span class="yokohamared" id="customerName"></span></strong></li>
                                     <li><strong>Program ID: <span id="programId"></span></strong></li>
                                     <li class="p-right10"><strong>Business Unit: <span id="businessUnit"></span></strong></li>
-                                    <li><button id="program-expand" type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
+                                    <li data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." 
+                                    data-placement="top" data-trigger="hover" class="popovers"><button id="program-expand" type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
                                  </ul>
                                <div id="demo" class="collapse out">
                                 <div class="col-lg-3 col-md-4 col-sm-4 p-left0">
@@ -694,7 +695,8 @@
 																(Behind The Line)</label> <select
 																class="form-control input-sm m-bot15"
 																rel="txtTooltip"
-																data-content="Please choose the Behind the Line as Yes/No."
+																data-content="Behind the Line (BTL), for purposes of After the Fact Sales Incentives, indicates if the Dealer/Customer is aware the program accrual exists.
+																<li>If Dealer/Customer is aware of the program, BTL = NO<li>If Dealer/Customer is NOT aware of the program, BTL = YES.</li>By default BTL is set as No."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
 																data-placement="top" rows="2"
@@ -706,7 +708,8 @@
 																for="pricing_type_inputselect">Pricing Type</label> <select
 																class="form-control input-sm m-bot15"
 																rel="txtTooltip"
-																data-content="Please choose the Pricing Type as Long Term/Promotion."
+																data-content="Is the After the Fact (ATF) program part of the Dealer/Customer long-term pricing structure? Or is the ATF program a promotional item?
+																Generally ATFs active for full year are long-term pricing. Non-reoccurring ATFs active for a single month/quarter may be considered promotional."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
 																data-placement="top" rows="3"
@@ -720,8 +723,7 @@
 																	class="control-label popovers" for="optionsRadiosTrueUp" 
 																	data-content="Please choose program is true-up or not."
 																	title="&nbsp;&nbsp;Hot Tip"
-																	data-placement="top" data-toggle="tooltip" data-trigger="hover">Is
-																	this 'True-up'?</label>
+																	data-placement="top" data-toggle="tooltip" data-trigger="hover">Annual-True-up for Tier Goal?</label>
 																<div class="radio-inline">
 																	<label class="control-label" for="optionsRadiosTrueUpYes">
 																		<input type="radio" name="optionsRadiosTrueUp"
@@ -2136,7 +2138,7 @@
 						$('#sapglcode_dropdown').attr('disabled', false);
 					}
 					$('#edit-button').hide();
-				}
+					}
 				else{
 					/**Nothing should be editable in screen.*/
 					hideCreatorButtons();

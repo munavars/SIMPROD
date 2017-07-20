@@ -205,7 +205,7 @@ public class ProgramServiceImpl implements IProgramService {
 	}
 
 
-	private void populateTierData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
+	public void populateTierData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
 		if(dalProgramDetail != null && programHeader != null){
 			List<ProgramTierDetail> programTierDetailSet = null;
 			String amountTypeTier = null;

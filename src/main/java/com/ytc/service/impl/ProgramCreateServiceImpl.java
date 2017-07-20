@@ -34,6 +34,7 @@ import com.ytc.dal.model.DalUserComments;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramEmailService;
+import com.ytc.service.IProgramService;
 import com.ytc.service.IProgramWorkflowService;
 import com.ytc.service.ServiceContext;
 
@@ -50,6 +51,9 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 	
 	@Autowired
 	private IProgramWorkflowService programWorkflowService;
+	
+	@Autowired
+	private IProgramService programService;
 	
 	@Override
 	@Transactional
@@ -138,6 +142,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			else{
 				programHeader.setNewProgram(false);
 			}
+			programService.populateTierData(programHeader, dalProgramDetail);
 			programHeader.setRequestedDate( (dalProgramHeader.getRequestDate() != null ) ? dalProgramHeader.getRequestDate().getTime() : null);
 			programHeader.setCreatedDate(dalProgramDetail.getCreatedDate().getTime());
 		}

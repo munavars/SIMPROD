@@ -29,6 +29,9 @@ public class ProgramConstant {
 	public static final String DDF_PROGRAM_TYPE = "DDF";
 	public static final String COOP_PROGRAM_TYPE = "COOP";
 	public static final String PRICING_FORM_TYPE = "Pricing Form";
+	
+	public static final String SAVE = "SAVE";
+	public static final String SUBMIT = "SUBMIT";
 
 	
 	public static final String USER_LEVEL_1 = "1";
@@ -46,6 +49,7 @@ public class ProgramConstant {
 	public static final String FORWARD_SLASH = "/";
 	public static final String NO_LIMIT = "No Limit";
 	
+	public static final String OPERATOR_G = ">";
 	public static final String OPERATOR_GE = ">=";
 	public static final String OPERATOR_LE = "<=";
 	
@@ -68,4 +72,6 @@ public class ProgramConstant {
 	public static final List<String> OTR_TAG_VALUE_LIST =Arrays.asList("ORL", "ORM", "ORS", "ORX", "OTL", "OTM", "OTR", "OTS", "OTX");
 	
 	public static final Integer MAX_END_RANGE = 99999999;
+	
+	public static final String PROGRAM_CREATER_ERROR = "Approval data does not exist. You are not authorized to create this program";
 }

@@ -2190,6 +2190,7 @@
          	function fnPopulateProgramTier(tierData){                
                 var table = $("#tier-schedule").DataTable();
                 if(tierData != null){
+                	table.fnClearTable();
                 	var endRangePrevious = null;
                 	var maxRange = convertNumberFormat(99999999);
 	                $.each(tierData, function(idx, item) {
@@ -2386,6 +2387,7 @@
 				var message = "Data approved successfully !!!";
          		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "2";
+				responseOnload.action = 'approve';
 				responseOnload.url = window.location.href;
 				responseOnload.userComments = $("#approveComments").val();
 				if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
@@ -2402,6 +2404,7 @@
 				var message = "Data rejected successfully !!!";
          		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "1";
+				responseOnload.action = 'reject';
 				responseOnload.url = window.location.href;
 				responseOnload.userComments = $("#rejectionComments").val();
 				fnCallService(message, idBefore, 'reject');
@@ -2412,6 +2415,7 @@
          		var message = "Data saved successfully !!!";
          		var idBefore = responseOnload.programDetailList[0].id;
          		responseOnload.status = "3";
+         		responseOnload.action = 'save';
          		prepareDataForSubmit();
          		fnCallService(message, idBefore, 'save');
          		$('#myModal1').modal('toggle');
@@ -2424,6 +2428,7 @@
 				var message = "Data submitted for approval successfully !!!";
          		var idBefore = responseOnload.programDetailList[0].id;
 	 			responseOnload.status = "2";
+	 			responseOnload.action = 'submit';
 				prepareDataForSubmit();
 				fnCallService(message, idBefore, 'submit');
 				$('#myModal').modal('toggle');
@@ -2496,6 +2501,9 @@
 							}
 							/**Appending program id in the modal message.- End*/
 							_isDirty = false;
+							if(action == 'submit' || action == 'save'){
+								fnPopulateProgramTier(response.data.programDetailList[0].programTierDetailList);
+							}
 			            } 
 			            else if(response.data.duplicate == true)
 			            {
@@ -2503,12 +2511,18 @@
 			              $("#confirmMessage").html("Program already exists and the previous program id is <strong>"+ idAfter + "</strong>");
 						  $('#myModal4').modal('toggle');
 			            }
+			            /* else if(response.data.success == false && response.data.errorMessage != null){
+				            $("#confirmMessage").html(response.data.errorMessage);
+							$('#myModal4').modal('toggle');
+			            } */
 			            else {
-							alert("Issue while saving the data. Please try again after sometime.!!");
+							$("#confirmMessage").html("Issue while saving the data. Please try again after sometime.!!");
+							$('#myModal4').modal('toggle');
 			            }
 					},
 					failure: function(response){
-						alert("Issue while saving the data. Please try again after sometime.!!");
+						$("#confirmMessage").html("Issue while saving the data. Please try again after sometime.!!");
+						$('#myModal4').modal('toggle');
 					}
 			    });
 			}

@@ -23,6 +23,8 @@ public class QueryConstant {
 	
 	public static final String EMPLOYEE_HIER_LIST= "SELECT BASE_EMP_ID FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = :loginId or LVL1_EMP_ID = :loginId or LVL2_EMP_ID = :loginId or LVL3_EMP_ID = :loginId or LVL4_EMP_ID = :loginId or LVL5_EMP_ID = :loginId";
 	
+	public static final String SIM_EMPLOYEE_HIER_LIST= "SELECT LVL1_EMP_ID FROM SIM_EMPLOYEE_HIERARCHY where (LVL1_EMP_ID = :loginId or LVL2_EMP_ID = :loginId or LVL3_EMP_ID = :loginId or LVL4_EMP_ID = :loginId or LVL5_EMP_ID = :loginId) and LVL1_EMP_ID is not NULL";
+	
 	public static final String CUSTOMER_LIST_MGR="select ID from CUSTOMER where ACCOUNT_MANAGER in(:userId)";
 
 	public static final String TBP_QUERY = "select DISTINCT EMP_ID from WORKFLOW_MATRIX where id in ("
@@ -34,13 +36,24 @@ public class QueryConstant {
 	
 	//public static final String PRICING_LIST_P = "select * from NETDOWN_P where [Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId)) and [Base Price] is not null and  [Base Price]>0";
 	
-	public static final String PRICING_LIST_P = "select N.* from NETDOWN_P N, PART_MASTER P where N.[Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId))  and N.[Part No]=p.PART_NUMBER and N.[Base Price] is not null and  N.[Base Price]>0 and (P.STATUS='A' or P.STATUS='B')";
+	public static final String PRICING_LIST_P = "select N.* from NETDOWN_P N, PART_MASTER P where N.[Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId) AND ID in (:customerId) )  and N.[Part No]=p.PART_NUMBER and N.[Base Price] is not null and  N.[Base Price]>0 and (P.STATUS='A' or P.STATUS='B')";
 	
-	public static final String PRICING_LIST_T = "select N.* from NETDOWN_T N, PART_MASTER P where N.[Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId))  and N.[Part No]=p.PART_NUMBER and N.[Base Price] is not null and  N.[Base Price]>0 and (P.STATUS='A' or P.STATUS='B')";
+	public static final String PRICING_LIST_T = "select N.* from NETDOWN_T N, PART_MASTER P where N.[Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId) AND ID in (:customerId) )  and N.[Part No]=p.PART_NUMBER and N.[Base Price] is not null and  N.[Base Price]>0 and (P.STATUS='A' or P.STATUS='B')";
+	
+	public static final String TBP_PRICING_LIST_P = "select N.* from NETDOWN_P N, PART_MASTER P where N.[Bill-To No] in "
+													+ "	(select CUSTOMER_NUMBER from CUSTOMER )  "
+													+ "and N.[Part No]=p.PART_NUMBER and N.[Base Price] is not null and  "
+													+ "N.[Base Price]>0 and (P.STATUS='A' or P.STATUS='B')";
+	
+	public static final String TBP_PRICING_LIST_T = "select N.* from NETDOWN_T N, PART_MASTER P where N.[Bill-To No] in "
+											+ "(select CUSTOMER_NUMBER from CUSTOMER )  and N.[Part No]=p.PART_NUMBER and N.[Base Price] is not null and  "
+											+ "N.[Base Price]>0 and (P.STATUS='A' or P.STATUS='B')";
 	
 	//public static final String TBP_USERS="SELECT * FROM TBP_USER where EMP_ID in (:empId)";
 	
 	public static final String TBP_USERS="select o from DalTbpUser o where o.empId in (:empId)";
+	
+	public static final String IS_TBP_USERS="SELECT EMP_ID FROM TBP_USER WHERE EMP_ID IN (:empId)";
 
 	public static final String CCM_REPORT="SELECT CUST.BU AS BUSINESS_UNIT\n"+
 			", HIER.LVL3_EMP_NAME AS ZONE_MGR\n"+

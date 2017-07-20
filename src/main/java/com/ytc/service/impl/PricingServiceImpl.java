@@ -294,27 +294,48 @@ public class PricingServiceImpl implements IPricingService {
 	}
 	
 	@Override
-	public List<NetPricing> getCustomerPricingDetails(Integer empId, String bu) {
+	public List<NetPricing> getCustomerPricingDetails(Integer empId, String bu, Integer customerId) {
 		List<NetPricing> pricingDetailList= new ArrayList<NetPricing>();
 		Map<String, Object> queryParams = new HashMap<>();
 		//String sql="select * from NETDOWN_P where [Bill-To No] in (select PAY_TO from CUSTOMER where ACCOUNT_MANAGER in (:empId))";
 		String sql="";
 		List<String> userIdList = null;
+		boolean isTbpUser = false;
 		if(empId != null){
-			String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
 			
-			queryParams.put("loginId", empId);
-			userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
-			if(userIdList.isEmpty()){
-				return pricingDetailList;
+			
+			String tbpString = QueryConstant.IS_TBP_USERS;
+			queryParams.put("empId", empId);
+			List<Integer> tbpList = baseDao.getListFromNativeQuery(tbpString, queryParams);
+			if(tbpList != null && tbpList.size() > 0){
+				isTbpUser = true;
 			}
-			queryParams.clear();
-			if("Consumer".equalsIgnoreCase(bu)){
-				sql=QueryConstant.PRICING_LIST_P;
-			}else{
-				sql=QueryConstant.PRICING_LIST_T;
+			
+			if(!isTbpUser){
+				String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
+				queryParams.clear();
+				queryParams.put("loginId", empId);
+				userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+				if(userIdList.isEmpty()){
+					return pricingDetailList;
+				}
+				queryParams.clear();
+				if("Consumer".equalsIgnoreCase(bu)){
+					sql=QueryConstant.PRICING_LIST_P;
+				}else{
+					sql=QueryConstant.PRICING_LIST_T;
+				}
+				queryParams.put("empId",userIdList);
+				queryParams.put("customerId", customerId);				
 			}
-			queryParams.put("empId",userIdList);
+			else{
+				queryParams.clear();
+				if("Consumer".equalsIgnoreCase(bu)){
+					sql=QueryConstant.TBP_PRICING_LIST_P;
+				}else{
+					sql=QueryConstant.TBP_PRICING_LIST_T;
+				}
+			}
 			//List<DalNetPricingConsumer> resultList =baseDao.list(DalNetPricingConsumer.class, sql, queryParams);
 			List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
 			for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
@@ -400,8 +421,11 @@ public class PricingServiceImpl implements IPricingService {
 			}
 			Set<Integer> uniqueIds = null;
 			if(dalPricingHeader.getDalPricingDetailList() != null && !dalPricingHeader.getDalPricingDetailList().isEmpty()){
+				
+				List<DalPricingDetail> dalWorkflowStatusList = PricingServiceHelper.getPricingDetailsSorted(dalPricingHeader.getDalPricingDetailList());
+
 				uniqueIds = new HashSet<Integer>();
-				for(DalPricingDetail dalPricingDetail : dalPricingHeader.getDalPricingDetailList() ){
+				for(DalPricingDetail dalPricingDetail : dalWorkflowStatusList ){
 					PricingDetail pricingDetail = new PricingDetail();
 					boolean isDuplicate = uniqueIds.add(dalPricingDetail.getId());
 					if(!isDuplicate){

@@ -9,6 +9,7 @@ import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramInputParam;
 import com.ytc.common.model.ProgramPaidOn;
 import com.ytc.common.model.ProgramTierDetail;
+import com.ytc.dal.model.DalProgramDetail;
 
 public interface IProgramService {
 
@@ -31,4 +32,6 @@ public interface IProgramService {
 	byte[] downloadPDF(String id);
 	
 	List<NewCustomerDetail> getNewCustomerData(Integer employeeId);
+	
+	void populateTierData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail);
 }

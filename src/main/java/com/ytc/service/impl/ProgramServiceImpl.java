@@ -454,6 +454,7 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetailsDropDown.setBtlList(getBTLDropDownList());
 		programDetailsDropDown.setPayToList(getPayToDropDownList(customerId));
 		programDetailsDropDown.setGlCodeList(getGLCodeDropDownList("DalGLCode.getAllDetails",programDetail));
+		programDetailsDropDown.setSapGlCodeList(getSapGLCodeDropDownList("DalGLCode.getAllDetails", programDetail));
 		programDetail.setBeginDate(new Date());
 		programDetail.setEndDate(new Date());
 		programDetail.setDropdownList(programDetailsDropDown);
@@ -1082,6 +1083,30 @@ public class ProgramServiceImpl implements IProgramService {
 					dropDown.setKey(String.valueOf(dalGlcode.getId()));
 					//dropDown.setKey(dalGlcode.getGlBucket());
 					dropDown.setValue(dalGlcode.getGlNo());
+					if(dropdownList == null){
+						dropdownList = new ArrayList<DropDown>();
+					}
+					dropdownList.add(dropDown);
+				}
+				dropdownList = dropdownList.stream().sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue())).collect(Collectors.toList());	
+				
+			}
+			
+		}
+		return dropdownList;
+	}
+	
+	private List<DropDown> getSapGLCodeDropDownList(String namedQueryValue,ProgramDetail programDetail){
+		List<DropDown> dropdownList = null;
+		if(namedQueryValue != null){
+			List<DalGLCode> dalGLCodeList =  baseDao.getListFromNamedQuery(namedQueryValue);
+			programDetail.setGlCodeList(dalGLCodeList);
+			if(dalGLCodeList != null){
+				for(DalGLCode dalGlcode : dalGLCodeList){
+					DropDown dropDown = new DropDown();
+					dropDown.setKey(String.valueOf(dalGlcode.getId()));
+					//dropDown.setKey(dalGlcode.getGlBucket());
+					dropDown.setValue(dalGlcode.getSapGlCode());
 					if(dropdownList == null){
 						dropdownList = new ArrayList<DropDown>();
 					}

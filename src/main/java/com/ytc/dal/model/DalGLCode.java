@@ -22,6 +22,8 @@ private static final long serialVersionUID = 1L;
 	private String pcs;
 	
 	private String bu;
+	
+	private String sapGlCode;
 
 	/**
 	 * @return the glNo
@@ -83,6 +85,21 @@ private static final long serialVersionUID = 1L;
 	 */
 	public void setBu(String bu) {
 		this.bu = bu;
+	}
+
+	/**
+	 * @return the sapGlCode
+	 */
+	@Column(name="SAP_GL")
+	public String getSapGlCode() {
+		return sapGlCode;
+	}
+
+	/**
+	 * @param sapGlCode the sapGlCode to set
+	 */
+	public void setSapGlCode(String sapGlCode) {
+		this.sapGlCode = sapGlCode;
 	}
 
 	

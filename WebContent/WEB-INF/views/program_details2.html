@@ -138,6 +138,12 @@
                      <span>My Dashboard</span>
                      </a>
                   </li>
+                   <li>
+                      <a class="" href="ccm">
+                              <i class="fa fa-tasks"></i>
+                              <span>CCM</span>
+                      </a>
+                  </li>
                  <!--  <li>
                      <a id="create-program" class="" href="program_details2.html">
                      <i class="fa fa-tasks"></i>
@@ -323,26 +329,9 @@
 											<div class="form-group clearfix">
 												<div class="col-lg-12">
 													<h5>Program Details</h5>
+													<br>
 													<div class="row">
-														<div class="col-lg-4 col-sm-4">
-															<label class="control-label"
-																for="program_name_inputselect">Program Name</label> <select
-																class="form-control input-sm m-bot15"
-																id="program_name_inputselect"
-																name="program_name_inputselect">
-																<!-- <option disabled class="required" value="">- Select -</option> -->
-															</select>
-														</div>
-														<div class="col-lg-4 col-sm-4">
-															<label class="control-label"
-																for="payout_freq_inputselect">Payout Frequency</label> <select
-																class="form-control input-sm m-bot15"
-																id="payout_freq_inputselect"
-																name="payout_freq_inputselect">
-																<!-- <option disabled class="" value="">- Select -</option> -->
-															</select>
-														</div>
-														<div class="form-group">
+													<!-- <div class="form-group"> -->
 															<div class="col-lg-4 col-sm-4">
 																<label class="control-label" for="from">Begin/End
 																	Dates:</label>
@@ -358,8 +347,27 @@
 																<label for="to" generated="true" class="error" style="float:right"></label> 
 																
 															</div>
+														<!-- </div> -->
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label"
+																for="program_name_inputselect">Program Name</label> <select
+																class="form-control input-sm m-bot15"
+																id="program_name_inputselect"
+																name="program_name_inputselect">
+																<!-- <option disabled class="required" value="">- Select -</option> -->
+															</select>
 														</div>
+														<!-- <div class="col-lg-4 col-sm-4">
+															<label class="control-label"
+																for="payout_freq_inputselect">Payout Frequency</label> <select
+																class="form-control input-sm m-bot15"
+																id="payout_freq_inputselect"
+																name="payout_freq_inputselect">
+															</select>
+														</div> -->
+														
 													</div>
+													<br>
 													<div class="row">
 														<div class="col-lg-12">
 															<label class="control-label " for="longDesc">Program
@@ -374,8 +382,20 @@
 																class="form-control m-bot15"></textarea>
 														</div>
 													</div>
+													
 													<div class="row">
-														<div class="col-lg-2 col-md-2 col-sm-2">
+														<div class="col-lg-4 col-sm-4">
+															<label class="control-label"
+																for="payout_freq_inputselect">Payout Frequency</label> <select
+																class="form-control input-sm m-bot15"
+																id="payout_freq_inputselect"
+																name="payout_freq_inputselect">
+															</select>
+														</div>
+													</div>
+													
+													<div class="row">
+														<!-- <div class="col-lg-2 col-md-2 col-sm-2">
 															<label class="control-label" for="btl_inputselect">BTL
 																(Behind The Line)</label> <select
 																class="form-control input-sm m-bot15"
@@ -415,7 +435,7 @@
 																id="payment_method_inputselect"
 																name="payment_method_inputselect">
 															</select>
-														</div>
+														</div> -->
 														<div class="col-lg-4 col-sm-4">
 															<label class="control-label"
 																for="paid_basedon_inputselect">Paid Based On</label> <select
@@ -497,7 +517,7 @@
 																</div>
 
 															</div>
-															<div
+<!-- 															<!--<div
 																class="col-lg-4 col-md-4 col-sm-4 inline-flex m-top45">
 																<div id="estimatedaccrual">
 																	<label class="control-label" for="estm_accrual">Estimated Accrual ($)</label>&nbsp;&nbsp;
@@ -585,14 +605,181 @@
 																<label class="control-label"
 																			for="glcode_dropdown">GLNo</label>&nbsp;&nbsp;
 																			  <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/>  
-																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled> -->
+																			 <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled>
 																</div> 
-																</div>
+																</div> -->
 															</div>
 														</div>
 													</div>
 												</div>
 												<!-- PAID BASED ON - End -->
+
+
+														<!-- 	<div class="col-lg-4 col-md-4 col-sm-4 inline-flex m-top45"> -->
+															<div class="col-lg-125">	
+																
+																<label class="control-label" for="inputSuccess"
+																	data-original-title="Customer Details">
+																	Is this 'Tiered'?</label>
+																<div class="radio-inline">
+																	<label class="control-label" for="inputSuccess">
+																		<input type="radio" name="optionsRadiosTier"
+																		id="optionsRadiosTierYes" value="Yes"
+																		class="radio-inline required m-bot15" rel="txtTooltip"
+																		checked="checked"> Yes
+																	</label>
+																</div>
+																<div class="radio-inline">
+																	<label class="control-label" for="inputSuccess">
+																		<input type="radio" name="optionsRadiosTier"
+																		id="optionsRadiosTierNo" value="No"
+																		class="radio-inline required m-bot15"> No
+																	</label>
+																</div>
+																<br> 
+																<br>
+																<div id="amountdiv">
+																	<label class="control-label" for="amount">Amount</label>&nbsp;&nbsp;
+																	<input id="amount" name="amount" type="text"
+																		class="form-control radio-inline m-bot15" style="width: 120px;"
+																		value="">
+																	<div class="radio-inline">
+																		<label class="control-label"
+																			for="optionsRadiosDenomination"> <input
+																			type="radio" name="optionsRadiosDenomination"
+																			id="optionsRadiosPercentage" value="%"
+																			class="radio-inline required m-bot15" disabled="disabled"
+																			> %
+																		</label>
+																	</div>
+																	<div class="radio-inline">
+																		<label class="control-label"
+																			for="optionsRadiosDenomination"> <input
+																			type="radio" name="optionsRadiosDenomination"
+																			id="optionsRadiosDollarSign" value="$"
+																			class="radio-inline required m-bot15"
+																			checked="checked" disabled="disabled"> $
+																		</label>
+																	</div>
+																</div>
+																<br>
+																<div class="row">																
+
+																	<div class="col-lg-2 col-sm-2">
+																		<label class="control-label"
+																			for="payment_method_inputselect">Paid Type</label> <select
+																			class="form-control input-sm m-bot15"
+																			id="payment_method_inputselect"
+																			name="payment_method_inputselect">
+																		</select>
+																	</div>
+														
+																	<div class="col-lg-2 col-sm-2">
+																		<label class="control-label popovers" for="payto_inputselect"
+																		data-content="If Paid type is Credit, enter ShipTo. If Cheque,  enter SAP Vendor #"
+																	    title="&nbsp;&nbsp;Hot Tip"
+																	    data-placement="top" data-toggle="tooltip" data-trigger="hover"
+																		>Pay To</label> <!-- <select class="form-control input-sm m-bot15"
+																			id="payto_inputselect" name="payto_inputselect">
+																		</select> -->
+																		<input id="payto_inputselect" name="payto_inputselect" type="text"
+																		class="form-control m-bot15" style="width: 120px;"
+																		value="">
+																	</div>
+																</div>
+																<br>
+													<div class="row">
+														<div class="col-lg-2 col-md-2 col-sm-2">
+															<label class="control-label" for="btl_inputselect">BTL
+																(Behind The Line)</label> <select
+																class="form-control input-sm m-bot15"
+																rel="txtTooltip"
+																data-content="Please choose the Behind the Line as Yes/No."
+																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+																data-toggle="tooltip" data-trigger="hover"
+																data-placement="top" rows="2"
+																id="btl_inputselect" name="btl_inputselect">
+															</select>
+														</div>
+														<div class="col-lg-2 col-md-2 col-sm-2">
+															<label class="control-label"
+																for="pricing_type_inputselect">Pricing Type</label> <select
+																class="form-control input-sm m-bot15"
+																rel="txtTooltip"
+																data-content="Please choose the Pricing Type as Long Term/Promotion."
+																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+																data-toggle="tooltip" data-trigger="hover"
+																data-placement="top" rows="3"
+																id="pricing_type_inputselect"
+																name="pricing_type_inputselect">
+															</select>
+														</div>
+													</div>
+															<br>	
+																<label
+																	class="control-label popovers" for="optionsRadiosTrueUp" 
+																	data-content="Please choose program is true-up or not."
+																	title="&nbsp;&nbsp;Hot Tip"
+																	data-placement="top" data-toggle="tooltip" data-trigger="hover">Is
+																	this 'True-up'?</label>
+																<div class="radio-inline">
+																	<label class="control-label" for="optionsRadiosTrueUpYes">
+																		<input type="radio" name="optionsRadiosTrueUp"
+																		id="optionsRadiosTrueUpYes" value="Yes"
+																		class="radio-inline required m-bot15"
+																		checked="checked" rel="txtTooltip">
+																		Yes
+																	</label>
+																</div>
+																<div class="radio-inline">
+																	<label class="control-label" for="optionsRadiosTrueUpNo">
+																		<input type="radio" name="optionsRadiosTrueUp"
+																		id="optionsRadiosTrueUpNo" value="No"
+																		class="radio-inline required m-bot15"> No
+																	</label>
+																</div>
+																<br>
+																
+																 <br>
+																 <div id="estimatedaccrual" >
+																	<label class="control-label popovers" for="estm_accrual" 
+																	data-content="Enter the Estimated Accrual Amount for the entire program period"
+																	title="&nbsp;&nbsp;Hot Tip"
+																	data-placement="top" data-toggle="tooltip" data-trigger="hover">
+																	Estimated Accrual ($)</label>&nbsp;&nbsp;
+																	<input id="estm_accrual" name="estm_accrual" type="text"
+																		class="form-control radio-inline m-bot15" style="width: 120px;"
+																		value="">
+																	
+																</div>
+																<br>
+																<div id="tbpchk" >
+																<label class="control-label"
+																			for="tbpcheck">TBP Special Handling</label>&nbsp;&nbsp;
+																			 <input
+																			type="checkbox" name="tbpCheck"
+																			id="tbpCheck"/>
+																</div>
+																<br>
+																<div class="row">
+																<div id="glcocde" class="col-lg-4 col-sm-4">
+																<label class="control-label"
+																			for="glcode_dropdown">GLNo</label>&nbsp;&nbsp;
+																			  <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/>  
+																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled> -->
+																</div> 
+																</div>
+																
+																<br>
+																<div class="row">
+																<div id="sapglcocde" class="col-lg-4 col-sm-4">
+																<label class="control-label"
+																			for="sapglcode_dropdown">SAP GL Code</label>&nbsp;&nbsp;
+																			  <select  id="sapglcode_dropdown" name="sapglcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/>  
+																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled> -->
+																</div> 
+																</div>
+																</div>
 
 												<!-- Paid Achieve on  Begin-->
 												<div class="col-lg-12">
@@ -602,7 +789,7 @@
 														<div class="row">
 															<div class="col-lg-1 col-md-1 col-sm-1">
 																<!-- copy from paid -->
-																<a class="btn btn-info m-bot15" id="copy-paid-info-btn"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Copy from Paid Details</a>
+																<a class="btn btn-info m-bot15" style="text-decoration:none" id="copy-paid-info-btn"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Copy from Paid Details</a>
 															</div>
 														</div>
 														<div class="row">
@@ -689,7 +876,7 @@
 																</div>
 
 															</div>
-															<div class="form-group">
+<!-- 															<!--<div class="form-group">
 																<div id="program-tier" class="col-lg-4 col-md-4 col-sm-4 col-xs-4 pull-right"
 																	style="margin-top: -8%;">
 																	<div class="adv-table editable-table">
@@ -753,17 +940,84 @@
 																		</div>
 																	</div>
 																</div>
-															</div>
+															</div> -->
 														</div>
 													</div>
 												</div>
 												<!-- Paid Achieve On End -->
+												
+																<div class="form-group">
+																<div id="program-tier" class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+																	<div class="adv-table editable-table">
+
+																		<h4 class="tableHeader">Program Schedules</h4>
+
+																		<div class="">
+																			<table
+																				class="table table-striped table-hover table-bordered"
+																				id="tier-schedule" style="width: 100%;">
+																				<thead>
+																					<tr>
+																						<td colspan="6" class="zeroborders text-left"><label
+																							class="control-label" for="inputSuccess">Amount
+																								Type</label>&nbsp;&nbsp;
+																							<div class="radio-inline inline-flex">
+																								<label class="control-label" for="inputSuccess">
+																									<input type="radio"
+																									name="optionsRadiosDenominationTier"
+																									id="optionsRadiosPercentageTier1" value="%"
+																									class="radio-inline denomination" disabled="disabled" >%
+																								</label>
+																							</div>
+																							<div class="radio-inline inline-flex">
+																								<label class="control-label" for="inputSuccess">
+																									<input type="radio"
+																									name="optionsRadiosDenominationTier"
+																									id="optionsRadiosDollarSignTier1" value="$"
+																									class="radio-inline denomination required"
+																									checked="checked" disabled="disabled">$
+																								</label>
+																							</div></td>
+																					</tr>
+																					<tr>
+																						<td colspan="6" class="zeroborderstlr text-left"><label
+																							class="control-label" for="inputSuccess">Accrued
+																								Tier</label>&nbsp;&nbsp; <input id="actual_marker"
+																							name="actual_marker" type="text" size="3"
+																							class="form-control inline-flex" value=""></td>
+																					</tr>
+																					<tr>
+																						<th class="text-center">Tier</th>
+																						<th class="text-center">Amount</th>
+																						<th class="text-center">Begin Range</th>
+																						<th class="text-center">End Range</th>
+																						<th class="text-center">Edit</th>
+																						<th class="text-center">Delete</th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																	<div class="clearfix">
+																		<div class="btn-group">
+																			<button id="tier-schedule_new"
+																				class="btn btn-default">
+																				Add New Tier <i class="fa fa-plus"></i>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															
 											</div> <!-- Div End - Program Detail-->
 
 											<!-- END ROW 4 -->
 
 											<!-- Start ROW 8 -->
 											<div class="clearfix"></div>
+											<br>
 											<div class="row">
 												<div class="col-lg-12">
 													<label class="control-label" for="userComments">Commentary/Special
@@ -784,7 +1038,7 @@
 													<div id="footer-button" class="modal-footer" hidden="true">
 														 <button id="cancel-program" data-dismiss="modal"
 																class="btn btn-default" type="button" onclick="cancellink('#myModal11')">Cancel</button>	
-														 &nbsp; <a class="btn btn-success" id="submit-program"
+														 &nbsp; <a class="btn btn-success" style="text-decoration:none" id="submit-program"
 															href="javascript: validateBeforeSubmit('#myModal')"><i
 															class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
 															Approval
@@ -1541,6 +1795,7 @@
              			tbp=false;
              		}else{
              			$('#glcode_dropdown').attr('disabled', false);
+             			$('#sapglcode_dropdown').attr('disabled', false);
              			tbp=true;
              		}
              	},
@@ -1701,7 +1956,7 @@
                	fnPopulateDropdown('btl_inputselect', response.data.programDetailList[0].dropdownList.btlList);
                	$('#btl_inputselect').val(response.data.programDetailList[0].btl);
                	
-               	fnPopulateDropdown('payto_inputselect', response.data.programDetailList[0].dropdownList.payToList);
+               	//fnPopulateDropdown('payto_inputselect', response.data.programDetailList[0].dropdownList.payToList);
                	$('#payto_inputselect').val(response.data.programDetailList[0].payTo);
                	
                	fnPopulateDropdown('payment_method_inputselect', response.data.programDetailList[0].dropdownList.paidTypeList);
@@ -1715,6 +1970,9 @@
               
                	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
                	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
+               	
+               	fnPopulateDropdown('sapglcode_dropdown', response.data.programDetailList[0].dropdownList.sapGlCodeList);
+               	$('#sapglcode_dropdown').val(response.data.programDetailList[0].glCode);
               
                	if(response.data.programDetailList[0].tbpCheck == '1'){
                		$("#tbpCheck").prop('checked', true);
@@ -1875,6 +2133,7 @@
 					showApproverButtons();
 					if(tbp){
 						$('#glcode_dropdown').attr('disabled', false);
+						$('#sapglcode_dropdown').attr('disabled', false);
 					}
 					$('#edit-button').hide();
 				}
@@ -1884,6 +2143,7 @@
 					hideApproverButtons();
 					$('#edit-button').hide();
 					$('#glcode_dropdown').attr('disabled', true);
+					$('#sapglcode_dropdown').attr('disabled', true);
 				}
          	}
          	
@@ -2087,6 +2347,7 @@
 				$('#edit-button').addClass("disabled");
 				if(!tbp){
 					$('#glcode_dropdown').attr('disabled', true);
+					$('#sapglcode_dropdown').attr('disabled', true);
 				}
 				$("#cancel-program").html("Cancel");
 			}
@@ -2401,6 +2662,7 @@
 	function populateGlcode(id){
 			pgmType='';
 			$('#glcode_dropdown').val('');
+			$('#sapglcode_dropdown').val('');
 			if(responseOnload.businessUnit=='P'){
 				//key=($('#program_name_inputselect option:selected').text())+' - '+'Consumer';
 				key='Consumer';
@@ -2436,6 +2698,7 @@
 			$.each(responseOnload.programDetailList[0].glCodeList, function (i, item) {
 			   if((key==item.bu)&&(item.pcs==pgmType)){
 				   $('#glcode_dropdown').val(item.id); 
+				   $('#sapglcode_dropdown').val(item.id);
 			   }
 			});
 	}

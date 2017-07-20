@@ -11,6 +11,7 @@ public class ProgramDetailsDropDown {
 	private List<DropDown> paidTypeList;
 	private List<DropDown> paidBasedOnList;
 	private List<DropDown> glCodeList;
+	private List<DropDown> sapGlCodeList;
 	
 	public List<DropDown> getProgramNameList() {
 		return programNameList;
@@ -60,4 +61,11 @@ public class ProgramDetailsDropDown {
 	public void setGlCodeList(List<DropDown> glCodeList) {
 		this.glCodeList = glCodeList;
 	}
+	public List<DropDown> getSapGlCodeList() {
+		return sapGlCodeList;
+	}
+	public void setSapGlCodeList(List<DropDown> sapGlCodeList) {
+		this.sapGlCodeList = sapGlCodeList;
+	}
+	
 }

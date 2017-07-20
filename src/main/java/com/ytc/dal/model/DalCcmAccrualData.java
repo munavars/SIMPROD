@@ -62,6 +62,7 @@ private String payTo;
 private Calendar beginDate;
 private Calendar endDate;
 private String glCode;
+private String sapGlCode;
 private String paymentMethod;
 private Integer baseItemId;
 private String adjustedUser;
@@ -186,7 +187,7 @@ public void setFrequency(String frequency) {
 /**
  * @return the programId
  */
-@Column(name = "PGM_ID")
+@Column(name = "PGM_DETAIL_ID")
 public Integer getProgramId() {
 	return programId;
 }
@@ -559,6 +560,20 @@ public String getGlCode() {
  */
 public void setGlCode(String glCode) {
 	this.glCode = glCode;
+}
+
+/**
+ * @return the sapGlCode
+ */
+@Column(name = "SAP_GL")
+public String getSapGlCode() {
+	return sapGlCode;
+}
+/**
+ * @param sapGlCode the sapGlCode to set
+ */
+public void setSapGlCode(String sapGlCode) {
+	this.sapGlCode = sapGlCode;
 }
 /**
  * @return the paymentMethod

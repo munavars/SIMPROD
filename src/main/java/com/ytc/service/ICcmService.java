@@ -16,9 +16,11 @@ public interface ICcmService {
 
 	List<DropDown> getPeriodDropDownList();
 
-	int saveCCMDetails(AccuralCcmData accuralCcmData, String string);
+	String saveCCMDetails(AccuralCcmData accuralCcmData, String string);
 
 	//int submitCcmForApproval(List<Integer> approvalList);
 
 	int updateCcmStatus(Integer id);
+
+	int updateCCMDetails(AccuralCcmData accuralCcmData);
 }

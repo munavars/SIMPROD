@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.RollbackException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ytc.common.model.Employee;
 import com.ytc.common.result.ListResult;
+import com.ytc.common.result.Result;
 import com.ytc.constant.ProgramConstant;
+import com.ytc.service.IAccrualDataService;
 import com.ytc.service.ISalesDataService;
 import com.ytc.service.ServiceContext;
 @Controller
@@ -161,14 +166,15 @@ public class TestController  extends BaseController {
 	}
 
 
-	@RequestMapping(value = "/getSalesData/{id}", method = RequestMethod.GET)
-	public @ResponseBody ListResult<String> getSalesData(HttpServletRequest request, @PathVariable Integer id) {
-		return new ListResult<String>(getService(request).getBaseData(id));
+
+	@RequestMapping(value = "/accuralCalc", method = RequestMethod.POST)
+	public void getSalesData(HttpServletRequest request) throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
+		getService(request).callStoreProcedures();
 	}
 
 
-	private ISalesDataService getService(HttpServletRequest request) {
-		return getServiceLocator(request).getSalesDataService();
+	private IAccrualDataService getService(HttpServletRequest request) {
+		return getServiceLocator(request).getAccrualDataService();
 
 	}
 

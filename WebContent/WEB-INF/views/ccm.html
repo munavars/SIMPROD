@@ -91,7 +91,7 @@
 	                render: function ( data, type, row, meta ) {
 	                      if(type === 'display'){
 	                    	  if((row.programStatus=='Submitted')){
-	                         	data='<a href=# id="unlock'+meta.row+'" onclick="unlock(this);"><button class="btn btn-default">Unlock</button></a>';
+	                         	data='<a href=# data-toggle="tooltip" data-placement="right" title="Click Unlock to Edit" id="unlock'+meta.row+'" onclick="unlock(this);"><button class="btn btn-default">Unlock</button></a>';
 	                     	 }else{
 	                     		data='<a href=# id="unlock'+meta.row+'"><button disabled class="btn btn-default">Unlock</button></a> '; 
 	                     	 }
@@ -121,6 +121,14 @@
 
                     return data;
                 } },
+                { data: "creditBasedOn",
+                	render: function ( data, type, row, meta ) {
+              	  if(type === 'display'){
+            		  data = '<div id="creditbasedon'+meta.row+'">' + data+'</div>';
+                  }
+
+                  return data;
+              	} },
 	            { data: "guarantee" },
 	            { data: "amount", 
 	            	className:"right",
@@ -194,15 +202,8 @@
 
                     return data;
                 }},	            
-	            { data: "creditBasedOn",
-                	render: function ( data, type, row, meta ) {
-              	  if(type === 'display'){
-            		  data = '<div id="creditbasedon'+meta.row+'">' + data+'</div>';
-                  }
-
-                  return data;
-              } },
-	            { data: "creditMemo", 
+	           
+	           /*  { data: "creditMemo", 
             	  className:"center",
             	  render: function ( data, type, row, meta ) {
                     if(type === 'display'){
@@ -210,7 +211,7 @@
                     }
 
                     return data;
-                }},
+                }}, */
                 { data: "comments",
 	            	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
@@ -223,7 +224,11 @@
 	            { data: "docNo",
 	            	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
-                        data = '<input type="text" id="docNum'+meta.row+'" value="">';
+                    	if((row.programStatus=='Submitted')){
+                        	 data = '<input type="text" id="docNum'+meta.row+'" value="">';
+                    	}else{
+                    		 data = '<input type="text" id="docNum'+meta.row+'" value="" disabled>';	
+                    	}
                     }
 
                     return data;
@@ -231,7 +236,12 @@
 	            { data: "docDate",
                 	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
-                        data = '<input type="text" id="docDate'+meta.row+'" value="">';
+                    	if((row.programStatus=='Submitted')){
+                       		data = '<input type="text" id="docDate'+meta.row+'" value="" readonly="readonly" style="background:white;">';
+                       		//data='<input type="text" class="form-control dpd1" readonly="readonly" id="from" name="from" placeholder="Begin Date" style="background:white;">';
+                    	}else{
+                    		data = '<input type="text" id="docDate'+meta.row+'" value="" disabled>';	
+                    	}
                     }
 
                     return data;
@@ -339,7 +349,7 @@
     	
     	 $('#ccmtable').on('draw.dt', function () {
              $('[data-toggle="tooltip"]').tooltip();
-             
+             $('[id^="docDate"]').datepicker();
          });  
     	 
        });
@@ -427,6 +437,12 @@
                      <i class="fa fa-dashboard"></i>
                      <span>My Dashboard</span>
                      </a>
+                  </li>
+                  <li>
+                      <a class="active" href="ccm">
+                              <i class="fa fa-tasks"></i>
+                              <span>CCM</span>
+                      </a>
                   </li>
                  <!--  <li>
                      <a id="create-program" class="" href="program_details2.html">
@@ -592,7 +608,8 @@
                                 <th>Program Id</th>
                                 <th>Program Name</th>
                                 <th>Description</th>
-                                <th>Paid Based On</th>								
+                                <th>Paid Based On</th>	
+                                <th>Credit Based On</th>							
                                 <th>Guarantee</th>
                                 <th>Amount</th>
                                 <!-- <th>% or $</th> -->
@@ -602,8 +619,8 @@
                                 <th>Variance</th>	
                                <!--  <th><input type="checkbox" id="allreview" value="">&nbsp;&nbsp;&nbsp;Reviewed</th> -->
                                 <th><input type="checkbox" id="allsubmit" value="">&nbsp;&nbsp;&nbsp;Submit For Approval</th>                               
-                                <th>Credit Based On</th>
-                                <th>Generate Credit Memo Data</th>
+                                
+                               <!--  <th>Generate Credit Memo Data</th> -->
                                 <th>Comments</th>
                                 <th>Program Status</th>
                                 <th>Doc No</th>
@@ -653,9 +670,9 @@
 															class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
 															Approval
 														</a>&nbsp; 
-														<!-- <a class="btn btn-info finish" id="ccm_save"
-															href="javascript: saveReviewedList()"><i
-															class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a> --> &nbsp;
+														 <a class="btn btn-info finish" id="ccm_save"
+															href="javascript: saveChanges()"><i
+															class="fa fa-save"></i>&nbsp;&nbsp;Save Changes</a> &nbsp;
 														&nbsp;</div>
 												
 											</div> 
@@ -809,8 +826,8 @@
 		   if(2!=emp[0].ROLE_ID)
 		   	{
 		   		openSidebar();
-			}
-		   
+			}		   
+		  
 		   
 		   $.ajax({ 
             	type: "GET",
@@ -1082,7 +1099,44 @@
 		}
 	}
 	
-	function saveReviewedList(){
+	function saveChanges(){
+		 var accuralCcmDataList=[];
+		 $('[id^="docNum"]:not([disabled])').each(function(index,data){
+			 //alert(this.id);
+			 var id=this.id.substring(6);
+			 if(($('#docNum'+id).val()!="")||($('#docDate'+id).val()!="")){
+			 var accuralCcmData = new Object();
+			 accuralCcmData.id=$('#submitForApproval'+id).data('id');
+			 accuralCcmData.comments=$('#comments'+id).val();
+			 accuralCcmData.docNumber=$('#docNum'+id).val();
+			 accuralCcmData.docDate=Date.parse($('#docDate'+id).val());
+			 accuralCcmDataList.push(accuralCcmData);
+			 }
+		   });
+		 console.log(JSON.stringify(accuralCcmDataList));
+		if(accuralCcmDataList.length==0){
+			 message="Kindly enter values to save";
+	         $("#confirmMessage").html(message);
+			 $('#myModal1').modal('toggle');
+			return;
+		}
+		 $.ajax({ 
+	           	type: "POST",
+	           	dataType: "json",
+	          		url: '/SIM/ccm/v1/updateCCMDetails',
+	          		contentType: 'application/json',
+					data: JSON.stringify(accuralCcmDataList),
+	           	success: function(response){
+	            message="Data Saved Successfully";
+	            $("#confirmMessage").html(message);
+				$('#myModal1').modal('toggle');
+	            runReport();
+	           	},
+	           	failure: function(response){
+	           		alert("Wrongly done");
+	           	}});
+	}
+	/* function saveReviewedList(){
 		console.log(reviewList);
 		var valid=false;
 		 $('[id^="review"]').each(function(index,data){
@@ -1136,7 +1190,7 @@
 			
 		 reviewList=[];
   		 submitList=[];
-	}
+	} */
 	
 	function submitForApproval(){
 		console.log(submitList);
@@ -1191,12 +1245,13 @@
 	   	           	dataType: "json",
 	   	          		url: '/SIM/ccm/v1/saveCCMDetails',
 	   	          		contentType: 'application/json',
+	   	          		dataType: "text",
 	   					data: JSON.stringify(accuralCcmDataList),
 	   	           	success: function(response){
-	   	            runReport();
 	   	            message="Data Saved Successfully";
 	   	            $("#confirmMessage").html(message);
 	   				$('#myModal1').modal('toggle');
+	   	            runReport();
 	   	           	},
 	   	           	failure: function(response){
 	   	           		alert("Wrongly done");
@@ -1217,10 +1272,10 @@
           		contentType: 'application/json',
 				data: JSON.stringify($('#submitForApproval'+id).data('id')),
            	success: function(response){
-           		runReport();
             message="Review Unlocked Successfully";
             $("#confirmMessage").html(message);
 			$('#myModal1').modal('toggle');
+       		runReport();
            	},
            	failure: function(response){
            		alert("Wrongly done");

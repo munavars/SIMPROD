@@ -32,6 +32,7 @@ import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IProgramCreateService;
 import com.ytc.service.IProgramEmailService;
+import com.ytc.service.IProgramService;
 import com.ytc.service.IProgramUpdateService;
 import com.ytc.service.IProgramWorkflowService;
 import com.ytc.service.ServiceContext;
@@ -52,6 +53,9 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 	
 	@Autowired
 	private IProgramWorkflowService programWorkflowService;
+	
+	@Autowired
+	private IProgramService programService;
 	
 	@Override
 	public ProgramHeader saveProgramDetails(ProgramHeader programHeader) {
@@ -171,6 +175,9 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			programHeader.getProgramDetailList().get(0).setModifiedDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT) );
 		}
 		getUpdatedWorkflowDetails(programHeader, dalProgramDetail);
+		if(ProgramConstant.SAVE.equalsIgnoreCase(programHeader.getAction() ) || ProgramConstant.SUBMIT.equalsIgnoreCase(programHeader.getAction() )){
+			programService.populateTierData(programHeader, dalProgramDetail);	
+		}
 		programHeader.setStatus(dalProgramDetail.getStatus().getType());
 		programEmailService.sendEmailData(programHeader, dalProgramDetail);
 	}

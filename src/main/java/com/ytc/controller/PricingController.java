@@ -113,10 +113,10 @@ public class PricingController extends BaseController {
 		
 	}
 	
-	@RequestMapping(value = "/pricing/v1/getCustomerPricingDetails/{bu}",method = RequestMethod.GET)
-	public @ResponseBody ListResult<NetPricing> getCustomerPricingDetails(HttpServletRequest request, @PathVariable("bu") String bu) {
+	@RequestMapping(value = "/pricing/v1/getCustomerPricingDetails/{bu}/{custId}",method = RequestMethod.GET)
+	public @ResponseBody ListResult<NetPricing> getCustomerPricingDetails(HttpServletRequest request, @PathVariable("bu") String bu, @PathVariable("custId") Integer custId) {
 		ListResult<NetPricing> returnData = null;
-		returnData = new ListResult<NetPricing>(getService(request).getCustomerPricingDetails(serviceContext.getEmployee().getEMP_ID(),bu));
+		returnData = new ListResult<NetPricing>(getService(request).getCustomerPricingDetails(serviceContext.getEmployee().getEMP_ID(),bu, custId));
 		//returnData = new ListResult<NetPricing>(getService(request).getCustomerPricingDetails(98));
 		return returnData;
 		

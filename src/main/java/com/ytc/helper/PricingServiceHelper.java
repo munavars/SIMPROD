@@ -3,6 +3,8 @@ package com.ytc.helper;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -99,5 +101,38 @@ public class PricingServiceHelper {
 			formattedAmount = amountFormatter.format(Double.valueOf(inputAmount));
 		}
 		return formattedAmount;
+	}
+	
+	public static List<DalPricingDetail> getPricingDetailsSorted(Set<DalPricingDetail> dalPricingDetailSet){
+		List<DalPricingDetail> dalPricingDetailList = null;
+		if(dalPricingDetailSet != null && !dalPricingDetailSet.isEmpty()){
+			dalPricingDetailList = new ArrayList<DalPricingDetail>(dalPricingDetailSet);
+			/**Sorting*/
+			Collections.sort(dalPricingDetailList, new Comparator<DalPricingDetail>() {
+	
+				@Override
+				public int compare(DalPricingDetail one, DalPricingDetail two) {
+					int val = 0;
+					if(one.getId() == null){
+						if(two.getId() != null){
+							val = -1;
+						}
+						else{
+							val = 0;
+						}
+					}
+					else if(two.getId() == null){
+						val = 1;
+					}
+					else{
+						val = one.getId().compareTo(two.getId());
+					}
+					return val;
+				}
+				
+			});
+		}
+		
+		return dalPricingDetailList;
 	}
 }

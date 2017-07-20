@@ -305,11 +305,21 @@ a { text-decoration: none }
 									}
 								}
 								else{
-									 if ((oneRow[i] == null || oneRow[i] == '') && (columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || columnNames[i] == " PART#") ){
-									 	isValid = false;
-									 }
-
-									rowValues[columnNames[i]] = oneRow[i];
+									if ((oneRow[i] == null || oneRow[i] == '') && (columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || columnNames[i] == " PART#") ){
+										isValid = false;
+									}
+									if(columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" ){
+										if(oneRow[i] != null){
+											rowValues[columnNames[i]] = oneRow[i].toString().toUpperCase();
+										}
+										else{
+											rowValues[columnNames[i]] = oneRow[i];
+										}
+									}
+									else{
+										rowValues[columnNames[i]] = oneRow[i];
+									}
+									
 								}
 							}
 							display2["values"] = rowValues;
@@ -1510,8 +1520,8 @@ a { text-decoration: none }
 						rowValues[invoiceDiscountHeader[3]] = item.prodLine;
 						rowValues[invoiceDiscountHeader[4]] = item.tread;
 						rowValues[invoiceDiscountHeader[5]] = item.part;
-						rowValues[invoiceDiscountHeader[6]] = convertAmountFormat(parseInt(item.netPrice));
-						rowValues[invoiceDiscountHeader[7]] = convertAmountFormat(parseInt(item.invoiceDisc)) + '%';
+						rowValues[invoiceDiscountHeader[6]] = convertAmountFormat(item.netPrice);
+						rowValues[invoiceDiscountHeader[7]] = convertAmountFormat(item.invoiceDisc) + '%';
 						rowValues[invoiceDiscountHeader[8]] = item.bonusUnits;
 						rowValues[invoiceDiscountHeader[9]] = item.commissionable;
 						rowValues[invoiceDiscountHeader[10]] = item.comments;
@@ -1641,7 +1651,7 @@ a { text-decoration: none }
 				responseOnload.status = "2";
 				responseOnload.url = window.location.href;
 				responseOnload.approverComments = $("#approveComments").val();
-				fnCallService(message, idBefore);
+				fnCallService(message, idBefore, 'approve');
 				$('#myModal7').modal('toggle');
 				disableFields();
 			}
@@ -1652,7 +1662,7 @@ a { text-decoration: none }
 				responseOnload.status = "1";
 				responseOnload.url = window.location.href;
 				responseOnload.approverComments = $("#rejectionComments").val();
-				fnCallService(message, idBefore);
+				fnCallService(message, idBefore, 'reject');
 				$('#myModal8').modal('toggle');
 				disableFields();
 			}
@@ -1663,7 +1673,7 @@ a { text-decoration: none }
          		responseOnload.status = "3";
          		responseOnload.url = window.location.href;
          		prepareDataForSubmit();
-         		fnCallService(message, idBefore);
+         		fnCallService(message, idBefore, 'save');
          		$('#myModal1').modal('toggle');
          	}
          	
@@ -1676,9 +1686,8 @@ a { text-decoration: none }
          			prepareDataForSubmit();
          		}
          		
-         		fnCallService(message, idBefore);
+         		fnCallService(message, idBefore, 'submit');
          		$('#myModal').modal('toggle');
-         		disableFields();
          	}
          	
          	var formData=[];
@@ -1707,7 +1716,7 @@ a { text-decoration: none }
 				responseOnload.pricingDetailList=fileDataList;
 						
  			}
-         	function fnCallService(message, idBefore){
+         	function fnCallService(message, idBefore, action){
 				/*Service call to save the data.*/	
 			    $.ajax({
 					type: "POST",
@@ -1734,8 +1743,11 @@ a { text-decoration: none }
 								//fnPopulateInvoiceDiscountTable(responseOnload);
 							}
 							_isDirty = false;
+							if(action == 'submit'){
+								disableFields();
+							}
 			            } else {
-			              	$('#myModal1').modal('toggle');
+			              	/* $('#myModal1').modal('toggle'); */
          					$("#errorMessage").html("Issue while saving the data. Please correct the following data.!!"+'<br><br>'+response.data.validationMessage);
 							$('#myModal5').modal('toggle');
 			            
@@ -1744,7 +1756,7 @@ a { text-decoration: none }
 			            
 					},
 					failure: function(response){
-					 	$('#myModal1').modal('toggle');
+					 	/* $('#myModal1').modal('toggle'); */
          				$("#errorMessage").html("Issue while saving the data. Please try again after sometime.!!");
 						$('#myModal5').modal('toggle');
 						//alert("Issue while saving the data. Please try again after sometime.!!");

@@ -18,7 +18,7 @@ public interface IPricingService {
 	
 	public List<DropDown> getTagValueDropDown(Integer tagId);
 	public PricingHeader getPricingDetails(Integer customerId);
-	public List<NetPricing> getCustomerPricingDetails(Integer empId, String bu);
+	public List<NetPricing> getCustomerPricingDetails(Integer empId, String bu, Integer customerId);
 	
 	/**
 	 * Interface method. This method is used to get the pricing heade details based on the pricing header id passed as input.

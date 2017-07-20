@@ -193,7 +193,7 @@ function tableToExcel(tableId, fileName) {
 					lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
 					
 				    ajax: {
-				        url: '/SIM/pricing/v1/getCustomerPricingDetails/'+bu,
+				        url: '/SIM/pricing/v1/getCustomerPricingDetails/'+bu +'/'+custId,
 				        dataSrc: "data",
 				        type: "GET",
 				    },

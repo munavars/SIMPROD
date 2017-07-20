@@ -1670,12 +1670,18 @@
 			              $("#confirmMessage").html("Program already exists and the previous program id is <strong>"+ idAfter + "</strong>");
 						  $('#myModal4').modal('toggle');
 			            }
-			             else {
-							alert("Issue while saving the data. Please try again after sometime.!!");
+						/* else if(response.data.success == false && response.data.errorMessage != null){
+				            $("#confirmMessage").html(response.data.errorMessage);
+							$('#myModal4').modal('toggle');
+			            } */
+			            else {
+							$("#confirmMessage").html("Issue while saving the data. Please try again after sometime.!!");
+							$('#myModal4').modal('toggle');
 			            }
 					},
 					failure: function(response){
-						alert("Issue while saving the data. Please try again after sometime.!!");
+						$("#confirmMessage").html("Issue while saving the data. Please try again after sometime.!!");
+						$('#myModal4').modal('toggle');
 					}
 			    });
 			}

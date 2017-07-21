@@ -5,6 +5,9 @@ import java.util.List;
 import com.ytc.common.model.AccuralCcmData;
 import com.ytc.common.model.CcmDetails;
 import com.ytc.common.model.DropDown;
+import com.ytc.common.params.CreditMemoParams;
+import com.ytc.dal.model.DalCcmBillToData;
+import com.ytc.dal.model.DalCcmPartData;
 
 public interface ICcmService {
 
@@ -23,4 +26,8 @@ public interface ICcmService {
 	int updateCcmStatus(Integer id);
 
 	int updateCCMDetails(AccuralCcmData accuralCcmData);
+
+	List<DalCcmBillToData> ccmBillToData(CreditMemoParams params);
+
+	List<DalCcmPartData> ccmPartData(CreditMemoParams params);
 }

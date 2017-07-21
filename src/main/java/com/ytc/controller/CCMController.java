@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ytc.common.model.AccuralCcmData;
 import com.ytc.common.model.CcmDetails;
 import com.ytc.common.model.DropDown;
+import com.ytc.common.params.CreditMemoParams;
 import com.ytc.common.result.ListResult;
 import com.ytc.constant.ProgramConstant;
+import com.ytc.dal.model.DalCcmBillToData;
+import com.ytc.dal.model.DalCcmPartData;
 import com.ytc.service.ICcmService;
 import com.ytc.service.ServiceContext;
 
@@ -118,4 +121,16 @@ public class CCMController extends BaseController {
 		return count;
 		
 	}
+	
+	
+	@RequestMapping(value = "/ccmBillToData", method = RequestMethod.GET)
+	public @ResponseBody List<DalCcmBillToData> getCcmBillToData(HttpServletRequest request, @RequestBody CreditMemoParams params){
+		return getService(request).ccmBillToData(params);
+	}
+	
+	@RequestMapping(value = "/ccmPartData", method = RequestMethod.GET)
+	public @ResponseBody List<DalCcmPartData> getCcmPartData(HttpServletRequest request, @RequestBody CreditMemoParams params){
+		return getService(request).ccmPartData(params);
+	}
+	
 }

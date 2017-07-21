@@ -617,7 +617,7 @@
 
 
 														<!-- 	<div class="col-lg-4 col-md-4 col-sm-4 inline-flex m-top45"> -->
-															<div class="col-lg-125">	
+															<div class="col-lg-125" style="padding-left: 15px;">	
 																
 																<label class="control-label" for="inputSuccess"
 																	data-original-title="Customer Details">
@@ -764,6 +764,14 @@
 																</div>
 																<br>
 																<div class="row">
+																
+																<div id="sapglcocde" class="col-lg-4 col-sm-4">
+																<label class="control-label"
+																			for="sapglcode_dropdown">SAP GL Code</label>&nbsp;&nbsp;
+																			  <select  id="sapglcode_dropdown" name="sapglcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/>  
+																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled> -->
+																</div>
+																
 																<div id="glcocde" class="col-lg-4 col-sm-4">
 																<label class="control-label"
 																			for="glcode_dropdown">GLNo</label>&nbsp;&nbsp;
@@ -773,14 +781,7 @@
 																</div>
 																
 																<br>
-																<div class="row">
-																<div id="sapglcocde" class="col-lg-4 col-sm-4">
-																<label class="control-label"
-																			for="sapglcode_dropdown">SAP GL Code</label>&nbsp;&nbsp;
-																			  <select  id="sapglcode_dropdown" name="sapglcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/>  
-																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled> -->
-																</div> 
-																</div>
+																
 																</div>
 
 												<!-- Paid Achieve on  Begin-->
@@ -791,7 +792,7 @@
 														<div class="row">
 															<div class="col-lg-1 col-md-1 col-sm-1">
 																<!-- copy from paid -->
-																<a class="btn btn-info m-bot15" style="text-decoration:none" id="copy-paid-info-btn"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Copy from Paid Details</a>
+																<a class="btn btn-info m-bot15" id="copy-paid-info-btn"><i class="fa fa-files-o"></i>&nbsp;&nbsp;Copy from Paid Details</a>
 															</div>
 														</div>
 														<div class="row">
@@ -1040,7 +1041,7 @@
 													<div id="footer-button" class="modal-footer" hidden="true">
 														 <button id="cancel-program" data-dismiss="modal"
 																class="btn btn-default" type="button" onclick="cancellink('#myModal11')">Cancel</button>	
-														 &nbsp; <a class="btn btn-success" style="text-decoration:none" id="submit-program"
+														 &nbsp; <a class="btn btn-success"  id="submit-program"
 															href="javascript: validateBeforeSubmit('#myModal')"><i
 															class="fa fa-check-circle"></i>&nbsp;&nbsp;Submit For
 															Approval
@@ -1500,6 +1501,18 @@
 			    return isNumber;
 			}, 'Please enter valid Accrual Estimation');
 			
+			$.validator.addMethod("payToValidation", function (value, element) {
+				var isNumber = true;
+				var regex = /^[0-9]+$/;
+				if(value==0){
+					isNumber=false;
+				}
+				if( !regex.test(value) ) {
+				  isNumber = false;
+				}
+			    return isNumber;
+			}, 'Please enter valid Pay To');
+			
 			$.validator.addMethod("percentageValidation", function (value, element) {
 				var isPercentage = true;
 				var regex = /^[0-9.]+$/;
@@ -1594,7 +1607,8 @@
 						required: true
 					},
 					payto_inputselect: {
-						required: true
+						required: true,
+						payToValidation:true
 					},
 					payment_method_inputselect:{
 						required: true
@@ -1961,7 +1975,7 @@
                	//fnPopulateDropdown('payto_inputselect', response.data.programDetailList[0].dropdownList.payToList);
                	$('#payto_inputselect').val(response.data.programDetailList[0].payTo);
                	
-               	fnPopulateDropdown('payment_method_inputselect', response.data.programDetailList[0].dropdownList.paidTypeList);
+               	fnPopulateDropdown('payment_method_inputselect', response.data.programDetailList[0].dropdownList.paidTypeList.reverse());
                	$('#payment_method_inputselect').val(response.data.programDetailList[0].paidType);
                	
                	fnPopulateDropdown('paid_basedon_inputselect', response.data.programDetailList[0].dropdownList.paidBasedOnList);

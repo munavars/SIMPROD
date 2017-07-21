@@ -66,6 +66,10 @@ private String sapGlCode;
 private String paymentMethod;
 private Integer baseItemId;
 private String adjustedUser;
+private String tbp;
+private double paidBasedOnValue;
+private String docNumber;
+private Calendar docDate;
 
 /**
  * @return the createdDate
@@ -639,6 +643,58 @@ public String getAdjustedUser() {
  */
 public void setAdjustedUser(String adjustedUser) {
 	this.adjustedUser = adjustedUser;
+}
+/**
+ * @return the tbp
+ */
+@Column(name = "TBP")
+public String getTbp() {
+	return tbp;
+}
+/**
+ * @param tbp the tbp to set
+ */
+public void setTbp(String tbp) {
+	this.tbp = tbp;
+}
+/**
+ * @return the paidBasedOnValue
+ */
+@Column(name = "PAID_BASED_ON_VALUE")
+public double getPaidBasedOnValue() {
+	return paidBasedOnValue;
+}
+/**
+ * @param paidBasedOnValue the paidBasedOnValue to set
+ */
+public void setPaidBasedOnValue(double paidBasedOnValue) {
+	this.paidBasedOnValue = paidBasedOnValue;
+}
+/**
+ * @return the docNumber
+ */
+@Column(name = "DOC_NO")
+public String getDocNumber() {
+	return docNumber;
+}
+/**
+ * @param docNumber the docNumber to set
+ */
+public void setDocNumber(String docNumber) {
+	this.docNumber = docNumber;
+}
+/**
+ * @return the docDate
+ */
+@Column(name = "DOC_DATE")
+public Calendar getDocDate() {
+	return docDate;
+}
+/**
+ * @param docDate the docDate to set
+ */
+public void setDocDate(Calendar docDate) {
+	this.docDate = docDate;
 }
 	
 

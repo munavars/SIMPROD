@@ -51,6 +51,9 @@ public class CcmDetails extends Model {
 	private String paymentMethod;
 	private String baseId;
 	private String edit;
+	private String accrualStartDate;
+	private String accrualEndDate;
+	private String tbp;
 	
 	
 	/**
@@ -582,6 +585,42 @@ public class CcmDetails extends Model {
 	 */
 	public void setEdit(String edit) {
 		this.edit = edit;
+	}
+	/**
+	 * @return the accrualStartDate
+	 */
+	public String getAccrualStartDate() {
+		return accrualStartDate;
+	}
+	/**
+	 * @param accrualStartDate the accrualStartDate to set
+	 */
+	public void setAccrualStartDate(String accrualStartDate) {
+		this.accrualStartDate = accrualStartDate;
+	}
+	/**
+	 * @return the accrualEndDate
+	 */
+	public String getAccrualEndDate() {
+		return accrualEndDate;
+	}
+	/**
+	 * @param accrualEndDate the accrualEndDate to set
+	 */
+	public void setAccrualEndDate(String accrualEndDate) {
+		this.accrualEndDate = accrualEndDate;
+	}
+	/**
+	 * @return the tbp
+	 */
+	public String getTbp() {
+		return tbp;
+	}
+	/**
+	 * @param tbp the tbp to set
+	 */
+	public void setTbp(String tbp) {
+		this.tbp = tbp;
 	}
 	
 	

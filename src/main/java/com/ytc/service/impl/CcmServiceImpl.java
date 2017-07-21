@@ -164,7 +164,13 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setProgramStatus(dalCcmAccrualData.getProgramStatus());
 			ccmDetails.setBaseId(dalCcmAccrualData.getBaseItemId().toString());
 			ccmDetails.setEdit("");
-			ccmDetails.setCreditBasedOn(populateCreditBasedOn(ccmDetails));
+			//ccmDetails.setCreditBasedOn(populateCreditBasedOn(ccmDetails));
+			ccmDetails.setCreditBasedOn(format.format(dalCcmAccrualData.getPaidBasedOnValue()));
+			ccmDetails.setAccrualStartDate(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getAccrualStartDate().getTime(), ProgramConstant.DATE_FORMAT));
+			ccmDetails.setAccrualEndDate(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getAccrualEndDate().getTime(), ProgramConstant.DATE_FORMAT));
+			ccmDetails.setTbp(dalCcmAccrualData.getTbp());
+			ccmDetails.setDocNo(null!=dalCcmAccrualData.getDocNumber()?dalCcmAccrualData.getDocNumber():"");
+			ccmDetails.setDocDate(null!=dalCcmAccrualData.getDocDate()?(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getDocDate().getTime(), ProgramConstant.DATE_FORMAT)):"");
 			ccmList.add(ccmDetails);
 		}
 /*		for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {

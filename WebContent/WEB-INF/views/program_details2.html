@@ -371,14 +371,13 @@
 													<br>
 													<div class="row">
 														<div class="col-lg-12">
-															<label class="control-label " for="longDesc">Program
-																Description</label>
-															<textarea id="longDesc" name="longDesc"
-																rel="txtTooltip"
+															<label class="control-label popovers" for="longDesc" rel="txtTooltip"
 																data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" rows="3"
+																data-placement="top" rows="3" data-html="true">Program
+																Description</label>
+															<textarea id="longDesc" name="longDesc"
 																placeholder="Add program description details"
 																class="form-control m-bot15"></textarea>
 														</div>
@@ -676,9 +675,9 @@
 																	</div>
 														
 																	<div class="col-lg-2 col-sm-2">
-																		<label class="control-label popovers" for="payto_inputselect"
+																		<label class="control-label popovers" for="payto_inputselect" data-html="true"
 																		data-content="If Paid type is Credit, enter ShipTo. If Cheque,  enter SAP Vendor #"
-																	    title="&nbsp;&nbsp;Hot Tip"
+																	    title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																	    data-placement="top" data-toggle="tooltip" data-trigger="hover"
 																		>Pay To</label> <!-- <select class="form-control input-sm m-bot15"
 																			id="payto_inputselect" name="payto_inputselect">
@@ -691,28 +690,28 @@
 																<br>
 													<div class="row">
 														<div class="col-lg-2 col-md-2 col-sm-2">
-															<label class="control-label" for="btl_inputselect">BTL
-																(Behind The Line)</label> <select
-																class="form-control input-sm m-bot15"
-																rel="txtTooltip"
-																data-content="Behind the Line (BTL), for purposes of After the Fact Sales Incentives, indicates if the Dealer/Customer is aware the program accrual exists.
-																<li>If Dealer/Customer is aware of the program, BTL = NO<li>If Dealer/Customer is NOT aware of the program, BTL = YES.</li>By default BTL is set as No."
+															<label class="control-label popovers" data-html="true"
+															 for="btl_inputselect" rel="txtTooltip"
+																data-content="Behind the Line (BTL), for purposes of After the Fact Sales Incentives, indicates if the Dealer/Customer is aware the program accrual exists.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+																-If Dealer/Customer is aware of the program, BTL = NO.
+																-If Dealer/Customer is NOT aware of the program, BTL = YES"
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" rows="2"
+																data-placement="top" >BTL (Behind The Line)</label> 
+																<select
+																class="form-control input-sm m-bot15"
 																id="btl_inputselect" name="btl_inputselect">
 															</select>
 														</div>
 														<div class="col-lg-2 col-md-2 col-sm-2">
-															<label class="control-label"
-																for="pricing_type_inputselect">Pricing Type</label> <select
-																class="form-control input-sm m-bot15"
-																rel="txtTooltip"
+															<label class="control-label popovers" data-html="true"
+																for="pricing_type_inputselect" rel="txtTooltip"
 																data-content="Is the After the Fact (ATF) program part of the Dealer/Customer long-term pricing structure? Or is the ATF program a promotional item?
 																Generally ATFs active for full year are long-term pricing. Non-reoccurring ATFs active for a single month/quarter may be considered promotional."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" rows="3"
+																data-placement="top">Pricing Type</label> <select
+																class="form-control input-sm m-bot15"
 																id="pricing_type_inputselect"
 																name="pricing_type_inputselect">
 															</select>
@@ -720,9 +719,9 @@
 													</div>
 															<br>	
 																<label
-																	class="control-label popovers" for="optionsRadiosTrueUp" 
+																	class="control-label popovers" data-html="true" for="optionsRadiosTrueUp" 
 																	data-content="Please choose program is true-up or not."
-																	title="&nbsp;&nbsp;Hot Tip"
+																	title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																	data-placement="top" data-toggle="tooltip" data-trigger="hover">Annual-True-up for Tier Goal?</label>
 																<div class="radio-inline">
 																	<label class="control-label" for="optionsRadiosTrueUpYes">
@@ -744,9 +743,9 @@
 																
 																 <br>
 																 <div id="estimatedaccrual" >
-																	<label class="control-label popovers" for="estm_accrual" 
+																	<label class="control-label popovers" data-html="true" for="estm_accrual" 
 																	data-content="Enter the Estimated Accrual Amount for the entire program period"
-																	title="&nbsp;&nbsp;Hot Tip"
+																	title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																	data-placement="top" data-toggle="tooltip" data-trigger="hover">
 																	Estimated Accrual ($)</label>&nbsp;&nbsp;
 																	<input id="estm_accrual" name="estm_accrual" type="text"
@@ -1023,14 +1022,14 @@
 											<br>
 											<div class="row">
 												<div class="col-lg-12">
-													<label class="control-label" for="userComments">Commentary/Special
-														Instructions</label>
-													<textarea id="userComments" name="userComments"
-														class="form-control" rel="txtTooltip"
+													<label class="control-label popovers" for="userComments" data-html="true" rel="txtTooltip"
 														data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
 														title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 														data-toggle="tooltip" data-trigger="hover"
-														data-placement="top" rows="3"
+														data-placement="top" rows="3">Commentary/Special
+														Instructions</label>
+													<textarea id="userComments" name="userComments"
+														class="form-control" 
 														placeholder="Add description details"></textarea>
 												</div>
 											</div>
@@ -1779,8 +1778,6 @@
                   return $('.js-tooltip').html();
                 }
             });
-
-
         });
            
        </script>
@@ -1970,7 +1967,10 @@
             	$('#longDesc').val(response.data.programDetailList[0].longDesc);
                	
                	fnPopulateDropdown('btl_inputselect', response.data.programDetailList[0].dropdownList.btlList);
+               	if(response.data.programDetailList[0].btl!=null)
                	$('#btl_inputselect').val(response.data.programDetailList[0].btl);
+               	else
+               	$('#btl_inputselect').val('No');
                	
                	//fnPopulateDropdown('payto_inputselect', response.data.programDetailList[0].dropdownList.payToList);
                	$('#payto_inputselect').val(response.data.programDetailList[0].payTo);
@@ -2404,6 +2404,7 @@
 				$('#view-program-workflow').attr('disabled', false);
 				$('#view-program-workflow').removeClass("disabled");
 				$('#program-workflow-btn').attr('disabled', false);
+				
 			}
 			
 			function approveProgram(){
@@ -2536,7 +2537,7 @@
 							_isDirty = false;
 							if(action == 'submit' || action == 'save'){
 								fnPopulateProgramTier(response.data.programDetailList[0].programTierDetailList);
-							}
+			            } 
 			            } 
 			            else if(response.data.duplicate == true)
 			            {

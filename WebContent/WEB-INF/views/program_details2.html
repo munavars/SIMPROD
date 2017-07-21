@@ -2136,6 +2136,7 @@
 					if(tbp){
 						$('#glcode_dropdown').attr('disabled', false);
 						$('#sapglcode_dropdown').attr('disabled', false);
+						$('#tbpCheck').attr('disabled', false);
 					}
 					$('#edit-button').hide();
 					}
@@ -2394,6 +2395,13 @@
 					responseOnload.programDetailList[0].glCode = '0';	
 				}else{
 					responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+				}
+				if($('#tbpCheck').is(":checked")){
+					responseOnload.programDetailList[0].tbpCheck = '1';
+				}
+				else
+				{
+				    responseOnload.programDetailList[0].tbpCheck = '0';
 				}
 				fnCallService(message, idBefore, 'approve');
 				$('#myModal7').modal('toggle');

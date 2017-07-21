@@ -209,7 +209,7 @@
                   targets:0,
                   render: function ( data, type, row, meta ) {
                       if(type === 'display'){
-                          data = '<a href="/SIM/customer?custId=' + encodeURIComponent(row.customerId) + '">' + data + '</a>';
+                          data = '<a href="/SIM/customer?custId=' + encodeURIComponent(row.customerId) + '" class="underline">' + data + '</a>';
                       }
 
                       return data;
@@ -272,7 +272,7 @@
 						targets:0,
 						render: function ( data, type, row, meta ) {
 						    if(type === 'display'){
-						        data = '<a href="/SIM/customer?custId=' + encodeURIComponent(row.customerId) + '">' + data + '</a>';
+						        data = '<a href="/SIM/customer?custId=' + encodeURIComponent(row.customerId) + '" class="underline">' + data + '</a>';
 						    }
 						    return data;
 						}
@@ -361,14 +361,14 @@
    				 
                     render: function ( data, type, row, meta ) {
 						if(type === 'display' && row.programType == 'Calculated Program'){
-                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
 
                         }
                         else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
-                        	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
                         }
                         else if(type === 'display' && row.programType == 'Pricing Form'){
-                            data = '<a href="/SIM/pricingRequest?pricingId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                            data = '<a href="/SIM/pricingRequest?pricingId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
                         }
 						return data;
                     }

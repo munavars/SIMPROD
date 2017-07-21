@@ -215,11 +215,11 @@ th{
                     targets:0,
                     render: function ( data, type, row, meta ) {
                         if(type === 'display' && row.programType == 'Calculated Program'){
-                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
 
                         }
                         else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
-                        	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
+                        	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
                         }
 						return data;
                     }

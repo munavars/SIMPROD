@@ -1,7 +1,12 @@
 /*anchor*/
 a {
     color: #3b5edd;
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+.underline{
+
+ text-decoration: underline;
 }
 
 a:hover {

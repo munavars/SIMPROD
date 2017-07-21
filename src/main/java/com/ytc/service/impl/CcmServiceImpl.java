@@ -9,16 +9,23 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.StoredProcedureQuery;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.model.AccuralCcmData;
 import com.ytc.common.model.CcmDetails;
 import com.ytc.common.model.DropDown;
+import com.ytc.common.params.CreditMemoParams;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalCcmAccrualData;
 import com.ytc.dal.model.DalCcmAudit;
+import com.ytc.dal.model.DalCcmBillToData;
+import com.ytc.dal.model.DalCcmPartData;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.helper.ProgramServiceHelper;
@@ -29,10 +36,13 @@ import com.ytc.service.util.ExcelGenerator;
 class CcmServiceImpl implements ICcmService{
 	@Autowired
 	private IDataAccessLayer baseDao;
-	
+
+	@PersistenceContext
+	protected EntityManager entityManager;
+
 	@Autowired
 	private ICcmEmailService ccmEmailService;  
-	
+
 	public List<DropDown> getFrequencyDropDownList(String namedQueryValue){
 		List<DropDown> dropdownList = null;
 		if(namedQueryValue != null){
@@ -40,52 +50,52 @@ class CcmServiceImpl implements ICcmService{
 			if(dalFrequencyList != null){
 				for(DalFrequency dalFrequency : dalFrequencyList){
 					if(!"0".equalsIgnoreCase(dalFrequency.getFrequency())){
-					DropDown dropDown = new DropDown();
-					dropDown.setKey(dalFrequency.getFrequency());
-					dropDown.setValue(dalFrequency.getFrequency());
-					if(dropdownList == null){
-						dropdownList = new ArrayList<DropDown>();
-					}
-					dropdownList.add(dropDown);
+						DropDown dropDown = new DropDown();
+						dropDown.setKey(dalFrequency.getFrequency());
+						dropDown.setValue(dalFrequency.getFrequency());
+						if(dropdownList == null){
+							dropdownList = new ArrayList<DropDown>();
+						}
+						dropdownList.add(dropDown);
 					}
 				}
 			}
-			
+
 		}
-		
+
 		return dropdownList;
 	}	
-	
+
 	public List<DropDown> getPeriodDropDownList(){
 		List<DropDown> dropdownList = null;
 		String sql=QueryConstant.CCM_PERIOD;
 		Map<String, Object> queryParams = new HashMap<>();
-			//List<DalFrequency> dalFrequencyList =  baseDao.getListFromNamedQuery(namedQueryValue);
-			List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
-			if(resultList != null){
-				for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
-					Object[] obj = (Object[]) iterator.next();
-					DropDown dropDown = new DropDown();
-					dropDown.setKey(obj[1].toString());
-					dropDown.setValue(obj[0].toString());
-					if(dropdownList == null){
-						dropdownList = new ArrayList<DropDown>();
-					}
-					dropdownList.add(dropDown);
+		//List<DalFrequency> dalFrequencyList =  baseDao.getListFromNamedQuery(namedQueryValue);
+		List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
+		if(resultList != null){
+			for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
+				Object[] obj = (Object[]) iterator.next();
+				DropDown dropDown = new DropDown();
+				dropDown.setKey(obj[1].toString());
+				dropDown.setValue(obj[0].toString());
+				if(dropdownList == null){
+					dropdownList = new ArrayList<DropDown>();
 				}
-
+				dropdownList.add(dropDown);
 			}
-			
-		
+
+		}
+
+
 		return dropdownList;
 	}	
 	public boolean createMemoData(Integer id){	
 		byte [] excelArray=new ExcelGenerator().generateExcel(baseDao, id);
 		ccmEmailService.sendEmailData(excelArray);
-			
+
 		return true;
 	}
-	
+
 	public List<CcmDetails> getCCMDetails(String frequency, String bu, Integer period, String status){	
 		List<CcmDetails> ccmList = new ArrayList<CcmDetails>();
 		DecimalFormat format = new DecimalFormat("#,##0.00");
@@ -99,7 +109,7 @@ class CcmServiceImpl implements ICcmService{
 		queryParams.put("status", selectedStatus);
 		List<DalCcmAccrualData> resultList =baseDao.list(DalCcmAccrualData.class, sql, queryParams);
 		//List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
-		
+
 		for (Iterator<DalCcmAccrualData> iterator = resultList.iterator(); iterator.hasNext();) {
 			DalCcmAccrualData dalCcmAccrualData = (DalCcmAccrualData) iterator.next();
 			CcmDetails ccmDetails=new CcmDetails();
@@ -173,7 +183,7 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setDocDate(null!=dalCcmAccrualData.getDocDate()?(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getDocDate().getTime(), ProgramConstant.DATE_FORMAT)):"");
 			ccmList.add(ccmDetails);
 		}
-/*		for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
+		/*		for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
 			Object[] obj = (Object[]) iterator.next();
 			CcmDetails ccmDetails=new CcmDetails();
 			ccmDetails.setBu(null!=obj[0]?obj[0].toString():"");
@@ -220,46 +230,46 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setBaseId(null!=obj[30]?obj[30].toString():"");
 			ccmList.add(ccmDetails);
 		}*/
-					
+
 		return ccmList;
 	}
-	
-	
+
+
 	public String saveCCMDetails(AccuralCcmData accuralCcmData, String user){	
 		String status="fail";
 		try{
-		DalCcmAudit dalCcmAudit=new DalCcmAudit();
-		dalCcmAudit.setCcmId(accuralCcmData.getId());
-		dalCcmAudit.setAdjustedAmount(accuralCcmData.getAdjustedAmount());
-		dalCcmAudit.setAdjustedCredit(accuralCcmData.getAdjustedCredit());
-		dalCcmAudit.setAdjustedUser(user);
-		dalCcmAudit.setStatusFlag(accuralCcmData.getReviewFlag());
-		dalCcmAudit.setComments(accuralCcmData.getComments());
-		dalCcmAudit.setAdjustedDate(Calendar.getInstance());
-		
-		String sql=QueryConstant.CCM_UPDATE;	
-		Map<String, Object> queryParams = new HashMap<>();	
-		queryParams.put("id", accuralCcmData.getId());
-		queryParams.put("adjustedAmount", accuralCcmData.getAdjustedAmount());
-		queryParams.put("adjustedCredit", accuralCcmData.getAdjustedCredit());
-		queryParams.put("user", user);
-		
-		baseDao.updateNative(sql, queryParams);
-		
-		baseDao.create(dalCcmAudit);
-		
-		submitCcmForApproval(accuralCcmData.getId(),accuralCcmData.getComments());
-		
-		status="success";
-		
+			DalCcmAudit dalCcmAudit=new DalCcmAudit();
+			dalCcmAudit.setCcmId(accuralCcmData.getId());
+			dalCcmAudit.setAdjustedAmount(accuralCcmData.getAdjustedAmount());
+			dalCcmAudit.setAdjustedCredit(accuralCcmData.getAdjustedCredit());
+			dalCcmAudit.setAdjustedUser(user);
+			dalCcmAudit.setStatusFlag(accuralCcmData.getReviewFlag());
+			dalCcmAudit.setComments(accuralCcmData.getComments());
+			dalCcmAudit.setAdjustedDate(Calendar.getInstance());
+
+			String sql=QueryConstant.CCM_UPDATE;	
+			Map<String, Object> queryParams = new HashMap<>();	
+			queryParams.put("id", accuralCcmData.getId());
+			queryParams.put("adjustedAmount", accuralCcmData.getAdjustedAmount());
+			queryParams.put("adjustedCredit", accuralCcmData.getAdjustedCredit());
+			queryParams.put("user", user);
+
+			baseDao.updateNative(sql, queryParams);
+
+			baseDao.create(dalCcmAudit);
+
+			submitCcmForApproval(accuralCcmData.getId(),accuralCcmData.getComments());
+
+			status="success";
+
 		}catch (Exception e){
 			System.out.println("Exception occured in saveCCMDetails"+e.getCause());
 		}
 		return status;
 	}
-	
+
 	public int submitCcmForApproval(Integer approvalList, String comments){	
-		
+
 		String hql=QueryConstant.CCM_LIST;
 		Map<String, Object> queryParams = new HashMap<>();	
 		queryParams.put("id", approvalList);		
@@ -270,79 +280,97 @@ class CcmServiceImpl implements ICcmService{
 			//Sending Email
 			ccmEmailService.sendEmailData(dalCcmAccrualData,comments,dalpgm,baseDao);
 
-			}
-		
+		}
+
 		return 0;
 	}
-	
+
 	public int updateCcmStatus(Integer id){	
-			
-			String sql=QueryConstant.CCM_UPDATE_STATUS;	
-			Map<String, Object> queryParams = new HashMap<>();			
-				//Update status in DB
-				queryParams.put("id", id);
-				queryParams.put("status", "Not Reviewed");
-				baseDao.updateNative(sql, queryParams);		
-			
-			
-			return 0;
-		}
+
+		String sql=QueryConstant.CCM_UPDATE_STATUS;	
+		Map<String, Object> queryParams = new HashMap<>();			
+		//Update status in DB
+		queryParams.put("id", id);
+		queryParams.put("status", "Not Reviewed");
+		baseDao.updateNative(sql, queryParams);		
+
+
+		return 0;
+	}
 
 
 	public int updateCCMDetails(AccuralCcmData accuralCcmData){	
-		
+
 		String sql=QueryConstant.CCM_UPDATE_DOC;	
 		Map<String, Object> queryParams = new HashMap<>();			
-			queryParams.put("id", accuralCcmData.getId());
-			queryParams.put("docNo", accuralCcmData.getDocNumber());
-			queryParams.put("docDate", accuralCcmData.getDocDate());		
-			baseDao.updateNative(sql, queryParams);				
-		
+		queryParams.put("id", accuralCcmData.getId());
+		queryParams.put("docNo", accuralCcmData.getDocNumber());
+		queryParams.put("docDate", accuralCcmData.getDocDate());		
+		baseDao.updateNative(sql, queryParams);				
+
 		return 0;
 	}
 
-public String populateCreditBasedOn(CcmDetails ccmDetails){
-	
-	String creditBasedOn="";
-	int paidBased=Integer.parseInt(ccmDetails.getBaseId());
-	if(paidBased==3){
-		creditBasedOn=(null!=ccmDetails.getUnits()?ccmDetails.getUnits().toString():"");
+	public String populateCreditBasedOn(CcmDetails ccmDetails){
+
+		String creditBasedOn="";
+		int paidBased=Integer.parseInt(ccmDetails.getBaseId());
+		if(paidBased==3){
+			creditBasedOn=(null!=ccmDetails.getUnits()?ccmDetails.getUnits().toString():"");
+		}
+
+		if(paidBased==1){
+			creditBasedOn=(null!=ccmDetails.getNadUnits()?ccmDetails.getNadUnits().toString():"");
+		}
+
+		if(paidBased==2){
+			creditBasedOn=(null!=ccmDetails.getBonusableUnits()?ccmDetails.getBonusableUnits().toString():"");
+		}
+
+		if(paidBased==4){
+			creditBasedOn=(null!=ccmDetails.getUnitsNad()?ccmDetails.getUnitsNad().toString():"");
+		}
+
+		if(paidBased==5){
+			creditBasedOn=(null!=ccmDetails.getBonusableNad()?ccmDetails.getBonusableNad().toString():"");
+		}
+
+		if(paidBased==8){
+			creditBasedOn=ccmDetails.getInvSales();
+		}
+
+		if(paidBased==6){
+			creditBasedOn=ccmDetails.getNadSales();
+		}
+		if(paidBased==7){
+			creditBasedOn=ccmDetails.getBonusableSales();
+		}
+		if(paidBased==9){
+			creditBasedOn=ccmDetails.getInvSalesNad();
+		}
+		if(paidBased==10){
+			creditBasedOn=ccmDetails.getBonusableSalesNad();
+		}
+		return creditBasedOn;
+
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DalCcmBillToData> ccmBillToData(CreditMemoParams params) {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_CcmBillToCreditMemoForPandT");
+		query.execute();
+		List<DalCcmBillToData> billToData = query.getResultList();
+		return billToData;
 	}
 	
-	if(paidBased==1){
-		creditBasedOn=(null!=ccmDetails.getNadUnits()?ccmDetails.getNadUnits().toString():"");
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<DalCcmPartData> ccmPartData(CreditMemoParams params) {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_CcmPartCreditMemoForPandT");
+		query.execute();
+		List<DalCcmPartData> partData = query.getResultList();
+		return partData;
 	}
-	
-	if(paidBased==2){
-		creditBasedOn=(null!=ccmDetails.getBonusableUnits()?ccmDetails.getBonusableUnits().toString():"");
-	}
-	
-	if(paidBased==4){
-		creditBasedOn=(null!=ccmDetails.getUnitsNad()?ccmDetails.getUnitsNad().toString():"");
-	}
-	
-	if(paidBased==5){
-		creditBasedOn=(null!=ccmDetails.getBonusableNad()?ccmDetails.getBonusableNad().toString():"");
-	}
-	
-	if(paidBased==8){
-		creditBasedOn=ccmDetails.getInvSales();
-	}
-	
-	if(paidBased==6){
-		creditBasedOn=ccmDetails.getNadSales();
-	}
-	if(paidBased==7){
-		creditBasedOn=ccmDetails.getBonusableSales();
-	}
-	if(paidBased==9){
-		creditBasedOn=ccmDetails.getInvSalesNad();
-	}
-	if(paidBased==10){
-		creditBasedOn=ccmDetails.getBonusableSalesNad();
-	}
-	return creditBasedOn;
-	
-}
-	
+
 }

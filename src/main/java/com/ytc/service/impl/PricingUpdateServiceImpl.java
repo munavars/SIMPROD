@@ -374,7 +374,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 						StringUtils.isEmpty(pricingHeader.getUserComments()) ? "" : pricingHeader.getUserComments());
 
 				/** Save pricing Detail section information */
-				Set<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
+				List<DalPricingDetail> dalPricingDetailsList = createPricingDetailsData(pricingHeader, 
 																						dalPricingHeader);
 
 				if (!dalPricingDetailsList.isEmpty()) {
@@ -402,10 +402,10 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		}
 	}
 
-	private Set<DalPricingDetail> createPricingDetailsData(PricingHeader pricingHeader,
+	private List<DalPricingDetail> createPricingDetailsData(PricingHeader pricingHeader,
 			DalPricingHeader dalPricingHeader) {
 
-		Set<DalPricingDetail> dalPricingDetailsList = new HashSet<DalPricingDetail>();
+		List<DalPricingDetail> dalPricingDetailsList = new ArrayList<DalPricingDetail>();
 		DalPricingDetail dalPricingDetail = null;
 
 		for (PricingDetail pricingDetail : pricingHeader.getPricingDetailList()) {

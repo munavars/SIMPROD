@@ -103,7 +103,7 @@ public class PricingServiceHelper {
 		return formattedAmount;
 	}
 	
-	public static List<DalPricingDetail> getPricingDetailsSorted(Set<DalPricingDetail> dalPricingDetailSet){
+	public static List<DalPricingDetail> getPricingDetailsSorted(List<DalPricingDetail> dalPricingDetailSet){
 		List<DalPricingDetail> dalPricingDetailList = null;
 		if(dalPricingDetailSet != null && !dalPricingDetailSet.isEmpty()){
 			dalPricingDetailList = new ArrayList<DalPricingDetail>(dalPricingDetailSet);

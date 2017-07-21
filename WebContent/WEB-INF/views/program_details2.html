@@ -2353,11 +2353,21 @@
 					$('#sapglcode_dropdown').attr('disabled', true);
 				}
 				$("#cancel-program").html("Cancel");
+				var oTable = $('#tier-schedule').dataTable();
+			    oTable.fnSetColumnVis(4, true);
+			    oTable.fnSetColumnVis(5, true);
+			    oTable.fnDraw(); 
 			}
 			function disableFields(){
 				$('#program-parent-div').find('input, textarea, button, select, a').attr('disabled',true);
 				$("#program-parent-div").find('a').addClass("disabled");
 				enabledButtonApplicableToAll();
+				 var oTable = $('#tier-schedule').dataTable();
+			    oTable.fnSetColumnVis(4, false);
+			    oTable.fnSetColumnVis(5, false);
+			    oTable.fnDraw(); 
+			    /* $('.edit.delete').attr('disabled',true);
+			    $('.edit.delete').addClass("disabled"); */
 				$("#cancel-program").html("Back");
 			}
 			function enabledButtonApplicableToAll(){
@@ -2379,7 +2389,6 @@
 				$('#view-program-workflow').attr('disabled', false);
 				$('#view-program-workflow').removeClass("disabled");
 				$('#program-workflow-btn').attr('disabled', false);
-				
 			}
 			
 			function approveProgram(){

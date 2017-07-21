@@ -130,8 +130,8 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 					"\t\t\t<td >"+dalCcmAccrualData.getCustomerNumber()+"</td>\t<!-- bill-to -->\n"+
 					"\t\t</tr> \n"+
 					"\t\t<tr>\n"+
-					"\t\t\t<td >Ship To Number</td>\n"+
-					"\t\t\t<td> "+dalCcmAccrualData.getBillToNo()+" </td>\t<!-- ship-to -->\n"+
+					"\t\t\t<td >Pay To</td>\n"+
+					"\t\t\t<td> "+dalCcmAccrualData.getPayTo()+" </td>\t<!-- ship-to -->\n"+
 					"\t\t</tr>\n"+
 					"\t\t<tr> \n"+
 					"\t\t\t<tr>\n"+

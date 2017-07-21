@@ -103,6 +103,8 @@
 	            { data: "accountManager" },
 	            { data: "zoneManager" },
 	            { data: "frequency"},
+	            { data: "accrualStartDate" },
+	            { data: "accrualEndDate"},
 	            { data: "programId"},
 	            { data: "programName" },
 	            { data: "description",  
@@ -174,6 +176,7 @@
                     }
                     return data;
                 }},
+                { data: "tbp" },
 	           /*  { data: "review", 
                 	orderable: false,
                 	className:"center",
@@ -226,7 +229,7 @@
 	            	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
                     	if((row.programStatus=='Submitted')){
-                        	 data = '<input type="text" id="docNum'+meta.row+'" value="">';
+                        	 data = '<input type="text" id="docNum'+meta.row+'" value="'+data+'">';
                     	}else{
                     		 data = '<input type="text" id="docNum'+meta.row+'" value="" disabled>';	
                     	}
@@ -238,7 +241,7 @@
                 	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
                     	if((row.programStatus=='Submitted')){
-                       		data = '<input type="text" id="docDate'+meta.row+'" value="" readonly="readonly" style="background:white;">';
+                       		data = '<input type="text" id="docDate'+meta.row+'" value="'+data+'" readonly="readonly" style="background:white;">';
                        		//data='<input type="text" class="form-control dpd1" readonly="readonly" id="from" name="from" placeholder="Begin Date" style="background:white;">';
                     	}else{
                     		data = '<input type="text" id="docDate'+meta.row+'" value="" disabled>';	
@@ -564,9 +567,9 @@
                                     <div class="col-lg-6 col-sm-6" style="float:right;width:30%;">
                                        <form action="#" class="cmxform">
                                               <div class="form-group clearfix">
-                                                    <label class="control-label font-weight-bold" for="inputSuccess"><h5>Status: <button data-original-title="To View Programs by Status:" data-content="Insert your cursor inside the grey box with 'Active' selected and choose the types of statuses you want to view." data-placement="right" data-trigger="hover" class="btn btn-info btn-xs popovers"><strong>?</strong></button></h5></label>
+                                                    <label class="control-label font-weight-bold" for="inputSuccess"><h5>Status: <button data-original-title="To View CCM details by Status:" data-content="Insert your cursor inside the grey box with 'Not Reviewed' selected and choose the types of statuses you want to view." data-placement="right" data-trigger="hover" class="btn btn-info btn-xs popovers"><strong>?</strong></button></h5></label>
 
-                                                  <select class="js-example-basic-multiple" multiple="multiple" id="program_status">
+                                                  <select class="js-example-basic-single" id="ccm_status">
                                                     <option selected value="Not Reviewed">Not Reviewed</option>
                                                       <!-- <option value="Reviewed">Reviewed</option> -->
                                                       <option value="Submitted">Submitted</option>
@@ -611,18 +614,21 @@
 								<th>Account Manager</th>
 								<th>Zone Manager</th>
                                 <th>Frequency</th>
+                                <th>Accrual Start Date</th>
+                                <th>Accrual End Date</th>
                                 <th>Program Id</th>
                                 <th>Program Name</th>
                                 <th>Description</th>
                                 <th>Paid Based On</th>	
                                 <th>Credit Based On</th>							
-                                <th>Guarantee</th>
+                                <th>Tiered</th>
                                 <th>Amount</th>
                                 <!-- <th>% or $</th> -->
                                 <th>Credit Accrued</th>	
-                                <th>Earned Adjustment</th>	
-                                <th>Credit Adjustment</th>	
+                                <th>Earned Rate</th>	
+                                <th>Actual Credit</th>	
                                 <th>Variance</th>	
+                                <th>TBP Flag</th>
                                <!--  <th><input type="checkbox" id="allreview" value="">&nbsp;&nbsp;&nbsp;Reviewed</th> -->
                                 <th><input type="checkbox" id="allsubmit" value="">&nbsp;&nbsp;&nbsp;Submit For Approval</th>                               
                                 
@@ -834,7 +840,7 @@
 		   		openSidebar();
 			}		   
 		  
-		   
+		   enablebutton();
 		   $.ajax({ 
             	type: "GET",
             	dataType: "json",
@@ -859,7 +865,8 @@
            	}
        	});
 		
-		   $('#program_status').on('change',function() {
+		   $('#ccm_status').on('change',function() {
+			    enablebutton();
 				var freq=$('#payout_freq_inputselect').val();
 				var bus=$('#buss_inputselect').val();
 				var period=$('#period_inputselect').val();
@@ -986,11 +993,11 @@
 			if($('#amt'+id).html().startsWith("$")){
 				amountType="$";
 			}
-			units=parseInt($('#units'+id).html());
-			bonusableUnits=parseInt($('#bonusableunits'+id).html());
-			nadUnits=parseInt($('#nadunits'+id).html());
-			unitsplusNad=parseInt($('#units_nad'+id).html());
-			bonUnitsplusNad=parseInt($('#bonusableunit_nad'+id).html());	
+			units=parseInt(removeCommaFromAmount($('#units'+id).html()));
+			bonusableUnits=parseInt(removeCommaFromAmount($('#bonusableunits'+id).html()));
+			nadUnits=parseInt(removeCommaFromAmount($('#nadunits'+id).html()));
+			unitsplusNad=parseInt(removeCommaFromAmount($('#units_nad'+id).html()));
+			bonUnitsplusNad=parseInt(removeCommaFromAmount($('#bonusableunit_nad'+id).html()));	
 			
 			invSales=parseFloat(removeCommaFromAmount($('#invsales'+id).html().substring(1)));
 			bonusableSales=parseFloat(removeCommaFromAmount($('#bonusablesales'+id).html().substring(1)));
@@ -1001,49 +1008,49 @@
 						
 			if(paidBased==3){
 				creditEarned=units*amount;
-				$('#creditbasedon'+id).html(units);
+				//$('#creditbasedon'+id).html(units);
 			}
 			
 			if(paidBased==1){
 				creditEarned=nadUnits*amount;
-				$('#creditbasedon'+id).html(nadUnits);
+				//$('#creditbasedon'+id).html(nadUnits);
 			}
 			
 			if(paidBased==2){
 				creditEarned=bonusableUnits*amount;
-				$('#creditbasedon'+id).html(bonusableUnits);
+				//$('#creditbasedon'+id).html(bonusableUnits);
 			}
 			
 			if(paidBased==4){
 				creditEarned=(unitsplusNad)*amount;
-				$('#creditbasedon'+id).html(unitsplusNad);
+				//$('#creditbasedon'+id).html(unitsplusNad);
 			}
 			
 			if(paidBased==5){
 				creditEarned=(bonUnitsplusNad)*amount;
-				$('#creditbasedon'+id).html(bonUnitsplusNad);
+				//$('#creditbasedon'+id).html(bonUnitsplusNad);
 			}
 			
 			if(paidBased==8){
 				creditEarned=invSales*amount;
-				$('#creditbasedon'+id).html(invSales);
+				//$('#creditbasedon'+id).html(invSales);
 			}
 			
 			if(paidBased==6){
 				creditEarned=nadSales*amount;
-				$('#creditbasedon'+id).html(nadSales);
+				//$('#creditbasedon'+id).html(nadSales);
 			}
 			if(paidBased==7){
 				creditEarned=bonusableSales*amount;
-				$('#creditbasedon'+id).html(bonusableSales);
+				//$('#creditbasedon'+id).html(bonusableSales);
 			}
 			if(paidBased==9){
 				creditEarned=(salesplusNad)*amount;
-				$('#creditbasedon'+id).html(salesplusNad);
+				//$('#creditbasedon'+id).html(salesplusNad);
 			}
 			if(paidBased==10){
 				creditEarned=(bonSalessplusNad)*amount;
-				$('#creditbasedon'+id).html(bonSalessplusNad);
+				//$('#creditbasedon'+id).html(bonSalessplusNad);
 			}
 			
 			if(amountType=="%"){
@@ -1053,6 +1060,7 @@
 			$('#creditearned'+id).val(creditEarned);
 			creditaccrued=parseFloat(removeCommaFromAmount($('#creditaccrued'+id).html().substring(1)));			
 			variance=creditaccrued-creditEarned;
+			variance=parseFloat(variance).toFixed(2);
 			$('#variance'+id).html('$ '+variance);
       }
           
@@ -1062,7 +1070,7 @@
 		var freq=$('#payout_freq_inputselect').val();
 		var bus=$('#buss_inputselect').val();
 		var period=$('#period_inputselect').val();
-		var url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+period+'/'+$('#program_status').val();
+		var url='/SIM/ccm/v1/getCcmDetails/'+freq+'/'+bus+'/'+period+'/'+$('#ccm_status').val();
 	  	table.ajax.url(url).load();
 	  	reviewList=[];
  		submitList=[];
@@ -1206,8 +1214,10 @@
 			   if((this.checked)&&(!$(this).is(':disabled'))){				  
 					valid=true;
 					id1=this.id.substring(17);
+					var creditearned=parseFloat($('#creditearned'+id1).val());
+					var creditaccrued=parseFloat($('#creditaccrued'+id1).html().substring(1));
 					var comments=$('#comments'+this.id.substring(17)).val();
-					if((comments=="")||(comments==null)){			           
+					if(((comments=="")||(comments==null))&&(creditearned!=creditaccrued)){			           
 						comment=false;
 						return false;     
 					}					
@@ -1223,7 +1233,7 @@
 				return;
 		 }
 		 if(!comment){
-			 message="Kindly enter comments for this operation";
+			 message="Actual credit not same as Accrued credit. This action requires comments to be entered";
 	            $("#confirmMessage").html(message);
 				$('#myModal1').modal('toggle');
 				$('#comments'+id1).focus();
@@ -1254,7 +1264,7 @@
 	   	          		dataType: "text",
 	   					data: JSON.stringify(accuralCcmDataList),
 	   	           	success: function(response){
-	   	            message="Data Saved Successfully";
+	   	            message="Data Submitted for Approval";
 	   	            $("#confirmMessage").html(message);
 	   				$('#myModal1').modal('toggle');
 	   	            runReport();
@@ -1278,7 +1288,7 @@
           		contentType: 'application/json',
 				data: JSON.stringify($('#submitForApproval'+id).data('id')),
            	success: function(response){
-            message="Review Unlocked Successfully";
+            message="Record Unlocked Successfully";
             $("#confirmMessage").html(message);
 			$('#myModal1').modal('toggle');
        		runReport();
@@ -1287,6 +1297,17 @@
            		alert("Wrongly done");
            	}});
 		
+	}
+	
+	function enablebutton(){
+		
+		if($('#ccm_status').val()=='Not Reviewed'){
+			$('#ccm_submit').show();
+			$('#ccm_save').hide();
+		}else{
+			$('#ccm_submit').hide();
+			$('#ccm_save').show();
+		}
 	}
 	
 	   //Export to Excel 

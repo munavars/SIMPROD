@@ -6,13 +6,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedStoredProcedureQuery;
+import javax.persistence.ParameterMode;
+import javax.persistence.StoredProcedureParameter;
 
 @Entity
 @NamedStoredProcedureQuery(
-        name = "sp_CcmPartCreditMemoForPandT",
-        procedureName = "sp_CcmPartCreditMemoForPandT",
-        resultClasses = {DalCcmPartData.class}
-        )
+		name = "sp_CcmPartCreditMemoForPandT",
+		procedureName = "sp_CcmPartCreditMemoForPandT",
+		parameters = { 
+				@StoredProcedureParameter(mode = ParameterMode.IN, type = int.class, name = "pgmDetId"), 
+				@StoredProcedureParameter(mode = ParameterMode.IN, type = Calendar.class, name = "startDate"), 
+				@StoredProcedureParameter(mode = ParameterMode.IN, type = Calendar.class, name = "endDate")
+		}
+		)
 public class DalCcmPartData {
 	private String customerName;
 	private int programId;
@@ -51,7 +57,7 @@ public class DalCcmPartData {
 	private String acctMgr;
 	private Calendar productLine;
 	private Calendar tread;
-	
+
 	@Column (name="PROGRAM_ID" , insertable = false, updatable = false)
 	public String getCustomerName() {
 		return customerName;
@@ -59,7 +65,7 @@ public class DalCcmPartData {
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
 	}
-	
+
 	@Id
 	@Column (name="PROGRAM_ID")
 	public int getProgramId() {
@@ -68,7 +74,7 @@ public class DalCcmPartData {
 	public void setProgramId(int programId) {
 		this.programId = programId;
 	}
-	
+
 	@Column (name="PGM_NAME")
 	public String getPgmName() {
 		return pgmName;
@@ -76,7 +82,7 @@ public class DalCcmPartData {
 	public void setPgmName(String pgmName) {
 		this.pgmName = pgmName;
 	}
-	
+
 	@Column (name="PAID_BASED_ON")
 	public String getPaidBasedOn() {
 		return paidBasedOn;
@@ -84,7 +90,7 @@ public class DalCcmPartData {
 	public void setPaidBasedOn(String paidBasedOn) {
 		this.paidBasedOn = paidBasedOn;
 	}
-	
+
 	@Column (name="GUARANTEE")
 	public String getGurantee() {
 		return gurantee;
@@ -92,7 +98,7 @@ public class DalCcmPartData {
 	public void setGurantee(String gurantee) {
 		this.gurantee = gurantee;
 	}
-	
+
 	@Column (name="AMOUNT")
 	public int getAmount() {
 		return amount;
@@ -100,7 +106,7 @@ public class DalCcmPartData {
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-	
+
 	@Column (name="TYPE")
 	public String getType() {
 		return type;
@@ -108,7 +114,7 @@ public class DalCcmPartData {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 	@Column (name="CORP_NO")
 	public int getCorpNo() {
 		return corpNo;
@@ -116,7 +122,7 @@ public class DalCcmPartData {
 	public void setCorpNo(int corpNo) {
 		this.corpNo = corpNo;
 	}
-	
+
 	@Column (name="CORP_NAME")
 	public String getCorpName() {
 		return corpName;
@@ -124,7 +130,7 @@ public class DalCcmPartData {
 	public void setCorpName(String corpName) {
 		this.corpName = corpName;
 	}
-	
+
 	@Column (name="UNITS_INCLUDED")
 	public int getUnitsIncl() {
 		return unitsIncl;
@@ -132,7 +138,7 @@ public class DalCcmPartData {
 	public void setUnitsIncl(int unitsIncl) {
 		this.unitsIncl = unitsIncl;
 	}
-	
+
 	@Column (name="UNITS_EXCLUDED")
 	public int getUnitsExcl() {
 		return unitsExcl;
@@ -140,7 +146,7 @@ public class DalCcmPartData {
 	public void setUnitsExcl(int unitsExcl) {
 		this.unitsExcl = unitsExcl;
 	}
-	
+
 	@Column (name="BONUSABLE_UNITS_INCLUDED")
 	public int getBonUnitsIncl() {
 		return bonUnitsIncl;
@@ -148,7 +154,7 @@ public class DalCcmPartData {
 	public void setBonUnitsIncl(int bonUnitsIncl) {
 		this.bonUnitsIncl = bonUnitsIncl;
 	}
-	
+
 	@Column (name="BONUSABLE_UNITS_EXCLUDED")
 	public int getBonUnitsExcl() {
 		return bonUnitsExcl;
@@ -156,7 +162,7 @@ public class DalCcmPartData {
 	public void setBonUnitsExcl(int bonUnitsExcl) {
 		this.bonUnitsExcl = bonUnitsExcl;
 	}
-	
+
 	@Column (name="NAD_UNITS_INLCUDED")
 	public int getNadUnitsIncl() {
 		return nadUnitsIncl;
@@ -164,7 +170,7 @@ public class DalCcmPartData {
 	public void setNadUnitsIncl(int nadUnitsIncl) {
 		this.nadUnitsIncl = nadUnitsIncl;
 	}
-	
+
 	@Column (name="NAD_UNITS_EXCLUDED")
 	public int getNadUnitsExcl() {
 		return nadUnitsExcl;
@@ -172,7 +178,7 @@ public class DalCcmPartData {
 	public void setNadUnitsExcl(int nadUnitsExcl) {
 		this.nadUnitsExcl = nadUnitsExcl;
 	}
-	
+
 	@Column (name="UNITS_PLUS_NAD_INLCUDED")
 	public int getUnitsPlusNadIncl() {
 		return unitsPlusNadIncl;
@@ -180,7 +186,7 @@ public class DalCcmPartData {
 	public void setUnitsPlusNadIncl(int unitsPlusNadIncl) {
 		this.unitsPlusNadIncl = unitsPlusNadIncl;
 	}
-	
+
 	@Column (name="UNITS_PLUS_NAD_EXCLUDED")
 	public int getUnitsPlusNadExcl() {
 		return unitsPlusNadExcl;
@@ -188,7 +194,7 @@ public class DalCcmPartData {
 	public void setUnitsPlusNadExcl(int unitsPlusNadExcl) {
 		this.unitsPlusNadExcl = unitsPlusNadExcl;
 	}
-	
+
 	@Column (name="BONUSABLE_UNITS_PLUS_NAD_INCLUDED")
 	public int getBonUnitsPlusNadIncl() {
 		return bonUnitsPlusNadIncl;
@@ -196,7 +202,7 @@ public class DalCcmPartData {
 	public void setBonUnitsPlusNadIncl(int bonUnitsPlusNadIncl) {
 		this.bonUnitsPlusNadIncl = bonUnitsPlusNadIncl;
 	}
-	
+
 	@Column (name="BONUSABLE_UNITS_PLUS_NAD_EXCLUDED")
 	public int getBonUnitsPlusNadExcl() {
 		return bonUnitsPlusNadExcl;
@@ -204,7 +210,7 @@ public class DalCcmPartData {
 	public void setBonUnitsPlusNadExcl(int bonUnitsPlusNadExcl) {
 		this.bonUnitsPlusNadExcl = bonUnitsPlusNadExcl;
 	}
-	
+
 	@Column (name="INV_SALES_INCLUDED")
 	public int getInvSalesIncl() {
 		return invSalesIncl;
@@ -212,7 +218,7 @@ public class DalCcmPartData {
 	public void setInvSalesIncl(int invSalesIncl) {
 		this.invSalesIncl = invSalesIncl;
 	}
-	
+
 	@Column (name="INV_SALES_EXCLUDED")
 	public int getInvSalesExcl() {
 		return invSalesExcl;
@@ -220,7 +226,7 @@ public class DalCcmPartData {
 	public void setInvSalesExcl(int invSalesExcl) {
 		this.invSalesExcl = invSalesExcl;
 	}
-	
+
 	@Column (name="BONUSABLE_SALES_INCLUDED")
 	public int getBonSaelsIncl() {
 		return bonSaelsIncl;
@@ -228,7 +234,7 @@ public class DalCcmPartData {
 	public void setBonSaelsIncl(int bonSaelsIncl) {
 		this.bonSaelsIncl = bonSaelsIncl;
 	}
-	
+
 	@Column (name="BONUSABLE_SALES_EXCLUDED")
 	public int getBonSalesExcl() {
 		return bonSalesExcl;
@@ -236,7 +242,7 @@ public class DalCcmPartData {
 	public void setBonSalesExcl(int bonSalesExcl) {
 		this.bonSalesExcl = bonSalesExcl;
 	}
-	
+
 	@Column (name="NAD_SALES_INCLUDED")
 	public int getNadSalesIncl() {
 		return nadSalesIncl;
@@ -244,16 +250,16 @@ public class DalCcmPartData {
 	public void setNadSalesIncl(int nadSalesIncl) {
 		this.nadSalesIncl = nadSalesIncl;
 	}
-	
+
 	@Column (name="NAD_SALES_EXCLUDED")
 	public int getNadSaelsExcl() {
 		return nadSaelsExcl;
 	}
-	
+
 	public void setNadSaelsExcl(int nadSaelsExcl) {
 		this.nadSaelsExcl = nadSaelsExcl;
 	}
-	
+
 	@Column (name="INV_SALES_PLUS_NAD_INCLUDED")
 	public int getInvSalesPlusNadIncl() {
 		return invSalesPlusNadIncl;
@@ -261,7 +267,7 @@ public class DalCcmPartData {
 	public void setInvSalesPlusNadIncl(int invSalesPlusNadIncl) {
 		this.invSalesPlusNadIncl = invSalesPlusNadIncl;
 	}
-	
+
 	@Column (name="INV_SALES_PLUS_NAD_EXCLUDED")
 	public int getInvSalesPlusNadExcl() {
 		return invSalesPlusNadExcl;
@@ -269,7 +275,7 @@ public class DalCcmPartData {
 	public void setInvSalesPlusNadExcl(int invSalesPlusNadExcl) {
 		this.invSalesPlusNadExcl = invSalesPlusNadExcl;
 	}
-	
+
 	@Column (name="BONUSABLE_SALES_PLUS_NAD_INCLUDED")
 	public int getBonSalesPlusNadIncl() {
 		return bonSalesPlusNadIncl;
@@ -277,7 +283,7 @@ public class DalCcmPartData {
 	public void setBonSalesPlusNadIncl(int bonSalesPlusNadIncl) {
 		this.bonSalesPlusNadIncl = bonSalesPlusNadIncl;
 	}
-	
+
 	@Column (name="BONUSABLE_SALES_PLUS_NAD_EXCLUDED")
 	public int getBonSalesPlusNadExcl() {
 		return bonSalesPlusNadExcl;
@@ -285,7 +291,7 @@ public class DalCcmPartData {
 	public void setBonSalesPlusNadExcl(int bonSalesPlusNadExcl) {
 		this.bonSalesPlusNadExcl = bonSalesPlusNadExcl;
 	}
-	
+
 	@Column (name="WARRANTY_INCLUDED")
 	public int getWarrantyIncl() {
 		return warrantyIncl;
@@ -293,7 +299,7 @@ public class DalCcmPartData {
 	public void setWarrantyIncl(int warrantyIncl) {
 		this.warrantyIncl = warrantyIncl;
 	}
-	
+
 	@Column (name="WARRANTY_EXCLUDED")
 	public int getWarrantyExcl() {
 		return warrantyExcl;
@@ -301,7 +307,7 @@ public class DalCcmPartData {
 	public void setWarrantyExcl(int warrantyExcl) {
 		this.warrantyExcl = warrantyExcl;
 	}
-	
+
 	@Column (name="CREDIT_ACCRUED")
 	public int getCreditAccrued() {
 		return creditAccrued;
@@ -309,7 +315,7 @@ public class DalCcmPartData {
 	public void setCreditAccrued(int creditAccrued) {
 		this.creditAccrued = creditAccrued;
 	}
-	
+
 	@Column (name="BUSINESS_UNIT")
 	public String getBu() {
 		return bu;
@@ -317,8 +323,8 @@ public class DalCcmPartData {
 	public void setBu(String bu) {
 		this.bu = bu;
 	}
-	
-	
+
+
 	@Column (name="ZONE_MGR")
 	public String getZoneMgr() {
 		return zoneMgr;
@@ -326,7 +332,7 @@ public class DalCcmPartData {
 	public void setZoneMgr(String zoneMgr) {
 		this.zoneMgr = zoneMgr;
 	}
-	
+
 	@Column (name="ACCT_MGR")
 	public String getAcctMgr() {
 		return acctMgr;
@@ -334,7 +340,7 @@ public class DalCcmPartData {
 	public void setAcctMgr(String acctMgr) {
 		this.acctMgr = acctMgr;
 	}
-	
+
 	@Column(name="PRODUCT_LINE")
 	public Calendar getProductLine() {
 		return productLine;
@@ -342,7 +348,7 @@ public class DalCcmPartData {
 	public void setProductLine(Calendar productLine) {
 		this.productLine = productLine;
 	}
-	
+
 	@Column(name="TREAD")
 	public Calendar getTread() {
 		return tread;
@@ -350,5 +356,5 @@ public class DalCcmPartData {
 	public void setTread(Calendar tread) {
 		this.tread = tread;
 	}	
-	
+
 }

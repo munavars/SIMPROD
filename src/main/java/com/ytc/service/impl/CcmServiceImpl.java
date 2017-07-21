@@ -359,6 +359,9 @@ class CcmServiceImpl implements ICcmService{
 	@Override
 	public List<DalCcmBillToData> ccmBillToData(CreditMemoParams params) {
 		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_CcmBillToCreditMemoForPandT");
+		query.setParameter("pgmDetId", params.getPgmDetailId());
+		query.setParameter("startDate", params.getStartDate());
+		query.setParameter("endDate", params.getEndDate());
 		query.execute();
 		List<DalCcmBillToData> billToData = query.getResultList();
 		return billToData;
@@ -368,6 +371,9 @@ class CcmServiceImpl implements ICcmService{
 	@Override
 	public List<DalCcmPartData> ccmPartData(CreditMemoParams params) {
 		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_CcmPartCreditMemoForPandT");
+		query.setParameter("pgmDetId", params.getPgmDetailId());
+		query.setParameter("startDate", params.getStartDate());
+		query.setParameter("endDate", params.getEndDate());
 		query.execute();
 		List<DalCcmPartData> partData = query.getResultList();
 		return partData;

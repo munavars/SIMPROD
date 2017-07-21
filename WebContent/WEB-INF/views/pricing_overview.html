@@ -91,6 +91,10 @@ function tableToExcel(tableId, fileName) {
 	   		{
 	   		 cell.setAttribute("style", 'mso-number-format:"\@"');
 	   		}
+	   		if(i==7 || i==11)
+	   		{
+	   		  cell.setAttribute("style", "mso-number-format:0\.00;");
+	   		}
 	   		}
 	   	    tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
 	    }

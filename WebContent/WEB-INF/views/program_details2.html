@@ -124,6 +124,7 @@
                   </li>
                   <!-- user login dropdown end -->
                </ul>
+                <center><h3 style="color:white;font-size: 20px;">Sales incentive management</h2></center>
             </div>
          </header>
          <!--header end-->
@@ -334,7 +335,7 @@
 													<div class="row">
 													<!-- <div class="form-group"> -->
 															<div class="col-lg-4 col-sm-4">
-																<label class="control-label" for="from">Begin/End
+																<label class="control-label" for="from">Begin / End
 																	Dates:</label>
 																<div class="input-group input-medium"
 																	data-date-format="mm/dd/yy">
@@ -773,7 +774,7 @@
 																
 																<div id="glcocde" class="col-lg-4 col-sm-4">
 																<label class="control-label"
-																			for="glcode_dropdown">GLNo</label>&nbsp;&nbsp;
+																			for="glcode_dropdown">GL No</label>&nbsp;&nbsp;
 																			  <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/>  
 																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled> -->
 																</div> 
@@ -1479,18 +1480,18 @@
                     });							
 			    return isSame;
 			}, 'Accrued Tier should match tier value available');
-			$.validator.addMethod("amountValidation", function (value, element) {
+			 $.validator.addMethod("amountValidation", function (value, element) {
 				var isNumber = true;
 				var regex = /^[0-9.,]+$/;
 				if( !regex.test(value) ) {
 				  isNumber = false;
 				}
 			    return isNumber;
-			}, 'Please enter valid amount');
+			}, 'Please enter valid amount'); 
 			
 			$.validator.addMethod("estimatedAccuralValidation", function (value, element) {
 				var isNumber = true;
-				var regex = /^[0-9,]+$/;
+				var regex = /^[0-9.,]+$/;
 				if(value==0){
 					isNumber=false;
 				}
@@ -1512,7 +1513,7 @@
 			    return isNumber;
 			}, 'Please enter valid Pay To');
 			
-			$.validator.addMethod("percentageValidation", function (value, element) {
+			  $.validator.addMethod("percentageValidation", function (value, element) {
 				var isPercentage = true;
 				var regex = /^[0-9.]+$/;
 				if( !regex.test(value)) {
@@ -1524,16 +1525,16 @@
 					}
 				}
 			    return isPercentage;
-			}, 'Please enter valid percentage');
+			}, 'Please enter valid percentage'); 
 			
-			$.validator.addMethod("amountValidationTier", function (value, element) {
+			 $.validator.addMethod("amountValidationTier", function (value, element) {
 				var isNumber = true;
 				var regex = /^[0-9.,]+$/;
 				if( !regex.test(value) ) {
 				  isNumber = false;
 				}
 			    return isNumber;
-			}, 'Please enter valid amount');
+			}, 'Please enter valid amount'); 
 			
 			$.validator.addMethod("percentageValidationTier", function (value, element) {
 				var isPercentage = true;
@@ -1547,7 +1548,7 @@
 					}
 				}
 			    return isPercentage;
-			}, 'Please enter valid percentage');
+			}, 'Please enter valid percentage'); 
 			$.validator.addMethod("paidBasedOnValidation", function (value, element) {
 				var isIncluded = false;
 				if(getTagPropertyValue(1, includePaid)!=null && getTagPropertyValue(7, includePaid)!=null){
@@ -1587,7 +1588,7 @@
 					},
 					amount: {
 						required: true,
-						amountValidation:{
+						    amountValidation:{
 							depends: function(element) {
 								return ($('#optionsRadiosDollarSign').is(':checked'));
 							}
@@ -1596,7 +1597,7 @@
 							depends: function(element) {
 								return ($('#optionsRadiosPercentage').is(':checked'));
 							}
-						}
+						} 
 					},
 					estm_accrual: {
 						required: true,
@@ -1825,9 +1826,10 @@
 
 	<script>
             $(document).ready(function(){
-                 $('#from').datepicker();
+                $('#from').datepicker();
                  $('#to').datepicker();
             });
+            
        		var responseOnload;
        		var _isDirty = false; 
 			//getParams = new URLSearchParams(window.location.search);
@@ -2446,7 +2448,7 @@
 				disableFields();
 			}
          	function saveDraft(){
-         		var message = "Data saved successfully !!!";
+         		var message = "Program is saved successfully.";
          		var idBefore = responseOnload.programDetailList[0].id;
          		responseOnload.status = "3";
          		responseOnload.action = 'save';
@@ -2459,7 +2461,7 @@
          	}
          	
 			function submitForApproval(){
-				var message = "Data submitted for approval successfully !!!";
+				var message = "Program is submitted for approval successfully.";
          		var idBefore = responseOnload.programDetailList[0].id;
 	 			responseOnload.status = "2";
 	 			responseOnload.action = 'submit';
@@ -2519,7 +2521,7 @@
 							/**Appending program id in the modal message.- Begin*/
 							var idAfter = responseOnload.programDetailList[0].id;
 							if(idBefore != idAfter){
-								var newMessage = "New program id generated : <strong>"+ idAfter + "</strong><br> <br>"+ message;
+								var newMessage = message+"Program ID : <strong>"+ idAfter + "</strong>";
 								message = newMessage; 
 								if(responseOnload.requestedDate != null){
 				               		$('#requestedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.requestedDate)));
@@ -2725,20 +2727,22 @@
 			$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
 				   if(id==item.id){
 					   if(item.base==1){
-						   pgmType='VBS';						   
-						   if(!$('#optionsRadiosDollarSign').is(':checked')){
+						   pgmType='VBS';	
+						   $("#amount").val("");					   
+						   /*if(!$('#optionsRadiosDollarSign').is(':checked')){
 							   $("#amount").val(""); 
-						   }
+						   }*/
 						   $("#optionsRadiosDollarSign, #optionsRadiosDollarSignTier1").prop("checked", true);
 						  
-						   $("#amount").valid();
+						  // $("#amount").valid();
 					   }else{
 						   pgmType='MKP';
-						   if(!$('#optionsRadiosPercentage').is(':checked')){
+						   $("#amount").val(""); 
+						  /* if(!$('#optionsRadiosPercentage').is(':checked')){
 							   $("#amount").val(""); 
-						   }
+						   }*/
 						   $("#optionsRadiosPercentage, #optionsRadiosPercentageTier1").prop("checked", true);
-						   $("#amount").valid();
+						  // $("#amount").valid();
 					   }
 				   }
 				});
@@ -2831,6 +2835,14 @@
             		}
 				   
 				}); 
+				$(document).on('blur',"#estm_accrual" , function () {
+					var value = $(this).val();
+					if(value != null && value != 'undefined' ){
+						  value = convertWholeNumber(value); 
+						 $(this).val(value);
+            		}
+				   
+				}); 
 				/*  $(document).on('keyup', "#amount", function () {
 					var value = $(this).val();
 					if(value != null && value != 'undefined' ){
@@ -2919,6 +2931,20 @@
 					amount = amount.toString().replace(/,/g, "");
 					if(!isNaN(amount)){
 						amount = parseInt(amount);
+						var withCommas = Number(amount).toLocaleString('en');
+																
+						return withCommas;
+					}
+				}
+				
+				return amount;
+			}
+			function convertWholeNumber(amount){
+				if(amount != null && amount != 0){
+					/*Remove comma's if already present*/
+					amount = amount.toString().replace(/,/g, "");
+					if(!isNaN(amount)){
+						amount = Math.round(amount);
 						var withCommas = Number(amount).toLocaleString('en');
 																
 						return withCommas;

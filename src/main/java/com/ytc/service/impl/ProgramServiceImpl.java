@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -455,7 +456,12 @@ public class ProgramServiceImpl implements IProgramService {
 		programDetailsDropDown.setPayToList(getPayToDropDownList(customerId));
 		programDetailsDropDown.setGlCodeList(getGLCodeDropDownList("DalGLCode.getAllDetails",programDetail));
 		programDetailsDropDown.setSapGlCodeList(getSapGLCodeDropDownList("DalGLCode.getAllDetails", programDetail));
-		programDetail.setBeginDate(new Date());
+		Date date = new Date();
+	    Calendar cal = Calendar.getInstance();
+	    cal.setTime(date);
+	    cal.set(Calendar.MONTH, 0);
+	    cal.set(Calendar.DAY_OF_MONTH, 1);
+		programDetail.setBeginDate(cal.getTime());
 		programDetail.setEndDate(new Date());
 		programDetail.setDropdownList(programDetailsDropDown);
 		/**

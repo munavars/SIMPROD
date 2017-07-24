@@ -1550,14 +1550,43 @@
 			}, 'Please enter valid percentage');
 			$.validator.addMethod("paidBasedOnValidation", function (value, element) {
 				var isIncluded = false;
-				if(getTagPropertyValue(1, includePaid)!=null && getTagPropertyValue(7, includePaid)!=null){
+				var totalTagEntity = 0;
+				var totalPickedEntity = 0;
+				if(responseOnload.tagItemsMap != null){
+					$.each(responseOnload.tagItemsMap, function (i, ob) {
+						totalTagEntity++;
+					    $.each(ob, function (ind, obj) {
+							var tagTemp = getTagPropertyValue(obj, includePaid);
+							if(tagTemp != null && tagTemp.length > 0){
+								totalPickedEntity++;
+								return;
+							}
+					    });
+					});
+				}
+
+				if(totalTagEntity === totalPickedEntity){
 					isIncluded = true;
 				}
 			    return isIncluded;
 			}, 'Please include at least one customer and one part master attributes');
             $.validator.addMethod("achBasedOnValidation", function (value, element) {
 				var isIncluded = false;
-				if(getTagPropertyValue(1, includeAchieve)!=null && getTagPropertyValue(7, includeAchieve)!=null){
+				var totalTagEntity = 0;
+				var totalPickedEntity = 0;
+				if(responseOnload.tagItemsMap != null){
+					$.each(responseOnload.tagItemsMap, function (i, ob) {
+						totalTagEntity++;
+					    $.each(ob, function (ind, obj) {
+							var tagTemp = getTagPropertyValue(obj, includeAchieve);
+							if(tagTemp != null && tagTemp.length > 0){
+								totalPickedEntity++;
+								return;
+							}
+					    });
+					});
+				}
+				if(totalTagEntity === totalPickedEntity){
 					isIncluded = true;
 				}
 			    return isIncluded;
@@ -1621,21 +1650,21 @@
 					actual_marker: {
 						actualMarkerCheck:{
 							depends: function(element) {
-								return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
+								return ($('#optionsRadiosTierYes').is(':checked'));
 							}
 						}
 					},
 					achieve_freq_inputselect:{
 						required :{
 							depends: function(element) {
-								return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
+								return ($('#optionsRadiosTierYes').is(':checked'));
 							}
 						}
 					},
 					achieve_basedon_inputselect:{
 						required :{
 							depends: function(element) {
-								return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
+								return ($('#optionsRadiosTierYes').is(':checked'));
 							}
 						}
 					},
@@ -1659,17 +1688,16 @@
 						required: true
 					},
 					include: {
-					//required: true,
-					paidBasedOnValidation: false
+						//required: true,
+						paidBasedOnValidation: true
 					},
 					achInclude:{
-					achBasedOnValidation: false
-					/* {
-					  depends: function(element) {
-						return $('input:radio[name=optionsRadiosTrueUpYes]:checked');
-					  }
-					} */
-				  }	
+						achBasedOnValidation:{
+							depends: function(element) {
+								return ($('#optionsRadiosTierYes').is(':checked'));
+							}
+						} 
+				  	}	
 				},
 				messages: {
 					required: "This field is required",
@@ -2788,15 +2816,79 @@
 				
 				
 
-				$('#achieve_basedon_inputselect').change(function(){
+				/* $('#achieve_basedon_inputselect').change(function(){
 					if($('#optionsRadiosTierYes').is(':checked')){
 					
 					id=$('#achieve_basedon_inputselect option:selected').val();
 					
 					populateGlcode(id);
 					}
-				});
+				}); */
 				
+				$(document).on('focusin', '#achieve_basedon_inputselect', function(){
+				    $(this).data('val', $(this).val());
+				}).on('change','#achieve_basedon_inputselect', function(){
+				    var prev = $(this).data('val');
+				    var current = $(this).val();
+					/* $("#confirmationMessage").html("Existing tier information will be cleared. Are you sure you want to change the value?");
+					$('#myModal10').modal('toggle'); */
+					var noRecord = false;
+					var isConfirmPopUpNeeded = false;
+					$('#tier-schedule tbody').find('tr').each(function(i) {
+	                	var tds = $(this).find('td'),
+	                	tierId = tds.eq(0).text();
+	                	
+	                	if(tierId == 'No data available in table'){
+	                		noRecord = true;
+	                	}
+	                });	
+					
+					var id1=$('#achieve_basedon_inputselect option:selected').val();
+					$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
+					   if(id1==item.id){
+						   if(item.base==1){
+							   if(!$('#optionsRadiosDollarSign').is(':checked')){
+								   isConfirmPopUpNeeded = true; 
+							   }
+						   }else{
+							   if(!$('#optionsRadiosPercentage').is(':checked')){
+								   isConfirmPopUpNeeded = true; 
+							   }
+						   }
+					   }
+					});
+					
+					if($('#actual_marker').val() != null && $('#actual_marker').val() != ''){
+						noRecord = false;
+					}
+					
+	                if(!noRecord && isConfirmPopUpNeeded && (prev != null || prev != '')){
+		                if(confirm("Existing program schedules information will be cleared. Are you sure you want to change the value?")){
+							var table = $("#tier-schedule").DataTable();
+			                if(table != null){
+			                	table.fnClearTable();
+			                }
+			                $('#actual_marker').val("");
+			                /* if($('#actual_marker').valid()){
+			                	$('#actual_marker').validate().resetForm();
+			                } */
+							if($('#optionsRadiosTierYes').is(':checked')){
+								id=$('#achieve_basedon_inputselect option:selected').val();
+								populateGlcode(id);
+							}
+						}
+						else{
+							$('#achieve_basedon_inputselect').val(prev);
+						}
+	                }
+	                else{
+	                	if($('#optionsRadiosTierYes').is(':checked')){
+							id=$('#achieve_basedon_inputselect option:selected').val();
+							populateGlcode(id);
+						}
+	                }
+					
+				});
 				
 				$(document).on('blur', "#tier_amount", function () {
 					var value = $(this).val();

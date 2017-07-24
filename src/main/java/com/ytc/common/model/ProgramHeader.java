@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ProgramHeader extends Model{
 	/**
@@ -42,6 +43,7 @@ public class ProgramHeader extends Model{
 	private String authorizedUser;
 	private boolean calculatedProgram;
 	private String userComments;
+	private Map<Integer, List<Integer>> tagItemsMap ;
 	
 	/** For email link*/
 	private String contextPath;
@@ -245,5 +247,11 @@ public class ProgramHeader extends Model{
 	}
 	public void setDuplicate(boolean isDuplicate) {
 		this.isDuplicate = isDuplicate;
+	}
+	public Map<Integer, List<Integer>> getTagItemsMap() {
+		return tagItemsMap;
+	}
+	public void setTagItemsMap(Map<Integer, List<Integer>> tagItemsMap) {
+		this.tagItemsMap = tagItemsMap;
 	}
 }

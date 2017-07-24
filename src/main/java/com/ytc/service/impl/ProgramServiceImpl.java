@@ -463,7 +463,7 @@ public class ProgramServiceImpl implements IProgramService {
 		 * 1.Tag Items
 		 * */
 		ProgramPaidOn programPaidOn = new ProgramPaidOn();
-		programPaidOn.setTagItemList(getTagItemDropDownList("DalTagItems.getAllDetails"));
+		programPaidOn.setTagItemList(getTagItemDropDownList("DalTagItems.getAllDetails", programHeader));
 		
 		/**
 		 * Populate Paid Achieve based on drop down list.
@@ -485,25 +485,39 @@ public class ProgramServiceImpl implements IProgramService {
 		
 	}
 	
-	private List<DropDown> getTagItemDropDownList(String namedQueryValue){
+	private List<DropDown> getTagItemDropDownList(String namedQueryValue, ProgramHeader programHeader){
 		List<DropDown> dropdownList = new ArrayList<DropDown>();
+		Map<Integer, List<Integer>> tagItemsMap = null;
 		populateDefaultValuesForTag(dropdownList);
+		List<Integer> tagItemsList = null;
 		if(namedQueryValue != null){
 			List<DalTagItems> dalTagItemsList =  baseDao.getListFromNamedQuery(namedQueryValue);
 			if(dalTagItemsList != null){
+				tagItemsMap = new HashMap<Integer, List<Integer>>();
 				for(DalTagItems dalTagItems : dalTagItemsList){
-					if(dalTagItems.getTagLevel()!=0){
-					DropDown dropDown = new DropDown();
-					dropDown.setKey(String.valueOf(dalTagItems.getId()));
-					dropDown.setValue(dalTagItems.getItem());
-					if(dropdownList == null){
-						dropdownList = new ArrayList<DropDown>();
-					}
-					dropdownList.add(dropDown);
+					if(dalTagItems.getTagLevel() != 0){
+						DropDown dropDown = new DropDown();
+						dropDown.setKey(String.valueOf(dalTagItems.getId()));
+						dropDown.setValue(dalTagItems.getItem());
+						if(dropdownList == null){
+							dropdownList = new ArrayList<DropDown>();
+						}
+						dropdownList.add(dropDown);
+						if(tagItemsMap.get(dalTagItems.getEntityId()) != null){
+							tagItemsList = tagItemsMap.get(dalTagItems.getEntityId());
+							tagItemsList.add(dalTagItems.getId());
+						}
+						else{
+							tagItemsList = new ArrayList<Integer>();
+							tagItemsList.add(dalTagItems.getId());
+							tagItemsMap.put(dalTagItems.getEntityId(), tagItemsList);
+						}
 					}
 				}
 			}
-			
+			if(tagItemsMap != null){
+				programHeader.setTagItemsMap(tagItemsMap);
+			}
 		}
 		
 		return dropdownList;
@@ -531,7 +545,7 @@ public class ProgramServiceImpl implements IProgramService {
 	private List<DropDown> getPayToDropDownList(String customerId){
 		
 		List<DropDown> dropdownList = null;
-		if(customerId != null){
+		if(customerId != null && !customerId.isEmpty()){
 			DalCustomer dalCustomer = null;
 			
 			Map<String, Object> inputMap = new HashMap<String, Object>();

@@ -4,9 +4,11 @@ import java.text.DateFormatSymbols;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +60,7 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 			emailDetails.setToAddress(toEmailIdList);
 			emailDetails.setSubject("Credit Memo");
 			emailDetails.setText("Sample Content. To be replaced with actual body");
-			emailDetails.setAttachment(excelByte);
+			//emailDetails.setAttachment(excelByte);
 			
 			ytcMailConnectorService.sendEmail(emailDetails);
 		
@@ -67,7 +69,7 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 	/**
 	 * This method is used to prepare the email data and calls the appropriate method to send the details. 
 	 */
-	public void sendEmailData(DalCcmAccrualData dalCcmAccrualData, String comments, DalProgramDetail dalProgramDetail, IDataAccessLayer baseDao) {
+	public void sendEmailData(DalCcmAccrualData dalCcmAccrualData, String comments, DalProgramDetail dalProgramDetail, IDataAccessLayer baseDao, Map<String, byte[]> attachment) {
 		
 			EmailDetails emailDetails = new EmailDetails();
 			List<String> toEmailIdList = new ArrayList<String>();
@@ -103,8 +105,12 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 				}
 			//toEmailIdList.add(env.getProperty("mail.ccm.to"));
 			//toEmailIdList.add("ArunThomas.Purushothaman@yokohamatire.com");
-			toEmailIdList.add(env.getProperty("mail.ccm.review.to"));
-			ccEmailIdList.add(env.getProperty("mail.ccm.review.cc"));
+			//toEmailIdList.add(env.getProperty("mail.ccm.review.to"));
+			//ccEmailIdList.add(env.getProperty("mail.ccm.review.cc"));
+			toEmailIdList.addAll(Arrays.asList(env.getProperty("mail.ccm.review.to").split("\\s*,\\s*")));
+			if(!"".equalsIgnoreCase(env.getProperty("mail.ccm.review.cc"))){
+				ccEmailIdList.addAll(Arrays.asList(env.getProperty("mail.ccm.review.cc").split("\\s*,\\s*")));
+			}			
 			emailDetails.setFromAddress(env.getProperty("mail.ccm.from"));
 			emailDetails.setToAddress(toEmailIdList);
 			emailDetails.setCcAddress(ccEmailIdList);
@@ -317,6 +323,7 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 					"\n"+
 					"\t";		
 			emailDetails.setText(body);
+			emailDetails.setAttachment(attachment);
 			ytcMailConnectorService.sendEmail(emailDetails);
 		
 	}

@@ -14,7 +14,7 @@ import javax.persistence.StoredProcedureParameter;
 		name = "sp_CcmPartCreditMemoForPandT",
 		procedureName = "sp_CcmPartCreditMemoForPandT",
 		parameters = { 
-				@StoredProcedureParameter(mode = ParameterMode.IN, type = int.class, name = "pgmDetId"), 
+				@StoredProcedureParameter(mode = ParameterMode.IN, type = Integer.class, name = "pgmDetId"), 
 				@StoredProcedureParameter(mode = ParameterMode.IN, type = Calendar.class, name = "startDate"), 
 				@StoredProcedureParameter(mode = ParameterMode.IN, type = Calendar.class, name = "endDate")
 		}
@@ -58,7 +58,7 @@ public class DalCcmPartData {
 	private Calendar productLine;
 	private Calendar tread;
 
-	@Column (name="PROGRAM_ID" , insertable = false, updatable = false)
+	@Column (name="CUSTOMER_NAME" , insertable = false, updatable = false)
 	public String getCustomerName() {
 		return customerName;
 	}

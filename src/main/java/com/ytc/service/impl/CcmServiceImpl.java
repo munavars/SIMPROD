@@ -24,14 +24,13 @@ import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalCcmAccrualData;
 import com.ytc.dal.model.DalCcmAudit;
-import com.ytc.dal.model.DalCcmBillToData;
-import com.ytc.dal.model.DalCcmPartData;
 import com.ytc.dal.model.DalFrequency;
 import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.ICcmEmailService;
 import com.ytc.service.ICcmService;
 import com.ytc.service.util.ExcelGenerator;
+
 
 class CcmServiceImpl implements ICcmService{
 	@Autowired
@@ -277,8 +276,21 @@ class CcmServiceImpl implements ICcmService{
 		for (Iterator<DalCcmAccrualData> iterator = ccmList.iterator(); iterator.hasNext();) {
 			DalCcmAccrualData dalCcmAccrualData = (DalCcmAccrualData) iterator.next();
 			DalProgramDetail dalpgm=baseDao.getById(DalProgramDetail.class, dalCcmAccrualData.getProgramId());
-			//Sending Email
-			ccmEmailService.sendEmailData(dalCcmAccrualData,comments,dalpgm,baseDao);
+			CreditMemoParams creditMemoParams=new CreditMemoParams();
+			creditMemoParams.setPgmDetailId(dalCcmAccrualData.getProgramId());
+			creditMemoParams.setStartDate(dalCcmAccrualData.getAccrualStartDate());
+			creditMemoParams.setEndDate(dalCcmAccrualData.getAccrualEndDate());
+			List<Object> billToList= ccmBillToData(creditMemoParams);
+			String headerColumnsBillto[]={"CUSTOMER NAME","PROGRAM ID","PROGRAM NAME","PAID BASED ON","GUARANTEE","AMOUNT","TYPE","CORP_NO","CORP_NAME","UNITS_INCLUDED","UNITS_EXCLUDED","BONUSABLE_UNITS_INCLUDED","BONUSABLE_UNITS_EXCLUDED","NAD_UNITS_INLCUDED","NAD_UNITS_EXCLUDED","UNITS_PLUS_NAD_INLCUDED","UNITS_PLUS_NAD_EXCLUDED","BONUSABLE_UNITS_PLUS_NAD_INCLUDED","BONUSABLE_UNITS_PLUS_NAD_EXCLUDED","INV_SALES_INCLUDED","INV_SALES_EXCLUDED","BONUSABLE_SALES_INCLUDED","BONUSABLE_SALES_EXCLUDED","NAD_SALES_INCLUDED","NAD_SALES_EXCLUDED","INV_SALES_PLUS_NAD_INCLUDED","INV_SALES_PLUS_NAD_EXCLUDED","BONUSABLE_SALES_PLUS_NAD_INCLUDED","BONUSABLE_SALES_PLUS_NAD_EXCLUDED","WARRANTY_INCLUDED","WARRANTY_EXCLUDED","CREDIT_ACCRUED","BUSINESS_UNIT","FRQENCY","ZONE_MGR","ACCT_MGR","BEGIN_DATE","END_DATE"};
+			byte [] excelBillToArray=new ExcelGenerator().generateExcelList("CcmBillToCreditMemo", billToList,headerColumnsBillto);
+			List<Object> partList=ccmPartData(creditMemoParams);
+			String headerColumnsPart[]={"CUSTOMER NAME","PROGRAM ID","PROGRAM NAME","CORP_NO","CORP_NAME","PRODUCT_LINE","TREAD","PAID BASED ON","AMOUNT","TYPE","UNITS_INCLUDED","UNITS_EXCLUDED","BONUSABLE_UNITS_INCLUDED","BONUSABLE_UNITS_EXCLUDED","NAD_UNITS_INLCUDED","NAD_UNITS_EXCLUDED","UNITS_PLUS_NAD_INLCUDED","UNITS_PLUS_NAD_EXCLUDED","BONUSABLE_UNITS_PLUS_NAD_INCLUDED","BONUSABLE_UNITS_PLUS_NAD_EXCLUDED","INV_SALES_INCLUDED","INV_SALES_EXCLUDED","BONUSABLE_SALES_INCLUDED","BONUSABLE_SALES_EXCLUDED","NAD_SALES_INCLUDED","NAD_SALES_EXCLUDED","INV_SALES_PLUS_NAD_INCLUDED","INV_SALES_PLUS_NAD_EXCLUDED","BONUSABLE_SALES_PLUS_NAD_INCLUDED","BONUSABLE_SALES_PLUS_NAD_EXCLUDED","WARRANTY_INCLUDED","WARRANTY_EXCLUDED","CREDIT_ACCRUED","BUSINESS_UNIT","ZONE_MGR","ACCT_MGR","GUARANTEE"};
+			byte [] excelPartArray=new ExcelGenerator().generateExcelList("CcmPartCreditMemo", partList,headerColumnsPart);
+			 //Sending Email
+			Map<String, byte[]> attachment=new HashMap<String, byte[]>();
+			attachment.put("CcmBillToCreditMemo", excelBillToArray);
+			attachment.put("CcmPartCreditMemo", excelPartArray);
+			ccmEmailService.sendEmailData(dalCcmAccrualData,comments,dalpgm,baseDao,attachment);
 
 		}
 
@@ -357,25 +369,25 @@ class CcmServiceImpl implements ICcmService{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DalCcmBillToData> ccmBillToData(CreditMemoParams params) {
+	public List<Object> ccmBillToData(CreditMemoParams params) {
 		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_CcmBillToCreditMemoForPandT");
-		query.setParameter("pgmDetId", params.getPgmDetailId());
+		query.setParameter("pgmDetId", params.getPgmDetailId());	
 		query.setParameter("startDate", params.getStartDate());
 		query.setParameter("endDate", params.getEndDate());
 		query.execute();
-		List<DalCcmBillToData> billToData = query.getResultList();
+		List<Object> billToData = (List<Object>)query.getResultList();
 		return billToData;
 	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<DalCcmPartData> ccmPartData(CreditMemoParams params) {
+	public List<Object> ccmPartData(CreditMemoParams params) {
 		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_CcmPartCreditMemoForPandT");
 		query.setParameter("pgmDetId", params.getPgmDetailId());
 		query.setParameter("startDate", params.getStartDate());
 		query.setParameter("endDate", params.getEndDate());
 		query.execute();
-		List<DalCcmPartData> partData = query.getResultList();
+		List<Object> partData = query.getResultList();
 		return partData;
 	}
 

@@ -1,6 +1,7 @@
 package com.ytc.common.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class EmailDetails {
 	private String host;
@@ -17,7 +18,8 @@ public class EmailDetails {
 	private StringBuilder toNames;
 	
 	private String environment;
-	private byte[] attachment;
+	
+	private Map<String, byte[]> attachment;
 	
 	public String getHost() {
 		return host;
@@ -85,11 +87,13 @@ public class EmailDetails {
 	public void setEnvironment(String environment) {
 		this.environment = environment;
 	}
-	public byte[] getAttachment() {
+	public Map<String, byte[]> getAttachment() {
 		return attachment;
 	}
-	public void setAttachment(byte[] attachment) {
+	public void setAttachment(Map<String, byte[]> attachment) {
 		this.attachment = attachment;
 	}
+
 	
+
 }

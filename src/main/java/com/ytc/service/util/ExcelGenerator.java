@@ -158,6 +158,75 @@ public class ExcelGenerator {
 		return excel;
 
 	}
-		
+	
+	
+	public byte[] generateExcelList(String fileName, List<Object> dataList, String[] headerColumns) {
 
+		int rownum = 0; 
+		byte[] excel=null;
+		ByteArrayOutputStream byteArrayOut = new ByteArrayOutputStream();
+		XSSFWorkbook workbook = new XSSFWorkbook();
+		XSSFSheet sheet = workbook.createSheet(fileName);
+		XSSFCellStyle headerStyle=workbook.createCellStyle();
+		headerStyle.setFillForegroundColor(IndexedColors.GREY_40_PERCENT.getIndex());
+		headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+
+        if(!dataList.isEmpty()){     
+
+    		Row titleRow=sheet.createRow(rownum++);
+    		for (int i = 0; i <headerColumns.length; i++) {
+    			Cell cell=titleRow.createCell(i);	
+    			cell.setCellValue(headerColumns[i]);
+    			cell.setCellStyle(headerStyle);
+    		}
+	        for (Iterator<Object> iterator = dataList.iterator(); iterator.hasNext();) {
+	        	Object[] type = (Object[]) iterator.next();
+	        	Row row = sheet.createRow(rownum++);
+	        	for (int i = 0; i < type.length; i++) {
+					Object object = type[i];
+					Cell cell=row.createCell(i);
+		        	cell.setCellValue(null!=object?object.toString():"");
+				}
+	        	
+	        }
+      
+        
+        }
+        
+        
+		
+		try {
+			autoSizeColumns(workbook);
+			/*FileOutputStream out = 
+					new FileOutputStream(new File("C:/Excel/"+fileName+".xlsx"));
+			workbook.write(out);	*/	
+			
+			workbook.write(byteArrayOut);
+			excel=byteArrayOut.toByteArray();
+			 byteArrayOut.close();
+			System.out.println("Excel written successfully..");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return excel;
+
+	}
+		
+	public void autoSizeColumns(XSSFWorkbook workbook) {
+	    int numberOfSheets = workbook.getNumberOfSheets();
+	    for (int i = 0; i < numberOfSheets; i++) {
+	    	XSSFSheet sheet = workbook.getSheetAt(i);
+	        if (sheet.getPhysicalNumberOfRows() > 0) {
+	            Row row = sheet.getRow(0);
+	            Iterator<Cell> cellIterator = row.cellIterator();
+	            while (cellIterator.hasNext()) {
+	                Cell cell = cellIterator.next();
+	                int columnIndex = cell.getColumnIndex();
+	                sheet.autoSizeColumn(columnIndex);
+	            }
+	        }
+	    }
+	}
 }

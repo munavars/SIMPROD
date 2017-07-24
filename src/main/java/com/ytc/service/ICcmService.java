@@ -27,7 +27,7 @@ public interface ICcmService {
 
 	int updateCCMDetails(AccuralCcmData accuralCcmData);
 
-	List<DalCcmBillToData> ccmBillToData(CreditMemoParams params);
+	List<Object> ccmBillToData(CreditMemoParams params);
 
-	List<DalCcmPartData> ccmPartData(CreditMemoParams params);
+	List<Object> ccmPartData(CreditMemoParams params);
 }

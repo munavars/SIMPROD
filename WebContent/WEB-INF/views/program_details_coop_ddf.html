@@ -1036,8 +1036,23 @@
 			    return isPercentage;
 			}, 'Please enter valid percentage');
 			$.validator.addMethod("paidBasedOnValidation", function (value, element) {
-				var isIncluded = false;
-				if(getTagPropertyValue(1, includePaid)!=null && getTagPropertyValue(7, includePaid)!=null){
+			    var isIncluded = false;
+				var totalTagEntity = 0;
+				var totalPickedEntity = 0;
+				if(responseOnload.tagItemsMap != null){
+					$.each(responseOnload.tagItemsMap, function (i, ob) {
+						totalTagEntity++;
+					    $.each(ob, function (ind, obj) {
+					    	var tagTemp = getTagPropertyValue(obj, includePaid);
+					        if(tagTemp != null && tagTemp.length > 0){
+								totalPickedEntity++;
+								return;
+							}
+					    });
+					});
+				}
+
+				if(totalTagEntity === totalPickedEntity){
 					isIncluded = true;
 				}
 			    return isIncluded;
@@ -1093,7 +1108,7 @@
 						required: true
 					},
 					include: {
-					paidBasedOnValidation: false
+						paidBasedOnValidation: true
 					}
 				},
 				messages: {

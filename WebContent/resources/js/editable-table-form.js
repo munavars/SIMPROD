@@ -221,6 +221,16 @@ var EditableTable = function () {
                 
                 var noRecord = true;
                 
+                $('#tier-schedule tbody').find('tr').each(function(i) {
+                	var tds = $(this).find('td'),
+                	tierId = tds.eq(0).text();
+                	
+                	if(tierId == 'No data available in table'){
+                		nEditing = null;
+                	}
+                });	
+
+                
 				var valid = true;
 				if(nEditing != null){
 					valid = saveRow(oTable, nEditing);

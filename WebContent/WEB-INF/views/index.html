@@ -75,15 +75,15 @@
 	    {     
 	        /* var table_cells = tab.rows[j].getElementsByTagName('td');  
 	        for (var i = 0; i < table_cells.length; i++) { 
-   			var cell = table_cells[i];
+		        var cell = table_cells[i];
 	   		if(i==12 || i==17 || i==18 || i==19 || i==20 )
-	   		{
+		   		{
 	   		 if(cell.innerHTML!='0')
 	   		 {cell.setAttribute("style", "mso-number-format:0\.00;");}
-	   		}
+		   		}
 	   		} */
 	   		tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-	    }
+	   		}
 	    tab_text=tab_text+"</table>";
 	    tab_text= tab_text.replace(/<a[^>]*>|<\/a>/g, "");//remove if u want links in your table
 	    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
@@ -377,16 +377,16 @@
 	            { data: "bu" },
 	            { data: "programType" },
 	            { data: "submitDate" ,className:"center" },
-	            { data: "programStatus",className:"center",	              
+	            { data: "actionReqByName",className:"center",	              
 	            	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
-                    	if(data=='2'){
+                    	if(row.programStatus=='2'){
                     	 data = '<span data-toggle="tooltip" title="Pending Since ' + row.modifiedDate + '">' + row.actionReqByName + '</span>';
-                       }else if(data=='1'){
+                       }else if(row.programStatus=='1'){
                          data = '<span data-toggle="tooltip" title="Pending Since ' + row.modifiedDate + '">' + row.actionReqByName + '</span>';
-                    	}else if(data=='4' || data == '0'){
+                    	}else if(row.programStatus=='4' || row.programStatus == '0'){
                     	data = '<span data-toggle="tooltip" title="Approved On ' + row.modifiedDate + '">' + row.actionReqByName + '</span>'; 
-                    	}else if(data=='5' || data == '3'){
+                    	}else if(row.programStatus=='5' || row.programStatus == '3'){
                     	data = '<span data-toggle="tooltip" title="Waiting Since ' + row.modifiedDate + '">' + row.actionReqByName + '</span>';
                     	}
                     }
@@ -471,9 +471,9 @@
 		 $('#customeroverview').on('draw.dt', function () {
            $('[data-toggle="tooltip"]').tooltip();
        });
-/* 		$('#pending_approvals').on('draw.dt', function () {
-           $('[rel="tooltip"]').tooltip();
-       }); */
+ 		$('#pending_approvals').on('draw.dt', function () {
+           $('[data-toggle="tooltip"]').tooltip();
+       });
        
    });
    </script>
@@ -527,11 +527,13 @@
           </ul>
           </div>
           <div class="top-nav ">
+          
               <ul class="nav pull-right top-menu">
                   <!-- <li>
                       <input type="text" class="form-control search" placeholder="Search">
                   </li> -->
                   <!-- user login dropdown start-->
+                 
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                           <span class="username" id="loginUserName"></span>
@@ -547,6 +549,10 @@
                   </li>
                   <!-- user login dropdown end -->
               </ul>
+           
+          
+          <center><h3 style="color:white;font-size: 20px;">Sales incentive management</h2></center>
+         
           </div>
       </header>
 <!--header end -->

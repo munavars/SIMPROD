@@ -117,6 +117,7 @@
                   </li>
                   <!-- user login dropdown end -->
                </ul>
+                <center><h3 style="color:white;font-size: 20px;">Sales incentive management</h2></center>
             </div>
          </header>
          <!--header end-->
@@ -180,7 +181,7 @@
                         <div class="panel-body">
                           <div class="clearfix">
                              <div class="col-lg-12">
-                                <h5 data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">Customer Details</h5>
+                                <h5>Customer Details</h5>
                                 <!-- Edit button Begin -->
 								<div id="header-button" class="modal-footer" hidden="true">
 	                                <button id="pdf-button" class="btn" disabled="disabled">Generate PDF</button> <!-- <div class="space15">&nbsp;</div> -->
@@ -213,7 +214,7 @@
                                     <li>Customer Name: <strong><span class="yokohamared" id="customerName"></span></strong></li>
                                     <li>Program ID: <strong><span id="programId"></span></strong></li>
                                     <li class="p-right10">Business Unit: <strong><span id="businessUnit"></span></strong></li>
-                                    <li><button id="program-expand" type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
+                                    <li data-original-title="Customer Details" data-content="Click on the grey button below to see more info about this customer. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers"><button id="program-expand" type="button" class="btn btn-default btn-xs" data-toggle="collapse" data-target="#demo"><i class="fa fa-angle-down"></i></button></li>
                                  </ul>
                                <div id="demo" class="collapse out">
                                 <div class="col-lg-3 col-md-4 col-sm-4 p-left0">
@@ -331,7 +332,7 @@
 														</div> -->
 														<!-- <div class="form-group"> -->
 															<div class="col-lg-4 col-sm-4">
-																<label class="control-label" for="from">Begin/End Dates:</label>
+																<label class="control-label" for="from">Begin / End Dates:</label>
 																<div class="input-group input-medium"
 																	data-date-format="mm/dd/yy">
 																	<input type="text" class="form-control dpd1 required"
@@ -359,14 +360,13 @@
 													<br>
 													<div class="row">
 														<div class="col-lg-12">
-															<label class="control-label " for="longDesc">Program
-																Description</label>
-															<textarea id="longDesc" name="longDesc"
-																rel="txtTooltip"
+															<label class="control-label popovers" for="longDesc" rel="txtTooltip"
 																data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" rows="3"
+																data-placement="top" rows="3" data-html="true">Program
+																Description</label>
+															<textarea id="longDesc" name="longDesc"
 																placeholder="Add program description details"
 																class="form-control m-bot15"></textarea>
 														</div>
@@ -528,8 +528,8 @@
 													<div class="col-lg-4 col-sm-4">
 															<label class="control-label popovers" for="payto_inputselect" 
 															data-content="If Paid type is Credit, enter ShipTo. If Cheque,  enter SAP Vendor #"
-															    title="&nbsp;&nbsp;Hot Tip"
-															    data-placement="top" data-toggle="tooltip" data-trigger="hover">Pay
+															    title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+															    data-placement="top" data-toggle="tooltip" data-trigger="hover" data-html="true">Pay
 																To</label> <!-- <select
 																class="form-control input-sm m-bot15 required"
 																id="payto_inputselect"
@@ -545,8 +545,8 @@
 													<div id="estimatedaccrual" class="col-lg-4 col-sm-4">
 																	<label class="control-label popovers" for="estm_accrual" 
 																	data-content="Enter the Estimated Accrual Amount for the entire program period"
-																	title="&nbsp;&nbsp;Hot Tip"
-																	data-placement="top" data-toggle="tooltip" data-trigger="hover">
+																	title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+																	data-placement="top" data-toggle="tooltip" data-trigger="hover" data-html="true">
 																	Estimated Accrual ($)</label>&nbsp;&nbsp;
 																	<input id="estm_accrual" name="estm_accrual" type="text"
 																		class="form-control radio-inline m-bot15" style="width: 120px;"
@@ -616,14 +616,14 @@
 													<br>
 													<div class="row">
 														<div class="col-lg-12">
-															<label class="control-label" for="userComments">Commentary/Special
-																Instructions</label>
-															<textarea id="userComments" name="userComments"
-																class="form-control" rel="txtTooltip"
+															<label class="control-label popovers" for="userComments" rel="txtTooltip"
 																data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" rows="3"
+																data-placement="top" rows="3" data-html="true">Commentary/Special
+																Instructions</label>
+															<textarea id="userComments" name="userComments"
+																class="form-control"
 																placeholder="Add description details"></textarea>
 														</div>
 													</div>
@@ -1000,7 +1000,7 @@
 			
       		$.validator.addMethod("estimatedAccuralValidation", function (value, element) {
 				var isNumber = true;
-				var regex = /^[0-9,]+$/;
+				var regex = /^[0-9.,]+$/;
 				if(value==0){
 					isNumber=false;
 				}
@@ -1742,7 +1742,7 @@
 				disableFields();
 			}
          	function saveDraft(){
-         		var message = "Data saved successfully !!!";
+         		var message = "Program is saved successfully.";
          		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "3";
          		prepareDataForSubmit();
@@ -1754,7 +1754,7 @@
          	}
          	
 			function submitForApproval(){
-				var message = "Data submitted for approval successfully !!!";
+				var message = "Program is submitted for approval successfully.";
          		var idBefore = responseOnload.programDetailList[0].id;
 				responseOnload.status = "2";
 				prepareDataForSubmit();
@@ -1801,7 +1801,7 @@
 							/**Appending program id in the modal message.- Begin*/
 							var idAfter = responseOnload.programDetailList[0].id;
 							if(idBefore != idAfter){
-								var newMessage = "New program id generated : <strong>"+ idAfter + "</strong><br> <br>"+ message;
+								var newMessage = message+"Program ID : <strong>"+ idAfter + "</strong>";
 								message = newMessage;
 								if(responseOnload.requestedDate != null){
 				               		$('#requestedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.requestedDate)));
@@ -1903,6 +1903,10 @@
 				}
 			});
 			
+			$("#estm_accrual").blur(function(){
+				$("#estm_accrual").val(convertWholeNumber($("#estm_accrual").val()));
+			});
+			
 			function convertPercentageFormat(amount){
 				if(amount != null && amount != 0 && amount.toString().includes(".")){
 					/*Remove comma's if already present*/
@@ -1927,6 +1931,21 @@
 						amount = parseFloat(amount).toFixed(2);
 						var withCommas = Number(amount).toLocaleString('en',
 																{ minimumFractionDigits: 2 });
+																
+						return withCommas;
+					}
+				}
+				
+				return amount;
+			}
+			
+			function convertWholeNumber(amount){
+				if(amount != null && amount != 0){
+					/*Remove comma's if already present*/
+					amount = amount.toString().replace(/,/g, "");
+					if(!isNaN(amount)){
+						amount = Math.round(amount);
+						var withCommas = Number(amount).toLocaleString('en');
 																
 						return withCommas;
 					}
@@ -2039,17 +2058,19 @@
 				$.each(responseOnload.programDetailList[0].baseItemList, function (i, item) {
 					   if(id==item.id){
 						   if(item.base==1){
-							   if(!$('#optionsRadiosDollarSign').is(':checked')){
+						/* 	   if(!$('#optionsRadiosDollarSign').is(':checked')){
 								   $("#amount").val(""); 
 							   }
-							   $("#optionsRadiosDollarSign").prop("checked", true);
-							   $("#amount").valid();
+						 */	   $("#optionsRadiosDollarSign").prop("checked", true);
+						       $("#amount").val(""); 
+//							   $("#amount").valid();
 						   }else{
-							   if(!$('#optionsRadiosPercentage').is(':checked')){
+							   /* if(!$('#optionsRadiosPercentage').is(':checked')){
 								   $("#amount").val(""); 
-							   }
+							   } */
 							   $("#optionsRadiosPercentage").prop("checked", true);
-							   $("#amount").valid();
+							    $("#amount").val(""); 
+							  // $("#amount").valid();
 						   }
 					   }
 					});

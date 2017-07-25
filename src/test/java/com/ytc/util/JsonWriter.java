@@ -1,6 +1,7 @@
 package com.ytc.util;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 import org.apache.log4j.Logger;
 import org.apache.sling.commons.json.JSONException;
@@ -10,6 +11,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ytc.common.model.Customer;
+import com.ytc.common.params.CreditMemoParams;
 
 public class JsonWriter {
 	
@@ -18,9 +20,11 @@ public class JsonWriter {
 	public static void main(String[] args) throws JsonMappingException {
 		ObjectMapper jsonWriter = new ObjectMapper();
 		try {
-			Customer customer = new Customer();
-			customer.setCM_CREDIT_STATUS("Active");
-			String modifedObjectJson = jsonWriter.writeValueAsString(customer);
+			CreditMemoParams params = new CreditMemoParams();
+			params.setPgmDetailId(1515);
+			params.setStartDate(Calendar.getInstance());
+			params.setEndDate(Calendar.getInstance());
+			String modifedObjectJson = jsonWriter.writeValueAsString(params);
 			System.out.println("Modified Json ... " +modifedObjectJson);
 			JSONObject object = new JSONObject(modifedObjectJson);
 			object.put("CMBLTOID", "1234");

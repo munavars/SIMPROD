@@ -5,25 +5,34 @@ package com.ytc.service;
 
 import java.util.List;
 
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
-
 import com.ytc.common.model.BookList;
+import com.ytc.common.params.BookParams;
 import com.ytc.dal.model.DalBookList;
 
 /**
- * @author 164919
+ * @author CTS
  *
  */
 public interface IAccrualDataService {
 
-	void callStoreProcedures() throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException;
+	void calculateLiability(Integer periodId);
+
+	void reviewedLiabilityCCM(Integer periodId);
+	
+	void reviewedLiabilityBook(BookParams bookParams);
+
+	void updatePYTD();
+
+	void updateCYTD();
 
 	List<BookList> getBookList();
 	
 	String createBookList(DalBookList dalBookList);
 
 	String deleteBookList(List<Integer> bookIdList);
+
+	void updatePYTDBook(String bookLabel);
+
+	void updateCYTDBook(String bookLabel);
 
 }

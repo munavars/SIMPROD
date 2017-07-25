@@ -116,4 +116,10 @@ public class QueryConstant {
 	
 	public static final String CCM_UPDATE_DOC="UPDATE ACCRUAL_DATA_PGM_DTL_CORP_WITH_ADJUSTMENTS SET DOC_NO=:docNo, DOC_DATE=:docDate WHERE ID=:id";
 	
+	public static final String BOOK_LIST="SELECT o FROM DalBookList o";
+	
+	public static final String CREATE_BOOK_LIST="INSERT INTO BOOK_LIST VALUES(SYSDATETIME(),:user,:booklabel,:bookdate,:bookrecord)";
+	
+	public static final String DELETE_BOOK_LIST="DELETE FROM BOOK_LIST WHERE ID IN (:id);";
+	
 }

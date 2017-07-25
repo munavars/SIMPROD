@@ -6,36 +6,60 @@
       <meta name="description" content="Program Details Form Wizard">
       <meta name="author" content="Yokohama">
       <meta name="keyword" content="YMPACT">
-      <title>Accrual Calculation</title>
+      <title>Liability Book List</title>
       
       
             
-      <!-- Bootstrap core CSS -->
-      <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-      <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
-
-      <!--external css-->
-      <link href="resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-      <link rel="stylesheet" href="resources/assets/data-tables/DT_bootstrap.css" />
-      <!--Date Picker--> 
+<!-- Bootstrap core CSS -->
+         <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
+       
+          <!--Date Picker--> 
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datepicker/css/datepicker.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/jquery-multi-select/css/multi-select.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-timepicker/compiled/timepicker.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-colorpicker/css/colorpicker.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datetimepicker/css/datetimepicker.css" />
-      <!--bootstrap switcher-->
-      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-switch/static/stylesheets/bootstrap-switch.css" />
-      <!--select 2-->
-      <link rel="stylesheet" type="text/css" href="resources/assets/select2/css/select2.min.css"/>
+      
+    <!--external css-->
+    <link href="resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="resources/assets/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="resources/assets/jquery-multi-select/css/multi-select.css" />
+
+
       <!--right slidebar-->
       <link href="resources/css/slidebars.css" rel="stylesheet">
-       <!--Form Wizard-->
-      <link rel="stylesheet" type="text/css" href="resources/css/jquery.steps.css" />
-      <!-- Custom styles for this template -->
-      <link href="resources/css/style.css" rel="stylesheet">
-      <link href="resources/css/style-responsive.css" rel="stylesheet" />
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="resources/css/style.css" rel="stylesheet">
+    <link href="resources/css/style-responsive.css" rel="stylesheet" />
+    <link href="resources/css/status_icons.css" rel="stylesheet" />
+    
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
+	
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+<style>
+		 td,th {
+		    white-space:nowrap;
+		}
+		th{
+				text-align: center;
+			}
+ 		.dataTables_wrapper .dataTables_filter {
+		    width: 50%;
+		} 
+		.dataTables_filter label input{
+		 width: 50%;
+		}
+		.right{
+		text-align:right;
+		}
+</style>
 
    </head>
    <body>
@@ -160,7 +184,7 @@
                      <!--progress bar start-->
                      <section class="panel">
                         <header class="panel-heading">
-                           <h3>Calculate Accruals</h3>
+                           <h3>Liability Book List</h3>
                         </header>
                         <div class="panel-body">
                           <div class="clearfix">
@@ -178,117 +202,24 @@
                                  <section>
 											<div class="form-group clearfix">
 												<div class="col-lg-12">
-													<h5>Accrual Details</h5>
-											
-													
-													                         <!--  <div class="table-responsive">
-                                 <div class="btn-group pull-right"> -->
+													<h5>Book List</h5>
+
                                 <div>
-                      <table class="table table-striped table-hover table-bordered" id="accrualtable">
-<!--                       <tr>
-                      	<td>1 &nbsp;&nbsp;<input id="refresh" type="checkbox" value="" >&nbsp; Refresh Data Source</td>
-                      	<td><div id="refreshdiv" style="display:none"><table id="datetable" class="table-bordered">
-                      	<tr bgcolor="#b1b2b5" ><td>Year</td><td>Begin Month</td><td>End Month</td></tr>
-                      	
-                      	<tr><td><select														
-																id="year_inputselect"
-																name="year_inputselect" >
-																<option value="">- Select -</option> 
-																 <option value="1">1000</option> 
-																  <option value="2">2000</option> 
-																  <option value="3">3000</option> 
-																  <option value="4">4000</option> 
-																  <option value="5">5000</option> 
-															</select></td>
-															<td><select														
-																id="beg_month_inputselect"
-																name="beg_month_inputselect" >
-																<option value="">- Select -</option> 
-																 <option value="1">1</option> 
-																  <option value="2">2</option> 
-																  <option value="3">3</option> 
-																  <option value="4">4</option> 
-																  <option value="5">5</option> 
-															</select></td>
-															<td><select														
-																id="end_month_inputselect"
-																name="end_month_inputselect" >
-																<option value="">- Select -</option> 
-																 <option value="1">1</option> 
-																  <option value="2">2</option> 
-																  <option value="3">3</option> 
-																  <option value="4">4</option> 
-																  <option value="5">5</option> 
-															</select></td></tr>
-                      	</table></div></td>
-                      </tr> -->
-                                            <tr>
-                      	<td>1 &nbsp;&nbsp;<input id="refresh" type="checkbox" value="" >&nbsp; Calculate Liability</td>
-                      	<td><div id="refreshdiv" style="display:none">
-                      	<div class="col-lg-4 col-sm-4">
-		                      	<select
-										class="form-control input-sm m-bot15"
-										id="pytd_period_inputselect"
-										name="period_inputselect" style="margin-top: 15px;">
-										<option value="">- Select -</option> 
-		
-									</select>
-                      	</div></div></td>
-                      </tr>
-                      <tr>
-                      	<td>2 &nbsp;&nbsp;<input id="review" type="checkbox" value="" >&nbsp; Reviewed Liability</td>
-                      	<td><div id="reviewdiv" style="display:none">
-                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="checkbox" value=""  name="liable" id="liable">&nbsp;Archive Name</div>
-                      	<div class="col-lg-4 col-sm-4" ><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable"></div>
-                      	<a href="#"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a>
-                      	<br>
-                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="checkbox" value="" name="liable" id="liable"> &nbsp;Book Name </div>
-                      	<div class="col-lg-4 col-sm-4"><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable">	</div>
-                      	<a href="booklist" id="add_book"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a>
-                      	
-                      	</div>
-							</td>
-                      </tr>
-                      <tr>
-                      	<td>2 &nbsp;&nbsp;<input id="pytd" type="checkbox" value="" >&nbsp; Update PYTD</td>
-                      	<td><div id="pytddiv" style="display:none">
-                      	<div class="col-lg-4 col-sm-4"><input type="radio" value="" checked name="liable" id="liable">&nbsp;From Current tblLiability</div>
-                      	<br>
-                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="radio" value="" name="liable" id="liable"> &nbsp;From Selection </div>
-                      	<div class="col-lg-4 col-sm-4">
-								<select
-									class="form-control input-sm m-bot15"
-									id="liability_inputselect"
-									name="liability_inputselect" style="margin-top: 15px;">
-									<option value="">- Select -</option> 
-									 <option value="1">1000</option> 
-									  <option value="2">2000</option> 
-									  <option value="3">3000</option> 
-									  <option value="4">4000</option> 
-									  <option value="5">5000</option> 
-								</select></div></div>
-							</td>
-                      </tr>
-                       <tr>
-                      	<td>3 &nbsp;&nbsp;<input id="cytd" type="checkbox" value="" >&nbsp; Update CYTD</td>
-                      	<td><div id="cytddiv" style="display:none"><div class="col-lg-4 col-sm-4"><input type="radio" value="" checked name="liable1" id="liable_cytd">&nbsp;From Current tblLiability</div>
-                      	
-                      	<br>
-                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="radio" value="" name="liable1" id="liable_cytd"> &nbsp;From Selection </div>
-                      	<div class="col-lg-4 col-sm-4">
-										<select
-											class="form-control input-sm m-bot15"
-											id="liability_id_inputselect"
-											name="liability_id_inputselect" style="margin-top: 15px;">
-											<option value="">- Select -</option> 
-											 <option value="1">1000</option> 
-											  <option value="2">2000</option> 
-											  <option value="3">3000</option> 
-											  <option value="4">4000</option> 
-											  <option value="5">5000</option> 
-										</select></div></div>
-									</td>
-                      </tr>
+                      <table class="table table-striped table-hover table-bordered" id="booklist">
+						<thead>
+						<tr class="rowvis" style="background-color: #cacbce;">
+						<th>Book Label</th>
+	                    <th>Book Date</th>
+						<th>Book Of Record</th>
+						<th>Create Date</th>
+	                    <th>Create By</th>
+	                    <th>Delete</th>
+						</tr>
+						</thead>
+						
+                              <tbody>
+                                                       
+                              </tbody>
                       </table>
                       
                       </div>
@@ -304,13 +235,13 @@
 
 												<div class="modal-content">
 																	<div class="modal-footer">
-																		<a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
-																			id="program-save-modal-cancel" type="button">Reset Process</button></a>
-																		<button
+																		 <!-- <a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
+																			id="program-save-modal-cancel" type="button">Delete Marked</button></a> -->
+																		 <button
 																				class="btn btn-info" id="program-save-modal-ok"
-																				type="button">
-																				<i class="fa fa-save"></i>&nbsp;&nbsp; Go
-																			</button>
+																				type="button" onclick="deleteBookList();">
+																				<!-- <i class="fa fa-save"></i> -->&nbsp;&nbsp; Delete Marked Records
+																			</button>  
 																	</div>
 																</div>
 
@@ -324,6 +255,63 @@
 											<div class="clearfix"></div>
 											
 											<!-- END ROW 8 -->
+
+												<div class="modal fade" id="myModal1" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-confirmation-modal-close"
+																			type="button" class="close" data-dismiss="modal"
+																			aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Confirmation</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="confirmMessage"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-confirmation-modal-ok"
+																			data-toggle="modal" href="#myModal1">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+														
+														<div class="modal fade" id="myModal2" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-error-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Error / Warning (s)</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="errorMessageModal"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-error-modal-ok" data-toggle="modal"
+																			href="#myModal2">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
 
 											</div>
 											</section>
@@ -354,19 +342,24 @@
 
        
       <!-- js placed at the end of the document so the pages load faster -->
-      <script src="resources/js/jquery.js"></script>
-      <script src="resources/js/bootstrap.min.js"></script>
-      <script src="resources/js/jquery-ui-1.9.2.custom.min.js"></script>
-      <script src="resources/js/jquery-migrate-1.2.1.min.js"></script>
-      <script class="include" type="text/javascript" src="resources/js/jquery.dcjqaccordion.2.7.js"></script>
-      <script src="resources/js/jquery.scrollTo.min.js"></script>
-      <script src="resources/js/jquery.nicescroll.js" type="text/javascript"></script>
-      <script src="resources/js/respond.min.js" ></script>
-      <script src="resources/js/jquery.stepy.js"></script>
-      <!--right slidebar-->
-      <script src="resources/js/slidebars.min.js"></script>
+    <!--   <script src="resources/js/jquery.js"></script> -->
+    <script src="resources/js/jquery-ui-1.9.2.custom.min.js"></script>
+    <script src="resources/js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+    <script class="include" type="text/javascript" src="resources/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="resources/js/jquery.scrollTo.min.js"></script>
+    <script src="resources/js/jquery.nicescroll.js" type="text/javascript"></script>
+    <script type="text/javascript" src="resources/assets/data-tables/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="resources/assets/data-tables/DT_bootstrap.js"></script>
+    <!-- <script src="resources/js/advanced-form-components.js"></script> -->
+    <script type="text/javascript" src="resources/assets/jquery-multi-select/js/jquery.multi-select.js"></script>
+    <script src="resources/js/respond.min.js" ></script>
+ 
+	
+  <!--right slidebar-->
+  <script src="resources/js/slidebars.min.js"></script>
       <script type="text/javascript" src="resources/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
-      <script type="text/javascript" src="resources/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+     <!--  <script type="text/javascript" src="resources/assets/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script> -->
       <script type="text/javascript" src="resources/assets/bootstrap-daterangepicker/moment.min.js"></script>
       <script type="text/javascript" src="resources/assets/bootstrap-daterangepicker/daterangepicker.js"></script>
       <script type="text/javascript" src="resources/assets/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
@@ -375,15 +368,9 @@
       <script type="text/javascript" src="resources/assets/jquery-multi-select/js/jquery.quicksearch.js"></script>
       <script type="text/javascript" src="resources/assets/data-tables/jquery.dataTables.js"></script>
       <script type="text/javascript" src="resources/assets/data-tables/DT_bootstrap.js"></script>
-      <!--select2-->
-      <script type="text/javascript" src="resources/assets/select2/js/select2.min.js"></script>
-      <!--Form Validation-->
-      <script src="resources/js/bootstrap-validator.min.js" type="text/javascript"></script>
-      <!--Form Wizard-->
-      <!--script src="js/jquery.steps.min.js" type="text/javascript"></script-->
-      <script src="resources/js/jquery.validate.min.js" type="text/javascript"></script>
-      <!--common script for all pages-->
-      <script src="resources/js/common-scripts.js"></script>
+    <!--common script for all pages-->
+    <script src="resources/js/common-scripts.js"></script>
+
       <!--script for this page-->
 
 
@@ -391,7 +378,7 @@
   <!--  Validation setup Ends -->
       <!--select2-->
       <script type="text/javascript">
-
+  	var deleteList=[];
          function openSidebar() {
              $('#main-content').css({
                  'margin-left': '210px'
@@ -442,9 +429,106 @@
 	      		}
 	         	
 			}
+ 
+ 
+ function createBookList(){
+
+	 if(($('#booklabelnew').val()=='')||($('#bookdatenew').val()=='')){
+		 message="Kindly enter the Book Label and Book Date.";		        		
+ 		 $("#errorMessageModal").html(message);
+			$('#myModal2').modal('toggle');
+		 return;
+	 }
+	 var dalBookList = new Object();
+	 dalBookList.bookLabel=$('#booklabelnew').val();
+	 if($('#bookRecordnew').is(':checked')){
+		 dalBookList.bookRecord='1';
+	 }else{
+		 dalBookList.bookRecord='0';
+	 }	 
+	 dalBookList.bookDate=Date.parse($('#bookdatenew').val());
+	 
+	 
+	 $.ajax({ 
+        	type: "POST",
+        	dataType: "json",
+       		url: '/SIM/accrual/v1/createBookList',
+       		contentType: 'application/json',
+       		dataType: "text",
+			data: JSON.stringify(dalBookList),
+        	success: function(response){
+	        	table.ajax.url('/SIM/accrual/v1/getBookList').load();
+	        	if(response=="success"){
+	            	message="Data Saved Successfully";
+	            	$("#confirmMessage").html(message);
+					$('#myModal1').modal('toggle');
+	        	}else{
+	        		message="Issue occured while processing your request. Please try again later.";		        		
+	        		$("#errorMessageModal").html(message);
+					$('#myModal2').modal('toggle');
+	        	}
+	             
+			
+        	},
+        	failure: function(response){
+        		alert("Wrongly done");
+        	}});
+ }
+ 
+ 
+ function populateDeleteList(event){
+		var id=(event.id).substring(6);
+
+		var bookId=$('#delete'+id).data('id');
+		
+		if(deleteList.indexOf(bookId)==-1)
+		{
+			deleteList.push(bookId);
+		}else{
+			deleteList.splice(deleteList.indexOf(bookId),1)
+		}
+	}
+ 
+ 
+ function deleteBookList(){
+	 console.log(deleteList);
+
+	if(deleteList.length==0){
+		 message="Kindly select atlest one record to delete.";		        		
+ 		 $("#errorMessageModal").html(message);
+			$('#myModal2').modal('toggle');
+		 return;
+		
+	}
+	 
+	 $.ajax({ 
+        	type: "POST",
+        	dataType: "json",
+       		url: '/SIM/accrual/v1/deleteBookList',
+       		contentType: 'application/json',
+       		dataType: "text",
+			data: JSON.stringify(deleteList),
+        	success: function(response){
+	        	table.ajax.url('/SIM/accrual/v1/getBookList').load();
+	        	if(response=="success"){
+	            	message="Data Deleted Successfully";
+	            	$("#confirmMessage").html(message);
+					$('#myModal1').modal('toggle');
+	        	}else{
+	        		message="Issue occured while processing your request. Please try again later.";		        		
+	        		$("#errorMessageModal").html(message);
+					$('#myModal2').modal('toggle');
+	        	}
+	        	deleteList=[];    	
+        	},
+        	failure: function(response){
+        		alert("Wrongly done");
+        	}});
+ }
+ 
       </script>
       <!--this page  script only-->
-      <script src="resources/js/advanced-form-components.js"></script>
+     <!--  <script src="resources/js/advanced-form-components.js"></script> -->
       <script src="resources/js/editable-table-form.js"></script>
           
     <!-- Inline javascript to set the user name from model attribute Begin -->
@@ -473,10 +557,77 @@
 	           	}
 		   });
 		   
-		   $('#accrualtable td').attr('style', 'line-height: 5 !important;width:30%');
+   
 		   
-		   $('#datetable td').attr('style', 'line-height: 1 !important;width:30%');
 		   
+	    	$('#booklist th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
+	    	   
+	    	table=$("#booklist").DataTable( {
+				 oLanguage: {
+					 "sEmptyTable": "No data available for this selection"
+					 },
+				processing: true,	 
+				lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
+				
+			    ajax: {
+			        url: '/SIM/accrual/v1/getBookList',
+			        dataSrc: "data",
+			        type: "GET",
+			    },
+			  
+		    
+			    columns: [	
+					
+			    	{ data: "bookLabel" },
+		            { data: "bookDate" },
+		            { data: "bookRecord", 
+		            	orderable: false,
+		            	className:"center",
+		            	render: function ( data, type, row, meta ) {
+	                    if(type === 'display'){	                        
+							if(data=='1'){
+		                   		data = '<input type="checkbox" checked id="bookRecord'+meta.row+'" value="" disabled>'; 
+							}else if(data=='new'){
+								data = '<input type="checkbox" id="bookRecordnew" value="" >';	
+							}
+							else{
+								data = '<input type="checkbox" id="bookRecord'+meta.row+'" value="" disabled>';	
+							}
+	                    }
+
+	                    return data;
+	                }          
+		            },
+		            { data: "createdDate"},
+		            { data: "createdUser" },
+		            { data: "delete", 
+		            	orderable: false,
+		            	className:"center",
+		            	render: function ( data, type, row, meta ) {
+	                    if(type === 'display'){	                        
+							if(data=='add'){
+								data='<a href="#" onclick="createBookList();"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Create</button></a';
+							}else{
+			                   data = '<input type="checkbox" id="delete'+meta.row+'" value="" data-id='+row.id+' onchange="populateDeleteList(this)">'; 
+							}
+	                    }
+
+	                    return data;
+	                }},	           
+		           
+		            { data: "id",
+	                	visible: false,
+	                	searchable: false
+	                	}
+	      ]
+			});
+	    	
+	    	$('#booklist').on('draw.dt', function () {
+	             //$('[data-toggle="tooltip"]').tooltip();
+	             $('#bookdatenew').datepicker().on('changeDate', function(e){
+	            	    $(this).datepicker('hide');
+	             });
+	         });
 		   
 		   $('#refresh').change(function(){
 			   if($(this).prop("checked")) {
@@ -509,15 +660,6 @@
 			     $('#reviewdiv').hide();
 			   }
 			 });
-		   
-		   $('#add_book').click(function() {
-			    var width = window.innerWidth * 0.66 ;
-			    // define the height in
-			    var height = width * window.innerHeight / window.innerWidth ;
-			    // Ratio the hight to the width as the user screen ratio
-			    window.open(this.href , 'newwindow', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2));
-				return false;
-			});
 		   
 		}); 
 		

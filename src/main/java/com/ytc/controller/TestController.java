@@ -165,7 +165,27 @@ public class TestController  extends BaseController {
 
 	}
 
+	@RequestMapping(value = "/booklist", method = RequestMethod.GET)
+	public String getBookList(HttpServletRequest request, Model model) {
+		String userName =  null;
+		String returnModel = null;
+		List<Employee> employee = null;
+		if(serviceContext != null && serviceContext.getEmployee() != null){
+			userName = serviceContext.getEmployee().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + serviceContext.getEmployee().getLAST_NAME();
+			returnModel = "book_list";
+			model.addAttribute("loginUserNameValue", userName);
+			employee=new ArrayList<Employee>();
+			employee.add(serviceContext.getEmployee());
+			model.addAttribute("EmployeeInfo", employee);
+		}
 
+		if(serviceContext == null || userName == null){
+			returnModel = "login";
+		}
+
+		return returnModel;
+
+	}
 
 	@RequestMapping(value = "/accuralCalc", method = RequestMethod.POST)
 	public void getSalesData(HttpServletRequest request) throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException {

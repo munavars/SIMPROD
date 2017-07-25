@@ -3,21 +3,20 @@
  */
 package com.ytc.controller;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ytc.common.model.AccuralCcmData;
 import com.ytc.common.model.BookList;
+import com.ytc.common.params.BookParams;
 import com.ytc.common.result.ListResult;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.model.DalBookList;
@@ -66,4 +65,38 @@ public class AccrualController extends BaseController {
 		return status;
 	}
 	
+	@RequestMapping(value = "/accrual/v1/calcLiability", method = RequestMethod.POST)
+	public void calculateLiability(HttpServletRequest request,@PathVariable Integer periodId) {
+		getService(request).calculateLiability(periodId);
+	}
+	
+	@RequestMapping(value = "/accrual/v1/reviewLiabilityCCM", method = RequestMethod.POST)
+	public void reviewedLiabilityCCM(HttpServletRequest request,@PathVariable Integer periodId) {
+		getService(request).reviewedLiabilityCCM(periodId);
+	}
+	
+	@RequestMapping(value = "/accrual/v1/reviewLiabilityBook", method = RequestMethod.POST)
+	public void reviewedLiabilityBook(HttpServletRequest request,@RequestBody BookParams params) {
+		getService(request).reviewedLiabilityBook(params);
+	}
+	
+	@RequestMapping(value = "/accrual/v1/updatePYTD", method = RequestMethod.POST)
+	public void updatePYTD(HttpServletRequest request) {
+		getService(request).updatePYTD();
+	}
+	
+	@RequestMapping(value = "/accrual/v1/updatePYTDBook", method = RequestMethod.POST)
+	public void updatePYTDBook(HttpServletRequest request, @PathVariable String bookLabel) {
+		getService(request).updatePYTDBook(bookLabel);
+	}
+	
+	@RequestMapping(value = "/accrual/v1/updateCYTD", method = RequestMethod.POST)
+	public void updateCYTD(HttpServletRequest request) {
+		getService(request).updateCYTD();
+	}
+	
+	@RequestMapping(value = "/accrual/v1/updateCYTDBook", method = RequestMethod.POST)
+	public void updateCYTDBook(HttpServletRequest request, @PathVariable String bookLabel) {
+		getService(request).updateCYTDBook(bookLabel);
+	}
 }

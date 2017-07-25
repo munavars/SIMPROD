@@ -9,14 +9,11 @@ import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
-import javax.transaction.HeuristicMixedException;
-import javax.transaction.HeuristicRollbackException;
-import javax.transaction.RollbackException;
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.model.BookList;
+import com.ytc.common.params.BookParams;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
@@ -30,24 +27,13 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 	
 	@PersistenceContext
 	protected EntityManager entityManager;
-	
-	/*@Inject
-	UserTransaction ut;*/
 
 	@Override
-	@Transactional
-	public void callStoreProcedures() throws SecurityException, IllegalStateException, RollbackException, HeuristicMixedException, HeuristicRollbackException {
-	
-	
-		
-			StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_CcmBillToCreditMemoForPandT");
-			query.execute();
-			List<String> output = query.getResultList();
-		
-		
-		
+	public void calculateLiability(Integer periodId) {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_00_CalculateAccural");
+		query.setParameter("PARAM_PERIOD_ID", periodId);
+		query.execute();		
 	}
-
 
 	public List<BookList> getBookList(){	
 		List<BookList> bookList = new ArrayList<BookList>();
@@ -106,18 +92,52 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		}
 		return status;
 	}
-	/*private void callStoreProcedure(String procName){
-		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery(procName);
-		query.executeUpdate();	
-		//query.getResultList();
+	
+	@Override
+	public void reviewedLiabilityCCM(Integer periodId) {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataToCCM");
+		query.setParameter("PARAM_PERIOD_ID", periodId);
+		query.execute();	
 		
-		//System.out.println(query);
+	}
+	
+	@Override
+	public void reviewedLiabilityBook(BookParams bookParams) {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataToBook");
+		query.setParameter("PARAM_BOOK_LABEL", bookParams.getBookLabel());
+		query.setParameter("PARAM_BOOK_DATE", bookParams.getBookDate());
+		query.setParameter("PARAM_BOOK_OF_RECORD", bookParams.getBookOfRecord());
+		query.setParameter("PARAM_CREATED_BY", bookParams.getCreatedBy());
+		query.execute();	
 		
-	}*/
+	}
 
+	@Override
+	public void updatePYTD() {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataCYTDToPYTD");
+		query.execute();	
+	}
+	
+	@Override
+	public void updatePYTDBook(String bookLabel) {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveBookLabelToPYTD");
+		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
+		query.execute();	
+	}
+
+	@Override
+	public void updateCYTD() {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataToCYTD");
+		query.execute();		
+	}
+	
+	@Override
+	public void updateCYTDBook(String bookLabel) {
+		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveBookLabelToCYTD");
+		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
+		query.execute();		
+	}
 
 	
-
 	
-
 }

@@ -1,28 +1,49 @@
 package com.ytc.common.params;
 
+import java.util.Calendar;
+
 public class CreditMemoParams {
 
-	private String pgmDetailId;
-	private String startDate;
-	private String endDate;
-	public String getPgmDetailId() {
+	private Integer pgmDetailId;
+	private Calendar startDate;
+	private Calendar endDate;
+	/**
+	 * @return the pgmDetailId
+	 */
+	public Integer getPgmDetailId() {
 		return pgmDetailId;
 	}
-	public void setPgmDetailId(String pgmDetailId) {
+	/**
+	 * @param pgmDetailId the pgmDetailId to set
+	 */
+	public void setPgmDetailId(Integer pgmDetailId) {
 		this.pgmDetailId = pgmDetailId;
 	}
-	public String getStartDate() {
+	/**
+	 * @return the startDate
+	 */
+	public Calendar getStartDate() {
 		return startDate;
 	}
-	public void setStartDate(String startDate) {
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Calendar startDate) {
 		this.startDate = startDate;
 	}
-	public String getEndDate() {
+	/**
+	 * @return the endDate
+	 */
+	public Calendar getEndDate() {
 		return endDate;
 	}
-	public void setEndDate(String endDate) {
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Calendar endDate) {
 		this.endDate = endDate;
 	}
+	
 	
 	
 }

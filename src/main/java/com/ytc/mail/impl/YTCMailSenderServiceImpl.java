@@ -73,18 +73,19 @@ public class YTCMailSenderServiceImpl{
 			}
 			body.setText(emailDetails.getText(),"UTF-8", "html");
 			multipart.addBodyPart(body);
-			
-			for (Entry<String, byte[]> attach : emailDetails.getAttachment().entrySet()) {
-			    
-				if((attach.getKey()!=null)&&(attach.getValue()!=null)){
-					MimeBodyPart messageBodyPart2 = new MimeBodyPart();  
-								  
-					    String filename = attach.getKey()+".xlsx";//change accordingly  
-					    DataSource ds = new ByteArrayDataSource(attach.getValue(), "application/excel");
-					    messageBodyPart2.setDataHandler(new DataHandler(ds));  
-					    messageBodyPart2.setFileName(filename); 
-					    multipart.addBodyPart(messageBodyPart2);
-					}
+			if((null!=emailDetails.getAttachment())){
+				for (Entry<String, byte[]> attach : emailDetails.getAttachment().entrySet()) {
+				    
+					if((attach.getKey()!=null)&&(attach.getValue()!=null)){
+						MimeBodyPart messageBodyPart2 = new MimeBodyPart();  
+									  
+						    String filename = attach.getKey()+".xlsx";//change accordingly  
+						    DataSource ds = new ByteArrayDataSource(attach.getValue(), "application/excel");
+						    messageBodyPart2.setDataHandler(new DataHandler(ds));  
+						    messageBodyPart2.setFileName(filename); 
+						    multipart.addBodyPart(messageBodyPart2);
+						}
+				}	
 			}
 			/*if((null!=emailDetails.getAttachment())&&(emailDetails.getAttachment().length>0)){
 				MimeBodyPart messageBodyPart2 = new MimeBodyPart();  

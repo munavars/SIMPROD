@@ -84,8 +84,17 @@ function listbox_moveacross(sourceID, destID) {
 				dest.add(newOption.value, null);
 				src.remove(count, null);
 			} catch (error) {
-				dest.add(newOption);
-				src.remove(count);
+				if(destID == 'prdvalue' || destID == 'achPrdvalue'){
+					var tagTemp = getTagPropertyValue(tagId, tagMap);
+					if(tagTemp != null && tagTemp.indexOf(newOption.value) !== -1){
+						dest.add(newOption);	
+					}
+					src.remove(count);
+				}
+				else{
+					dest.add(newOption);
+					src.remove(count);	
+				}
 			}
 			if (add) {
 				var tagTemp = getTagPropertyValue(tagId, tagMap);
@@ -312,12 +321,30 @@ function dynamicDropdownCommon(listindex){
 		dataType : "json",
 		url : "/SIM/program/v1/getTagValueDropDown/" + listindex,
 		success : function(response) {
-     		$.each(response, function (i, item) {
-			    $('#prdvalue').append($('<option>', { 
-			        value: item.key,
-			        text : item.value 
-			    }));
-			});
+			var tagTemp = getTagPropertyValue(listindex, includePaid);
+			if(tagTemp == null){
+				tagTemp = [];
+			}
+			tagTemp = tagTemp.concat(getTagPropertyValue(listindex, excludePaid));
+			
+			if(tagTemp == null || tagTemp.length == 0){
+				$.each(response, function (i, item) {
+				    $('#prdvalue').append($('<option>', { 
+				        value: item.key,
+				        text : item.value 
+				    }));
+				});
+			}
+			else{
+				$.each(response, function (i, item) {
+					if(tagTemp.indexOf(item.key) == -1){
+						$('#prdvalue').append($('<option>', { 
+					        value: item.key,
+					        text : item.value 
+					    }));	
+					}
+				});
+			}
 		},
 		failure : function(response) {
 			alert("Wrongly done");
@@ -332,12 +359,30 @@ function achDynamicDropdownCommon(listindex){
 		dataType : "json",
 		url : "/SIM/program/v1/getTagValueDropDown/" + listindex,
 		success : function(response) {
-     		$.each(response, function (i, item) {
-			    $('#achPrdvalue').append($('<option>', { 
-			        value: item.key,
-			        text : item.value 
-			    }));
-			});
+     		var tagTemp = getTagPropertyValue(listindex, includeAchieve);
+			if(tagTemp == null){
+				tagTemp = [];
+			}
+			tagTemp = tagTemp.concat(getTagPropertyValue(listindex, excludeAchieve));
+			
+			if(tagTemp == null || tagTemp.length == 0){
+				$.each(response, function (i, item) {
+				    $('#achPrdvalue').append($('<option>', { 
+				        value: item.key,
+				        text : item.value 
+				    }));
+				});
+			}
+			else{
+				$.each(response, function (i, item) {
+					if(tagTemp.indexOf(item.key) == -1){
+						$('#achPrdvalue').append($('<option>', { 
+					        value: item.key,
+					        text : item.value 
+					    }));	
+					}
+				});
+			}
 		},
 		failure : function(response) {
 			alert("Wrongly done");

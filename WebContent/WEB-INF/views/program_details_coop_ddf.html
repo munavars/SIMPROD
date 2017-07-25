@@ -1414,13 +1414,13 @@
                	fnPopulatePaidDetails(response);
                	
                	fnPopulateDropdown('glcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
-               	fnPopulateDropdown('sapglcode_dropdown', response.data.programDetailList[0].dropdownList.glCodeList);
+               	fnPopulateDropdown('sapglcode_dropdown', response.data.programDetailList[0].dropdownList.sapGlCodeList);
                	$('#glcode_dropdown').val(response.data.programDetailList[0].glCode);
             	$('#sapglcode_dropdown').val(response.data.programDetailList[0].glCode);
                	if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
                	populateGlCode();
                	}
-               	
+              
                	if(response.data.programDetailList[0].tbpCheck == '1'){
                		$("#tbpCheck").prop('checked', true);
                	}else
@@ -1801,7 +1801,7 @@
 							/**Appending program id in the modal message.- Begin*/
 							var idAfter = responseOnload.programDetailList[0].id;
 							if(idBefore != idAfter){
-								var newMessage = message+"Program ID : <strong>"+ idAfter + "</strong>";
+								var newMessage = message+"<br>Program ID : <strong>"+ idAfter + "</strong>";
 								message = newMessage;
 								if(responseOnload.requestedDate != null){
 				               		$('#requestedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.requestedDate)));
@@ -1905,8 +1905,11 @@
 			
 			$("#estm_accrual").blur(function(){
 				$("#estm_accrual").val(convertWholeNumber($("#estm_accrual").val()));
+				document.getElementById("estm_accrual").setAttribute('style','text-align:right;width: 120px;');
 			});
-			
+			$(document).on('focusin',"#estm_accrual" , function () {
+				   document.getElementById("estm_accrual").setAttribute('style','width: 120px;');
+			}); 
 			function convertPercentageFormat(amount){
 				if(amount != null && amount != 0 && amount.toString().includes(".")){
 					/*Remove comma's if already present*/

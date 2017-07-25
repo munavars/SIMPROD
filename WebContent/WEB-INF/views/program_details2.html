@@ -1501,6 +1501,13 @@
 			    return isNumber;
 			}, 'Please enter valid Accrual Estimation');
 			
+			$.validator.addMethod("actualAmountComparison", function (value, element) {
+				var compareFlag = true;
+				if(removeCommaFromAmount(value) < removeCommaFromAmount(document.getElementById("amount").value))
+				compareFlag=false;
+			    return compareFlag;
+			}, 'Amount should not be less than actual accrual amount');
+			
 			$.validator.addMethod("payToValidation", function (value, element) {
 				var isNumber = true;
 				var regex = /^[0-9]+$/;
@@ -1630,7 +1637,8 @@
 					},
 					estm_accrual: {
 						required: true,
-						estimatedAccuralValidation:true
+						estimatedAccuralValidation:true,
+						actualAmountComparison:false
 					},
 					optionsRadiosDenomination: {
 						required: true
@@ -2149,7 +2157,9 @@
          	}
          	
 			function hideShowButtonsOnLoad(responseOnload1){
+			    
          		if(responseOnload1.authorizedUser == 'Yes' && responseOnload1.programButton.userLevel == "1" && responseOnload1.programButton.creater == true){
+         		
 					$('#edit-button').attr('disabled', false);
 					$('#edit-button').removeClass("disabled");
 					$('#modal-edit-cancel').attr('disabled', false);
@@ -2181,7 +2191,14 @@
 						$('#glcode_dropdown').attr('disabled', false);
 						$('#sapglcode_dropdown').attr('disabled', false);
 						$('#tbpCheck').attr('disabled', false);
-					}
+						showCreatorButtons();
+						$('#edit-button').show();
+						$('#edit-button').attr('disabled', false);
+						$('#edit-button').removeClass("disabled");
+						$('#modal-edit-cancel').attr('disabled', false);
+						$('#modal-edit-ok').attr('disabled', false);
+						$('#modal-edit-close').attr('disabled', false);
+					}else
 					$('#edit-button').hide();
 					}
 				else{
@@ -2192,6 +2209,17 @@
 					$('#glcode_dropdown').attr('disabled', true);
 					$('#sapglcode_dropdown').attr('disabled', true);
 				}
+				if(tbp && responseOnload1.status === 'APPROVED')
+               		{
+               		$('#edit-button').show();
+               		$('#edit-button').attr('disabled', false);
+					$('#edit-button').removeClass("disabled");
+					$('#modal-edit-cancel').attr('disabled', false);
+					$('#modal-edit-ok').attr('disabled', false);
+					$('#modal-edit-close').attr('disabled', false);
+					$('#save-program').show();
+               		$('#submit-program').show();
+               		}
          	}
          	
 			function hideCreatorButtons(){
@@ -2549,7 +2577,7 @@
 							/**Appending program id in the modal message.- Begin*/
 							var idAfter = responseOnload.programDetailList[0].id;
 							if(idBefore != idAfter){
-								var newMessage = message+"Program ID : <strong>"+ idAfter + "</strong>";
+								var newMessage = message+"<br>Program ID : <strong>"+ idAfter + "</strong>";
 								message = newMessage; 
 								if(responseOnload.requestedDate != null){
 				               		$('#requestedDate').html($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.requestedDate)));
@@ -2937,7 +2965,10 @@
 						  value = convertWholeNumber(value); 
 						 $(this).val(value);
             		}
-				   
+				   document.getElementById("estm_accrual").setAttribute('style','text-align:right;width: 120px;');
+				});
+				$(document).on('focusin',"#estm_accrual" , function () {
+				   document.getElementById("estm_accrual").setAttribute('style','width: 120px;');
 				}); 
 				/*  $(document).on('keyup', "#amount", function () {
 					var value = $(this).val();

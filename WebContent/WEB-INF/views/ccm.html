@@ -358,7 +358,9 @@
     	
     	 $('#ccmtable').on('draw.dt', function () {
              $('[data-toggle="tooltip"]').tooltip();
-             $('[id^="docDate"]').datepicker();
+             $('[id^="docDate"]').datepicker().on('changeDate', function(e){
+         	    $(this).datepicker('hide');
+             });
          });  
     	 
        });

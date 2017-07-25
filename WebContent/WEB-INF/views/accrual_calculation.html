@@ -36,10 +36,7 @@
       <link href="resources/css/style.css" rel="stylesheet">
       <link href="resources/css/style-responsive.css" rel="stylesheet" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-     
-     <style>
 
-     </style>
    </head>
    <body>
       <section id="container" class="sidebar-closed">
@@ -188,7 +185,7 @@
                                  <div class="btn-group pull-right"> -->
                                 <div>
                       <table class="table table-striped table-hover table-bordered" id="accrualtable">
-                      <tr>
+<!--                       <tr>
                       	<td>1 &nbsp;&nbsp;<input id="refresh" type="checkbox" value="" >&nbsp; Refresh Data Source</td>
                       	<td><div id="refreshdiv" style="display:none"><table id="datetable" class="table-bordered">
                       	<tr bgcolor="#b1b2b5" ><td>Year</td><td>Begin Month</td><td>End Month</td></tr>
@@ -224,42 +221,73 @@
 																  <option value="5">5</option> 
 															</select></td></tr>
                       	</table></div></td>
+                      </tr> -->
+                                            <tr>
+                      	<td>1 &nbsp;&nbsp;<input id="refresh" type="checkbox" value="" >&nbsp; Calculate Liability</td>
+                      	<td><div id="refreshdiv" style="display:none">
+                      	<div class="col-lg-4 col-sm-4">
+		                      	<select
+										class="form-control input-sm m-bot15"
+										id="pytd_period_inputselect"
+										name="period_inputselect" style="margin-top: 15px;">
+										<option value="">- Select -</option> 
+		
+									</select>
+                      	</div></div></td>
+                      </tr>
+                      <tr>
+                      	<td>2 &nbsp;&nbsp;<input id="review" type="checkbox" value="" >&nbsp; Reviewed Liability</td>
+                      	<td><div id="reviewdiv" style="display:none">
+                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="checkbox" value=""  name="liable" id="liable">&nbsp;Archive Name</div>
+                      	<div class="col-lg-4 col-sm-4" ><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable"></div>
+                      	<a href="#"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a>
+                      	<br>
+                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="checkbox" value="" name="liable" id="liable"> &nbsp;Book Name </div>
+                      	<div class="col-lg-4 col-sm-4"><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable">	</div>
+                      	<a href="booklist" id="add_book"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a>
+                      	
+                      	</div>
+							</td>
                       </tr>
                       <tr>
                       	<td>2 &nbsp;&nbsp;<input id="pytd" type="checkbox" value="" >&nbsp; Update PYTD</td>
-                      	<td><div id="pytddiv" style="display:none"><input type="radio" value="" checked name="liable" id="liable">&nbsp;From Current tblLiability<br>
-                      	<div class="row"><div class="col-lg-4 col-sm-4" style="width:20%"><input type="radio" value="" name="liable" id="liable"> &nbsp;From Selection </div>
+                      	<td><div id="pytddiv" style="display:none">
+                      	<div class="col-lg-4 col-sm-4"><input type="radio" value="" checked name="liable" id="liable">&nbsp;From Current tblLiability</div>
+                      	<br>
+                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="radio" value="" name="liable" id="liable"> &nbsp;From Selection </div>
                       	<div class="col-lg-4 col-sm-4">
-															<select
-																class="form-control input-sm m-bot15"
-																id="liability_inputselect"
-																name="liability_inputselect" style="margin-top: 15px;">
-																<option value="">- Select -</option> 
-																 <option value="1">1000</option> 
-																  <option value="2">2000</option> 
-																  <option value="3">3000</option> 
-																  <option value="4">4000</option> 
-																  <option value="5">5000</option> 
-															</select></div></div></div>
-														</td>
+								<select
+									class="form-control input-sm m-bot15"
+									id="liability_inputselect"
+									name="liability_inputselect" style="margin-top: 15px;">
+									<option value="">- Select -</option> 
+									 <option value="1">1000</option> 
+									  <option value="2">2000</option> 
+									  <option value="3">3000</option> 
+									  <option value="4">4000</option> 
+									  <option value="5">5000</option> 
+								</select></div></div>
+							</td>
                       </tr>
                        <tr>
                       	<td>3 &nbsp;&nbsp;<input id="cytd" type="checkbox" value="" >&nbsp; Update CYTD</td>
-                      	<td><div id="cytddiv" style="display:none"><input type="radio" value="" checked name="liable1" id="liable_cytd">&nbsp;From Current tblLiability<br>
-                      	<div class="row"><div class="col-lg-4 col-sm-4" style="width:20%"><input type="radio" value="" name="liable1" id="liable_cytd"> &nbsp;From Selection </div>
+                      	<td><div id="cytddiv" style="display:none"><div class="col-lg-4 col-sm-4"><input type="radio" value="" checked name="liable1" id="liable_cytd">&nbsp;From Current tblLiability</div>
+                      	
+                      	<br>
+                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="radio" value="" name="liable1" id="liable_cytd"> &nbsp;From Selection </div>
                       	<div class="col-lg-4 col-sm-4">
-															<select
-																class="form-control input-sm m-bot15"
-																id="liability_id_inputselect"
-																name="liability_id_inputselect" style="margin-top: 15px;">
-																<option value="">- Select -</option> 
-																 <option value="1">1000</option> 
-																  <option value="2">2000</option> 
-																  <option value="3">3000</option> 
-																  <option value="4">4000</option> 
-																  <option value="5">5000</option> 
-															</select></div></div></div>
-														</td>
+										<select
+											class="form-control input-sm m-bot15"
+											id="liability_id_inputselect"
+											name="liability_id_inputselect" style="margin-top: 15px;">
+											<option value="">- Select -</option> 
+											 <option value="1">1000</option> 
+											  <option value="2">2000</option> 
+											  <option value="3">3000</option> 
+											  <option value="4">4000</option> 
+											  <option value="5">5000</option> 
+										</select></div></div>
+									</td>
                       </tr>
                       </table>
                       
@@ -271,7 +299,6 @@
                           
                          
                       </div>
-													<!-- <div  class="row"><br><br><br><br><br><br></div> -->
 													
 												<!-- END ROW 3 & Program Details section-->
 
@@ -298,13 +325,6 @@
 											
 											<!-- END ROW 8 -->
 
-													<!---- START Submit -->
-												
-																
-															
-
-
-												
 											</div>
 											</section>
       <!---- END Review / Confirm Section -->
@@ -371,11 +391,7 @@
   <!--  Validation setup Ends -->
       <!--select2-->
       <script type="text/javascript">
-         $(document).ready(function () {
-             $(".js-example-basic-single").select2();
-         
-             $(".js-example-basic-multiple").select2();
-         });
+
          function openSidebar() {
              $('#main-content').css({
                  'margin-left': '210px'
@@ -389,21 +405,7 @@
                  'display': 'block'
              });
          }
-         function closeSidebar(){
-  			if ($('#sidebar > ul').is(":visible") === true) {
-  	            $('#main-content').css({
-  	                'margin-left': '0px'
-  	            });
-  	            $('#sidebar').css({
-  	                'margin-left': '-210px'
-  	            });
-  	            $('#sidebar > ul').hide();
-  	            $("#container").addClass("sidebar-closed");
-         		}
-  			$('#sidebar-toggle-box').css({
-  		           'display': 'none'
-  		       });
-  		}
+
          
          function resetChanges(){
         	 document.getElementById("wizard-validation-form").reset();
@@ -411,19 +413,40 @@
         	 $('#cytddiv').hide();
         	 $('#refreshdiv').hide();
          }
+         
+ function fnPopulateDropdown(elementId, items){
+			 
+			 if(items != null){
+	         		$.each(items, function (i, item) {
+					    $('#'+ elementId).append($('<option>', { 
+					        value: item.value,
+					        text : item.key 
+					    }));
+					});
+	         	}
+			 //code to select the default value in period dropdown
+	         	if((elementId=='pytd_period_inputselect')||(elementId=='cytd_period_inputselect')){
+					var currentDate=new Date();
+	      			var currentMonth=currentDate.getMonth().toString();
+	      			var currentYear=currentDate.getFullYear();
+	      			if(currentMonth.length==1){
+	      				if(currentMonth==0){
+	      					currentMonth=12;
+	      					currentYear=currentYear-1;
+	      				}
+	      				currentMonth='0'+currentMonth;
+	      			}
+	      			period=currentYear+''+currentMonth+'01';
+	      			$('#pytd_period_inputselect').val(period);
+	      			$('#cytd_period_inputselect').val(period);
+	      		}
+	         	
+			}
       </script>
       <!--this page  script only-->
       <script src="resources/js/advanced-form-components.js"></script>
       <script src="resources/js/editable-table-form.js"></script>
-      
-      <script>
-         jQuery(document).ready(function() {
-             EditableTable.init();
-         });
-      </script>
-
-
-       
+          
     <!-- Inline javascript to set the user name from model attribute Begin -->
 	<script type="text/javascript" th:inline="javascript">
 	
@@ -437,6 +460,18 @@
 		   		openSidebar();
 			}
 		   
+		   $.ajax({ 
+	           	type: "GET",
+	           	dataType: "json",
+	          		url: '/SIM/ccm/v1/getPeriodDropDown',
+	           	success: function(response){
+	           	fnPopulateDropdown('pytd_period_inputselect', response);	
+	           	fnPopulateDropdown('cytd_period_inputselect', response);
+	           	},
+	           	failure: function(response){
+	           		alert("Wrongly done");
+	           	}
+		   });
 		   
 		   $('#accrualtable td').attr('style', 'line-height: 5 !important;width:30%');
 		   
@@ -466,6 +501,23 @@
 			     $('#pytddiv').hide();
 			   }
 			 });
+		   
+		   $('#review').change(function(){
+			   if($(this).prop("checked")) {
+			     $('#reviewdiv').show();
+			   } else {
+			     $('#reviewdiv').hide();
+			   }
+			 });
+		   
+		   $('#add_book').click(function() {
+			    var width = window.innerWidth * 0.66 ;
+			    // define the height in
+			    var height = width * window.innerHeight / window.innerWidth ;
+			    // Ratio the hight to the width as the user screen ratio
+			    window.open(this.href , 'newwindow', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2));
+				return false;
+			});
 		   
 		}); 
 		

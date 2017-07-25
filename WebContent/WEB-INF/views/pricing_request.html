@@ -265,6 +265,12 @@ a { text-decoration: none }
 		return result;
 	}
 	
+	function trimValue(inputStr){
+		if(inputStr != null){
+			return inputStr.trim();
+		}
+		return inputStr;
+	}
 	function buildTable(output) {
 		var rows = output.split('\n');
 		var rowData = [];
@@ -285,7 +291,7 @@ a { text-decoration: none }
 					if (j == 2 ) {
 						columnNames = oneRow;
 						for (var k = 0; k < columnNames.length; ++k) {
-							metadata.push({ name: columnNames[k], label: columnNames[k], datatype: "string", editable: false});
+							metadata.push({ name: trimValue(columnNames[k]), label: trimValue(columnNames[k]), datatype: "string", editable: false});
 							// alert("metadata: "+k+" "+columnNames[k]);
 						}
 						metadata.push({ name: 'ID', label: 'ID', datatype: "string", editable: false, hidden: true});
@@ -311,7 +317,7 @@ a { text-decoration: none }
 									}
 								}
 								else{
-									if ((oneRow[i] == null || oneRow[i] == '') && (columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || columnNames[i] == " PART#") ){
+									if ((oneRow[i] == null || oneRow[i] == '') && (columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || trimValue(columnNames[i]) == "PART#") ){
 										isValid = false;
 									}
 									if(columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" ){
@@ -323,7 +329,7 @@ a { text-decoration: none }
 										}
 									}
 									else{
-										rowValues[columnNames[i]] = oneRow[i];
+										rowValues[trimValue(columnNames[i])] = oneRow[i];
 									}
 									
 								}
@@ -1730,7 +1736,7 @@ a { text-decoration: none }
 			
 				$.each(fileData, function(key, data) {
 					console.log( $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']));
-					var fileDataRow = {'id': data.values['ID'], 'programId': data.id, 'part':data.values[' PART#'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': removeCommaFromAmount(data.values['NET PRICE']), 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
+					var fileDataRow = {'id': data.values['ID'], 'programId': data.id, 'part':data.values['PART#'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': removeCommaFromAmount(data.values['NET PRICE']), 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
 					fileDataList.push(fileDataRow);
 				});
 				//console.log(fileDataList);

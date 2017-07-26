@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PRICING_DETAIL")
@@ -120,7 +119,7 @@ public class DalPricingDetail extends DalAuditableModel{
 		this.partNumber = partNumber;
 	}
 	
-	@Transient
+	@Column(name = "BUSINESS_UNIT")
 	public String getBusinessUnit() {
 		return businessUnit;
 	}

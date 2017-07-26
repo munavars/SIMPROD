@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PRICING_HEADER")
@@ -210,7 +209,7 @@ public class DalPricingHeader extends DalAuditableModel{
 		this.dalWorkflowStatusForPricingList = dalWorkflowStatusForPricingList;
 	}
 	
-	@Transient
+	@Column(name = "SBM")
 	public String getSbm() {
 		return sbm;
 	}

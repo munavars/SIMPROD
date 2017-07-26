@@ -9,14 +9,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ytc.common.model.AccrualDropDown;
 import com.ytc.common.model.BookList;
-import com.ytc.common.params.BookParams;
 import com.ytc.common.result.ListResult;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.model.DalBookList;
@@ -36,6 +35,13 @@ public class AccrualController extends BaseController {
 	private IAccrualDataService getService(HttpServletRequest request) {
 		return getServiceLocator(request).getAccrualDataService();
 
+	}
+	
+	@RequestMapping(value = "/accrual/v1/getAccrualDropDown", method = RequestMethod.GET)
+	public @ResponseBody AccrualDropDown getAccrualDropDown(HttpServletRequest request) {
+		AccrualDropDown accrualDropDown = null;
+		accrualDropDown = (AccrualDropDown)(getService(request).getAccrualDropDown());
+		return accrualDropDown;
 	}
 	
 	@RequestMapping(value = "/accrual/v1/getBookList", method = RequestMethod.GET)
@@ -66,18 +72,18 @@ public class AccrualController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/accrual/v1/calcLiability", method = RequestMethod.POST)
-	public void calculateLiability(HttpServletRequest request,@PathVariable Integer periodId) {
+	public void calculateLiability(HttpServletRequest request,@RequestBody Integer periodId) {
 		getService(request).calculateLiability(periodId);
 	}
 	
 	@RequestMapping(value = "/accrual/v1/reviewLiabilityCCM", method = RequestMethod.POST)
-	public void reviewedLiabilityCCM(HttpServletRequest request,@PathVariable Integer periodId) {
+	public void reviewedLiabilityCCM(HttpServletRequest request,@RequestBody Integer periodId) {
 		getService(request).reviewedLiabilityCCM(periodId);
 	}
 	
 	@RequestMapping(value = "/accrual/v1/reviewLiabilityBook", method = RequestMethod.POST)
-	public void reviewedLiabilityBook(HttpServletRequest request,@RequestBody BookParams params) {
-		getService(request).reviewedLiabilityBook(params);
+	public void reviewedLiabilityBook(HttpServletRequest request,@RequestBody String bookLabel) {
+		getService(request).reviewedLiabilityBook(bookLabel);
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updatePYTD", method = RequestMethod.POST)
@@ -86,7 +92,7 @@ public class AccrualController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updatePYTDBook", method = RequestMethod.POST)
-	public void updatePYTDBook(HttpServletRequest request, @PathVariable String bookLabel) {
+	public void updatePYTDBook(HttpServletRequest request, @RequestBody String bookLabel) {
 		getService(request).updatePYTDBook(bookLabel);
 	}
 	
@@ -96,7 +102,7 @@ public class AccrualController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updateCYTDBook", method = RequestMethod.POST)
-	public void updateCYTDBook(HttpServletRequest request, @PathVariable String bookLabel) {
+	public void updateCYTDBook(HttpServletRequest request, @RequestBody String bookLabel) {
 		getService(request).updateCYTDBook(bookLabel);
 	}
 }

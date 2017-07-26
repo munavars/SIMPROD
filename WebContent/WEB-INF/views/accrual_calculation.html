@@ -121,6 +121,18 @@
                      <span>My Dashboard</span>
                      </a>
                   </li>
+                  <li>
+                      <a class="" href="ccm">
+                              <i class="fa fa-tasks"></i>
+                              <span>CCM</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a class="active" href="accrual">
+                              <i class="fa fa-tasks"></i>
+                              <span>Accrual</span>
+                      </a>
+                  </li>
                  <!--  <li>
                      <a id="create-program" class="" href="program_details2.html">
                      <i class="fa fa-tasks"></i>
@@ -223,14 +235,14 @@
                       	</table></div></td>
                       </tr> -->
                                             <tr>
-                      	<td>1 &nbsp;&nbsp;<input id="refresh" type="checkbox" value="" >&nbsp; Calculate Liability</td>
+                      	<td>1 &nbsp;&nbsp;<input id="calculate" type="checkbox" value="" >&nbsp; Calculate Liability</td>
                       	<td><div id="refreshdiv" style="display:none">
-                      	<div class="col-lg-4 col-sm-4">
+                      	<div class="col-lg-4">
 		                      	<select
 										class="form-control input-sm m-bot15"
-										id="pytd_period_inputselect"
-										name="period_inputselect" style="margin-top: 15px;">
-										<option value="">- Select -</option> 
+										id="liable_period_inputselect"
+										name="liable_period_inputselect" style="margin-top: 15px;">
+										<!-- <option value="">- Select -</option> --> 
 		
 									</select>
                       	</div></div></td>
@@ -238,54 +250,70 @@
                       <tr>
                       	<td>2 &nbsp;&nbsp;<input id="review" type="checkbox" value="" >&nbsp; Reviewed Liability</td>
                       	<td><div id="reviewdiv" style="display:none">
-                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="checkbox" value=""  name="liable" id="liable">&nbsp;Archive Name</div>
-                      	<div class="col-lg-4 col-sm-4" ><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable"></div>
-                      	<a href="#"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a>
+                      	<div class="col-lg-4 " ><input type="checkbox" value=""  name="archiveName" id="archiveName">&nbsp;Archive Name</div>
+<!--                       	<div class="col-lg-4 " ><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable"></div>
+                      	<a href="#"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a> -->
+                      	 <div class="col-lg-4">
+		                      	<select
+										class="form-control input-sm m-bot15"
+										id="review_period_inputselect"
+										name="period_inputselect" style="margin-top: 15px;">
+										<!-- <option value="">- Select -</option> --> 
+		
+									</select>
+                      	</div>
                       	<br>
-                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="checkbox" value="" name="liable" id="liable"> &nbsp;Book Name </div>
-                      	<div class="col-lg-4 col-sm-4"><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable">	</div>
+                      	<div class="col-lg-4 " ><input type="checkbox" value="" name="bookName" id="bookName"> &nbsp;Book Name </div>
+                      	<!-- <div class="col-lg-4 "><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable">	</div> -->
+                      	  <div class="col-lg-4">
+								<select
+									class="form-control input-sm m-bot15"
+									id="review_book_inputselect"
+									name="review_book_inputselect" style="margin-top: 15px;">
+									<!-- <option value="">- Select -</option>  -->
+								</select></div>
                       	<a href="booklist" id="add_book"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a>
                       	
                       	</div>
 							</td>
                       </tr>
                       <tr>
-                      	<td>2 &nbsp;&nbsp;<input id="pytd" type="checkbox" value="" >&nbsp; Update PYTD</td>
+                      	<td>3 &nbsp;&nbsp;<input id="pytd" type="checkbox" value="" >&nbsp; Update PYTD</td>
                       	<td><div id="pytddiv" style="display:none">
-                      	<div class="col-lg-4 col-sm-4"><input type="radio" value="" checked name="liable" id="liable">&nbsp;From Current tblLiability</div>
+                      	<div class="col-lg-4"><input type="radio" value="" checked name="pytd_select" id="pytd_current">&nbsp;From Current tblLiability</div>
                       	<br>
-                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="radio" value="" name="liable" id="liable"> &nbsp;From Selection </div>
-                      	<div class="col-lg-4 col-sm-4">
+                      	<div class="col-lg-4"><input type="radio" value="" name="pytd_select" id="pytd_select"> &nbsp;From Selection </div>
+                      	<div class="col-lg-4">
 								<select
 									class="form-control input-sm m-bot15"
-									id="liability_inputselect"
-									name="liability_inputselect" style="margin-top: 15px;">
-									<option value="">- Select -</option> 
+									id="pytd_book_inputselect"
+									name="pytd_book_inputselect" style="margin-top: 15px;">
+									<!-- <option value="">- Select -</option> 
 									 <option value="1">1000</option> 
 									  <option value="2">2000</option> 
 									  <option value="3">3000</option> 
 									  <option value="4">4000</option> 
-									  <option value="5">5000</option> 
+									  <option value="5">5000</option>  -->
 								</select></div></div>
 							</td>
                       </tr>
                        <tr>
-                      	<td>3 &nbsp;&nbsp;<input id="cytd" type="checkbox" value="" >&nbsp; Update CYTD</td>
-                      	<td><div id="cytddiv" style="display:none"><div class="col-lg-4 col-sm-4"><input type="radio" value="" checked name="liable1" id="liable_cytd">&nbsp;From Current tblLiability</div>
+                      	<td>4 &nbsp;&nbsp;<input id="cytd" type="checkbox" value="" >&nbsp; Update CYTD</td>
+                      	<td><div id="cytddiv" style="display:none"><div class="col-lg-4 "><input type="radio" value="" checked name="cytd_select" id="cytd_current">&nbsp;From Current tblLiability</div>
                       	
                       	<br>
-                      	<div class="col-lg-4 col-sm-4" style="width:20%"><input type="radio" value="" name="liable1" id="liable_cytd"> &nbsp;From Selection </div>
-                      	<div class="col-lg-4 col-sm-4">
+                      	<div class="col-lg-4 "><input type="radio" value="" name="cytd_select" id="cytd_select"> &nbsp;From Selection </div>
+                      	<div class="col-lg-4 ">
 										<select
 											class="form-control input-sm m-bot15"
-											id="liability_id_inputselect"
-											name="liability_id_inputselect" style="margin-top: 15px;">
-											<option value="">- Select -</option> 
+											id="cytd_book_inputselect"
+											name="cytd_book_inputselect" style="margin-top: 15px;">
+											<!-- <option value="">- Select -</option> 
 											 <option value="1">1000</option> 
 											  <option value="2">2000</option> 
 											  <option value="3">3000</option> 
 											  <option value="4">4000</option> 
-											  <option value="5">5000</option> 
+											  <option value="5">5000</option>  -->
 										</select></div></div>
 									</td>
                       </tr>
@@ -306,7 +334,7 @@
 																	<div class="modal-footer">
 																		<a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
 																			id="program-save-modal-cancel" type="button">Reset Process</button></a>
-																		<button
+																		<button onclick="calculateAccruals();"
 																				class="btn btn-info" id="program-save-modal-ok"
 																				type="button">
 																				<i class="fa fa-save"></i>&nbsp;&nbsp; Go
@@ -412,9 +440,206 @@
         	 $('#pytddiv').hide();
         	 $('#cytddiv').hide();
         	 $('#refreshdiv').hide();
+        	 $('#reviewdiv').hide();
          }
          
- function fnPopulateDropdown(elementId, items){
+         function calculateAccruals(){
+        	 
+ 			if($('#calculate').is(':checked')){
+ 				calculateLiability(); 				
+ 			}
+ 			
+ 			if($('#review').is(':checked')){
+ 				
+ 				if($('#archiveName').is(':checked')){
+ 					reviewLiabilityCCM();
+ 				}
+				if($('#bookName').is(':checked')){
+					reviewLiabilityBook();
+ 				}
+ 				
+ 			}
+ 			
+			if($('#pytd').is(':checked')){
+				
+				if($('#pytd_current').is(':checked')){
+					updatePYTD();
+ 				}
+				if($('#pytd_select').is(':checked')){
+					updatePYTDBook();
+ 				}
+ 			}
+			
+			if($('#cytd').is(':checked')){
+				
+				if($('#cytd_current').is(':checked')){
+					updateCYTD();
+ 				}
+				if($('#cytd_select').is(':checked')){
+					updateCYTDBook();
+ 				}
+		
+			}
+         }
+         
+         function calculateLiability(){
+       	
+        	var liablePeriod= parseInt($('#liable_period_inputselect').val());
+        	 $.ajax({ 
+                	type: "POST",
+                	dataType: "json",
+               		url: '/SIM/accrual/v1/calcLiability',
+               		contentType: 'application/json',
+               		dataType: "text",
+        			data: JSON.stringify(liablePeriod),
+                	success: function(response){
+        	        	if(response=="success"){
+        	            	/* message="Data Submitted Successfully";
+        	            	$("#confirmMessage").html(message);
+        					$('#myModal1').modal('toggle'); */
+        	        	}else{
+        	        		/* message="Issue occured while processing your request. Please try again later.";		        		
+        	        		$("#errorMessageModal").html(message);
+        					$('#myModal2').modal('toggle'); */
+        	        	}
+                	},
+                	failure: function(response){
+                		alert("Wrongly done");
+                	}});
+         }
+         
+         function reviewLiabilityCCM(){
+            	
+         	var liablePeriod= parseInt($('#review_period_inputselect').val());
+         	 $.ajax({ 
+                 	type: "POST",
+                 	dataType: "json",
+                		url: '/SIM/accrual/v1/reviewLiabilityCCM',
+                		contentType: 'application/json',
+                		dataType: "text",
+         			data: JSON.stringify(liablePeriod),
+                 	success: function(response){
+         	        	if(response=="success"){
+
+         	        	}else{
+
+         	        	}
+                 	},
+                 	failure: function(response){
+                 		alert("Wrongly done");
+                 	}});
+          }
+         
+         function reviewLiabilityBook(){
+         	
+          	var liablePeriod= $('#review_book_inputselect').val();
+          	 $.ajax({ 
+                  	type: "POST",
+                  	dataType: "json",
+                 		url: '/SIM/accrual/v1/reviewLiabilityBook',
+                 		contentType: 'application/json',
+                 		dataType: "text",
+          			data: JSON.stringify(liablePeriod),
+                  	success: function(response){
+          	        	if(response=="success"){
+
+          	        	}else{
+
+          	        	}
+                  	},
+                  	failure: function(response){
+                  		alert("Wrongly done");
+                  	}});
+           }
+         
+         function updatePYTD(){
+          	
+           	 $.ajax({ 
+                   	type: "POST",
+                   	dataType: "json",
+                  		url: '/SIM/accrual/v1/updatePYTD',
+                  		contentType: 'application/json',
+                  		dataType: "text",
+           			//data: JSON.stringify(liablePeriod),
+                   	success: function(response){
+           	        	if(response=="success"){
+
+           	        	}else{
+
+           	        	}
+                   	},
+                   	failure: function(response){
+                   		alert("Wrongly done");
+                   	}});
+            }
+         
+         function updatePYTDBook(){
+           	
+            	var liablePeriod= $('#pytd_book_inputselect').val();
+            	 $.ajax({ 
+                    	type: "POST",
+                    	dataType: "json",
+                   		url: '/SIM/accrual/v1/updatePYTDBook',
+                   		contentType: 'application/json',
+                   		dataType: "text",
+            			data: JSON.stringify(liablePeriod),
+                    	success: function(response){
+            	        	if(response=="success"){
+
+            	        	}else{
+
+            	        	}
+                    	},
+                    	failure: function(response){
+                    		alert("Wrongly done");
+                    	}});
+             }
+         
+         function updateCYTD(){
+            	
+         	 $.ajax({ 
+                 	type: "POST",
+                 	dataType: "json",
+                		url: '/SIM/accrual/v1/updateCYTD',
+                		contentType: 'application/json',
+                		dataType: "text",
+         			//data: JSON.stringify(liablePeriod),
+                 	success: function(response){
+         	        	if(response=="success"){
+
+         	        	}else{
+
+         	        	}
+                 	},
+                 	failure: function(response){
+                 		alert("Wrongly done");
+                 	}});
+          }
+         
+         function updateCYTDBook(){
+         	
+          	var liablePeriod= $('#cytd_book_inputselect').val();
+          	 $.ajax({ 
+                  	type: "POST",
+                  	dataType: "json",
+                 		url: '/SIM/accrual/v1/updateCYTDBook',
+                 		contentType: 'application/json',
+                 		dataType: "text",
+          			data: JSON.stringify(liablePeriod),
+                  	success: function(response){
+          	        	if(response=="success"){
+
+          	        	}else{
+
+          	        	}
+                  	},
+                  	failure: function(response){
+                  		alert("Wrongly done");
+                  	}});
+           }
+         
+         
+ 		 function fnPopulateDropdown(elementId, items){
 			 
 			 if(items != null){
 	         		$.each(items, function (i, item) {
@@ -425,7 +650,7 @@
 					});
 	         	}
 			 //code to select the default value in period dropdown
-	         	if((elementId=='pytd_period_inputselect')||(elementId=='cytd_period_inputselect')){
+	         	if((elementId=='liable_period_inputselect')||(elementId=='review_period_inputselect')){
 					var currentDate=new Date();
 	      			var currentMonth=currentDate.getMonth().toString();
 	      			var currentYear=currentDate.getFullYear();
@@ -437,8 +662,8 @@
 	      				currentMonth='0'+currentMonth;
 	      			}
 	      			period=currentYear+''+currentMonth+'01';
-	      			$('#pytd_period_inputselect').val(period);
-	      			$('#cytd_period_inputselect').val(period);
+	      			$('#liable_period_inputselect').val(period);
+	      			$('#review_period_inputselect').val(period);
 	      		}
 	         	
 			}
@@ -463,22 +688,28 @@
 		   $.ajax({ 
 	           	type: "GET",
 	           	dataType: "json",
-	          		url: '/SIM/ccm/v1/getPeriodDropDown',
+	          		url: '/SIM/accrual/v1/getAccrualDropDown',
 	           	success: function(response){
-	           	fnPopulateDropdown('pytd_period_inputselect', response);	
-	           	fnPopulateDropdown('cytd_period_inputselect', response);
+	           	fnPopulateDropdown('liable_period_inputselect', response.periodList);	
+	           	fnPopulateDropdown('review_period_inputselect', response.periodList);
+	           	fnPopulateDropdown('cytd_book_inputselect', response.bookLabelList);
+	        	fnPopulateDropdown('pytd_book_inputselect', response.bookLabelList);
+	        	fnPopulateDropdown('review_book_inputselect', response.bookLabelList);
 	           	},
 	           	failure: function(response){
 	           		alert("Wrongly done");
 	           	}
 		   });
 		   
-		   $('#accrualtable td').attr('style', 'line-height: 5 !important;width:30%');
+		  // $('#accrualtable td').attr('style', 'line-height: 5 !important;width:30%');
+		  $('#accrualtable td').attr('style', 'line-height: 5 !important');
+		 
+		  $('#accrualtable  td:first-child').css({"width":"30%"});
 		   
-		   $('#datetable td').attr('style', 'line-height: 1 !important;width:30%');
+		  /*  $('#datetable td').attr('style', 'line-height: 1 !important;width:30%'); */
 		   
 		   
-		   $('#refresh').change(function(){
+		   $('#calculate').change(function(){
 			   if($(this).prop("checked")) {
 			     $('#refreshdiv').show();
 			   } else {

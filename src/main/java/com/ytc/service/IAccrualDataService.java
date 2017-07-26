@@ -5,8 +5,8 @@ package com.ytc.service;
 
 import java.util.List;
 
+import com.ytc.common.model.AccrualDropDown;
 import com.ytc.common.model.BookList;
-import com.ytc.common.params.BookParams;
 import com.ytc.dal.model.DalBookList;
 
 /**
@@ -19,7 +19,7 @@ public interface IAccrualDataService {
 
 	void reviewedLiabilityCCM(Integer periodId);
 	
-	void reviewedLiabilityBook(BookParams bookParams);
+	void reviewedLiabilityBook(String bookLabel);
 
 	void updatePYTD();
 
@@ -34,5 +34,7 @@ public interface IAccrualDataService {
 	void updatePYTDBook(String bookLabel);
 
 	void updateCYTDBook(String bookLabel);
+
+	AccrualDropDown getAccrualDropDown();
 
 }

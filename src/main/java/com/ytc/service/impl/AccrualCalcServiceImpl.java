@@ -7,17 +7,20 @@ import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
+import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ytc.common.model.AccrualDropDown;
 import com.ytc.common.model.BookList;
-import com.ytc.common.params.BookParams;
+import com.ytc.common.model.DropDown;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBookList;
+import com.ytc.dal.model.DalCcmAccrualData;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IAccrualDataService;
 
@@ -30,9 +33,61 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 
 	@Override
 	public void calculateLiability(Integer periodId) {
-		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_00_CalculateAccural");
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_00_CalculateAccural");
+		query.registerStoredProcedureParameter("PARAM_PERIOD_ID", Integer.class, ParameterMode.IN);
 		query.setParameter("PARAM_PERIOD_ID", periodId);
 		query.execute();		
+	}
+	
+	public AccrualDropDown getAccrualDropDown(){
+		AccrualDropDown accrualDropDown=new AccrualDropDown();
+		accrualDropDown.setBookLabelList(getBookLabelDropDownList());
+		accrualDropDown.setPeriodList(getPeriodDropDownList());
+		return accrualDropDown;
+		
+	}
+	
+	public List<DropDown> getPeriodDropDownList(){
+		List<DropDown> dropdownList = null;
+		String sql=QueryConstant.CCM_PERIOD;
+		Map<String, Object> queryParams = new HashMap<>();
+		List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
+		if(resultList != null){
+			for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
+				Object[] obj = (Object[]) iterator.next();
+				DropDown dropDown = new DropDown();
+				dropDown.setKey(obj[1].toString());
+				dropDown.setValue(obj[0].toString());
+				if(dropdownList == null){
+					dropdownList = new ArrayList<DropDown>();
+				}
+				dropdownList.add(dropDown);
+			}
+
+		}
+
+
+		return dropdownList;
+	}
+	
+	private List<DropDown> getBookLabelDropDownList(){
+		List<DropDown> dropdownList = null;
+			List<DalBookList> dalBookList =  baseDao.getListFromNamedQuery("DalBookList.getAllDetailsWithSort");
+			if(dalBookList != null){
+				for(DalBookList dalBook : dalBookList){
+					DropDown dropDown = new DropDown();
+					dropDown.setKey(dalBook.getBookLabel());
+					dropDown.setValue(dalBook.getBookLabel());
+					if(dropdownList == null){
+						dropdownList = new ArrayList<DropDown>();
+					}
+					dropdownList.add(dropDown);
+				}
+			}
+			
+		
+		
+		return dropdownList;
 	}
 
 	public List<BookList> getBookList(){	
@@ -95,45 +150,54 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 	
 	@Override
 	public void reviewedLiabilityCCM(Integer periodId) {
-		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataToCCM");
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToCCM");
+		query.registerStoredProcedureParameter("PARAM_PERIOD_ID", Integer.class, ParameterMode.IN);
 		query.setParameter("PARAM_PERIOD_ID", periodId);
 		query.execute();	
 		
 	}
 	
 	@Override
-	public void reviewedLiabilityBook(BookParams bookParams) {
+	public void reviewedLiabilityBook(String bookLabel) {
+		Map<String, Object> queryParams = new HashMap<>();			
+		queryParams.put("book",bookLabel);
+		List<DalBookList> dalBookList =  baseDao.getListFromNamedQueryWithParameter("DalBookList.getAllDetailsForLabel", queryParams);
+		if(!dalBookList.isEmpty()){
+		DalBookList book=(DalBookList) dalBookList.get(0);
 		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataToBook");
-		query.setParameter("PARAM_BOOK_LABEL", bookParams.getBookLabel());
-		query.setParameter("PARAM_BOOK_DATE", bookParams.getBookDate());
-		query.setParameter("PARAM_BOOK_OF_RECORD", bookParams.getBookOfRecord());
-		query.setParameter("PARAM_CREATED_BY", bookParams.getCreatedBy());
+		query.setParameter("PARAM_BOOK_LABEL", book.getBookLabel());
+		query.setParameter("PARAM_BOOK_DATE", book.getBookDate());
+		query.setParameter("PARAM_BOOK_OF_RECORD", book.getBookRecord());
+		query.setParameter("PARAM_CREATED_BY", book.getCreatedUser());
 		query.execute();	
+		}
 		
 	}
 
 	@Override
 	public void updatePYTD() {
-		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataCYTDToPYTD");
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataCYTDToPYTD");
 		query.execute();	
 	}
 	
 	@Override
 	public void updatePYTDBook(String bookLabel) {
-		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveBookLabelToPYTD");
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveBookLabelToPYTD");
+		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
 		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 		query.execute();	
 	}
 
 	@Override
 	public void updateCYTD() {
-		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataToCYTD");
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToCYTD");
 		query.execute();		
 	}
 	
 	@Override
 	public void updateCYTDBook(String bookLabel) {
-		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveBookLabelToCYTD");
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveBookLabelToCYTD");
+		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
 		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 		query.execute();		
 	}

@@ -52,6 +52,11 @@
 		var headerTxt=headerTxt=tab.rows[j].getElementsByTagName('th')[11].outerHTML;
 	    for(j = 0 ; j < tab.rows.length ; j++) 
 	    {  
+	       var table_cells = tab.rows[j].getElementsByTagName('th');  
+	       for (var i = 0; i < table_cells.length; i++) {
+	        var cell = table_cells[i];
+	        cell.setAttribute("style", "") 
+	       }
 	       var table_cells = tab.rows[j].getElementsByTagName('td'); 
 	       var cellTxt="";
 	        for (var i = 0; i < table_cells.length; i++) { 

@@ -1015,6 +1015,12 @@
 				}
 			    return isNumber;
 			}, 'Please enter valid Accrual Estimation');
+			$.validator.addMethod("actualAmountComparison", function (value, element) {
+				var compareFlag = true;
+				if(parseFloat(removeCommaFromAmount(value)) < parseFloat(removeCommaFromAmount($("#amount").val())))
+				compareFlag=false;
+			    return compareFlag;
+			}, 'Estimated Accrual Amount should not be less than actual accrual amount');
 			
       		$.validator.addMethod("payToValidation", function (value, element) {
 				var isNumber = true;
@@ -1108,7 +1114,12 @@
 					},
 					estm_accrual: {
 						required: true,
-						estimatedAccuralValidation:true
+						estimatedAccuralValidation:true,
+						actualAmountComparison:{
+							depends: function(element) {
+								return ($('#optionsRadiosDollarSign').is(':checked'));
+							}
+						}
 					},
 					optionsRadiosDenomination: {
 						required: true
@@ -1732,6 +1743,13 @@
 				}else{
 					responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
 				}
+				if($('#tbpCheck').is(":checked")){
+					responseOnload.programDetailList[0].tbpCheck = '1';
+				}
+				else
+				{
+				    responseOnload.programDetailList[0].tbpCheck = '0';
+				}
 				fnCallService(message, idBefore, 'approve');
 				$('#myModal6').modal('toggle');
 				disableFields();
@@ -1907,8 +1925,11 @@
 				else if($('input:radio[name=optionsRadiosDenomination]:checked').val() == '%'){
 					$("#amount").val(convertPercentageFormat($("#amount").val()));
 				}
+				document.getElementById("amount").setAttribute('style','text-align:right;');
 			});
-			
+			$("#amount").focusin(function(){
+				document.getElementById("amount").setAttribute('style','');
+			});
 			$("#estm_accrual").blur(function(){
 				$("#estm_accrual").val(convertWholeNumber($("#estm_accrual").val()));
 				document.getElementById("estm_accrual").setAttribute('style','text-align:right;width: 120px;');

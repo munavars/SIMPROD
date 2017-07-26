@@ -7,6 +7,8 @@ import java.util.Calendar;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 /**
@@ -15,6 +17,10 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "BOOK_LIST")
+@NamedQueries({
+	@NamedQuery(name="DalBookList.getAllDetailsWithSort", query = "select o from DalBookList o order by o.createdDate desc"),
+	@NamedQuery(name="DalBookList.getAllDetailsForLabel", query = "select o from DalBookList o where o.bookLabel =:booklabel")
+})
 public class DalBookList extends DalModel{
 	
 	private static final long serialVersionUID = 4482936117713996795L;	

@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PRICING_HEADER")
@@ -33,6 +34,7 @@ public class DalPricingHeader extends DalAuditableModel{
 	private String userComments;
 	private DalStatus dalStatus;
 	private DalProgramType dalProgramType;
+	private String sbm;
 	
 	private List<DalPricingDetail> dalPricingDetailList;
 	
@@ -206,6 +208,14 @@ public class DalPricingHeader extends DalAuditableModel{
 	
 	public void setDalWorkflowStatusForPricingList(List<DalWorkflowStatus> dalWorkflowStatusForPricingList) {
 		this.dalWorkflowStatusForPricingList = dalWorkflowStatusForPricingList;
+	}
+	
+	@Transient
+	public String getSbm() {
+		return sbm;
+	}
+	public void setSbm(String sbm) {
+		this.sbm = sbm;
 	}
 }
 

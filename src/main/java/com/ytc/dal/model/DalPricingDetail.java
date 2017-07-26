@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "PRICING_DETAIL")
@@ -31,6 +32,7 @@ public class DalPricingDetail extends DalAuditableModel{
 	private String prodLine;
 	private String prodTread;
 	private String partNumber;
+	private String businessUnit;
 	private double netPrice;
 	private double invoiceDisc;
 	private String discType; 
@@ -116,6 +118,14 @@ public class DalPricingDetail extends DalAuditableModel{
 	 */
 	public void setPartNumber(String partNumber) {
 		this.partNumber = partNumber;
+	}
+	
+	@Transient
+	public String getBusinessUnit() {
+		return businessUnit;
+	}
+	public void setBusinessUnit(String businessUnit) {
+		this.businessUnit = businessUnit;
 	}
 	/**
 	 * @return the netPrice

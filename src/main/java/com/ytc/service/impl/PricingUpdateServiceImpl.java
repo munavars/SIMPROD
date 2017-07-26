@@ -295,6 +295,8 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 				parameters.remove("otherReqs", pricingHeader.getOtherShippingReqs());
 			}	
 		}
+		
+		dalPricingHeader.setSbm(pricingHeader.getSbmCheck());
 	}
 
 	private void createPricingDetails(PricingHeader pricingHeader) {
@@ -353,6 +355,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 					dalPricingHeader.setOtherShippingreqs(dalPricingOtherShipRequirements);
 					parameters.remove("otherReqs", pricingHeader.getOtherShippingReqs());
 				}
+				dalPricingHeader.setSbm(pricingHeader.getSbmCheck());
 				
 				/**Set Pricing request status*/
 				if(pricingHeader.getStatus() != null){
@@ -429,6 +432,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 				dalPricingDetail.setIsBonusableUnits(pricingDetail.getBonusUnits());
 				dalPricingDetail.setIsCommissionable(pricingDetail.getCommissionable());
 				dalPricingDetail.setPartNumber(pricingDetail.getPart());
+				dalPricingDetail.setBusinessUnit(pricingDetail.getBusinessUnit());
 				dalPricingDetail.setProdLine(pricingDetail.getProdLine());
 				dalPricingDetail.setProdTread(pricingDetail.getTread());
 				dalPricingDetail.setComments(pricingDetail.getComments());
@@ -617,6 +621,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 					pricingDetail.setProdLine(dalPricingDetail.getProdLine());
 					pricingDetail.setTread(dalPricingDetail.getProdTread());
 					pricingDetail.setPart(dalPricingDetail.getPartNumber());
+					pricingDetail.setBusinessUnit(dalPricingDetail.getBusinessUnit());
 					pricingDetail.setNetPrice(String.valueOf(dalPricingDetail.getNetPrice()));
 					pricingDetail.setInvoiceDisc(String.valueOf( dalPricingDetail.getInvoiceDisc()));
 					pricingDetail.setBonusUnits(dalPricingDetail.getIsBonusableUnits());

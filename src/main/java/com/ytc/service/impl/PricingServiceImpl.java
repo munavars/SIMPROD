@@ -437,6 +437,7 @@ public class PricingServiceImpl implements IPricingService {
 					pricingDetail.setProdLine(dalPricingDetail.getProdLine());
 					pricingDetail.setTread(dalPricingDetail.getProdTread());
 					pricingDetail.setPart(dalPricingDetail.getPartNumber());
+					pricingDetail.setBusinessUnit(dalPricingDetail.getBusinessUnit());
 					pricingDetail.setNetPrice(String.valueOf(dalPricingDetail.getNetPrice()));
 					pricingDetail.setInvoiceDisc(String.valueOf( dalPricingDetail.getInvoiceDisc()));
 					pricingDetail.setBonusUnits(dalPricingDetail.getIsBonusableUnits());
@@ -461,6 +462,7 @@ public class PricingServiceImpl implements IPricingService {
 			pricingHeader.setTermCode(dalPricingHeader.getTermCodes().getCode());
 			pricingHeader.setShippingReqs(dalPricingHeader.getShippingReqs().getShipRqs());
 			pricingHeader.setOtherShippingReqs(dalPricingHeader.getOtherShippingreqs().getOtherReqs());
+			pricingHeader.setSbmCheck(dalPricingHeader.getSbm());
 		}
 	}
 

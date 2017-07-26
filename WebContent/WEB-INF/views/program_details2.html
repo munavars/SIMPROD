@@ -1694,7 +1694,8 @@
 						required: true
 					},
 					tier_range: {
-						required: true
+						required: true,
+						amountValidationTier: true
 					},
 					include: {
 						//required: true,
@@ -2899,7 +2900,7 @@
 					}
 					
 	                if(!noRecord && isConfirmPopUpNeeded && (prev != null || prev != '')){
-		                if(confirm("Existing program schedules information will be cleared. Are you sure you want to change the value?")){
+		                if(confirm("Existing program schedules information will be cleared. Are you sure you want to change the Achieve Based on value?")){
 							var table = $("#tier-schedule").DataTable();
 			                if(table != null){
 			                	table.fnClearTable();
@@ -2951,7 +2952,7 @@
 					var value = $(this).val();
 					if(value != null && value != 'undefined' ){
 						 /* value = value.toString().replace(/,/g, ""); */
-						  value = convertNumberFormat(value); 
+						  value = convertWholeNumber(value); 
 						 /* value = parseFloat(amount).toFixed(2); */
 						 /* value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 						 value = parseFloat(value).toFixed(2); */ 

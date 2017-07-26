@@ -451,9 +451,14 @@ function listboxCopy(sourceID, destID) {
 	}
 	
 	if (destID == 'achInclude') {
-		includeAchieve = includePaid;
+		/*includeAchieve = includePaid;*/
+		includeAchieve = {};
+		for(var k in includePaid) includeAchieve[k]=includePaid[k];
+		
 	} else if (destID == 'achExclude') {
-		excludeAchieve = excludePaid;
+		/*excludeAchieve = excludePaid;*/
+		excludeAchieve = {};
+		for(var k in excludePaid) excludeAchieve[k]=excludePaid[k];
 	}
 
 	return false;

@@ -153,7 +153,7 @@ a { text-decoration: none }
 			h1 { font-size: 15px; }
 			a { color: #548dc4; text-decoration: none; }
 			a:hover { text-decoration: underline; }
-			table.testgrid { border-collapse: collapse; border: 1px solid #CCB; width: 800px; }
+			table.testgrid { border-collapse: collapse; border: 1px solid #CCB; width: 100%; }
 			table.testgrid td, table.testgrid th { padding: 5px; border: 1px solid #E0E0E0; }
 			table.testgrid th { background: #E5E5E5; text-align: left; }
 			input.invalid { background: red; color: #FDFDFD; }
@@ -167,6 +167,7 @@ a { text-decoration: none }
 <script src="resources/js/jszip.js"></script>
 <script src="resources/js/xlsx.js"></script>
 <script>
+	var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','BUSINESS UNIT','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT'];
 	var fileData ={};
 	var dataUploaded = false;
 	/*jshint browser:true */
@@ -309,7 +310,7 @@ a { text-decoration: none }
 									rowValues[columnNames[i]] = convertAmountFormat(oneRow[i]);
 								}
 								else if (columnNames[i] == "BEG DATE" || columnNames[i] == "END DATE"){
-									if(oneRow[i] != null){
+									if(!isEmpty(oneRow[i])){
 										rowValues[columnNames[i]] =	$.datepicker.formatDate( "mm/dd/yy", new Date(oneRow[i]));
 									}
 									else{
@@ -317,10 +318,10 @@ a { text-decoration: none }
 									}
 								}
 								else{
-									if ((oneRow[i] == null || oneRow[i] == '') && (columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || trimValue(columnNames[i]) == "PART#") ){
+									/* if ((oneRow[i] == null || oneRow[i] == '') && (columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || trimValue(columnNames[i]) == "PART#") ){
 										isValid = false;
-									}
-									if(columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" ){
+									} */
+									if(columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || columnNames[i] == "BUSINESS UNIT"){
 										if(oneRow[i] != null){
 											rowValues[columnNames[i]] = oneRow[i].toString().toUpperCase();
 										}
@@ -345,6 +346,11 @@ a { text-decoration: none }
 			}
 		}
 		
+		var message = [];
+		message.error = "";
+		/* var tempData = Array.from(data); */
+		isValid = validateInvoiceData(data, message, columnNames);
+		
 		if(isValid){
 			editableGrid = new EditableGrid(title, {
 				modelChanged: function(rowId, colId, oldValue, newValue, row) {
@@ -358,18 +364,66 @@ a { text-decoration: none }
 			$("#invoice-export-btn").removeAttr('disabled');
 		}
 		else{
-			$("#errorMessageModal").html("Prod Line, Tread and Part Number columns cannot have null values.");
+			$("#errorMessageModal").html(message.error);
 			$('#myModal6').modal('toggle');
 		}
 
 	} 
 	
-	EditableGrid.prototype.addCellValidator = function(columnIndexOrName, cellValidator)
-	{
-		var columnIndex = this.getColumnIndex(2);
-		if (columnIndex < 0) alert("[addCellValidator] Invalid column: " + columnIndexOrName);
-		else this.columns[columnIndex].cellValidators.push(cellValidator);
-	};
+	function isEmpty(inputStr){
+		var isEmpty1 = false;
+		if(inputStr == null || inputStr.toString().trim() == ''){
+			isEmpty1 = true;
+		}
+		return isEmpty1;
+	}
+	
+	function validateInvoiceData(data, message, columnNames){
+		var isValid = false;
+		if(data != null){
+			isValid = true;
+       		if(columnNames.length != invoiceDiscountHeader.length){
+    			message.error = " Column length is not matching. Please upload a valid template."
+    			isValid = false;
+    		}
+    		if(isValid){
+    		    var condition1 = true;
+	    		var condition2 = true;
+	    		var condition3 = true;
+	        	$.each(data, function (i, row) {
+	        		var values = row.values;
+	        		if(isEmpty(values[invoiceDiscountHeader[0]]) || isEmpty(values[invoiceDiscountHeader[1]]) || isEmpty(values[invoiceDiscountHeader[2]]) ){
+	        			isValid = false;
+	        			condition1 = false;
+	        		}
+	        		if(isEmpty(values[invoiceDiscountHeader[3]]) && isEmpty(values[invoiceDiscountHeader[4]]) 
+	        			&& isEmpty(values[invoiceDiscountHeader[5]]) && isEmpty(values[invoiceDiscountHeader[6]]) ){
+	        			isValid = false;
+	        			condition2 = false;
+	        		}   
+	        		if(isEmpty(values[invoiceDiscountHeader[7]]) && isEmpty(values[invoiceDiscountHeader[8]]) 
+	        			&& isEmpty(values[invoiceDiscountHeader[9]]) && isEmpty(values[invoiceDiscountHeader[10]]) ){        			
+	        			isValid = false;
+	        			condition3 = false;
+	        		}   
+				});
+				if(condition1 === false){
+					message.error = message.error + " Column values for "+ invoiceDiscountHeader[0] + ", " + invoiceDiscountHeader[1] + " and " + invoiceDiscountHeader[2] + " are mandatory.<br><br>";
+				}
+				if(condition2 === false){
+					message.error = message.error + " Either "+ invoiceDiscountHeader[3] + " or " + invoiceDiscountHeader[4] + " or " + invoiceDiscountHeader[5] + " or " + invoiceDiscountHeader[6]  + " column value is mandatory.<br><br>";
+				}
+				if(condition3 === false){
+					message.error = message.error + " Either "+ invoiceDiscountHeader[7] + " or " + invoiceDiscountHeader[8] + " or " + invoiceDiscountHeader[9] + " or " + invoiceDiscountHeader[10]  + " column value is mandatory.";
+				}
+    		}
+		}
+		else{
+   			message.error = " No data to validate. Please upload a valid template."
+ 			isValid = false;
+		}
+		return isValid;
+	}
 	
 	function handleFile(e) {
 		rABS = false;
@@ -644,12 +698,14 @@ a { text-decoration: none }
 								</div>
 								<!-- EDIT BUTTON END -->
                                  <ul class="list-inline w-list">
+                                 <li><strong>Pricing ID: <span id="pricingId"></span></strong></li>
                                     <li><strong> Business Unit: <span class="yokohamared" id="businessUnitDescription"></span></strong></li>
                                     <li data-original-title="Pricing Details" data-content="Click on the grey button below to see more info about this Pricing. Click again to hide it." data-placement="top" data-trigger="hover" class="popovers">
                                     	<button id="pricing-expand" type="button" class="btn btn-default btn-xs" 
                                     			data-toggle="collapse" data-target="#demo">
                                     			<i class="fa fa-angle-down"></i>
                                     	</button></li>
+                                    	
                                  </ul>
                                <div id="demo" class="collapse out">
                                 <div class="col-lg-3 col-sm-4 p-left0">
@@ -733,20 +789,36 @@ a { text-decoration: none }
                                     <button type="button" id="invoice-export-btn" class="btn btn-default" onclick="tableToExcel('testgrid', 'Pricing Details_')"><i class="fa fa-arrow-down"></i> Export To Excel</button>
                                 </div>
                               </div>
+                              <div class="btn-group pull-right p-right10">
+                                    <button type="button" id="invoice-template-btn" class="btn btn-default" onclick="window.location.href='resources/templates/Pricing_Form_Template.xlsx'" value ="download">
+                                    	<i class="fa fa-arrow-down"></i> Download Excel Template
+                                    </button>
+                               </div>
                               <div class="btn-group pull-left">
                                   <h5 class="p-left16">Invoice Discount</h5>
                               </div>
                           </div>
                           </div>
-                          
-                          <div class="adv-table editable-table p-left16">
-                          
-							<input type="file" name="xlfile" id="xlf" />
+
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="col-sm-5">
+									<input type="file" name="xlfile" id="xlf" />
+								</div>
+								<div class="col-sm-2">
+									<div id="sbmdiv">
+										<label class="control-label" for="sbmCheck">Is this a SBM?</label>&nbsp;&nbsp; 
+										<input type="checkbox" name="sbmCheck" id="sbmCheck" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="adv-table editable-table p-left16">
 							<br />
 							<div id="tablecontent"></div>
-							</div>                              
-                          
- 	<script>
+						</div>
+	<script>
  	
 	var xlf = document.getElementById('xlf');
 		if(xlf.addEventListener) {
@@ -1360,7 +1432,7 @@ a { text-decoration: none }
 				$('#cancelLink').attr('href','/SIM/indexRedirect');
 			} */
 			
-			var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT'];
+			/* var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','BUSINESS UNIT','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT']; */
         	$.ajax({ 
 				type: "GET",
 				cache: false,
@@ -1396,9 +1468,15 @@ a { text-decoration: none }
 					
 					if(responseOnload.dropdownList.groupList == null){
 						$("input[type=radio][value='Group']").attr("disabled",true);
+						fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
+					}
+					else{
+						$("#optionsRadiosGroup").prop('checked', true);
+						fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.groupList);
 					}
 										
 					if(pricingHeaderId != null){
+						$('#pricingId').html(response.data.id);
 						$('#status').html(response.data.status);
 						populateCustomerGroupDropDown(responseOnload.customerType);
 						$("#custByName_inputselect").val(responseOnload.customerGroup);
@@ -1449,6 +1527,12 @@ a { text-decoration: none }
 						if(responseOnload.dropdownList.groupList == null){
 							$("input[type=radio][value='Group']").attr("disabled",true);
 						}
+						if(responseOnload.sbmCheck == '1'){
+							$("#sbmCheck").prop('checked', true);
+						}else{
+							$("#sbmCheck").prop('checked', false);
+						}		
+               		
 					}
 					else{
 						$("#invoice-export-btn").attr('disabled', true);
@@ -1547,11 +1631,12 @@ a { text-decoration: none }
 						rowValues[invoiceDiscountHeader[3]] = item.prodLine;
 						rowValues[invoiceDiscountHeader[4]] = item.tread;
 						rowValues[invoiceDiscountHeader[5]] = item.part;
-						rowValues[invoiceDiscountHeader[6]] = convertAmountFormat(item.netPrice);
-						rowValues[invoiceDiscountHeader[7]] = convertAmountFormat(item.invoiceDisc) + '%';
-						rowValues[invoiceDiscountHeader[8]] = item.bonusUnits;
-						rowValues[invoiceDiscountHeader[9]] = item.commissionable;
-						rowValues[invoiceDiscountHeader[10]] = item.comments;
+						rowValues[invoiceDiscountHeader[6]] = item.businessUnit;
+						rowValues[invoiceDiscountHeader[7]] = convertAmountFormat(item.netPrice);
+						rowValues[invoiceDiscountHeader[8]] = convertAmountFormat(item.invoiceDisc) + '%';
+						rowValues[invoiceDiscountHeader[9]] = item.bonusUnits;
+						rowValues[invoiceDiscountHeader[10]] = item.commissionable;
+						rowValues[invoiceDiscountHeader[11]] = item.comments;
 						rowValues['ID'] = item.id;
 						
 						data.push({id: idx, values: rowValues});
@@ -1724,19 +1809,37 @@ a { text-decoration: none }
 				responseOnload.customerType=formData[0].value;
 				responseOnload.customerGroup=formData[1].value;
 				responseOnload.customerId=formData[2].value;
-				responseOnload.userComments=formData[4].value;
-				responseOnload.termCode=formData[5].value;
-				responseOnload.definition=formData[6].value;
-				responseOnload.dueDates=formData[7].value;
-				responseOnload.cash=formData[8].value;
-				responseOnload.shippingReqs=formData[9].value;
-				responseOnload.otherShippingReqs=formData[10].value;
+				if(formData.length == 14){
+					if(formData[4].value === 'on'){
+						responseOnload.sbmCheck= "1";
+					}
+					else{
+						responseOnload.sbmCheck= "0";
+					}
+					responseOnload.userComments=formData[5].value;
+					responseOnload.termCode=formData[6].value;
+					responseOnload.definition=formData[7].value;
+					responseOnload.dueDates=formData[8].value;
+					responseOnload.cash=formData[9].value;
+					responseOnload.shippingReqs=formData[10].value;
+					responseOnload.otherShippingReqs=formData[11].value;
+				}
+				else {
+					responseOnload.userComments=formData[4].value;
+					responseOnload.termCode=formData[5].value;
+					responseOnload.definition=formData[6].value;
+					responseOnload.dueDates=formData[7].value;
+					responseOnload.cash=formData[8].value;
+					responseOnload.shippingReqs=formData[9].value;
+					responseOnload.otherShippingReqs=formData[10].value;
+				}
+				
 				responseOnload.success=false;
 				var fileDataList = [];
 			
 				$.each(fileData, function(key, data) {
 					console.log( $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']));
-					var fileDataRow = {'id': data.values['ID'], 'programId': data.id, 'part':data.values['PART#'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': removeCommaFromAmount(data.values['NET PRICE']), 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
+					var fileDataRow = {'id': data.values['ID'], 'programId': data.id, 'part':data.values['PART#'], 'businessUnit':data.values['BUSINESS UNIT'], 'addChangeDel': data.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['BEG DATE']), 'bonusUnits': data.values['BONUS UNITS Y/N'], 'commissionable': data.values['COMM Y/N'], 'comments': data.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", data.values['END DATE']), 'invoiceDisc': data.values['INVOICE DSC %'],'netPrice': removeCommaFromAmount(data.values['NET PRICE']), 'prodLine': data.values['PROD LINE'], 'tread': data.values['TREAD'] };
 					fileDataList.push(fileDataRow);
 				});
 				//console.log(fileDataList);
@@ -1754,6 +1857,7 @@ a { text-decoration: none }
 					success: function (response) {
 			            if (response != null && response.data.success == true) {
 			            	responseOnload = response.data;
+			            	$('#pricingId').html(response.data.id);
 			            	$('#status').html(response.data.status);
 			            	fnPopulateProgramWorkflowStatus(response.data.programWorkflowStatusList);
 							/**Appending program id in the modal message.- Begin*/
@@ -1829,7 +1933,6 @@ a { text-decoration: none }
 			function enabledButtonApplicableToAll(){
 				$('#pricing-expand').attr('disabled', false);
 				$('#pricing-expand').removeClass("disabled");
-				/* $('#pdf-button').attr('disabled', false); */
 				$('#cancel-pricing').attr('disabled', false);
 				$('#cancelLink').attr('disabled', false);
 				$('#cancelLink').removeClass("disabled");
@@ -1847,21 +1950,8 @@ a { text-decoration: none }
 				$('#pricing-workflow-btn').attr('disabled', false); 
 				$('#view-program-workflow').attr('disabled', false);
 				$('#view-program-workflow').removeClass("disabled");
-				
-				/* $('#invoice-export-link').attr('disabled', false);
-				$('#invoice-export-link').removeClass("disabled"); */
 				$('#invoice-export-btn').attr('disabled', false); 
-				/* $('#myModal5').find('button').attr('disabled',false);
-				$('#myModal4').find('button').attr('disabled',false);
-				$('#myModal7').find('button, a, textarea').attr('disabled',false);
-				$('#myModal8').find('button, a, textarea').attr('disabled',false);
-				$('#myModal9').find('button, a, textarea').attr('disabled',false);
-				$('#myModal10').find('button, a, textarea').attr('disabled',false);
-				$('#header-button').removeAttr('hidden');
-				$('#footer-button').removeAttr('hidden');
-				$('#view-program-workflow').attr('disabled', false);
-				$('#view-program-workflow').removeClass("disabled");
-				$('#program-workflow-btn').attr('disabled', false); */
+				$('#invoice-template-btn').attr('disabled', false); 
 			}
 			
 			$(':input').change(function(){

@@ -22,6 +22,7 @@ public class PricingDetail extends Model{
 	private String prodLine;
 	private String tread;
 	private String part;
+	private String businessUnit;
 	private String netPrice;
 	private String invoiceDisc;
 	private String bonusUnits;
@@ -99,6 +100,12 @@ public class PricingDetail extends Model{
 	 */
 	public void setPart(String part) {
 		this.part = part;
+	}
+	public String getBusinessUnit() {
+		return businessUnit;
+	}
+	public void setBusinessUnit(String businessUnit) {
+		this.businessUnit = businessUnit;
 	}
 	/**
 	 * @return the netPrice

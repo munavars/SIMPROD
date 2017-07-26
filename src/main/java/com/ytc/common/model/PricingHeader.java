@@ -33,6 +33,7 @@ public class PricingHeader extends Model{
 	private String customerGroup;
 	private String customerId;
 	private String customerGroupValue;
+	private String sbmCheck;
 	private String userComments;
 	private String termCode;
 	private String definition;
@@ -317,5 +318,11 @@ public class PricingHeader extends Model{
 	}
 	public void setCustomerGroupValue(String customerGroupValue) {
 		this.customerGroupValue = customerGroupValue;
+	}
+	public String getSbmCheck() {
+		return sbmCheck;
+	}
+	public void setSbmCheck(String sbmCheck) {
+		this.sbmCheck = sbmCheck;
 	}
 }

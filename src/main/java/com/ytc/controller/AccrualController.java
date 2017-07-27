@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.databind.node.TextNode;
 import com.ytc.common.model.AccrualDropDown;
 import com.ytc.common.model.BookList;
 import com.ytc.common.result.ListResult;
@@ -82,8 +83,8 @@ public class AccrualController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/accrual/v1/reviewLiabilityBook", method = RequestMethod.POST)
-	public void reviewedLiabilityBook(HttpServletRequest request,@RequestBody String bookLabel) {
-		getService(request).reviewedLiabilityBook(bookLabel);
+	public void reviewedLiabilityBook(HttpServletRequest request,@RequestBody TextNode bookLabel) {
+		getService(request).reviewedLiabilityBook(bookLabel.asText());
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updatePYTD", method = RequestMethod.POST)
@@ -92,8 +93,8 @@ public class AccrualController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updatePYTDBook", method = RequestMethod.POST)
-	public void updatePYTDBook(HttpServletRequest request, @RequestBody String bookLabel) {
-		getService(request).updatePYTDBook(bookLabel);
+	public void updatePYTDBook(HttpServletRequest request, @RequestBody TextNode bookLabel) {
+		getService(request).updatePYTDBook(bookLabel.asText());
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updateCYTD", method = RequestMethod.POST)

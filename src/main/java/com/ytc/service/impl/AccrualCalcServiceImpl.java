@@ -1,6 +1,7 @@
 package com.ytc.service.impl;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -20,7 +21,6 @@ import com.ytc.constant.ProgramConstant;
 import com.ytc.constant.QueryConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalBookList;
-import com.ytc.dal.model.DalCcmAccrualData;
 import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IAccrualDataService;
 
@@ -164,7 +164,11 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		List<DalBookList> dalBookList =  baseDao.getListFromNamedQueryWithParameter("DalBookList.getAllDetailsForLabel", queryParams);
 		if(!dalBookList.isEmpty()){
 		DalBookList book=(DalBookList) dalBookList.get(0);
-		StoredProcedureQuery query =entityManager.createNamedStoredProcedureQuery("sp_MoveAccrualDataToBook");
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToBook");
+		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("PARAM_BOOK_DATE", Calendar.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("PARAM_BOOK_OF_RECORD", String.class, ParameterMode.IN);
+		query.registerStoredProcedureParameter("PARAM_CREATED_BY", String.class, ParameterMode.IN);
 		query.setParameter("PARAM_BOOK_LABEL", book.getBookLabel());
 		query.setParameter("PARAM_BOOK_DATE", book.getBookDate());
 		query.setParameter("PARAM_BOOK_OF_RECORD", book.getBookRecord());

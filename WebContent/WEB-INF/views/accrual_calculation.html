@@ -350,7 +350,62 @@
 											<!-- Start ROW 8 -->
 											<div class="clearfix"></div>
 											<div class="clearfix"></div>
-											
+																							<div class="modal fade" id="myModal1" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-confirmation-modal-close"
+																			type="button" class="close" data-dismiss="modal"
+																			aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Confirmation</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="confirmMessage"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-confirmation-modal-ok"
+																			data-toggle="modal" href="#myModal1">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
+														
+														<div class="modal fade" id="myModal2" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true">
+															<div class="modal-dialog">
+																<div class="modal-content">
+																	<div class="modal-header">
+																		<button id="program-error-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Error / Warning (s)</h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="errorMessageModal"></span>
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-error-modal-ok" data-toggle="modal"
+																			href="#myModal2">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+																		</button>
+																	</div>
+																</div>
+															</div>
+														</div>
 											<!-- END ROW 8 -->
 
 											</div>
@@ -445,16 +500,20 @@
          
          function calculateAccruals(){
         	 
+        	var select=false; 
  			if($('#calculate').is(':checked')){
+ 				select=true; 
  				calculateLiability(); 				
  			}
  			
  			if($('#review').is(':checked')){
  				
  				if($('#archiveName').is(':checked')){
+ 					select=true; 
  					reviewLiabilityCCM();
  				}
 				if($('#bookName').is(':checked')){
+					select=true; 
 					reviewLiabilityBook();
  				}
  				
@@ -463,9 +522,11 @@
 			if($('#pytd').is(':checked')){
 				
 				if($('#pytd_current').is(':checked')){
+					select=true; 
 					updatePYTD();
  				}
 				if($('#pytd_select').is(':checked')){
+					select=true; 
 					updatePYTDBook();
  				}
  			}
@@ -473,12 +534,19 @@
 			if($('#cytd').is(':checked')){
 				
 				if($('#cytd_current').is(':checked')){
+					select=true; 
 					updateCYTD();
  				}
 				if($('#cytd_select').is(':checked')){
+					select=true; 
 					updateCYTDBook();
  				}
 		
+			}
+			if(!select){
+				message="Kindly select atleast one option to execute";		        		
+        		$("#errorMessageModal").html(message);
+				$('#myModal2').modal('toggle');
 			}
          }
          

@@ -2081,6 +2081,11 @@
 			});
 		});
 			
+		 $('#glcode_dropdown').change(function(){
+			 
+				$('#sapglcode_dropdown').val($('#glcode_dropdown').val());
+		 });
+			
 			$('#paid_basedon_inputselect').change(function(){
 				
 				id=$('#paid_basedon_inputselect option:selected').val();

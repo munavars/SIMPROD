@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Table(name = "BOOK_LIST")
 @NamedQueries({
 	@NamedQuery(name="DalBookList.getAllDetailsWithSort", query = "select o from DalBookList o order by o.createdDate desc"),
-	@NamedQuery(name="DalBookList.getAllDetailsForLabel", query = "select o from DalBookList o where o.bookLabel =:booklabel")
+	@NamedQuery(name="DalBookList.getAllDetailsForLabel", query = "select b from DalBookList b where b.bookLabel in (:book)")
 })
 public class DalBookList extends DalModel{
 	

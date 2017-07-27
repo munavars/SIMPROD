@@ -76,6 +76,9 @@ var EditableTable = function () {
 					$('#myModal5').modal('toggle');
                 	return false;
                 }
+                if( !$("#tier_amount").valid() || !$("#tier_range").valid()){
+                	return false;
+                }
                 if(!validateRange(nRow)){
                 	
                 	oTable.fnUpdate('<input type="text" style="width:100%" class="form-control small error" value="' + jqInputs[1].value + '">', nRow, 2, false);

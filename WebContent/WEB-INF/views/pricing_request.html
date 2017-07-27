@@ -172,7 +172,7 @@ a { text-decoration: none }
 <script src="resources/js/jszip.js"></script>
 <script src="resources/js/xlsx.js"></script>
 <script>
-	var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','BUSINESS UNIT','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT'];
+	var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','BUSINESS UNIT','PROD LINE','TREAD','PART#','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT'];
 	var fileData ={};
 	var dataUploaded = false;
 	/*jshint browser:true */
@@ -326,8 +326,9 @@ a { text-decoration: none }
 									/* if ((oneRow[i] == null || oneRow[i] == '') && (columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || trimValue(columnNames[i]) == "PART#") ){
 										isValid = false;
 									} */
-									if(columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || columnNames[i] == "BUSINESS UNIT"){
-										if(oneRow[i] != null){
+									
+									if(columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || columnNames[i] == "BUSINESS UNIT" ||  columnNames[i] == 'PART#'){
+										if(!isEmpty(oneRow[i])){
 											rowValues[columnNames[i]] = oneRow[i].toString().toUpperCase();
 										}
 										else{
@@ -339,6 +340,9 @@ a { text-decoration: none }
 									}
 									
 								}
+							}
+							if(isEmpty(rowValues["PROD LINE"]) && isEmpty(rowValues["TREAD"]) && isEmpty(rowValues["BUSINESS UNIT"]) && isEmpty(rowValues["PART#"]) ){
+								continue;
 							}
 							display2["values"] = rowValues;
 		
@@ -406,8 +410,7 @@ a { text-decoration: none }
 	        			isValid = false;
 	        			condition2 = false;
 	        		}   
-	        		if(isEmpty(values[invoiceDiscountHeader[7]]) && isEmpty(values[invoiceDiscountHeader[8]]) 
-	        			&& isEmpty(values[invoiceDiscountHeader[9]]) && isEmpty(values[invoiceDiscountHeader[10]]) ){        			
+	        		if(isEmpty(values[invoiceDiscountHeader[9]]) && isEmpty(values[invoiceDiscountHeader[10]]) ){        			
 	        			isValid = false;
 	        			condition3 = false;
 	        		}   
@@ -419,7 +422,7 @@ a { text-decoration: none }
 					message.error = message.error + " Either "+ invoiceDiscountHeader[3] + " or " + invoiceDiscountHeader[4] + " or " + invoiceDiscountHeader[5] + " or " + invoiceDiscountHeader[6]  + " column value is mandatory.<br><br>";
 				}
 				if(condition3 === false){
-					message.error = message.error + " Either "+ invoiceDiscountHeader[7] + " or " + invoiceDiscountHeader[8] + " or " + invoiceDiscountHeader[9] + " or " + invoiceDiscountHeader[10]  + " column value is mandatory.";
+					message.error = message.error + " Either " + invoiceDiscountHeader[9] + " or " + invoiceDiscountHeader[10]  + " column value is mandatory.";
 				}
     		}
 		}
@@ -946,6 +949,7 @@ a { text-decoration: none }
                                 <div class="col-lg-5 col-md-7 col-sm-5">
                                     <label class="control-label" for="inputSuccess">Terms Code</label>
                                         <select class="form-control input-sm m-bot15" id="termsCode_inputselect" name="termsCode_inputselect">
+                                        	<option selected disabled value="select">-- Select --</option>
                                         </select>
                                     </div>
                                 <div class="col-lg-3 col-md-5 col-sm-3">
@@ -968,33 +972,34 @@ a { text-decoration: none }
                                     <div class="form-group">
                                     <div class="col-lg-5 col-md-8 inline-flex p-left0">
                                         <div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Select which program applies">
-                                             <label class="control-label" for="inputSuccess"></label>
+                                             <!-- <label class="control-label" for="optionsRadiosShippingProgram"></label> -->
                                              <div class="radio-inline">
-                                                <label class="control-label" for="inputSuccess">
+                                                <label class="control-label" for="optionsRadiosShippingProgram">
                                                 <input type="radio" name="optionsRadiosShippingProgram" id="optionsRadios1000lbs" value="1000 LBS" class="radio-inline required" checked="checked">
                                                 1000 LBS
                                                 </label>
                                             </div>
                                         </div>
                                         <div class="radio-inline">
-                                                <label class="control-label" for="inputSuccess">
+                                                <label class="control-label" for="optionsRadiosShippingProgram">
                                                 <input type="radio" name="optionsRadiosShippingProgram" id="optionsRadios2000lbs" value="2000 LBS" class="radio-inline required" checked="">
                                                 2000 LBS</label> 
                                         </div>
                                         <div class="radio-inline">
-                                                <label class="control-label" for="inputSuccess">
+                                                <label class="control-label" for="optionsRadiosShippingProgram">
                                                 <input type="radio" name="optionsRadiosShippingProgram" id="optionsRadiosTrailerLoad" value="Trailer Load" class="radio-inline required">
                                                 Trailer Load</label> 
                                         </div>
                                         <div class="radio-inline">
-                                                <label class="control-label" for="inputSuccess">
+                                                <label class="control-label" for="optionsRadiosShippingProgram">
                                                 <input type="radio" name="optionsRadiosShippingProgram" id="optionsRadiosPerProgram" value="Per Program" class="radio-inline required">
                                                  Per Program</label> 
                                         </div>
                                     </div>
                                   <div class="col-lg-5 col-sm-12">
-                                    <label class="control-label" for="inputSuccess">Other</label>
+                                    <label class="control-label" for="Other_Ship_Reqs_inputselect">Other</label>
                                         <select class="form-control input-sm m-bot15" id="Other_Ship_Reqs_inputselect" name="Other_Ship_Reqs_inputselect">
+                                        	<option selected disabled value="select">-- Select --</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1460,10 +1465,10 @@ a { text-decoration: none }
 	         		$('#approvedTitle').html(response.data.approvedByTitle);
 	         		$('#approvedDate').html(response.data.approvedByDate); */
 	         		
-					fnPopulateDropdown('termsCode_inputselect', response.data.dropdownList.termsCodeList);
-			        $('#termsCode_inputselect').val(response.data.dropdownList.termsCodeList[0].key);
+					fnPopulateDropdownAppend('termsCode_inputselect', response.data.dropdownList.termsCodeList);
+			        /* $('#termsCode_inputselect').val(response.data.dropdownList.termsCodeList[0].key); */
 			 
-			        if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.definitionList[0].key){
+			        /* if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.definitionList[0].key){
 			       		$('#program_terms_definition').val(response.data.dropdownList.definitionList[0].value);
 			       	}
 			        if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.dueDatesList[0].key){
@@ -1471,8 +1476,8 @@ a { text-decoration: none }
 			       	}
 					if(response.data.dropdownList.termsCodeList[0].key == response.data.dropdownList.cashList[0].key){
 			       		$('#program_terms_cash').val(response.data.dropdownList.cashList[0].value);
-			       	}
-					fnPopulateDropdown('Other_Ship_Reqs_inputselect', response.data.dropdownList.otherShipReqsList);
+			       	} */
+					fnPopulateDropdownAppend('Other_Ship_Reqs_inputselect', response.data.dropdownList.otherShipReqsList);
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
 					$("#customerId").val(responseOnload.customerId);
 					$("#customerGroup").val(responseOnload.customerGroup);
@@ -1639,10 +1644,12 @@ a { text-decoration: none }
 							enddate = $.datepicker.formatDate( "mm/dd/yy", new Date(item.endDate));
 						}
 						rowValues[invoiceDiscountHeader[2]] = enddate;
-						rowValues[invoiceDiscountHeader[3]] = item.prodLine;
-						rowValues[invoiceDiscountHeader[4]] = item.tread;
-						rowValues[invoiceDiscountHeader[5]] = item.part;
-						rowValues[invoiceDiscountHeader[6]] = item.businessUnit;
+						
+						rowValues[invoiceDiscountHeader[3]] = item.businessUnit;
+						rowValues[invoiceDiscountHeader[4]] = item.prodLine;
+						rowValues[invoiceDiscountHeader[5]] = item.tread;
+						rowValues[invoiceDiscountHeader[6]] = item.part;
+						
 						rowValues[invoiceDiscountHeader[7]] = convertAmountFormat(item.netPrice);
 						rowValues[invoiceDiscountHeader[8]] = convertAmountFormat(item.invoiceDisc) + '%';
 						rowValues[invoiceDiscountHeader[9]] = item.bonusUnits;
@@ -1742,6 +1749,23 @@ a { text-decoration: none }
 	        		$('#'+ elementId).empty();
 	        	}
 			}
+			
+       		function fnPopulateDropdownAppend(elementId, items){
+	        	if(items != null){
+	        		$.each(items, function (i, item) {
+					    $('#'+ elementId).append($('<option>', { 
+					        value: item.key,
+					        text : item.value 
+					    },'</option>' ));
+				    
+					});
+				//resetFormForMandatoryCheck(elementId);
+	        	}
+	        	else{
+	        		$('#'+ elementId).empty();
+	        	}
+			}
+						
 	function fnPopulateProgramTerms(elementId, items,item){
 		var check = item;
        	if(items != null){

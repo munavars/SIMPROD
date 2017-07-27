@@ -241,7 +241,7 @@
                 	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
                     	if((row.programStatus=='Submitted')){
-                       		data = '<input type="text" id="docDate'+meta.row+'" value="'+data+'" readonly="readonly" style="background:white;">';
+                       		data = '<input type="text" id="docDate'+meta.row+'" value="'+data+'"> <img id="calImg'+meta.row+'" src="resources/img/email-img/calendar.png" width="30" onclick="openCalendar(this);">';
                        		//data='<input type="text" class="form-control dpd1" readonly="readonly" id="from" name="from" placeholder="Begin Date" style="background:white;">';
                     	}else{
                     		data = '<input type="text" id="docDate'+meta.row+'" value="" disabled>';	
@@ -358,9 +358,10 @@
     	
     	 $('#ccmtable').on('draw.dt', function () {
              $('[data-toggle="tooltip"]').tooltip();
-             $('[id^="docDate"]').datepicker().on('changeDate', function(e){
+             $('[id^="docDate"]').datepicker('update', new Date()).on('changeDate', function(e){
          	    $(this).datepicker('hide');
              });
+             
          });  
     	 
        });
@@ -997,7 +998,7 @@
     	 var id=(event.id).substring(6);
 			creditEarned='';
 			paidBased=$('#paidbase'+id).data('id');			
-			amount=event.value;
+			amount=removeCommaFromAmount(event.value);
 			if(amount!=""){
 			amount=parseFloat(event.value);
 			}
@@ -1069,19 +1070,40 @@
 				creditEarned=creditEarned/100;
 			}
 			creditEarned=parseFloat(creditEarned).toFixed(2);
-			$('#creditearned'+id).val(creditEarned);
+
 			creditaccrued=parseFloat(removeCommaFromAmount($('#creditaccrued'+id).html().substring(1)));			
 			variance=creditaccrued-creditEarned;
 			variance=parseFloat(variance).toFixed(2);
+			if(variance<0){
+				$('#variance'+id).css({'color':'red'});
+			}else{
+				$('#variance'+id).css({'color':'black'});
+			}
+			
+			creditEarned= Number(creditEarned).toLocaleString('en',{ minimumFractionDigits: 2 });
+			$('#creditearned'+id).val(creditEarned);
+			variance= Number(variance).toLocaleString('en',{ minimumFractionDigits: 2 });
 			$('#variance'+id).html('$ '+variance);
+			
+			
       }
           
 	function calculateVariance(event){
 		var id=(event.id).substring(12);
+		if($('#creditearned'+id).val()!=""){
 		creditEarned=parseFloat(removeCommaFromAmount($('#creditearned'+id).val()));
-		creditaccrued=parseFloat(removeCommaFromAmount($('#creditaccrued'+id).html().substring(1)));			
+		}
+		if($('#creditaccrued'+id).html().substring(1)!=""){
+		creditaccrued=parseFloat(removeCommaFromAmount($('#creditaccrued'+id).html().substring(1)));
+		}
 		variance=creditaccrued-creditEarned;
 		variance=parseFloat(variance).toFixed(2);	
+		if(variance<0){
+			$('#variance'+id).css({'color':'red'});
+		}else{
+			$('#variance'+id).css({'color':'black'});
+		}
+		variance= Number(variance).toLocaleString('en',{ minimumFractionDigits: 2 });
 		$('#variance'+id).html('$ '+variance);
 	}
 	
@@ -1234,8 +1256,8 @@
 			   if((this.checked)&&(!$(this).is(':disabled'))){				  
 					valid=true;
 					id1=this.id.substring(17);
-					var creditearned=parseFloat($('#creditearned'+id1).val());
-					var creditaccrued=parseFloat($('#creditaccrued'+id1).html().substring(1));
+					var creditearned=parseFloat(removeCommaFromAmount($('#creditearned'+id1).val()));
+					var creditaccrued=parseFloat(removeCommaFromAmount($('#creditaccrued'+id1).html().substring(1)));
 					var comments=$('#comments'+this.id.substring(17)).val();
 					if(((comments=="")||(comments==null))&&(creditearned!=creditaccrued)){			           
 						comment=false;
@@ -1330,6 +1352,10 @@
 		}
 	}
 	
+	function openCalendar(event){
+		var id=(event.id).substring(6);
+		$('#docDate'+id).datepicker('show');
+	}
 	   //Export to Excel 
 	   function tableToExcel(tableId, fileName) {
 	   	var ua = window.navigator.userAgent;

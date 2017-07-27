@@ -81,7 +81,9 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 			String achExclude="";
 			SimpleDateFormat sdf=new SimpleDateFormat("MM/dd/yyyy");
 			String reportDate=sdf.format(new Date());
+			if(!dalProgramDetail.getDalProgramDetPaidList().isEmpty()){
 			List<DalProgramDetPaid> dalProgramDetPaidList = dalProgramDetail.getDalProgramDetPaidList().stream().sorted((e1, e2) -> e1.getTagId().compareTo(e2.getTagId())).collect(Collectors.toList());
+			 
 			for (Iterator<DalProgramDetPaid> iterator = dalProgramDetPaidList.iterator(); iterator.hasNext();) {
 				DalProgramDetPaid dalProgramDetPaid = (DalProgramDetPaid) iterator.next();
 				 if("1".equalsIgnoreCase(dalProgramDetPaid.getMethod())){
@@ -92,6 +94,8 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 		         }
 				
 			}
+			}
+			if(!dalProgramDetail.getDalProgramDetAchievedList().isEmpty()){  
 			List<DalProgramDetAchieved> dalProgramDetAchieved = dalProgramDetail.getDalProgramDetAchievedList().stream().sorted((e1, e2) -> e1.getAchTagId().compareTo(e2.getAchTagId())).collect(Collectors.toList());
 				for (Iterator<DalProgramDetAchieved> iterator = dalProgramDetAchieved.iterator(); iterator.hasNext();) {
 					DalProgramDetAchieved dalPgmDetAchieved = (DalProgramDetAchieved) iterator.next();
@@ -103,6 +107,7 @@ public class CcmEmailServiceImpl implements ICcmEmailService {
 			         }
 					
 				}
+			}
 			//toEmailIdList.add(env.getProperty("mail.ccm.to"));
 			//toEmailIdList.add("ArunThomas.Purushothaman@yokohamatire.com");
 			//toEmailIdList.add(env.getProperty("mail.ccm.review.to"));

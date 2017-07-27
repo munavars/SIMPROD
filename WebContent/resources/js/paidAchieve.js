@@ -126,7 +126,7 @@ function listbox_moveacross(sourceID, destID) {
 			}
 			if (remove) {
 				var tagTemp = getTagPropertyValue(tagId, tagMap);
-				if (tagTemp != null) {
+				if (tagTemp != null && tagTemp.indexOf(newOption.value) !== -1) {
 					removeFromArray(tagTemp, newOption.value);
 					tagMap[tagId] = tagTemp;
 				} else {

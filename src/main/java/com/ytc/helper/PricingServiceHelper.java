@@ -68,6 +68,7 @@ public class PricingServiceHelper {
 				dalPricingDetail.setIsBonusableUnits(pricingDetail.getBonusUnits());
 				dalPricingDetail.setIsCommissionable(pricingDetail.getCommissionable());
 				dalPricingDetail.setPartNumber(pricingDetail.getPart());
+				dalPricingDetail.setBusinessUnit(pricingDetail.getBusinessUnit());
 				dalPricingDetail.setProdLine(pricingDetail.getProdLine());
 				dalPricingDetail.setProdTread(pricingDetail.getTread());
 				dalPricingDetail.setComments(pricingDetail.getComments());

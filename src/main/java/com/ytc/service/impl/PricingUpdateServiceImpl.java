@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.ytc.common.enums.BusinessUnitDescriptionEnum;
 import com.ytc.common.model.PricingDetail;
 import com.ytc.common.model.PricingHeader;
 import com.ytc.constant.ProgramConstant;
@@ -499,18 +500,25 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		String invalidPartNumber = "";
 		String invalidProdLine = "";
 		String invalidProdTread = "";
+		String invalidBusinessUnit = "";
 		List<String> prodLine = new ArrayList<String>();
 		List<String> prodTread = new ArrayList<String>();
 		Map<String, Object> queryPart = new HashMap<>();
 		Map<String, Object> queryProdLine = new HashMap<>();
 		Map<String, Object> queryTread = new HashMap<>();
+		Set<String> businessUnitSet = new HashSet<String>();
 		for (PricingDetail pricingDetail : pricingDetailsList) {
-			if (!StringUtils.isEmpty(pricingDetail.getPart()) && !StringUtils.isEmpty(pricingDetail.getProdLine())
-					&& !StringUtils.isEmpty(pricingDetail.getTread())) {
+			if (!StringUtils.isEmpty(pricingDetail.getPart())) {
 				partNumber.add(pricingDetail.getPart());
+			}
+			if (!StringUtils.isEmpty(pricingDetail.getProdLine())) {
 				prodLine.add(pricingDetail.getProdLine());
+			}
+			if (!StringUtils.isEmpty(pricingDetail.getTread())) {
 				prodTread.add(pricingDetail.getTread());
-
+			}
+			if (!StringUtils.isEmpty(pricingDetail.getBusinessUnit())) {
+				businessUnitSet.add(pricingDetail.getBusinessUnit());
 			}
 		}
 		isValidated = true;
@@ -553,6 +561,26 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 		if (!"".equalsIgnoreCase(invalidProdTread)) {
 			validationMessage = validationMessage + "<br>" + "Incorrect Prod Tread: " + invalidProdTread.substring(1);
 		}
+
+		for (Iterator<String> iterator = businessUnitSet.iterator(); iterator.hasNext();) {
+			String businessUnit = (String) iterator.next();
+			boolean isValid = false;
+			for (BusinessUnitDescriptionEnum c : BusinessUnitDescriptionEnum.values()){
+				if(c.getBusinessUnitDescription().equalsIgnoreCase(businessUnit)){
+					isValid = true;
+					break;
+				}
+			}
+			if (!isValid) {
+				invalidBusinessUnit = invalidBusinessUnit + "," + businessUnit;
+				isValidated = false;
+			}
+
+		}
+		if (!"".equalsIgnoreCase(invalidBusinessUnit)) {
+			validationMessage = validationMessage + "<br>" + "Incorrect Business Unit: " + invalidBusinessUnit.substring(1);
+		}
+		
 		if (!isValidated) {
 			pricingHeader.setValidationMessage(validationMessage);
 		}

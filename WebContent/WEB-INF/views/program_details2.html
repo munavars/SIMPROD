@@ -1573,7 +1573,7 @@
 							var tagTemp = getTagPropertyValue(obj, includePaid);
 							if(tagTemp != null && tagTemp.length > 0){
 								totalPickedEntity++;
-								return;
+								return false;
 							}
 					    });
 					});
@@ -1595,7 +1595,7 @@
 							var tagTemp = getTagPropertyValue(obj, includeAchieve);
 							if(tagTemp != null && tagTemp.length > 0){
 								totalPickedEntity++;
-								return;
+								return false;
 							}
 					    });
 					});

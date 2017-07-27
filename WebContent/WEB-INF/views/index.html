@@ -53,7 +53,7 @@
    
    //Export to Excel 
    function tableToExcel(tableId, fileName) {
-	    var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+	    var tab_text="<table border='2px'><tr>";
 	    var textRange; var j=0;
 	    tab = document.getElementById(tableId); // id of table
 	    
@@ -72,27 +72,29 @@
 		}
 
 	    for(j = 0 ; j < tab.rows.length ; j++) 
-	    {   
-	      var table_cells = tab.rows[j].getElementsByTagName('th');  
-	       for (var i = 0; i < table_cells.length; i++) {
-	        var cell = table_cells[i];
-	        cell.setAttribute("style", "") 
-	       }
-	        /* var table_cells = tab.rows[j].getElementsByTagName('td');  
+	    {  
+	       
+	        var table_cells = tab.rows[j].getElementsByTagName('td');  
 	        for (var i = 0; i < table_cells.length; i++) { 
-		        var cell = table_cells[i];
-	   		if(i==12 || i==17 || i==18 || i==19 || i==20 )
-		   		{
-	   		 if(cell.innerHTML!='0')
-	   		 {cell.setAttribute("style", "mso-number-format:0\.00;");}
-		   		}
-	   		} */
-	   		tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+		     var cell = table_cells[i];
+		   		if(i==15 || i==16 || i==17 || i==18 || i==19  )
+			   	{
+		   		 if(cell.innerHTML!='0')
+		   		 {cell.setAttribute("style", "mso-number-format:0\.00;");}
+			   	}
 	   		}
+	   		var text="";
+	   		if(tableId=="pending_approvals" && j==0)
+	   		text=tab.rows[j].innerHTML.replace(/<th/g,'<th style="background-color: #87AFC6"');
+	   		else
+	   		text=tab.rows[j].innerHTML;
+	   		tab_text=tab_text+text+"</tr>";
+	   	}
 	    tab_text=tab_text+"</table>";
 	    tab_text= tab_text.replace(/<a[^>]*>|<\/a>/g, "");//remove if u want links in your table
 	    tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
 	    tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+	    tab_text= tab_text.replace(/(width: )\d+px;/g, "background-color: #87AFC6");
 	    if (navigator.userAgent.indexOf('Trident')>0 || navigator.userAgent.indexOf('Edge')>0)
 	    {
 	    	var blobObject = new Blob([tab_text]); 

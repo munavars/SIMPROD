@@ -71,7 +71,9 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			}
 			else{
 				
-				int prgrmId=checkForTheDuplicateRecord(programHeader);
+				int prgrmId=0;
+				if(dalProgramDetail.getStatus().getId()!=4)
+				checkForTheDuplicateRecord(programHeader);
 				
 				if(prgrmId!=0)
 				{

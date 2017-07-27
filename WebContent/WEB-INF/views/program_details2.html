@@ -648,7 +648,7 @@
 																<div id="amountdiv">
 																	<label class="control-label" for="amount">Amount</label>&nbsp;&nbsp;
 																	<input id="amount" name="amount" type="text"
-																		class="form-control radio-inline m-bot15" style="width: 120px;"
+																		class="form-control radio-inline m-bot15" style="width: 120px;text-align: right;"
 																		value="">
 																	<div class="radio-inline">
 																		<label class="control-label"
@@ -699,9 +699,10 @@
 														<div class="col-lg-2 col-md-2 col-sm-2">
 															<label class="control-label popovers" data-html="true"
 															 for="btl_inputselect" rel="txtTooltip"
-																data-content="Behind the Line (BTL), for purposes of After the Fact Sales Incentives, indicates if the Dealer/Customer is aware the program accrual exists.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-																-If Dealer/Customer is aware of the program, BTL = NO.
-																-If Dealer/Customer is NOT aware of the program, BTL = YES"
+																data-content="Behind the Line (BTL), for purposes of After the Fact Sales Incentives, indicates if the Dealer/Customer is aware the program accrual exists.
+																<li>If Dealer/Customer is aware of the program, BTL = NO. </li>
+																<li>If Dealer/Customer is NOT aware of the program, BTL = YES. </li>
+																By default BTL is set as No."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
 																data-placement="top" >BTL (Behind The Line)</label> 
@@ -756,7 +757,7 @@
 																	data-placement="top" data-toggle="tooltip" data-trigger="hover">
 																	Estimated Accrual ($)</label>&nbsp;&nbsp;
 																	<input id="estm_accrual" name="estm_accrual" type="text"
-																		class="form-control radio-inline m-bot15" style="width: 120px;"
+																		class="form-control radio-inline m-bot15" style="width: 120px;text-align: right;"
 																		value="">
 																	
 																</div>
@@ -2433,9 +2434,9 @@
                	$('#edit-button').attr('disabled', true);
 				$('#edit-button').addClass("disabled");
 				if(!tbp){
-					$('#glcode_dropdown').attr('disabled', true);					
+					$('#glcode_dropdown').attr('disabled', true);
 				}
-				$('#sapglcode_dropdown').attr('disabled', true);
+					$('#sapglcode_dropdown').attr('disabled', true);
 				$("#cancel-program").html("Cancel");
 				var oTable = $('#tier-schedule').dataTable();
 			    oTable.fnSetColumnVis(4, true);
@@ -2851,7 +2852,7 @@
 				});
 				 */
 				 $('#glcode_dropdown').change(function(){
-					 
+				
 						$('#sapglcode_dropdown').val($('#glcode_dropdown').val());
 				 });
 				
@@ -3031,7 +3032,7 @@
 				else if($('input:radio[name=optionsRadiosDenomination]:checked').val() == '%'){
 					$("#amount").val(convertPercentageFormat($("#amount").val()));
 				}
-				 document.getElementById("amount").setAttribute('style','text-align:right;width: 120px;');
+				document.getElementById("amount").setAttribute('style','text-align:right;width: 120px;');
 			});
 			$("#amount").focusin(function(){
 				 document.getElementById("amount").setAttribute('style','width: 120px;');

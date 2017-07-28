@@ -385,6 +385,7 @@ a { text-decoration: none }
 	
 	function validateInvoiceData(data, message, columnNames){
 		var isValid = false;
+		var invalidRows = "";
 		if(data != null){
 			isValid = true;
        		if(columnNames.length != invoiceDiscountHeader.length){
@@ -395,22 +396,38 @@ a { text-decoration: none }
     		    var condition1 = true;
 	    		var condition2 = true;
 	    		var condition3 = true;
+	    		var counter = 0;
+	    		var rowInvalid = false;
 	        	$.each(data, function (i, row) {
+	        		counter++;
+	        		rowInvalid = false;
 	        		var values = row.values;
 	        		if(isEmpty(values[invoiceDiscountHeader[0]]) || isEmpty(values[invoiceDiscountHeader[1]]) || isEmpty(values[invoiceDiscountHeader[2]]) ){
+	        			rowInvalid = true;
 	        			isValid = false;
 	        			condition1 = false;
 	        		}
 	        		if(isEmpty(values[invoiceDiscountHeader[3]]) && isEmpty(values[invoiceDiscountHeader[4]]) 
 	        			&& isEmpty(values[invoiceDiscountHeader[5]]) && isEmpty(values[invoiceDiscountHeader[6]]) ){
+	        			rowInvalid = true;
 	        			isValid = false;
 	        			condition2 = false;
 	        		}   
-	        		if(isEmpty(values[invoiceDiscountHeader[9]]) && isEmpty(values[invoiceDiscountHeader[10]]) ){        			
+	        		if(isEmpty(values[invoiceDiscountHeader[9]]) && isEmpty(values[invoiceDiscountHeader[10]]) ){
+   						rowInvalid = true;
 	        			isValid = false;
 	        			condition3 = false;
-	        		}   
+	        		}
+	        		if(rowInvalid){
+	        			if(!isEmpty(invalidRows)){
+	        				invalidRows = invalidRows + ", ";
+	        			}
+	        			invalidRows =  invalidRows + counter;
+	        		}
 				});
+				if(!isValid && !isEmpty(invalidRows)){
+					message.error = message.error + " Incorrect data detected on line(s) " + invalidRows + ".<br><br>";
+				}
 				if(condition1 === false){
 					message.error = message.error + " Column values for "+ invoiceDiscountHeader[0] + ", " + invoiceDiscountHeader[1] + " and " + invoiceDiscountHeader[2] + " are mandatory.<br><br>";
 				}

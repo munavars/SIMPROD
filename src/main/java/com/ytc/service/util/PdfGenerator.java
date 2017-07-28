@@ -696,7 +696,8 @@ public class PdfGenerator {
 			for (ListIterator<DalProgramDetailTier> iterator = dalProgramTierList.listIterator(dalProgramTierList.size()); iterator.hasPrevious();) {
 				DalProgramDetailTier dalProgramDetailTier = (DalProgramDetailTier) iterator.previous();
 				if(previousBeginRange == null){
-					endRangeDetailsMap.put(dalProgramDetailTier.getLevel(),  format.format(ProgramConstant.MAX_END_RANGE));
+					/*endRangeDetailsMap.put(dalProgramDetailTier.getLevel(),  format.format(ProgramConstant.MAX_END_RANGE));*/
+					endRangeDetailsMap.put(dalProgramDetailTier.getLevel(),  ProgramConstant.BLANK);
 				}
 				else{
 					endRangeDetailsMap.put(dalProgramDetailTier.getLevel(), format.format(previousBeginRange - 1));

@@ -47,6 +47,9 @@ var EditableTable = function () {
            	 var jqInputs = $('input', nRow);
            	 var beginRange = removeCommaFromAmount(jqInputs[1].value.trim());
            	 var endRange = removeCommaFromAmount(jqTds[3].innerText);
+           	 if(endRange === '' || endRange === null){
+           		endRange = parseInt(99999999);
+           	 }
            	 if(parseInt(beginRange) > parseInt(endRange)){
            		 return false;
            	 }
@@ -81,8 +84,8 @@ var EditableTable = function () {
                 }
                 if(!validateRange(nRow)){
                 	
-                	oTable.fnUpdate('<input type="text" style="width:100%" class="form-control small error" value="' + jqInputs[1].value + '">', nRow, 2, false);
-                	$("#errorMessageModal").html("Invalid value for begin range.");
+                	oTable.fnUpdate('<input type="text" id="tier_range" name="tier_range" style="width:100%" class="form-control small error" value="' + jqInputs[1].value + '">', nRow, 2, false);
+                	$("#errorMessageModal").html("Either entered value is less than or equal to previous row begin range value or greater than "+ convertNumberFormat(99999999));
 					$('#myModal5').modal('toggle');
                 	return false;
                 }
@@ -220,7 +223,7 @@ var EditableTable = function () {
                 
                 
                 var maxTierId = 1;
-                var maxRange = convertNumberFormat(99999999);
+                /*var maxRange = convertNumberFormat(99999999);*/
                 
                 var noRecord = true;
                 
@@ -257,7 +260,7 @@ var EditableTable = function () {
 	                });	
 
 					if(noRecord || ( $("#tier_amount").valid() && $("#tier_range").valid() ) ){
-						var aiNew = oTable.fnAddData([maxTierId, '', '', maxRange,
+						var aiNew = oTable.fnAddData([maxTierId, '', '', '',
 	                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
 		                ]);
 		                var nRow = oTable.fnGetNodes(aiNew[0]);

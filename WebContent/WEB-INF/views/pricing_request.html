@@ -1710,18 +1710,18 @@ a { text-decoration: none }
 				test = $(this).val();
 				if(test == 'Group'){
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.groupList);
-					/* $("#customerGroup").val($("#custByName_inputselect").val()); */
+					$("#custByName_inputselect").valid();
 				}
 				else if(test == 'BillTo'){
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custBillToList);
-					/* $("#customerGroup").val($("#custByName_inputselect").val()); */
+					$("#custByName_inputselect").valid();
 				}
 				else if(test == 'Name'){
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custByNameList);
-					/* $("#customerGroup").val($("#custByName_inputselect").val()); */
+					$("#custByName_inputselect").valid();
 				}	else if(test == 'ShipTo'){
 					fnPopulateDropdown('custByName_inputselect', responseOnload.dropdownList.custShipToList);
-					/* $("#customerGroup").val($("#custByName_inputselect").val()); */
+					$("#custByName_inputselect").valid();
 				}
   			});
   			

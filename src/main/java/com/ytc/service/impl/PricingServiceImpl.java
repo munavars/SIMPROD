@@ -300,42 +300,22 @@ public class PricingServiceImpl implements IPricingService {
 		//String sql="select * from NETDOWN_P where [Bill-To No] in (select PAY_TO from CUSTOMER where ACCOUNT_MANAGER in (:empId))";
 		String sql="";
 		List<String> userIdList = null;
-		boolean isTbpUser = false;
 		if(empId != null){
-			
-			
-			String tbpString = QueryConstant.IS_TBP_USERS;
-			queryParams.put("empId", empId);
-			List<Integer> tbpList = baseDao.getListFromNativeQuery(tbpString, queryParams);
-			if(tbpList != null && tbpList.size() > 0){
-				isTbpUser = true;
+			String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
+			queryParams.clear();
+			queryParams.put("loginId", empId);
+			userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+			if(userIdList.isEmpty()){
+				return pricingDetailList;
 			}
-			
-			if(!isTbpUser){
-				String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
-				queryParams.clear();
-				queryParams.put("loginId", empId);
-				userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
-				if(userIdList.isEmpty()){
-					return pricingDetailList;
-				}
-				queryParams.clear();
-				if("Consumer".equalsIgnoreCase(bu)){
-					sql=QueryConstant.PRICING_LIST_P;
-				}else{
-					sql=QueryConstant.PRICING_LIST_T;
-				}
-				queryParams.put("empId",userIdList);
-				queryParams.put("customerId", customerId);				
+			queryParams.clear();
+			if("Consumer".equalsIgnoreCase(bu)){
+				sql=QueryConstant.PRICING_LIST_P;
+			}else{
+				sql=QueryConstant.PRICING_LIST_T;
 			}
-			else{
-				queryParams.clear();
-				if("Consumer".equalsIgnoreCase(bu)){
-					sql=QueryConstant.TBP_PRICING_LIST_P;
-				}else{
-					sql=QueryConstant.TBP_PRICING_LIST_T;
-				}
-			}
+			queryParams.put("empId",userIdList);
+			queryParams.put("customerId", customerId);				
 			//List<DalNetPricingConsumer> resultList =baseDao.list(DalNetPricingConsumer.class, sql, queryParams);
 			List<Object> resultList =baseDao.getListFromNativeQuery(sql, queryParams);
 			for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {

@@ -64,7 +64,7 @@ public class CustomerService implements ICustomerService {
 			sql = QueryConstant.TBP_CUSTOMER_LIST;
 		}
 		else{
-			String queryString=QueryConstant.EMPLOYEE_HIER_LIST;
+			String queryString=QueryConstant.SIM_EMPLOYEE_HIER_LIST;
 			
 			queryParams.put("loginId", loginId);
 			userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
@@ -258,5 +258,3 @@ public class CustomerService implements ICustomerService {
 		return customer;
 	}
 }
-
-

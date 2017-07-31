@@ -22,15 +22,6 @@ public class ProgramHeader extends Model{
 	private Date createdDate;
 	private String status;
 	
-	private String zoneManagerApprovedBy;
-	private Date zoneManagerApprovedDate;
-	private String directorApprovedBy;
-	private Date directorApprovedDate;
-	private String executiveApprovedBy;
-	private Date executiveApprovedDate;
-	private String tbpApprovedBy;
-	private Date tbpApprovedDate;
-	
 	private BigDecimal accrualAmount;
 	private BigDecimal paidAmount;
 	private BigDecimal balance;
@@ -49,6 +40,7 @@ public class ProgramHeader extends Model{
 	private String contextPath;
 	private String url;
 	private boolean isDuplicate;
+	private String errorMessage;
 	/** For email link*/
 	
 	private ProgramButton programButton = new ProgramButton();
@@ -116,54 +108,7 @@ public class ProgramHeader extends Model{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getZoneManagerApprovedBy() {
-		return zoneManagerApprovedBy;
-	}
-	public void setZoneManagerApprovedBy(String zoneManagerApprovedBy) {
-		this.zoneManagerApprovedBy = zoneManagerApprovedBy;
-	}
-	public Date getZoneManagerApprovedDate() {
-		return zoneManagerApprovedDate;
-	}
-	public void setZoneManagerApprovedDate(Date zoneManagerApprovedDate) {
-		this.zoneManagerApprovedDate = zoneManagerApprovedDate;
-	}
-	public String getDirectorApprovedBy() {
-		return directorApprovedBy;
-	}
-	public void setDirectorApprovedBy(String directorApprovedBy) {
-		this.directorApprovedBy = directorApprovedBy;
-	}
-	public Date getDirectorApprovedDate() {
-		return directorApprovedDate;
-	}
-	public void setDirectorApprovedDate(Date directorApprovedDate) {
-		this.directorApprovedDate = directorApprovedDate;
-	}
-	public String getExecutiveApprovedBy() {
-		return executiveApprovedBy;
-	}
-	public void setExecutiveApprovedBy(String executiveApprovedBy) {
-		this.executiveApprovedBy = executiveApprovedBy;
-	}
-	public Date getExecutiveApprovedDate() {
-		return executiveApprovedDate;
-	}
-	public void setExecutiveApprovedDate(Date executiveApprovedDate) {
-		this.executiveApprovedDate = executiveApprovedDate;
-	}
-	public String getTbpApprovedBy() {
-		return tbpApprovedBy;
-	}
-	public void setTbpApprovedBy(String tbpApprovedBy) {
-		this.tbpApprovedBy = tbpApprovedBy;
-	}
-	public Date getTbpApprovedDate() {
-		return tbpApprovedDate;
-	}
-	public void setTbpApprovedDate(Date tbpApprovedDate) {
-		this.tbpApprovedDate = tbpApprovedDate;
-	}
+
 	public BigDecimal getAccrualAmount() {
 		return accrualAmount;
 	}
@@ -253,5 +198,11 @@ public class ProgramHeader extends Model{
 	}
 	public void setTagItemsMap(Map<Integer, List<Integer>> tagItemsMap) {
 		this.tagItemsMap = tagItemsMap;
+	}
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
 	}
 }

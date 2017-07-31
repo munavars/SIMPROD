@@ -11,16 +11,17 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.comparator.WorkflowStatusComparatorByModifiedDate;
+import com.ytc.common.enums.BusinessUnitDescriptionEnum;
 import com.ytc.common.model.Employee;
 import com.ytc.common.model.ProgramHeader;
 import com.ytc.common.model.ProgramWorkflowMatrixDetail;
 import com.ytc.constant.ProgramConstant;
 import com.ytc.dal.IDataAccessLayer;
 import com.ytc.dal.model.DalEmployee;
-import com.ytc.dal.model.DalEmployeeHierarchy;
 import com.ytc.dal.model.DalProgramDetail;
+import com.ytc.dal.model.DalSimEmployeeHierarchy;
+import com.ytc.dal.model.DalSimWorkflowMatrix;
 import com.ytc.dal.model.DalStatus;
-import com.ytc.dal.model.DalWorkflowMatrix;
 import com.ytc.dal.model.DalWorkflowStatus;
 import com.ytc.helper.ProgramServiceWorkflowHelper;
 import com.ytc.service.IProgramWorkflowService;
@@ -149,13 +150,12 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 		
 		ProgramWorkflowMatrixDetail programWorkflowMatrixDetail = null;
 		Map<String, Object> inputParameters = new HashMap<String, Object>();
-		inputParameters.put("programType", "%"+dalProgramDetail.getDalProgramType().getType() +"%");
-		inputParameters.put("businessUnit", dalProgramDetail.getDalProgramHeader().getBu());
+		inputParameters.put("businessUnit", String.valueOf(BusinessUnitDescriptionEnum.getBUDescription(dalProgramDetail.getDalProgramHeader().getBu())) );
 		
-		List<DalWorkflowMatrix> dalWorkflowMatrixList =  baseDao.getListFromNamedQueryWithParameter("DalWorkflowMatrix.getMatrixForBU", 
+		List<DalSimWorkflowMatrix> dalSimWorkflowMatrixList =  baseDao.getListFromNamedQueryWithParameter("DalSimWorkflowMatrix.getMatrixForBU", 
 																										inputParameters);
 		
-		if(dalWorkflowMatrixList != null && !dalWorkflowMatrixList.isEmpty()){
+		if(dalSimWorkflowMatrixList != null && !dalSimWorkflowMatrixList.isEmpty()){
 			programWorkflowMatrixDetail = new ProgramWorkflowMatrixDetail();
 			Integer employeeId = null;
 			if(dalProgramDetail.getCreatedBy() != null){
@@ -164,44 +164,61 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 			else {
 				employeeId = employee.getEMP_ID();
 			}
-			DalEmployeeHierarchy dalEmployeeHierarchy = baseDao.getEntityById(DalEmployeeHierarchy.class, employeeId);
+			inputParameters.clear();
+			inputParameters.put("empId", String.valueOf( employeeId) );
+			inputParameters.put("businessUnit", String.valueOf(BusinessUnitDescriptionEnum.getBUDescription(dalProgramDetail.getDalProgramHeader().getBu())) );
+			
+			/*Here for sure, there should be a record present in employee hierarchy. */
+			List<DalSimEmployeeHierarchy> dalSimEmployeeHierarchyList = baseDao.getListFromNamedQueryWithParameter("DalSimEmployeeHierarchy.getHierarchyListBasedOnIdAndBU", 
+																											inputParameters);
+			
+			DalSimEmployeeHierarchy dalSimEmployeeHierarchy = dalSimEmployeeHierarchyList.get(0);
 			int currentUserLevel = 0;
 			int userLevel = 0;
 			Integer[] value = null;
-			boolean skipRecord = false;
-			for(DalWorkflowMatrix workflowMatrix : dalWorkflowMatrixList){
-				if(skipRecord && !ProgramConstant.NO_LIMIT.equalsIgnoreCase(workflowMatrix.getDollerLimit())){
+			/*boolean skipRecord = false;*/
+			for(DalSimWorkflowMatrix simWorkflowMatrix : dalSimWorkflowMatrixList){
+				
+				/*if(skipRecord && !ProgramConstant.NO_LIMIT.equalsIgnoreCase(simWorkflowMatrix.getDollarLimit())){
 					continue;
-				}
-				if(!ProgramConstant.NO_LIMIT.equalsIgnoreCase(workflowMatrix.getDollerLimit())){
-					boolean isMatchingApprover = checkDollerLimit(workflowMatrix, dalProgramDetail);
-					if(isMatchingApprover){
-						skipRecord = true;
-					}
-					else{
+				}*/
+				if(!ProgramConstant.NO_LIMIT.equalsIgnoreCase(simWorkflowMatrix.getDollarLimit())){
+					boolean isMatchingApprover = checkDollarLimit(simWorkflowMatrix, dalProgramDetail);
+					if(!isMatchingApprover){
 						continue;
 					}
+					/*else{
+						continue;
+					}*/
 				}
-				else{
+				/*else{
 					skipRecord = false;
-				}
-				userLevel++;
-				if(workflowMatrix.getHierarchyLevel() != null){
+				}*/
+				
+				if(simWorkflowMatrix.getHierarchyLevel() != null){
 					value = new Integer[2]; 
-					Integer currentUserEmployeeId = ProgramServiceWorkflowHelper.getEmployeeIdFromHierachy(dalEmployeeHierarchy, workflowMatrix.getHierarchyLevel());
+					Integer currentUserEmployeeId = ProgramServiceWorkflowHelper.getEmployeeIdFromHierachy(dalSimEmployeeHierarchy, simWorkflowMatrix.getHierarchyLevel());
+					if (employeeId != null && currentUserEmployeeId != null && employeeId.equals(currentUserEmployeeId)){
+						continue;
+					}
+					else if (currentUserEmployeeId == null){
+						continue;
+					}
 					value[0] = currentUserEmployeeId;
-					value[1] = workflowMatrix.getId();
+					value[1] = simWorkflowMatrix.getId();
+					userLevel++;
 					programWorkflowMatrixDetail.getApproverLevelList().put(userLevel, value);
 					if(employee.getEMP_ID().equals(currentUserEmployeeId)){
 						currentUserLevel = userLevel;
 					}
 				}
-				else if(workflowMatrix.getEmpId() != null){
+				else if(simWorkflowMatrix.getEmpId() != null){
 					value = new Integer[2]; 
-					value[0] = workflowMatrix.getEmpId();
-					value[1] = workflowMatrix.getId();
+					value[0] = simWorkflowMatrix.getEmpId();
+					value[1] = simWorkflowMatrix.getId();
+					userLevel++;
 					programWorkflowMatrixDetail.getApproverLevelList().put(userLevel, value);
-					if(employee.getEMP_ID().equals(workflowMatrix.getEmpId())){
+					if(employee.getEMP_ID().equals(simWorkflowMatrix.getEmpId())){
 						currentUserLevel = userLevel;
 					}
 				}
@@ -219,10 +236,10 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 		return programWorkflowMatrixDetail;
 	}
 	
-	private boolean checkDollerLimit(DalWorkflowMatrix workflowMatrix, DalProgramDetail dalProgramDetail) {
+	private boolean checkDollarLimit(DalSimWorkflowMatrix dalSimWorkflowMatrix, DalProgramDetail dalProgramDetail) {
 		boolean isMatching = false;
-		if(workflowMatrix != null && dalProgramDetail != null ){
-			String dollerLimit = workflowMatrix.getDollerLimit();
+		if(dalSimWorkflowMatrix != null && dalProgramDetail != null ){
+			String dollerLimit = dalSimWorkflowMatrix.getDollarLimit();
 			int numericIndex = 0;
 			if(dollerLimit != null){
 				/**
@@ -237,22 +254,49 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 				}
 				String comparisonOperator = dollerLimit.substring(0, numericIndex).trim();
 				BigDecimal amount = new BigDecimal(dollerLimit.substring(numericIndex, dollerLimit.length())); 
-				if(ProgramConstant.OPERATOR_GE.contains(comparisonOperator)){
-					BigDecimal userAmount = new BigDecimal(dalProgramDetail.getAccrualAmount());
+				
+				if(ProgramConstant.OPERATOR_G.equals(comparisonOperator)){
+					BigDecimal userAmount = new BigDecimal(dalProgramDetail.getEstimatedAccrual());
+					if( userAmount.compareTo(amount) > 0){
+						isMatching = true;
+					}
+				}
+				else if(ProgramConstant.OPERATOR_GE.contains(comparisonOperator)){
+					BigDecimal userAmount = new BigDecimal(dalProgramDetail.getEstimatedAccrual());
 					if( userAmount.compareTo(amount) >= 0){
 						isMatching = true;
 					}
 				}
 				else if(ProgramConstant.OPERATOR_LE.contains(comparisonOperator)){
-					BigDecimal userAmount = new BigDecimal(dalProgramDetail.getAccrualAmount());
+					BigDecimal userAmount = new BigDecimal(dalProgramDetail.getEstimatedAccrual());
 					if( userAmount.compareTo(amount) <= 0){
 						isMatching = true;
-					}
+					}					
 				}
 			}
 		}
 		return isMatching;
 	}
+	
+	/*private BigDecimal getPreviousDollarValue(String previousDollarLimitStr){
+		int numericIndex = 0;
+		BigDecimal amount = new BigDecimal(0);
+		if(previousDollarLimitStr != null){
+			*//**
+			 * Since, we have no clue @ what position amount will start, 
+			 * below logic checks for first digit occurrence and based on that, operator and amount is separated. 
+			 *//*
+			for(int i = 0; i < previousDollarLimitStr.length(); i++){
+				if(Character.isDigit(previousDollarLimitStr.charAt(i))){
+					numericIndex = i;
+					break;
+				}
+			}
+			amount = new BigDecimal(previousDollarLimitStr.substring(numericIndex, previousDollarLimitStr.length())); 
+			
+		}
+		return amount;
+	}*/
 
 	/**
 	 * Method is used to sort the DalWorkFlowStatus object based on its modified date.

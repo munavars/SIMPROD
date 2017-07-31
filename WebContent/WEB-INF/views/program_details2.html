@@ -627,7 +627,7 @@
 																
 																<label class="control-label" for="inputSuccess"
 																	data-original-title="Customer Details">
-																	Is this 'Tiered'?</label>
+																	Tiered Program?</label>
 																<div class="radio-inline">
 																	<label class="control-label" for="inputSuccess">
 																		<input type="radio" name="optionsRadiosTier"
@@ -705,7 +705,7 @@
 																By default BTL is set as No."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" >BTL (Behind The Line)</label> 
+																data-placement="top" >Behind The Line (BTL)</label> 
 																<select
 																class="form-control input-sm m-bot15"
 																id="btl_inputselect" name="btl_inputselect">
@@ -781,7 +781,7 @@
 																
 																<div id="glcocde" class="col-lg-4 col-sm-4">
 																<label class="control-label"
-																			for="glcode_dropdown">GL No</label>&nbsp;&nbsp;
+																			for="glcode_dropdown">Legacy GL #</label>&nbsp;&nbsp;
 																			  <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/>  
 																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control radio-inline m-bot15" style="width: 150px;" value="" disabled> -->
 																</div> 
@@ -991,14 +991,19 @@
 																					</tr>
 																					<tr>
 																						<td colspan="6" class="zeroborderstlr text-left"><label
-																							class="control-label" for="inputSuccess">Accrued
-																								Tier</label>&nbsp;&nbsp; <input id="actual_marker"
+																							class="control-label popovers" for="actual_marker"
+																							rel="txtTooltip"
+																							data-content="Please add tier details in below table before entering the accrued tier value."
+																							title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+																							data-toggle="tooltip" data-trigger="hover"
+																							data-placement="top" rows="3" data-html="true">
+																							Accrued	Tier</label>&nbsp;&nbsp; <input id="actual_marker"
 																							name="actual_marker" type="text" size="3"
 																							class="form-control inline-flex" value=""></td>
 																					</tr>
 																					<tr>
 																						<th class="text-center">Tier</th>
-																						<th class="text-center">Amount</th>
+																						<th class="text-center">Accrual Amount</th>
 																						<th class="text-center">Begin Range</th>
 																						<th class="text-center">End Range</th>
 																						<th class="text-center">Edit</th>
@@ -1718,7 +1723,13 @@
 								return ($('#optionsRadiosTierYes').is(':checked'));
 							}
 						} 
-				  	}	
+				  	},
+				  	approveComments:{
+				  		required: true
+				  	},
+				  	rejectionComments:{
+				  		required: true
+				  	}
 				},
 				messages: {
 					required: "This field is required",
@@ -2478,42 +2489,46 @@
 			}
 			
 			function approveProgram(){
-				/**Approve program from here will always carry status as Pending,
-				In service, after checking the approver level from matrix table, this will be
-				changed to Approved if applicable.*/
-				var message = "Data approved successfully !!!";
-         		var idBefore = responseOnload.programDetailList[0].id;
-				responseOnload.status = "2";
-				responseOnload.action = 'approve';
-				responseOnload.url = window.location.href;
-				responseOnload.userComments = $("#approveComments").val();
-				if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
-					responseOnload.programDetailList[0].glCode = '0';	
-				}else{
-					responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+				if($("#approveComments").valid()){
+					/**Approve program from here will always carry status as Pending,
+					In service, after checking the approver level from matrix table, this will be
+					changed to Approved if applicable.*/
+					var message = "Data approved successfully !!!";
+	         		var idBefore = responseOnload.programDetailList[0].id;
+					responseOnload.status = "2";
+					responseOnload.action = 'approve';
+					responseOnload.url = window.location.href;
+					responseOnload.userComments = $("#approveComments").val();
+					if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
+						responseOnload.programDetailList[0].glCode = '0';	
+					}else{
+						responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+					}
+					if($('#tbpCheck').is(":checked")){
+						responseOnload.programDetailList[0].tbpCheck = '1';
+					}
+					else
+					{
+					    responseOnload.programDetailList[0].tbpCheck = '0';
+					}
+					fnCallService(message, idBefore, 'approve');
+					$('#myModal7').modal('toggle');
+					disableFields();				
 				}
-				if($('#tbpCheck').is(":checked")){
-					responseOnload.programDetailList[0].tbpCheck = '1';
-				}
-				else
-				{
-				    responseOnload.programDetailList[0].tbpCheck = '0';
-				}
-				fnCallService(message, idBefore, 'approve');
-				$('#myModal7').modal('toggle');
-				disableFields();
 			}
 			
 			function rejectProgram(){
-				var message = "Data rejected successfully !!!";
-         		var idBefore = responseOnload.programDetailList[0].id;
-				responseOnload.status = "1";
-				responseOnload.action = 'reject';
-				responseOnload.url = window.location.href;
-				responseOnload.userComments = $("#rejectionComments").val();
-				fnCallService(message, idBefore, 'reject');
-				$('#myModal8').modal('toggle');
-				disableFields();
+				if($("#rejectionComments").valid()){
+					var message = "Data rejected successfully !!!";
+	         		var idBefore = responseOnload.programDetailList[0].id;
+					responseOnload.status = "1";
+					responseOnload.action = 'reject';
+					responseOnload.url = window.location.href;
+					responseOnload.userComments = $("#rejectionComments").val();
+					fnCallService(message, idBefore, 'reject');
+					$('#myModal8').modal('toggle');
+					disableFields();				
+				}
 			}
          	function saveDraft(){
          		var message = "Program is saved successfully.";
@@ -2615,10 +2630,10 @@
 			              $("#confirmMessage").html("Program already exists and the previous program id is <strong>"+ idAfter + "</strong>");
 						  $('#myModal4').modal('toggle');
 			            }
-			            /* else if(response.data.success == false && response.data.errorMessage != null){
+			            else if(response.data.success == false && response.data.errorMessage != null){
 				            $("#confirmMessage").html(response.data.errorMessage);
 							$('#myModal4').modal('toggle');
-			            } */
+			            }
 			            else {
 							$("#confirmMessage").html("Issue while saving the data. Please try again after sometime.!!");
 							$('#myModal4').modal('toggle');

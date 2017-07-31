@@ -275,7 +275,7 @@ public class PdfGenerator {
 	         table.addCell(cell1);
 	         
 	         if(ProgramConstant.CALCULATED_PROGRAM_TYPE.equalsIgnoreCase(dalpgm.getDalProgramType().getType())){
-	        	 cell1 = new PdfPCell(new Paragraph("BTL: "+("Y".equalsIgnoreCase(dalpgm.getBTL())?ProgramConstant.YES:ProgramConstant.NO)));
+	        	 cell1 = new PdfPCell(new Paragraph("Behind The Line (BTL): "+("Y".equalsIgnoreCase(dalpgm.getBTL())?ProgramConstant.YES:ProgramConstant.NO)));
 		         cell.setBorderColor(BaseColor.BLACK);
 		         cell1.setPaddingLeft(10);
 		         //cell4.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -368,7 +368,7 @@ public class PdfGenerator {
 		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         table.addCell(cell1);
 		         
-		         cell1 = new PdfPCell(new Paragraph("Is Tiered: "+(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES)));
+		         cell1 = new PdfPCell(new Paragraph("Tiered Program: "+(ProgramConstant.ZERO.equalsIgnoreCase(dalpgm.getIsTiered())?ProgramConstant.NO:ProgramConstant.YES)));
 		         cell1.setBorderColor(BaseColor.BLACK);
 		         cell1.setPaddingLeft(10);
 		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -394,9 +394,9 @@ public class PdfGenerator {
 	         int glcode=0;
 	         if((null!=dalpgm.getGlCode())&&(!"".equalsIgnoreCase(dalpgm.getGlCode()))&&(!"0".equalsIgnoreCase(dalpgm.getGlCode()))){
 	        	 glcode=Integer.parseInt(dalpgm.getGlCode());
-	        	 cell1 = new PdfPCell(new Paragraph("GL No: "+ baseDao.getById(DalGLCode.class,glcode).getGlNo()));
+	        	 cell1 = new PdfPCell(new Paragraph("Legacy GL #: "+ baseDao.getById(DalGLCode.class,glcode).getGlNo()));
 	         }else{
-	        	 cell1 = new PdfPCell(new Paragraph("GL No: "));
+	        	 cell1 = new PdfPCell(new Paragraph("Legacy GL #: "));
 	         }
 	         cell1.setBorderColor(BaseColor.BLACK);
 	         cell1.setPaddingLeft(10);
@@ -604,7 +604,7 @@ public class PdfGenerator {
 		         programScheduleTable.addCell(cell);
 
 		         
-		         cell = new PdfPCell(new Paragraph("AMOUNT"));
+		         cell = new PdfPCell(new Paragraph("ACCRUAL AMOUNT"));
 		         cell.setBorderColor(BaseColor.BLACK);
 		         cell.setPaddingLeft(10);
 		         //cell.setHorizontalAlignment(Element.ALIGN_CENTER);

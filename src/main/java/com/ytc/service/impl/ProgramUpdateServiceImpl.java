@@ -10,6 +10,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ytc.common.enums.BusinessUnitDescriptionEnum;
 import com.ytc.common.model.ProgramAchieveOn;
 import com.ytc.common.model.ProgramDetail;
 import com.ytc.common.model.ProgramHeader;
@@ -26,6 +27,7 @@ import com.ytc.dal.model.DalProgramDetail;
 import com.ytc.dal.model.DalProgramDetailTier;
 import com.ytc.dal.model.DalProgramHeader;
 import com.ytc.dal.model.DalProgramMaster;
+import com.ytc.dal.model.DalSimEmployeeHierarchy;
 import com.ytc.dal.model.DalStatus;
 import com.ytc.dal.model.DalUserComments;
 import com.ytc.dal.model.DalWorkflowStatus;
@@ -91,25 +93,55 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		
 		}
 		else{
+			boolean isValidCreater = checkApprovalData(programHeader);
 			
-			/**Checking for duplicate record based on Customer, Date Range, Amount, Include / Exclude Tags */
-			int prgrmId=checkForTheDuplicateRecord(programHeader);
-			
-			if(prgrmId!=0)
-			{
-				programHeader.setSuccess(true); 
-				programHeader.setDuplicate(true); 
-				programHeader.setId(prgrmId); 
-		    }
-			else
-			{	
-				/** Both Program header and detail id will be generated.*/
-				programCreateService.createProgramDetails(programHeader);
-				programHeader.setDuplicate(false); 
+			if(isValidCreater){
+				/**Checking for duplicate record based on Customer, Date Range, Amount, Include / Exclude Tags */
+				int prgrmId=checkForTheDuplicateRecord(programHeader);
+				
+				if(prgrmId!=0)
+				{
+					programHeader.setSuccess(true); 
+					programHeader.setDuplicate(true); 
+					programHeader.setId(prgrmId); 
+			    }
+				else
+				{	
+					/** Both Program header and detail id will be generated.*/
+					programCreateService.createProgramDetails(programHeader);
+					programHeader.setDuplicate(false); 
+				}
 			}
+			else{
+				programHeader.setSuccess(false); 
+				programHeader.setDuplicate(false);
+			}
+
 		}		
 		
 		return programHeader;
+	}
+
+	private boolean checkApprovalData(ProgramHeader programHeader) {
+		boolean isApprovalDataAvailable = false;
+		if(programHeader != null && serviceContext.getEmployee().getEMP_ID() != null){
+			Map<String, Object> inputParameters = new HashMap<String, Object>();
+			inputParameters.put("empId", String.valueOf( serviceContext.getEmployee().getEMP_ID()) );
+			inputParameters.put("businessUnit", BusinessUnitDescriptionEnum.getBUDescription(programHeader.getBusinessUnit()).toString() );
+			
+			/*Here for sure, there should be a record present in employee hierarchy. */
+			List<DalSimEmployeeHierarchy> dalSimEmployeeHierarchyList = baseDao.getListFromNamedQueryWithParameter("DalSimEmployeeHierarchy.getHierarchyListBasedOnIdAndBU", 
+																											inputParameters);
+			
+			if(dalSimEmployeeHierarchyList != null && dalSimEmployeeHierarchyList.size() > 0){
+				isApprovalDataAvailable = true;
+			}
+			else{
+				programHeader.setErrorMessage(ProgramConstant.PROGRAM_CREATER_ERROR);
+			}
+		}
+		
+		return isApprovalDataAvailable;
 	}
 
 	private void updateProgramDetails(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {

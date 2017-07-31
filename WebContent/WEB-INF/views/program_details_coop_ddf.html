@@ -610,7 +610,7 @@
 															
 															<div class="col-lg-4 col-sm-4">
 																<label class="control-label"
-																			for="glcode_dropdown">GL No</label>
+																			for="glcode_dropdown">Legacy GL #</label>
 																			 <select  id="glcode_dropdown" name="glcode_dropdown" class="form-control input-sm m-bot15" disabled="disabled"/> 
 																			<!--  <input id="glcode_dropdown" name="glcode_dropdown" type="text" class="form-control "  value="" disabled> -->
 															</div>
@@ -1126,7 +1126,13 @@
 					},
 					include: {
 						paidBasedOnValidation: true
-					}
+					},
+					approveComments:{
+				  		required: true
+				  	},
+				  	rejectionComments:{
+				  		required: true
+				  	}
 				},
 				messages: {
 					required: "This field is required",
@@ -1733,37 +1739,41 @@
 			}
 			
 			function approveProgram(){
-				var message = "Data approved successfully !!!";
-         		var idBefore = responseOnload.programDetailList[0].id;
-				responseOnload.status = "2";
-				responseOnload.userComments = $("#approveComments").val();
-				responseOnload.url = window.location.href;
-				if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
-					responseOnload.programDetailList[0].glCode = '0';	
-				}else{
-					responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+				if($("#approveComments").valid()){
+					var message = "Data approved successfully !!!";
+	         		var idBefore = responseOnload.programDetailList[0].id;
+					responseOnload.status = "2";
+					responseOnload.userComments = $("#approveComments").val();
+					responseOnload.url = window.location.href;
+					if(($('#glcode_dropdown').val()=='')||($('#glcode_dropdown').val()==null)){
+						responseOnload.programDetailList[0].glCode = '0';	
+					}else{
+						responseOnload.programDetailList[0].glCode = $('#glcode_dropdown').val();	
+					}
+					if($('#tbpCheck').is(":checked")){
+						responseOnload.programDetailList[0].tbpCheck = '1';
+					}
+					else
+					{
+					    responseOnload.programDetailList[0].tbpCheck = '0';
+					}
+					fnCallService(message, idBefore, 'approve');
+					$('#myModal6').modal('toggle');
+					disableFields();
 				}
-				if($('#tbpCheck').is(":checked")){
-					responseOnload.programDetailList[0].tbpCheck = '1';
-				}
-				else
-				{
-				    responseOnload.programDetailList[0].tbpCheck = '0';
-				}
-				fnCallService(message, idBefore, 'approve');
-				$('#myModal6').modal('toggle');
-				disableFields();
 			}
 			
 			function rejectProgram(){
-				var message = "Data rejected successfully !!!";
-         		var idBefore = responseOnload.programDetailList[0].id;
-				responseOnload.status = "1";
-				responseOnload.url = window.location.href;
-				responseOnload.userComments = $("#rejectionComments").val();
-				fnCallService(message, idBefore, 'reject');
-				$('#myModal7').modal('toggle');
-				disableFields();
+				if($("#rejectionComments").valid()){
+					var message = "Data rejected successfully !!!";
+	         		var idBefore = responseOnload.programDetailList[0].id;
+					responseOnload.status = "1";
+					responseOnload.url = window.location.href;
+					responseOnload.userComments = $("#rejectionComments").val();
+					fnCallService(message, idBefore, 'reject');
+					$('#myModal7').modal('toggle');
+					disableFields();
+				}
 			}
          	function saveDraft(){
          		var message = "Program is saved successfully.";
@@ -1848,10 +1858,10 @@
 			              $("#confirmMessage").html("Program already exists and the previous program id is <strong>"+ idAfter + "</strong>");
 						  $('#myModal4').modal('toggle');
 			            }
-						/* else if(response.data.success == false && response.data.errorMessage != null){
+						else if(response.data.success == false && response.data.errorMessage != null){
 				            $("#confirmMessage").html(response.data.errorMessage);
 							$('#myModal4').modal('toggle');
-			            } */
+			            }
 			            else {
 							$("#confirmMessage").html("Issue while saving the data. Please try again after sometime.!!");
 							$('#myModal4').modal('toggle');

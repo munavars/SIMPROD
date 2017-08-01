@@ -197,6 +197,7 @@ public class PricingWorkflowServiceHelper {
 					programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
 					programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
 					programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
+					programWorkflowStatus.setComments(dalWorkflowStatus.getApprovalComment());
 					
 					pricingHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
 				}
@@ -232,6 +233,7 @@ public class PricingWorkflowServiceHelper {
 				programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
 				programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
 				programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
+				programWorkflowStatus.setComments(dalWorkflowStatus.getApprovalComment());
 				
 				pricingHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
 			}

@@ -366,6 +366,7 @@ public class ProgramServiceHelper {
 					programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
 					programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
 					programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
+					programWorkflowStatus.setComments(dalWorkflowStatus.getApprovalComment());
 					
 					programHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
 				}
@@ -400,6 +401,7 @@ public class ProgramServiceHelper {
 				programWorkflowStatus.setApproverName(ProgramServiceHelper.getName(dalWorkflowStatus.getApprover()));
 				programWorkflowStatus.setApproverRole(dalWorkflowStatus.getApprover().getTITLE().getTitle());
 				programWorkflowStatus.setStatus(dalWorkflowStatus.getApprovalStatus().getType());
+				programWorkflowStatus.setComments(dalWorkflowStatus.getApprovalComment());
 				
 				programHeader.getProgramWorkflowStatusList().add(programWorkflowStatus);
 			}

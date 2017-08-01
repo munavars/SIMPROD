@@ -335,12 +335,14 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 					parameters.remove("customerType", pricingHeader.getCustomerType());
 				}
 				
-				parameters.put("code", pricingHeader.getTermCode());
-				List<DalPricingTermCodes> dalPricingTermCodesList = baseDao.getByType("DalPricingTermCodes.getCode",
-						parameters);
-				for (DalPricingTermCodes dalPricingTermCodes : dalPricingTermCodesList) {
-					dalPricingHeader.setTermCodes(dalPricingTermCodes);
-					parameters.remove("code", pricingHeader.getTermCode());
+				if(pricingHeader.getTermCode() != null && !pricingHeader.getTermCode().isEmpty()){
+					parameters.put("code", pricingHeader.getTermCode());
+					List<DalPricingTermCodes> dalPricingTermCodesList = baseDao.getByType("DalPricingTermCodes.getCode",
+							parameters);
+					for (DalPricingTermCodes dalPricingTermCodes : dalPricingTermCodesList) {
+						dalPricingHeader.setTermCodes(dalPricingTermCodes);
+						parameters.remove("code", pricingHeader.getTermCode());
+					}	
 				}
 				
 				parameters.put("shipRqs", pricingHeader.getShippingReqs());

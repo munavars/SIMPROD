@@ -13,7 +13,7 @@ public class QueryConstant {
 	
 	public static final String PROGRAM_LIST_ALL="select * from PROGRAM_DETAIL where STATUS_ID in (:status) and PGM_END_DATE>(DATEADD(YEAR, -2,SYSDATETIME()))";
 	
-	public static final String CUSTOMER_LIST="select * from PROGRAM_DETAIL where PGM_HDR_ID in (select ID from PROGRAM_HEADER where REQUEST_ID in (:requestId) and STATUS_ID in (1, 2) ) and STATUS_ID in (1, 2) and PGM_END_DATE>(DATEADD(YEAR, -2,SYSDATETIME()))";
+	public static final String CUSTOMER_LIST="select * from PROGRAM_DETAIL where PGM_HDR_ID in (select ID from PROGRAM_HEADER where REQUEST_ID in (:requestId) and STATUS_ID in (1, 2, 3) ) and STATUS_ID in (1, 2, 3) and PGM_END_DATE>(DATEADD(YEAR, -2,SYSDATETIME()))";
 		
 	public static final String PRICING_LIST="select * from PRICING_HEADER where CREATED_BY in (:requestId) and STATUS in (1, 2, 3) ";
 	

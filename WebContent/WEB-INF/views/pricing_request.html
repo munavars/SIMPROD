@@ -386,7 +386,7 @@ a { text-decoration: none }
 	function validateInvoiceData(data, message, columnNames){
 		var isValid = false;
 		var invalidRows = "";
-		if(data != null){
+		if(data != null && data.length > 0){
 			isValid = true;
        		if(columnNames.length != invoiceDiscountHeader.length){
     			message.error = " Column length is not matching. Please upload a valid template."
@@ -1291,6 +1291,7 @@ a { text-decoration: none }
 																		<th class="text-center">Approver Role</th>
 																		<th class="text-center">Action</th>
 																		<th class="text-center">Date</th>
+																		<th class="text-center">Comments</th>
 																	</tr>
 																</thead>
 																<tbody>
@@ -1403,7 +1404,8 @@ a { text-decoration: none }
 							{ "sClass": "text-left" },
 							{ "sClass": "text-left" },
 							{ "sClass": "text-left" },
-							{ "sClass": "center" }
+							{ "sClass": "center" },
+							{ "sClass": "text-left" }
 						]
        });
 	});	
@@ -1417,7 +1419,7 @@ a { text-decoration: none }
 		if(item.approvalDate != null){
 			date = $.datepicker.formatDate( "mm/dd/yy", new Date(item.approvalDate));
 		}
-				table.fnAddData([item.approverName, item.approverRole, item.status, date]);
+				table.fnAddData([item.approverName, item.approverRole, item.status, date, item.comments]);
            });
    		}
    		table.fnDraw();
@@ -1809,28 +1811,32 @@ a { text-decoration: none }
 			var responseOnload = {};
 		
 			function approveProgram(){
-				/**Approve program from here will always carry status as Pending,
-				In service, after checking the approver level from matrix table, this will be
-				changed to Approved if applicable.*/
-				var message = "Data approved successfully !!!";
-         		var idBefore = responseOnload.id;
-				responseOnload.status = "2";
-				responseOnload.url = window.location.href;
-				responseOnload.approverComments = $("#approveComments").val();
-				fnCallService(message, idBefore, 'approve');
-				$('#myModal7').modal('toggle');
-				disableFields();
+				if($('#approveComments').valid()){
+					/**Approve program from here will always carry status as Pending,
+					In service, after checking the approver level from matrix table, this will be
+					changed to Approved if applicable.*/
+					var message = "Data approved successfully !!!";
+	         		var idBefore = responseOnload.id;
+					responseOnload.status = "2";
+					responseOnload.url = window.location.href;
+					responseOnload.approverComments = $("#approveComments").val();
+					fnCallService(message, idBefore, 'approve');
+					$('#myModal7').modal('toggle');
+					disableFields();				
+				}
 			}
 			
 			function rejectProgram(){
-				var message = "Data rejected successfully !!!";
-         		var idBefore = responseOnload.id;
-				responseOnload.status = "1";
-				responseOnload.url = window.location.href;
-				responseOnload.approverComments = $("#rejectionComments").val();
-				fnCallService(message, idBefore, 'reject');
-				$('#myModal8').modal('toggle');
-				disableFields();
+				if($('#rejectionComments').valid()){
+					var message = "Data rejected successfully !!!";
+	         		var idBefore = responseOnload.id;
+					responseOnload.status = "1";
+					responseOnload.url = window.location.href;
+					responseOnload.approverComments = $("#rejectionComments").val();
+					fnCallService(message, idBefore, 'reject');
+					$('#myModal8').modal('toggle');
+					disableFields();
+				}
 			}
 			
 			function saveDraft(){
@@ -2051,7 +2057,12 @@ a { text-decoration: none }
 					Other_Ship_Reqs_inputselect:{
 						required: true
 					},
-					
+					approveComments:{
+						required: true
+					},
+					rejectionComments:{
+						required: true
+					}
 				},
 				messages: {
 					required: "This field is required",

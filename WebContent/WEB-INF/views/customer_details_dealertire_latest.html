@@ -89,7 +89,7 @@ th{
 	     	var table_cells = tab.rows[j].getElementsByTagName('td');  
 	        for (var i = 0; i < table_cells.length; i++) { 
 		     var cell = table_cells[i];
-		   		if(i==15 || i==16 || i==17 || i==18 || i==19  )
+		   		if(i==14 || i==15 || i==16 || i==17 || i==18  )
 			   	{
 		   		 if(cell.innerHTML!='0')
 		   		 {cell.setAttribute("style", "mso-number-format:0\.00;");}
@@ -218,7 +218,7 @@ th{
 		  
 		    columnDefs: [
 
-                { className: "dt-right", "targets": [11,13,14,15,16,17,18] },
+                { className: "dt-right", "targets": [10,12,13,14,15,16,17] },
                 {
                     targets:0,
                     render: function ( data, type, row, meta ) {
@@ -250,7 +250,7 @@ th{
                     }
                 },   
                 {
-                    targets: 19,
+                    targets: 18,
                     visible: false,
                 	searchable: false
                 }
@@ -267,7 +267,7 @@ th{
 	            { data: "paidBasedOn" },
 	            { data: "isTiered" },
 	            { data: "achievedBasedOn" },
-	            { data: "trueUp" },
+	           /*  { data: "trueUp" }, */
 	            { data: "accrualAmount" },
 	            { data: "currentTier" },
 	            { data: "beginRange" },
@@ -286,8 +286,10 @@ th{
 			  	
 		 //Reload datatable on changing program status
 		 
-		 $('#program_status').on('change',function() {
+		 $('#program_status').select2().on('change',function() {
 			 
+			 /* var options = $('#program_status').data('select2').options.options; */
+			 /* $(this).select2('destroy');  */
 			 var opt = $('#program_status option:selected').map(function(i,v) {
 			 		$('#program_status option[value="'+ this.value +'"]').prop('disabled', true);
 				    return this.value;
@@ -300,7 +302,7 @@ th{
 			 	}
 			 });
 			 
-			 $(".js-example-basic-multiple").select2();
+			  $(".js-example-basic-multiple").select2();
 			 
 		  	  var url='/SIM/program/'+custId+'/'+opt;
 		  	  if($(this).val()){
@@ -575,7 +577,7 @@ th{
                                 <th>Paid Based On</th>								
                                 <th>Tiered Program </th>
                                 <th>Achieve Based On</th>
-                                <th>True Up</th>								
+                                <!-- <th>True Up</th>	 -->							
                                 <th>Accrual Amount</th>
                                 <th>Current Tier</th>
 								<th>Begin Range</th>

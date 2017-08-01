@@ -361,7 +361,8 @@ public class PdfGenerator {
 		         cell1.setVerticalAlignment(Element.ALIGN_MIDDLE);
 		         table.addCell(cell1);
 		         
-		         cell1 = new PdfPCell(new Paragraph("Is True Up: "+("Y".equalsIgnoreCase(dalpgm.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO)));
+		         /*cell1 = new PdfPCell(new Paragraph("Is True Up: "+("Y".equalsIgnoreCase(dalpgm.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO)));*/
+		         cell1 = new PdfPCell(new Paragraph(""));
 		         cell1.setBorderColor(BaseColor.BLACK);
 		         cell1.setPaddingLeft(10);
 		         //cell9.setHorizontalAlignment(Element.ALIGN_CENTER);

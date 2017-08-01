@@ -1032,7 +1032,8 @@
  			 $.ajax({ 
   	           	type: "GET",
   	           	dataType: "json",
-  	          		url: '/SIM/accrual/v1/getAccrualDropDown',
+  	            cache: false,
+  	          	url: '/SIM/accrual/v1/getAccrualDropDown',
   	           	success: function(response){
   	           	$("#review_book_inputselect").empty();
   	        	fnPopulateDropdown('review_book_inputselect', response.bookLabelList);
@@ -1085,10 +1086,11 @@
  				    },
  		        	success: function(response){
  			        	table.ajax.url('/SIM/accrual/v1/getBookList').load();
- 			        	if(response=="success"){
+ 			        	if(response=="success"){ 			        		
  			            	message="Data Deleted Successfully";
  			            	$("#confirmMessage").html(message);
- 							$('#myModal1').modal('toggle'); 
+ 							$('#myModal1').modal('toggle');
+ 							refreshBookLabel();
  			        	}else{
  			        		message="Issue occured while processing your request. Please try again later.";		        		
  			        		$("#errorMessageModal").html(message);
@@ -1194,7 +1196,8 @@
 		   $.ajax({ 
 	           	type: "GET",
 	           	dataType: "json",
-	          		url: '/SIM/accrual/v1/getAccrualDropDown',
+	           	cache: false,
+	          	url: '/SIM/accrual/v1/getAccrualDropDown',
 	           	success: function(response){
 	           	fnPopulateDropdown('liable_period_inputselect', response.periodList);	
 	           	fnPopulateDropdown('review_period_inputselect', response.periodList);

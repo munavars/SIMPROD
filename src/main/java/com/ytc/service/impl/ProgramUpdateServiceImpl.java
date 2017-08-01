@@ -67,11 +67,11 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			
 			DalProgramDetail dalProgramDetail = baseDao.getById(DalProgramDetail.class, programHeader.getProgramDetailList().get(0).getId());
 			
-			if(dalProgramDetail != null && !programHeader.isNewProgram()){
+			if(dalProgramDetail != null ){ /*&& !programHeader.isNewProgram()*/
 				/** If control is here, then user is editing the existing program details.*/
 				updateProgramDetails(programHeader, dalProgramDetail);
 			}
-			else{
+			/*else{
 				
 				int prgrmId=0;
 				if(dalProgramDetail.getStatus().getId()!=4)
@@ -85,11 +85,11 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			    }
 				else
 				{	
-					/** Only Program detail id will be generated.*/
+					*//** Only Program detail id will be generated.*//*
 					programCreateService.createProgramDetails(programHeader);
 					programHeader.setDuplicate(false); 
 				}
-			}
+			}*/
 		
 		}
 		else{
@@ -521,7 +521,7 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 			}
 			if(programHeader.isCalculatedProgram() && programDetail.getProgramPaidOn() != null){
 				dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "1" : "0");
-				dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
+				/*dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");*/
 			}
 			
 			/*if(programDetail.getProgramPaidOn() != null){

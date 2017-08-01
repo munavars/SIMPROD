@@ -350,7 +350,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 		
 		if(programHeader.isCalculatedProgram()){
 			dalProgramDet.setIsTiered(programDetail.getProgramPaidOn().getIsTiered() == true ? "1" : "0");
-			dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");
+			/*dalProgramDet.setTrueUp(programDetail.getProgramPaidOn().getIsTrueUp() == true ? "Y" : "N");*/
 			dalProgramDet.setBTL( ("Yes".equals(programDetail.getBTL()) ? "Y" : "N"));
 			dalProgramDet.setPricingType(Integer.valueOf(programDetail.getPricingType()));
 			if(programDetail.getProgramAchieveOn().getAchieveBasedOn() != null){

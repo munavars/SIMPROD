@@ -13,6 +13,7 @@ public class ProgramWorkflowStatus {
 	private String approverRole;
 	private String status;
 	private Date approvalDate;
+	private String comments;
 	
 	public String getApproverName() {
 		return approverName;
@@ -37,5 +38,11 @@ public class ProgramWorkflowStatus {
 	}
 	public void setApprovalDate(Date approvalDate) {
 		this.approvalDate = approvalDate;
+	}
+	public String getComments() {
+		return comments;
+	}
+	public void setComments(String comments) {
+		this.comments = comments;
 	}
 }

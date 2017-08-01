@@ -287,7 +287,7 @@
                                 <th>Paid Based On</th>								
                                 <th>Tiered </th>
                                 <th>Achieve Based On</th>
-                                <th>True Up</th>								
+                                <!-- <th>True Up</th>	 -->							
                                 <th>Accrual Amount</th>
                                 <th>Accrual Type</th>
 								<th>Current Tier</th>
@@ -312,7 +312,7 @@
                               <td></td>
                               <td></td>
                               <td></td>
-                              <td></td>
+                              <!-- <td></td> -->
                               <td></td>
                               <td></td>
                               <td>0</td>
@@ -725,7 +725,7 @@
 															</select>
 														</div>
 													</div>
-															<br>	
+															<!-- <br>	
 																<label
 																	class="control-label popovers" data-html="true" for="optionsRadiosTrueUp" 
 																	data-content="Please choose program is true-up or not."
@@ -746,8 +746,8 @@
 																		id="optionsRadiosTrueUpNo" value="No"
 																		class="radio-inline required m-bot15"> No
 																	</label>
-																</div>
-																<br>
+																</div> 
+																<br>-->
 																
 																 <br>
 																 <div id="estimatedaccrual" >
@@ -1320,6 +1320,7 @@
 																						<th class="text-center">Approver Role</th>
 																						<th class="text-center">Action</th>
 																						<th class="text-center">Date</th>
+																						<th class="text-center">Comments</th>
 																					</tr>
 																				</thead>
 																				<tbody>
@@ -1811,7 +1812,8 @@
 					{ "sClass": "text-left" },
 					{ "sClass": "text-left" },
 					{ "sClass": "text-left" },
-					{ "sClass": "center" }
+					{ "sClass": "center" },
+					{ "sClass": "text-left" },
 				]
 	        });
 		});	
@@ -2074,12 +2076,12 @@
 					$("#amountdiv").show();
                	}
                	
-               	if(response.data.programDetailList[0].programPaidOn.isTrueUp == true){
+               	/* if(response.data.programDetailList[0].programPaidOn.isTrueUp == true){
                		$("#optionsRadiosTrueUpYes").prop('checked', true);
                	}
                	else{
                		$("#optionsRadiosTrueUpNo").prop('checked', true);
-               	}
+               	} */
                	fnPopulatePaidDetails(response);
                	                	
                	/*Program Achieve Based on section*/
@@ -2150,9 +2152,9 @@
                     $tds.eq(7).text($('#paid_basedon_inputselect option:selected').text());
                     $tds.eq(8).text((responseOnload.programDetailList[0].programPaidOn.isTiered==true)?'Yes':'No');
                     $tds.eq(9).text($('#achieve_basedon_inputselect option:selected').text());
-                    $tds.eq(10).text((responseOnload.programDetailList[0].programPaidOn.isTrueUp==true)?'Yes':'No');
-                    $tds.eq(11).text($("#amount").val());
-                    $tds.eq(12).text(responseOnload.programDetailList[0].amountType);
+                   /*  $tds.eq(10).text((responseOnload.programDetailList[0].programPaidOn.isTrueUp==true)?'Yes':'No'); */
+                    $tds.eq(10).text($("#amount").val());
+                    $tds.eq(11).text(responseOnload.programDetailList[0].amountType);
                     $('#tier-schedule tbody').find('tr').each(function(i) {
                     	 var tds = $(this).find('td'),
                          marker = tds.eq(0).text(),
@@ -2160,21 +2162,21 @@
                          range = tds.eq(2).text();
                     	 
                     	 if(marker==responseOnload.programDetailList[0].schdTierMarker){
-                    		 $tds.eq(13).text(responseOnload.programDetailList[0].schdTierMarker);
-                             $tds.eq(14).text(range);
-                             $tds.eq(15).text(amount+responseOnload.programDetailList[0].amountTypeTier); 
+                    		 $tds.eq(12).text(responseOnload.programDetailList[0].schdTierMarker);
+                             $tds.eq(13).text(range);
+                             $tds.eq(14).text(amount+responseOnload.programDetailList[0].amountTypeTier); 
                              if('$'==responseOnload.programDetailList[0].amountTypeTier){
-                            	 $tds.eq(15).text(responseOnload.programDetailList[0].amountTypeTier+amount);  
+                            	 $tds.eq(14).text(responseOnload.programDetailList[0].amountTypeTier+amount);  
                              }
                     	 }
                     });
                    
+                    $tds.eq(15).text(0);
                     $tds.eq(16).text(0);
                     $tds.eq(17).text(0);
                     $tds.eq(18).text(0);
-                    $tds.eq(19).text(0);
-                    $tds.eq(20).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].createdDate)));
-                    $tds.eq(21).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].modifiedDate)));
+                    $tds.eq(19).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].createdDate)));
+                    $tds.eq(20).text($.datepicker.formatDate( "mm/dd/yy", new Date(responseOnload.programDetailList[0].modifiedDate)));
                 });
          	}
          	
@@ -2327,8 +2329,7 @@
          					if(item.approvalDate != null){
          						date = $.datepicker.formatDate( "mm/dd/yy", new Date(item.approvalDate));
          					}
-							table.fnAddData([item.approverName, item.approverRole, item.status, date
-	                    ]);
+							table.fnAddData([item.approverName, item.approverRole, item.status, date, item.comments ]);
 	                });
          		}
          		table.fnDraw();
@@ -2403,12 +2404,12 @@
 				else{
 					responseOnload.programDetailList[0].programPaidOn.isTiered  = false;
 				}
-				if( $('input:radio[name=optionsRadiosTrueUp]:checked').val() == 'Yes'){
+				/* if( $('input:radio[name=optionsRadios]:checked').val() == 'Yes'){
 					responseOnload.programDetailList[0].programPaidOn.isTrueUp = true;
 				}
 				else{
 					responseOnload.programDetailList[0].programPaidOn.isTrueUp = false;
-				}
+				} */
 				
 				responseOnload.programDetailList[0].programPaidOn.includedMap = includePaid;
 				responseOnload.programDetailList[0].programPaidOn.excludedMap = excludePaid;

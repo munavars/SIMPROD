@@ -296,7 +296,7 @@ public class ProgramServiceImpl implements IProgramService {
 		if(programHeader != null && dalProgramDetail != null && dalProgramHeader != null){
 			programPaidOn = programHeader.getProgramDetailList().get(0).getProgramPaidOn();
 			programPaidOn.setIsTiered("0".equals(dalProgramDetail.getIsTiered()) ? false : true);
-			programPaidOn.setIsTrueUp("Y".equals(dalProgramDetail.getTrueUp()) ? true : false);
+			/*programPaidOn.setIsTrueUp("Y".equals(dalProgramDetail.getTrueUp()) ? true : false);*/
 			if(dalProgramDetail.getDalProgramDetPaidList() != null){
 				Map<String, List<String>> includedMap = new HashMap<String, List<String>>();
 				Map<String, List<String>> excludedMap = new HashMap<String, List<String>>();
@@ -805,9 +805,9 @@ public class ProgramServiceImpl implements IProgramService {
 			
 			
 			programDetail.setAccrualType(dalProgramDetail.getAccrualType());
-			if(dalProgramDetail.getTrueUp() != null){
+			/*if(dalProgramDetail.getTrueUp() != null){
 				programDetail.setTrueUp("Y".equalsIgnoreCase(dalProgramDetail.getTrueUp())?ProgramConstant.YES:ProgramConstant.NO);
-			}
+			}*/
 			//programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getActualMarker()));
 			programDetail.setCurrentTier(Integer.toString(dalProgramDetail.getSchdTierMarker()==null?0:dalProgramDetail.getSchdTierMarker()));
 			programDetail.setBeginRange(null!=dalProgramDetail.getPgmDetailTier()?cf.format(dalProgramDetail.getPgmDetailTier().getBeginRange()):ProgramConstant.ZERO);
@@ -929,7 +929,7 @@ public class ProgramServiceImpl implements IProgramService {
 		Map<String, Object> queryParams = new HashMap<>();
 		List<ProgramDetail> pgm=new ArrayList<ProgramDetail>();
 		if(empId==0){
-			pgm=getProgram("0","0,4,3");
+			pgm=getProgram("0","0,4");
 		}else{
 			String queryString = QueryConstant.EMPLOYEE_HIER_LIST;
 			queryParams.put("loginId", empId);

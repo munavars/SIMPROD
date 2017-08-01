@@ -49,6 +49,7 @@
 	    width: 50%;
 	}
 	</style>
+
    <script type="text/javascript">
    
    //Export to Excel 
@@ -221,7 +222,20 @@
 
                       return data;
                   }
-              },   
+              }, 
+              {
+                  targets:1,
+                  render: function ( data, type, row, meta ) {
+                      if(type === 'display' && row.programType == 'Calculated Program'){
+                          data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
+
+                      }
+                      else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
+                      	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
+                      }
+						return data;
+                  }
+              }, 
               {
                   targets:2,
                   render: function ( data, type, row, meta ) {

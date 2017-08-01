@@ -319,7 +319,7 @@ th{
 			 var type=$("#program_type_select option:selected").val();
 			 if(type=='Program Type'){
 				//alert("Kindly choose a Program Type to create new program");
-				$("#errorMessageModal").html("Kindly choose a Program Type to create new program");
+				$("#errorMessageModal").html("Kindly choose a Required Action");
 				$('#myModal1').modal('toggle');
 				return false;
 			}
@@ -538,8 +538,8 @@ th{
                                  <div class="btn-group">
                                   <div class="">
                                                 <select class="form-control input-sm m-bot15 required" id="program_type_select" name="Program Type_inputselect">
-                                                   <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Program Type</option>
-                                                   <option id="program_type_vbs" value="Calculated Program">Calculated Program</option>
+                                                   <option id="program_type_inputselect" selected disabled class="required" value="Program Type">Action Required</option>
+                                                   <option id="program_type_vbs" value="Calculated Program">After The Fact (ATF)</option>
                                                    <option id="program_type_pricing" value="Pricing">Pricing Form</option>
                                                   <!--  <option id="program_type_ddf" value="DDF">DDF</option>
                                                     <option id="program_type_coop" value="COOP">COOP</option> 
@@ -548,7 +548,7 @@ th{
                                           </div>
                               </div>
                                    <div class="btn-group m-left8">
-                                  <a href="/SIM/programDetail?custId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New Program</button></a>
+                                  <a href="/SIM/programDetail?custId=" id="create_new_pgm"><button class="btn btn-default"><i class="fa fa-plus"></i> Create New</button></a>
                               </div>
                               <!-- Pricing form link Start-->
                               <!-- <div class="btn-group m-left8">

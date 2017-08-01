@@ -120,6 +120,8 @@ public class QueryConstant {
 	
 	public static final String CREATE_BOOK_LIST="INSERT INTO BOOK_LIST VALUES(SYSDATETIME(),:user,:booklabel,:bookdate,:bookrecord)";
 	
-	public static final String DELETE_BOOK_LIST="DELETE FROM BOOK_LIST WHERE ID IN (:id);";
+	public static final String DELETE_BOOK_LIST="DELETE FROM BOOK_LIST WHERE ID IN (:id)";
+	
+	public static final String DELETE_ACCURAL_BOOK="DELETE FROM ACCRUAL_DATA_BOOK WHERE BOOK_ID IN (:id)";
 	
 }

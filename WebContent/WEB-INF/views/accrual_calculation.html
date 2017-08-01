@@ -8,38 +8,95 @@
       <meta name="keyword" content="YMPACT">
       <title>Accrual Calculation</title>
       
-      
-            
-      <!-- Bootstrap core CSS -->
-      <link href="resources/css/bootstrap.min.css" rel="stylesheet">
-      <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
-
-      <!--external css-->
-      <link href="resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
-      <link rel="stylesheet" href="resources/assets/data-tables/DT_bootstrap.css" />
-      <!--Date Picker--> 
+                  
+<!-- Bootstrap core CSS -->
+         <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
+       
+          <!--Date Picker--> 
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datepicker/css/datepicker.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/jquery-multi-select/css/multi-select.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-timepicker/compiled/timepicker.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-colorpicker/css/colorpicker.css" />
       <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datetimepicker/css/datetimepicker.css" />
-      <!--bootstrap switcher-->
-      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-switch/static/stylesheets/bootstrap-switch.css" />
-      <!--select 2-->
-      <link rel="stylesheet" type="text/css" href="resources/assets/select2/css/select2.min.css"/>
+      
+    <!--external css-->
+    <link href="resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link rel="stylesheet" href="resources/assets/data-tables/DT_bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="resources/assets/jquery-multi-select/css/multi-select.css" />
+
+
       <!--right slidebar-->
       <link href="resources/css/slidebars.css" rel="stylesheet">
-       <!--Form Wizard-->
-      <link rel="stylesheet" type="text/css" href="resources/css/jquery.steps.css" />
-      <!-- Custom styles for this template -->
-      <link href="resources/css/style.css" rel="stylesheet">
-      <link href="resources/css/style-responsive.css" rel="stylesheet" />
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+    <!-- Custom styles for this template -->
+    <link href="resources/css/style.css" rel="stylesheet">
+    <link href="resources/css/style-responsive.css" rel="stylesheet" />
+    <link href="resources/css/status_icons.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 	<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
 	
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+            
+ <!--      Bootstrap core CSS
+      <link href="resources/css/bootstrap.min.css" rel="stylesheet">
+      <link href="resources/css/bootstrap-reset.css" rel="stylesheet">
+
+      external css
+      <link href="resources/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+      <link rel="stylesheet" href="resources/assets/data-tables/DT_bootstrap.css" />
+      Date Picker 
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datepicker/css/datepicker.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/jquery-multi-select/css/multi-select.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-timepicker/compiled/timepicker.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-colorpicker/css/colorpicker.css" />
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-datetimepicker/css/datetimepicker.css" />
+      bootstrap switcher
+      <link rel="stylesheet" type="text/css" href="resources/assets/bootstrap-switch/static/stylesheets/bootstrap-switch.css" />
+      select 2
+      <link rel="stylesheet" type="text/css" href="resources/assets/select2/css/select2.min.css"/>
+      right slidebar
+      <link href="resources/css/slidebars.css" rel="stylesheet">
+       Form Wizard
+      <link rel="stylesheet" type="text/css" href="resources/css/jquery.steps.css" />
+      Custom styles for this template
+      <link href="resources/css/style.css" rel="stylesheet">
+      <link href="resources/css/style-responsive.css" rel="stylesheet" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+	<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css"> -->
+		<style>
+	 td,th {
+	  white-space:nowrap;
+	}
+	th{
+		text-align: center;
+	}
+	.dataTables_wrapper .dataTables_filter {
+	    width: 50%;
+	}
+.loader {
+  display: none;
+  background-color: #EEE;
+  position: absolute;
+  top: 0; left: 0;
+  bottom: 0; right: 0;
+  opacity: 0.8;
+}
+ .loader img {
+  position: absolute;
+  top: 50%;
+  margin-top: -20px;
+  left: 50%;
+  margin-left: -20px;
+}
+	</style>
    </head>
    <body>
       <section id="container" class="sidebar-closed">
@@ -124,18 +181,19 @@
                      <span>My Dashboard</span>
                      </a>
                   </li>
+                   <li>
+                      <a class="active" href="accrual">
+                              <i class="fa fa-tasks"></i>
+                              <span>Accrual Calculation</span>
+                      </a>
+                  </li>
                   <li>
                       <a class="" href="ccm">
                               <i class="fa fa-tasks"></i>
                               <span>CCM</span>
                       </a>
                   </li>
-                  <li>
-                      <a class="active" href="accrual">
-                              <i class="fa fa-tasks"></i>
-                              <span>Accrual</span>
-                      </a>
-                  </li>
+                 
                  <!--  <li>
                      <a id="create-program" class="" href="program_details2.html">
                      <i class="fa fa-tasks"></i>
@@ -363,11 +421,77 @@
 											<!-- Start ROW 8 -->
 											<div class="clearfix"></div>
 											<div class="clearfix"></div>
-																							<div class="modal fade" id="myModal1" tabindex="-1"
+														
+														
+														<div class="modal fade" id="booklistdiv" tabindex="-1"
+															role="dialog" aria-labelledby="myModalLabel"
+															aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+															<div class="modal-dialog">
+																<div class="modal-content" style="width:900px">
+																	<div class="modal-header">
+																		<button id="program-error-modal-close" type="button"
+																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																		<h4 class="modal-title">Accrual Book List </h4>
+																	</div>
+																	<div class="modal-body">
+																		<!-- <div class="space15">&nbsp;</div> -->
+																		<div class="text-center">
+																			<span id="bookcontent"></span>
+																			
+																			<table class="table table-striped table-hover table-bordered" id="booklist">
+																			<thead>
+																			<tr class="rowvis" style="background-color: #cacbce;">
+																			<th>Book Label</th>
+														                    <th>Book Date</th>
+																			<th>Book Of Record</th>
+																			<th>Create Date</th>
+														                    <th>Create By</th>
+														                    <th>Action</th>
+																			</tr>
+																			</thead>
+																			
+													                              <tbody>
+													                                                       
+													                              </tbody>
+													                      </table> 
+													                      
+																		<div class="modal-content">
+																							<div class="modal-footer">
+																								 <!-- <a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
+																									id="program-save-modal-cancel" type="button">Delete Marked</button></a> -->
+																								 <button class="btn btn-info" style="float:left" type="button"
+																									id="program-error-modal-ok" data-toggle="modal"
+																									href="#booklistdiv">
+																									<!-- <i class="fa fa-save"> --></i>&nbsp;&nbsp;Close
+																								</button>
+																								 <button
+																										class="btn btn-info" id="program-save-modal-ok"
+																										type="button" onclick="deleteBookList();">
+																										<!-- <i class="fa fa-save"></i> -->&nbsp;&nbsp; Delete Marked Records
+																									</button>  
+																							</div>
+																						</div>
+													                      
+																			
+																			
+																		</div>
+																		<!-- <div class="space15"></div> -->
+																	</div>
+																	<!-- <div class="modal-footer">
+																		<button class="btn btn-info" type="button"
+																			id="program-error-modal-ok" data-toggle="modal"
+																			href="#booklistdiv">
+																			<i class="fa fa-save"></i>&nbsp;&nbsp;Close
+																		</button>
+																	</div> -->
+																</div>
+															</div>
+														</div>
+														<div class="modal fade" id="myModal1" tabindex="-1"
 															role="dialog" aria-labelledby="myModalLabel"
 															aria-hidden="true">
 															<div class="modal-dialog">
-																<div class="modal-content">
+																<div class="modal-content" style="border: thin solid grey">
 																	<div class="modal-header">
 																		<button id="program-confirmation-modal-close"
 																			type="button" class="close" data-dismiss="modal"
@@ -394,9 +518,9 @@
 														
 														<div class="modal fade" id="myModal2" tabindex="-1"
 															role="dialog" aria-labelledby="myModalLabel"
-															aria-hidden="true">
+															aria-hidden="true" >
 															<div class="modal-dialog">
-																<div class="modal-content">
+																<div class="modal-content" style="border: thin solid grey">
 																	<div class="modal-header">
 																		<button id="program-error-modal-close" type="button"
 																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -420,68 +544,12 @@
 															</div>
 														</div>
 														
-														<div class="modal fade" id="booklistdiv" tabindex="-1"
-															role="dialog" aria-labelledby="myModalLabel"
-															aria-hidden="true">
-															<div class="modal-dialog">
-																<div class="modal-content" style="width:800px">
-																	<div class="modal-header">
-																		<button id="program-error-modal-close" type="button"
-																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-																		<h4 class="modal-title">Accrual Book List </h4>
-																	</div>
-																	<div class="modal-body">
-																		<!-- <div class="space15">&nbsp;</div> -->
-																		<div class="text-center">
-																			<span id="bookcontent"></span>
-																			
-																			<table class="table table-striped table-hover table-bordered" id="booklist">
-																			<thead>
-																			<tr class="rowvis" style="background-color: #cacbce;">
-																			<th>Book Label</th>
-														                    <th>Book Date</th>
-																			<th>Book Of Record</th>
-																			<th>Create Date</th>
-														                    <th>Create By</th>
-														                    <th>Delete</th>
-																			</tr>
-																			</thead>
-																			
-													                              <tbody>
-													                                                       
-													                              </tbody>
-													                      </table> 
-													                      
-																		<div class="modal-content">
-																							<div class="modal-footer">
-																								 <!-- <a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
-																									id="program-save-modal-cancel" type="button">Delete Marked</button></a> -->
-																								 <button
-																										class="btn btn-info" id="program-save-modal-ok"
-																										type="button" onclick="deleteBookList();">
-																										<!-- <i class="fa fa-save"></i> -->&nbsp;&nbsp; Delete Marked Records
-																									</button>  
-																							</div>
-																						</div>
-													                      
-																			
-																			
-																		</div>
-																		<!-- <div class="space15"></div> -->
-																	</div>
-																	<div class="modal-footer">
-																		<button class="btn btn-info" type="button"
-																			id="program-error-modal-ok" data-toggle="modal"
-																			href="#booklistdiv">
-																			<!-- <i class="fa fa-save"></i> -->&nbsp;&nbsp;Close
-																		</button>
-																	</div>
-																</div>
-															</div>
-														</div>
+														
+														
 											<!-- END ROW 8 -->
-											
-											
+	<div class="loader">
+    <img src="resources/img/Processing.gif">
+  </div>
 											</div>
 											</section>
       <!---- END Review / Confirm Section -->
@@ -636,19 +704,34 @@
                		contentType: 'application/json',
                		dataType: "text",
         			data: JSON.stringify(liablePeriod),
-                	success: function(response){
-        	        	if(response=="success"){
-        	            	/* message="Data Submitted Successfully";
-        	            	$("#confirmMessage").html(message);
-        					$('#myModal1').modal('toggle'); */
-        	        	}else{
-        	        		/* message="Issue occured while processing your request. Please try again later.";		        		
-        	        		$("#errorMessageModal").html(message);
-        					$('#myModal2').modal('toggle'); */
-        	        	}
-                	},
+        			beforeSend: function(){
+        				  $('.loader').show();
+ 				    },
+ 				    complete: function(){
+ 				    	 $('.loader').hide();
+ 				    },
+ 				   success: function(response){
+         	        	if(response=="success"){
+         	        		message="Data Submitted Successfully";
+       	            	$("#confirmMessage").html(message);
+       					$('#myModal1').modal('toggle');
+       	        	}else{
+       	        		message="Issue occured while processing your request. Please try again later.";		        		
+       	        		$("#errorMessageModal").html(message);
+       					$('#myModal2').modal('toggle');
+
+         	        	}
+                 	},
+                 	beforeSend: function(){
+     				  $('.loader').show();
+				    },
+				    complete: function(){
+				    	 $('.loader').hide();
+				    },
                 	failure: function(response){
-                		alert("Wrongly done");
+                		message="Issue occured while processing your request. Please try again later.";		        		
+       	        		$("#errorMessageModal").html(message);
+       					$('#myModal2').modal('toggle');
                 	}});
          }
          
@@ -662,15 +745,28 @@
                 		contentType: 'application/json',
                 		dataType: "text",
          			data: JSON.stringify(liablePeriod),
-                 	success: function(response){
-         	        	if(response=="success"){
+         			success: function(response){
+          	        	if(response=="success"){
+          	        		message="Data Submitted Successfully";
+        	            	$("#confirmMessage").html(message);
+        					$('#myModal1').modal('toggle');
+        	        	}else{
+        	        		message="Issue occured while processing your request. Please try again later.";		        		
+        	        		$("#errorMessageModal").html(message);
+        					$('#myModal2').modal('toggle');
 
-         	        	}else{
-
-         	        	}
-                 	},
+          	        	}
+                  	},
+                  	beforeSend: function(){
+      				  $('.loader').show();
+				    },
+				    complete: function(){
+				    	 $('.loader').hide();
+				    },
                  	failure: function(response){
-                 		alert("Wrongly done");
+                 		message="Issue occured while processing your request. Please try again later.";		        		
+       	        		$("#errorMessageModal").html(message);
+       					$('#myModal2').modal('toggle');
                  	}});
           }
          
@@ -686,13 +782,26 @@
           			data: JSON.stringify(liablePeriod),
                   	success: function(response){
           	        	if(response=="success"){
-
-          	        	}else{
+          	        		message="Data Submitted Successfully";
+        	            	$("#confirmMessage").html(message);
+        					$('#myModal1').modal('toggle');
+        	        	}else{
+        	        		message="Issue occured while processing your request. Please try again later.";		        		
+        	        		$("#errorMessageModal").html(message);
+        					$('#myModal2').modal('toggle');
 
           	        	}
                   	},
+                  	beforeSend: function(){
+      				  $('.loader').show();
+				    },
+				    complete: function(){
+				    	 $('.loader').hide();
+				    },
                   	failure: function(response){
-                  		alert("Wrongly done");
+                  		message="Issue occured while processing your request. Please try again later.";		        		
+       	        		$("#errorMessageModal").html(message);
+       					$('#myModal2').modal('toggle');
                   	}});
            }
          
@@ -705,15 +814,28 @@
                   		contentType: 'application/json',
                   		dataType: "text",
            			//data: JSON.stringify(liablePeriod),
-                   	success: function(response){
-           	        	if(response=="success"){
+                  		success: function(response){
+              	        	if(response=="success"){
+              	        		message="Data Submitted Successfully";
+            	            	$("#confirmMessage").html(message);
+            					$('#myModal1').modal('toggle');
+            	        	}else{
+            	        		message="Issue occured while processing your request. Please try again later.";		        		
+            	        		$("#errorMessageModal").html(message);
+            					$('#myModal2').modal('toggle');
 
-           	        	}else{
-
-           	        	}
-                   	},
+              	        	}
+                      	},
+                      	beforeSend: function(){
+          				  $('.loader').show();
+    				    },
+    				    complete: function(){
+    				    	 $('.loader').hide();
+    				    },
                    	failure: function(response){
-                   		alert("Wrongly done");
+                   		message="Issue occured while processing your request. Please try again later.";		        		
+       	        		$("#errorMessageModal").html(message);
+       					$('#myModal2').modal('toggle');
                    	}});
             }
          
@@ -727,15 +849,28 @@
                    		contentType: 'application/json',
                    		dataType: "text",
             			data: JSON.stringify(liablePeriod),
-                    	success: function(response){
-            	        	if(response=="success"){
-
+            			success: function(response){
+              	        	if(response=="success"){
+              	        		message="Data Submitted Successfully";
+            	            	$("#confirmMessage").html(message);
+            					$('#myModal1').modal('toggle');
             	        	}else{
+            	        		message="Issue occured while processing your request. Please try again later.";		        		
+            	        		$("#errorMessageModal").html(message);
+            					$('#myModal2').modal('toggle');
 
-            	        	}
-                    	},
+              	        	}
+                      	},
+                      	beforeSend: function(){
+          				  $('.loader').show();
+    				    },
+    				    complete: function(){
+    				    	 $('.loader').hide();
+    				    },
                     	failure: function(response){
-                    		alert("Wrongly done");
+                    		message="Issue occured while processing your request. Please try again later.";		        		
+           	        		$("#errorMessageModal").html(message);
+           					$('#myModal2').modal('toggle');
                     	}});
              }
          
@@ -748,15 +883,28 @@
                 		contentType: 'application/json',
                 		dataType: "text",
          			//data: JSON.stringify(liablePeriod),
-                 	success: function(response){
-         	        	if(response=="success"){
+                		success: function(response){
+              	        	if(response=="success"){
+              	        		message="Data Submitted Successfully";
+            	            	$("#confirmMessage").html(message);
+            					$('#myModal1').modal('toggle');
+            	        	}else{
+            	        		message="Issue occured while processing your request. Please try again later.";		        		
+            	        		$("#errorMessageModal").html(message);
+            					$('#myModal2').modal('toggle');
 
-         	        	}else{
-
-         	        	}
-                 	},
+              	        	}
+                      	},
+                      	beforeSend: function(){
+          				  $('.loader').show();
+    				    },
+    				    complete: function(){
+    				    	 $('.loader').hide();
+    				    },
                  	failure: function(response){
-                 		alert("Wrongly done");
+                 		message="Issue occured while processing your request. Please try again later.";		        		
+       	        		$("#errorMessageModal").html(message);
+       					$('#myModal2').modal('toggle');
                  	}});
           }
          
@@ -770,15 +918,28 @@
                  		contentType: 'application/json',
                  		dataType: "text",
           			data: JSON.stringify(liablePeriod),
-                  	success: function(response){
+          			success: function(response){
           	        	if(response=="success"){
-
-          	        	}else{
+          	        		message="Data Submitted Successfully";
+        	            	$("#confirmMessage").html(message);
+        					$('#myModal1').modal('toggle');
+        	        	}else{
+        	        		message="Issue occured while processing your request. Please try again later.";		        		
+        	        		$("#errorMessageModal").html(message);
+        					$('#myModal2').modal('toggle');
 
           	        	}
                   	},
+                  	beforeSend: function(){
+      				  $('.loader').show();
+				    },
+				    complete: function(){
+				    	 $('.loader').hide();
+				    },
                   	failure: function(response){
-                  		alert("Wrongly done");
+                  		message="Issue occured while processing your request. Please try again later.";		        		
+       	        		$("#errorMessageModal").html(message);
+       					$('#myModal2').modal('toggle');
                   	}});
            }
          
@@ -795,7 +956,7 @@
 					});
 	         	}
 			 //code to select the default value in period dropdown
-	         	if((elementId=='liable_period_inputselect')||(elementId=='review_period_inputselect')){
+	         	if((elementId=='liable_period_inputselect')||(elementId=='review_period_inputselect')||(elementId=='accrual_period_inputselect')){
 					var currentDate=new Date();
 	      			var currentMonth=currentDate.getMonth().toString();
 	      			var currentYear=currentDate.getFullYear();
@@ -809,12 +970,12 @@
 	      			period=currentYear+''+currentMonth+'01';
 	      			$('#liable_period_inputselect').val(period);
 	      			$('#review_period_inputselect').val(period);
+	      			$('#accrual_period_inputselect').val(period);
 	      		}
 	         	
 			}
  		 
  		function createBookList(){
-
  			 if(($('#booklabelnew').val()=='')||($('#bookdatenew').val()=='')){
  				 message="Kindly enter the Book Label and Book Date.";		        		
  		 		 $("#errorMessageModal").html(message);
@@ -839,25 +1000,31 @@
  		       		dataType: "text",
  					data: JSON.stringify(dalBookList),
  		        	success: function(response){
- 			        	table.ajax.url('/SIM/accrual/v1/getBookList').load();
  			        	if(response=="success"){
- 			            	/* message="Data Saved Successfully";
+ 	 			        	table.ajax.url('/SIM/accrual/v1/getBookList').load();
+ 			            	message="Data Saved Successfully";
  			            	$("#confirmMessage").html(message);
- 							$('#myModal1').modal('toggle'); */
+ 							$('#myModal1').modal('toggle');
  							refreshBookLabel();
+ 							$('#booklistdiv').modal('toggle');
+ 							
+ 			        	}else if(response=="duplicate"){
+ 			        		message="The Book Label "+dalBookList.bookLabel+" is already present. Kindly choose a different Label";		        		
+ 			        		$("#errorMessageModal").html(message);
+ 							$('#myModal2').modal('toggle');
+ 							
  			        	}else{
  			        		message="Issue occured while processing your request. Please try again later.";		        		
  			        		$("#errorMessageModal").html(message);
  							$('#myModal2').modal('toggle');
  			        	}
- 			             
  					
  		        	},
  		        	failure: function(response){
- 		        		alert("Wrongly done");
- 		        	}});
- 			 
- 			 
+ 		        		message="Issue occured while processing your request. Please try again later.";		        		
+			        		$("#errorMessageModal").html(message);
+							$('#myModal2').modal('toggle');
+ 		        	}}); 				 
  		 }
  		 
  		function refreshBookLabel(){
@@ -869,6 +1036,10 @@
   	           	success: function(response){
   	           	$("#review_book_inputselect").empty();
   	        	fnPopulateDropdown('review_book_inputselect', response.bookLabelList);
+  	        	$("#pytd_book_inputselect").empty();
+  	        	fnPopulateDropdown('pytd_book_inputselect', response.bookLabelList);
+  	        	$("#cytd_book_inputselect").empty();
+  	        	fnPopulateDropdown('cytd_book_inputselect', response.bookLabelList);
   	           	},
   	           	failure: function(response){
   	           		alert("Wrongly done");
@@ -908,12 +1079,16 @@
  		       		contentType: 'application/json',
  		       		dataType: "text",
  					data: JSON.stringify(deleteList),
+ 					beforeSend: function(){
+ 				    },
+ 				    complete: function(){
+ 				    },
  		        	success: function(response){
  			        	table.ajax.url('/SIM/accrual/v1/getBookList').load();
  			        	if(response=="success"){
- 			            	/* message="Data Deleted Successfully";
+ 			            	message="Data Deleted Successfully";
  			            	$("#confirmMessage").html(message);
- 							$('#myModal1').modal('toggle'); */
+ 							$('#myModal1').modal('toggle'); 
  			        	}else{
  			        		message="Issue occured while processing your request. Please try again later.";		        		
  			        		$("#errorMessageModal").html(message);
@@ -935,6 +1110,7 @@
 	
 		 $(document).ready(function() {
 			 
+	 
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
@@ -942,6 +1118,8 @@
 		   	{
 		   		openSidebar();
 			}
+		   
+		  
 		   
 		   $('#booklist th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
     	   
@@ -961,7 +1139,7 @@
 		    
 			    columns: [	
 					
-			    	{ data: "bookLabel" },
+			    	{ data: "bookLabel",className:"dt-left" },
 		            { data: "bookDate" },
 		            { data: "bookRecord", 
 		            	orderable: false,
@@ -982,14 +1160,15 @@
 	                }          
 		            },
 		            { data: "createdDate"},
-		            { data: "createdUser" },
+		            { data: "createdUser", className:"dt-left"},
 		            { data: "delete", 
 		            	orderable: false,
 		            	className:"center",
 		            	render: function ( data, type, row, meta ) {
 	                    if(type === 'display'){	                        
 							if(data=='add'){
-								data='<a href="#" onclick="createBookList();"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Create</button></a';
+								//data='<button data-dismiss="modal" class="btn btn-default" id="add" type="button" onclick="createBookList();">Create</button>';
+								data='<button class="btn btn-info" id="add"	type="button" onclick="createBookList();">Create</button>'; 
 							}else{
 			                   data = '<input type="checkbox" id="delete'+meta.row+'" value="" data-id='+row.id+' onchange="populateDeleteList(this)">'; 
 							}
@@ -1037,6 +1216,8 @@
 		  /*  $('#datetable td').attr('style', 'line-height: 1 !important;width:30%'); */
 		     $('#accrual_period_inputselect').change(function(){
 		    	 $('#liable_period_inputselect').val($('#accrual_period_inputselect').val());
+		    	 $('#review_period_inputselect').val($('#accrual_period_inputselect').val());
+		    	 
 			 });
 		   
 		   $('#calculate').change(function(){

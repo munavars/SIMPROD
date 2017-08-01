@@ -1,7 +1,6 @@
 package com.ytc.service.impl;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -32,11 +31,19 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 	protected EntityManager entityManager;
 
 	@Override
-	public void calculateLiability(Integer periodId) {
+	public String calculateLiability(Integer periodId) {
+		String status="fail";
+		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_00_CalculateAccural");
 		query.registerStoredProcedureParameter("PARAM_PERIOD_ID", Integer.class, ParameterMode.IN);
 		query.setParameter("PARAM_PERIOD_ID", periodId);
 		query.execute();		
+		status="success";
+		}catch (Exception e){
+			System.out.println("Exception occured in calculateLiability"+e.getMessage());
+		}
+
+		return status;
 	}
 	
 	public AccrualDropDown getAccrualDropDown(){
@@ -121,7 +128,14 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		String status="fail";
 		String sql=QueryConstant.CREATE_BOOK_LIST;	
 		try{
-		Map<String, Object> queryParams = new HashMap<>();			
+						
+		Map<String, Object> queryParams = new HashMap<>();		
+		queryParams.put("book",dalBookList.getBookLabel());
+		List<DalBookList> dalBokList =  baseDao.getListFromNamedQueryWithParameter("DalBookList.getAllDetailsForLabel", queryParams);
+		if(!dalBokList.isEmpty()){
+			return "duplicate";
+		}
+		queryParams = new HashMap<>();
 		queryParams.put("user",dalBookList.getCreatedUser());
 		queryParams.put("booklabel",dalBookList.getBookLabel());
 		queryParams.put("bookdate",dalBookList.getBookDate());
@@ -141,25 +155,48 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		Map<String, Object> queryParams = new HashMap<>();			
 		queryParams.put("id",bookIdList);
 		baseDao.updateNative(sql, queryParams);		
+		status=deleteAccrualDataBook(bookIdList);
+		}catch(Exception e){
+			System.out.println("Exception occured in deleteBookList"+e.getMessage());
+		}
+		return status;
+	}
+	
+	public String deleteAccrualDataBook(List<Integer> bookIdList){
+		String status="fail";
+		String sql=QueryConstant.DELETE_ACCURAL_BOOK;	
+		try{
+		Map<String, Object> queryParams = new HashMap<>();			
+		queryParams.put("id",bookIdList);
+		baseDao.updateNative(sql, queryParams);		
 		status="success";
 		}catch(Exception e){
-			System.out.println("exception occured in deleteBookList"+e.getMessage());
+			System.out.println("Exception occured in deleteAccrualDataBook"+e.getMessage());
 		}
 		return status;
 	}
 	
 	@Override
-	public void reviewedLiabilityCCM(Integer periodId) {
+	public String reviewedLiabilityCCM(Integer periodId) {
+		String status="fail";
+		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToCCM");
 		query.registerStoredProcedureParameter("PARAM_PERIOD_ID", Integer.class, ParameterMode.IN);
 		query.setParameter("PARAM_PERIOD_ID", periodId);
 		query.execute();	
+		status="success";
+		}catch (Exception e){
+			System.out.println("Exception occured in reviewedLiabilityCCM"+e.getMessage());
+		}
+
+		return status;
 		
 	}
 	
 	@Override
-	public void reviewedLiabilityBook(String bookLabel) {
-		Map<String, Object> queryParams = new HashMap<>();			
+	public String reviewedLiabilityBook(String bookLabel) {
+		String status="fail";
+		/*Map<String, Object> queryParams = new HashMap<>();			
 		queryParams.put("book",bookLabel);
 		List<DalBookList> dalBookList =  baseDao.getListFromNamedQueryWithParameter("DalBookList.getAllDetailsForLabel", queryParams);
 		if(!dalBookList.isEmpty()){
@@ -174,36 +211,76 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		query.setParameter("PARAM_BOOK_OF_RECORD", book.getBookRecord());
 		query.setParameter("PARAM_CREATED_BY", book.getCreatedUser());
 		query.execute();	
+		}*/
+		try{
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToBook");
+		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
+
+		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
+
+		query.execute();
+		status="success";
+		}catch (Exception e){
+			System.out.println("Exception occured in reviewedLiabilityBook"+e.getMessage());
 		}
-		
+
+		return status;
 	}
 
 	@Override
-	public void updatePYTD() {
+	public String updatePYTD() {
+		String status="fail";
+		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataCYTDToPYTD");
 		query.execute();	
+		status="success";
+		}catch (Exception e){
+			System.out.println("Exception occured in updatePYTD"+e.getMessage());
+		}
+		return status;
 	}
 	
 	@Override
-	public void updatePYTDBook(String bookLabel) {
+	public String updatePYTDBook(String bookLabel) {
+		String status="fail";
+		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveBookLabelToPYTD");
 		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
 		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 		query.execute();	
+		status="success";
+		}catch (Exception e){
+			System.out.println("Exception occured in updatePYTDBook"+e.getMessage());
+		}
+		return status;
 	}
 
 	@Override
-	public void updateCYTD() {
+	public String updateCYTD() {
+		String status="fail";
+		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToCYTD");
 		query.execute();		
+		status="success";
+		}catch (Exception e){
+			System.out.println("Exception occured in updateCYTD"+e.getMessage());
+		}
+		return status;
 	}
 	
 	@Override
-	public void updateCYTDBook(String bookLabel) {
+	public String updateCYTDBook(String bookLabel) {
+		String status="fail";
+		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveBookLabelToCYTD");
 		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
 		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
-		query.execute();		
+		query.execute();	
+		status="success";
+		}catch (Exception e){
+			System.out.println("Exception occured in updateCYTDBook"+e.getMessage());
+		}
+		return status;
 	}
 
 	

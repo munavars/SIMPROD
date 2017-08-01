@@ -15,15 +15,15 @@ import com.ytc.dal.model.DalBookList;
  */
 public interface IAccrualDataService {
 
-	void calculateLiability(Integer periodId);
+	String calculateLiability(Integer periodId);
 
-	void reviewedLiabilityCCM(Integer periodId);
+	String reviewedLiabilityCCM(Integer periodId);
 	
-	void reviewedLiabilityBook(String bookLabel);
+	String reviewedLiabilityBook(String bookLabel);
 
-	void updatePYTD();
+	String updatePYTD();
 
-	void updateCYTD();
+	String updateCYTD();
 
 	List<BookList> getBookList();
 	
@@ -31,9 +31,9 @@ public interface IAccrualDataService {
 
 	String deleteBookList(List<Integer> bookIdList);
 
-	void updatePYTDBook(String bookLabel);
+	String updatePYTDBook(String bookLabel);
 
-	void updateCYTDBook(String bookLabel);
+	String updateCYTDBook(String bookLabel);
 
 	AccrualDropDown getAccrualDropDown();
 

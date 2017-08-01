@@ -73,37 +73,37 @@ public class AccrualController extends BaseController {
 	}
 	
 	@RequestMapping(value = "/accrual/v1/calcLiability", method = RequestMethod.POST)
-	public void calculateLiability(HttpServletRequest request,@RequestBody Integer periodId) {
-		getService(request).calculateLiability(periodId);
+	public @ResponseBody String calculateLiability(HttpServletRequest request,@RequestBody Integer periodId) {
+		return getService(request).calculateLiability(periodId);
 	}
 	
 	@RequestMapping(value = "/accrual/v1/reviewLiabilityCCM", method = RequestMethod.POST)
-	public void reviewedLiabilityCCM(HttpServletRequest request,@RequestBody Integer periodId) {
-		getService(request).reviewedLiabilityCCM(periodId);
+	public @ResponseBody String reviewedLiabilityCCM(HttpServletRequest request,@RequestBody Integer periodId) {
+		return getService(request).reviewedLiabilityCCM(periodId);
 	}
 	
 	@RequestMapping(value = "/accrual/v1/reviewLiabilityBook", method = RequestMethod.POST)
-	public void reviewedLiabilityBook(HttpServletRequest request,@RequestBody TextNode bookLabel) {
-		getService(request).reviewedLiabilityBook(bookLabel.asText());
+	public @ResponseBody String reviewedLiabilityBook(HttpServletRequest request,@RequestBody TextNode bookLabel) {
+		return getService(request).reviewedLiabilityBook(bookLabel.asText());
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updatePYTD", method = RequestMethod.POST)
-	public void updatePYTD(HttpServletRequest request) {
-		getService(request).updatePYTD();
+	public @ResponseBody String updatePYTD(HttpServletRequest request) {
+		return getService(request).updatePYTD();
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updatePYTDBook", method = RequestMethod.POST)
-	public void updatePYTDBook(HttpServletRequest request, @RequestBody TextNode bookLabel) {
-		getService(request).updatePYTDBook(bookLabel.asText());
+	public @ResponseBody String updatePYTDBook(HttpServletRequest request, @RequestBody TextNode bookLabel) {
+		return getService(request).updatePYTDBook(bookLabel.asText());
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updateCYTD", method = RequestMethod.POST)
-	public void updateCYTD(HttpServletRequest request) {
-		getService(request).updateCYTD();
+	public @ResponseBody String updateCYTD(HttpServletRequest request) {
+		return getService(request).updateCYTD();
 	}
 	
 	@RequestMapping(value = "/accrual/v1/updateCYTDBook", method = RequestMethod.POST)
-	public void updateCYTDBook(HttpServletRequest request, @RequestBody String bookLabel) {
-		getService(request).updateCYTDBook(bookLabel);
+	public @ResponseBody String updateCYTDBook(HttpServletRequest request, @RequestBody String bookLabel) {
+		return getService(request).updateCYTDBook(bookLabel);
 	}
 }

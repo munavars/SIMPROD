@@ -39,12 +39,16 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		logger.info("Enter in to the calculate liability store procedure");
 		String status="fail";
 		try{
+		long startTime = System.currentTimeMillis();
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_00_CalculateAccural");
 		query.registerStoredProcedureParameter("PARAM_PERIOD_ID", Integer.class, ParameterMode.IN);
 		query.setParameter("PARAM_PERIOD_ID", periodId);
 		query.execute();		
 		status="success";
 		logger.info("Successfully completed calculate liability store procedure");
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Time taken to execute sp_00_CalculateAccural: "+(totalTime/1000));
 		}catch (Exception e){
 			logger.info("Exception occured in calculateLiability"+e.getMessage());
 			
@@ -150,7 +154,7 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		baseDao.updateNative(sql, queryParams);		
 		status="success";
 		}catch(Exception e){
-			logger.info("exception occured in createBookList"+e.getMessage());
+			logger.error("exception occured in createBookList"+e.getMessage());
 		}
 		return status;
 	}
@@ -164,7 +168,7 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		baseDao.updateNative(sql, queryParams);		
 		status=deleteAccrualDataBook(bookIdList);
 		}catch(Exception e){
-			logger.info("Exception occured in deleteBookList"+e.getMessage());
+			logger.error("Exception occured in deleteBookList"+e.getMessage());
 		}
 		return status;
 	}
@@ -178,7 +182,7 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		baseDao.updateNative(sql, queryParams);		
 		status="success";
 		}catch(Exception e){
-			logger.info("Exception occured in deleteAccrualDataBook"+e.getMessage());
+			logger.error("Exception occured in deleteAccrualDataBook"+e.getMessage());
 		}
 		return status;
 	}
@@ -188,14 +192,18 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		logger.info("Enter in to the reviewed liability CCM store procedure");
 		String status="fail";
 		try{
+		long startTime   = System.currentTimeMillis();
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToCCM");
 		query.registerStoredProcedureParameter("PARAM_PERIOD_ID", Integer.class, ParameterMode.IN);
 		query.setParameter("PARAM_PERIOD_ID", periodId);
 		query.execute();	
 		status="success";
 		logger.info("Successfully completed reviewed liability CCM store procedure");
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Time taken to execute sp_MoveAccrualDataToCCM: "+(totalTime/1000));
 		}catch (Exception e){
-			logger.info("Exception occured in reviewedLiabilityCCM"+e.getMessage());
+			logger.error("Exception occured in reviewedLiabilityCCM"+e.getMessage());
 		}
 
 		return status;
@@ -208,16 +216,20 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		logger.info("Enter in to the reviewed liability Book store procedure");
 		String status="fail";
 		try{
-			StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToBook");
-			query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
+		long startTime   = System.currentTimeMillis();
+		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToBook");
+		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
 
-			query.setParameter("PARAM_BOOK_LABEL", bookLabel);
+		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 
-			query.execute();
-			status="success";
-			logger.info("Successfully completed reviewed liability Book store procedure");
+		query.execute();
+		status="success";
+		logger.info("Successfully completed reviewed liability Book store procedure");
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Time taken to execute sp_MoveAccrualDataToBook: "+(totalTime/1000));
 		}catch (Exception e){
-			logger.info("Exception occured in reviewedLiabilityBook"+e.getMessage());
+			logger.error("Exception occured in reviewedLiabilityBook"+e.getMessage());
 		}
 
 		return status;
@@ -228,12 +240,16 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		logger.info("Enter in to the move accrual data CYTD to PYTD store procedure");
 		String status="fail";
 		try{
+		long startTime   = System.currentTimeMillis();
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataCYTDToPYTD");
 		query.execute();	
 		status="success";
 		logger.info("Successfully completed move accrual data CYTD to PYTD store procedure");
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Time taken to execute sp_MoveAccrualDataCYTDToPYTD: "+(totalTime/1000));
 		}catch (Exception e){
-			logger.info("Exception occured in updatePYTD"+e.getMessage());
+			logger.error("Exception occured in updatePYTD"+e.getMessage());
 		}
 		return status;
 	}
@@ -243,14 +259,18 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		logger.info("Enter in to the updatePYTDBook store procedure");
 		String status="fail";
 		try{
+		long startTime   = System.currentTimeMillis();
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveBookLabelToPYTD");
 		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
 		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 		query.execute();	
 		status="success";
 		logger.info("Successfully completed updatePYTDBook store procedure");
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Time taken to execute sp_MoveBookLabelToPYTD: "+(totalTime/1000));
 		}catch (Exception e){
-			logger.info("Exception occured in updatePYTDBook"+e.getMessage());
+			logger.error("Exception occured in updatePYTDBook"+e.getMessage());
 		}
 		return status;
 	}
@@ -260,12 +280,16 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		logger.info("Enter in to the updateCYTD store procedure");
 		String status="fail";
 		try{
+		long startTime   = System.currentTimeMillis();
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToCYTD");
 		query.execute();		
 		status="success";
 		logger.info("Successfully completed updateCYTD store procedure");
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Time taken to execute sp_MoveAccrualDataToCYTD: "+(totalTime/1000));
 		}catch (Exception e){
-			logger.info("Exception occured in updateCYTD"+e.getMessage());
+			logger.error("Exception occured in updateCYTD"+e.getMessage());
 		}
 		return status;
 	}
@@ -275,14 +299,18 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		logger.info("Enter in to the updateCYTDBook store procedure");
 		String status="fail";
 		try{
+		long startTime   = System.currentTimeMillis();
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveBookLabelToCYTD");
 		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
 		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 		query.execute();	
 		status="success";
 		logger.info("Successfully completed updateCYTDBook store procedure");
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		logger.info("Time taken to execute sp_MoveBookLabelToCYTD: "+(totalTime/1000));
 		}catch (Exception e){
-			logger.info("Exception occured in updateCYTDBook"+e.getMessage());
+			logger.error("Exception occured in updateCYTDBook"+e.getMessage());
 		}
 		return status;
 	}

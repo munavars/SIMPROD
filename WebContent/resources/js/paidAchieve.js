@@ -503,10 +503,6 @@ function listboxCopy(sourceID, destID) {
 		newOption.value = option.value;
 		newOption.text = option.text;
 		try {
-			var tagTemp = getTagPropertyValue(tagId, tagMap);
-			if(tagTemp != null && tagTemp.indexOf(newOption.value) !== -1){
-				dest.add(newOption);	
-			}
 			dest.add(newOption.value, null);
 		} catch (error) {
 			dest.add(newOption);

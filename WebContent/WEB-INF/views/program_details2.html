@@ -346,16 +346,18 @@
 													<br>
 													<div class="row">
 													<!-- <div class="form-group"> -->
-															<div class="col-lg-4 col-sm-4">
+															<div class="col-lg-4 col-sm-4" style="width:38%">
 																<label class="control-label" for="from">Begin / End
 																	Dates:</label>
 																<div class="input-group input-medium"
 																	data-date-format="mm/dd/yy">
-																	<input type="text" class="form-control dpd1" readonly="readonly" id="from"
-																		name="from" placeholder="Begin Date" style="background:white;"><span
-																		class="input-group-addon" for="to">To</span> <input
-																		type="text" class="form-control dpd2" readonly="readonly" id="to"
-																		name="to" placeholder="End Date" style="background:white;">
+																	<input type="text" class="form-control dpd1"  id="from"
+																		name="from" placeholder="Begin Date">
+																		<span class="input-group-addon"><img id="calImgfrom" src="resources/img/email-img/calendar.png" width="15" onclick="openCalendar(this);"></span>																		
+																		<span class="input-group-addon" for="to">To</span> <input
+																		type="text" class="form-control dpd2"  id="to"
+																		name="to" placeholder="End Date">
+																		<span class="input-group-addon"><img id="calImgto" src="resources/img/email-img/calendar.png" width="15" onclick="openCalendar(this);"></span>	
 																</div>
 																<label for=from generated="true" class="error"></label>
 																<label for="to" generated="true" class="error" style="float:right"></label> 
@@ -3079,7 +3081,12 @@
 				
 				return amount;
 			}
-						
+			
+			function openCalendar(event){
+				var id=(event.id).substring(6);
+				$('#'+id).datepicker('show');
+			}
+			
 			function convertAmountFormat(amount){
 				if(amount != null && amount != 0){
 					/*Remove comma's if already present*/

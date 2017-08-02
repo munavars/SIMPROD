@@ -229,7 +229,7 @@
 	            	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
                     	if((row.programStatus=='Submitted')){
-                        	 data = '<input type="text" id="docNum'+meta.row+'" value="'+data+'" onkeypress="return isNumber(event);">';
+                        	 data = '<input type="text" id="docNum'+meta.row+'" value="'+data+'" onkeypress="return isNumber(event);" onkeydown="nextDocNum(event,this);">';
                     	}else{
                     		 data = '<input type="text" id="docNum'+meta.row+'" value="" disabled>';	
                     	}
@@ -450,6 +450,12 @@
                      <i class="fa fa-dashboard"></i>
                      <span>My Dashboard</span>
                      </a>
+                  </li>
+                   <li>
+                      <a class="" href="accrual">
+                              <i class="fa fa-tasks"></i>
+                              <span>Accrual Calculation</span>
+                      </a>
                   </li>
                   <li>
                       <a class="active" href="ccm">
@@ -910,6 +916,8 @@
 			   			   
 			   console.log(reviewList);  	
 		   });
+		  
+		  
 		   
 		   $('#allsubmit').on('change',function() {
 
@@ -978,6 +986,26 @@
 				}
 			}
 		 
+		 function nextDocNum(eve,ths){
+			 var nowTemp = new Date();
+			 var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+			 var docdate=new Date($('#docDate'+(ths.id).substring(6)).val());
+			 var id=parseInt((ths.id).substring(6))+1;
+
+			 var charCode = (eve.which) ? eve.which : eve.keyCode;
+			 if(charCode==9){	
+				 eve.preventDefault();
+				 if(docdate>now){
+					    message="Document date cannot be greater than current date";
+			            $("#confirmMessage").html(message);
+						$('#myModal1').modal('toggle');
+						$('#docNum'+(ths.id).substring(6)).focus();
+				 }
+
+				 $('#docNum'+id).focus();
+			 } 
+
+		 }
 				 
 		 function isNumber(evt)
 	       {

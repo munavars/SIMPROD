@@ -49,4 +49,12 @@ public class EmailConstant {
 	public static final String PRICING_SUBJECT_APPROVAL = "Attention: Pricing id %s is Approved";
 	
 	public static final String PRICING_SUBJECT_REJECTED = "Action Required: Pricing id %s is rejected";
+	
+	public static final String CONSUMER_PRICING_MAIL_GROUP = "manju.vubra@yokohamatire.com"; //"ConsumerPricingFT@yokohamatire.com"
+	
+	public static final String OTR_PRICING_MAIL_GROUP = "manju.vubra@yokohamatire.com"; //"otrpricing@yokohamatire.com"
+	
+	public static final String COMMERCIAL_SBM_PRICING_MAIL_GROUP = "manju.vubra@yokohamatire.com"; //"CommercialSBM@yokohamatire.com"
+	
+	public static final String COMMERCIAL_PRICING_MAIL_GROUP = "manju.vubra@yokohamatire.com"; //"commercialpricing@yokohamatire.com"
 }

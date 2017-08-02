@@ -1865,24 +1865,26 @@ a { text-decoration: none }
          	var formData=[];
          	function prepareDataForSubmit(){
          		//responseOnload.url = window.location.href;
-				formData= $('form#pricingRequest').serializeArray();
-				responseOnload.customerType=formData[0].value;
-				responseOnload.customerGroup=formData[1].value;
-				responseOnload.customerId=formData[2].value;
-				if(formData.length == 14){
-					if(formData[4].value === 'on'){
-						responseOnload.sbmCheck= "1";
-					}
-					else{
-						responseOnload.sbmCheck= "0";
-					}
-					responseOnload.userComments=formData[5].value;
-					responseOnload.termCode=formData[6].value;
-					responseOnload.definition=formData[7].value;
-					responseOnload.dueDates=formData[8].value;
-					responseOnload.cash=formData[9].value;
-					responseOnload.shippingReqs=formData[10].value;
-					responseOnload.otherShippingReqs=formData[11].value;
+				/* formData= $('form#pricingRequest').serializeArray(); */
+				responseOnload.customerType = $('input:radio[name=optionsRadiosSourcePathName]:checked').val();
+				responseOnload.customerGroup = $('#custByName_inputselect').val();
+				responseOnload.customerId = $('#customerId').val();
+				if($('#sbmCheck').is(":checked")){
+					responseOnload.sbmCheck= "1";
+				}
+				else{
+					responseOnload.sbmCheck= "0";
+				}
+				responseOnload.userComments = $('#user_comments').val();
+				responseOnload.termCode = $('#termsCode_inputselect').val();
+				responseOnload.definition = $('#program_terms_definition').val();
+				responseOnload.dueDates = $('#program_terms_duedates').val();
+				responseOnload.cash = $('#program_terms_cash').val();
+				responseOnload.shippingReqs = $('input:radio[name=optionsRadiosShippingProgram]:checked').val();
+				responseOnload.otherShippingReqs = $('#Other_Ship_Reqs_inputselect').val();
+					
+				/* if(formData.length == 14){
+					
 				}
 				else {
 					responseOnload.userComments=formData[4].value;
@@ -1893,7 +1895,7 @@ a { text-decoration: none }
 					responseOnload.shippingReqs=formData[9].value;
 					responseOnload.otherShippingReqs=formData[10].value;
 				}
-				
+				 */
 				responseOnload.success=false;
 				var fileDataList = [];
 			
@@ -2048,9 +2050,9 @@ a { text-decoration: none }
 					 customerId: {
 						required: true
 					},
- 					termsCode_inputselect: {
+ 					/* termsCode_inputselect: {
 						required: true
-					},
+					}, */
 					optionsRadiosShippingProgram: {
 						required: true
 					},

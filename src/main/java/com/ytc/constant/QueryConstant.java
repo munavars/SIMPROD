@@ -17,9 +17,9 @@ public class QueryConstant {
 		
 	public static final String PRICING_LIST="select * from PRICING_HEADER where CREATED_BY in (:requestId) and STATUS in (1, 2, 3) ";
 	
-	public static final String TBP_CUSTOMER_LIST="select * from PROGRAM_DETAIL where STATUS_ID in (1, 2) and PGM_END_DATE>(DATEADD(YEAR, -2,SYSDATETIME()))";
+	public static final String TBP_CUSTOMER_LIST="select * from PROGRAM_DETAIL where STATUS_ID in (1, 2, 3) and PGM_END_DATE>(DATEADD(YEAR, -2,SYSDATETIME()))";
 	
-	public static final String TBP_CUSTOMER_PRICING_LIST="select * from PRICING_HEADER where STATUS in (1, 2)";
+	public static final String TBP_CUSTOMER_PRICING_LIST="select * from PRICING_HEADER where STATUS in (1, 2, 3)";
 	
 	public static final String EMPLOYEE_HIER_LIST= "SELECT BASE_EMP_ID FROM EMPLOYEE_HIERARCHY where BASE_EMP_ID = :loginId or LVL1_EMP_ID = :loginId or LVL2_EMP_ID = :loginId or LVL3_EMP_ID = :loginId or LVL4_EMP_ID = :loginId or LVL5_EMP_ID = :loginId";
 	

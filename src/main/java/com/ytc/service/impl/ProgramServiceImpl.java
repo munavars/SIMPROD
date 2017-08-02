@@ -936,12 +936,12 @@ public class ProgramServiceImpl implements IProgramService {
 			List<String> userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
 			queryParams = new HashMap<>();
 			//if((userIdList.size()>1)||((userIdList.size()==1)&&(baseDao.getEntityById(DalEmployeeHierarchy.class, Integer.parseInt(userIdList.get(0))).getBaseTitle().equalsIgnoreCase("Account Manager")))){
-				String sql=QueryConstant.CUSTOMER_LIST_MGR;
-				queryParams.put("userId", userIdList);
-				List<String> customerId=baseDao.getListFromNativeQuery(sql, queryParams);	
-				if(!customerId.isEmpty()){
-				pgm=getProgram(customerId.toString().substring(1, customerId.toString().length()-1),"0,4,3");
-				}
+			String sql = QueryConstant.CUSTOMER_LIST_MGR;
+			queryParams.put("userId", userIdList);
+			List<String> customerId = baseDao.getListFromNativeQuery(sql, queryParams);
+			if (!customerId.isEmpty()) {
+				pgm = getProgram(customerId.toString().substring(1, customerId.toString().length() - 1), "0,4");
+			}
 			//}
 			
 		}

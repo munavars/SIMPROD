@@ -203,13 +203,13 @@ function populateTagDetails(response, elementId){
 	if(response != null){
 		if(response.includedMap != null){
 			if(elementId == 'prdvalue'){
-				removeOptions('include');
-				removeOptions('exclude');
+				/*removeOptions('include');
+				removeOptions('exclude');*/
 				fnPopulateTag(response.includedMap, 'include');	
 			}
 			else if(elementId === 'achPrdvalue'){
-				removeOptions('achInclude');
-				removeOptions('achExclude');
+				/*removeOptions('achInclude');
+				removeOptions('achExclude');*/
 				fnPopulateTag(response.includedMap, 'achInclude');
 			}
 			
@@ -225,9 +225,9 @@ function populateTagDetails(response, elementId){
 	}	
 }
 
-function removeOptions(elementId){
+/*function removeOptions(elementId){
 	var dest = document.getElementById(elementId);
-	/**If already if some data is present, remove it.*/
+	*//**If already if some data is present, remove it.*//*
 	if (dest != null && dest.options.length > 0) {
 		var totalLength = dest.options.length;
 		while(totalLength > 0){
@@ -255,15 +255,26 @@ function removeOptions(elementId){
 		}
 	}
 	
-}
+}*/
 
 function fnPopulateTag(valueMap, elementId){
     var includedList = valueMap;
 	var dest = document.getElementById(elementId);
-
+	var tagMap;
+	var reassignNeeded = true;
+	if (elementId == 'include') {
+		tagMap = includePaid;
+	} else if (elementId == 'exclude') {
+		tagMap = excludePaid;
+	} else if (elementId == 'achInclude') {
+		tagMap = includeAchieve;
+	} else if (elementId == 'achExclude') {
+		tagMap = excludeAchieve;
+	}
+	
 	if(includedList != null){
 	    $.each(includedList, function (i, mapValue) {
-		    $.each(mapValue, function (i, value) {
+		    $.each(mapValue, function (j, value) {
 				var newOption=document.createElement("option");
 				newOption.value=value;
 				newOption.text=value;
@@ -275,25 +286,73 @@ function fnPopulateTag(valueMap, elementId){
 						console.log("dest value cannot be null here. Having this logger for testing purpose.. value of element id : "+elementId);
 						dest = document.getElementById(elementId);
 					}
-					dest.add(newOption);
+					var tagTemp = getTagPropertyValue(i, tagMap);
+					if(tagTemp != null){
+						if(tagTemp.indexOf(newOption.value) === -1){
+							dest.add(newOption);
+							var arrLength = tagTemp.length;
+							tagTemp[arrLength] = newOption.value;
+							tagMap[i] = tagTemp;	
+						}
+					}
+					else{
+						dest.add(newOption);
+						var arr = [];
+						arr[0] = newOption.value;
+						if (tagMap == null) {
+							tagMap = {};
+						}
+						tagMap[i] = arr;
+					}
 				}
 		    });
-		    /**Update respective map object to be sent to service.*/
-		    var tagMap;
-		    var reassignNeeded = true;
-		    if (elementId == 'include') {
-				tagMap = includePaid;
-			} else if (elementId == 'exclude') {
-				tagMap = excludePaid;
-			} else if (elementId == 'achInclude') {
-				tagMap = includeAchieve;
-			} else if (elementId == 'achExclude') {
-				tagMap = excludeAchieve;
+
+			if (reassignNeeded) {
+				if (elementId == 'include') {
+					includePaid = tagMap;
+				} else if (elementId == 'exclude') {
+					excludePaid = tagMap;
+				} else if (elementId == 'achInclude') {
+					includeAchieve = tagMap;
+				} else if (elementId == 'achExclude') {
+					excludeAchieve = tagMap;
+				}
 			}
-/*		    var tagTemp = getTagPropertyValue(i, tagMap);
+			
+			/*var tagTemp = getTagPropertyValue(i, tagMap);
+			if (tagTemp != null ) {
+				if(tagTemp.indexOf(newOption.value) === -1){
+					var arrLength = tagTemp.length;
+					tagTemp[arrLength] = newOption.value;
+					tagMap[i] = tagTemp;	
+				}
+			} else {
+				var arr = [];
+				arr[0] = newOption.value;
+				if (tagMap == null) {
+					tagMap = {};
+
+				}
+				tagMap[i] = arr;
+				if (reassignNeeded) {
+					if (elementId == 'include') {
+						includePaid = tagMap;
+					} else if (elementId == 'exclude') {
+						excludePaid = tagMap;
+					} else if (elementId == 'achInclude') {
+						includeAchieve = tagMap;
+					} else if (elementId == 'achExclude') {
+						excludeAchieve = tagMap;
+					}
+				}
+			}*/
+		    
+		    
+		    /**Update respective map object to be sent to service.*/
+		    /*var tagTemp = getTagPropertyValue(i, tagMap);
 			if (tagTemp != null) {
 				tagMap[i] = mapValue;
-			} else {*/
+			} else {
 				if (tagMap == null) {
 					tagMap = {};
 				}
@@ -309,7 +368,7 @@ function fnPopulateTag(valueMap, elementId){
 						excludeAchieve = tagMap;
 					}
 				}
-/*			}*/
+			}*/
 		});
 	}
 }
@@ -444,6 +503,10 @@ function listboxCopy(sourceID, destID) {
 		newOption.value = option.value;
 		newOption.text = option.text;
 		try {
+			var tagTemp = getTagPropertyValue(tagId, tagMap);
+			if(tagTemp != null && tagTemp.indexOf(newOption.value) !== -1){
+				dest.add(newOption);	
+			}
 			dest.add(newOption.value, null);
 		} catch (error) {
 			dest.add(newOption);

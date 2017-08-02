@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.comparator.WorkflowStatusComparatorByModifiedDate;
+import com.ytc.common.enums.BusinessUnitDescriptionEnum;
 import com.ytc.common.model.EmailDetails;
 import com.ytc.common.model.PricingHeader;
 import com.ytc.constant.EmailConstant;
@@ -210,6 +211,29 @@ public class PricingEmailServiceImpl implements IPricingEmailService{
 							}
 						}
 					}
+				}
+				if(BusinessUnitDescriptionEnum.COMMERCIAL.getBusinessUnitDescription().equalsIgnoreCase(pricingHeader.getBusinessUnitDescription())){
+					if(ccEmailIdList == null){
+						ccEmailIdList = new ArrayList<String>();
+					}
+					if(ProgramConstant.ONE.equals(pricingHeader.getSbmCheck())){
+						ccEmailIdList.add(EmailConstant.COMMERCIAL_SBM_PRICING_MAIL_GROUP);
+					}
+					else{
+						ccEmailIdList.add(EmailConstant.COMMERCIAL_PRICING_MAIL_GROUP);
+					}
+				}
+				else if(BusinessUnitDescriptionEnum.CONSUMER.getBusinessUnitDescription().equalsIgnoreCase(pricingHeader.getBusinessUnitDescription())){
+					if(ccEmailIdList == null){
+						ccEmailIdList = new ArrayList<String>();
+					}
+					ccEmailIdList.add(EmailConstant.CONSUMER_PRICING_MAIL_GROUP);
+				}
+				else if(BusinessUnitDescriptionEnum.OTR.getBusinessUnitDescription().equalsIgnoreCase(pricingHeader.getBusinessUnitDescription())){
+					if(ccEmailIdList == null){
+						ccEmailIdList = new ArrayList<String>();
+					}
+					ccEmailIdList.add(EmailConstant.OTR_PRICING_MAIL_GROUP);
 				}
 			}
 			emailDetails.setToAddress(toEmailIdList);

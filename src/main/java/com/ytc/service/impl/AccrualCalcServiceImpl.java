@@ -11,6 +11,7 @@ import javax.persistence.ParameterMode;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.model.AccrualDropDown;
@@ -24,6 +25,9 @@ import com.ytc.helper.ProgramServiceHelper;
 import com.ytc.service.IAccrualDataService;
 
 public class AccrualCalcServiceImpl implements IAccrualDataService{
+	
+	private org.slf4j.Logger logger = LoggerFactory.getLogger(AccrualCalcServiceImpl.class);
+	
 	@Autowired
 	private IDataAccessLayer baseDao;
 	
@@ -32,6 +36,7 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 
 	@Override
 	public String calculateLiability(Integer periodId) {
+		logger.info("Enter in to the calculate liability store procedure");
 		String status="fail";
 		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_00_CalculateAccural");
@@ -39,8 +44,10 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		query.setParameter("PARAM_PERIOD_ID", periodId);
 		query.execute();		
 		status="success";
+		logger.info("Successfully completed calculate liability store procedure");
 		}catch (Exception e){
-			System.out.println("Exception occured in calculateLiability"+e.getMessage());
+			logger.info("Exception occured in calculateLiability"+e.getMessage());
+			
 		}
 
 		return status;
@@ -143,7 +150,7 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		baseDao.updateNative(sql, queryParams);		
 		status="success";
 		}catch(Exception e){
-			System.out.println("exception occured in createBookList"+e.getMessage());
+			logger.info("exception occured in createBookList"+e.getMessage());
 		}
 		return status;
 	}
@@ -157,7 +164,7 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		baseDao.updateNative(sql, queryParams);		
 		status=deleteAccrualDataBook(bookIdList);
 		}catch(Exception e){
-			System.out.println("Exception occured in deleteBookList"+e.getMessage());
+			logger.info("Exception occured in deleteBookList"+e.getMessage());
 		}
 		return status;
 	}
@@ -171,13 +178,14 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		baseDao.updateNative(sql, queryParams);		
 		status="success";
 		}catch(Exception e){
-			System.out.println("Exception occured in deleteAccrualDataBook"+e.getMessage());
+			logger.info("Exception occured in deleteAccrualDataBook"+e.getMessage());
 		}
 		return status;
 	}
 	
 	@Override
 	public String reviewedLiabilityCCM(Integer periodId) {
+		logger.info("Enter in to the reviewed liability CCM store procedure");
 		String status="fail";
 		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToCCM");
@@ -185,8 +193,9 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		query.setParameter("PARAM_PERIOD_ID", periodId);
 		query.execute();	
 		status="success";
+		logger.info("Successfully completed reviewed liability CCM store procedure");
 		}catch (Exception e){
-			System.out.println("Exception occured in reviewedLiabilityCCM"+e.getMessage());
+			logger.info("Exception occured in reviewedLiabilityCCM"+e.getMessage());
 		}
 
 		return status;
@@ -195,33 +204,20 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 	
 	@Override
 	public String reviewedLiabilityBook(String bookLabel) {
+
+		logger.info("Enter in to the reviewed liability Book store procedure");
 		String status="fail";
-		/*Map<String, Object> queryParams = new HashMap<>();			
-		queryParams.put("book",bookLabel);
-		List<DalBookList> dalBookList =  baseDao.getListFromNamedQueryWithParameter("DalBookList.getAllDetailsForLabel", queryParams);
-		if(!dalBookList.isEmpty()){
-		DalBookList book=(DalBookList) dalBookList.get(0);
-		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToBook");
-		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("PARAM_BOOK_DATE", Calendar.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("PARAM_BOOK_OF_RECORD", String.class, ParameterMode.IN);
-		query.registerStoredProcedureParameter("PARAM_CREATED_BY", String.class, ParameterMode.IN);
-		query.setParameter("PARAM_BOOK_LABEL", book.getBookLabel());
-		query.setParameter("PARAM_BOOK_DATE", book.getBookDate());
-		query.setParameter("PARAM_BOOK_OF_RECORD", book.getBookRecord());
-		query.setParameter("PARAM_CREATED_BY", book.getCreatedUser());
-		query.execute();	
-		}*/
 		try{
-		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToBook");
-		query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
+			StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToBook");
+			query.registerStoredProcedureParameter("PARAM_BOOK_LABEL", String.class, ParameterMode.IN);
 
-		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
+			query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 
-		query.execute();
-		status="success";
+			query.execute();
+			status="success";
+			logger.info("Successfully completed reviewed liability Book store procedure");
 		}catch (Exception e){
-			System.out.println("Exception occured in reviewedLiabilityBook"+e.getMessage());
+			logger.info("Exception occured in reviewedLiabilityBook"+e.getMessage());
 		}
 
 		return status;
@@ -229,19 +225,22 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 
 	@Override
 	public String updatePYTD() {
+		logger.info("Enter in to the move accrual data CYTD to PYTD store procedure");
 		String status="fail";
 		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataCYTDToPYTD");
 		query.execute();	
 		status="success";
+		logger.info("Successfully completed move accrual data CYTD to PYTD store procedure");
 		}catch (Exception e){
-			System.out.println("Exception occured in updatePYTD"+e.getMessage());
+			logger.info("Exception occured in updatePYTD"+e.getMessage());
 		}
 		return status;
 	}
 	
 	@Override
 	public String updatePYTDBook(String bookLabel) {
+		logger.info("Enter in to the updatePYTDBook store procedure");
 		String status="fail";
 		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveBookLabelToPYTD");
@@ -249,27 +248,31 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 		query.execute();	
 		status="success";
+		logger.info("Successfully completed updatePYTDBook store procedure");
 		}catch (Exception e){
-			System.out.println("Exception occured in updatePYTDBook"+e.getMessage());
+			logger.info("Exception occured in updatePYTDBook"+e.getMessage());
 		}
 		return status;
 	}
 
 	@Override
 	public String updateCYTD() {
+		logger.info("Enter in to the updateCYTD store procedure");
 		String status="fail";
 		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveAccrualDataToCYTD");
 		query.execute();		
 		status="success";
+		logger.info("Successfully completed updateCYTD store procedure");
 		}catch (Exception e){
-			System.out.println("Exception occured in updateCYTD"+e.getMessage());
+			logger.info("Exception occured in updateCYTD"+e.getMessage());
 		}
 		return status;
 	}
 	
 	@Override
 	public String updateCYTDBook(String bookLabel) {
+		logger.info("Enter in to the updateCYTDBook store procedure");
 		String status="fail";
 		try{
 		StoredProcedureQuery query =entityManager.createStoredProcedureQuery("sp_MoveBookLabelToCYTD");
@@ -277,8 +280,9 @@ public class AccrualCalcServiceImpl implements IAccrualDataService{
 		query.setParameter("PARAM_BOOK_LABEL", bookLabel);
 		query.execute();	
 		status="success";
+		logger.info("Successfully completed updateCYTDBook store procedure");
 		}catch (Exception e){
-			System.out.println("Exception occured in updateCYTDBook"+e.getMessage());
+			logger.info("Exception occured in updateCYTDBook"+e.getMessage());
 		}
 		return status;
 	}

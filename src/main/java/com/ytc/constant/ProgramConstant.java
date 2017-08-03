@@ -16,6 +16,7 @@ public class ProgramConstant {
 	
 	public static final String TAG_VALUE_DELIMITER = "-";
 	public static final String NAME_DELIMITER = " ";
+	public static final String TAG_VALUE_DELIMITER_SPACE = " - ";
 	
 	public static final String ACTIVE_STATUS = "ACTIVE";
 	public static final String APPROVED_STATUS = "APPROVED";

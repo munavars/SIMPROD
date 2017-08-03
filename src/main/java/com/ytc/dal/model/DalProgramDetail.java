@@ -330,7 +330,7 @@ public class DalProgramDetail extends DalAuditableModel {
                     this.dalProgramHeader = dalProgramHeader;
     }
     
-    @OneToMany(mappedBy="dalProgramDetail", cascade=CascadeType.ALL, fetch =FetchType.EAGER)
+    @OneToMany(mappedBy="dalProgramDetail", cascade=CascadeType.ALL, fetch =FetchType.EAGER, orphanRemoval = true)
     public Set<DalProgramDetAchieved> getDalProgramDetAchievedList() {
                     return dalProgramDetAchievedList;
     }
@@ -338,7 +338,7 @@ public class DalProgramDetail extends DalAuditableModel {
                     this.dalProgramDetAchievedList = dalProgramDetAchievedList;
     }
     
-    @OneToMany(mappedBy="dalProgramDetails", cascade=CascadeType.ALL, fetch =FetchType.EAGER)
+    @OneToMany(mappedBy="dalProgramDetails", cascade=CascadeType.ALL, fetch =FetchType.EAGER, orphanRemoval = true)
     public Set<DalProgramDetPaid> getDalProgramDetPaidList() {
                     return dalProgramDetPaidList;
     }

@@ -729,8 +729,8 @@ public class ProgramServiceImpl implements IProgramService {
 				for(String value : tagValueList){
 					if(value != null){
 						DropDown dropDown = new DropDown();
-						dropDown.setKey(value);
-						dropDown.setValue(value);
+						dropDown.setKey(tagItemValueMapEnum.getMasterColumnName() + ProgramConstant.TAG_VALUE_DELIMITER_SPACE + value);
+						dropDown.setValue(tagItemValueMapEnum.getMasterColumnName() + ProgramConstant.TAG_VALUE_DELIMITER_SPACE + value);
 						if(dropdownList == null){
 							dropdownList = new ArrayList<DropDown>();
 						}
@@ -1060,9 +1060,10 @@ public class ProgramServiceImpl implements IProgramService {
 			for(Integer tagId : tagIdList){
 				List<String> returnList = getTagValueList(tagId);
 				List<String> validValueList = new ArrayList<String>();
+				TagItemValueMapEnum tagItemValueMapEnum = TagItemValueMapEnum.tableDetail(tagId);
 				for(String value : tagValues){
 					if(returnList.contains(value)){
-						validValueList.add(value);
+						validValueList.add(tagItemValueMapEnum.getMasterColumnName() + ProgramConstant.TAG_VALUE_DELIMITER_SPACE + value);
 					}
 				}
 				if(tagDetailsMap == null){

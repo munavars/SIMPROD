@@ -245,7 +245,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 						dalProgramDetAchieved.setAchMethod(method);
 						if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
 							String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
-							dalProgramDetAchieved.setAchValue(delimitedValue[0].trim());
+							dalProgramDetAchieved.setAchValue(delimitedValue[1].trim());
 						}
 						else{
 							dalProgramDetAchieved.setAchValue(value);	
@@ -301,7 +301,7 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 						dalProgramDetPaid.setMethod(method);
 						if(value.contains(ProgramConstant.TAG_VALUE_DELIMITER)){
 							String delimitedValue[] = value.split(ProgramConstant.TAG_VALUE_DELIMITER);
-							dalProgramDetPaid.setValue(delimitedValue[0].trim());
+							dalProgramDetPaid.setValue(delimitedValue[1].trim());
 						}
 						else{
 							dalProgramDetPaid.setValue(value);

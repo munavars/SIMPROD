@@ -35,9 +35,9 @@
     <link href="resources/css/style-responsive.css" rel="stylesheet" />
     <link href="resources/css/status_icons.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
-	
+       <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css">
+       
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
@@ -68,19 +68,19 @@
       <link href="resources/css/style.css" rel="stylesheet">
       <link href="resources/css/style-responsive.css" rel="stylesheet" />
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-	<script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
-	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css"> -->
-		<style>
-	 td,th {
-	  white-space:nowrap;
-	}
-	th{
-		text-align: center;
-	}
-	.dataTables_wrapper .dataTables_filter {
-	    width: 50%;
-	}
+       <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+       <script src="https://cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js"></script>
+       <link rel="stylesheet" href="https://cdn.datatables.net/1.10.4/css/jquery.dataTables.min.css"> -->
+              <style>
+       td,th {
+         white-space:nowrap;
+       }
+       th{
+              text-align: center;
+       }
+       .dataTables_wrapper .dataTables_filter {
+           width: 50%;
+       }
 .loader {
   display: none;
   background-color: #EEE;
@@ -89,14 +89,14 @@
   bottom: 0; right: 0;
   opacity: 0.8;
 }
- .loader img {
+.loader img {
   position: absolute;
   top: 50%;
   margin-top: -20px;
   left: 50%;
   margin-left: -20px;
 }
-	</style>
+       </style>
    </head>
    <body>
       <section id="container" class="sidebar-closed">
@@ -244,149 +244,149 @@
                            </div> -->
                        </div>
                        </div>
-						
+                                         
                 <!-- START STEP 1: PROGRAM INFO -->
                            <form id="wizard-validation-form" name="wizard-validation-form" class="cmxform" action="#">
                               <div>
                                  <section>
-											<div class="form-group clearfix">
-												<div class="col-lg-12">
-												<div style="float:left">
-													<h5>Calculate Accrual for the period: </h5></div>
-													<div class="col-lg-4">
-					                      			<select
-														class="form-control input-sm m-bot15"
-														id="accrual_period_inputselect"
-														name="accrual_period_inputselect">
-														<!-- <option value="">- Select -</option> --> 
-					
-														</select>
-			                      					</div>
-											<br>
-													
-													                         <!--  <div class="table-responsive">
+                                                                           <div class="form-group clearfix">
+                                                                                  <div class="col-lg-12">
+                                                                                  <div style="float:left">
+                                                                                         <h5>Calculate Accrual for the period: </h5></div>
+                                                                                         <div class="col-lg-4">
+                                                                          <select
+                                                                                                class="form-control input-sm m-bot15"
+                                                                                                id="accrual_period_inputselect"
+                                                                                                name="accrual_period_inputselect">
+                                                                                                <!-- <option value="">- Select -</option> --> 
+                                  
+                                                                                                </select>
+                                                                           </div>
+                                                                           <br>
+                                                                                         
+                                                                                                                  <!--  <div class="table-responsive">
                                  <div class="btn-group pull-right"> -->
                                 <div>
                       <table class="table table-striped table-hover table-bordered" id="accrualtable">
 <!--                       <tr>
-                      	<td>1 &nbsp;&nbsp;<input id="refresh" type="checkbox" value="" >&nbsp; Refresh Data Source</td>
-                      	<td><div id="refreshdiv" style="display:none"><table id="datetable" class="table-bordered">
-                      	<tr bgcolor="#b1b2b5" ><td>Year</td><td>Begin Month</td><td>End Month</td></tr>
-                      	
-                      	<tr><td><select														
-																id="year_inputselect"
-																name="year_inputselect" >
-																<option value="">- Select -</option> 
-																 <option value="1">1000</option> 
-																  <option value="2">2000</option> 
-																  <option value="3">3000</option> 
-																  <option value="4">4000</option> 
-																  <option value="5">5000</option> 
-															</select></td>
-															<td><select														
-																id="beg_month_inputselect"
-																name="beg_month_inputselect" >
-																<option value="">- Select -</option> 
-																 <option value="1">1</option> 
-																  <option value="2">2</option> 
-																  <option value="3">3</option> 
-																  <option value="4">4</option> 
-																  <option value="5">5</option> 
-															</select></td>
-															<td><select														
-																id="end_month_inputselect"
-																name="end_month_inputselect" >
-																<option value="">- Select -</option> 
-																 <option value="1">1</option> 
-																  <option value="2">2</option> 
-																  <option value="3">3</option> 
-																  <option value="4">4</option> 
-																  <option value="5">5</option> 
-															</select></td></tr>
-                      	</table></div></td>
+                          <td>1 &nbsp;&nbsp;<input id="refresh" type="checkbox" value="" >&nbsp; Refresh Data Source</td>
+                          <td><div id="refreshdiv" style="display:none"><table id="datetable" class="table-bordered">
+                          <tr bgcolor="#b1b2b5" ><td>Year</td><td>Begin Month</td><td>End Month</td></tr>
+                          
+                          <tr><td><select                                                                                              
+                                                                                                              id="year_inputselect"
+                                                                                                              name="year_inputselect" >
+                                                                                                              <option value="">- Select -</option> 
+                                                                                                               <option value="1">1000</option> 
+                                                                                                                <option value="2">2000</option> 
+                                                                                                                <option value="3">3000</option> 
+                                                                                                                <option value="4">4000</option> 
+                                                                                                                <option value="5">5000</option> 
+                                                                                                       </select></td>
+                                                                                                       <td><select                                                                                            
+                                                                                                              id="beg_month_inputselect"
+                                                                                                              name="beg_month_inputselect" >
+                                                                                                              <option value="">- Select -</option> 
+                                                                                                               <option value="1">1</option> 
+                                                                                                                <option value="2">2</option> 
+                                                                                                                <option value="3">3</option> 
+                                                                                                                <option value="4">4</option> 
+                                                                                                                <option value="5">5</option> 
+                                                                                                       </select></td>
+                                                                                                       <td><select                                                                                            
+                                                                                                              id="end_month_inputselect"
+                                                                                                              name="end_month_inputselect" >
+                                                                                                              <option value="">- Select -</option> 
+                                                                                                               <option value="1">1</option> 
+                                                                                                                <option value="2">2</option> 
+                                                                                                                <option value="3">3</option> 
+                                                                                                                <option value="4">4</option> 
+                                                                                                                <option value="5">5</option> 
+                                                                                                       </select></td></tr>
+                          </table></div></td>
                       </tr> -->
                                             <tr>
-                      	<td>1 &nbsp;&nbsp;<input id="calculate" type="checkbox" value="" >&nbsp; Calculate Accrual</td>
-                      	<td><div id="refreshdiv" style="display:none">
-                      	<div class="col-lg-4">
-		                      	<select
-										class="form-control input-sm m-bot15"
-										id="liable_period_inputselect"
-										name="liable_period_inputselect" style="margin-top: 15px;" disabled>
-										<!-- <option value="">- Select -</option> --> 
-		
-									</select>
-                      	</div></div></td>
+                          <td>1 &nbsp;&nbsp;<input id="calculate" type="checkbox" value="" >&nbsp; Calculate Accrual</td>
+                          <td><div id="refreshdiv" style="display:none">
+                          <div class="col-lg-4">
+                                        <select
+                                                                     class="form-control input-sm m-bot15"
+                                                                     id="liable_period_inputselect"
+                                                                     name="liable_period_inputselect" style="margin-top: 15px;" disabled>
+                                                                     <!-- <option value="">- Select -</option> --> 
+              
+                                                              </select>
+                          </div></div></td>
                       </tr>
                       <tr>
-                      	<td>2 &nbsp;&nbsp;<input id="review" type="checkbox" value="" >&nbsp; Reviewed Accrual</td>
-                      	<td><div id="reviewdiv" style="display:none">
-                      	<div class="col-lg-4 " ><input type="checkbox" value=""  name="copyaccrual" id="copyaccrual">&nbsp;Copy Accrual Data to CCM for Payout</div>
-<!--                       	<div class="col-lg-4 " ><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable"></div>
-                      	<a href="#"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a> -->
-                      	 <div class="col-lg-4" id="copy_accrual_period" style="display:none">
-		                      	<select
-										class="form-control input-sm m-bot15"
-										id="review_period_inputselect"
-										name="period_inputselect" style="margin-top: 15px;">
-										<!-- <option value="">- Select -</option> --> 
-		
-									</select>
-                      	</div>
-                      	<br>
-                      	<div class="col-lg-4 " ><input type="checkbox" value="" name="bookName" id="bookName"> &nbsp;Book Name </div>
-                      	<!-- <div class="col-lg-4 "><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable">	</div> -->
-                      	  <div class="col-lg-4" id="addbookdiv" style="display:none">
-								<select
-									class="form-control input-sm m-bot15"
-									id="review_book_inputselect"
-									name="review_book_inputselect" style="margin-top: 15px;">
-									<!-- <option value="">- Select -</option>  -->
-								</select></div>
-                      	<a href="#" id="add_book" style="display:none"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a>
-                      	
-                      	</div>
-							</td>
+                          <td>2 &nbsp;&nbsp;<input id="review" type="checkbox" value="" >&nbsp; Reviewed Accrual</td>
+                          <td><div id="reviewdiv" style="display:none">
+                          <div class="col-lg-4 " ><input type="checkbox" value=""  name="copyaccrual" id="copyaccrual">&nbsp;Copy Accrual Data to CCM for Payout</div>
+<!--                             <div class="col-lg-4 " ><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable"></div>
+                          <a href="#"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a> -->
+                           <div class="col-lg-4" id="copy_accrual_period" style="display:none">
+                                        <select
+                                                                     class="form-control input-sm m-bot15"
+                                                                     id="review_period_inputselect"
+                                                                     name="period_inputselect" style="margin-top: 15px;">
+                                                                     <!-- <option value="">- Select -</option> --> 
+              
+                                                              </select>
+                          </div>
+                          <br>
+                          <div class="col-lg-4 " ><input type="checkbox" value="" name="bookName" id="bookName"> &nbsp;Book Name </div>
+                          <!-- <div class="col-lg-4 "><input class="form-control radio-inline m-bot15" type="text" value=""  name="liable" id="liable">    </div> -->
+                            <div class="col-lg-4" id="addbookdiv" style="display:none">
+                                                       <select
+                                                              class="form-control input-sm m-bot15"
+                                                              id="review_book_inputselect"
+                                                              name="review_book_inputselect" style="margin-top: 15px;">
+                                                              <!-- <option value="">- Select -</option>  -->
+                                                       </select></div>
+                          <a href="#" id="add_book" style="display:none"><button data-dismiss="modal" class="btn btn-default" id="add" type="button">Add</button></a>
+                          
+                          </div>
+                                                </td>
                       </tr>
                       <tr>
-                      	<td>3 &nbsp;&nbsp;<input id="pytd" type="checkbox" value="" >&nbsp; Update PYTD</td>
-                      	<td><div id="pytddiv" style="display:none">
-                      	<div class="col-lg-4"><input type="radio" value="" checked name="pytd_select" id="pytd_current">&nbsp;Current Accrual Data</div>
-                      	<br>
-                      	<div class="col-lg-4"><input type="radio" value="" name="pytd_select" id="pytd_select"> &nbsp;From the Book List (Select a Book Label) </div>
-                      	<div id="pytd_select_div" class="col-lg-4" style="display:none">
-								<select
-									class="form-control input-sm m-bot15"
-									id="pytd_book_inputselect"
-									name="pytd_book_inputselect" style="margin-top: 15px;">
-									<!-- <option value="">- Select -</option> 
-									 <option value="1">1000</option> 
-									  <option value="2">2000</option> 
-									  <option value="3">3000</option> 
-									  <option value="4">4000</option> 
-									  <option value="5">5000</option>  -->
-								</select></div></div>
-							</td>
+                          <td>3 &nbsp;&nbsp;<input id="pytd" type="checkbox" value="" >&nbsp; Update PYTD</td>
+                          <td><div id="pytddiv" style="display:none">
+                          <div class="col-lg-4"><input type="radio" value="" checked name="pytd_select" id="pytd_current">&nbsp;Current Accrual Data</div>
+                          <br>
+                          <div class="col-lg-4"><input type="radio" value="" name="pytd_select" id="pytd_select"> &nbsp;From the Book List (Select a Book Label) </div>
+                          <div id="pytd_select_div" class="col-lg-4" style="display:none">
+                                                       <select
+                                                              class="form-control input-sm m-bot15"
+                                                              id="pytd_book_inputselect"
+                                                              name="pytd_book_inputselect" style="margin-top: 15px;">
+                                                              <!-- <option value="">- Select -</option> 
+                                                               <option value="1">1000</option> 
+                                                                <option value="2">2000</option> 
+                                                                <option value="3">3000</option> 
+                                                                <option value="4">4000</option> 
+                                                                <option value="5">5000</option>  -->
+                                                       </select></div></div>
+                                                </td>
                       </tr>
                        <tr>
-                      	<td>4 &nbsp;&nbsp;<input id="cytd" type="checkbox" value="" >&nbsp; Update CYTD</td>
-                      	<td><div id="cytddiv" style="display:none"><div class="col-lg-4 "><input type="radio" value="" checked name="cytd_select" id="cytd_current">&nbsp;Current Accrual Data</div>
-                      	
-                      	<br>
-                      	<div class="col-lg-4 "><input type="radio" value="" name="cytd_select" id="cytd_select"> &nbsp;From the Book List (Select a Book Label)</div>
-                      	<div id="cytd_select_div"  class="col-lg-4 " style="display:none">
-										<select
-											class="form-control input-sm m-bot15"
-											id="cytd_book_inputselect"
-											name="cytd_book_inputselect" style="margin-top: 15px;">
-											<!-- <option value="">- Select -</option> 
-											 <option value="1">1000</option> 
-											  <option value="2">2000</option> 
-											  <option value="3">3000</option> 
-											  <option value="4">4000</option> 
-											  <option value="5">5000</option>  -->
-										</select></div></div>
-									</td>
+                          <td>4 &nbsp;&nbsp;<input id="cytd" type="checkbox" value="" >&nbsp; Update CYTD</td>
+                          <td><div id="cytddiv" style="display:none"><div class="col-lg-4 "><input type="radio" value="" checked name="cytd_select" id="cytd_current">&nbsp;Current Accrual Data</div>
+                          
+                          <br>
+                          <div class="col-lg-4 "><input type="radio" value="" name="cytd_select" id="cytd_select"> &nbsp;From the Book List (Select a Book Label)</div>
+                          <div id="cytd_select_div"  class="col-lg-4 " style="display:none">
+                                                                     <select
+                                                                           class="form-control input-sm m-bot15"
+                                                                            id="cytd_book_inputselect"
+                                                                            name="cytd_book_inputselect" style="margin-top: 15px;">
+                                                                           <!-- <option value="">- Select -</option> 
+                                                                            <option value="1">1000</option> 
+                                                                             <option value="2">2000</option> 
+                                                                             <option value="3">3000</option> 
+                                                                              <option value="4">4000</option> 
+                                                                             <option value="5">5000</option>  -->
+                                                                     </select></div></div>
+                                                              </td>
                       </tr>
                       </table>
                       
@@ -398,160 +398,160 @@
                           
                          
                       </div>
-													
-												<!-- END ROW 3 & Program Details section-->
+                                                                                         
+                                                                                  <!-- END ROW 3 & Program Details section-->
 
-												<div class="modal-content">
-																	<div class="modal-footer">
-																		<a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
-																			id="program-save-modal-cancel" type="button">Reset Process</button></a>
-																		<button onclick="calculateAccruals();"
-																				class="btn btn-info" id="program-save-modal-ok"
-																				type="button">
-																				<i class="fa fa-save"></i>&nbsp;&nbsp; Go
-																			</button>
-																	</div>
-																</div>
+                                                                                  <div class="modal-content">
+                                                                                                                     <div class="modal-footer">
+                                                                                                                           <a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
+                                                                                                                                  id="program-save-modal-cancel" type="button">Reset Process</button></a>
+                                                                                                                           <button onclick="calculateAccruals();"
+                                                                                                                                         class="btn btn-info" id="program-save-modal-ok"
+                                                                                                                                         type="button">
+                                                                                                                                         <i class="fa fa-save"></i>&nbsp;&nbsp; Go
+                                                                                                                                  </button>
+                                                                                                                     </div>
+                                                                                                              </div>
 
-												
-											</div> <!-- Div End - Program Detail-->
+                                                                                  
+                                                                           </div> <!-- Div End - Program Detail-->
 
-											<!-- END ROW 4 -->
+                                                                           <!-- END ROW 4 -->
 
-											<!-- Start ROW 8 -->
-											<div class="clearfix"></div>
-											<div class="clearfix"></div>
-														
-														
-														<div class="modal fade" id="booklistdiv" tabindex="-1"
-															role="dialog" aria-labelledby="myModalLabel"
-															aria-hidden="true" data-backdrop="static" data-keyboard="false" >
-															<div class="modal-dialog">
-																<div class="modal-content" style="width:900px">
-																	<div class="modal-header">
-																		<button id="program-error-modal-close" type="button"
-																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-																		<h4 class="modal-title">Accrual Book List </h4>
-																	</div>
-																	<div class="modal-body">
-																		<!-- <div class="space15">&nbsp;</div> -->
-																		<div class="text-center">
-																			<span id="bookcontent"></span>
-																			
-																			<table class="table table-striped table-hover table-bordered" id="booklist">
-																			<thead>
-																			<tr class="rowvis" style="background-color: #cacbce;">
-																			<th>Book Label</th>
-														                    <th>Book Date</th>
-																			<th>Book Of Record</th>
-																			<th>Create Date</th>
-														                    <th>Create By</th>
-														                    <th>Action</th>
-																			</tr>
-																			</thead>
-																			
-													                              <tbody>
-													                                                       
-													                              </tbody>
-													                      </table> 
-													                      
-																		<div class="modal-content">
-																							<div class="modal-footer">
-																								 <!-- <a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
-																									id="program-save-modal-cancel" type="button">Delete Marked</button></a> -->
-																								 <button class="btn btn-info" style="float:left" type="button"
-																									id="program-error-modal-ok" data-toggle="modal"
-																									href="#booklistdiv">
-																									<!-- <i class="fa fa-save"> --></i>&nbsp;&nbsp;Close
-																								</button>
-																								 <button
-																										class="btn btn-info" id="program-save-modal-ok"
-																										type="button" onclick="deleteBookList();">
-																										<!-- <i class="fa fa-save"></i> -->&nbsp;&nbsp; Delete Marked Records
-																									</button>  
-																							</div>
-																						</div>
-													                      
-																			
-																			
-																		</div>
-																		<!-- <div class="space15"></div> -->
-																	</div>
-																	<!-- <div class="modal-footer">
-																		<button class="btn btn-info" type="button"
-																			id="program-error-modal-ok" data-toggle="modal"
-																			href="#booklistdiv">
-																			<i class="fa fa-save"></i>&nbsp;&nbsp;Close
-																		</button>
-																	</div> -->
-																</div>
-															</div>
-														</div>
-														<div class="modal fade" id="myModal1" tabindex="-1"
-															role="dialog" aria-labelledby="myModalLabel"
-															aria-hidden="true">
-															<div class="modal-dialog">
-																<div class="modal-content" style="border: thin solid grey">
-																	<div class="modal-header">
-																		<button id="program-confirmation-modal-close"
-																			type="button" class="close" data-dismiss="modal"
-																			aria-hidden="true">&times;</button>
-																		<h4 class="modal-title">Confirmation</h4>
-																	</div>
-																	<div class="modal-body">
-																		<!-- <div class="space15">&nbsp;</div> -->
-																		<div class="text-center">
-																			<span id="confirmMessage"></span>
-																		</div>
-																		<!-- <div class="space15"></div> -->
-																	</div>
-																	<div class="modal-footer">
-																		<button class="btn btn-info" type="button"
-																			id="program-confirmation-modal-ok"
-																			data-toggle="modal" href="#myModal1">
-																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																		</button>
-																	</div>
-																</div>
-															</div>
-														</div>
-														
-														<div class="modal fade" id="myModal2" tabindex="-1"
-															role="dialog" aria-labelledby="myModalLabel"
-															aria-hidden="true" >
-															<div class="modal-dialog">
-																<div class="modal-content" style="border: thin solid grey">
-																	<div class="modal-header">
-																		<button id="program-error-modal-close" type="button"
-																			class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-																		<h4 class="modal-title">Error / Warning (s)</h4>
-																	</div>
-																	<div class="modal-body">
-																		<!-- <div class="space15">&nbsp;</div> -->
-																		<div class="text-center">
-																			<span id="errorMessageModal"></span>
-																		</div>
-																		<!-- <div class="space15"></div> -->
-																	</div>
-																	<div class="modal-footer">
-																		<button class="btn btn-info" type="button"
-																			id="program-error-modal-ok" data-toggle="modal"
-																			href="#myModal2">
-																			<i class="fa fa-save"></i>&nbsp;&nbsp;OK
-																		</button>
-																	</div>
-																</div>
-															</div>
-														</div>
-														
-														
-														
-											<!-- END ROW 8 -->
-	<div class="loader">
+                                                                           <!-- Start ROW 8 -->
+                                                                           <div class="clearfix"></div>
+                                                                           <div class="clearfix"></div>
+                                                                                                
+                                                                                                
+                                                                                                <div class="modal fade" id="booklistdiv" tabindex="-1"
+                                                                                                       role="dialog" aria-labelledby="myModalLabel"
+                                                                                                       aria-hidden="true" data-backdrop="static"ï¿½data-keyboard="false" >
+                                                                                                       <div class="modal-dialog">
+                                                                                                              <div class="modal-content" style="width:900px">
+                                                                                                                     <div class="modal-header">
+                                                                                                                           <button id="program-error-modal-close" type="button"
+                                                                                                                                  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                                                           <h4 class="modal-title">Accrual Book List </h4>
+                                                                                                                     </div>
+                                                                                                                     <div class="modal-body">
+                                                                                                                           <!-- <div class="space15">&nbsp;</div> -->
+                                                                                                                           <div class="text-center">
+                                                                                                                                  <span id="bookcontent"></span>
+                                                                                                                                  
+                                                                                                                                  <table class="table table-striped table-hover table-bordered" id="booklist">
+                                                                                                                                  <thead>
+                                                                                                                                  <tr class="rowvis" style="background-color: #cacbce;">
+                                                                                                                                  <th>Book Label</th>
+                                                                                                                    <th>Book Date</th>
+                                                                                                                                  <th>Book Of Record</th>
+                                                                                                                                  <th>Create Date</th>
+                                                                                                                    <th>Create By</th>
+                                                                                                                    <th>Action</th>
+                                                                                                                                  </tr>
+                                                                                                                                  </thead>
+                                                                                                                                  
+                                                                                                                       <tbody>
+                                                                                                                                                
+                                                                                                                       </tbody>
+                                                                                                               </table> 
+                                                                                                               
+                                                                                                                           <div class="modal-content">
+                                                                                                                                                              <div class="modal-footer">
+                                                                                                                                                                     <!-- <a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
+                                                                                                                                                                           id="program-save-modal-cancel" type="button">Delete Marked</button></a> -->
+                                                                                                                                                                     <button class="btn btn-info" style="float:left" type="button"
+                                                                                                                                                                           id="program-error-modal-ok" data-toggle="modal"
+                                                                                                                                                                           href="#booklistdiv">
+                                                                                                                                                                           <!-- <i class="fa fa-save"> --></i>&nbsp;&nbsp;Close
+                                                                                                                                                                     </button>
+                                                                                                                                                                     <button
+                                                                                                                                                                                  class="btn btn-info" id="program-save-modal-ok"
+                                                                                                                                                                                  type="button" onclick="deleteBookList();">
+                                                                                                                                                                                  <!-- <i class="fa fa-save"></i> -->&nbsp;&nbsp; Delete Marked Records
+                                                                                                                                                                           </button>  
+                                                                                                                                                              </div>
+                                                                                                                                                       </div>
+                                                                                                               
+                                                                                                                                  
+                                                                                                                                  
+                                                                                                                           </div>
+                                                                                                                           <!-- <div class="space15"></div> -->
+                                                                                                                     </div>
+                                                                                                                     <!-- <div class="modal-footer">
+                                                                                                                           <button class="btn btn-info" type="button"
+                                                                                                                                  id="program-error-modal-ok" data-toggle="modal"
+                                                                                                                                  href="#booklistdiv">
+                                                                                                                                  <i class="fa fa-save"></i>&nbsp;&nbsp;Close
+                                                                                                                           </button>
+                                                                                                                     </div> -->
+                                                                                                              </div>
+                                                                                                       </div>
+                                                                                                </div>
+                                                                                                <div class="modal fade" id="myModal1" tabindex="-1"
+                                                                                                       role="dialog" aria-labelledby="myModalLabel"
+                                                                                                       aria-hidden="true">
+                                                                                                       <div class="modal-dialog">
+                                                                                                              <div class="modal-content" style="border: thin solid grey">
+                                                                                                                     <div class="modal-header">
+                                                                                                                           <button id="program-confirmation-modal-close"
+                                                                                                                                  type="button" class="close" data-dismiss="modal"
+                                                                                                                                  aria-hidden="true">&times;</button>
+                                                                                                                           <h4 class="modal-title">Confirmation</h4>
+                                                                                                                     </div>
+                                                                                                                     <div class="modal-body">
+                                                                                                                           <!-- <div class="space15">&nbsp;</div> -->
+                                                                                                                           <div class="text-center">
+                                                                                                                                  <span id="confirmMessage"></span>
+                                                                                                                           </div>
+                                                                                                                           <!-- <div class="space15"></div> -->
+                                                                                                                     </div>
+                                                                                                                     <div class="modal-footer">
+                                                                                                                           <button class="btn btn-info" type="button"
+                                                                                                                                  id="program-confirmation-modal-ok"
+                                                                                                                                  data-toggle="modal" href="#myModal1">
+                                                                                                                                  <i class="fa fa-save"></i>&nbsp;&nbsp;OK
+                                                                                                                           </button>
+                                                                                                                     </div>
+                                                                                                              </div>
+                                                                                                       </div>
+                                                                                                </div>
+                                                                                                
+                                                                                                <div class="modal fade" id="myModal2" tabindex="-1"
+                                                                                                       role="dialog" aria-labelledby="myModalLabel"
+                                                                                                       aria-hidden="true" >
+                                                                                                       <div class="modal-dialog">
+                                                                                                              <div class="modal-content" style="border: thin solid grey">
+                                                                                                                     <div class="modal-header">
+                                                                                                                           <button id="program-error-modal-close" type="button"
+                                                                                                                                  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                                                           <h4 class="modal-title">Error / Warning (s)</h4>
+                                                                                                                     </div>
+                                                                                                                     <div class="modal-body">
+                                                                                                                           <!-- <div class="space15">&nbsp;</div> -->
+                                                                                                                           <div class="text-center">
+                                                                                                                                  <span id="errorMessageModal"></span>
+                                                                                                                           </div>
+                                                                                                                           <!-- <div class="space15"></div> -->
+                                                                                                                     </div>
+                                                                                                                     <div class="modal-footer">
+                                                                                                                           <button class="btn btn-info" type="button"
+                                                                                                                                  id="program-error-modal-ok" data-toggle="modal"
+                                                                                                                                  href="#myModal2">
+                                                                                                                                  <i class="fa fa-save"></i>&nbsp;&nbsp;OK
+                                                                                                                           </button>
+                                                                                                                     </div>
+                                                                                                              </div>
+                                                                                                       </div>
+                                                                                                </div>
+                                                                                                
+                                                                                                
+                                                                                                
+                                                                           <!-- END ROW 8 -->
+       <div class="loader">
     <img src="resources/img/Processing.gif">
   </div>
-											</div>
-											</section>
+                                                                           </div>
+                                                                           </section>
       <!---- END Review / Confirm Section -->
       </div>
        </form>
@@ -633,687 +633,806 @@
              });
          }
 
-         
+        
          function resetChanges(){
-        	 document.getElementById("wizard-validation-form").reset();
-        	 $('#pytddiv').hide();
-        	 $('#cytddiv').hide();
-        	 $('#refreshdiv').hide();
-        	 $('#reviewdiv').hide();
+              document.getElementById("wizard-validation-form").reset();
+              $('#pytddiv').hide();
+              $('#cytddiv').hide();
+              $('#refreshdiv').hide();
+              $('#reviewdiv').hide();
          }
          
-         function calculateAccruals(){
-        	 
-        	var select=false; 
- 			if($('#calculate').is(':checked')){
- 				select=true; 
- 				calculateLiability(); 				
- 			}
- 			
- 			if($('#review').is(':checked')){
- 				
- 				if($('#copyaccrual').is(':checked')){
- 					select=true; 
- 					reviewLiabilityCCM();
- 				}
+        function calculateAccruals(){
+        	var accrualProcess = [];
+        	var arrLength = 0;
+        	if($('#calculate').is(':checked')){
+        		accrualProcess[arrLength] = 'calculateLiability';
+        		arrLength++;
+        	}
+        	if($('#review').is(':checked')){
+				if($('#copyaccrual').is(':checked')){
+					accrualProcess[arrLength] = 'reviewLiabilityCCM';
+        			arrLength++;
+				}
 				if($('#bookName').is(':checked')){
-					select=true; 
-					reviewLiabilityBook();
- 				}
- 				
- 			}
- 			
-			if($('#pytd').is(':checked')){
-				
-				if($('#pytd_current').is(':checked')){
-					select=true; 
-					updatePYTD();
- 				}
-				if($('#pytd_select').is(':checked')){
-					select=true; 
-					updatePYTDBook();
- 				}
- 			}
-			
-			if($('#cytd').is(':checked')){
-				
-				if($('#cytd_current').is(':checked')){
-					select=true; 
-					updateCYTD();
- 				}
-				if($('#cytd_select').is(':checked')){
-					select=true; 
-					updateCYTDBook();
- 				}
-		
-			}
-			if(!select){
-				message="Kindly select atleast one option to execute";		        		
-        		$("#errorMessageModal").html(message);
-				$('#myModal2').modal('toggle');
-			}
+					accrualProcess[arrLength] = 'reviewLiabilityBook';
+        			arrLength++;
+				}
+        	}
+        	if($('#pytd').is(':checked')){
+        		if($('#pytd_current').is(':checked')){
+					accrualProcess[arrLength] = 'updatePYTD';
+        			arrLength++;        		
+        		}
+        		if($('#pytd_select').is(':checked')){
+					accrualProcess[arrLength] = 'updatePYTDBook';
+        			arrLength++;        		
+        		}
+        	}
+        	if($('#cytd').is(':checked')){
+        		if($('#cytd_current').is(':checked')){
+					accrualProcess[arrLength] = 'updateCYTD';                         
+                 }
+                 if($('#cytd_select').is(':checked')){
+					accrualProcess[arrLength] = 'updateCYTDBook';
+                 }
+        	}
+        
+        	calCalculateAccruals(accrualProcess);
+        }
+         
+         function calCalculateAccruals(accrualProcess){
+             var required = accrualProcess[0];
+             var select=false; 
+                     if($('#calculate').is(':checked')){
+                          select=true; 
+                           if(required==='calculateLiability'){
+                                 calculateLiability(accrualProcess); 
+                           }
+                    }
+                    
+                     if($('#review').is(':checked')){
+                          
+                           if($('#copyaccrual').is(':checked')){
+                                 select=true; 
+                                  if(required==='reviewLiabilityCCM'){
+                                        reviewLiabilityCCM(accrualProcess); 
+                                  }
+                                 
+                           }
+                           if($('#bookName').is(':checked')){
+                                  select=true; 
+                                  if(required==='reviewLiabilityBook'){
+                                         reviewLiabilityBook(accrualProcess); 
+                                  }
+                          }
+                          
+                     }
+                    
+                     if($('#pytd').is(':checked')){
+                           
+                           if($('#pytd_current').is(':checked')){
+                                  select=true; 
+                                  if(required==='updatePYTD'){
+                                         updatePYTD(accrualProcess); 
+                                  }
+                                                                     
+                          }
+                           if($('#pytd_select').is(':checked')){
+                                  select=true;
+                                  if(required==='updatePYTDBook'){
+                                         updatePYTDBook(accrualProcess); 
+                                  }
+                                  
+                          }
+                    }
+                     
+                     if($('#cytd').is(':checked')){
+                           
+                           if($('#cytd_current').is(':checked')){
+                                  select=true; 
+                                  if(required==='updateCYTD'){
+                                         updateCYTD(accrualProcess); 
+                                  }
+                                  
+                           }
+                           if($('#cytd_select').is(':checked')){
+                                  select=true;
+                                  if(required==='updateCYTDBook'){
+                                         updateCYTDBook(accrualProcess); 
+                                  }
+                                  
+                          }
+              
+                     }
+                     if(!select){
+                           message="Kindly select atleast one option to execute";                                  
+                    $("#errorMessageModal").html(message);
+                           $('#myModal2').modal('toggle');
+                     }
          }
          
-         function calculateLiability(){
-       	
-        	var liablePeriod= parseInt($('#liable_period_inputselect').val());
-        	 $.ajax({ 
-                	type: "POST",
-                	dataType: "json",
-               		url: '/SIM/accrual/v1/calcLiability',
-               		contentType: 'application/json',
-               		dataType: "text",
-        			data: JSON.stringify(liablePeriod),
-        			beforeSend: function(){
-        				  $('.loader').show();
- 				    },
- 				    complete: function(){
- 				    	 $('.loader').hide();
- 				    },
- 				   success: function(response){
-         	        	if(response=="success"){
-         	        		message="Data Submitted Successfully";
-       	            	$("#confirmMessage").html(message);
-       					$('#myModal1').modal('toggle');
-       	        	}else{
-       	        		message="Issue occured while processing your request. Please try again later.";		        		
-       	        		$("#errorMessageModal").html(message);
-       					$('#myModal2').modal('toggle');
+         function calculateLiability(accrualProcess){
+             
+             var liablePeriod= parseInt($('#liable_period_inputselect').val());
+              $.ajax({ 
+                    type: "POST",
+                    dataType: "json",
+                           url: '/SIM/accrual/v1/calcLiability',
+                           contentType: 'application/json',
+                           dataType: "text",
+                           data: JSON.stringify(liablePeriod),
+                           beforeSend: function(){
+                                    $('.loader').show();
+                              },
+                              complete: function(){
+                                  $('.loader').hide();
+                              },
+                             success: function(response){
+                          if(response=="success"){
+                                 message="Data Submitted Successfully";
+                                 accrualProcess.splice(0, 1);
+                                 calCalculateAccruals(accrualProcess);
+                          $("#confirmMessage").html(message);
+                                         $('#myModal1').modal('toggle');
+                          }else{
+                                 message="Issue occured while processing your request. Please try again later.";                             
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
 
-         	        	}
-                 	},
-                 	beforeSend: function(){
-     				  $('.loader').show();
-				    },
-				    complete: function(){
-				    	 $('.loader').hide();
-				    },
-                	failure: function(response){
-                		message="Issue occured while processing your request. Please try again later.";		        		
-       	        		$("#errorMessageModal").html(message);
-       					$('#myModal2').modal('toggle');
-                	}});
+                          }
+                    },
+                    beforeSend: function(){
+                             $('.loader').show();
+                               },
+                               complete: function(){
+                                   $('.loader').hide();
+                               },
+                    failure: function(response){
+                         message="Issue occured while processing your request. Please try again later.";                                
+                         $("#errorMessageModal").html(message);
+                         $('#myModal2').modal('toggle');
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                         $("#errorMessageModal").html(message);
+                         $('#myModal2').modal('toggle');                    	
+               		}   
+
+                    });
          }
          
-         function reviewLiabilityCCM(){
-            	
-         	var liablePeriod= parseInt($('#review_period_inputselect').val());
-         	 $.ajax({ 
-                 	type: "POST",
-                 	dataType: "json",
-                		url: '/SIM/accrual/v1/reviewLiabilityCCM',
-                		contentType: 'application/json',
-                		dataType: "text",
-         			data: JSON.stringify(liablePeriod),
-         			success: function(response){
-          	        	if(response=="success"){
-          	        		message="Data Submitted Successfully";
-        	            	$("#confirmMessage").html(message);
-        					$('#myModal1').modal('toggle');
-        	        	}else{
-        	        		message="Issue occured while processing your request. Please try again later.";		        		
-        	        		$("#errorMessageModal").html(message);
-        					$('#myModal2').modal('toggle');
+         function reviewLiabilityCCM(accrualProcess){
+            
+             var liablePeriod= parseInt($('#review_period_inputselect').val());
+              $.ajax({ 
+                    type: "POST",
+                    dataType: "json",
+                           url: '/SIM/accrual/v1/reviewLiabilityCCM',
+                           contentType: 'application/json',
+                           dataType: "text",
+                           data: JSON.stringify(liablePeriod),
+                           success: function(response){
+                          if(response=="success"){
+                                 message="Data Submitted Successfully";
+                                 accrualProcess.splice(0, 1);
+                                 calCalculateAccruals(accrualProcess);
+                          $("#confirmMessage").html(message);
+                                         $('#myModal1').modal('toggle');
+                          }else{
+                                 message="Issue occured while processing your request. Please try again later.";                             
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
 
-          	        	}
-                  	},
-                  	beforeSend: function(){
-      				  $('.loader').show();
-				    },
-				    complete: function(){
-				    	 $('.loader').hide();
-				    },
-                 	failure: function(response){
-                 		message="Issue occured while processing your request. Please try again later.";		        		
-       	        		$("#errorMessageModal").html(message);
-       					$('#myModal2').modal('toggle');
-                 	}});
+                          }
+                    },
+                    beforeSend: function(){
+                             $('.loader').show();
+                               },
+                               complete: function(){
+                                   $('.loader').hide();
+                               },
+                    failure: function(response){
+                           message="Issue occured while processing your request. Please try again later.";                                
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                         $("#errorMessageModal").html(message);
+                         $('#myModal2').modal('toggle');                    	
+               		}  
+                    
+                    });
           }
          
-         function reviewLiabilityBook(){
-         	
-          	var liablePeriod= $('#review_book_inputselect').val();
-          	 $.ajax({ 
-                  	type: "POST",
-                  	dataType: "json",
-                 		url: '/SIM/accrual/v1/reviewLiabilityBook',
-                 		contentType: 'application/json',
-                 		dataType: "text",
-          			data: JSON.stringify(liablePeriod),
-                  	success: function(response){
-          	        	if(response=="success"){
-          	        		message="Data Submitted Successfully";
-        	            	$("#confirmMessage").html(message);
-        					$('#myModal1').modal('toggle');
-        	        	}else{
-        	        		message="Issue occured while processing your request. Please try again later.";		        		
-        	        		$("#errorMessageModal").html(message);
-        					$('#myModal2').modal('toggle');
+         function reviewLiabilityBook(accrualProcess){
+             
+             var liablePeriod= $('#review_book_inputselect').val();
+              $.ajax({ 
+                    type: "POST",
+                    dataType: "json",
+                           url: '/SIM/accrual/v1/reviewLiabilityBook',
+                           contentType: 'application/json',
+                           dataType: "text",
+                           data: JSON.stringify(liablePeriod),
+                    success: function(response){
+                          if(response=="success"){
+                                 message="Data Submitted Successfully";
+                                 accrualProcess.splice(0, 1);
+                                 calCalculateAccruals(accrualProcess);
+                          $("#confirmMessage").html(message);
+                                         $('#myModal1').modal('toggle');
+                          }else{
+                                 message="Issue occured while processing your request. Please try again later.";                             
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
 
-          	        	}
-                  	},
-                  	beforeSend: function(){
-      				  $('.loader').show();
-				    },
-				    complete: function(){
-				    	 $('.loader').hide();
-				    },
-                  	failure: function(response){
-                  		message="Issue occured while processing your request. Please try again later.";		        		
-       	        		$("#errorMessageModal").html(message);
-       					$('#myModal2').modal('toggle');
-                  	}});
+                          }
+                    },
+                    beforeSend: function(){
+                             $('.loader').show();
+                               },
+                               complete: function(){
+                                   $('.loader').hide();
+                               },
+                    failure: function(response){
+                           message="Issue occured while processing your request. Please try again later.";                                
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                         $("#errorMessageModal").html(message);
+                         $('#myModal2').modal('toggle');                    	
+               		} 
+                    
+                    });
            }
          
-         function updatePYTD(){
-          	
-           	 $.ajax({ 
-                   	type: "POST",
-                   	dataType: "json",
-                  		url: '/SIM/accrual/v1/updatePYTD',
-                  		contentType: 'application/json',
-                  		dataType: "text",
-           			//data: JSON.stringify(liablePeriod),
-                  		success: function(response){
-              	        	if(response=="success"){
-              	        		message="Data Submitted Successfully";
-            	            	$("#confirmMessage").html(message);
-            					$('#myModal1').modal('toggle');
-            	        	}else{
-            	        		message="Issue occured while processing your request. Please try again later.";		        		
-            	        		$("#errorMessageModal").html(message);
-            					$('#myModal2').modal('toggle');
+         function updatePYTD(accrualProcess){
+             
+              $.ajax({ 
+                    type: "POST",
+                   dataType: "json",
+                           url: '/SIM/accrual/v1/updatePYTD',
+                           contentType: 'application/json',
+                           dataType: "text",
+                           //data: JSON.stringify(liablePeriod),
+                           success: function(response){
+                                 if(response=="success"){
+                                        message="Data Submitted Successfully";
+                                        accrualProcess.splice(0, 1);
+                                 calCalculateAccruals(accrualProcess);
+                         $("#confirmMessage").html(message);
+                                         $('#myModal1').modal('toggle');
+                         }else{
+                                message="Issue occured while processing your request. Please try again later.";                             
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
 
-              	        	}
-                      	},
-                      	beforeSend: function(){
-          				  $('.loader').show();
-    				    },
-    				    complete: function(){
-    				    	 $('.loader').hide();
-    				    },
-                   	failure: function(response){
-                   		message="Issue occured while processing your request. Please try again later.";		        		
-       	        		$("#errorMessageModal").html(message);
-       					$('#myModal2').modal('toggle');
-                   	}});
+                                 }
+                          },
+                          beforeSend: function(){
+                                    $('.loader').show();
+                               },
+                               complete: function(){
+                                   $('.loader').hide();
+                               },
+                   failure: function(response){
+                           message="Issue occured while processing your request. Please try again later.";                                
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
+                   },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                         $("#errorMessageModal").html(message);
+                         $('#myModal2').modal('toggle');                    	
+               		} 
+               		                   
+                   });
             }
          
-         function updatePYTDBook(){
-           	
-            	var liablePeriod= $('#pytd_book_inputselect').val();
-            	 $.ajax({ 
-                    	type: "POST",
-                    	dataType: "json",
-                   		url: '/SIM/accrual/v1/updatePYTDBook',
-                   		contentType: 'application/json',
-                   		dataType: "text",
-            			data: JSON.stringify(liablePeriod),
-            			success: function(response){
-              	        	if(response=="success"){
-              	        		message="Data Submitted Successfully";
-            	            	$("#confirmMessage").html(message);
-            					$('#myModal1').modal('toggle');
-            	        	}else{
-            	        		message="Issue occured while processing your request. Please try again later.";		        		
-            	        		$("#errorMessageModal").html(message);
-            					$('#myModal2').modal('toggle');
+         function updatePYTDBook(accrualProcess){
+             
+             var liablePeriod= $('#pytd_book_inputselect').val();
+             $.ajax({ 
+                          type: "POST",
+                          dataType: "json",
+                           url: '/SIM/accrual/v1/updatePYTDBook',
+                           contentType: 'application/json',
+                           dataType: "text",
+                           data: JSON.stringify(liablePeriod),
+                           success: function(response){
+                                 if(response=="success"){
+                                        message="Data Submitted Successfully";
+                                        accrualProcess.splice(0, 1);
+                                 calCalculateAccruals(accrualProcess);
+                         $("#confirmMessage").html(message);
+                                         $('#myModal1').modal('toggle');
+                         }else{
+                                message="Issue occured while processing your request. Please try again later.";                             
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
 
-              	        	}
-                      	},
-                      	beforeSend: function(){
-          				  $('.loader').show();
-    				    },
-    				    complete: function(){
-    				    	 $('.loader').hide();
-    				    },
-                    	failure: function(response){
-                    		message="Issue occured while processing your request. Please try again later.";		        		
-           	        		$("#errorMessageModal").html(message);
-           					$('#myModal2').modal('toggle');
-                    	}});
+                                 }
+                          },
+                          beforeSend: function(){
+                                    $('.loader').show();
+                               },
+                               complete: function(){
+                                   $('.loader').hide();
+                               },
+                          failure: function(response){
+                                 message="Issue occured while processing your request. Please try again later.";                             
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
+                          },
+		                   error: function(XMLHttpRequest, textStatus, errorThrown) { 
+		                   		message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+		                        $("#errorMessageModal").html(message);
+		                        $('#myModal2').modal('toggle');                    	
+		              		}                           
+                          });
              }
          
-         function updateCYTD(){
-            	
-         	 $.ajax({ 
-                 	type: "POST",
-                 	dataType: "json",
-                		url: '/SIM/accrual/v1/updateCYTD',
-                		contentType: 'application/json',
-                		dataType: "text",
-         			//data: JSON.stringify(liablePeriod),
-                		success: function(response){
-              	        	if(response=="success"){
-              	        		message="Data Submitted Successfully";
-            	            	$("#confirmMessage").html(message);
-            					$('#myModal1').modal('toggle');
-            	        	}else{
-            	        		message="Issue occured while processing your request. Please try again later.";		        		
-            	        		$("#errorMessageModal").html(message);
-            					$('#myModal2').modal('toggle');
+         function updateCYTD(accrualProcess){
+            
+              $.ajax({ 
+                    type: "POST",
+                    dataType: "json",
+                           url: '/SIM/accrual/v1/updateCYTD',
+                           contentType: 'application/json',
+                           dataType: "text",
+                           //data: JSON.stringify(liablePeriod),
+                           success: function(response){
+                                 if(response=="success"){
+                                        message="Data Submitted Successfully";
+                                        accrualProcess.splice(0, 1);
+                                 calCalculateAccruals(accrualProcess);
+                          $("#confirmMessage").html(message);
+                                         $('#myModal1').modal('toggle');
+                         }else{
+                                message="Issue occured while processing your request. Please try again later.";                             
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
 
-              	        	}
-                      	},
-                      	beforeSend: function(){
-          				  $('.loader').show();
-    				    },
-    				    complete: function(){
-    				    	 $('.loader').hide();
-    				    },
-                 	failure: function(response){
-                 		message="Issue occured while processing your request. Please try again later.";		        		
-       	        		$("#errorMessageModal").html(message);
-       					$('#myModal2').modal('toggle');
-                 	}});
+                                 }
+                          },
+                          beforeSend: function(){
+                                    $('.loader').show();
+                               },
+                               complete: function(){
+                                   $('.loader').hide();
+                               },
+                    failure: function(response){
+                           message="Issue occured while processing your request. Please try again later.";                                
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                         $("#errorMessageModal").html(message);
+                         $('#myModal2').modal('toggle');                    	
+               		}                     
+                    });
           }
          
-         function updateCYTDBook(){
-         	
-          	var liablePeriod= $('#cytd_book_inputselect').val();
-          	 $.ajax({ 
-                  	type: "POST",
-                  	dataType: "json",
-                 		url: '/SIM/accrual/v1/updateCYTDBook',
-                 		contentType: 'application/json',
-                 		dataType: "text",
-          			data: JSON.stringify(liablePeriod),
-          			success: function(response){
-          	        	if(response=="success"){
-          	        		message="Data Submitted Successfully";
-        	            	$("#confirmMessage").html(message);
-        					$('#myModal1').modal('toggle');
-        	        	}else{
-        	        		message="Issue occured while processing your request. Please try again later.";		        		
-        	        		$("#errorMessageModal").html(message);
-        					$('#myModal2').modal('toggle');
+         function updateCYTDBook(accrualProcess){
+             
+             var liablePeriod= $('#cytd_book_inputselect').val();
+              $.ajax({ 
+                    type: "POST",
+                    dataType: "json",
+                           url: '/SIM/accrual/v1/updateCYTDBook',
+                           contentType: 'application/json',
+                           dataType: "text",
+                           data: JSON.stringify(liablePeriod),
+                           success: function(response){
+                          if(response=="success"){
+                                 message="Data Submitted Successfully";
+                                 accrualProcess.splice(0, 1);
+                                 calCalculateAccruals(accrualProcess);;
+                          $("#confirmMessage").html(message);
+                                         $('#myModal1').modal('toggle');
+                          }else{
+                                 message="Issue occured while processing your request. Please try again later.";                             
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
 
-          	        	}
-                  	},
-                  	beforeSend: function(){
-      				  $('.loader').show();
-				    },
-				    complete: function(){
-				    	 $('.loader').hide();
-				    },
-                  	failure: function(response){
-                  		message="Issue occured while processing your request. Please try again later.";		        		
-       	        		$("#errorMessageModal").html(message);
-       					$('#myModal2').modal('toggle');
-                  	}});
+                          }
+                    },
+                    beforeSend: function(){
+                             $('.loader').show();
+                               },
+                               complete: function(){
+                                   $('.loader').hide();
+                               },
+                    failure: function(response){
+                           message="Issue occured while processing your request. Please try again later.";                                
+                                 $("#errorMessageModal").html(message);
+                                         $('#myModal2').modal('toggle');
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                         $("#errorMessageModal").html(message);
+                         $('#myModal2').modal('toggle');                    	
+               		}                     
+                    
+                    });
            }
          
 
          
- 		 function fnPopulateDropdown(elementId, items){
-			 
-			 if(items != null){
-	         		$.each(items, function (i, item) {
-					    $('#'+ elementId).append($('<option>', { 
-					        value: item.value,
-					        text : item.key 
-					    }));
-					});
-	         	}
-			 //code to select the default value in period dropdown
-	         	if((elementId=='liable_period_inputselect')||(elementId=='review_period_inputselect')||(elementId=='accrual_period_inputselect')){
-					var currentDate=new Date();
-	      			var currentMonth=currentDate.getMonth().toString();
-	      			var currentYear=currentDate.getFullYear();
-	      			if(currentMonth.length==1){
-	      				if(currentMonth==0){
-	      					currentMonth=12;
-	      					currentYear=currentYear-1;
-	      				}
-	      				currentMonth='0'+currentMonth;
-	      			}
-	      			period=currentYear+''+currentMonth+'01';
-	      			$('#liable_period_inputselect').val(period);
-	      			$('#review_period_inputselect').val(period);
-	      			$('#accrual_period_inputselect').val(period);
-	      		}
-	         	
-			}
- 		 
- 		function createBookList(){
- 			 if(($('#booklabelnew').val()=='')||($('#bookdatenew').val()=='')){
- 				 message="Kindly enter the Book Label and Book Date.";		        		
- 		 		 $("#errorMessageModal").html(message);
- 					$('#myModal2').modal('toggle');
- 				 return;
- 			 }
- 			 var dalBookList = new Object();
- 			 dalBookList.bookLabel=$('#booklabelnew').val();
- 			 if($('#bookRecordnew').is(':checked')){
- 				 dalBookList.bookRecord='1';
- 			 }else{
- 				 dalBookList.bookRecord='0';
- 			 }	 
- 			 dalBookList.bookDate=Date.parse($('#bookdatenew').val());
- 			 
- 			 
- 			 $.ajax({ 
- 		        	type: "POST",
- 		        	dataType: "json",
- 		       		url: '/SIM/accrual/v1/createBookList',
- 		       		contentType: 'application/json',
- 		       		dataType: "text",
- 					data: JSON.stringify(dalBookList),
- 		        	success: function(response){
- 			        	if(response=="success"){
- 	 			        	table.ajax.url('/SIM/accrual/v1/getBookList').load();
- 			            	message="Data Saved Successfully";
- 			            	$("#confirmMessage").html(message);
- 							$('#myModal1').modal('toggle');
- 							refreshBookLabel();
- 							$('#booklistdiv').modal('toggle');
- 							
- 			        	}else if(response=="duplicate"){
- 			        		message="The Book Label "+dalBookList.bookLabel+" is already present. Kindly choose a different Label";		        		
- 			        		$("#errorMessageModal").html(message);
- 							$('#myModal2').modal('toggle');
- 							
- 			        	}else{
- 			        		message="Issue occured while processing your request. Please try again later.";		        		
- 			        		$("#errorMessageModal").html(message);
- 							$('#myModal2').modal('toggle');
- 			        	}
- 					
- 		        	},
- 		        	failure: function(response){
- 		        		message="Issue occured while processing your request. Please try again later.";		        		
-			        		$("#errorMessageModal").html(message);
-							$('#myModal2').modal('toggle');
- 		        	}}); 				 
- 		 }
- 		 
- 		function refreshBookLabel(){
- 			
- 			 $.ajax({ 
-  	           	type: "GET",
-  	           	dataType: "json",
-  	            cache: false,
-  	          	url: '/SIM/accrual/v1/getAccrualDropDown',
-  	           	success: function(response){
-  	           	$("#review_book_inputselect").empty();
-  	        	fnPopulateDropdown('review_book_inputselect', response.bookLabelList);
-  	        	$("#pytd_book_inputselect").empty();
-  	        	fnPopulateDropdown('pytd_book_inputselect', response.bookLabelList);
-  	        	$("#cytd_book_inputselect").empty();
-  	        	fnPopulateDropdown('cytd_book_inputselect', response.bookLabelList);
-  	           	},
-  	           	failure: function(response){
-  	           		alert("Wrongly done");
-  	           	}
-  		   });
- 		}
- 		 
- 		 function populateDeleteList(event){
- 				var id=(event.id).substring(6);
+               function fnPopulateDropdown(elementId, items){
+                     
+                      if(items != null){
+                           $.each(items, function (i, item) {
+                                      $('#'+ elementId).append($('<option>', { 
+                                          value: item.value,
+                                          text : item.key 
+                                      }));
+                                  });
+                    }
+                     //code to select the default value in period dropdown
+                if((elementId=='liable_period_inputselect')||(elementId=='review_period_inputselect')||(elementId=='accrual_period_inputselect')){
+                                  var currentDate=new Date();
+                           var currentMonth=currentDate.getMonth().toString();
+                           var currentYear=currentDate.getFullYear();
+                           if(currentMonth.length==1){
+                                  if(currentMonth==0){
+                                         currentMonth=12;
+                                         currentYear=currentYear-1;
+                                  }
+                                  currentMonth='0'+currentMonth;
+                           }
+                           period=currentYear+''+currentMonth+'01';
+                           $('#liable_period_inputselect').val(period);
+                           $('#review_period_inputselect').val(period);
+                           $('#accrual_period_inputselect').val(period);
+                    }
+                    
+                     }
+              
+              function createBookList(){
+                     if(($('#booklabelnew').val()=='')||($('#bookdatenew').val()=='')){
+                           message="Kindly enter the Book Label and Book Date.";                                  
+                             $("#errorMessageModal").html(message);
+                                 $('#myModal2').modal('toggle');
+                           return;
+                     }
+                     var dalBookList = new Object();
+                     dalBookList.bookLabel=$('#booklabelnew').val();
+                     if($('#bookRecordnew').is(':checked')){
+                           dalBookList.bookRecord='1';
+                     }else{
+                           dalBookList.bookRecord='0';
+                     }     
+                      dalBookList.bookDate=Date.parse($('#bookdatenew').val());
+                     
+                      
+                      $.ajax({ 
+                           type: "POST",
+                          dataType: "json",
+                                 url: '/SIM/accrual/v1/createBookList',
+                                 contentType: 'application/json',
+                                 dataType: "text",
+                                 data: JSON.stringify(dalBookList),
+                          success: function(response){
+                                 if(response=="success"){
+                                        table.ajax.url('/SIM/accrual/v1/getBookList').load();
+                                 message="Data Saved Successfully";
+                                 $("#confirmMessage").html(message);
+                                               $('#myModal1').modal('toggle');
+                                               refreshBookLabel();
+                                               $('#booklistdiv').modal('toggle');
+                                               
+                                  }else if(response=="duplicate"){
+                                        message="The Book Label "+dalBookList.bookLabel+" is already present. Kindly choose a different Label";                             
+                                         $("#errorMessageModal").html(message);
+                                               $('#myModal2').modal('toggle');
+                                               
+                                  }else{
+                                        message="Issue occured while processing your request. Please try again later.";                            
+                                         $("#errorMessageModal").html(message);
+                                               $('#myModal2').modal('toggle');
+                                 }
+                                 
+                           },
+                          failure: function(response){
+                                 message="Issue occured while processing your request. Please try again later.";                             
+                                         $("#errorMessageModal").html(message);
+                                                $('#myModal2').modal('toggle');
+                          }});                        
+               }
+              
+              function refreshBookLabel(){
+                    
+                      $.ajax({ 
+                    type: "GET",
+                    dataType: "json",
+                   cache: false,
+                    url: '/SIM/accrual/v1/getAccrualDropDown',
+                    success: function(response){
+                    $("#review_book_inputselect").empty();
+                    fnPopulateDropdown('review_book_inputselect', response.bookLabelList);
+                    $("#pytd_book_inputselect").empty();
+                    fnPopulateDropdown('pytd_book_inputselect', response.bookLabelList);
+                    $("#cytd_book_inputselect").empty();
+                    fnPopulateDropdown('cytd_book_inputselect', response.bookLabelList);
+                    },
+                    failure: function(response){
+                           alert("Wrongly done");
+                    }
+                 });
+             }
+              
+               function populateDeleteList(event){
+                          var id=(event.id).substring(6);
 
- 				var bookId=$('#delete'+id).data('id');
- 				
- 				if(deleteList.indexOf(bookId)==-1)
- 				{
- 					deleteList.push(bookId);
- 				}else{
- 					deleteList.splice(deleteList.indexOf(bookId),1)
- 				}
- 			}
- 		 
- 		 
- 		 function deleteBookList(){
- 			 console.log(deleteList);
+                          var bookId=$('#delete'+id).data('id');
+                          
+                           if(deleteList.indexOf(bookId)==-1)
+                          {
+                                 deleteList.push(bookId);
+                          }else{
+                                 deleteList.splice(deleteList.indexOf(bookId),1)
+                          }
+                    }
+              
+               
+               function deleteBookList(){
+                     console.log(deleteList);
 
- 			if(deleteList.length==0){
- 				 message="Kindly select atlest one record to delete.";		        		
- 		 		 $("#errorMessageModal").html(message);
- 					$('#myModal2').modal('toggle');
- 				 return;
- 				
- 			}
- 			 
- 			 $.ajax({ 
- 		        	type: "POST",
- 		        	dataType: "json",
- 		       		url: '/SIM/accrual/v1/deleteBookList',
- 		       		contentType: 'application/json',
- 		       		dataType: "text",
- 					data: JSON.stringify(deleteList),
- 					beforeSend: function(){
- 				    },
- 				    complete: function(){
- 				    },
- 		        	success: function(response){
- 			        	table.ajax.url('/SIM/accrual/v1/getBookList').load();
- 			        	if(response=="success"){ 			        		
- 			            	message="Data Deleted Successfully";
- 			            	$("#confirmMessage").html(message);
- 							$('#myModal1').modal('toggle');
- 							refreshBookLabel();
- 			        	}else{
- 			        		message="Issue occured while processing your request. Please try again later.";		        		
- 			        		$("#errorMessageModal").html(message);
- 							$('#myModal2').modal('toggle');
- 			        	}
- 			        	deleteList=[];    	
- 		        	},
- 		        	failure: function(response){
- 		        		alert("Wrongly done");
- 		        	}});
- 		 }
+                    if(deleteList.length==0){
+                           message="Kindly select atlest one record to delete.";                                  
+                             $("#errorMessageModal").html(message);
+                                 $('#myModal2').modal('toggle');
+                           return;
+                          
+                     }
+                     
+                      $.ajax({ 
+                           type: "POST",
+                          dataType: "json",
+                                 url: '/SIM/accrual/v1/deleteBookList',
+                                 contentType: 'application/json',
+                                 dataType: "text",
+                                 data: JSON.stringify(deleteList),
+                                 beforeSend: function(){
+                              },
+                              complete: function(){
+                              },
+                          success: function(response){
+                                 table.ajax.url('/SIM/accrual/v1/getBookList').load();
+                                 if(response=="success"){                                    
+                                  message="Data Deleted Successfully";
+                                 $("#confirmMessage").html(message);
+                                               $('#myModal1').modal('toggle');
+                                               refreshBookLabel();
+                                 }else{
+                                        message="Issue occured while processing your request. Please try again later.";                            
+                                         $("#errorMessageModal").html(message);
+                                               $('#myModal2').modal('toggle');
+                                 }
+                                 deleteList=[];      
+                           },
+                          failure: function(response){
+                                 alert("Wrongly done");
+                          }});
+              }
       </script>
       <!--this page  script only-->
       <script src="resources/js/advanced-form-components.js"></script>
       <script src="resources/js/editable-table-form.js"></script>
           
     <!-- Inline javascript to set the user name from model attribute Begin -->
-	<script type="text/javascript" th:inline="javascript">
-	
-		 $(document).ready(function() {
-			 
-	 
-		   var modelAttributeValue = [[${loginUserNameValue}]];
-		   $("#loginUserName").html(modelAttributeValue);
-		   var emp = [[${EmployeeInfo}]];
-		   if(2!=emp[0].ROLE_ID)
-		   	{
-		   		openSidebar();
-			}
-		   
-		  
-		   
-		   $('#booklist th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
-    	   
-		   table=$("#booklist").DataTable( {
-				 oLanguage: {
-					 "sEmptyTable": "No data available for this selection"
-					 },
-				processing: true,	 
-				lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
-				
-			    ajax: {
-			        url: '/SIM/accrual/v1/getBookList',
-			        dataSrc: "data",
-			        type: "GET",
-			    },
-			  
-		    
-			    columns: [	
-					
-			    	{ data: "bookLabel",className:"dt-left" },
-		            { data: "bookDate" },
-		            { data: "bookRecord", 
-		            	orderable: false,
-		            	className:"center",
-		            	render: function ( data, type, row, meta ) {
-	                    if(type === 'display'){	                        
-							if(data=='1'){
-		                   		data = '<input type="checkbox" checked id="bookRecord'+meta.row+'" value="" disabled>'; 
-							}else if(data=='new'){
-								data = '<input type="checkbox" id="bookRecordnew" value="" >';	
-							}
-							else{
-								data = '<input type="checkbox" id="bookRecord'+meta.row+'" value="" disabled>';	
-							}
-	                    }
+       <script type="text/javascript" th:inline="javascript">
+       
+              $(document).ready(function() {
+                     
+        
+                 var modelAttributeValue = [[${loginUserNameValue}]];
+                 $("#loginUserName").html(modelAttributeValue);
+                 var emp = [[${EmployeeInfo}]];
+                 if(2!=emp[0].ROLE_ID)
+                     {
+                            openSidebar();
+                     }
+                 
+                
+                 
+                 $('#booklist th').attr('style', 'padding-left: 20px !important;padding-right:20px !important');
+          
+                 table=$("#booklist").DataTable( {
+                           oLanguage: {
+                                  "sEmptyTable": "No data available for this selection"
+                                  },
+                           processing: true,   
+                           lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],    
+                           
+                         ajax: {
+                             url: '/SIM/accrual/v1/getBookList',
+                             dataSrc: "data",
+                             type: "GET",
+                         },
+                       
+                  
+                         columns: [      
+                                  
+                            { data: "bookLabel",className:"dt-left" },
+                          { data: "bookDate" },
+                          { data: "bookRecord", 
+                           orderable: false,
+                          className:"center",
+                          render: function ( data, type, row, meta ) {
+                           if(type === 'display'){                           
+                                                if(data=='1'){
+                                         data = '<input type="checkbox" checked id="bookRecord'+meta.row+'" value="" disabled>'; 
+                                                }else if(data=='new'){
+                                                       data = '<input type="checkbox" id="bookRecordnew" value="" >';  
+                                                }
+                                                else{
+                                                       data = '<input type="checkbox" id="bookRecord'+meta.row+'" value="" disabled>';     
+                                                }
+                           }
 
-	                    return data;
-	                }          
-		            },
-		            { data: "createdDate"},
-		            { data: "createdUser", className:"dt-left"},
-		            { data: "delete", 
-		            	orderable: false,
-		            	className:"center",
-		            	render: function ( data, type, row, meta ) {
-	                    if(type === 'display'){	                        
-							if(data=='add'){
-								//data='<button data-dismiss="modal" class="btn btn-default" id="add" type="button" onclick="createBookList();">Create</button>';
-								data='<button class="btn btn-info" id="add"	type="button" onclick="createBookList();">Create</button>'; 
-							}else{
-			                   data = '<input type="checkbox" id="delete'+meta.row+'" value="" data-id='+row.id+' onchange="populateDeleteList(this)">'; 
-							}
-	                    }
+                           return data;
+                       }          
+                          },
+                          { data: "createdDate"},
+                          { data: "createdUser", className:"dt-left"},
+                          { data: "delete", 
+                           orderable: false,
+                          className:"center",
+                          render: function ( data, type, row, meta ) {
+                           if(type === 'display'){                           
+                                                if(data=='add'){
+                                                       //data='<button data-dismiss="modal" class="btn btn-default" id="add" type="button" onclick="createBookList();">Create</button>';
+                                                       data='<button class="btn btn-info" id="add"       type="button" onclick="createBookList();">Create</button>'; 
+                                                }else{
+                                        data = '<input type="checkbox" id="delete'+meta.row+'" value="" data-id='+row.id+' onchange="populateDeleteList(this)">'; 
+                                                }
+                           }
 
-	                    return data;
-	                }},	           
-		           
-		            { data: "id",
-	                	visible: false,
-	                	searchable: false
-	                	}
-	      ]
-			});
-	    	
-	    	$('#booklist').on('draw.dt', function () {
-	             //$('[data-toggle="tooltip"]').tooltip();
-	             $('#bookdatenew').datepicker().on('changeDate', function(e){
-	            	    $(this).datepicker('hide');
-	             });
-	         });
-		   
-		   $.ajax({ 
-	           	type: "GET",
-	           	dataType: "json",
-	           	cache: false,
-	          	url: '/SIM/accrual/v1/getAccrualDropDown',
-	           	success: function(response){
-	           	fnPopulateDropdown('liable_period_inputselect', response.periodList);	
-	           	fnPopulateDropdown('review_period_inputselect', response.periodList);
-	           	fnPopulateDropdown('accrual_period_inputselect', response.periodList);	           	
-	           	fnPopulateDropdown('cytd_book_inputselect', response.bookLabelList);
-	        	fnPopulateDropdown('pytd_book_inputselect', response.bookLabelList);
-	        	fnPopulateDropdown('review_book_inputselect', response.bookLabelList);
-	           	},
-	           	failure: function(response){
-	           		alert("Wrongly done");
-	           	}
-		   });
-		   
-		  // $('#accrualtable td').attr('style', 'line-height: 5 !important;width:30%');
-		  $('#accrualtable td').attr('style', 'line-height: 5 !important');
-		 
-		  $('#accrualtable  td:first-child').css({"width":"20%"});
-		   
-		  /*  $('#datetable td').attr('style', 'line-height: 1 !important;width:30%'); */
-		     $('#accrual_period_inputselect').change(function(){
-		    	 $('#liable_period_inputselect').val($('#accrual_period_inputselect').val());
-		    	 $('#review_period_inputselect').val($('#accrual_period_inputselect').val());
-		    	 
-			 });
-		   
-		   $('#calculate').change(function(){
-			   if($(this).prop("checked")) {
-			     $('#refreshdiv').show();
-			   } else {
-			     $('#refreshdiv').hide();
-			   }
-			 });
-		   
-		   $('#cytd').change(function(){
-			   if($(this).prop("checked")) {
-			     $('#cytddiv').show();
-			   } else {
-			     $('#cytddiv').hide();
-			   }
-			 });
-		   
-		   $('#pytd').change(function(){
-			   if($(this).prop("checked")) {
-			     $('#pytddiv').show();
-			   } else {
-			     $('#pytddiv').hide();
-			   }
-			 });
-		   
-		   $('#review').change(function(){
-			   if($(this).prop("checked")) {
-			     $('#reviewdiv').show();
-			   } else {
-			     $('#reviewdiv').hide();
-			   }
-			 });
-		   
-		   $('#copyaccrual').change(function(){
-			   if($(this).prop("checked")) {
-				     $('#copy_accrual_period').show();
-				   } else {
-				     $('#copy_accrual_period').hide();
-				   }
-		   });
-		   
-		   $('#bookName').change(function(){
-			   if($(this).prop("checked")) {
-				     refreshBookLabel();
-				     $('#addbookdiv').show();
-				     $('#add_book').show()
-				     
-				   } else {
-				     $('#addbookdiv').hide();
-				     $('#add_book').hide()
-				   }
-		   });
-		   
-		   $('input[type=radio][name=pytd_select]').change(function(){
-			   if($('#pytd_select').prop("checked")) {
-				     $('#pytd_select_div').show();
-				     
-				   } else {
-				     $('#pytd_select_div').hide();
-				   }
-		   });
-		   
-		  		   
-		   $('input[type=radio][name=cytd_select]').change(function(){
-			   if($('#cytd_select').prop("checked")) {
-				     $('#cytd_select_div').show();
-				     
-				   } else {
-				     $('#cytd_select_div').hide();
-				   }
-		   });
-		   
-		   $('#add_book').click(function() {
-			   
-			  // $("#bookcontent").html("<H1>Test</H1>");
-			  //loadBooklisttable();
-				$('#booklistdiv').modal('toggle');
-				
-			   /*  var width = window.innerWidth * 0.66 ;
-			    // define the height in
-			    var height = width * window.innerHeight / window.innerWidth ;
-			    // Ratio the hight to the width as the user screen ratio
-			    window.open(this.href , 'newwindow', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2));
-				return false; */
-				return false;
-			});
-		   
-		}); 
-		
-		
-	</script>
-	<!-- Inline javascript to set the user name from model attribute End -->
+                           return data;
+                       }},            
+                         
+                          { data: "id",
+                           visible: false,
+                           searchable: false
+                           }
+             ]
+                     });
+              
+              $('#booklist').on('draw.dt', function () {
+                    //$('[data-toggle="tooltip"]').tooltip();
+                    $('#bookdatenew').datepicker().on('changeDate', function(e){
+                       $(this).datepicker('hide');
+                    });
+                });
+                 
+                 $.ajax({ 
+                    type: "GET",
+                    dataType: "json",
+                    cache: false,
+                    url: '/SIM/accrual/v1/getAccrualDropDown',
+                    success: function(response){
+                    fnPopulateDropdown('liable_period_inputselect', response.periodList);   
+                    fnPopulateDropdown('review_period_inputselect', response.periodList);
+                    fnPopulateDropdown('accrual_period_inputselect', response.periodList);                    
+                    fnPopulateDropdown('cytd_book_inputselect', response.bookLabelList);
+                    fnPopulateDropdown('pytd_book_inputselect', response.bookLabelList);
+                    fnPopulateDropdown('review_book_inputselect', response.bookLabelList);
+                    },
+                    failure: function(response){
+                           alert("Wrongly done");
+                    }
+                 });
+                 
+                // $('#accrualtable td').attr('style', 'line-height: 5 !important;width:30%');
+                $('#accrualtable td').attr('style', 'line-height: 5 !important');
+              
+                $('#accrualtable  td:first-child').css({"width":"20%"});
+                 
+                /*  $('#datetable td').attr('style', 'line-height: 1 !important;width:30%'); */
+                   $('#accrual_period_inputselect').change(function(){
+                      $('#liable_period_inputselect').val($('#accrual_period_inputselect').val());
+                      $('#review_period_inputselect').val($('#accrual_period_inputselect').val());
+                      
+                      });
+                 
+                 $('#calculate').change(function(){
+                        if($(this).prop("checked")) {
+                          $('#refreshdiv').show();
+                        } else {
+                          $('#refreshdiv').hide();
+                        }
+                     });
+                 
+                 $('#cytd').change(function(){
+                        if($(this).prop("checked")) {
+                          $('#cytddiv').show();
+                        } else {
+                          $('#cytddiv').hide();
+                        }
+                     });
+                 
+                 $('#pytd').change(function(){
+                        if($(this).prop("checked")) {
+                          $('#pytddiv').show();
+                        } else {
+                          $('#pytddiv').hide();
+                        }
+                     });
+                 
+                 $('#review').change(function(){
+                        if($(this).prop("checked")) {
+                          $('#reviewdiv').show();
+                        } else {
+                          $('#reviewdiv').hide();
+                        }
+                     });
+                 
+                 $('#copyaccrual').change(function(){
+                        if($(this).prop("checked")) {
+                                $('#copy_accrual_period').show();
+                              } else {
+                                $('#copy_accrual_period').hide();
+                              }
+                 });
+                 
+                 $('#bookName').change(function(){
+                        if($(this).prop("checked")) {
+                                refreshBookLabel();
+                                $('#addbookdiv').show();
+                                $('#add_book').show()
+                                
+                              } else {
+                                $('#addbookdiv').hide();
+                                $('#add_book').hide()
+                              }
+                 });
+                 
+                 $('input[type=radio][name=pytd_select]').change(function(){
+                        if($('#pytd_select').prop("checked")) {
+                                $('#pytd_select_div').show();
+                                
+                              } else {
+                                $('#pytd_select_div').hide();
+                              }
+                 });
+                 
+                               
+                 $('input[type=radio][name=cytd_select]').change(function(){
+                        if($('#cytd_select').prop("checked")) {
+                                $('#cytd_select_div').show();
+                                
+                              } else {
+                                $('#cytd_select_div').hide();
+                              }
+                 });
+                 
+                 $('#add_book').click(function() {
+                        
+                       // $("#bookcontent").html("<H1>Test</H1>");
+                       //loadBooklisttable();
+                           $('#booklistdiv').modal('toggle');
+                           
+                        /*  var width = window.innerWidth * 0.66 ;
+                         // define the height in
+                         var height = width * window.innerHeight / window.innerWidth ;
+                         // Ratio the hight to the width as the user screen ratio
+                         window.open(this.href , 'newwindow', 'width=' + width + ', height=' + height + ', top=' + ((window.innerHeight - height) / 2) + ', left=' + ((window.innerWidth - width) / 2));
+                           return false; */
+                           return false;
+                     });
+                 
+              }); 
+              
+              
+       </script>
+       <!-- Inline javascript to set the user name from model attribute End -->
 
        
    </body>

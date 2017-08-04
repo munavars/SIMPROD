@@ -926,7 +926,7 @@ th{
 	           	url: '/SIM/isTbpUser',
 	            	success: function(response){
 	            		if(response.empId!=null){
-	            			
+	            			openSidebar();
 	            			 if(response.ddf.toLowerCase()=='yes'){
 	            				 $('#program_type_select').append($('<option id="program_type_ddf" value="DDF">DDF</option>'));
 	            			}

@@ -557,9 +557,26 @@ function tableToExcel(tableId, fileName) {
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
-		   if(2!=emp[0].ROLE_ID)
+		   if(1==emp[0].ROLE_ID)
 		   	{
 		   		openSidebar();
+			}else{
+				
+				 $.ajax({ 
+		            	type: "GET",
+		            	dataType: "json",
+		            	 cache: false,
+		           	url: '/SIM/isTbpUser',
+		            	success: function(response){
+		            		if(response.empId!=null){
+		            			
+		            			 openSidebar();
+		            		}
+		            	},
+		            	failure: function(response){
+		            		alert("Wrongly done");
+		            	}
+		        	});
 			}
 		});
 	</script>

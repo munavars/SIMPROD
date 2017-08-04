@@ -255,6 +255,7 @@
 		    	{ data: "customerName" },   
      			{ data: "programId" },
 	            { data: "programName" },
+	            { data: "programStatus" },
 	            { data: "payoutFrequency" },
 	            { data: "displayBeginDate",className:"center" },
 	            { data: "displayEndDate",className:"center" },
@@ -452,6 +453,25 @@
 	            	
 	            	
 	            }, */
+	            { data: "programStatus" ,
+	            	render: function ( data, type, row, meta ) {
+	            		
+	            		
+	                    if(type === 'display'){
+	                    	if(data=='2'){
+	                        data = 'PENDING';
+	                    	}else if(data=='1'){
+	                    	data=	'REJECTED';	
+	                    	}else if(data=='3'){
+	                    	data='IN PROGRESS';	
+	                    	}
+	                    }
+
+	                    return data;
+	                },className:"center" 	
+	            	
+	            	
+	            },
 	         	{ data: "programStatus" ,
 	            	render: function ( data, type, row, meta ) {
 	            		
@@ -474,6 +494,7 @@
 	            	
 	            	
 	            },
+	           
 	            {
 	            	data: "statusHistory",
 	            	visible: false,
@@ -646,7 +667,7 @@
                             <a href="#"><button class="btn btn-default" onclick="tableToExcel('pending_approvals','Pending Approval Data')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
                             </div>   
                         </div>
-                         <h3 class="tableHeader">Pending Approvals</h3>
+                         <h3 class="tableHeader">In Progress/Pending Approvals </h3>
                           <div class="adv-table table-responsive">
                           <table class="display table table-striped table-bordered approvals" id="pending_approvals">
                               <thead>
@@ -665,6 +686,7 @@
                                 <th>Program Type</th>
                                 <th>Submitted</th>
                                 <th>Pending</th>
+                                <th>Program Status</th>
                                 <!-- <th>Zone Manager</th> -->
 <!--                                 <th class="center">Director</th>
                                 <th class="center">Execs</th> -->
@@ -862,6 +884,7 @@
 							    <th>Customer</th> 
                                 <th class="center rowvis">Program ID</th>
                                 <th>Program</th>
+                                <th>Program Status</th>
                                 <th>Frequency</th>								
                                 <th>Begin Date</th>
                                 <th>End Date</th>

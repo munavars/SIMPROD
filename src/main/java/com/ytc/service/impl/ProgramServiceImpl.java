@@ -770,6 +770,7 @@ public class ProgramServiceImpl implements IProgramService {
 			programDetail.setCustomerId(dalProgramDetail.getDalProgramHeader().getCustomer().getId().toString());
 			programDetail.setProgramId(dalProgramDetail.getId());
 			programDetail.setProgramName(dalProgramDetail.getProgramMaster().getProgram());
+			programDetail.setProgramStatus((dalProgramDetail.getStatus() != null) ? dalProgramDetail.getStatus().getType() : "" );
 			programDetail.setPayoutFrequency(null!=dalProgramDetail.getPaidFrequency()?dalProgramDetail.getPaidFrequency().getFrequency():"");
 			programDetail.setBeginDate(dalProgramDetail.getProgramStartDate().getTime());
 			programDetail.setEndDate(dalProgramDetail.getProgramEndDate().getTime());

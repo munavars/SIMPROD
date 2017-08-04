@@ -112,7 +112,7 @@ public class CustomerService implements ICustomerService {
 				approvalStatus=dalWorkflowStatus.getApprovalStatus().getType();
 			}
 		}
-		if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(approvalStatus))
+		if((ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(approvalStatus))||("".equalsIgnoreCase(approvalStatus)))
 		{
 			actionReqdByName=ProgramServiceHelper.getName(dalProgramDetail.getCreatedBy());
 		}
@@ -204,7 +204,7 @@ public class CustomerService implements ICustomerService {
 				approvalStatus=dalWorkflowStatus.getApprovalStatus().getType();
 			}
 		}
-		if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(approvalStatus))
+		if((ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(approvalStatus))||("".equalsIgnoreCase(approvalStatus)))
 		{
 			actionReqdByName=ProgramServiceHelper.getName(dalPricingHeader.getCreatedBy());
 		}

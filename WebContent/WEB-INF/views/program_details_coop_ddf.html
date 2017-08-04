@@ -1265,7 +1265,7 @@
 		   var modelAttributeValue = [[${loginUserNameValue}]];
 		   $("#loginUserName").html(modelAttributeValue);
 		   var emp = [[${EmployeeInfo}]];
-		   if(2!=emp[0].ROLE_ID)
+		   if(1==emp[0].ROLE_ID)
 		   	{
 		   		openSidebar();
 			}
@@ -1282,6 +1282,7 @@
             		}else{
              			$('#glcode_dropdown').attr('disabled', false);
              			tbp=true;
+             			openSidebar();
              		}
             	},
             	failure: function(response){

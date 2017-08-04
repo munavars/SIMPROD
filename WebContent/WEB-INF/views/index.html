@@ -1424,7 +1424,26 @@
 		   if(1==emp[0].ROLE_ID)
 		   	{
 			   openSidebar();
+			}else{
+				
+				 $.ajax({ 
+		            	type: "GET",
+		            	dataType: "json",
+		            	 cache: false,
+		           	url: '/SIM/isTbpUser',
+		            	success: function(response){
+		            		if(response.empId!=null){
+		            			
+		            			 openSidebar();
+		            		}
+		            	},
+		            	failure: function(response){
+		            		alert("Wrongly done");
+		            	}
+		        	});
 			}
+		   
+		   
 		});
 	</script>
 	<!-- Inline javascript to set the user name from model attribute End -->

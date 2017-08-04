@@ -443,7 +443,9 @@ public class PricingServiceImpl implements IPricingService {
 				pricingHeader.setTermCode(dalPricingHeader.getTermCodes().getCode());	
 			}
 			pricingHeader.setShippingReqs(dalPricingHeader.getShippingReqs().getShipRqs());
-			pricingHeader.setOtherShippingReqs(dalPricingHeader.getOtherShippingreqs().getOtherReqs());
+			if(dalPricingHeader.getOtherShippingreqs() != null){
+				pricingHeader.setOtherShippingReqs(dalPricingHeader.getOtherShippingreqs().getOtherReqs());	
+			}
 			pricingHeader.setSbmCheck(dalPricingHeader.getSbm());
 		}
 	}

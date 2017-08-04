@@ -269,7 +269,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 			}	
 		}
 		
-		if(!dalPricingHeader.getTermCodes().getCode().equals(pricingHeader.getCustomerType())){
+		if(dalPricingHeader.getTermCodes() != null && !dalPricingHeader.getTermCodes().getCode().equals(pricingHeader.getCustomerType())){
 			parameters.put("code", pricingHeader.getTermCode());
 			List<DalPricingTermCodes> dalPricingTermCodesList = baseDao.getByType("DalPricingTermCodes.getCode",
 					parameters);
@@ -279,7 +279,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 			}	
 		}
 		
-		if(!dalPricingHeader.getShippingReqs().getShipRqs().equals(pricingHeader.getShippingReqs())){
+		if(dalPricingHeader.getShippingReqs() != null && !dalPricingHeader.getShippingReqs().getShipRqs().equals(pricingHeader.getShippingReqs())){
 			parameters.put("shipRqs", pricingHeader.getShippingReqs());
 			List<DalPricingShipRequirements> dalPricingShipRequirementsList = baseDao.getByType("DalPricingShipRequirements.getShipRqs", parameters);
 			for (DalPricingShipRequirements dalPricingShipRequirements : dalPricingShipRequirementsList) {
@@ -288,7 +288,7 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 			}	
 		}
 		
-		if(!dalPricingHeader.getOtherShippingreqs().getOtherReqs().equals(pricingHeader.getOtherShippingReqs())){
+		if(dalPricingHeader.getOtherShippingreqs() != null && !dalPricingHeader.getOtherShippingreqs().getOtherReqs().equals(pricingHeader.getOtherShippingReqs())){
 			parameters.put("otherReqs", pricingHeader.getOtherShippingReqs());
 			List<DalPricingOtherShipRequirements> dalPricingOtherShipRequirementsList = baseDao.getByType("DalPricingOtherShipRequirements.getOtherReq", parameters);
 			for (DalPricingOtherShipRequirements dalPricingOtherShipRequirements : dalPricingOtherShipRequirementsList) {
@@ -351,13 +351,16 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 					dalPricingHeader.setShippingReqs(dalPricingShipRequirements);
 					parameters.remove("shipRqs", pricingHeader.getShippingReqs());
 				}
-
-				parameters.put("otherReqs", pricingHeader.getOtherShippingReqs());
-				List<DalPricingOtherShipRequirements> dalPricingOtherShipRequirementsList = baseDao.getByType("DalPricingOtherShipRequirements.getOtherReq", parameters);
-				for (DalPricingOtherShipRequirements dalPricingOtherShipRequirements : dalPricingOtherShipRequirementsList) {
-					dalPricingHeader.setOtherShippingreqs(dalPricingOtherShipRequirements);
-					parameters.remove("otherReqs", pricingHeader.getOtherShippingReqs());
+				
+				if(pricingHeader.getOtherShippingReqs() != null && !pricingHeader.getOtherShippingReqs().isEmpty()){
+					parameters.put("otherReqs", pricingHeader.getOtherShippingReqs());
+					List<DalPricingOtherShipRequirements> dalPricingOtherShipRequirementsList = baseDao.getByType("DalPricingOtherShipRequirements.getOtherReq", parameters);
+					for (DalPricingOtherShipRequirements dalPricingOtherShipRequirements : dalPricingOtherShipRequirementsList) {
+						dalPricingHeader.setOtherShippingreqs(dalPricingOtherShipRequirements);
+						parameters.remove("otherReqs", pricingHeader.getOtherShippingReqs());
+					}	
 				}
+				
 				dalPricingHeader.setSbm(pricingHeader.getSbmCheck());
 				
 				/**Set Pricing request status*/

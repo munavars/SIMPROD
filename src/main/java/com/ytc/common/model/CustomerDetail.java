@@ -24,6 +24,8 @@ public class CustomerDetail extends Model {
 	
 	private EmployeeHierarchy employeeHierarchy;
 	
+	private String channelCode;
+	
 	public CustomerDetail() {
 
 	}	
@@ -186,8 +188,12 @@ public class CustomerDetail extends Model {
 	public void setEmployeeHierarchy(EmployeeHierarchy employeeHierarchy) {
 		this.employeeHierarchy = employeeHierarchy;
 	}
-	
-	
 
+	public String getChannelCode() {
+		return channelCode;
+	}
 
+	public void setChannelCode(String channelCode) {
+		this.channelCode = channelCode;
+	}
 }

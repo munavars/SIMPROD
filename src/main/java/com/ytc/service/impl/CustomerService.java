@@ -46,6 +46,12 @@ public class CustomerService implements ICustomerService {
 		DalEmployeeHierarchy dalEmployeeHierarchy = baseDao.getEntityById(DalEmployeeHierarchy.class, Integer.parseInt(dalCustomer.getAccountManager()));
 		EmployeeHierarchy employeeHierarchy=modelMapper.map(dalEmployeeHierarchy,EmployeeHierarchy.class);
 		customer.setEmployeeHierarchy(employeeHierarchy);
+		Map<String, Object> queryParams = new HashMap<>();
+		queryParams.put("customerId", customerId);
+		List<String> channelCodeList =  baseDao.getListFromNativeQuery(QueryConstant.GET_CHANNEL_CODE_FOR_CUSTOMER_ID, queryParams);
+		if(channelCodeList != null && !channelCodeList.isEmpty()){
+			customer.setChannelCode(channelCodeList.get(0));
+		}
 		return customer;
 
 	}

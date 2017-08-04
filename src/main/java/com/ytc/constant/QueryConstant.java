@@ -123,5 +123,7 @@ public class QueryConstant {
 	public static final String DELETE_BOOK_LIST="DELETE FROM BOOK_LIST WHERE ID IN (:id)";
 	
 	public static final String DELETE_ACCURAL_BOOK="DELETE FROM ACCRUAL_DATA_BOOK WHERE BOOK_ID IN (:id)";
-	
+
+	public static final String GET_CHANNEL_CODE_FOR_CUSTOMER_ID = "SELECT DISTINCT CHANNEL_CODE FROM SHIP_TO_MASTER WHERE BILL_TO_NUMBER IN "
+																	+ "(SELECT CUSTOMER_NUMBER FROM CUSTOMER WHERE ID = :customerId)";
 }

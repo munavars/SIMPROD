@@ -183,6 +183,7 @@ function tableToExcel(tableId, fileName) {
 				   $("#custno").html("<strong>"+cust.data.customerNumber+"</strong>");
 				   $("#bu").html("<strong>"+cust.data.bu+"</strong>");
 				   bu=cust.data.bu;
+				   $("#channelCode").html("<strong>"+cust.data.channelCode+"</strong>");
 				   $("#level1").html("<strong>"+cust.data.employeeHierarchy.lvl1EmpName+"</strong>, "+cust.data.employeeHierarchy.lvl1Title);
 				   $("#level3").html("<strong>"+cust.data.employeeHierarchy.lvl3EmpName+"</strong>, "+cust.data.employeeHierarchy.lvl3Title);
 				   loadPricingTable();
@@ -383,6 +384,7 @@ function tableToExcel(tableId, fileName) {
                           <ul class="list-unstyled">
                               <li id="custno"><strong>No data available for this customer Id</strong></li>
                               <li id="bu"><strong></strong></li>
+                              <li id="channelCode"><strong></strong></li>
                               <li id="level1"><strong></strong></li>
                               <li id="level3"><strong></strong></li>
                           </ul>

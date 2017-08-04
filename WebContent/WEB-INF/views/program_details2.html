@@ -1660,11 +1660,12 @@
 					estm_accrual: {
 						required: true,
 						estimatedAccuralValidation:true,
-						actualAmountComparison:{
+						actualAmountComparison: false
+						/* {
 							depends: function(element) {
 								return ($('#optionsRadiosDollarSign').is(':checked'));
 							}
-						}	
+						} */	
 					},
 					optionsRadiosDenomination: {
 						required: true
@@ -3166,6 +3167,9 @@
            	 var jqInputs = $('input',  nRow.childNodes);
            	 var beginRange = removeCommaFromAmount(jqInputs[1].value.trim());
            	 var endRange = removeCommaFromAmount(jqTds[3].innerText);
+           	 if(endRange === '' || endRange === null){
+           		endRange = parseInt(99999999);
+           	 }
            	 if(parseInt(beginRange) > parseInt(endRange)){
            		 return false;
            	 }

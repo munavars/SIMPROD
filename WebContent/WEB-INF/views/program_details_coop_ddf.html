@@ -530,8 +530,11 @@
 													<div class="row">
 
 														<div class="col-lg-4 col-sm-4">
-															<label class="control-label" for="payment_method_inputselect">Paid
-																Type</label> <select
+															<label class="control-label popovers" for="payment_method_inputselect"
+																data-html="true" data-content="If Paid Type is Check, please enter the SAP Vendor # in the Pay-To textbox."
+															    title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+															    data-placement="top" data-toggle="tooltip" data-trigger="hover">Paid Type</label> 
+															<select
 																class="form-control input-sm m-bot15 required"
 																id="payment_method_inputselect"
 																name="payment_method_inputselect">
@@ -540,11 +543,8 @@
 															
 																											
 													<div class="col-lg-4 col-sm-4">
-															<label class="control-label popovers" for="payto_inputselect" 
-															data-content="If Paid type is Credit, enter ShipTo. If Cheque,  enter SAP Vendor #"
-															    title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
-															    data-placement="top" data-toggle="tooltip" data-trigger="hover" data-html="true">Pay
-																To</label> <!-- <select
+															<label class="control-label" for="payto_inputselect">Pay To</label> 
+															<!-- <select
 																class="form-control input-sm m-bot15 required"
 																id="payto_inputselect"
 																name="payto_inputselect">
@@ -1124,7 +1124,8 @@
 					estm_accrual: {
 						required: true,
 						estimatedAccuralValidation:true,
-						actualAmountComparison:{
+						actualAmountComparison: false
+						{
 							depends: function(element) {
 								return ($('#optionsRadiosDollarSign').is(':checked'));
 							}

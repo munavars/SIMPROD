@@ -60,9 +60,9 @@
                 }*/
                
                 checkin.hide();
-               if(new Date($(this).val()).getFullYear()<now.getFullYear()){
+               if(new Date($(this).val()).getFullYear()!=now.getFullYear()){
                 	//alert("Begin date cannot be less than Current date");
-                	$("#errorMessageModal").html("Begin date cannot be less than Current Year");
+                	$("#errorMessageModal").html("Begin date should be selected from Current Year");
 					$('#myModal5').modal('toggle');
                 	$(this).val(''); 
                 	//$('.dpd1')[0].focus();	
@@ -86,9 +86,9 @@
             }
         }).on('changeDate', function(ev) {
                 checkout.hide();
-               if(new Date($(this).val()).getFullYear()<now.getFullYear()){
+             if(new Date($(this).val()).getFullYear()!=now.getFullYear()){
                 	//alert("End date cannot be less than Current date");
-                	$("#errorMessageModal").html("End date cannot be less than Current Year");
+                	$("#errorMessageModal").html("End date should be selected from Current Year");
 					$('#myModal5').modal('toggle');
                 	$(this).val(''); 
                 	//$('.dpd2')[0].focus();	

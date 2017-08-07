@@ -335,10 +335,10 @@ a { text-decoration: none }
 								}
 								else if (columnNames[i] == "BEG DATE" || columnNames[i] == "END DATE"){
 									if(!isEmpty(oneRow[i])){
-										rowValues[columnNames[i]] =	$.datepicker.formatDate( "mm/dd/yy", new Date(oneRow[i]));
+										rowValues[trimValue(columnNames[i])] =	$.datepicker.formatDate( "mm/dd/yy", new Date(oneRow[i]));
 									}
 									else{
-										rowValues[columnNames[i]] = oneRow[i];
+										rowValues[trimValue(columnNames[i])] = oneRow[i];
 									}
 								}
 								else{
@@ -348,10 +348,10 @@ a { text-decoration: none }
 									
 									if(columnNames[i] == "PROD LINE" || columnNames[i] == "TREAD" || columnNames[i] == "BUSINESS UNIT" ||  columnNames[i] == 'PART#'){
 										if(!isEmpty(oneRow[i])){
-											rowValues[columnNames[i]] = oneRow[i].toString().toUpperCase();
+											rowValues[trimValue(columnNames[i])] = oneRow[i].toString().toUpperCase();
 										}
 										else{
-											rowValues[columnNames[i]] = oneRow[i];
+											rowValues[trimValue(columnNames[i])] = oneRow[i];
 										}
 									}
 									else{
@@ -463,8 +463,43 @@ a { text-decoration: none }
     		}
 		}
 		else{
-   			message.error = " No data to validate. Please upload a valid template."
+   			message.error = "No data to validate. Please upload a valid template."
  			isValid = false;
+		}
+		if(isValid){
+			/**If client side validation is successfull, then call service side for validation.*/
+				var fileDataList = [];
+			
+				$.each(data, function(key, rowData) {
+					var fileDataRow = {'id': rowData.values['ID'], 'programId': rowData.id, 'part':rowData.values['PART#'], 'businessUnit':rowData.values['BUSINESS UNIT'], 'addChangeDel': rowData.values['ADD CHG DEL'], 'beginDate':  $.datepicker.parseDate( "mm/dd/yy", rowData.values['BEG DATE']), 'bonusUnits': rowData.values['BONUS UNITS Y/N'], 'commissionable': rowData.values['COMM Y/N'], 'comments': rowData.values['COMMENT'], 'endDate':  $.datepicker.parseDate( "mm/dd/yy", rowData.values['END DATE']), 'invoiceDisc': rowData.values['INVOICE DSC %'],'netPrice': removeCommaFromAmount(rowData.values['NET PRICE']), 'prodLine': rowData.values['PROD LINE'], 'tread': rowData.values['TREAD'] };
+					fileDataList.push(fileDataRow);
+				});
+				//console.log(fileDataList);
+				responseOnload.pricingDetailList=fileDataList;
+				
+			 $.ajax({
+					type: "POST",
+					url: "/SIM/pricing/v1/validatePricingInvoiceDetails",
+					dataType: 'json',
+					async: false,
+					contentType: 'application/json',
+					data: JSON.stringify(responseOnload),
+					success: function (response) {
+			            if (response != null && response.data.success == false) {
+			            	isValid = false;
+							message.error = "Issue while saving the data. Please correct the following data.!!"+'<br><br>'+response.data.validationMessage;
+			            }
+					},
+					failure: function(response){
+         				$("#errorMessage").html("Issue while saving the data. Please try again after sometime.!!");
+						$('#myModal5').modal('toggle');
+					},
+					error: function(XMLHttpRequest, textStatus, errorThrown) { 
+						message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+						 $("#errorMessage").html(message);
+						 $('#myModal5').modal('toggle');                    	
+					} 
+			    });
 		}
 		return isValid;
 	}
@@ -572,7 +607,12 @@ a { text-decoration: none }
 	            	},
 	            	failure: function(response){
 	            		alert("Wrongly done");
-	            	}
+	            	},
+					error: function(XMLHttpRequest, textStatus, errorThrown) { 
+						message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+						 $("#errorMessage").html(message);
+						 $('#myModal5').modal('toggle');                    	
+					}
 	        	});
 		}
 /* 	   var url="/SIM/getEmployeeDetail/"+emp[0].MANAGER_ID;
@@ -1644,7 +1684,12 @@ a { text-decoration: none }
             	},
             	failure: function(response){
             		alert("Wrongly done");
-            	}
+            	},
+				error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+					 $("#errorMessage").html(message);
+					 $('#myModal5').modal('toggle');                    	
+				}
         	});
 
         	function disableFieldBasedOnCurrentStatusAndUser(responseOnload1){

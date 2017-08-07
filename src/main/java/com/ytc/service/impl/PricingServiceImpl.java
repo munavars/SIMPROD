@@ -116,7 +116,7 @@ public class PricingServiceImpl implements IPricingService {
 			pricingHeader.setRequestedByDate(ProgramServiceHelper.convertDateToString(Calendar.getInstance().getTime(), ProgramConstant.DATE_FORMAT));
 			pricingHeader.setCustomerId(dalCustomer.getCustomerNumber());
 			pricingHeader.setCustomerGroup(dalCustomer.getCustomerName());
-			pricingHeader.setStatus(ConsumerProgramStatusEnum.INPROGRESS.getProgramStatus());
+			pricingHeader.setStatus(ConsumerProgramStatusEnum.DRAFT.getProgramStatus());
 			/**Work flow matrix.*/
 			/*Map<String, Object> inputParameter = new HashMap<String, Object>();
 			inputParameter.put("programType", ProgramConstant.PRICING_FORM_TYPE);
@@ -159,7 +159,7 @@ public class PricingServiceImpl implements IPricingService {
 		pricingDetailsDropDown.setCustByNameList(getGroupDropDownList("DalCustomer.getCustomerName", parameters));
 		pricingDetailsDropDown.setCustShipToList(getTagValueDropDown(TagItemValueMapEnum.SHIP_TO_NUMBER.getTagId(), 
 																	 customerNumber));
-		pricingDetailsDropDown.setTermsCodeList(getDropDownList("DalPricingTermCodes.getTermCodes"));
+		pricingDetailsDropDown.setTermsCodeList(getDropDownTermList("DalPricingTermCodes.getDefnsDue"));
 		pricingDetailsDropDown.setOtherShipReqsList(getDropDownList("DalPricingOtherShipRequirements.getOtherReqs"));
 		pricingDetailsDropDown= getSelectedValueList(pricingDetailsDropDown);
 		pricingHeader.setDropdownList(pricingDetailsDropDown);
@@ -228,6 +228,45 @@ public class PricingServiceImpl implements IPricingService {
 		
 		return dropdownList;
 	}
+	
+	private List<DropDown> getDropDownTermList(String namedQueryValue){
+		List<DropDown> dropdownList = null;		
+		if(namedQueryValue != null){
+			List<Object[]> dalList =  baseDao.getListFromNamedQuery(namedQueryValue);
+			if(dalList != null){
+				for(Object[] values : dalList){
+					DropDown dropDown = new DropDown();
+					if(!StringUtils.isEmpty(values)){
+						dropDown.setKey(values[0].toString());
+						StringBuffer value = new StringBuffer(values[0].toString());
+						if(!StringUtils.isEmpty(values[1])){
+							value.append(ProgramConstant.PIPE_SEPARATOR_WITH_SPACE);
+							value.append(values[1]);
+						}
+						if(!StringUtils.isEmpty(values[2])){
+							value.append(ProgramConstant.PIPE_SEPARATOR_WITH_SPACE);
+							value.append(values[2]);
+						}
+						if(!StringUtils.isEmpty(values[3])){
+							value.append(ProgramConstant.PIPE_SEPARATOR_WITH_SPACE);
+							value.append(values[3]);
+						}
+						
+						dropDown.setValue(value.toString());
+					
+						if(dropdownList == null){
+							dropdownList = new ArrayList<DropDown>();
+						}
+						dropdownList.add(dropDown);
+					}
+				}
+			}
+			
+		}
+		
+		return dropdownList;
+	}
+	
 	private List<DropDown> getDropDownList(String namedQueryValue){
 		List<DropDown> dropdownList = null;		
 		if(namedQueryValue != null){

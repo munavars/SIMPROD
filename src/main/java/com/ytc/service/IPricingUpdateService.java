@@ -13,4 +13,6 @@ public interface IPricingUpdateService {
 
 	
 	PricingHeader savePricingHeaderDetails(PricingHeader pricingHeader); 
+	
+	PricingHeader validatePricingInvoiceDetails(PricingHeader pricingHeader);
 }

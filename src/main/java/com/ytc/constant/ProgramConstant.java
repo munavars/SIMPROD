@@ -19,13 +19,15 @@ public class ProgramConstant {
 	public static final String NAME_DELIMITER = " ";
 	public static final String TAG_VALUE_DELIMITER_SPACE = " - ";
 	
-	public static final String ACTIVE_STATUS = "ACTIVE";
-	public static final String APPROVED_STATUS = "APPROVED";
-	public static final String IN_ACTIVE_STATUS = "IN ACTIVE";
-	public static final String IN_PROGRESS_STATUS = "IN PROGRESS";
-	public static final String PENDING_STATUS = "PENDING";
-	public static final String WAITING_STATUS = "WAITING";
-	public static final String REJECTED_STATUS = "REJECTED";
+	public static final Integer ACTIVE_STATUS_CODE = 0;
+	public static final Integer APPROVED_STATUS_CODE = 4;
+	/*public static final String IN_ACTIVE_STATUS_CODE = ";
+*/	public static final Integer IN_PROGRESS_STATUS_CODE = 3;
+	public static final Integer PENDING_STATUS_CODE = 2;
+	public static final Integer WAITING_STATUS_CODE = 5;
+	public static final Integer REJECTED_STATUS_CODE = 1;
+	
+	public static final String PENDING_STATUS_TYPE = "PENDING";
 	
 	public static final String CALCULATED_PROGRAM_TYPE = "CALCULATED PROGRAM";
 	public static final String DDF_PROGRAM_TYPE = "DDF";
@@ -49,6 +51,7 @@ public class ProgramConstant {
 	public static final String PROGRAM_DESCRIPTION_NOT_FOUND = "Program Description not available";
 	
 	public static final String FORWARD_SLASH = "/";
+	public static final String PIPE_SEPARATOR_WITH_SPACE = " | ";
 	public static final String NO_LIMIT = "No Limit";
 	
 	public static final String OPERATOR_G = ">";

@@ -65,7 +65,6 @@ public class DalProgramDetail extends DalAuditableModel {
     private Set<DalProgramDetAchieved> dalProgramDetAchievedList;
     private Set<DalProgramDetPaid> dalProgramDetPaidList;
     private DalProgramDetailTier pgmDetailTier;
-    private DalAccrualData accuralData;
     
     private DalStatus status;
     /*private Set<DalProgramDetailTier> dalProgramDetailTierSet;*/
@@ -363,21 +362,6 @@ public class DalProgramDetail extends DalAuditableModel {
 	 */
 	public void setPgmDetailTier(DalProgramDetailTier pgmDetailTier) {
 		this.pgmDetailTier = pgmDetailTier;
-	}
-
-	/**
-	 * @return the accuralData
-	 */
-	@OneToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name = "ID", referencedColumnName = "PGM_DET_ID", insertable=false, updatable=false)
-	public DalAccrualData getAccuralData() {
-		return accuralData;
-	}
-	/**
-	 * @param accuralData the accuralData to set
-	 */
-	public void setAccuralData(DalAccrualData accuralData) {
-		this.accuralData = accuralData;
 	}
 
 	@Column(name = "PRICING_TYPE_ID")

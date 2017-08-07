@@ -7,6 +7,7 @@ public class ProgramConstant {
 	public static final String INCLUDED = "1";
 	public static final String EXCLUDED = "2";
 	public static final String DATE_FORMAT = "MM/dd/yyyy";
+	public static final String DATE_FORMAT_TIME = "MM/dd/yyyy HH:mm:ss";
 	public static final String YES = "Yes";
 	public static final String NO = "No";
 	public static final String Y = "Y";

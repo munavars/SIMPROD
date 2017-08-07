@@ -258,37 +258,10 @@ public class ProgramServiceImpl implements IProgramService {
 		}
 		
 		programHeader.setCreatedDate(dalProgramDetail.getCreatedDate().getTime());
-		/*if(dalProgramDetail.getZmAppById() != null){
-			programHeader.setZoneManagerApprovedBy(dalProgramDetail.getZmAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getZmAppById().getLAST_NAME());
-			programHeader.setZoneManagerApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getZmAppDate()));	
-		}*/
-		/*if(dalProgramDetail.getDirAppById() != null){
-			programHeader.setDirectorApprovedBy(dalProgramDetail.getDirAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getDirAppById().getLAST_NAME());
-			programHeader.setDirectorApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getDirAppDate()));	
-		}
-		if(dalProgramDetail.getExecAppById() != null){
-			programHeader.setExecutiveApprovedBy(dalProgramDetail.getExecAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getExecAppById().getLAST_NAME());
-			programHeader.setExecutiveApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getExecAppDate()));	
-		}*/
-		/*if(dalProgramDetail.getTbpAppById() != null){
-			programHeader.setTbpApprovedBy(dalProgramDetail.getTbpAppById().getFIRST_NAME() + ProgramConstant.NAME_DELIMITER + dalProgramDetail.getTbpAppById().getLAST_NAME());
-			programHeader.setTbpApprovedDate( ProgramServiceHelper.convertToDateFromCalendar(dalProgramDetail.getTbpAppDate()));	
-		}*/
-		
-		if(dalProgramDetail.getAccuralData() != null){
-			/**Commenting the below lines due to recent changes in ACCRUAL_DATA table.*/
-			/*programHeader.setAccrualAmount(new BigDecimal(dalProgramDetail.getAccuralData().getTotalAccuredAmount()));
-			programHeader.setPaidAmount(new BigDecimal(dalProgramDetail.getAccuralData().getTotalPaidAmount()));
-			programHeader.setBalance(new BigDecimal(dalProgramDetail.getAccuralData().getBalance()));	*/
-			programHeader.setAccrualAmount(new BigDecimal(0));
-			programHeader.setPaidAmount(new BigDecimal(0));
-			programHeader.setBalance(new BigDecimal(0));	
-		}
-		else{
-			programHeader.setAccrualAmount(new BigDecimal(0));
-			programHeader.setPaidAmount(new BigDecimal(0));
-			programHeader.setBalance(new BigDecimal(0));	
-		}
+
+		programHeader.setAccrualAmount(new BigDecimal(0));
+		programHeader.setPaidAmount(new BigDecimal(0));
+		programHeader.setBalance(new BigDecimal(0));	
 	}
 
 	private void populatePaidBasedOnData(ProgramHeader programHeader, DalProgramHeader dalProgramHeader, DalProgramDetail dalProgramDetail) {

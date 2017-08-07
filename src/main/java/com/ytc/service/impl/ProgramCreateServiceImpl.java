@@ -134,8 +134,8 @@ public class ProgramCreateServiceImpl implements IProgramCreateService {
 			programHeader.setStatus(returnEntity.getStatus().getType());
 			programEmailService.sendEmailData(programHeader, dalProgramDetail);
 			if(returnEntity.getDalProgramHeader().getStatus() != null 
-					&& !ProgramConstant.IN_PROGRESS_STATUS.equals(returnEntity.getDalProgramHeader().getStatus().getType())
-					&& !ProgramConstant.REJECTED_STATUS.equals(returnEntity.getDalProgramHeader().getStatus().getType())
+					&& !ProgramConstant.IN_PROGRESS_STATUS_CODE.equals(returnEntity.getDalProgramHeader().getStatus().getId())
+					&& !ProgramConstant.REJECTED_STATUS_CODE.equals(returnEntity.getDalProgramHeader().getStatus().getId())
 					&& "1".equals(programHeader.getProgramButton().getUserLevel())){
 				programHeader.setNewProgram(true);
 			}

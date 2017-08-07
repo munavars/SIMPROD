@@ -134,4 +134,14 @@ public class PricingController extends BaseController {
 		return returnData;
 	}
 	
+	@RequestMapping(value = "/pricing/v1/validatePricingInvoiceDetails", method = RequestMethod.POST)
+	public @ResponseBody ModelResult<PricingHeader> validatePricingInvoiceDetails(HttpServletRequest request, @RequestBody PricingHeader pricingHeader) {
+		ModelResult<PricingHeader> returnData = null;
+		if(pricingHeader != null && request != null){
+			pricingHeader.setContextPath(request.getContextPath());
+		}
+		returnData =  new ModelResult<PricingHeader>(getPersistService().validatePricingInvoiceDetails(pricingHeader));
+		return returnData;
+	}
+	
 }

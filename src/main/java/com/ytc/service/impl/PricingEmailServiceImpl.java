@@ -33,7 +33,7 @@ public class PricingEmailServiceImpl implements IPricingEmailService{
 	@Override
 	public void sendEmailData(PricingHeader pricingHeader, DalPricingHeader dalPricingHeader) {
 		if(pricingHeader != null && dalPricingHeader != null && 
-				!ProgramConstant.IN_PROGRESS_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+				!ProgramConstant.IN_PROGRESS_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 			EmailDetails emailDetails = new EmailDetails();
 			
 			emailDetails.setFromAddress(dalPricingHeader.getModifiedBy().getEMAIL());
@@ -48,11 +48,11 @@ public class PricingEmailServiceImpl implements IPricingEmailService{
 	
 	private void buildText(EmailDetails emailDetails, DalPricingHeader dalPricingHeader, PricingHeader pricingHeader) {
 		String bodyContent = null;
-		if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+		if(ProgramConstant.PENDING_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 			bodyContent = buildContentForApprover(emailDetails, dalPricingHeader, pricingHeader);
 		}
 		/**Below things has to be modified. For now, gng to test pending status first*/
-		else if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+		else if(ProgramConstant.APPROVED_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 /*			if(ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel())){
 				bodyContent = buildContentForApprover(emailDetails, dalProgramDetail, programHeader);	
 			}
@@ -61,7 +61,7 @@ public class PricingEmailServiceImpl implements IPricingEmailService{
 				bodyContent = buildApprovedMailContent(emailDetails, dalPricingHeader, pricingHeader);
 			/*}*/
 		}
-		else if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+		else if(ProgramConstant.REJECTED_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 			bodyContent = buildRejectedMailContent(emailDetails, dalPricingHeader, pricingHeader);
 		}
 		emailDetails.setText(bodyContent);	
@@ -146,14 +146,14 @@ public class PricingEmailServiceImpl implements IPricingEmailService{
 
 	private void buildSubject(EmailDetails emailDetails, DalPricingHeader dalPricingHeader, PricingHeader pricingHeader) {
 		String subject = null;
-		if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+		if(ProgramConstant.PENDING_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 			subject = String.format(EmailConstant.PRICING_SUBJECT_PENDING, dalPricingHeader.getId());
 		}
-		else if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+		else if(ProgramConstant.APPROVED_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 			/**If control is here, then approval is done by TBP user who is level 3 user.*/
 			subject = String.format(EmailConstant.PRICING_SUBJECT_APPROVAL, dalPricingHeader.getId());
 		}
-		else if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+		else if(ProgramConstant.REJECTED_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 			subject = String.format(EmailConstant.PRICING_SUBJECT_REJECTED, dalPricingHeader.getId());
 		}
 		emailDetails.setSubject(subject);
@@ -174,12 +174,12 @@ public class PricingEmailServiceImpl implements IPricingEmailService{
 			List<DalWorkflowStatus> dalWorkflowStatusList = dalPricingHeader.getDalWorkflowStatusForPricingList();
 			Collections.sort(dalWorkflowStatusList, new WorkflowStatusComparatorByModifiedDate());
 			if(dalWorkflowStatusList != null){
-				if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+				if(ProgramConstant.REJECTED_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 					/**To and CC list are possible.*/
 					toEmailIdList.add(dalPricingHeader.getCreatedBy().getEMAIL());
 					appendToName(emailDetails, dalPricingHeader.getCreatedBy());
 					for(DalWorkflowStatus workflowStatus : dalWorkflowStatusList){
-						if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(workflowStatus.getApprovalStatus().getType())){
+						if(ProgramConstant.APPROVED_STATUS_CODE.equals(workflowStatus.getApprovalStatus().getId())){
 							if(ccEmailIdList == null){
 								ccEmailIdList = new ArrayList<String>();
 							}
@@ -191,19 +191,19 @@ public class PricingEmailServiceImpl implements IPricingEmailService{
 					}
 					
 				}
-				else if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+				else if(ProgramConstant.PENDING_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 					int size = dalWorkflowStatusList.size();
 					DalWorkflowStatus dalWorkflowStatus = dalWorkflowStatusList.get(size-1);
 					toEmailIdList.add(dalWorkflowStatus.getApprover().getEMAIL());
 					appendToName(emailDetails, dalWorkflowStatus.getApprover());
 				}
-				else if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType())){
+				else if(ProgramConstant.APPROVED_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())){
 					toEmailIdList.add(dalPricingHeader.getCreatedBy().getEMAIL());
 					appendToName(emailDetails, dalPricingHeader.getCreatedBy());
 					for(DalWorkflowStatus workflowStatus : dalWorkflowStatusList){
 						/**Last updated person mail id should not be appended to the To list, so not equal to check is added in the below 
 						 * condition. */
-						if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(workflowStatus.getApprovalStatus().getType()) &&
+						if(ProgramConstant.APPROVED_STATUS_CODE.equals(workflowStatus.getApprovalStatus().getId()) &&
 								!dalPricingHeader.getModifiedBy().getId().equals(workflowStatus.getApprover().getId())){
 							if(!toEmailIdList.contains(workflowStatus.getApprover().getEMAIL())){
 								toEmailIdList.add(workflowStatus.getApprover().getEMAIL());

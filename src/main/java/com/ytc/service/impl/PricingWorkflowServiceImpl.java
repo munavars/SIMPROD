@@ -45,7 +45,7 @@ public class PricingWorkflowServiceImpl implements IPricingWorkflowService {
 		 * Only if the user is submitting, then get the next approver from
 		 * WorkFlow matrix table and make an entry in WorkFlow status table.
 		 */
-		if (!ProgramConstant.IN_PROGRESS_STATUS.equals(dalPricingHeader.getDalStatus().getType())) {
+		if (!ProgramConstant.IN_PROGRESS_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId())) {
 			/***
 			 * 1. Get WorkFlow Matrix 2. Get WorkFlow status entries (latest
 			 * entry with Pending status has to be updated with Approved or
@@ -65,14 +65,14 @@ public class PricingWorkflowServiceImpl implements IPricingWorkflowService {
 				 * existing status during re submission of request by the
 				 * creator.
 				 */
-				if (ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalWorkflowStatus.getApprovalStatus().getType())) {
+				if (ProgramConstant.PENDING_STATUS_CODE.equals(dalWorkflowStatus.getApprovalStatus().getId())) {
 					dalWorkflowStatus.setApprovalComment(pricingHeader.getApproverComments());
-					String decision = ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(
-							dalPricingHeader.getDalStatus().getType()) ? ProgramConstant.N : ProgramConstant.Y;
+					String decision = ProgramConstant.REJECTED_STATUS_CODE.equals(
+							dalPricingHeader.getDalStatus().getId()) ? ProgramConstant.N : ProgramConstant.Y;
 					dalWorkflowStatus.setDecisionMade(decision);
 					if (ProgramConstant.Y.equals(decision)) {
 						for (DalStatus dalStatus : dalStatusList) {
-							if (ProgramConstant.APPROVED_STATUS.equals(dalStatus.getType())) {
+							if (ProgramConstant.APPROVED_STATUS_CODE.equals(dalStatus.getId())) {
 								dalWorkflowStatus.setApprovalStatus(dalStatus);
 								break;
 							}
@@ -88,7 +88,7 @@ public class PricingWorkflowServiceImpl implements IPricingWorkflowService {
 					dalWorkflowStatus.setWfStatusDate(Calendar.getInstance());
 				}
 			}
-			if (!(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalPricingHeader.getDalStatus().getType()))) {
+			if (!(ProgramConstant.REJECTED_STATUS_CODE.equals(dalPricingHeader.getDalStatus().getId()))) {
 				/**
 				 * Only if it s not rejected, next approver details will be
 				 * updated.
@@ -113,7 +113,7 @@ public class PricingWorkflowServiceImpl implements IPricingWorkflowService {
 				 * it approved.
 				 */
 				for (DalStatus dalStatus : dalStatusList) {
-					if (ProgramConstant.APPROVED_STATUS.equals(dalStatus.getType())) {
+					if (ProgramConstant.APPROVED_STATUS_CODE.equals(dalStatus.getId())) {
 						dalPricingHeader.setDalStatus(dalStatus);
 						break;
 					}
@@ -131,7 +131,7 @@ public class PricingWorkflowServiceImpl implements IPricingWorkflowService {
 					DalWorkflowStatus dalWorkflowStatus = new DalWorkflowStatus();
 
 					for (DalStatus dalStatus : dalStatusList) {
-						if (ProgramConstant.PENDING_STATUS.equals(dalStatus.getType())) {
+						if (ProgramConstant.PENDING_STATUS_CODE.equals(dalStatus.getId())) {
 							dalWorkflowStatus.setApprovalStatus(dalStatus);
 							break;
 						}

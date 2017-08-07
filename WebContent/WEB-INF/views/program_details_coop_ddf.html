@@ -455,12 +455,20 @@
 													<!-- ROW 4 ENDS -->
 													<div class="row">
 														<div class="form-group">
+															<label class="control-label p-left16"
+																for="paid_basedon_inputselect">Customer / Product Definition
+																	<label data-original-title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" 
+																	data-content="Include at least one customer and one part master attributes." 
+																	data-placement="top" data-trigger="hover" 
+																	rows="3" data-html="true" class="btn btn-info btn-xs popovers"><strong>?</strong></label>
+															</label>	
 															<div class="space15 clearfix"></div>
-															<h4 rel="txtTooltip" class="control-label popovers"
+															<!-- <h4 rel="txtTooltip" class="control-label popovers"
 																data-content="Include at least one customer and one part master attributes."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" rows="3" data-html="true" style="width:110px">Paid Based On </h4>
+																data-placement="top" rows="3" data-html="true" style="width:110px">Paid Based On </h4> -->
+																
 															<div class="col-lg-4 col-md-4 col-sm-4">
 																<select class="paidachieve" name="paidBasedOn"
 																	id="paidBasedOn"
@@ -1333,7 +1341,12 @@
             	},
             	failure: function(response){
             		alert("Wrongly done");
-            	}
+            	},
+            	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+					 $("#errorMessageModal").html(message);
+					 $('#myModal5').modal('toggle');                    	
+				} 
         	});
 		});
 	</script>
@@ -1390,7 +1403,12 @@
              	},
              	failure: function(response){
              		alert("Wrongly done");
-             	}
+             	},
+            	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+					 $("#errorMessageModal").html(message);
+					 $('#myModal5').modal('toggle');                    	
+				} 
          	});
 		});
 		
@@ -1927,7 +1945,12 @@
 					failure: function(response){
 						$("#confirmMessage").html("Issue while saving the data. Please try again after sometime.!!");
 						$('#myModal4').modal('toggle');
-					}
+					},
+	            	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+						message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+						 $("#errorMessageModal").html(message);
+						 $('#myModal5').modal('toggle');                    	
+					} 
 			    });
 			}
 			

@@ -60,6 +60,27 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 	
 	private static Logger LOGGER = Logger.getLogger(PricingUpdateServiceImpl.class.getName());
 
+
+
+	@Override
+	public PricingHeader validatePricingInvoiceDetails(PricingHeader pricingHeader) {
+		try{
+			if(pricingHeader != null){
+				if (!validatePartProdTread(pricingHeader)){
+					pricingHeader.setSuccess(false);
+				}
+				else{
+					pricingHeader.setSuccess(true);
+				}
+			}
+		}
+		catch(Exception e){
+			LOGGER.info("Error while validating Pricing Header Details" + e);
+			throw e;
+		}
+		return pricingHeader;
+	}
+	
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public PricingHeader savePricingHeaderDetails(PricingHeader pricingHeader) {
@@ -84,8 +105,8 @@ public class PricingUpdateServiceImpl implements IPricingUpdateService {
 				
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
 			LOGGER.info("Error in saving Pricing Header Details" + e);
+			throw e;
 		}
 
 		return pricingHeader;

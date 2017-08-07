@@ -51,7 +51,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 			
 			/**Only if the user is submitting, then get the next approver from
 			 * WorkFlow matrix table and make an entry in WorkFlow status table. */
-			if(!ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramDet.getStatus().getType())){
+			if(!ProgramConstant.IN_PROGRESS_STATUS_CODE.equals(dalProgramDet.getStatus().getId())){
 				/***
 				 * 1. Get WorkFlow Matrix
 				 * 2. Get WorkFlow status entries (latest entry with Pending status has to be updated with Approved or Rejected status.)
@@ -66,13 +66,13 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 					DalWorkflowStatus dalWorkflowStatus = dalWorkflowStatusList.get(size-1);
 					/**This condition will eliminate the need of updating the existing status during resubmission of request
 					 * by the creator.*/
-					if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalWorkflowStatus.getApprovalStatus().getType())){
+					if(ProgramConstant.PENDING_STATUS_CODE.equals(dalWorkflowStatus.getApprovalStatus().getId())){
 						dalWorkflowStatus.setApprovalComment(programHeader.getUserComments());
-						String decision = ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalProgramDet.getStatus().getType()) ? ProgramConstant.N : ProgramConstant.Y;
+						String decision = ProgramConstant.REJECTED_STATUS_CODE.equals(dalProgramDet.getStatus().getId()) ? ProgramConstant.N : ProgramConstant.Y;
 						dalWorkflowStatus.setDecisionMade(decision);
 						if(ProgramConstant.Y.equals(decision)){
 							for(DalStatus dalStatus : dalStatusList){
-								if(ProgramConstant.APPROVED_STATUS.equals(dalStatus.getType())){
+								if(ProgramConstant.APPROVED_STATUS_CODE.equals(dalStatus.getId())){
 									dalWorkflowStatus.setApprovalStatus(dalStatus);
 									break;
 								}
@@ -86,7 +86,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 						dalWorkflowStatus.setWfStatusDate(Calendar.getInstance());						
 					}
 				}
-				if(!(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalProgramDet.getStatus().getType()))){
+				if(!(ProgramConstant.REJECTED_STATUS_CODE.equals(dalProgramDet.getStatus().getId()))){
 					/**Only if it s not rejected, next approver details will be updated.*/
 					getNextApproverFromMatrix(dalProgramDet, programHeader, employee, dalStatusList);
 				}
@@ -106,7 +106,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 			if(programWorkflowMatrixDetail.getCurrentUserLevel() == programWorkflowMatrixDetail.getTotalLevel()){
 				/**There is no level after this. This is the final action , if it approved.*/
 				for(DalStatus dalStatus : dalStatusList){
-					if(ProgramConstant.APPROVED_STATUS.equals(dalStatus.getType())){
+					if(ProgramConstant.APPROVED_STATUS_CODE.equals(dalStatus.getId())){
 						dalProgramDetail.setStatus(dalStatus);
 						dalProgramDetail.getDalProgramHeader().setStatus(dalStatus);
 						break;
@@ -125,7 +125,7 @@ public class ProgramWorkflowServiceImpl implements IProgramWorkflowService{
 					DalWorkflowStatus dalWorkflowStatus = new DalWorkflowStatus();
 					
 					for(DalStatus dalStatus : dalStatusList){
-						if(ProgramConstant.PENDING_STATUS.equals(dalStatus.getType())){
+						if(ProgramConstant.PENDING_STATUS_CODE.equals(dalStatus.getId())){
 							dalWorkflowStatus.setApprovalStatus(dalStatus);
 							break;
 						}

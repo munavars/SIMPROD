@@ -1431,7 +1431,36 @@
 					</div>
 				</div>
 				<!-- END of 'New Customers' table -->
+				<!-- START Modal -->
+				<div id="footer-button" class="modal-footer">
+					<div class="modal fade" id="myModal1" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button id="program-confirmation-modal-close" type="button"
+										class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">Error/Warning (s)</h4>
+								</div>
+								<div class="modal-body">
+									<!-- <div class="space15">&nbsp;</div> -->
+									<div class="text-center">
+										<span id="errorMessageModal"></span>
+									</div>
+									<!-- <div class="space15"></div> -->
+								</div>
+								<div class="modal-footer">
+									<button class="btn btn-info" type="button"
+										id="program-confirmation-modal-ok" data-dismiss="modal">
+										<i class="fa fa-save"></i>&nbsp;&nbsp;OK
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
 
+				</div>
+				<!-- END Modal -->
 				<!-- page end-->
           </section>
       </section>
@@ -1500,7 +1529,12 @@
 		            	},
 		            	failure: function(response){
 		            		alert("Wrongly done");
-		            	}
+		            	},
+		            	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+							message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+							 $("#errorMessageModal").html(message);
+							 $('#myModal1').modal('toggle');                    	
+						}  
 		        	});
 			}
 		   

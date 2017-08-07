@@ -111,14 +111,14 @@ public class CustomerService implements ICustomerService {
 	
 	private String getActionRequiredByName(DalProgramDetail dalProgramDetail) {
 		String actionReqdByName = "";
-		String approvalStatus = "";
+		Integer approvalStatus = null;
 		if(dalProgramDetail != null & dalProgramDetail.getDalWorkflowStatusList() != null){
 			for(DalWorkflowStatus dalWorkflowStatus : dalProgramDetail.getDalWorkflowStatusList()){
 				actionReqdByName=ProgramServiceHelper.getName(dalWorkflowStatus.getApprover());
-				approvalStatus=dalWorkflowStatus.getApprovalStatus().getType();
+				approvalStatus=dalWorkflowStatus.getApprovalStatus().getId();
 			}
 		}
-		if((ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(approvalStatus))||("".equalsIgnoreCase(approvalStatus)))
+		if((ProgramConstant.REJECTED_STATUS_CODE.equals(approvalStatus))||(approvalStatus == null))
 		{
 			actionReqdByName=ProgramServiceHelper.getName(dalProgramDetail.getCreatedBy());
 		}
@@ -165,7 +165,7 @@ public class CustomerService implements ICustomerService {
 	private String getProgramStatusHistory(DalProgramDetail dalProgramDetail) {
 		String statusHistory = null;
 		StringBuilder statusBuilder = null;
-		String approvalStatus="";
+		Integer approvalStatusCode = null;
 		if(dalProgramDetail != null & dalProgramDetail.getDalWorkflowStatusList() != null){
 			Set<Integer> workflowIdSet = new HashSet<Integer>();
 			for(DalWorkflowStatus dalWorkflowStatus : dalProgramDetail.getDalWorkflowStatusList()){
@@ -185,16 +185,16 @@ public class CustomerService implements ICustomerService {
 				statusBuilder.append(dalWorkflowStatus.getApprover().getTITLE().getTitle());
 				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
 				statusBuilder.append(dalWorkflowStatus.getApprovalStatus().getType());
-				approvalStatus=dalWorkflowStatus.getApprovalStatus().getType();
+				approvalStatusCode = dalWorkflowStatus.getApprovalStatus().getId();
 			}
-			if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(approvalStatus))
+			if(ProgramConstant.REJECTED_STATUS_CODE.equals(approvalStatusCode))
 			{
 				statusBuilder.append(ProgramConstant.BREAK_NEW_LINE_CODE);
 				statusBuilder.append(ProgramServiceHelper.getName(dalProgramDetail.getCreatedBy()));
 				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
 				statusBuilder.append(dalProgramDetail.getCreatedBy().getTITLE().getTitle());
 				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
-				statusBuilder.append(ProgramConstant.PENDING_STATUS);
+				statusBuilder.append(ProgramConstant.PENDING_STATUS_TYPE);
 			}
 			statusHistory = (statusBuilder != null) ? statusBuilder.toString() : ProgramConstant.STATUS_HISTORY_DATA_MESSAGE;
 		}
@@ -203,14 +203,14 @@ public class CustomerService implements ICustomerService {
 	
 	private String getActionRequiredByName(DalPricingHeader dalPricingHeader) {
 		String actionReqdByName = "";
-		String approvalStatus = "";
+		Integer approvalStatus = null;
 		if(dalPricingHeader != null & dalPricingHeader.getDalWorkflowStatusForPricingList() != null){
 			for(DalWorkflowStatus dalWorkflowStatus : dalPricingHeader.getDalWorkflowStatusForPricingList()){
 				actionReqdByName=ProgramServiceHelper.getName(dalWorkflowStatus.getApprover());
-				approvalStatus=dalWorkflowStatus.getApprovalStatus().getType();
+				approvalStatus=dalWorkflowStatus.getApprovalStatus().getId();
 			}
 		}
-		if((ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(approvalStatus))||("".equalsIgnoreCase(approvalStatus)))
+		if((ProgramConstant.REJECTED_STATUS_CODE.equals(approvalStatus))||(approvalStatus == null))
 		{
 			actionReqdByName=ProgramServiceHelper.getName(dalPricingHeader.getCreatedBy());
 		}
@@ -220,7 +220,7 @@ public class CustomerService implements ICustomerService {
 	private String getPricingStatusHistory(DalPricingHeader dalPricingHeader) {
 		String statusHistory = null;
 		StringBuilder statusBuilder = null;
-		String approvalStatus="";
+		Integer approvalStatusCode = null;
 		if(dalPricingHeader != null & dalPricingHeader.getDalWorkflowStatusForPricingList() != null){
 			Set<Integer> workflowIdSet = new HashSet<Integer>();
 			for(DalWorkflowStatus dalWorkflowStatus : dalPricingHeader.getDalWorkflowStatusForPricingList()){
@@ -240,16 +240,16 @@ public class CustomerService implements ICustomerService {
 				statusBuilder.append(dalWorkflowStatus.getApprover().getTITLE().getTitle());
 				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
 				statusBuilder.append(dalWorkflowStatus.getApprovalStatus().getType());
-				approvalStatus=dalWorkflowStatus.getApprovalStatus().getType();
+				approvalStatusCode = dalWorkflowStatus.getApprovalStatus().getId();
 			}
-			if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(approvalStatus))
+			if(ProgramConstant.REJECTED_STATUS_CODE.equals(approvalStatusCode))
 			{
 				statusBuilder.append(ProgramConstant.BREAK_NEW_LINE_CODE);
 				statusBuilder.append(ProgramServiceHelper.getName(dalPricingHeader.getCreatedBy()));
 				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
 				statusBuilder.append(dalPricingHeader.getCreatedBy().getTITLE().getTitle());
 				statusBuilder.append(ProgramConstant.COLON_WITH_SPACE);
-				statusBuilder.append(ProgramConstant.PENDING_STATUS);
+				statusBuilder.append(ProgramConstant.PENDING_STATUS_TYPE);
 			}
 			
 			statusHistory = (statusBuilder != null) ? statusBuilder.toString() : ProgramConstant.STATUS_HISTORY_DATA_MESSAGE;

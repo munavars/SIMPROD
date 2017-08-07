@@ -35,7 +35,7 @@ public class ProgramEmailServiceImpl implements IProgramEmailService {
 	 */
 	public void sendEmailData(ProgramHeader programHeader, DalProgramDetail dalProgramDetail) {
 		if(programHeader != null && dalProgramDetail != null && 
-				!ProgramConstant.IN_PROGRESS_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+				!ProgramConstant.IN_PROGRESS_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 			EmailDetails emailDetails = new EmailDetails();
 			
 			emailDetails.setFromAddress(dalProgramDetail.getModifiedBy().getEMAIL());
@@ -49,11 +49,11 @@ public class ProgramEmailServiceImpl implements IProgramEmailService {
 
 	private void buildText(EmailDetails emailDetails, DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {
 		String bodyContent = null;
-		if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+		if(ProgramConstant.PENDING_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 			bodyContent = buildContentForApprover(emailDetails, dalProgramDetail, programHeader);
 		}
 		/**Below things has to be modified. For now, gng to test pending status first*/
-		else if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+		else if(ProgramConstant.APPROVED_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 /*			if(ProgramConstant.USER_LEVEL_2.equals(programHeader.getProgramButton().getUserLevel())){
 				bodyContent = buildContentForApprover(emailDetails, dalProgramDetail, programHeader);	
 			}
@@ -62,7 +62,7 @@ public class ProgramEmailServiceImpl implements IProgramEmailService {
 				bodyContent = buildApprovedMailContent(emailDetails, dalProgramDetail, programHeader);
 			/*}*/
 		}
-		else if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+		else if(ProgramConstant.REJECTED_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 			bodyContent = buildRejectedMailContent(emailDetails, dalProgramDetail, programHeader);
 		}
 		emailDetails.setText(bodyContent);	
@@ -167,14 +167,14 @@ public class ProgramEmailServiceImpl implements IProgramEmailService {
 
 	private void buildSubject(EmailDetails emailDetails, DalProgramDetail dalProgramDetail, ProgramHeader programHeader) {
 		String subject = null;
-		if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+		if(ProgramConstant.PENDING_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 			subject = String.format(EmailConstant.SUBJECT_PENDING, dalProgramDetail.getId());
 		}
-		else if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+		else if(ProgramConstant.APPROVED_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 			/**If control is here, then approval is done by TBP user who is level 3 user.*/
 			subject = String.format(EmailConstant.SUBJECT_APPROVAL, dalProgramDetail.getId());
 		}
-		else if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+		else if(ProgramConstant.REJECTED_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 			subject = String.format(EmailConstant.SUBJECT_REJECTED, dalProgramDetail.getId());
 		}
 		emailDetails.setSubject(subject);
@@ -195,12 +195,12 @@ public class ProgramEmailServiceImpl implements IProgramEmailService {
 			List<DalWorkflowStatus> dalWorkflowStatusList = dalProgramDetail.getDalWorkflowStatusList();
 			if(dalWorkflowStatusList != null){
 				Collections.sort(dalWorkflowStatusList, new WorkflowStatusComparatorByModifiedDate());
-				if(ProgramConstant.REJECTED_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+				if(ProgramConstant.REJECTED_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 					/**To and CC list are possible.*/
 					toEmailIdList.add(dalProgramDetail.getCreatedBy().getEMAIL());
 					appendToName(emailDetails, dalProgramDetail.getCreatedBy());
 					for(DalWorkflowStatus workflowStatus : dalWorkflowStatusList){
-						if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(workflowStatus.getApprovalStatus().getType())){
+						if(ProgramConstant.APPROVED_STATUS_CODE.equals(workflowStatus.getApprovalStatus().getId())){
 							if(ccEmailIdList == null){
 								ccEmailIdList = new ArrayList<String>();
 							}
@@ -212,19 +212,19 @@ public class ProgramEmailServiceImpl implements IProgramEmailService {
 					}
 					
 				}
-				else if(ProgramConstant.PENDING_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+				else if(ProgramConstant.PENDING_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 					int size = dalWorkflowStatusList.size();
 					DalWorkflowStatus dalWorkflowStatus = dalWorkflowStatusList.get(size-1);
 					toEmailIdList.add(dalWorkflowStatus.getApprover().getEMAIL());
 					appendToName(emailDetails, dalWorkflowStatus.getApprover());
 				}
-				else if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(dalProgramDetail.getStatus().getType())){
+				else if(ProgramConstant.APPROVED_STATUS_CODE.equals(dalProgramDetail.getStatus().getId())){
 					toEmailIdList.add(dalProgramDetail.getCreatedBy().getEMAIL());
 					appendToName(emailDetails, dalProgramDetail.getCreatedBy());
 					for(DalWorkflowStatus workflowStatus : dalWorkflowStatusList){
 						/**Last updated person mail id should not be appended to the To list, so not equal to check is added in the below 
 						 * condition. */
-						if(ProgramConstant.APPROVED_STATUS.equalsIgnoreCase(workflowStatus.getApprovalStatus().getType()) &&
+						if(ProgramConstant.APPROVED_STATUS_CODE.equals(workflowStatus.getApprovalStatus().getId()) &&
 								!dalProgramDetail.getModifiedBy().getId().equals(workflowStatus.getApprover().getId())){
 							if(!toEmailIdList.contains(workflowStatus.getApprover().getEMAIL())){
 								toEmailIdList.add(workflowStatus.getApprover().getEMAIL());

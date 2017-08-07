@@ -10,7 +10,7 @@ import java.util.Map;
  */
 public enum ConsumerProgramStatusEnum {
 
-	INPROGRESS("IN PROGRESS", 1),
+	DRAFT("DRAFT", 1),
 	PENDING("PENDING",2),
 	ACTIVE("ACTIVE", 1),
 	APPROVED("APPROVED",1),

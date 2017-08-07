@@ -27,26 +27,27 @@ public class PricingWorkflowServiceHelper {
 			 * 2.Current user level.
 			 * 3.Set button enable/disable value accordingly
 			 * */
+			Integer programStatusCode = dalPricingHeader.getDalStatus().getId();
 			String programStatus = dalPricingHeader.getDalStatus().getType();
 			ConsumerProgramStatusEnum consumerProgramStatusEnum = ConsumerProgramStatusEnum.getProgramStatus(programStatus);
 			if(consumerProgramStatusEnum != null){
 				pricingHeader.getProgramButton().setUserLevel(String.valueOf(consumerProgramStatusEnum.getUserLevel()));
 				
-				if(ConsumerProgramStatusEnum.INPROGRESS.getProgramStatus().equalsIgnoreCase(programStatus)){
+				if(ProgramConstant.IN_PROGRESS_STATUS_CODE.equals(programStatusCode)){
 					setInProgressBehaviour(pricingHeader, dalPricingHeader, employee);
 					
 					pricingHeader.setNewProgram(false);
 				}
-				else if(ConsumerProgramStatusEnum.PENDING.getProgramStatus().equalsIgnoreCase(programStatus)){
+				else if(ProgramConstant.PENDING_STATUS_CODE.equals(programStatusCode)){
 					setPendingManagerApprovalBehaviour(pricingHeader, dalPricingHeader, employee);
 					pricingHeader.setNewProgram(false);
 				}
-				else if(ConsumerProgramStatusEnum.ACTIVE.getProgramStatus().equalsIgnoreCase(programStatus) ||  
-						ConsumerProgramStatusEnum.APPROVED.getProgramStatus().equalsIgnoreCase(programStatus)){
+				else if(ProgramConstant.ACTIVE_STATUS_CODE.equals(programStatusCode) ||  
+						ProgramConstant.APPROVED_STATUS_CODE.equals(programStatusCode)){
 					setApprovedBehaviour(pricingHeader, dalPricingHeader, employee);
 					pricingHeader.setNewProgram(true);
 				}
-				else if(ConsumerProgramStatusEnum.REJECTED.getProgramStatus().equalsIgnoreCase(programStatus)){
+				else if(ProgramConstant.REJECTED_STATUS_CODE.equals(programStatusCode)){
 					setRejectedBehaviour(pricingHeader, dalPricingHeader, employee);
 					pricingHeader.setNewProgram(false);
 				}
@@ -113,7 +114,7 @@ public class PricingWorkflowServiceHelper {
 	}
 
 	public static void setNewProgramButtonProperties(PricingHeader pricingHeader) {
-		pricingHeader.getProgramButton().setUserLevel(ConsumerProgramStatusEnum.INPROGRESS.getUserLevel().toString());
+		pricingHeader.getProgramButton().setUserLevel(ConsumerProgramStatusEnum.DRAFT.getUserLevel().toString());
 		pricingHeader.getProgramButton().setApprover(false);
 		pricingHeader.getProgramButton().setCreater(true);	
 	}

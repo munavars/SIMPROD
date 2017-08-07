@@ -196,7 +196,12 @@ function tableToExcel(tableId, fileName) {
 				   $("#level1").html("<strong>"+cust.data.employeeHierarchy.lvl1EmpName+"</strong>, "+cust.data.employeeHierarchy.lvl1Title);
 				   $("#level3").html("<strong>"+cust.data.employeeHierarchy.lvl3EmpName+"</strong>, "+cust.data.employeeHierarchy.lvl3Title);
 				   loadPricingTable();
-			   }
+			   },
+				error: function(XMLHttpRequest, textStatus, errorThrown) { 
+					message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+					 $("#errorMessageModal").html(message);
+					 $('#myModal5').modal('toggle');                    	
+				} 
 			});
 		
 		function loadPricingTable(){
@@ -612,7 +617,12 @@ function tableToExcel(tableId, fileName) {
 		            	},
 		            	failure: function(response){
 		            		alert("Wrongly done");
-		            	}
+		            	},
+		            	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+							message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+							 $("#errorMessageModal").html(message);
+							 $('#myModal5').modal('toggle');                    	
+						} 
 		        	});
 			}
 		});

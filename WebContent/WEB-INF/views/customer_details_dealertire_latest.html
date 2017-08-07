@@ -198,6 +198,7 @@ th{
 				   $("#custname").text(cust.data.customerName);
 				   $("#custno").html("<strong>"+cust.data.customerNumber+"</strong>");
 				   $("#bu").html("<strong>"+cust.data.bu+"</strong>");
+				   $("#channelCode").html("<strong>"+cust.data.channelCode+"</strong>");
 				   $("#level1").html("<strong>"+cust.data.employeeHierarchy.lvl1EmpName+"</strong>, "+cust.data.employeeHierarchy.lvl1Title);
 				   $("#level3").html("<strong>"+cust.data.employeeHierarchy.lvl3EmpName+"</strong>, "+cust.data.employeeHierarchy.lvl3Title);
                    
@@ -547,6 +548,7 @@ th{
                           <ul class="list-unstyled">
                               <li id="custno"><strong>No data available for this customer Id</strong></li>
                               <li id="bu"><strong></strong></li>
+                              <li id="channelCode"><strong></strong></li>
                               <li id="level1"><strong></strong></li>
                               <li id="level3"><strong></strong></li>
                           </ul>
@@ -977,7 +979,12 @@ th{
 	            	},
 	            	failure: function(response){
 	            		alert("Wrongly done");
-	            	}
+	            	},
+	            	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+						message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+						 $("#errorMessageModal").html(message);
+						 $('#myModal1').modal('toggle');                    	
+					}  
 	        	});
 			}
 		});

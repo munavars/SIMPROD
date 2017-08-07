@@ -23,26 +23,25 @@ public class ProgramServiceWorkflowHelper {
 			 * 2.Current user level.
 			 * 3.Set button enable/disable value accordingly
 			 * */
-			String programStatus = dalProgramDetail.getStatus().getType();
-			ConsumerProgramStatusEnum consumerProgramStatusEnum = ConsumerProgramStatusEnum.getProgramStatus(programStatus);
+			Integer programCode = dalProgramDetail.getStatus().getId();
+			ConsumerProgramStatusEnum consumerProgramStatusEnum = ConsumerProgramStatusEnum.getProgramStatus(dalProgramDetail.getStatus().getType());
 			if(consumerProgramStatusEnum != null){
 				programHeader.getProgramButton().setUserLevel(String.valueOf(consumerProgramStatusEnum.getUserLevel()));
 				
-				if(ConsumerProgramStatusEnum.INPROGRESS.getProgramStatus().equalsIgnoreCase(programStatus)){
+				if(ProgramConstant.IN_PROGRESS_STATUS_CODE.equals(programCode)){
 					setInProgressBehaviour(programHeader, dalProgramDetail, employee);
-					
 					programHeader.setNewProgram(false);
 				}
-				else if(ConsumerProgramStatusEnum.PENDING.getProgramStatus().equalsIgnoreCase(programStatus)){
+				else if(ProgramConstant.PENDING_STATUS_CODE.equals(programCode)){
 					setPendingManagerApprovalBehaviour(programHeader, dalProgramDetail, employee);
 					programHeader.setNewProgram(false);
 				}
-				else if(ConsumerProgramStatusEnum.ACTIVE.getProgramStatus().equalsIgnoreCase(programStatus) ||  
-						ConsumerProgramStatusEnum.APPROVED.getProgramStatus().equalsIgnoreCase(programStatus)){
+				else if(ProgramConstant.ACTIVE_STATUS_CODE.equals(programCode) ||  
+						ProgramConstant.APPROVED_STATUS_CODE.equals(programCode)){
 					setApprovedBehaviour(programHeader, dalProgramDetail, employee);
 					programHeader.setNewProgram(true);
 				}
-				else if(ConsumerProgramStatusEnum.REJECTED.getProgramStatus().equalsIgnoreCase(programStatus)){
+				else if(ProgramConstant.REJECTED_STATUS_CODE.equals(programCode) ){
 					setRejectedBehaviour(programHeader, dalProgramDetail, employee);
 					programHeader.setNewProgram(false);
 				}
@@ -126,7 +125,7 @@ public class ProgramServiceWorkflowHelper {
 	}
 
 	public static void setNewProgramButtonProperties(ProgramHeader programHeader) {
-		programHeader.getProgramButton().setUserLevel(ConsumerProgramStatusEnum.INPROGRESS.getUserLevel().toString());
+		programHeader.getProgramButton().setUserLevel(ConsumerProgramStatusEnum.DRAFT.getUserLevel().toString());
 		programHeader.getProgramButton().setApprover(false);
 		programHeader.getProgramButton().setCreater(true);	
 	}

@@ -191,8 +191,8 @@ public class ProgramUpdateServiceImpl implements IProgramUpdateService{
 		
 		/**Setting the value to true */
 		if(dalProgramDetail.getDalProgramHeader().getStatus() != null 
-				&& !ProgramConstant.IN_PROGRESS_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
-				&& !ProgramConstant.REJECTED_STATUS.equals(dalProgramDetail.getDalProgramHeader().getStatus().getType())
+				&& !ProgramConstant.IN_PROGRESS_STATUS_CODE.equals(dalProgramDetail.getDalProgramHeader().getStatus().getId())
+				&& !ProgramConstant.REJECTED_STATUS_CODE.equals(dalProgramDetail.getDalProgramHeader().getStatus().getId())
 				&& "1".equals(programHeader.getProgramButton().getUserLevel())){
 			programHeader.setNewProgram(true);
 		}

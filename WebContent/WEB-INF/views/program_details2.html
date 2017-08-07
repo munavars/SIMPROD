@@ -37,7 +37,6 @@
       <link href="resources/css/style.css" rel="stylesheet">
       <link href="resources/css/style-responsive.css" rel="stylesheet" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-        
       
       <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltips and media queries -->
       <!--[if lt IE 9]>
@@ -55,8 +54,6 @@
            n2.value = n1.value;
          }
       </script>
-      
-
    </head>
    <body onload="prdValue();include();exclude();achPrdValue();achInclude();achExclude();">
       <section id="container" class="sidebar-closed">
@@ -496,7 +493,11 @@
 												<!-- PAID BASED ON - BEGIN -->
 												<div class="col-lg-12">
 													<div class="form-group">
-														<h4>Paid Based On</h4>
+														<h4 rel="txtTooltip" class="control-label popovers"
+																data-content="Include at least one customer and one part master attributes."
+																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+																data-toggle="tooltip" data-trigger="hover"
+																data-placement="top" rows="3" data-html="true" style="width:110px">Paid Based On </h4>
 														<div class="space15 clearfix"></div>
 														<div class="row">
 															<div class="col-lg-4 col-md-4 col-sm-4">
@@ -697,7 +698,11 @@
 														</div>
 														<div class="row">
 															<div class="col-lg-4 col-md-4 col-sm-4">
-																<label class="control-label"
+																<label class="control-label popovers"
+																data-content="Include at least one customer and one part master attributes."
+																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+																data-toggle="tooltip" data-trigger="hover"
+																data-placement="top" rows="3" data-html="true"
 																	for="achieve_basedon_inputselect">Achieve Based
 																	On</label> <select class="form-control input-sm m-bot15 "
 																	id="achieve_basedon_inputselect"
@@ -1447,7 +1452,7 @@
       <link rel="stylesheet" href="resources/css/breadcrumbs.css">
 	<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 	<script src="resources/js/jquery.breadcrumbs-generator.js"></script>
-	<script>
+      <script>
 	$(function() {
 	  $('#breadcrumbs').breadcrumbsGenerator();
 	});
@@ -1878,7 +1883,7 @@
 	<script>
             $(document).ready(function(){
                 $('#from').datepicker();
-                 $('#to').datepicker();                
+                 $('#to').datepicker();
             });
             
        		var responseOnload;

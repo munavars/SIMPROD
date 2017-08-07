@@ -96,7 +96,7 @@ public class CustomerService implements ICustomerService {
 				programDetail.setZmAppDate(null!=dalProgramDetail.getZmAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getZmAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
 				programDetail.setTbpAppStatus(null!=dalProgramDetail.getTbAppStatus()?dalProgramDetail.getTbAppStatus().getId().toString():"0");
 				programDetail.setTbpAppDate(null!=dalProgramDetail.getTbpAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getTbpAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");*/
-				programDetail.setModifiedDate(null!=dalProgramDetail.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT):"");
+				programDetail.setModifiedDate(null!=dalProgramDetail.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT_TIME):"");
 				programDetail.setProgramStatus((dalProgramDetail.getStatus() != null) ? dalProgramDetail.getStatus().getId().toString() : "0" );
 				programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
 				programDetail.setStatusHistory(getProgramStatusHistory(dalProgramDetail));
@@ -151,7 +151,7 @@ public class CustomerService implements ICustomerService {
 				programDetail.setProgramId(dalPricingHeader.getId());
 				programDetail.setBu(dalPricingHeader.getCreatedBy().getBUSINESS_UNIT());
 				programDetail.setSubmitDate(ProgramServiceHelper.convertDateToString(dalPricingHeader.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
-				programDetail.setModifiedDate(null!=dalPricingHeader.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalPricingHeader.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT):"");
+				programDetail.setModifiedDate(null!=dalPricingHeader.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalPricingHeader.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT_TIME):"");
 				programDetail.setProgramStatus((dalPricingHeader.getDalStatus() != null) ? dalPricingHeader.getDalStatus().getId().toString() : "0" );
 				programDetail.setProgramType(dalPricingHeader.getDalProgramType().getType());
 				programDetail.setStatusHistory(getPricingStatusHistory(dalPricingHeader));

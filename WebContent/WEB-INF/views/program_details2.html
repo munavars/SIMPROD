@@ -37,6 +37,7 @@
       <link href="resources/css/style.css" rel="stylesheet">
       <link href="resources/css/style-responsive.css" rel="stylesheet" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+        
       
       <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltips and media queries -->
       <!--[if lt IE 9]>
@@ -54,6 +55,8 @@
            n2.value = n1.value;
          }
       </script>
+      
+
    </head>
    <body onload="prdValue();include();exclude();achPrdValue();achInclude();achExclude();">
       <section id="container" class="sidebar-closed">
@@ -201,6 +204,33 @@
                         <header class="panel-heading">
                            <h3>Program Item Detail</h3>
                         </header>
+                        
+                                            <ol id="breadcrumbs"></ol>
+					<nav id="sitemaps"  style="display:none">
+					 <!--  <h2>Sitemaps</h2> -->
+					  <ul>
+					    <li>
+					      <a href="processLogin">Home</a>
+					      <ul>
+					       <li>
+					          <a href="customer">Customer Details</a>
+					          <ul>
+					            <li><a href="programDetail">Program Detail</a></li>
+					            <li><a href="programddfcoop">Program Detail</a></li>
+					            <li><a href="pricingOverview">Pricing Overview</a>
+					             	<ul>
+					             	<li><a href="pricingRequest">Pricing Request</a></li>
+					             	</ul>
+					             </li>
+					          </ul> 
+					        </li>
+					        <li><a href="ccm">CCM</a></li>
+					        <li><a href="accrual">Accrual Calculation</a></li>					       
+					      </ul>
+					    </li>
+					  </ul>
+					</nav>
+                        
                         <div class="panel-body">
                           <div class="clearfix">
                              <div class="col-lg-12">
@@ -1412,6 +1442,17 @@
       <!--common script for all pages-->
       <script src="resources/js/common-scripts.js"></script>
       <!--script for this page-->
+      
+      
+      <link rel="stylesheet" href="resources/css/breadcrumbs.css">
+	<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+	<script src="resources/js/jquery.breadcrumbs-generator.js"></script>
+	<script>
+	$(function() {
+	  $('#breadcrumbs').breadcrumbsGenerator();
+	});
+	</script>
+      
       <script>
          //step wizard
          
@@ -1837,7 +1878,7 @@
 	<script>
             $(document).ready(function(){
                 $('#from').datepicker();
-                 $('#to').datepicker();
+                 $('#to').datepicker();                
             });
             
        		var responseOnload;
@@ -1879,7 +1920,7 @@
 	            	url: url,
 	             	success: function(response){
 	             		responseOnload = response.data;
-	             		
+	             		$('#breadcrumbs li:nth-last-child(2) >a').attr('href','/SIM/customer?custId='+ responseOnload.customerId);
 						fnPopulateProgramDetails(response);
 						
 						_isDirty = false;

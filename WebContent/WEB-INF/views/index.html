@@ -38,6 +38,15 @@
 
 	<link rel="stylesheet" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.3.1/css/buttons.dataTables.min.css">
+	
+	<link rel="stylesheet" href="resources/css/breadcrumbs.css">
+	<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+	<script src="resources/js/jquery.breadcrumbs-generator.js"></script>
+	<script>
+	$(function() {
+	  $('#breadcrumbs').breadcrumbsGenerator();
+	});
+	</script>
 	<style>
 	 td,th {
 	  white-space:nowrap;
@@ -660,6 +669,35 @@
               <section class="panel">
                   <!--header class="panel-heading">
                     </header-->
+                    
+                    <br>
+                    <ol id="breadcrumbs"></ol>
+					<nav id="sitemaps"  style="display:none">
+					 <!--  <h2>Sitemaps</h2> -->
+					  <ul>
+					    <li>
+					      <a href="processLogin">Home</a>
+					      <ul>
+					       <li>
+					          <a href="customer">Customer Details</a>
+					          <ul>
+					            <li><a href="programDetail">Program Detail</a></li>
+					            <li><a href="programddfcoop">Program Detail</a></li>
+					            <li><a href="pricingOverview">Pricing Overview</a>
+					             	<ul>
+					             	<li><a href="pricingRequest">Pricing Request</a></li>
+					             	</ul>
+					             </li>
+					          </ul> 
+					        </li>
+					        <li><a href="ccm">CCM</a></li>
+					        <li><a href="accrual">Accrual Calculation</a></li>					       
+					      </ul>
+					    </li>
+					  </ul>
+					</nav>
+                    
+                    
                   <div class="panel-body"> 
 <!-- START 'Pending Approvals' table -->
                           <div class="btn-group pull-right">
@@ -1369,7 +1407,7 @@
 											</button></a>
 									</div>
 								</div>
-								<h3 class="tableHeader">Customer with No Active Programs</h3>
+								<h3 class="tableHeader">All Customers</h3>
 								<div class="adv-table table-responsive">
 									<table class="table table-striped table-hover table-bordered"
 										id="newcustomeroverview">

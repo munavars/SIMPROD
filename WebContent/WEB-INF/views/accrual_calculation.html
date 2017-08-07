@@ -544,7 +544,7 @@
                                                                                                                      </div>
                                                                                                                      <div class="modal-footer">
                                                                                                                            <button class="btn btn-info" type="button"
-                                                                                                                                  id="program-confirmation-modal-ok"
+                                                                                                                                  id="confirmation-modal-ok"
                                                                                                                                   data-toggle="modal" href="#myModal1">
                                                                                                                                   <i class="fa fa-save"></i>&nbsp;&nbsp;OK
                                                                                                                            </button>
@@ -720,6 +720,11 @@
          
          function calCalculateAccruals(accrualProcess){
              var required = accrualProcess[0];
+             if(accrualProcess.length==0){
+            	   message="Data Submitted Successfully";
+                   $("#confirmMessage").html(message);
+                   $('#myModal1').modal('toggle');
+             }
              var select=false; 
                      if($('#calculate').is(':checked')){
                           select=true; 
@@ -807,11 +812,12 @@
                               },
                              success: function(response){
                           if(response=="success"){
-                                 message="Data Submitted Successfully";
+/*                                  message="Data Submitted Successfully";
+                                 $("#confirmMessage").html(message);
+                                 $('#myModal1').modal('toggle'); */
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
-                          $("#confirmMessage").html(message);
-                                         $('#myModal1').modal('toggle');
+                         
                           }else{
                                  message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
@@ -822,7 +828,7 @@
                     beforeSend: function(){
                              $('.loader').show();
                                },
-                               complete: function(){
+                    complete: function(){
                                    $('.loader').hide();
                                },
                     failure: function(response){
@@ -851,11 +857,13 @@
                            data: JSON.stringify(liablePeriod),
                            success: function(response){
                           if(response=="success"){
-                                 message="Data Submitted Successfully";
+/*                                  message="Data Submitted Successfully";
+                                 $("#confirmMessage").html(message);
+                                 $('#myModal1').modal('toggle'); */
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
-                          $("#confirmMessage").html(message);
-                                         $('#myModal1').modal('toggle');
+
+                         
                           }else{
                                  message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
@@ -895,11 +903,13 @@
                            data: JSON.stringify(liablePeriod),
                     success: function(response){
                           if(response=="success"){
-                                 message="Data Submitted Successfully";
+/*                                  message="Data Submitted Successfully";
+                                 $("#confirmMessage").html(message);
+                                 $('#myModal1').modal('toggle'); */
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
-                          $("#confirmMessage").html(message);
-                                         $('#myModal1').modal('toggle');
+
+                         
                           }else{
                                  message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
@@ -938,11 +948,13 @@
                            //data: JSON.stringify(liablePeriod),
                            success: function(response){
                                  if(response=="success"){
-                                        message="Data Submitted Successfully";
+/*                                         message="Data Submitted Successfully";
+                                        $("#confirmMessage").html(message);
+                                        $('#myModal1').modal('toggle'); */
                                         accrualProcess.splice(0, 1);
-                                 calCalculateAccruals(accrualProcess);
-                         $("#confirmMessage").html(message);
-                                         $('#myModal1').modal('toggle');
+                                        calCalculateAccruals(accrualProcess);
+
+
                          }else{
                                 message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
@@ -982,11 +994,13 @@
                            data: JSON.stringify(liablePeriod),
                            success: function(response){
                                  if(response=="success"){
-                                        message="Data Submitted Successfully";
+/*                                         message="Data Submitted Successfully";
+                                        $("#confirmMessage").html(message);
+                                        $('#myModal1').modal('toggle'); */
                                         accrualProcess.splice(0, 1);
-                                 calCalculateAccruals(accrualProcess);
-                         $("#confirmMessage").html(message);
-                                         $('#myModal1').modal('toggle');
+                                        calCalculateAccruals(accrualProcess);
+
+                        
                          }else{
                                 message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
@@ -1024,11 +1038,13 @@
                            //data: JSON.stringify(liablePeriod),
                            success: function(response){
                                  if(response=="success"){
-                                        message="Data Submitted Successfully";
+/*                                         message="Data Submitted Successfully";
+                                        $("#confirmMessage").html(message);
+                                        $('#myModal1').modal('toggle'); */
                                         accrualProcess.splice(0, 1);
-                                 calCalculateAccruals(accrualProcess);
-                          $("#confirmMessage").html(message);
-                                         $('#myModal1').modal('toggle');
+                                        calCalculateAccruals(accrualProcess);
+
+                          
                          }else{
                                 message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
@@ -1067,11 +1083,13 @@
                            data: JSON.stringify(liablePeriod),
                            success: function(response){
                           if(response=="success"){
-                                 message="Data Submitted Successfully";
+/*                                  message="Data Submitted Successfully";
+                                 $("#confirmMessage").html(message);
+                                 $('#myModal1').modal('toggle'); */
                                  accrualProcess.splice(0, 1);
-                                 calCalculateAccruals(accrualProcess);;
-                          $("#confirmMessage").html(message);
-                                         $('#myModal1').modal('toggle');
+                                 calCalculateAccruals(accrualProcess);
+
+
                           }else{
                                  message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);

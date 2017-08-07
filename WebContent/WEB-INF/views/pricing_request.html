@@ -1013,13 +1013,12 @@ a { text-decoration: none }
 
 									<div class="col-sm-6">
 										<label class="control-label" for="user_comments">User
-											Comments</label>
-										<textarea id="user_comments" name="user_comments" 
-													class="form-control" rel="txtTooltip"
-													data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
-													title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
+											Comments</label><button class="btn btn-info btn-xs popovers" rel="txtTooltip" data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
+													data-original-title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 													data-toggle="tooltip" data-trigger="hover"
-													data-placement="top" rows="3"
+													data-placement="top" rows="3"  data-html="true"><strong>?</strong></button>
+										<textarea id="user_comments" name="user_comments" 
+													class="form-control"  rows="3"
 													placeholder="Add description details"></textarea>
 									</div>
 																

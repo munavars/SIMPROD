@@ -416,12 +416,18 @@
 													<br>
 													<div class="row">
 														<div class="col-lg-12">
-															<label class="control-label popovers" for="longDesc" rel="txtTooltip"
+															<!-- <label class="control-label popovers" for="longDesc" rel="txtTooltip"
 																data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
 																data-placement="top" rows="3" data-html="true">Program
-																Description</label>
+																Description</label> -->
+																
+																<label class="control-label popovers" for="longDesc" >
+																Program	Description <button data-original-title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" 
+																data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height." 
+																data-placement="right" data-trigger="hover" 
+																rows="3" data-html="true" class="btn btn-info btn-xs popovers"><strong>?</strong></button></label>
 															<textarea id="longDesc" name="longDesc"
 																placeholder="Add program description details"
 																class="form-control m-bot15"></textarea>
@@ -813,11 +819,17 @@
 																<div class="row">																
 
 																	<div class="col-lg-2 col-sm-2">
-																		<label class="control-label popovers"
+									<!-- 									<label class="control-label popovers"
 																			for="payment_method_inputselect"
 																			data-html="true" data-content="If Paid Type is Check, please enter the SAP Vendor # in the Pay-To textbox."
 																		    title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
-																		    data-placement="top" data-toggle="tooltip" data-trigger="hover">Paid Type</label> 
+																		    data-placement="top" data-toggle="tooltip" data-trigger="hover">Paid Type</label>  -->
+																		    
+																		<label class="control-label popovers" for="payment_method_inputselect" >
+																Paid Type <button data-original-title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip" 
+																data-content="If Paid Type is Check, please enter the SAP Vendor # in the Pay-To textbox." 
+																data-placement="top" data-trigger="hover" 
+																rows="3" data-html="true" class="btn btn-info btn-xs popovers"><strong>?</strong></button></label>    
 																		<select
 																			class="form-control input-sm m-bot15"
 																			id="payment_method_inputselect"
@@ -838,6 +850,7 @@
 																<br>
 													<div class="row">
 														<div class="col-lg-2 col-md-2 col-sm-2">
+														<label class="control-label popovers">Behind The Line? (BTL)</label>
 															<label class="control-label popovers" data-html="true"
 															 for="btl_inputselect" rel="txtTooltip"
 																data-content="Behind the Line (BTL), for purposes of After the Fact Sales Incentives, indicates if the Dealer/Customer is aware the program accrual exists.
@@ -846,20 +859,23 @@
 																By default BTL is set as No."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top" >Behind The Line? (BTL)</label> 
+																data-placement="top" ><button class="btn btn-info btn-xs"><strong>?</strong></button></label> 
+																
+																
+																
 																<select
 																class="form-control input-sm m-bot15"
 																id="btl_inputselect" name="btl_inputselect">
 															</select>
 														</div>
-														<div class="col-lg-2 col-md-2 col-sm-2">
+														<div class="col-lg-2 col-md-2 col-sm-2"><label class="control-label popovers">Pricing Type</label>
 															<label class="control-label popovers" data-html="true"
 																for="pricing_type_inputselect" rel="txtTooltip"
 																data-content="Is the After the Fact (ATF) program part of the Dealer/Customer long-term pricing structure? Or is the ATF program a promotional item?
 																Generally ATFs active for full year are long-term pricing. Non-reoccurring ATFs active for a single month/quarter may be considered promotional."
 																title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																data-toggle="tooltip" data-trigger="hover"
-																data-placement="top">Pricing Type</label> <select
+																data-placement="top"><button class="btn btn-info btn-xs"><strong>?</strong></button></label> <select
 																class="form-control input-sm m-bot15"
 																id="pricing_type_inputselect"
 																name="pricing_type_inputselect">
@@ -891,12 +907,12 @@
 																<br>-->
 																
 																 <br>
-																 <div id="estimatedaccrual" >
+																 <div id="estimatedaccrual" ><label class="control-label">Estimated Accrual ($)</label>
 																	<label class="control-label popovers" data-html="true" for="estm_accrual" 
 																	data-content="Enter the Estimated Accrual Amount for the entire program period"
 																	title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																	data-placement="top" data-toggle="tooltip" data-trigger="hover">
-																	Estimated Accrual ($)</label>&nbsp;&nbsp;
+																	<button class="btn btn-info btn-xs"><strong>?</strong></button></label>&nbsp;&nbsp;
 																	<input id="estm_accrual" name="estm_accrual" type="text"
 																		class="form-control radio-inline m-bot15" style="width: 120px;text-align: right;"
 																		value="">
@@ -968,14 +984,16 @@
 																							</div></td>
 																					</tr>
 																					<tr>
-																						<td colspan="6" class="zeroborderstlr text-left"><label
+																						<td colspan="6" class="zeroborderstlr text-left">
+																						<label class="control-label">Accrued Tier</label>
+																						<label
 																							class="control-label popovers" for="actual_marker"
 																							rel="txtTooltip"
 																							data-content="Please add tier details in below table before entering the accrued tier value."
 																							title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 																							data-toggle="tooltip" data-trigger="hover"
 																							data-placement="top" rows="3" data-html="true">
-																							Accrued	Tier</label>&nbsp;&nbsp; <input id="actual_marker"
+																							<button class="btn btn-info btn-xs"><strong>?</strong></button></label>&nbsp;&nbsp; <input id="actual_marker"
 																							name="actual_marker" type="text" size="3"
 																							class="form-control inline-flex" value=""></td>
 																					</tr>
@@ -1013,12 +1031,12 @@
 											<br>
 											<div class="row">
 												<div class="col-lg-12">
+												<label class="control-label">Commentary/Special Instructions</label>
 													<label class="control-label popovers" for="userComments" data-html="true" rel="txtTooltip"
 														data-content="If you can't see all your content, pull down the bottom-right corner of this field to expand the height."
 														title="<i class='fa fa-lightbulb-o'></i>&nbsp;&nbsp;Hot Tip"
 														data-toggle="tooltip" data-trigger="hover"
-														data-placement="top" rows="3">Commentary/Special
-														Instructions</label>
+														data-placement="top" rows="3"><button class="btn btn-info btn-xs"><strong>?</strong></button></label>
 													<textarea id="userComments" name="userComments"
 														class="form-control" 
 														placeholder="Add description details"></textarea>

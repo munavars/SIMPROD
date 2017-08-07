@@ -30,9 +30,13 @@ public class QueryConstant {
 	public static final String TBP_QUERY = "select DISTINCT EMP_ID from WORKFLOW_MATRIX where id in ("
 											+"select Max(id) from WORKFLOW_MATRIX where COMMENTS = 'TBP' group by SUBJECT_AREA, BUSINESS_UNIT)";
 	
-	public static final String NEW_CUSTOMER_QUERY = "SELECT * FROM CUSTOMER WHERE ID NOT IN (SELECT CUSTOMER_ID from PROGRAM_HEADER) ";
+	//public static final String NEW_CUSTOMER_QUERY = "SELECT * FROM CUSTOMER WHERE ID NOT IN (SELECT CUSTOMER_ID from PROGRAM_HEADER) ";
 	
-	public static final String NEW_CUSTOMER_ACCOUNT_MANAGER_CHECK = " AND ACCOUNT_MANAGER in (:userIdList)";
+	public static final String NEW_CUSTOMER_QUERY = "SELECT * FROM CUSTOMER ";
+	
+	//public static final String NEW_CUSTOMER_ACCOUNT_MANAGER_CHECK = " AND ACCOUNT_MANAGER in (:userIdList)";
+	
+	public static final String NEW_CUSTOMER_ACCOUNT_MANAGER_CHECK = " WHERE ACCOUNT_MANAGER in (:userIdList)";
 	
 	//public static final String PRICING_LIST_P = "select * from NETDOWN_P where [Bill-To No] in (select CUSTOMER_NUMBER from CUSTOMER where ACCOUNT_MANAGER in (:empId)) and [Base Price] is not null and  [Base Price]>0";
 	

@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.StoredProcedureQuery;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ytc.common.model.AccuralCcmData;
@@ -33,6 +34,9 @@ import com.ytc.service.util.ExcelGenerator;
 
 
 class CcmServiceImpl implements ICcmService{
+	
+	private org.slf4j.Logger logger = LoggerFactory.getLogger(CcmServiceImpl.class);
+	
 	@Autowired
 	private IDataAccessLayer baseDao;
 
@@ -177,58 +181,12 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setCreditBasedOn(format.format(dalCcmAccrualData.getPaidBasedOnValue()));
 			ccmDetails.setAccrualStartDate(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getAccrualStartDate().getTime(), ProgramConstant.DATE_FORMAT));
 			ccmDetails.setAccrualEndDate(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getAccrualEndDate().getTime(), ProgramConstant.DATE_FORMAT));
-			ccmDetails.setTbp(dalCcmAccrualData.getTbp());
+			ccmDetails.setTbp("1".equalsIgnoreCase(dalCcmAccrualData.getTbp())?"TBP Review":"");
 			ccmDetails.setDocNo(null!=dalCcmAccrualData.getDocNumber()?dalCcmAccrualData.getDocNumber():"");
 			ccmDetails.setDocDate(null!=dalCcmAccrualData.getDocDate()?(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getDocDate().getTime(), ProgramConstant.DATE_FORMAT)):"");
 			ccmList.add(ccmDetails);
 		}
-		/*		for (Iterator<Object> iterator = resultList.iterator(); iterator.hasNext();) {
-			Object[] obj = (Object[]) iterator.next();
-			CcmDetails ccmDetails=new CcmDetails();
-			ccmDetails.setBu(null!=obj[0]?obj[0].toString():"");
-			ccmDetails.setAccountManager(null!=obj[2]?obj[2].toString():"");
-			ccmDetails.setZoneManager(null!=obj[1]?obj[1].toString():"");
-			ccmDetails.setFrequency(null!=obj[3]?obj[3].toString():"");
-			ccmDetails.setProgramId(null!=obj[4]?obj[4].toString():"");
-			ccmDetails.setProgramName(null!=obj[5]?obj[5].toString():"");
-			ccmDetails.setDescription(null!=obj[6]?obj[6].toString():"");
-			ccmDetails.setPaidBasedOn(null!=obj[7]?obj[7].toString():"");
-			ccmDetails.setGuarantee(null!=obj[8]?(obj[8].toString()):"");
-			ccmDetails.setAmount(((null!=obj[9])&&(!"0.0".equalsIgnoreCase(obj[9].toString())))?format.format(Double.parseDouble(obj[9].toString())):"0");
-			ccmDetails.setAmountType(null!=obj[10]?obj[10].toString():"");
-			ccmDetails.setCreditAccured(((null!=obj[11])&&(!"0.0".equalsIgnoreCase(obj[11].toString())))?format.format(Double.parseDouble(obj[11].toString())):"0");
-			ccmDetails.setEarned(0.0);
-			ccmDetails.setCreditEarned(0.0);
-			ccmDetails.setReview("");
-			ccmDetails.setComments("");
-			ccmDetails.setCreditBasedOn("");
-			ccmDetails.setCreditMemo("");
-			ccmDetails.setProgramStatus("");
-			ccmDetails.setDocNo("");
-			ccmDetails.setDocDate("");
-			ccmDetails.setBillToNo(null!=obj[12]?obj[12].toString():"");
-			ccmDetails.setBillToName(null!=obj[13]?obj[13].toString():"");
-			ccmDetails.setUnits(null!=obj[14]? Double.valueOf((obj[14]).toString()).intValue():0);
-			ccmDetails.setBonusableUnits(null!=obj[15]?Double.valueOf((obj[15]).toString()).intValue():0);
-			ccmDetails.setNadUnits(null!=obj[16]?Double.valueOf((obj[16]).toString()).intValue():0);
-			ccmDetails.setUnitsNad(null!=obj[17]?Double.valueOf((obj[17]).toString()).intValue():0);
-			ccmDetails.setBonusableNad(null!=obj[18]?Double.valueOf((obj[18]).toString()).intValue():0);
-			ccmDetails.setInvSales(((null!=obj[19])&&(!"0.0".equalsIgnoreCase(obj[19].toString())))?format.format(Double.parseDouble(obj[19].toString())):"0");
-			ccmDetails.setBonusableSales(((null!=obj[20])&&(!"0.0".equalsIgnoreCase(obj[20].toString())))?format.format(Double.parseDouble(obj[20].toString())):"0");
-			ccmDetails.setNadSales(((null!=obj[21])&&(!"0.0".equalsIgnoreCase(obj[21].toString())))?format.format(Double.parseDouble(obj[21].toString())):"0");
-			ccmDetails.setInvSalesNad(((null!=obj[22])&&(!"0.0".equalsIgnoreCase(obj[22].toString())))?format.format(Double.parseDouble(obj[22].toString())):"0");
-			ccmDetails.setBonusableSalesNad(((null!=obj[23])&&(!"0.0".equalsIgnoreCase(obj[23].toString())))?format.format(Double.parseDouble(obj[23].toString())):"0");
-			ccmDetails.setWarranty(((null!=obj[24])&&(!"0.0".equalsIgnoreCase(obj[24].toString())))?format.format(Double.parseDouble(obj[24].toString())):"0");
-			ccmDetails.setPayTo(null!=obj[25]?obj[25].toString():"");
-			Timestamp fromDate=(Timestamp) obj[26];
-			Timestamp toDate=(Timestamp) obj[27];
-			ccmDetails.setBeginDate(null!=obj[26]?ProgramServiceHelper.convertDateToString(fromDate, ProgramConstant.DATE_FORMAT):"");
-			ccmDetails.setEndDate(null!=obj[27]?ProgramServiceHelper.convertDateToString(toDate, ProgramConstant.DATE_FORMAT):"");
-			ccmDetails.setGlCode(null!=obj[28]?obj[28].toString():"");
-			ccmDetails.setPaymentMethod(null!=obj[29]?obj[29].toString():"");
-			ccmDetails.setBaseId(null!=obj[30]?obj[30].toString():"");
-			ccmList.add(ccmDetails);
-		}*/
+		
 
 		return ccmList;
 	}
@@ -262,7 +220,7 @@ class CcmServiceImpl implements ICcmService{
 			status="success";
 
 		}catch (Exception e){
-			System.out.println("Exception occured in saveCCMDetails"+e.getCause());
+			logger.error("Exception occured in saveCCMDetails"+e.getCause());
 		}
 		return status;
 	}

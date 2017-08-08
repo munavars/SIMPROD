@@ -181,7 +181,7 @@ class CcmServiceImpl implements ICcmService{
 			ccmDetails.setCreditBasedOn(format.format(dalCcmAccrualData.getPaidBasedOnValue()));
 			ccmDetails.setAccrualStartDate(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getAccrualStartDate().getTime(), ProgramConstant.DATE_FORMAT));
 			ccmDetails.setAccrualEndDate(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getAccrualEndDate().getTime(), ProgramConstant.DATE_FORMAT));
-			ccmDetails.setTbp("1".equalsIgnoreCase(dalCcmAccrualData.getTbp())?"TBP Review":"");
+			ccmDetails.setTbp(dalCcmAccrualData.getTbp());
 			ccmDetails.setDocNo(null!=dalCcmAccrualData.getDocNumber()?dalCcmAccrualData.getDocNumber():"");
 			ccmDetails.setDocDate(null!=dalCcmAccrualData.getDocDate()?(ProgramServiceHelper.convertDateToString(dalCcmAccrualData.getDocDate().getTime(), ProgramConstant.DATE_FORMAT)):"");
 			ccmList.add(ccmDetails);
@@ -220,7 +220,8 @@ class CcmServiceImpl implements ICcmService{
 			status="success";
 
 		}catch (Exception e){
-			logger.error("Exception occured in saveCCMDetails"+e.getCause());
+			logger.error("Exception occured in saveCCMDetails"+e.getMessage());
+			throw e;
 		}
 		return status;
 	}

@@ -251,7 +251,7 @@
                 	render: function ( data, type, row, meta ) {
                     if(type === 'display'){
                     	if((row.programStatus=='Submitted')){
-                       		data = '<input type="text" id="docDate'+meta.row+'" value="'+data+'"> <img id="calImg'+meta.row+'" src="resources/img/email-img/calendar.png" width="30" onclick="openCalendar(this);">';
+                       		data = '<input type="text" id="docDate'+meta.row+'" value="'+data+'" onchange="isDate(this);"> <img id="calImg'+meta.row+'" src="resources/img/email-img/calendar.png" width="30" onclick="openCalendar(this);" >';
                        		//data='<input type="text" class="form-control dpd1" readonly="readonly" id="from" name="from" placeholder="Begin Date" style="background:white;">';
                     	}else{
                     		data = '<input type="text" id="docDate'+meta.row+'" value="" disabled>';	
@@ -368,10 +368,10 @@
     	
     	 $('#ccmtable').on('draw.dt', function () {
              $('[data-toggle="tooltip"]').tooltip();
-             $('[id^="docDate"]').datepicker('update', new Date()).on('changeDate', function(e){
+            /*  $('[id^="docDate"]').datepicker('update', new Date()).on('changeDate', function(e){
          	    $(this).datepicker('hide');
-             });
-             
+             }); */
+             $('[id^="docDate"]:not([disabled])').not("[value!='']").val(getCurrentDate()); 
          });  
     	 
        });
@@ -778,6 +778,54 @@
 																</div>
 															</div>
 														</div>
+														
+														<div class="modal fade" id="statusbox" tabindex="-1"
+                                                             role="dialog" aria-labelledby="myModalLabel"
+                                                             aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+                                                             <div class="modal-dialog">
+                                                                    <div class="modal-content" style="border: thin solid grey">
+                                                                           <div class="modal-header">
+                                                                                 <h4 class="modal-title">Status</h4>
+                                                                           </div>
+                                                                           <div class="modal-body">
+                                                                                 <!-- <div class="space15">&nbsp;</div> -->
+                                                                                 <div class="text-center">
+                                                                                        <span>Please wait, while your request is being processed.<br><img src="resources/img/Processing.gif"></span>
+                                                                                 </div>
+                                                                                 <!-- <div class="space15"></div> -->
+                                                                           </div>                                                                           
+
+                                                                    </div>
+                                                             </div>
+                                                      </div>
+                                                      
+                                                      <div class="modal fade" id="myModal2" tabindex="-1"
+                                                              role="dialog" aria-labelledby="myModalLabel"
+                                                              aria-hidden="true" >
+                                                              <div class="modal-dialog">
+                                                                     <div class="modal-content" style="border: thin solid grey">
+                                                                            <div class="modal-header">
+                                                                                  <button id="program-error-modal-close" type="button"
+                                                                                         class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                  <h4 class="modal-title">Error / Warning (s)</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                  <!-- <div class="space15">&nbsp;</div> -->
+                                                                                  <div class="text-center">
+                                                                                         <span id="errorMessageModal"></span>
+                                                                                  </div>
+                                                                                  <!-- <div class="space15"></div> -->
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                  <button class="btn btn-info" type="button"
+                                                                                         id="program-error-modal-ok" data-toggle="modal"
+                                                                                         href="#myModal2">
+                                                                                         <i class="fa fa-save"></i>&nbsp;&nbsp;OK
+                                                                                  </button>
+                                                                            </div>
+                                                                     </div>
+                                                              </div>
+                                                       </div>
 
 
 
@@ -883,6 +931,8 @@
 		
 	var reviewList=[];
 	var submitList=[];
+	var nowTemp = new Date();
+	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 	
 		 $(document).ready(function() {
 		   var modelAttributeValue = [[${loginUserNameValue}]];
@@ -982,8 +1032,8 @@
 			   $('[id^="review"]').each(function(index,data){
 				   if(!this.checked){
 					   message="Kindly review all the options before selecting for approval submission";
-			            $("#confirmMessage").html(message);
-						$('#myModal1').modal('toggle');
+			            $("#errorMessageModal").html(message);
+						$('#myModal2').modal('toggle');
 						ret=true;
 						$('#allsubmit').prop('checked', false);
 						return false;	   
@@ -1041,8 +1091,6 @@
 			}
 		 
 		 function nextDocNum(eve,ths){
-			 var nowTemp = new Date();
-			 var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 			 var docdate=new Date($('#docDate'+(ths.id).substring(6)).val());
 			 var id=parseInt((ths.id).substring(6))+1;
 
@@ -1051,8 +1099,8 @@
 				 eve.preventDefault();
 				 if(docdate>now){
 					    message="Document date cannot be greater than current date";
-			            $("#confirmMessage").html(message);
-						$('#myModal1').modal('toggle');
+			            $("#errorMessageModal").html(message);
+						$('#myModal2').modal('toggle');
 						$('#docNum'+(ths.id).substring(6)).focus();
 				 }
 
@@ -1060,7 +1108,8 @@
 			 } 
 
 		 }
-				 
+		
+	 
 		 function isNumber(evt)
 	       {
 			 var charCode = (evt.which) ? evt.which : evt.keyCode;
@@ -1239,6 +1288,7 @@
 	
 	function saveChanges(){
 		 var accuralCcmDataList=[];
+		 var date=true;
 		 $('[id^="docNum"]:not([disabled])').each(function(index,data){
 			 //alert(this.id);
 			 var id=this.id.substring(6);
@@ -1248,15 +1298,26 @@
 			 accuralCcmData.comments=$('#comments'+id).val();
 			 accuralCcmData.docNumber=$('#docNum'+id).val();
 			 accuralCcmData.docDate=Date.parse($('#docDate'+id).val());
+			 if(accuralCcmData.docDate>now){
+				 date=false;				   
+			 }
 			 accuralCcmDataList.push(accuralCcmData);
 			 }
 		   });
 		 console.log(JSON.stringify(accuralCcmDataList));
+		 
 		if(accuralCcmDataList.length==0){
 			 message="Kindly enter values to save";
-	         $("#confirmMessage").html(message);
-			 $('#myModal1').modal('toggle');
+	         $("#errorMessageModal").html(message);
+			 $('#myModal2').modal('toggle');
 			return;
+		}
+		
+		if(!date){
+			 	message="Document date cannot be greater than current date";
+	            $("#errorMessageModal").html(message);
+				$('#myModal2').modal('toggle');
+				return;
 		}
 		 $.ajax({ 
 	           	type: "POST",
@@ -1331,7 +1392,7 @@
 	} */
 	
 	function submitForApproval(){
-		console.log(submitList);
+		console.log(submitList);		
 		var valid=false;
 		var comment=true;		
 		 $('[id^="submitForApproval"]').each(function(index,data){
@@ -1351,15 +1412,15 @@
 		 
 		 if(!valid){
 			 message="Kindly select atleast one item to submit for approval";
-	            $("#confirmMessage").html(message);
-				$('#myModal1').modal('toggle');
+	            $("#errorMessageModal").html(message);
+				$('#myModal2').modal('toggle');
 				
 				return;
 		 }
 		 if(!comment){
 			 message="Actual credit not same as Accrued credit. This action requires comments to be entered";
-	            $("#confirmMessage").html(message);
-				$('#myModal1').modal('toggle');
+	            $("#errorMessageModal").html(message);
+				$('#myModal2').modal('toggle');
 				$('#comments'+id1).focus();
 				return;
 		 }
@@ -1380,6 +1441,7 @@
 		 
 		
 		     console.log(JSON.stringify(accuralCcmDataList));
+		     $('#statusbox').modal('show');
 	   		 $.ajax({ 
 	   	           	type: "POST",
 	   	           	dataType: "json",
@@ -1388,6 +1450,7 @@
 	   	          		dataType: "text",
 	   					data: JSON.stringify(accuralCcmDataList),
 	   	           	success: function(response){
+	   	           	$('#statusbox').modal('hide');
 	   	            message="Data Submitted for Approval";
 	   	            $("#confirmMessage").html(message);
 	   				$('#myModal1').modal('toggle');
@@ -1395,7 +1458,14 @@
 	   	           	},
 	   	           	failure: function(response){
 	   	           		alert("Wrongly done");
-	   	           	}});
+	   	           	},
+	   	         	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+                 	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                 	 $('#statusbox').modal('hide');
+                 	$("#errorMessageModal").html(message);
+                      $('#myModal2').modal('toggle');                    	
+            		}       	
+	   		 });
 
 		 reviewList=[];
   		 submitList=[];
@@ -1436,8 +1506,72 @@
 	
 	function openCalendar(event){
 		var id=(event.id).substring(6);
-		$('#docDate'+id).datepicker('show');
+		$('#docDate'+id).datepicker('show').on('changeDate', function(e){
+     	    $(this).datepicker('hide');
+        });
 	}
+	
+	function getCurrentDate(){
+		var today = new Date();
+		var dd = today.getDate();
+		var mm = today.getMonth()+1; //January is 0!
+		var yyyy = today.getFullYear();
+
+		if(dd<10) {
+		    dd='0'+dd
+		} 
+
+		if(mm<10) {
+		    mm='0'+mm
+		}  
+
+		today = mm+'/'+dd+'/'+yyyy;
+		return today;
+	}
+	
+	function isDate(ths)
+	{
+		txtDate=ths.value;
+		var valid=true;
+		var currVal = txtDate;
+	    if(currVal == '')
+	        return false;
+	    
+	    var rxDatePattern = /^(\d{1,2})(\/|-)(\d{1,2})(\/|-)(\d{4})$/; //Declare Regex
+	    var dtArray = currVal.match(rxDatePattern); // is format OK?
+	    
+	    if (dtArray == null) {
+	    	valid=false;
+	    }else{
+	    //Checks for mm/dd/yyyy format.
+	    dtMonth = dtArray[1];
+	    dtDay= dtArray[3];
+	    dtYear = dtArray[5];        
+	    
+	    if (dtMonth < 1 || dtMonth > 12) 
+	    	valid=false;
+	    else if (dtDay < 1 || dtDay> 31) 
+	    	valid=false;
+	    else if ((dtMonth==4 || dtMonth==6 || dtMonth==9 || dtMonth==11) && dtDay ==31) 
+	    	valid=false;
+	    else if (dtMonth == 2) 
+	    {
+	        var isleap = (dtYear % 4 == 0 && (dtYear % 100 != 0 || dtYear % 400 == 0));
+	        if (dtDay> 29 || (dtDay ==29 && !isleap)) 
+	        	valid=false;
+	    }
+	    }
+	    if(!valid){
+			 	message="Kindly enter a valid date in mm/dd/yyyy format";
+	            $("#errorMessageModal").html(message);
+				$('#myModal2').modal('toggle');
+				ths.value="";
+				return;
+		 }
+	    
+	}
+
+	
 	   //Export to Excel 
 	   function tableToExcel(tableId, fileName) {
 	   	var ua = window.navigator.userAgent;

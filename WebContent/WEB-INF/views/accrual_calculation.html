@@ -462,7 +462,7 @@
                                                                                                 
                                                                                                 <div class="modal fade" id="booklistdiv" tabindex="-1"
                                                                                                        role="dialog" aria-labelledby="myModalLabel"
-                                                                                                       aria-hidden="true" data-backdrop="static"�data-keyboard="false" >
+                                                                                                       aria-hidden="true" data-backdrop="static" data-keyboard="false" >
                                                                                                        <div class="modal-dialog">
                                                                                                               <div class="modal-content" style="width:900px">
                                                                                                                      <div class="modal-header">
@@ -479,11 +479,11 @@
                                                                                                                                   <thead>
                                                                                                                                   <tr class="rowvis" style="background-color: #cacbce;">
                                                                                                                                   <th>Book Label</th>
-                                                                                                                    <th>Book Date</th>
+                                                                                                                    			  <th>Book Date</th>
                                                                                                                                   <th>Book Of Record</th>
                                                                                                                                   <th>Create Date</th>
-                                                                                                                    <th>Create By</th>
-                                                                                                                    <th>Action</th>
+                                                                                                                    			  <th>Create By</th>
+                                                                                                                    			  <th>Action</th>
                                                                                                                                   </tr>
                                                                                                                                   </thead>
                                                                                                                                   
@@ -493,20 +493,20 @@
                                                                                                                </table> 
                                                                                                                
                                                                                                                            <div class="modal-content">
-                                                                                                                                                              <div class="modal-footer">
-                                                                                                                                                                     <!-- <a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
-                                                                                                                                                                           id="program-save-modal-cancel" type="button">Delete Marked</button></a> -->
-                                                                                                                                                                     <button class="btn btn-info" style="float:left" type="button"
-                                                                                                                                                                           id="program-error-modal-ok" data-toggle="modal"
-                                                                                                                                                                           href="#booklistdiv">
-                                                                                                                                                                           <!-- <i class="fa fa-save"> --></i>&nbsp;&nbsp;Close
-                                                                                                                                                                     </button>
-                                                                                                                                                                     <button
-                                                                                                                                                                                  class="btn btn-info" id="program-save-modal-ok"
-                                                                                                                                                                                  type="button" onclick="deleteBookList();">
-                                                                                                                                                                                  <!-- <i class="fa fa-save"></i> -->&nbsp;&nbsp; Delete Marked Records
-                                                                                                                                                                           </button>  
-                                                                                                                                                              </div>
+                                                                                                                                   <div class="modal-footer">
+                                                                                                                                          <!-- <a href="javascript: resetChanges();"><button data-dismiss="modal" class="btn btn-default"
+                                                                                                                                                id="program-save-modal-cancel" type="button">Delete Marked</button></a> -->
+                                                                                                                                          <button class="btn btn-info" style="float:left" type="button"
+                                                                                                                                                id="program-error-modal-ok" data-toggle="modal"
+                                                                                                                                                href="#booklistdiv">
+                                                                                                                                                <!-- <i class="fa fa-save"> --></i>&nbsp;&nbsp;Close
+                                                                                                                                          </button>
+                                                                                                                                          <button
+                                                                                                                                                       class="btn btn-info" id="program-save-modal-ok"
+                                                                                                                                                       type="button" onclick="deleteBookList();">
+                                                                                                                                                       <!-- <i class="fa fa-save"></i> -->&nbsp;&nbsp; Delete Marked Records
+                                                                                                                                                </button>  
+                                                                                                                                   </div>
                                                                                                                                                        </div>
                                                                                                                
                                                                                                                                   
@@ -524,62 +524,90 @@
                                                                                                               </div>
                                                                                                        </div>
                                                                                                 </div>
-                                                                                                <div class="modal fade" id="myModal1" tabindex="-1"
-                                                                                                       role="dialog" aria-labelledby="myModalLabel"
-                                                                                                       aria-hidden="true">
-                                                                                                       <div class="modal-dialog">
-                                                                                                              <div class="modal-content" style="border: thin solid grey">
-                                                                                                                     <div class="modal-header">
-                                                                                                                           <button id="program-confirmation-modal-close"
-                                                                                                                                  type="button" class="close" data-dismiss="modal"
-                                                                                                                                  aria-hidden="true">&times;</button>
-                                                                                                                           <h4 class="modal-title">Confirmation</h4>
-                                                                                                                     </div>
-                                                                                                                     <div class="modal-body">
-                                                                                                                           <!-- <div class="space15">&nbsp;</div> -->
-                                                                                                                           <div class="text-center">
-                                                                                                                                  <span id="confirmMessage"></span>
-                                                                                                                           </div>
-                                                                                                                           <!-- <div class="space15"></div> -->
-                                                                                                                     </div>
-                                                                                                                     <div class="modal-footer">
-                                                                                                                           <button class="btn btn-info" type="button"
-                                                                                                                                  id="confirmation-modal-ok"
-                                                                                                                                  data-toggle="modal" href="#myModal1">
-                                                                                                                                  <i class="fa fa-save"></i>&nbsp;&nbsp;OK
-                                                                                                                           </button>
-                                                                                                                     </div>
-                                                                                                              </div>
-                                                                                                       </div>
-                                                                                                </div>
+                                                        <div class="modal fade" id="myModal1" tabindex="-1"
+                                                               role="dialog" aria-labelledby="myModalLabel"
+                                                               aria-hidden="true">
+                                                               <div class="modal-dialog">
+                                                                      <div class="modal-content" style="border: thin solid grey">
+                                                                             <div class="modal-header">
+                                                                                   <button id="program-confirmation-modal-close"
+                                                                                          type="button" class="close" data-dismiss="modal"
+                                                                                          aria-hidden="true">&times;</button>
+                                                                                   <h4 class="modal-title">Confirmation</h4>
+                                                                             </div>
+                                                                             <div class="modal-body">
+                                                                                   <!-- <div class="space15">&nbsp;</div> -->
+                                                                                   <div class="text-center">
+                                                                                          <span id="confirmMessage"></span>
+                                                                                   </div>
+                                                                                   <!-- <div class="space15"></div> -->
+                                                                             </div>
+                                                                             <div class="modal-footer">
+                                                                                   <button class="btn btn-info" type="button"
+                                                                                          id="confirmation-modal-ok"
+                                                                                          data-toggle="modal" href="#myModal1">
+                                                                                          <i class="fa fa-save"></i>&nbsp;&nbsp;OK
+                                                                                   </button>
+                                                                             </div>
+                                                                      </div>
+                                                               </div>
+                                                        </div>
                                                                                                 
-                                                                                                <div class="modal fade" id="myModal2" tabindex="-1"
-                                                                                                       role="dialog" aria-labelledby="myModalLabel"
-                                                                                                       aria-hidden="true" >
-                                                                                                       <div class="modal-dialog">
-                                                                                                              <div class="modal-content" style="border: thin solid grey">
-                                                                                                                     <div class="modal-header">
-                                                                                                                           <button id="program-error-modal-close" type="button"
-                                                                                                                                  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                                                                                           <h4 class="modal-title">Error / Warning (s)</h4>
-                                                                                                                     </div>
-                                                                                                                     <div class="modal-body">
-                                                                                                                           <!-- <div class="space15">&nbsp;</div> -->
-                                                                                                                           <div class="text-center">
-                                                                                                                                  <span id="errorMessageModal"></span>
-                                                                                                                           </div>
-                                                                                                                           <!-- <div class="space15"></div> -->
-                                                                                                                     </div>
-                                                                                                                     <div class="modal-footer">
-                                                                                                                           <button class="btn btn-info" type="button"
-                                                                                                                                  id="program-error-modal-ok" data-toggle="modal"
-                                                                                                                                  href="#myModal2">
-                                                                                                                                  <i class="fa fa-save"></i>&nbsp;&nbsp;OK
-                                                                                                                           </button>
-                                                                                                                     </div>
-                                                                                                              </div>
-                                                                                                       </div>
-                                                                                                </div>
+                                                      <div class="modal fade" id="statusbox" tabindex="-1"
+                                                             role="dialog" aria-labelledby="myModalLabel"
+                                                             aria-hidden="true" data-backdrop="static" data-keyboard="false" >
+                                                             <div class="modal-dialog">
+                                                                    <div class="modal-content" style="border: thin solid grey">
+                                                                           <div class="modal-header">
+                                                                                 <h4 class="modal-title">Status</h4>
+                                                                           </div>
+                                                                           <div class="modal-body">
+                                                                                 <!-- <div class="space15">&nbsp;</div> -->
+                                                                                 <div class="text-left">
+                                                                                        <span id="statusmessage1"></span>
+                                                                                        <span id="statusmessage2"></span>
+                                                                                 </div>
+                                                                                 <!-- <div class="space15"></div> -->
+                                                                           </div>
+                                                                           <div class="modal-footer" id="ok" style="display:none">
+                                                                                 <button class="btn btn-info" type="button"
+                                                                                        id="status-modal-ok" data-toggle="modal"
+                                                                                        href="#statusbox">
+                                                                                        <i class="fa fa-save"></i>&nbsp;&nbsp;OK
+                                                                                 </button>
+                                                                           </div>
+
+                                                                    </div>
+                                                             </div>
+                                                      </div>
+                                                       
+                                                       <div class="modal fade" id="myModal2" tabindex="-1"
+                                                              role="dialog" aria-labelledby="myModalLabel"
+                                                              aria-hidden="true" >
+                                                              <div class="modal-dialog">
+                                                                     <div class="modal-content" style="border: thin solid grey">
+                                                                            <div class="modal-header">
+                                                                                  <button id="program-error-modal-close" type="button"
+                                                                                         class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                                                  <h4 class="modal-title">Error / Warning (s)</h4>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                  <!-- <div class="space15">&nbsp;</div> -->
+                                                                                  <div class="text-center">
+                                                                                         <span id="errorMessageModal"></span>
+                                                                                  </div>
+                                                                                  <!-- <div class="space15"></div> -->
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                  <button class="btn btn-info" type="button"
+                                                                                         id="program-error-modal-ok" data-toggle="modal"
+                                                                                         href="#myModal2">
+                                                                                         <i class="fa fa-save"></i>&nbsp;&nbsp;OK
+                                                                                  </button>
+                                                                            </div>
+                                                                     </div>
+                                                              </div>
+                                                       </div>
                                                                                                 
                                                                                                 
                                                                                                 
@@ -656,6 +684,7 @@
       <!--select2-->
       <script type="text/javascript">
       var deleteList=[];
+      var status="";
          function openSidebar() {
              $('#main-content').css({
                  'margin-left': '210px'
@@ -682,48 +711,67 @@
         function calculateAccruals(){
         	var accrualProcess = [];
         	var arrLength = 0;
+        	 var select=false; 
         	if($('#calculate').is(':checked')){
+        		 select=true;
         		accrualProcess[arrLength] = 'calculateLiability';
         		arrLength++;
         	}
         	if($('#review').is(':checked')){
 				if($('#copyaccrual').is(':checked')){
+					 select=true;
 					accrualProcess[arrLength] = 'reviewLiabilityCCM';
         			arrLength++;
 				}
 				if($('#bookName').is(':checked')){
+					 select=true;
 					accrualProcess[arrLength] = 'reviewLiabilityBook';
         			arrLength++;
 				}
         	}
         	if($('#pytd').is(':checked')){
         		if($('#pytd_current').is(':checked')){
+        			 select=true;
 					accrualProcess[arrLength] = 'updatePYTD';
         			arrLength++;        		
         		}
         		if($('#pytd_select').is(':checked')){
+        			 select=true;
 					accrualProcess[arrLength] = 'updatePYTDBook';
         			arrLength++;        		
         		}
         	}
         	if($('#cytd').is(':checked')){
         		if($('#cytd_current').is(':checked')){
+        			 select=true;
 					accrualProcess[arrLength] = 'updateCYTD';                         
                  }
                  if($('#cytd_select').is(':checked')){
+                	 select=true;
 					accrualProcess[arrLength] = 'updateCYTDBook';
                  }
         	}
-        
-        	calCalculateAccruals(accrualProcess);
+        	if(!select){
+                message="Kindly select atleast one option to execute";                                  
+         		$("#errorMessageModal").html(message);
+                $('#myModal2').modal('toggle');
+          	}else{
+          	    progress="";
+          	    status="";
+          	    $('#ok').hide()
+          	    $('#statusbox').modal('toggle');
+        		calCalculateAccruals(accrualProcess);
+          	}
         }
          
          function calCalculateAccruals(accrualProcess){
              var required = accrualProcess[0];
              if(accrualProcess.length==0){
-            	   message="Data Submitted Successfully";
+/*             	   message="Data Submitted Successfully";
                    $("#confirmMessage").html(message);
-                   $('#myModal1').modal('toggle');
+                   $('#myModal1').modal('toggle'); */
+            	   $('#ok').show();
+                   
              }
              var select=false; 
                      if($('#calculate').is(':checked')){
@@ -787,15 +835,17 @@
                           }
               
                      }
-                     if(!select){
+                     /* if(!select){
                            message="Kindly select atleast one option to execute";                                  
                     $("#errorMessageModal").html(message);
                            $('#myModal2').modal('toggle');
-                     }
+                     } */
          }
          
          function calculateLiability(accrualProcess){
-             
+        	 progress='Calculate Accrual stored procedure is executing....! <img src="resources/img/Processing.gif">';
+        	 $("#statusmessage2").html(progress);
+        	 $("#statusmessage2").show();
              var liablePeriod= parseInt($('#liable_period_inputselect').val());
               $.ajax({ 
                     type: "POST",
@@ -815,30 +865,34 @@
 /*                                  message="Data Submitted Successfully";
                                  $("#confirmMessage").html(message);
                                  $('#myModal1').modal('toggle'); */
+                                 $("#statusmessage2").hide();
+                                 status=(status+'Calculate Accrual stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                 $("#statusmessage1").html(status);
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
                          
                           }else{
                                  message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
-                                         $('#myModal2').modal('toggle');
+                                 $('#myModal2').modal('toggle');
 
                           }
                     },
-                    beforeSend: function(){
-                             $('.loader').show();
+                   /*  beforeSend: function(){
+                             //$('.loader').show();
                                },
                     complete: function(){
                                    $('.loader').hide();
-                               },
+                               }, */
                     failure: function(response){
                          message="Issue occured while processing your request. Please try again later.";                                
                          $("#errorMessageModal").html(message);
                          $('#myModal2').modal('toggle');
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
-                         $("#errorMessageModal").html(message);
+                    	message = "<strong> Error :</strong> " + errorThrown + " occured while executing Calculate Accrual stored procedure<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                    	 $('#statusbox').modal('hide');
+                    	$("#errorMessageModal").html(message);
                          $('#myModal2').modal('toggle');                    	
                		}   
 
@@ -846,7 +900,9 @@
          }
          
          function reviewLiabilityCCM(accrualProcess){
-            
+        	 progress='Reviewed Accrual copy accrual data to CCM stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 $("#statusmessage2").html(progress);
+        	 $("#statusmessage2").show();
              var liablePeriod= parseInt($('#review_period_inputselect').val());
               $.ajax({ 
                     type: "POST",
@@ -860,6 +916,9 @@
 /*                                  message="Data Submitted Successfully";
                                  $("#confirmMessage").html(message);
                                  $('#myModal1').modal('toggle'); */
+                                 $("#statusmessage2").hide();
+                                 status=(status+'Reviewed Accrual copy accrual data to CCM stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                 $("#statusmessage1").html(status);                                 
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
 
@@ -871,20 +930,21 @@
 
                           }
                     },
-                    beforeSend: function(){
-                             $('.loader').show();
+                   /*  beforeSend: function(){
+                             //$('.loader').show();
                                },
                                complete: function(){
                                    $('.loader').hide();
-                               },
+                               }, */
                     failure: function(response){
                            message="Issue occured while processing your request. Please try again later.";                                
                                  $("#errorMessageModal").html(message);
                                          $('#myModal2').modal('toggle');
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
-                         $("#errorMessageModal").html(message);
+                    	message = "<strong> Error :</strong> " + errorThrown + " occured while executing Reviewed Accrual copy accrual data to CCM stored procedure<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                    	 $('#statusbox').modal('hide');
+                    	$("#errorMessageModal").html(message);
                          $('#myModal2').modal('toggle');                    	
                		}  
                     
@@ -892,6 +952,9 @@
           }
          
          function reviewLiabilityBook(accrualProcess){
+        	 progress='Reviewed  Accrual Book name stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 $("#statusmessage2").html(progress);
+        	 $("#statusmessage2").show();
              
              var liablePeriod= $('#review_book_inputselect').val();
               $.ajax({ 
@@ -906,6 +969,9 @@
 /*                                  message="Data Submitted Successfully";
                                  $("#confirmMessage").html(message);
                                  $('#myModal1').modal('toggle'); */
+                                 $("#statusmessage2").hide();
+                                 status=(status+'Reviewed  Accrual Book name stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                 $("#statusmessage1").html(status);                                
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
 
@@ -917,20 +983,21 @@
 
                           }
                     },
-                    beforeSend: function(){
-                             $('.loader').show();
+                  /*   beforeSend: function(){
+                             //$('.loader').show();
                                },
                                complete: function(){
                                    $('.loader').hide();
-                               },
+                               }, */
                     failure: function(response){
                            message="Issue occured while processing your request. Please try again later.";                                
                                  $("#errorMessageModal").html(message);
                                          $('#myModal2').modal('toggle');
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
-                         $("#errorMessageModal").html(message);
+                    	message = "<strong> Error :</strong> " + errorThrown + " occured while executing Reviewed Accrual book name stored procedure <br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                    	 $('#statusbox').modal('hide');
+                    	$("#errorMessageModal").html(message);
                          $('#myModal2').modal('toggle');                    	
                		} 
                     
@@ -938,7 +1005,9 @@
            }
          
          function updatePYTD(accrualProcess){
-             
+        	 progress='Update PYTD current accrual data stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 $("#statusmessage2").html(progress);
+        	 $("#statusmessage2").show();
               $.ajax({ 
                     type: "POST",
                    dataType: "json",
@@ -951,6 +1020,9 @@
 /*                                         message="Data Submitted Successfully";
                                         $("#confirmMessage").html(message);
                                         $('#myModal1').modal('toggle'); */
+                                        $("#statusmessage2").hide();
+                                        status=(status+'Update PYTD current accrual data stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                        $("#statusmessage1").html(status);                                       
                                         accrualProcess.splice(0, 1);
                                         calCalculateAccruals(accrualProcess);
 
@@ -962,20 +1034,21 @@
 
                                  }
                           },
-                          beforeSend: function(){
-                                    $('.loader').show();
+                          /* beforeSend: function(){
+                                    //$('.loader').show();
                                },
                                complete: function(){
                                    $('.loader').hide();
-                               },
+                               }, */
                    failure: function(response){
                            message="Issue occured while processing your request. Please try again later.";                                
                                  $("#errorMessageModal").html(message);
                                          $('#myModal2').modal('toggle');
                    },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
-                         $("#errorMessageModal").html(message);
+                    	message = "<strong> Error :</strong> " + errorThrown + " occured while executing Update PYTD current accrual data stored procedure <br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                    	 $('#statusbox').modal('hide');
+                    	$("#errorMessageModal").html(message);
                          $('#myModal2').modal('toggle');                    	
                		} 
                		                   
@@ -983,6 +1056,9 @@
             }
          
          function updatePYTDBook(accrualProcess){
+        	 progress='Update PYTD Book list stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 $("#statusmessage2").html(progress);
+        	 $("#statusmessage2").show();
              
              var liablePeriod= $('#pytd_book_inputselect').val();
              $.ajax({ 
@@ -997,6 +1073,9 @@
 /*                                         message="Data Submitted Successfully";
                                         $("#confirmMessage").html(message);
                                         $('#myModal1').modal('toggle'); */
+                                        $("#statusmessage2").hide();
+                                        status=(status+'Update PYTD Book list stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                        $("#statusmessage1").html(status);                                        
                                         accrualProcess.splice(0, 1);
                                         calCalculateAccruals(accrualProcess);
 
@@ -1008,26 +1087,30 @@
 
                                  }
                           },
-                          beforeSend: function(){
-                                    $('.loader').show();
+                         /*  beforeSend: function(){
+                                   // $('.loader').show();
                                },
                                complete: function(){
                                    $('.loader').hide();
-                               },
+                               }, */
                           failure: function(response){
                                  message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
                                          $('#myModal2').modal('toggle');
                           },
 		                   error: function(XMLHttpRequest, textStatus, errorThrown) { 
-		                   		message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
-		                        $("#errorMessageModal").html(message);
+		                   		message = "<strong> Error :</strong> " + errorThrown + " occured while executing Update PYTD book list stored procedure <br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+		                   	    $('#statusbox').modal('hide');
+		                   		$("#errorMessageModal").html(message);
 		                        $('#myModal2').modal('toggle');                    	
 		              		}                           
                           });
              }
          
          function updateCYTD(accrualProcess){
+        	 progress='Update CYTD current Accrual data stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 $("#statusmessage2").html(progress);
+        	 $("#statusmessage2").show();
             
               $.ajax({ 
                     type: "POST",
@@ -1041,6 +1124,9 @@
 /*                                         message="Data Submitted Successfully";
                                         $("#confirmMessage").html(message);
                                         $('#myModal1').modal('toggle'); */
+                                        $("#statusmessage2").hide();
+                                        status=(status+'Update CYTD current Accrual data stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                        $("#statusmessage1").html(status);                                        
                                         accrualProcess.splice(0, 1);
                                         calCalculateAccruals(accrualProcess);
 
@@ -1052,27 +1138,30 @@
 
                                  }
                           },
-                          beforeSend: function(){
-                                    $('.loader').show();
+                          /* beforeSend: function(){
+                                    //$('.loader').show();
                                },
                                complete: function(){
                                    $('.loader').hide();
-                               },
+                               }, */
                     failure: function(response){
                            message="Issue occured while processing your request. Please try again later.";                                
                                  $("#errorMessageModal").html(message);
                                          $('#myModal2').modal('toggle');
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
-                         $("#errorMessageModal").html(message);
+                    	message = "<strong> Error :</strong> " + errorThrown + " occured while executing Update CYTD current Accrual data stored procedure<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                    	$('#statusbox').modal('hide'); 
+                    	$("#errorMessageModal").html(message);
                          $('#myModal2').modal('toggle');                    	
                		}                     
                     });
           }
          
          function updateCYTDBook(accrualProcess){
-             
+        	 progress='Update CYTD Book stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 $("#statusmessage2").html(progress);
+        	 $("#statusmessage2").show();
              var liablePeriod= $('#cytd_book_inputselect').val();
               $.ajax({ 
                     type: "POST",
@@ -1086,6 +1175,9 @@
 /*                                  message="Data Submitted Successfully";
                                  $("#confirmMessage").html(message);
                                  $('#myModal1').modal('toggle'); */
+                                 $("#statusmessage2").hide();
+                                 status=(status+'Update CYTD Book stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                 $("#statusmessage1").html(status);                                
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
 
@@ -1093,25 +1185,27 @@
                           }else{
                                  message="Issue occured while processing your request. Please try again later.";                             
                                  $("#errorMessageModal").html(message);
-                                         $('#myModal2').modal('toggle');
+                                 $('#myModal2').modal('toggle');
 
                           }
                     },
-                    beforeSend: function(){
-                             $('.loader').show();
+                   /*  beforeSend: function(){
+                               $('.loader').show();
                                },
                                complete: function(){
                                    $('.loader').hide();
-                               },
+                               }, */
                     failure: function(response){
                            message="Issue occured while processing your request. Please try again later.";                                
                                  $("#errorMessageModal").html(message);
                                          $('#myModal2').modal('toggle');
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) { 
-                    	message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
-                         $("#errorMessageModal").html(message);
-                         $('#myModal2').modal('toggle');                    	
+                    	message = "<strong> Error :</strong> " + errorThrown + " occured while executing Update CYTD book list data stored procedure<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+                    	 $('#statusbox').modal('hide'); 
+                    	$("#errorMessageModal").html(message);
+                         $('#myModal2').modal('toggle');  
+                        
                		}                     
                     
                     });

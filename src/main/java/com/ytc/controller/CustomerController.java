@@ -32,6 +32,11 @@ public class CustomerController extends BaseController  {
 		return new ListResult<ProgramDetail>(getService(request).getCustomerDetailDashboard(Integer.parseInt(request.getSession().getAttribute("EMPLOYEE_INFO").toString())));
 	}
 	
+	@RequestMapping(value = "/getPendingPricingDetails", method = RequestMethod.GET)
+	public @ResponseBody ListResult<ProgramDetail> getPendingPricingDetails(HttpServletRequest request) {
+		return new ListResult<ProgramDetail>(getService(request).getPendingPricingDetails(Integer.parseInt(request.getSession().getAttribute("EMPLOYEE_INFO").toString())));
+	}
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public @ResponseBody ModelResult<Customer> getDetail(HttpServletRequest request, @PathVariable Integer id) {
 		return new ModelResult<Customer>(getService(request).getDetail(id));

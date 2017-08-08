@@ -87,7 +87,8 @@ function listbox_moveacross(sourceID, destID) {
 				if(destID == 'prdvalue' || destID == 'achPrdvalue'){
 					var tagTemp = getTagPropertyValue(tagId, tagMap);
 					if(tagTemp != null && tagTemp.indexOf(newOption.value) !== -1){
-						dest.add(newOption);	
+						dest.add(newOption);
+						sortSelectOption(destID);
 					}
 					src.remove(count);
 				}
@@ -152,6 +153,19 @@ function listbox_moveacross(sourceID, destID) {
 	return false;
 }
 
+function sortSelectOption(selector){
+	var selector1 = '#'+selector;
+	var selector2 = selector1 + ' option';
+	var my_options = $(selector2);
+
+	my_options.sort(function(a,b) {
+	    if (a.text > b.text) return 1;
+	    if (a.text < b.text) return -1;
+	    return 0
+	})
+
+	$(selector1).empty().append( my_options );
+}
 function removeFromArray(arr) {
 	var what, a = arguments, L = a.length, ax;
 	while (L > 1 && arr.length) {
@@ -189,7 +203,12 @@ function dynamicdropdown(listindex) {
 			},
 			failure : function(response) {
 				alert("Wrongly done");
-			}
+			},
+        	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+				 $("#errorMessageModal").html(message);
+				 $('#myModal5').modal('toggle');                    	
+			}  
 		});	
 		
 	}
@@ -407,7 +426,12 @@ function dynamicDropdownCommon(listindex){
 		},
 		failure : function(response) {
 			alert("Wrongly done");
-		}
+		},
+    	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+			message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+			 $("#errorMessageModal").html(message);
+			 $('#myModal5').modal('toggle');                    	
+		}  
 	});	
 }
 
@@ -445,7 +469,12 @@ function achDynamicDropdownCommon(listindex){
 		},
 		failure : function(response) {
 			alert("Wrongly done");
-		}
+		},
+    	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+			message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+			 $("#errorMessageModal").html(message);
+			 $('#myModal5').modal('toggle');                    	
+		}  
 	});
 	
 }
@@ -463,7 +492,12 @@ function achDynamicdropdown(listindex) {
 			},
 			failure : function(response) {
 				alert("Wrongly done");
-			}
+			},
+        	error: function(XMLHttpRequest, textStatus, errorThrown) { 
+				message = "<strong> Error :</strong> " + errorThrown + "<br><strong>Message :</strong> " + XMLHttpRequest.responseText;
+				 $("#errorMessageModal").html(message);
+				 $('#myModal5').modal('toggle');                    	
+			}  
 		});	
 		
 	}

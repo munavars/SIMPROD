@@ -65,6 +65,7 @@ public class ProgramDetail extends Model{
 	private String modifiedDate;
 	private String statusHistory;
 	private String programStatus;
+	private String programStatusDescription;
 	
 	private Integer tbpCheck;
 	private String glCode;
@@ -496,5 +497,11 @@ public class ProgramDetail extends Model{
 	}
 	public void setActionReqByName(String actionReqByName) {
 		this.actionReqByName = actionReqByName;
+	}
+	public String getProgramStatusDescription() {
+		return programStatusDescription;
+	}
+	public void setProgramStatusDescription(String programStatusDescription) {
+		this.programStatusDescription = programStatusDescription;
 	}
 }

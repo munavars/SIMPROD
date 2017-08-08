@@ -69,7 +69,7 @@
 	    
 		if(tableId=="pending_approvals"){
 			
-		    fileName="Pending Approvals_"+$("#loginUserName").html()+"_"+new Date().toLocaleString();
+		    fileName="Pending Approvals Program_"+$("#loginUserName").html()+"_"+new Date().toLocaleString();
 		    
 		}else if(tableId=="customeroverview"){
 			
@@ -79,6 +79,10 @@
 			
 			fileName="CustomerListWithNoProgram_"+$("#loginUserName").html()+"_"+new Date().toLocaleString();
 			
+		}else if(tableId=="pending_approvals_pricing"){
+			
+		    fileName="Pending Approvals Pricing_"+$("#loginUserName").html()+"_"+new Date().toLocaleString();
+		    
 		}
 
 	    for(j = 0 ; j < tab.rows.length ; j++) 
@@ -94,7 +98,7 @@
 			   	}
 	   		}
 	   		var text="";
-	   		if(tableId=="pending_approvals" && j==0)
+	   		if( (tableId=="pending_approvals" || tableId == "pending_approvals_pricing") && j==0)
 	   		text=tab.rows[j].innerHTML.replace(/<th/g,'<th style="background-color: #87AFC6"');
 	   		else
 	   		text=tab.rows[j].innerHTML;
@@ -335,55 +339,6 @@
 		        dataSrc: "data",
 		        type: "GET",
 		    },
-		  
-		    /*columnDefs: [
-           
-		    	 {
-                targets:0,
-                render: function ( data, type, row, meta ) {
-                    if(type === 'display'){
-                        data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '">' + data + '</a>';
-                    }
-
-                    return data;
-                }
-            },   
-            {
-                targets:7,
-                render: function ( data, type, row, meta ) {
-                	console.log(row);
-                    if(type === 'display'){
-                    	if(data=='1'){
-                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a>';
-                    	}else if(data=='2'){
-                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a>';	
-                    	}else if(data=='3'){
-                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a>';	
-                    	}
-                    }
-
-                    return data;
-                }
-            }, 
-            {
-                targets:8,
-                render: function ( data, type, row, meta ) {
-                    if(type === 'display'){
-                    	if(data=='1'){
-                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a>';
-                    	}else if(data=='2'){
-                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a>';	
-                    	}else if(data=='3'){
-                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a>';	
-                    	}
-                    }
-
-                    return data;
-                }
-            }
-            
-
-     ],*/
 		    columns: [
 		    	
 		    	{ data: "customerNumber" },   
@@ -424,63 +379,7 @@
 
                     return data;
                 }  },
-/* 	            { data: "zmAppStatus",                
-	              render: function ( data, type, row, meta ) {
-                    if(type === 'display'){
-                    	if(data=='2'){
-                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.zmAppDate+'</div></a>';
-                    	}else if(data=='1'){
-                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.zmAppDate+'</div></a>';	
-                    	}else if(data=='4'){
-                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.zmAppDate+'</div></a>';	
-                    	}else if(data=='5'){
-                    	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.zmAppDate+'</div></a>';	
-                    	}
-                    }
-
-                    return data;
-                },className:"center" 
-	            	
-	            
-	            },
-	            { data: "tbpAppStatus" ,
-	            	render: function ( data, type, row, meta ) {
-	                    if(type === 'display'){
-	                    	if(data=='2'){
-	                        data = '<a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending since '+row.tbpAppDate+'</div></a>';
-	                    	}else if(data=='1'){
-	                    	data=	'<a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected On '+row.tbpAppDate+'</div></a>';	
-	                    	}else if(data=='4'){
-	                    	data='<a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved On '+row.tbpAppDate+'</div></a>';	
-	                    	}else if(data=='5'){
-	                        	data='<a class="status-icon status-icon--waiting"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Waiting Since '+row.tbpAppDate+'</div></a>';	
-	                    	}
-	                    }
-
-	                    return data;
-	                },className:"center" 	
-	            	
-	            	
-	            }, */
-	            { data: "programStatus" ,
-	            	render: function ( data, type, row, meta ) {
-	            		
-	            		
-	                    if(type === 'display'){
-	                    	if(data=='2'){
-	                        data = 'PENDING';
-	                    	}else if(data=='1'){
-	                    	data=	'REJECTED';	
-	                    	}else if(data=='3'){
-	                    	data='IN PROGRESS';	
-	                    	}
-	                    }
-
-	                    return data;
-	                },className:"center" 	
-	            	
-	            	
-	            },
+	            { data: "programStatusDescription", className:"center"},
 	         	{ data: "programStatus" ,
 	            	render: function ( data, type, row, meta ) {
 	            		
@@ -517,12 +416,105 @@
 
     ]
 		} );
+		
+		<!-- START Pending Approval Pricing details-->
+	   var table=$("#pending_approvals_pricing").DataTable( {
+			 oLanguage: {
+				 "sEmptyTable": "No matching records found"
+				 },
+				 
+			lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],	 
+			
+		    ajax: {
+		        //url: '/SIM/v1/customer/getDetailDash/'+loginId,
+		        url: '/SIM/v1/customer/getPendingPricingDetails/',
+		        dataSrc: "data",
+		        type: "GET",
+		    },
+		    columns: [
+		    	
+		    	{ data: "customerNumber" },   
+   				{ data: "customerName" },
+   				{ data: "programId",
+   				 
+                    render: function ( data, type, row, meta ) {
+						if(type === 'display' && row.programType == 'Calculated Program'){
+                            data = '<a href="/SIM/programDetail?pgmId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
+
+                        }
+                        else if(type == 'display' && (row.programType=='DDF' || row.programType=='COOP' || row.programType=='Fixed $')){
+                        	data = '<a href="/SIM/programddfcoop?pgmId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
+                        }
+                        else if(type === 'display' && row.programType == 'Pricing Form'){
+                            data = '<a href="/SIM/pricingRequest?pricingId=' + encodeURIComponent(data) + '" class="underline">' + data + '</a>';
+                        }
+						return data;
+                    }
+   				},
+	            { data: "programName" },
+	            { data: "bu" },
+	            { data: "programType" },
+	            { data: "submitDate" ,className:"center" },
+	            { data: "actionReqByName",className:"center",	              
+	            	render: function ( data, type, row, meta ) {
+                    if(type === 'display'){
+                    	if(row.programStatus=='2'){
+                    	 data = '<span data-toggle="tooltip" title="Pending Since ' + row.modifiedDate + '">' + row.actionReqByName + '</span>';
+                       }else if(row.programStatus=='1'){
+                         data = '<span data-toggle="tooltip" title="Pending Since ' + row.modifiedDate + '">' + row.actionReqByName + '</span>';
+                    	}else if(row.programStatus=='4' || row.programStatus == '0'){
+                    	data = '<span data-toggle="tooltip" title="Approved On ' + row.modifiedDate + '">' + row.actionReqByName + '</span>'; 
+                    	}else if(row.programStatus=='5' || row.programStatus == '3'){
+                    	data = '<span data-toggle="tooltip" title="Waiting Since ' + row.modifiedDate + '">' + row.actionReqByName + '</span>';
+                    	}
+                    }
+
+                    return data;
+                }  },
+	            { data: "programStatusDescription", className:"center"},
+	         	{ data: "programStatus" ,
+	            	render: function ( data, type, row, meta ) {
+	            		
+	            		var divToolTip = "\""+row.statusHistory +"\""; 
+	            		
+	                    if(type === 'display'){
+	                    	if(data=='2'){
+	                        data = '<a class="status-icon status-icon--pending" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-ellipsis-h"></i></a>';
+	                    	}else if(data=='1'){
+	                    	data=	'<a class="status-icon status-icon--rejected" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-times"></i></a>';	
+	                    	}else if(data=='4'|| data == '0'){
+	                    	data='<a class="status-icon status-icon--approved" data-placement="top" rel="tooltip" title='+ divToolTip +'><i class="fa fa-check"></i></a>';	
+	                    	}else if(data=='5' || data == '3'){
+	                        	data='<a class="status-icon status-icon--waiting" data-placement="top" rel="tooltip"  title='+ divToolTip +'><i class="fa fa-ellipsis-h"></i></a>';	
+	                    	}
+	                    }
+
+	                    return data;
+	                },className:"center" 	
+	            },
+	           
+	            {
+	            	data: "statusHistory",
+	            	visible: false,
+                	searchable: false
+	            },
+	            { 
+	              	data: "actionReqByName",
+	            	visible: false,
+                	searchable: true
+	            }
+    		]
+		} );
+		<!-- END Pending Approval Pricing details-->
 	   
 	   //tool tip on hover
 		 $('#customeroverview').on('draw.dt', function () {
            $('[data-toggle="tooltip"]').tooltip();
        });
  		$('#pending_approvals').on('draw.dt', function () {
+           $('[data-toggle="tooltip"]').tooltip();
+       });
+       $('#pending_approvals_pricing').on('draw.dt', function () {
            $('[data-toggle="tooltip"]').tooltip();
        });
        
@@ -664,243 +656,131 @@
       <section id="main-content">
           <section class="wrapper">
               <!-- page start-->
-                <div class="row">
-                <div class="col-sm-12">
-              <section class="panel">
-                  <!--header class="panel-heading">
+				<div class="row">
+					<div class="col-sm-12">
+						<section class="panel">
+							<!--header class="panel-heading">
                     </header-->
-                    
-                    <br>
-                    <ol id="breadcrumbs"></ol>
-					<nav id="sitemaps"  style="display:none">
-					 <!--  <h2>Sitemaps</h2> -->
-					  <ul>
-					    <li>
-					      <a href="processLogin">Home</a>
-					      <ul>
-					       <li>
-					          <a href="customer">Customer Details</a>
-					          <ul>
-					            <li><a href="programDetail">Program Detail</a></li>
-					            <li><a href="programddfcoop">Program Detail</a></li>
-					            <li><a href="pricingOverview">Pricing Overview</a>
-					             	<ul>
-					             	<li><a href="pricingRequest">Pricing Request</a></li>
-					             	</ul>
-					             </li>
-					          </ul> 
-					        </li>
-					        <li><a href="ccm">CCM</a></li>
-					        <li><a href="accrual">Accrual Calculation</a></li>					       
-					      </ul>
-					    </li>
-					  </ul>
-					</nav>
-                    
-                    
-                  <div class="panel-body"> 
-<!-- START 'Pending Approvals' table -->
-                          <div class="btn-group pull-right">
-                            <div class="btn-group">
-                            <a href="#"><button class="btn btn-default" onclick="tableToExcel('pending_approvals','Pending Approval Data')"><i class="fa fa-arrow-down"></i> Export To Excel</button></a>
-                            </div>   
-                        </div>
-                         <h3 class="tableHeader">In Progress/Pending Approvals </h3>
-                          <div class="adv-table table-responsive">
-                          <table class="display table table-striped table-bordered approvals" id="pending_approvals">
-                              <thead>
-                                <tr>
-                                    <th colspan="2" class="center toptheader">Customer</th>
-                                    <th colspan="5" class="center toptheader">Program</th>
-                                    <!-- <th colspan="3" class="toptheader">&nbsp;</th> -->
-                                    <th colspan="4" class="center toptheader">Status</th>
-                              </tr>
-                              <tr class="rowvis">
-                                <th>Number</th>
-                                <th>Name</th>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Bus. Unit</th>
-                                <th>Program Type</th>
-                                <th>Submitted</th>
-                                <th>Pending</th>
-                                <th>Program Status</th>
-                                <!-- <th>Zone Manager</th> -->
-<!--                                 <th class="center">Director</th>
-                                <th class="center">Execs</th> -->
-                                <!-- <th>TBP</th> -->
-                                <th>Program Approval History</th>
-                              </tr>
-                              </thead>
-                              <tbody>
-                              <!--
-                              <tr class="">
-                                  <td class="center">20998</td>
-                                  <td>A &amp; E TIRE INC</td>   
-                                  <td class="center">1234</td>
-                                  <td>OE Spec Credit</td>
-                                  <td>Commercial</td>
-                                  <td class="center">03/15/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-<!--                              <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td> 
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                              </tr>
-                               <tr class="">
-                                  <td class="center">26100</td>
-                                  <td>ACTION TIRE INC</td>
-                                  <td class="center">1234</td>
-                                  <td>Retail Sellout</td>
-                                  <td>Consumer</td>
-                                  <td class="center">03/11/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28588</td>
-                                  <td>T &amp; D TRUCKING INC</td>
-                                  <td class="center">1234</td>
-                                  <td>Program Support</td>
-                                  <td>Consumer</td>
-                                  <td class="center">03/11/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--saved"><i class="fa fa-save"></i><div class="tooltip">Saved 03/21/17</div></a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28588</td>
-                                  <td>T &amp; D TRUCKING INC</td>
-                                  <td class="center">1234</td>
-                                  <td>Store Assistance</td>
-                                  <td>Commercial</td>
-                                  <td class="center">03/11/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                            </tr>
-                              <tr class="">
-                                  <td class="center">26588</td>
-                                  <td>T &amp; D TRUCKING INC</td>
-                                  <td class="center">1234</td>
-                                  <td>Trip Fund</td>
-                                  <td>OTR</td>
-                                  <td class="center">03/11/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28544</td>
-                                  <td>T &amp; D TRUCKING INC</td>
-                                  <td class="center">1234</td>
-                                  <td>Fixed Subsidy</td>
-                                  <td>Consumer</td>
-                                  <td class="center">03/11/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28588</td>
-                                  <td>INTERSTATE TIRE DISTRIBUTOR</td>
-                                  <td class="center">1234</td>
-                                  <td>Roadside Assistance</td>
-                                  <td>Commercial</td>
-                                  <td class="center">03/11/2017</td>
-                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
-                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
-                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
-                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
-                                  <td class="center"><div class="tooltips" data-placement="top" data-toggle="tooltip" data-original-title="Saved 03/24/17"><i class="fa fa-floppy-o fa-2x" aria-hidden="true"></i></div></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28568</td>
-                                  <td>Evans Tires</td>
-                                  <td class="center">1234</td>
-                                  <td>OE Spec Credit</td>
-                                  <td>OTR</td>
-                                  <td class="center">02/01/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28588</td>
-                                  <td class="">T &amp; D TRUCKING INC</td>
-                                  <td class="center">1234</td>
-                                  <td class="">OE Spec Credit</td>
-                                  <td class="">Consumer</td>
-                                  <td class="center">03/01/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28588</td>
-                                  <td>T &amp; D TRUCKING INC</td>
-                                  <td class="center">1234</td>
-                                  <td>Retail Enhancement</td>
-                                  <td>OTR</td>
-                                  <td class="center">02/01/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28588</td>
-                                  <td>T &amp; D TRUCKING INC</td>
-                                  <td class="center">1236</td>
-                                  <td>Trip Fund</td>
-                                  <td>Commercial</td>
-                                  <td class="center">03/11/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--approved"><i class="fa fa-check"></i><div class="tooltip">Approved 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                              </tr>
-                              <tr class="">
-                                  <td class="center">28588</td>
-                                  <td>T &amp; D TRUCKING INC</td>
-                                  <td class="center">1474</td>
-                                  <td>Retail Sellout</td>
-                                  <td>OTR</td>
-                                  <td class="center">02/01/2017</td>
-                                  <td class="center"><a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--rejected"><i class="fa fa-times"></i><div class="tooltip">Rejected 03/11/2017</div></a></td>
-                                  <td class="center"><a class="status-icon status-icon--pending"><i class="fa fa-ellipsis-h"></i><div class="tooltip">Pending 03/21/17</div></a></td>
-                              </tr> -->
-                              </tbody>
-                          </table>
-                        </div>
-                        </div>
-                    </section>
-                </div>
-              </div>
-                 
-<!-- END 'Pending Approvals' table -->                    
 
-<!-- START 'My Customers' table -->
+							<br>
+							<ol id="breadcrumbs"></ol>
+							<nav id="sitemaps" style="display: none">
+								<!--  <h2>Sitemaps</h2> -->
+								<ul>
+									<li><a href="processLogin">Home</a>
+										<ul>
+											<li><a href="customer">Customer Details</a>
+												<ul>
+													<li><a href="programDetail">Program Detail</a></li>
+													<li><a href="programddfcoop">Program Detail</a></li>
+													<li><a href="pricingOverview">Pricing Overview</a>
+														<ul>
+															<li><a href="pricingRequest">Pricing Request</a></li>
+														</ul></li>
+												</ul></li>
+											<li><a href="ccm">CCM</a></li>
+											<li><a href="accrual">Accrual Calculation</a></li>
+										</ul></li>
+								</ul>
+							</nav>
+
+
+							<div class="panel-body">
+								<!-- START 'Pending Approvals' table -->
+								<div class="btn-group pull-right">
+									<div class="btn-group">
+										<a href="#"><button class="btn btn-default"
+												onclick="tableToExcel('pending_approvals','Pending Approval Data')">
+												<i class="fa fa-arrow-down"></i> Export To Excel
+											</button></a>
+									</div>
+								</div>
+								<h3 class="tableHeader">Draft / Pending Program Approvals</h3>
+								<div class="adv-table table-responsive">
+									<table
+										class="display table table-striped table-bordered approvals"
+										id="pending_approvals">
+										<thead>
+											<tr>
+												<th colspan="2" class="center toptheader">Customer</th>
+												<th colspan="5" class="center toptheader">Program</th>
+												<!-- <th colspan="3" class="toptheader">&nbsp;</th> -->
+												<th colspan="4" class="center toptheader">Status</th>
+											</tr>
+											<tr class="rowvis">
+												<th>Number</th>
+												<th>Name</th>
+												<th>ID</th>
+												<th>Name</th>
+												<th>Bus. Unit</th>
+												<th>Program Type</th>
+												<th>Submitted</th>
+												<th>Pending</th>
+												<th>Program Status</th>
+												<th>Program Approval History</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- Content to be appended dynamically. -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<!-- END 'Pending Approvals' table -->
+
+				<!-- START Pending Approvals Pricing table -->
+				<div class="row">
+					<div class="col-sm-12">
+						<section class="panel">
+							<div class="panel-body">
+								<!-- START 'Pending Approvals' table -->
+								<div class="btn-group pull-right">
+									<div class="btn-group">
+										<a href="#"><button class="btn btn-default"
+												onclick="tableToExcel('pending_approvals_pricing','Pending Approval Data')">
+												<i class="fa fa-arrow-down"></i> Export To Excel
+											</button></a>
+									</div>
+								</div>
+								<h3 class="tableHeader">Draft / Pending Pricing Approvals</h3>
+								<div class="adv-table table-responsive">
+									<table
+										class="display table table-striped table-bordered approvals"
+										id="pending_approvals_pricing">
+										<thead>
+											<tr>
+												<th colspan="2" class="center toptheader">Customer</th>
+												<th colspan="5" class="center toptheader">Program</th>
+												<th colspan="4" class="center toptheader">Status</th>
+											</tr>
+											<tr class="rowvis">
+												<th>Number</th>
+												<th>Name</th>
+												<th>ID</th>
+												<th>Name</th>
+												<th>Bus. Unit</th>
+												<th>Program Type</th>
+												<th>Submitted</th>
+												<th>Pending</th>
+												<th>Pricing Status</th>
+												<th>Pricing Approval History</th>
+											</tr>
+										</thead>
+										<tbody>
+											<!-- Content to be appended dynamically. -->
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+				<!-- END Pending Approvals Pricing table -->
+
+				<!-- START 'My Customers' table -->
             <div class="row">
                 <div class="col-sm-12">
               <section class="panel">

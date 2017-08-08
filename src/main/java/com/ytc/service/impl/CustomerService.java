@@ -92,18 +92,40 @@ public class CustomerService implements ICustomerService {
 				programDetail.setProgramId(dalProgramDetail.getId());
 				programDetail.setBu(dalProgramDetail.getDalProgramHeader().getCustomer().getBu());
 				programDetail.setSubmitDate(ProgramServiceHelper.convertDateToString(dalProgramDetail.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
-				/*programDetail.setZmAppStatus(null!=dalProgramDetail.getZmAppStatus()?dalProgramDetail.getZmAppStatus().getId().toString():"0");
-				programDetail.setZmAppDate(null!=dalProgramDetail.getZmAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getZmAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");
-				programDetail.setTbpAppStatus(null!=dalProgramDetail.getTbAppStatus()?dalProgramDetail.getTbAppStatus().getId().toString():"0");
-				programDetail.setTbpAppDate(null!=dalProgramDetail.getTbpAppDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getTbpAppDate().getTime(), ProgramConstant.DATE_FORMAT):"");*/
 				programDetail.setModifiedDate(null!=dalProgramDetail.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalProgramDetail.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT_TIME):"");
 				programDetail.setProgramStatus((dalProgramDetail.getStatus() != null) ? dalProgramDetail.getStatus().getId().toString() : "0" );
+				programDetail.setProgramStatusDescription((dalProgramDetail.getStatus() != null) ? dalProgramDetail.getStatus().getType() : "" );
 				programDetail.setProgramType(dalProgramDetail.getDalProgramType().getType());
 				programDetail.setStatusHistory(getProgramStatusHistory(dalProgramDetail));
 				programDetail.setActionReqByName(getActionRequiredByName(dalProgramDetail));
 				dashboardDetailList.add(programDetail);
 			}
 		}
+		
+		return dashboardDetailList;
+
+	}
+	
+	@Override
+	public List<ProgramDetail> getPendingPricingDetails(Integer loginId) {
+		
+		List<ProgramDetail> dashboardDetailList= new ArrayList<ProgramDetail>();
+
+		Map<String, Object> queryParams = new HashMap<>();
+		String tbpQuery = QueryConstant.TBP_QUERY;
+		List<String> userIdList = null;
+		List<String> tbpList = baseDao.getListFromNativeQuery(tbpQuery, new HashMap<String, Object>());
+		if(!tbpList.contains(loginId)){
+			String queryString=QueryConstant.SIM_EMPLOYEE_HIER_LIST;
+			
+			queryParams.put("loginId", loginId);
+			userIdList=baseDao.getListFromNativeQuery(queryString,queryParams);
+			if(userIdList.isEmpty()){
+				return dashboardDetailList;
+			}
+
+		}
+
 		getPricingDetails(dashboardDetailList, tbpList, userIdList, loginId);
 		return dashboardDetailList;
 
@@ -153,6 +175,7 @@ public class CustomerService implements ICustomerService {
 				programDetail.setSubmitDate(ProgramServiceHelper.convertDateToString(dalPricingHeader.getCreatedDate().getTime(), ProgramConstant.DATE_FORMAT));
 				programDetail.setModifiedDate(null!=dalPricingHeader.getModifiedDate()?ProgramServiceHelper.convertDateToString(dalPricingHeader.getModifiedDate().getTime(), ProgramConstant.DATE_FORMAT_TIME):"");
 				programDetail.setProgramStatus((dalPricingHeader.getDalStatus() != null) ? dalPricingHeader.getDalStatus().getId().toString() : "0" );
+				programDetail.setProgramStatusDescription((dalPricingHeader.getDalStatus() != null) ? dalPricingHeader.getDalStatus().getType() : "" );
 				programDetail.setProgramType(dalPricingHeader.getDalProgramType().getType());
 				programDetail.setStatusHistory(getPricingStatusHistory(dalPricingHeader));
 				programDetail.setActionReqByName(getActionRequiredByName(dalPricingHeader));

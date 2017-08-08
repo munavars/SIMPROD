@@ -115,6 +115,7 @@ public class PricingServiceImpl implements IPricingService {
 			pricingHeader.setRequestedByTitle(baseDao.getById(DalEmployeeTitle.class, Integer.valueOf(employee.getTITLE_ID())).getTitle());
 			pricingHeader.setRequestedByDate(ProgramServiceHelper.convertDateToString(Calendar.getInstance().getTime(), ProgramConstant.DATE_FORMAT));
 			pricingHeader.setCustomerId(dalCustomer.getCustomerNumber());
+			pricingHeader.setCustId(dalCustomer.getId().toString());
 			pricingHeader.setCustomerGroup(dalCustomer.getCustomerName());
 			pricingHeader.setStatus(ConsumerProgramStatusEnum.DRAFT.getProgramStatus());
 			/**Work flow matrix.*/
@@ -475,6 +476,7 @@ public class PricingServiceImpl implements IPricingService {
 		if(pricingHeader != null && dalPricingHeader != null){
 			pricingHeader.setCustomerType(dalPricingHeader.getCustomerType().getCustomerType());
 			pricingHeader.setCustomerId(dalPricingHeader.getCustomer().getCustomerNumber());
+			pricingHeader.setCustId(dalPricingHeader.getCustomer().getId().toString());
 			pricingHeader.setCustomerGroup(String.valueOf(dalPricingHeader.getCustomerGroup()));
 			pricingHeader.setCustomerGroupValue(dalPricingHeader.getCustomer().getCustomerName());
 			pricingHeader.setUserComments(dalPricingHeader.getUserComments());

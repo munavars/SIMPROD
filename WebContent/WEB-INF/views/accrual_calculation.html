@@ -91,7 +91,7 @@
        .dataTables_wrapper .dataTables_filter {
            width: 50%;
        }
-.loader {
+/* .loader {
   display: none;
   background-color: #EEE;
   position: absolute;
@@ -105,7 +105,7 @@
   margin-top: -20px;
   left: 50%;
   margin-left: -20px;
-}
+} */
        </style>
    </head>
    <body>
@@ -612,9 +612,9 @@
                                                                                                 
                                                                                                 
                                                                            <!-- END ROW 8 -->
-       <div class="loader">
+<!--        <div class="loader">
     <img src="resources/img/Processing.gif">
-  </div>
+  </div> -->
                                                                            </div>
                                                                            </section>
       <!---- END Review / Confirm Section -->
@@ -843,7 +843,7 @@
          }
          
          function calculateLiability(accrualProcess){
-        	 progress='Calculate Accrual stored procedure is executing....! <img src="resources/img/Processing.gif">';
+        	 progress='Calculate Accrual stored procedure is executing....! <br><center><img src="resources/img/Processing.gif"></center>';
         	 $("#statusmessage2").html(progress);
         	 $("#statusmessage2").show();
              var liablePeriod= parseInt($('#liable_period_inputselect').val());
@@ -854,12 +854,12 @@
                            contentType: 'application/json',
                            dataType: "text",
                            data: JSON.stringify(liablePeriod),
-                           beforeSend: function(){
+                           /* beforeSend: function(){
                                     $('.loader').show();
                               },
                               complete: function(){
                                   $('.loader').hide();
-                              },
+                              }, */
                              success: function(response){
                           if(response=="success"){
 /*                                  message="Data Submitted Successfully";
@@ -900,7 +900,7 @@
          }
          
          function reviewLiabilityCCM(accrualProcess){
-        	 progress='Reviewed Accrual copy accrual data to CCM stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 progress='Reviewed Accrual - Copy Accrual Data to CCM for Payout stored procedure is executing....!<br><center><img src="resources/img/Processing.gif"></center>';
         	 $("#statusmessage2").html(progress);
         	 $("#statusmessage2").show();
              var liablePeriod= parseInt($('#review_period_inputselect').val());
@@ -917,7 +917,7 @@
                                  $("#confirmMessage").html(message);
                                  $('#myModal1').modal('toggle'); */
                                  $("#statusmessage2").hide();
-                                 status=(status+'Reviewed Accrual copy accrual data to CCM stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                 status=(status+'Reviewed Accrual - Copy Accrual Data to CCM for Payout stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
                                  $("#statusmessage1").html(status);                                 
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
@@ -952,7 +952,7 @@
           }
          
          function reviewLiabilityBook(accrualProcess){
-        	 progress='Reviewed  Accrual Book name stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 progress='Reviewed  Accrual - Book Name stored procedure is executing....!<br><center><img src="resources/img/Processing.gif"></center>';
         	 $("#statusmessage2").html(progress);
         	 $("#statusmessage2").show();
              
@@ -970,7 +970,7 @@
                                  $("#confirmMessage").html(message);
                                  $('#myModal1').modal('toggle'); */
                                  $("#statusmessage2").hide();
-                                 status=(status+'Reviewed  Accrual Book name stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                 status=(status+'Reviewed  Accrual - Book Name stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
                                  $("#statusmessage1").html(status);                                
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);
@@ -1005,7 +1005,7 @@
            }
          
          function updatePYTD(accrualProcess){
-        	 progress='Update PYTD current accrual data stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 progress='Update PYTD - Current Accrual Data stored procedure is executing....!<br><center><img src="resources/img/Processing.gif"></center>';
         	 $("#statusmessage2").html(progress);
         	 $("#statusmessage2").show();
               $.ajax({ 
@@ -1021,7 +1021,7 @@
                                         $("#confirmMessage").html(message);
                                         $('#myModal1').modal('toggle'); */
                                         $("#statusmessage2").hide();
-                                        status=(status+'Update PYTD current accrual data stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                        status=(status+'Update PYTD - Current Accrual Data stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
                                         $("#statusmessage1").html(status);                                       
                                         accrualProcess.splice(0, 1);
                                         calCalculateAccruals(accrualProcess);
@@ -1056,7 +1056,7 @@
             }
          
          function updatePYTDBook(accrualProcess){
-        	 progress='Update PYTD Book list stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 progress='Update PYTD - From the Book List stored procedure is executing....!<br><center><img src="resources/img/Processing.gif"></center>';
         	 $("#statusmessage2").html(progress);
         	 $("#statusmessage2").show();
              
@@ -1074,7 +1074,7 @@
                                         $("#confirmMessage").html(message);
                                         $('#myModal1').modal('toggle'); */
                                         $("#statusmessage2").hide();
-                                        status=(status+'Update PYTD Book list stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                        status=(status+'Update PYTD - From the Book List stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
                                         $("#statusmessage1").html(status);                                        
                                         accrualProcess.splice(0, 1);
                                         calCalculateAccruals(accrualProcess);
@@ -1108,7 +1108,7 @@
              }
          
          function updateCYTD(accrualProcess){
-        	 progress='Update CYTD current Accrual data stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 progress='Update CYTD - Current Accrual Data stored procedure is executing....!<br><center><img src="resources/img/Processing.gif"></center>';
         	 $("#statusmessage2").html(progress);
         	 $("#statusmessage2").show();
             
@@ -1125,7 +1125,7 @@
                                         $("#confirmMessage").html(message);
                                         $('#myModal1').modal('toggle'); */
                                         $("#statusmessage2").hide();
-                                        status=(status+'Update CYTD current Accrual data stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                        status=(status+'Update CYTD - Current Accrual Data stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
                                         $("#statusmessage1").html(status);                                        
                                         accrualProcess.splice(0, 1);
                                         calCalculateAccruals(accrualProcess);
@@ -1159,7 +1159,7 @@
           }
          
          function updateCYTDBook(accrualProcess){
-        	 progress='Update CYTD Book stored procedure is executing....!<img src="resources/img/Processing.gif">';
+        	 progress='Update CYTD - From the Book List stored procedure is executing....!<br><center><img src="resources/img/Processing.gif"></center>';
         	 $("#statusmessage2").html(progress);
         	 $("#statusmessage2").show();
              var liablePeriod= $('#cytd_book_inputselect').val();
@@ -1176,7 +1176,7 @@
                                  $("#confirmMessage").html(message);
                                  $('#myModal1').modal('toggle'); */
                                  $("#statusmessage2").hide();
-                                 status=(status+'Update CYTD Book stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
+                                 status=(status+'Update CYTD - From the Book List stored procedure executed Successfully!! <img src="resources/img/sprite/images/approved.png"><br>');
                                  $("#statusmessage1").html(status);                                
                                  accrualProcess.splice(0, 1);
                                  calCalculateAccruals(accrualProcess);

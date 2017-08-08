@@ -1568,12 +1568,12 @@ a { text-decoration: none }
 			else if(custId != null){
 				url = "/SIM/pricing/v1/getPricingDetails/" + custId;
 			}
-			/* if(custId != null){
+			if(custId != null){
 				$('#cancelLink').attr('href','/SIM/pricingOverview?custId='+custId);
 			}
 			else{
 				$('#cancelLink').attr('href','/SIM/indexRedirect');
-			} */
+			}
 			
 			/* var invoiceDiscountHeader = ['ADD CHG DEL','BEG DATE','END DATE','PROD LINE','TREAD','PART#','BUSINESS UNIT','NET PRICE','INVOICE DSC %','BONUS UNITS Y/N','COMM Y/N','COMMENT']; */
         	$.ajax({ 
@@ -1584,6 +1584,10 @@ a { text-decoration: none }
 	           	async: false,
             	success: function(response){
 	         		responseOnload = response.data;
+	         		if(custId == null){
+	         		$('#breadcrumbs li:nth-last-child(2) >a').attr('href','/SIM/pricingOverview?custId='+responseOnload.custId);
+	      		    $('#breadcrumbs li:nth-last-child(3) >a').attr('href','/SIM/customer?custId='+ responseOnload.custId);
+	         		}
 	         		$('#businessUnitDescription').html(response.data.businessUnitDescription);
 	         		$('#requestedBy').html(response.data.requestedByName);
 	         		$('#requestedTitle').html(response.data.requestedByTitle);
